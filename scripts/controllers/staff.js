@@ -22,6 +22,20 @@ app.controller('StaffCtrl', ['$scope','$http','$location','$state', function($sc
                     });
 
                          };
+
+
+                         $scope.openStaff = function() {
+                         
+                          $location.url('/staff/add');
+                         
+                         };
+
+                          $scope.openList = function() {
+                         
+                          $location.url('/staff/list');
+                          return false;
+                         
+                         };
                     
 
 }]);
