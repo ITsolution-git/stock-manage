@@ -1,0 +1,49 @@
+
+  <div class="row">
+    <div class="col-sm-6">
+      <form  class="form-validation" name="form-account" data-ng-submit="addcompany()">
+        <div class="panel panel-default">
+          <div class="panel-heading bg-white">
+            <span class="font-bold">Create Account</span>
+             <button class="btn btn-default m-b-lg pull-right" ui-sref="account.list">Cancel</button>
+          </div>
+          <div class="panel-body">
+          <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" class="form-control" ng-model="account.name" required >
+            </div>
+            <div class="form-group">
+              <label>Username <em class="text-muted">(allow 'a-z,A-Z,0-9', 4-20 length)</em></label>
+              <input type="text" class="form-control" ng-model="account.user_name" ng-pattern="/^[a-zA-Z0-9]{4,20}$/" required >
+            </div>
+            <div class="form-group">
+              <label>Email </label>
+              <input type="email" class="form-control" ng-model="account.email" required >
+            </div>
+            <div class="row">
+              <div class="col-sm-6 m-b">
+                <label>Enter password</label>
+                <input type="password" class="form-control" name="account.password" ng-model="account.password" required >   
+              </div>
+              <div class="col-sm-6 m-b">
+                <label>Confirm password</label>
+                <input type="password" class="form-control" name="confirm_password" required ng-model="confirm_password" ui-validate=" '$value==account.password' " ui-validate-watch=" 'password' ">
+                <span ng-show='form.confirm_password.$error.validator'>Passwords do not match!</span>
+              </div>
+            </div>
+              <div class="col-sm-6 m-b">
+                <label>Select</label>
+                  <select class="form-control"  ng-model="account.role_id"  >
+                    <option ng-repeat="item in rolelist.records" value="{{item.id}}">{{item.title}}</option>
+                  </select>
+              </div>
+          </div>
+           <footer class="panel-footer text-right">
+            <button type="submit" class="btn btn-info" ng-disabled="form.$invalid">Submit</button>
+          </footer>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+  

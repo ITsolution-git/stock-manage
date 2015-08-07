@@ -21,6 +21,14 @@ Route::controllers([
 ]);
 */
 Route::post('admin/login', 'LoginController@loginverify');
+// ADMIN ACCOUNT ROUTERS
+Route::get('admin/account', 'AccountController@listData');
+Route::get('admin/account/list', 'AccountController@listData');
+Route::post('admin/account/add', 'AccountController@addData');
+
+
+// COMMON CONTROLLER 
+Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
 
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');

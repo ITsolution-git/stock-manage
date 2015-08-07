@@ -27,5 +27,7 @@ angular
     'ui.jp',
     'pascalprecht.translate',
     'oc.lazyLoad',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'app.services',
+    'app.company'
   ]);
