@@ -157,12 +157,10 @@
         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
 
            <div class="form-group">
-              <label>Staff Type <em class="text-muted" ng-model="staff.staff_type"></em></label>
-                  <select class="form-control">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+              <label>Staff Type <em class="text-muted"></em></label>
+
+                  <select class="form-control" ng-model="staff.staff_type">
+                    <option ng-repeat="data in types" value={{data.id}}>{{data.name}}</option>
                  </select>
             </div>
 

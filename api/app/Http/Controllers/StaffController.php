@@ -50,6 +50,13 @@ class StaffController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+     /**
+     * Staff Add.
+     *
+     * @param  all staff data in post
+     * @return Data Response
+     */
+
     public function add() {
  
          $data = Input::all();
@@ -63,10 +70,55 @@ class StaffController extends Controller {
         
         return response()->json(["data" => $response]);
 
-      //  $username = $data['username'];
-       // $password = $data['password'];
-        
-       // $result = $this->login->verifylogin($username, $password);
     }
+
+    /**
+     * All types related to staff.
+     *
+     * @param  
+     * @return Data Response
+     */
+
+    public function type() {
+ 
+        $result = $this->staff->TypeList('staff');
+
+       
+        if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => "Data fetch successfully",'records' => $result);
+        } else {
+           
+            $response = array('success' => 0, 'message' => "No records Found",'records' => $result);
+        }
+        
+        return response()->json(["data" => $response]);
+    }
+
+
+     /**
+     * Staff Add.
+     *
+     * @param  staff detail page
+     * @return Data Response
+     */
+
+    public function detail() {
+ 
+         $data = Input::all();
+         
+          $result = $this->staff->StaffDetail($data);
+          
+           if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => "Data fetch successfully",'records' => $result);
+        } else {
+            $response = array('success' => 0, 'message' => "User eithe not exists or Inactive",'records' => $result);
+        }
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+
+
 
 }

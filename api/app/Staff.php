@@ -9,15 +9,16 @@ use DateTime;
 class Staff extends Model {
 
     /**
-     * login verify function
-     *
-     *
+     * Staff listing
      */
     public function StaffList() {
-        $staffdata = DB::table('staff')->where('status','=','1')->get();
-        return $staffdata;
+        $staffData = DB::table('staff')->where('status','=','1')->get();
+        return $staffData;
     }
 
+     /**
+     * Add Staff
+     */
     public function StaffAdd($data) {
     	$data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
@@ -25,6 +26,22 @@ class Staff extends Model {
 
         $result = DB::table('staff')->insert($data);
         return $result;
+    }
+
+    /**
+     * Type listing
+     */
+    public function TypeList($type) {
+        $typeData = DB::table('type')->where('status','=','1')->where('type','=',$type)->get();
+        return $typeData;
+    }
+
+    /**
+     * Staff Detail
+     */
+    public function staffDetail($staffId) {
+        $staffData = DB::table('staff')->where('status','=','1')->where('id','=',$staffId)->get();
+        return $staffData;
     }
 
 

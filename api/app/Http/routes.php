@@ -26,3 +26,5 @@ Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::get('admin/staff', 'StaffController@index');
 Route::post('admin/staffAdd', 'StaffController@add');
+Route::get('admin/type', 'StaffController@type');
+Route::post('admin/staffDetail', 'StaffController@detail');
