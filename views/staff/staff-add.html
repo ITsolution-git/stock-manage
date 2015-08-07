@@ -1,0 +1,164 @@
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="form" class="form-validation">
+        <div class="panel panel-default">
+          <div class="panel-heading bg-white">
+            <span class="font-bold">Add Staff</span>
+          </div>
+          <div class="panel-body">
+            <div class="form-group col-sm-4 m-b">
+              <label>Name Last <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.last_name" required >
+            </div>
+
+             <div class="form-group col-sm-4 m-b">
+              <label>First <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.first_name" required >
+            </div>
+
+             <div class="form-group col-sm-4 m-b">
+              <label>Middle<em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.middle_name" required >
+            </div>
+
+            <div class="form-group col-sm-12 m-b">
+              <label>Address<em class="text-muted"></em></label>
+              <input type="text" class="form-control col-sm-6 m-b" ng-model="staff.prime_address1" required >
+              <input type="text" class="form-control col-sm-6 m-b" ng-model="staff.prime_address2" required >
+              <input type="text" class="form-control col-sm-6 m-b" ng-model="staff.prime_address_city" required>
+              <input type="text" class="form-control col-sm-2 m-b" ng-model="staff.prime_address_state" required>
+              <input type="text" class="form-control col-sm-4 m-b" ng-model="staff.prime_address_zip" required>
+            </div>
+
+
+            <div class="form-group col-sm-12 m-b">
+              <label>Phone</label>
+              <input type="text" class="form-control" placeholder="XXXXXXXXXX" ng-model="staff.prime_phone_main" ng-pattern="/([0-9]{10})$/" required >
+            </div>
+
+            <div class="form-group col-sm-12 m-b">
+              <label>Email</label>
+              <input type="email" class="form-control" ng-model="staff.prime_mail" required >
+            </div>
+
+            <div>&nbsp;</div>
+
+            <div class="form-group col-sm-12 m-b">
+            	<ul class="nav nav-tabs">
+        <li class="active">
+          <a href data-toggle="tab" data-target="#tab1">Details</a>
+        </li>
+        <li>
+          <a href data-toggle="tab" data-target="#tab2">Comission</a>
+        </li>
+        <li>
+          <a href data-toggle="tab" data-target="#tab3">Emergency Contact</a>
+        </li>
+      </ul>
+
+      <div class="tab-content p b-a no-b-t bg-white m-b-md">
+
+        <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab1">
+
+          <div class="form-group">
+              <label>Position <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.position"  >
+            </div>
+
+            <div class="form-group">
+              <label>Level <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.level"  >
+            </div>
+
+ <!-- datepicker -->
+             <div class="form-group" ng-controller="DatepickerDemoCtrl">
+              <label>Hired <em class="text-muted"></em></label>
+             
+              
+                    <p class="input-group">
+                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="staff.date_start" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                 
+           
+            </div>
+  <!-- / datepicker -->
+
+
+   <!-- datepicker -->
+             <div class="form-group" ng-controller="DatepickerDemoCtrl">
+              <label>Birthday <em class="text-muted"></em></label>
+             
+              
+                    <p class="input-group">
+                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="staff.birthday" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                 
+           
+            </div>
+  <!-- / datepicker -->
+
+<!-- datepicker -->
+             <div class="form-group" ng-controller="DatepickerDemoCtrl">
+              <label>Terminated <em class="text-muted"></em></label>
+             
+              
+                    <p class="input-group">
+                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="staff.date_end" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                 
+           
+            </div>
+  <!-- / datepicker -->
+
+
+
+            <div class="form-group">
+              <label>Email Secondary <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.second_mail"  >
+            </div>
+
+            <div class="form-group">
+              <label>Note <em class="text-muted"></em></label>
+              <textarea rows="5" class="form-control" ng-model="staff.notes"></textarea>
+
+             
+            </div>
+        
+
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
+          Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
+        </div>
+
+        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab3">
+          Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher.
+        </div>
+
+      </div>
+            </div>
+
+
+           
+            
+          </div>
+          <footer class="panel-footer text-right">
+            <button ng-click="saveStaff(staff);" type="submit" class="btn btn-info" ng-disabled="form.$invalid">Submit</button>
+          </footer>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+ 
