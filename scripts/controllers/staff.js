@@ -43,7 +43,6 @@ app.controller('StaffCtrl', ['$scope','$http','$location','$state', function($sc
                                      $location.url('/staff/add');
                                      $scope.staff = result.data.records;
                                      
-                                     
 
                              }  else {
                               $location.url('/app/dashboard');
