@@ -33,7 +33,7 @@ class AccountController extends Controller {
 		$getData = $this->account->GetCompanyData();
 
 		$success = count($getData);
-		$message  = ($success>0)? 'Get Records.':NO_RECORDS;
+		$message  = ($success>0)? GET_RECORDS:NO_RECORDS;
 		$data = array("records" => $getData,"success"=>$success,"message"=>$message);
 		
 		return response()->json(['data'=>$data]);
@@ -77,4 +77,97 @@ class AccountController extends Controller {
 		return response()->json(['data'=>$data]);
 	}
 
+	/**
+     * Get All account list data BY id
+     *
+     * @param  id.
+     * @return success message, data.
+     */
+	public function GetData ($id)
+	{
+		if(!empty($id))
+		{
+			$getData = $this->account->GetCompanybyId($id);
+			$success = count($getData);
+			$message  = ($success>0)? GET_RECORDS:NO_RECORDS;
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+		}
+
+		$data = array("records" => $getData,"success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
+
+	/**
+     * Save Edit Data
+     *
+     * @param  post.
+     * @return success message.
+     */
+	public function SaveData ()
+	{
+		$post = Input::all();
+		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['id']))
+		{
+			if($post['password']=='testcodal')
+				{
+					unset($post['password']);
+				} 
+			else 
+				{
+					$post['password']=md5($post['password']);
+				}
+			$getData = $this->account->SaveCompanyData($post);
+
+			if($getData)
+			{
+				$message = UPDATE_RECORD;
+				$success = 1;
+			}
+			else
+			{
+				$message = MISSING_PARAMS;
+				$success = 0;
+			}
+
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+		}
+		
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
+	public function DeleteData()
+	{
+		$post = Input::all();
+
+		if(!empty($post['id']))
+		{
+			$getData = $this->account->DeleteCompanyData($post['id']);
+			if($getData)
+			{
+				$message = DELETE_RECORD;
+				$success = 1;
+			}
+			else
+			{
+				$message = MISSING_PARAMS;
+				$success = 0;
+			}
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+		}
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+
+	}
 }

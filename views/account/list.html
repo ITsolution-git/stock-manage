@@ -33,7 +33,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="value in account.records" ng-if="account.success>0">
+          <tr ng-repeat="value in account.records" ng-if="account.success>0" id="comp_{{value.id}}">
               <td>{{value.name}}</td>
               <td>{{value.user_name}}</td>
               <td>{{value.email}}</td>
@@ -41,8 +41,8 @@
               <td ng-if="value.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
               <td ng-if="value.status == 0" ><span class="label bg-danger" title="Deactive">Deactive</span></td>
               <td>
-                <button ng-click="" class="btn btn-xs btn-info" tabindex="0">edit</button>
-                <button ng-click="" class="btn btn-xs btn-danger" tabindex="0">delete</button>
+                <button class="btn btn-xs btn-info" ui-sref="account.edit({ id: value.id })">Edit</button>
+                <button class="btn btn-xs btn-danger" ng-click="deletecompany(value.id)">Delete</button>
               </td>
           </tr>
           <tr ng-if="account.success==0"><td>{{account.message}}</td></tr>

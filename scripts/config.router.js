@@ -484,15 +484,24 @@ angular.module('app')
           .state('account.list', {
               url: '/list',
               templateUrl: 'views/account/list.html',
-              data : { title: 'Account' },
               controller: 'accountListCtrl',
             
             })
            .state('account.add', {
               url: '/add',
               templateUrl: 'views/account/add.html',
-              data : { title: 'Account' },
               controller: 'accountAddCtrl',
+              resolve: load('scripts/controllers/account.js')
+            })
+           .state('account.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/account/add.html',
+              controller: 'accountEditCtrl',
+              resolve: load('scripts/controllers/account.js')
+            })
+           .state('account.delete', {
+              url: '/delete/:id',
+              controller: 'accountEditCtrl',
               resolve: load('scripts/controllers/account.js')
             })
 ;

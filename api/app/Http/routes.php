@@ -21,14 +21,18 @@ Route::controllers([
 ]);
 */
 Route::post('admin/login', 'LoginController@loginverify');
-// ADMIN ACCOUNT ROUTERS
+
+// ADMIN COMPANY ROUTERS
 Route::get('admin/account', 'AccountController@listData');
 Route::get('admin/account/list', 'AccountController@listData');
 Route::post('admin/account/add', 'AccountController@addData');
-
+Route::get('admin/account/edit/{id}', 'AccountController@GetData');
+Route::post('admin/account/save', 'AccountController@SaveData');
+Route::post('admin/account/delete', 'AccountController@DeleteData');
 
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
+
 
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
