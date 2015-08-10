@@ -28,6 +28,23 @@ class Staff extends Model {
         return $result;
     }
 
+
+    /**
+     * Edit Staff
+     */
+    public function StaffEdit($data) {
+        
+        $data['updated_date'] = date("Y-m-d H:i:s");
+        $result = DB::table('staff')->where('id', '=', $data['id'])->update($data);
+        return $result;
+    }
+
+
+
+
+
+    
+
     /**
      * Type listing
      */
@@ -41,6 +58,7 @@ class Staff extends Model {
      */
     public function staffDetail($staffId) {
         $staffData = DB::table('staff')->where('status','=','1')->where('id','=',$staffId)->get();
+
         return $staffData;
     }
 

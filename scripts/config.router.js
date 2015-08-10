@@ -495,6 +495,14 @@ angular.module('app')
               data : { title: 'Staff Add' },
                controller: 'StaffCtrl',
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
+            })
+
+             .state('staff.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/staff/staff-add.html',
+              data : { title: 'Staff Edit' },
+               controller: 'StaffCtrl',
+              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
             });
 
 

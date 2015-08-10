@@ -1,4 +1,5 @@
-app.controller('StaffCtrl', ['$scope','$http','$location','$state', function($scope,$http,$location,$state) {
+app.controller('StaffCtrl', ['$scope','$http','$location','$state','$stateParams', function($scope,$http,$location,$state,$stateParams) {
+  
 
                          $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
 
@@ -13,13 +14,26 @@ app.controller('StaffCtrl', ['$scope','$http','$location','$state', function($sc
                           });
 
 
-                         
-
-
                          $scope.saveStaff = function(staff) {
                          
                           
-                         $http.post('api/public/admin/staffAdd',staff).success(function(result, status, headers, config) {
+                         
+                         if(staff.id) {
+
+                          $http.post('api/public/admin/StaffEdit',staff).success(function(result, status, headers, config) {
+        
+                            if(result.data.success == '1') {
+
+                                    $location.url('/staff/list');
+                                   
+
+                             } 
+                         
+                          });
+                          
+                         } else {
+                          
+                           $http.post('api/public/admin/staffAdd',staff).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
 
@@ -30,18 +44,19 @@ app.controller('StaffCtrl', ['$scope','$http','$location','$state', function($sc
                          
                           });
 
+                         }
+                         
+
                          };
 
 
-                         $scope.editStaff = function(staffId) {
-                         
-                          
-                         $http.post('api/public/admin/staffDetail',staffId).success(function(result, status, headers, config) {
+                         if($stateParams.id) {
+
+                           $http.post('api/public/admin/staffDetail',$stateParams.id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
-
-                                     $location.url('/staff/add');
-                                     $scope.staff = result.data.records;
+                                       
+                                     $scope.staff = result.data.records[0];
                                      
 
                              }  else {
@@ -50,7 +65,7 @@ app.controller('StaffCtrl', ['$scope','$http','$location','$state', function($sc
                          
                           });
 
-                         };
+                         }
 
 
 

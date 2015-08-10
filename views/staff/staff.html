@@ -55,7 +55,7 @@
               <td style="white-space: nowrap">
 
                 <div class="buttons" ng-show="!rowform.$visible" aria-hidden="false">
-                  <button class="btn btn-xs btn-info" ng-click="editStaff(data.id)" tabindex="0">edit</button>
+                  <button class="btn btn-xs btn-info" ui-sref="staff.edit({ id: data.id })" tabindex="0">edit</button>
                 </div>
              </td>
 
