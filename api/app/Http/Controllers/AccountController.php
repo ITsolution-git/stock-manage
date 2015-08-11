@@ -121,17 +121,8 @@ class AccountController extends Controller {
 					$post['password']=md5($post['password']);
 				}
 			$getData = $this->account->SaveCompanyData($post);
-
-			if($getData)
-			{
-				$message = UPDATE_RECORD;
-				$success = 1;
-			}
-			else
-			{
-				$message = MISSING_PARAMS;
-				$success = 0;
-			}
+			$message = UPDATE_RECORD;
+			$success = 1;
 
 		}
 		else

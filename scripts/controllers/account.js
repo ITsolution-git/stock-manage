@@ -20,7 +20,7 @@
                                           }  
                                      });
                                   }
-                                   } 
+                              } // DELETE COMPANY FINISH
                         var account = {};
                         
                         $http.get('api/public/admin/account/list').success(function(result) {

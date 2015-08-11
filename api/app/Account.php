@@ -45,7 +45,7 @@ class Account extends Model {
     	}
     	else
     	{
-    		return false;
+    		return 0;
     	}
     }
     public function DeleteCompanyData($id)
