@@ -68,8 +68,11 @@
   <script src="scripts/filters/fromnow.js"></script>
   <script src="scripts/services/ngstore.js"></script>
   <script src="scripts/services/ui-load.js"></script>
-  <script src="scripts/common/services.js"></script>
 
+    <!-- COMMON LOGIN FUNCTION AND CHECK -->
+  <script src="scripts/services/services.js"></script>
+
+  <script src="scripts/controllers/account.js"></script>
 
 </body>
 </html>

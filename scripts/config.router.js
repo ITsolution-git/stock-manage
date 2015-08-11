@@ -10,7 +10,7 @@
 angular.module('app')
   .run(
     [           '$rootScope', '$state', '$stateParams','$location','$http',
-      function ( $rootScope,   $state,   $stateParams ,$location,$http) {
+      function ( $rootScope,   $state,  $stateParams ,$location,$http) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
 
@@ -129,6 +129,7 @@ angular.module('app')
                 templateUrl: 'apps/inbox/new.html',
                 resolve: load( ['textAngular', 'ui.select'] )
             })
+
           .state('ui', {
             url: '/ui',
             abstract: true,
@@ -211,6 +212,7 @@ angular.module('app')
                 resolve: load('scripts/controllers/bootstrap.js'),
                 data : { title: 'UI Bootstrap' }
               })
+            
             // material routers
             .state('ui.material', {
               url: '/material',
@@ -463,10 +465,22 @@ angular.module('app')
               resolve: load('scripts/controllers/logout.js')
             })
 
-// staff routers
-
-          .state('staff', {
-            url: '/staff',
+        .state('staff', {
+              url: '/staff',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+          .state('account', {
+              url: '/account',
             views: {
               '': {
                 templateUrl: 'views/layout.html'
@@ -503,8 +517,32 @@ angular.module('app')
               data : { title: 'Staff Edit' },
                controller: 'StaffCtrl',
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
-            });
+            })
 
+          .state('account.list', {
+              url: '/list',
+              templateUrl: 'views/account/list.html',
+              controller: 'accountListCtrl',
+            
+            })
+           .state('account.add', {
+              url: '/add',
+              templateUrl: 'views/account/add.html',
+              controller: 'accountAddCtrl',
+              resolve: load('scripts/controllers/account.js')
+            })
+           .state('account.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/account/add.html',
+              controller: 'accountEditCtrl',
+              resolve: load('scripts/controllers/account.js')
+            })
+           .state('account.delete', {
+              url: '/delete/:id',
+              controller: 'accountEditCtrl',
+              resolve: load('scripts/controllers/account.js')
+            })
+;
 
           function load(srcs, callback) {
             return {

@@ -1,5 +1,6 @@
-<?php namespace App\Http\Controllers;
-
+<?php 
+namespace App\Http\Controllers;
+require_once(app_path() . '/constants.php');
 class HomeController extends Controller {
 
 	/*

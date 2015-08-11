@@ -1,0 +1,72 @@
+
+  <div class="row">
+    <div class="col-sm-6">
+    
+      <form  class="form-validation" name="companyForm">
+       
+
+        <div class="panel panel-default">
+          <div class="panel-heading bg-white">
+            <span class="font-bold">Create Account</span><b>- {{CurrentController}}</b> <b> - {{password}}</b>
+             <button class="btn btn-default m-b-lg pull-right" ui-sref="account.list">Cancel</button>
+          </div>
+          <div class="panel-body">
+          <div class="form-group">
+              <label>Full Name</label>
+
+              <input type="text" class="form-control" data-ng-model="account.name"  required >
+            </div>
+            <div class="form-group">
+              <label>Username <em class="text-muted">(allow 'a-z,A-Z,0-9', 4-20 length)</em></label>
+                      <input 
+                          type="text" 
+                          class="form-control" 
+                          name="user_name"
+                          data-ng-model="account.user_name" 
+                          ng-pattern="/^[a-zA-Z0-9]{4,20}$/" 
+                          required >
+
+                          <span style="color:#f44336" ng-show="companyForm.user_name.$error.pattern">
+                                    This Field Should Contain 4-20 Numeric/characters</span>
+            </div>
+            <div class="form-group">
+              <label>Email </label>
+              <input 
+                  type="email" 
+                  class="form-control" 
+                  data-ng-model="account.email" 
+                  required >
+            </div>
+
+
+
+              <div class="row">
+              <div class="col-sm-6 m-b">
+                <label>Enter password</label>
+                <input type="password" class="form-control" name="account.password" ng-model="account.password" required >   
+              </div>
+              <div class="col-sm-6 m-b">
+                <label>Confirm password</label>
+                <input type="password" class="form-control" name="confirm_password" required ng-model="confirm_password" ui-validate=" '$value==account.password' " ui-validate-watch=" 'password' ">
+                <span ng-show='form.confirm_password.$error.validator'>Passwords do not match!</span>
+              </div>
+            </div>
+
+              <div class="col-sm-6 m-b">
+                <label>Select</label>
+                  <select class="form-control" data-ng-model="account.role_id"  >
+                    <option ng-repeat="item in rolelist.records" ng-selected="{{account.role_id==item.id}}" value="{{item.id}}">{{item.title}}</option>
+                  </select>
+              </div>
+          </div>
+           <footer class="panel-footer text-right">
+          
+            <button type="submit"  ng-if="CurrentController=='accountAddCtrl'"  ng-click="addcompany(account)"  class="btn btn-info">Add</button>
+            <button type="submit"  ng-if="CurrentController=='accountEditCtrl'" ng-click="editcompany(account)" class="btn btn-info">Save</button>
+          </footer>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+  

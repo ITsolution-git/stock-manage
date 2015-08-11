@@ -36,6 +36,7 @@
             .factory('loginService', [
                 '$route', "$rootScope", '$state', '$http', '$location', 'notifyService', 'sessionService', '$q',
                 function ($route, $rootScope, $state, $http, $location, notifyService, sessionService, $q) {
+
                     return {
                         login: function (user_data) {
                             var request = $http({
@@ -93,7 +94,7 @@
                             ($checkSessionServer).then(function (result) {
                                 if (result.data.validated === false) {
                                     deferred.reject("notlogin");
-                                    $location.url('/pages/signin?msg=login_first');
+                                    $location.url('/access/signin?msg=login_first');
                                 }
                                 else {
                                     //  $location.url('/dashboard?msg=logged_in');
