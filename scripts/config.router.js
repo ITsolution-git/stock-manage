@@ -462,7 +462,48 @@ angular.module('app')
               controller: 'logoutCtrl',
               resolve: load('scripts/controllers/logout.js')
             })
-          ;
+
+// staff routers
+
+          .state('staff', {
+            url: '/staff',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
+
+            .state('staff.list', {
+              url: '/list',
+              templateUrl: 'views/staff/staff.html',
+              data : { title: 'Staff' },
+              controller: 'StaffCtrl',
+              resolve: load(['scripts/controllers/staff.js'])
+            })
+
+             .state('staff.add', {
+              url: '/add',
+              templateUrl: 'views/staff/staff-add.html',
+              data : { title: 'Staff Add' },
+               controller: 'StaffCtrl',
+              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
+            })
+
+             .state('staff.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/staff/staff-add.html',
+              data : { title: 'Staff Edit' },
+               controller: 'StaffCtrl',
+              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
+            });
 
 
           function load(srcs, callback) {
