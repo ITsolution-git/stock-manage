@@ -32,13 +32,15 @@ Route::post('admin/account/delete', 'AccountController@DeleteData');
 
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
-
+Route::get('common/type/{type}', 'CommonController@type');
+Route::get('common/staffRole', 'CommonController@getStaffRoles');
 
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::get('admin/staff', 'StaffController@index');
 Route::post('admin/staffAdd', 'StaffController@add');
-Route::post('admin/StaffEdit', 'StaffController@edit');
-Route::get('admin/type', 'StaffController@type');
+Route::post('admin/staffEdit', 'StaffController@edit');
+Route::post('admin/staffDelete', 'StaffController@delete');
+
 Route::post('admin/staffDetail', 'StaffController@detail');
 Route::get('admin/StaffEdit/{id}', 'StaffController@detail');

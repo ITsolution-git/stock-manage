@@ -13,26 +13,41 @@ class Staff extends Model {
      */
     public function StaffList() {
         $staffData = DB::table('staff')->where('status','=','1')->get();
+
+        $staffData = DB::table('staff as staff')
+                         ->Join('users as users', 'users.id', '=', 'staff.user_id')
+                         ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
+                         ->select('staff.user_id','staff.id','staff.first_name','staff.last_name','staff.prime_phone_main','staff.date_start','staff.status','roles.title')
+                         ->where('users.is_delete','=','0')
+                         ->where('staff.is_delete','=','0')
+                         ->get();
+
         return $staffData;
     }
 
      /**
      * Add Staff
      */
-    public function StaffAdd($data) {
-    	$data['created_date'] = date("Y-m-d H:i:s");
-        $data['updated_date'] = date("Y-m-d H:i:s");
+    public function staffAdd($data) {
+    	$data['staff']['created_date'] = date("Y-m-d H:i:s");
+        $data['staff']['updated_date'] = date("Y-m-d H:i:s");
+        $data['users']['updated_date'] = date("Y-m-d H:i:s");
+        $data['users']['updated_date'] = date("Y-m-d H:i:s");
         
-
-        $result = DB::table('staff')->insert($data);
-        return $result;
+        $result = DB::table('users')->insert($data['users']);
+       
+        $insertedid = DB::getPdo()->lastInsertId();
+        
+        $data['staff']['user_id'] = $insertedid;
+        $result_staff = DB::table('staff')->insert($data['staff']);
+        return $result_staff;
     }
 
 
     /**
      * Edit Staff
      */
-    public function StaffEdit($data) {
+    public function staffEdit($data) {
         
         $data['updated_date'] = date("Y-m-d H:i:s");
         $result = DB::table('staff')->where('id', '=', $data['id'])->update($data);
@@ -42,24 +57,48 @@ class Staff extends Model {
 
 
 
-
-    
-
-    /**
-     * Type listing
-     */
-    public function TypeList($type) {
-        $typeData = DB::table('type')->where('status','=','1')->where('type','=',$type)->get();
-        return $typeData;
-    }
-
     /**
      * Staff Detail
      */
     public function staffDetail($staffId) {
         $staffData = DB::table('staff')->where('status','=','1')->where('id','=',$staffId)->get();
+       
+        $UserData = DB::table('users')->where('status','=','1')->where('id','=',$staffData[0]->user_id)->get();
 
-        return $staffData;
+        $combine_array = array();
+
+        $combine_array['staff'] = $staffData;
+        $combine_array['users'] = $UserData;
+
+        return $combine_array;
+    }
+
+     /**
+     * Edit Staff
+     */
+    public function userEdit($user) {
+        
+        $user['updated_date'] = date("Y-m-d H:i:s");
+        $result = DB::table('users')->where('id', '=', $user['id'])->update($user);
+        return $result;
+    }
+
+     /**
+     * Delete Staff
+     */
+
+    public function staffDelete($id,$user_id)
+    {
+        if(!empty($id))
+        {
+            $result = DB::table('users')->where('id','=',$user_id)->update(array("is_delete" => '1'));
+          //  $result = DB::table('staff')->where('id','=',$id)->update(array("is_delete" => '1'));
+            return $result;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

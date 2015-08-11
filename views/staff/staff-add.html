@@ -49,7 +49,7 @@
 
             <div class="form-group col-sm-12 m-b">
               <label>Email</label>
-              <input type="email" class="form-control" ng-model="staff.prime_mail" required >
+              <input type="email" class="form-control" ng-model="users.email" required >
             </div>
 
 
@@ -59,7 +59,7 @@
                           type="text" 
                           class="form-control" 
                           name="user_name"
-                          data-ng-model="staff.user_name" 
+                          data-ng-model="users.user_name" 
                           ng-pattern="/^[a-zA-Z0-9]{4,20}$/" 
                           required >
 
@@ -69,7 +69,7 @@
 
                <div class="form-group col-sm-12 m-b">
               <label>Password</label>
-              <input type="password" class="form-control" ng-model="staff.password" required >
+              <input type="password" class="form-control" ng-model="users.password" required >
             </div>
 
 
@@ -108,8 +108,13 @@
 
           <div class="form-group">
               <label>Position <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="staff.position"  >
+
+              <select class="form-control" ng-model="users.role_id">
+                    <option ng-repeat="data in staffRoles" value={{data.id}}>{{data.title}}</option>
+                 </select>
+
             </div>
+
 
             <div class="form-group">
               <label>Level <em class="text-muted"></em></label>
@@ -223,7 +228,7 @@
             
           </div>
           <footer class="panel-footer text-right">
-            <button ng-click="saveStaff(staff);" type="submit" class="btn btn-info" ng-disabled="staffForm.$invalid">Submit</button>&nbsp;
+            <button ng-click="saveStaff(staff,users);" type="submit" class="btn btn-info" ng-disabled="staffForm.$invalid">Submit</button>&nbsp;
             <button ng-click="openList();" type="button"  class="btn btn-info">Cancel</button>&nbsp;
            
           </footer>

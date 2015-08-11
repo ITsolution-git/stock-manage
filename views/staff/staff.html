@@ -45,10 +45,10 @@
         </thead>
         <tbody>
 
-          <tr ng-repeat="data in staffs">
+          <tr ng-repeat="data in staffs" id="comp_{{data.id}}">
               <td>{{data.first_name}}</td>
               <td>{{data.last_name}}</td>
-              <td>{{data.position}}</td>
+              <td>{{data.title}}</td>
               <td>{{data.prime_phone_main}}</td>
               <td data-value="78025368997">{{data.date_start}}</td>
               <td data-value="1">{{data.status}}</td>
@@ -56,7 +56,7 @@
 
                 <div class="buttons" ng-show="!rowform.$visible" aria-hidden="false">
                   <button class="btn btn-xs btn-info" ui-sref="staff.edit({ id: data.id })" tabindex="0">Edit</button>
-                  <button class="btn btn-xs btn-danger" ui-sref="staff.delete({ id: data.id })" tabindex="0">Delete</button>
+                  <button class="btn btn-xs btn-danger" ng-click="delete(data.id,data.user_id)" tabindex="1">Delete</button>
                 </div>
              </td>
 
