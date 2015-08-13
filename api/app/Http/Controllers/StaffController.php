@@ -39,7 +39,7 @@ class StaffController extends Controller {
     public function index() {
  
         $result = $this->staff->staffList();
-        
+       
        
         if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
@@ -136,7 +136,7 @@ class StaffController extends Controller {
 
           $insertedid = $this->staff->staffAdd($data);
 
-          if ($insertedid) {
+          if ($insertedid && $_FILES) {
 
                 if (!$_FILES['image']['error'] && isset($insertedid)) {
 
@@ -237,10 +237,20 @@ class StaffController extends Controller {
          $data['users']['id'] = $data['staff']['user_id'];
 
 
+          if(isset($data['staff']['date_start'])) {
+             $data['staff']['date_start'] = date("Y-m-d", strtotime($data['staff']['date_start']));
+          }
+
+
+          if(isset($data['staff']['date_end'])) {
+             $data['staff']['date_end'] = date("Y-m-d", strtotime($data['staff']['date_end']));
+          }
+
+          if(isset($data['staff']['birthday'])) {
+             $data['staff']['birthday'] = date("Y-m-d", strtotime($data['staff']['birthday']));
+          }
           
-          $data['staff']['date_start'] = date("Y-m-d", strtotime($data['staff']['date_start']));
-          $data['staff']['birthday'] = date("Y-m-d", strtotime($data['staff']['birthday']));
-          $data['staff']['date_end'] = date("Y-m-d", strtotime($data['staff']['date_end']));
+          
 
           $data['users']['password'] = md5($data['users']['password']);
           $data['users']['name'] = $data['staff']['first_name'].' '.$data['staff']['last_name'];
@@ -284,7 +294,7 @@ class StaffController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS,'records' => '');
         }
         
-        
+
 return response()->json(["data" => $response]);
     }
 
@@ -315,10 +325,33 @@ public function create_dir($dir_path) {
 
           $result['staff'][0]->all_url_photo = UPLOAD_PATH.'staff/'.$result["staff"][0]->id.'/'.$result['staff'][0]->photo;
 
-         
-          $result['staff'][0]->date_start = date("d-F-Y", strtotime($result['staff'][0]->date_start));
-          $result['staff'][0]->birthday = date("d-F-Y", strtotime($result['staff'][0]->birthday));
-          $result['staff'][0]->date_end = date("d-F-Y", strtotime($result['staff'][0]->date_end));
+         // if blank birthdaye is enter then we will not calculate date
+         if($result['staff'][0]->birthday == '0000-00-00 00:00:00') {
+
+             unset($result['staff'][0]->birthday);
+
+         } else {
+
+            $result['staff'][0]->birthday = date("d-F-Y", strtotime($result['staff'][0]->birthday));
+         }
+
+         if($result['staff'][0]->date_start == '0000-00-00 00:00:00') {
+
+              unset($result['staff'][0]->date_start);
+
+         } else {
+
+            $result['staff'][0]->date_start = date("d-F-Y", strtotime($result['staff'][0]->date_start));
+         }
+
+         if($result['staff'][0]->date_end == '0000-00-00 00:00:00') {
+
+              unset($result['staff'][0]->date_end);
+
+         } else {
+
+            $result['staff'][0]->date_end = date("d-F-Y", strtotime($result['staff'][0]->date_end));
+         }
 
 
            if (count($result) > 0) {

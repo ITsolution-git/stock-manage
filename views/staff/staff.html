@@ -50,7 +50,9 @@
               <td>{{data.last_name}}</td>
               <td>{{data.title}}</td>
               <td>{{data.prime_phone_main}}</td>
-              <td data-value="78025368997">{{data.date_start}}</td>
+              
+
+              <td data-value="78025368997">{{ data.date_start == "0000-00-00 00:00:00" ? "" : data.date_start }}</td>
               <td data-value="1">{{data.status}}</td>
               <td style="white-space: nowrap">
 
