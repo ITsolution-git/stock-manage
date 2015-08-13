@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
+use SplFileInfo;
 use DB;
 use Image;
 use Request;
@@ -38,6 +39,7 @@ class StaffController extends Controller {
     public function index() {
  
         $result = $this->staff->staffList();
+        
        
         if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
@@ -57,9 +59,65 @@ class StaffController extends Controller {
      */
 
     public function add() {
- 
-         $data = Input::all();
-         
+
+       
+        $data['staff'] = array('last_name' => isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : '',
+            'first_name' => isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : '',
+            'middle_name' => isset($_REQUEST['middle_name']) ? $_REQUEST['middle_name'] : '',
+            'start_date' => isset($_REQUEST['start_date']) ? $_REQUEST['start_date'] : '',
+            'prime_phone_main' => $_REQUEST['prime_phone_main'] ? $_REQUEST['prime_phone_main'] : '',
+            
+            'status' => isset($_REQUEST['status']) ? $_REQUEST['status'] : '',
+            'commision_base' => isset($_REQUEST['commision_base']) ? $_REQUEST['commision_base'] : '',
+            'commission_sub' => isset($_REQUEST['commission_sub']) ? $_REQUEST['commission_sub'] : '',
+            'prime_address_city' => isset($_REQUEST['prime_address_city']) ? $_REQUEST['prime_address_city'] : '',
+            'prime_address_state' => isset($_REQUEST['prime_address_state']) ? $_REQUEST['prime_address_state'] : '',
+            'prime_address_zip' => isset($_REQUEST['prime_address_zip']) ? $_REQUEST['prime_address_zip'] : '',
+            'prime_address1' => isset($_REQUEST['staff_type']) ? $_REQUEST['staff_type'] : '',
+            'prime_address1' => isset($_REQUEST['prime_address1']) ? $_REQUEST['prime_address1'] : '',
+            'prime_address2' => isset($_REQUEST['prime_address2']) ? $_REQUEST['prime_address2'] : '',
+            'birthday' => isset($_REQUEST['birthday']) ? $_REQUEST['birthday'] : '',
+            'date_start' => isset($_REQUEST['date_start']) ? $_REQUEST['date_start'] : '',
+            'date_end' => isset($_REQUEST['date_end']) ? $_REQUEST['date_end'] : '',
+            'level' => isset($_REQUEST['level']) ? $_REQUEST['level'] : '',
+            'notes' => isset($_REQUEST['notes']) ? $_REQUEST['notes'] : '',
+            'second_mail' => isset($_REQUEST['second_mail']) ? $_REQUEST['second_mail'] : '',
+            'emergency_contact_name' => isset($_REQUEST['emergency_contact_name']) ? $_REQUEST['emergency_contact_name'] : '',
+            'emergency_contact_relation' => isset($_REQUEST['emergency_contact_relation']) ? $_REQUEST['emergency_contact_relation'] : ''
+
+        );
+
+
+
+
+        $data['users'] = array('user_name' => isset($_REQUEST['user_name']) ? $_REQUEST['user_name'] : '',
+            'email' => isset($_REQUEST['email']) ? $_REQUEST['email'] : '',
+            'password' => isset($_REQUEST['password']) ? $_REQUEST['password'] : '',
+            'role_id' => isset($_REQUEST['role_id']) ? $_REQUEST['role_id'] : ''
+        );
+
+
+                foreach($data['staff'] as $key => $link) 
+                { 
+
+                    if($link == '') 
+                    { 
+                        unset($data['staff'][$key]); 
+                    } 
+                } 
+
+                 foreach($data['users'] as $key => $link) 
+                { 
+
+                    if($link == '') 
+                    { 
+                        unset($data['users'][$key]); 
+                    } 
+                } 
+
+
+
+
          if(isset($data['staff']['date_start'])) {
             $data['staff']['date_start'] = date("Y-m-d", strtotime($data['staff']['date_start']));
          }
@@ -76,16 +134,37 @@ class StaffController extends Controller {
           $data['users']['password'] = md5($data['users']['password']);
           $data['users']['name'] = $data['staff']['first_name'].' '.$data['staff']['last_name'];
 
-          $result = $this->staff->staffAdd($data);
+          $insertedid = $this->staff->staffAdd($data);
 
-          if (count($result) > 0) {
+          if ($insertedid) {
+
+                if (!$_FILES['image']['error'] && isset($insertedid)) {
+
+                    $filename = $_FILES['image']['name'];
+                    $info = new SplFileInfo($filename);
+                    $extention = $info->getExtension();
+                    $uploaddir = FILEUPLOAD . "staff/" . $insertedid;
+                    StaffController::create_dir($uploaddir);
+                    
+                    $newfilename = "staff_main_" . $insertedid . "." . $extention;
+
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
+                       
+                       $result = $this->staff->staffImageUpdate($insertedid,$newfilename);
+                    }
+                }
 
             $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
-        } 
+        } else {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS,'records' => '');
+        }
+
         
         return response()->json(["data" => $response]);
 
     }
+
+     
 
     /**
      * Staff Edit.
@@ -96,7 +175,64 @@ class StaffController extends Controller {
 
     public function edit() {
  
-         $data = Input::all();
+
+         
+          $data['staff'] = array('id' => isset($_REQUEST['id']) ? $_REQUEST['id'] : '',
+            'last_name' => isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : '',
+            'first_name' => isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : '',
+            'middle_name' => isset($_REQUEST['middle_name']) ? $_REQUEST['middle_name'] : '',
+            'start_date' => isset($_REQUEST['start_date']) ? $_REQUEST['start_date'] : '',
+            'prime_phone_main' => $_REQUEST['prime_phone_main'] ? $_REQUEST['prime_phone_main'] : '',
+            'user_id' => $_REQUEST['user_id'] ? $_REQUEST['user_id'] : '',
+            'status' => isset($_REQUEST['status']) ? $_REQUEST['status'] : '',
+            'commision_base' => isset($_REQUEST['commision_base']) ? $_REQUEST['commision_base'] : '',
+            'commission_sub' => isset($_REQUEST['commission_sub']) ? $_REQUEST['commission_sub'] : '',
+            'prime_address_city' => isset($_REQUEST['prime_address_city']) ? $_REQUEST['prime_address_city'] : '',
+            'prime_address_state' => isset($_REQUEST['prime_address_state']) ? $_REQUEST['prime_address_state'] : '',
+            'prime_address_zip' => isset($_REQUEST['prime_address_zip']) ? $_REQUEST['prime_address_zip'] : '',
+            'prime_address1' => isset($_REQUEST['staff_type']) ? $_REQUEST['staff_type'] : '',
+            'prime_address1' => isset($_REQUEST['prime_address1']) ? $_REQUEST['prime_address1'] : '',
+            'prime_address2' => isset($_REQUEST['prime_address2']) ? $_REQUEST['prime_address2'] : '',
+            'birthday' => isset($_REQUEST['birthday']) ? $_REQUEST['birthday'] : '',
+            'date_start' => isset($_REQUEST['date_start']) ? $_REQUEST['date_start'] : '',
+            'date_end' => isset($_REQUEST['date_end']) ? $_REQUEST['date_end'] : '',
+            'level' => isset($_REQUEST['level']) ? $_REQUEST['level'] : '',
+            'notes' => isset($_REQUEST['notes']) ? $_REQUEST['notes'] : '',
+            'second_mail' => isset($_REQUEST['second_mail']) ? $_REQUEST['second_mail'] : '',
+            'emergency_contact_name' => isset($_REQUEST['emergency_contact_name']) ? $_REQUEST['emergency_contact_name'] : '',
+            'emergency_contact_relation' => isset($_REQUEST['emergency_contact_relation']) ? $_REQUEST['emergency_contact_relation'] : ''
+
+        );
+
+
+
+
+        $data['users'] = array('user_name' => isset($_REQUEST['user_name']) ? $_REQUEST['user_name'] : '',
+            'email' => isset($_REQUEST['email']) ? $_REQUEST['email'] : '',
+            'password' => isset($_REQUEST['password']) ? $_REQUEST['password'] : '',
+            'role_id' => isset($_REQUEST['role_id']) ? $_REQUEST['role_id'] : ''
+        );
+
+
+                foreach($data['staff'] as $key => $link) 
+                { 
+
+                    if($link == '') 
+                    { 
+                        unset($data['staff'][$key]); 
+                    } 
+                } 
+
+                 foreach($data['users'] as $key => $link) 
+                { 
+
+                    if($link == '') 
+                    { 
+                        unset($data['users'][$key]); 
+                    } 
+                } 
+
+
 
          $data['users']['id'] = $data['staff']['user_id'];
 
@@ -109,20 +245,58 @@ class StaffController extends Controller {
           $data['users']['password'] = md5($data['users']['password']);
           $data['users']['name'] = $data['staff']['first_name'].' '.$data['staff']['last_name'];
 
+          
           $result = $this->staff->staffEdit($data['staff']);
           $resultUsers = $this->staff->userEdit($data['users']);
 
           if (count($result) > 0) {
 
-            $response = array('success' => 1, 'message' => UPDATE_RECORD,'records' => $result);
-        } 
-        
-        return response()->json(["data" => $response]);
 
+            if ($_FILES) {
+
+                if (!$_FILES['image']['error'] && isset($data['staff']['id'])) {
+
+                     array_map('unlink', glob(FILEUPLOAD . "staff/" . $data['staff']['id']."/*"));
+
+                    $filename = $_FILES['image']['name'];
+                    $info = new SplFileInfo($filename);
+                    $extention = $info->getExtension();
+                    $uploaddir = FILEUPLOAD . "staff/" . $data['staff']['id'];
+                    StaffController::create_dir($uploaddir);
+                    
+                    $newfilename = "staff_main_" . $data['staff']['id'] . "." . $extention;
+
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
+                       
+                       $result = $this->staff->staffImageUpdate($data['staff']['id'],$newfilename);
+                    }
+                }
+
+            
+        } 
+
+         $response = array('success' => 1, 'message' => UPDATE_RECORD,'records' => $result);
+        
+
+
+           
+        } else {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS,'records' => '');
+        }
+        
+        
+return response()->json(["data" => $response]);
     }
 
     
+public function create_dir($dir_path) {
 
+        if (!file_exists($dir_path)) {
+            mkdir($dir_path, 0777, true);
+        } else {
+            chmod($dir_path, 0777);
+        }
+    }
 
      /**
      * Staff Add.
@@ -139,6 +313,9 @@ class StaffController extends Controller {
           $result = $this->staff->staffDetail($data);
           
 
+          $result['staff'][0]->all_url_photo = UPLOAD_PATH.'staff/'.$result["staff"][0]->id.'/'.$result['staff'][0]->photo;
+
+         
           $result['staff'][0]->date_start = date("d-F-Y", strtotime($result['staff'][0]->date_start));
           $result['staff'][0]->birthday = date("d-F-Y", strtotime($result['staff'][0]->birthday));
           $result['staff'][0]->date_end = date("d-F-Y", strtotime($result['staff'][0]->date_end));

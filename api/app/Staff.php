@@ -18,8 +18,8 @@ class Staff extends Model {
                          ->Join('users as users', 'users.id', '=', 'staff.user_id')
                          ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
                          ->select('staff.user_id','staff.id','staff.first_name','staff.last_name','staff.prime_phone_main','staff.date_start','staff.status','roles.title')
-                         ->where('users.is_delete','=','0')
-                         ->where('staff.is_delete','=','0')
+                         ->where('users.is_delete','=','1')
+                         ->where('staff.is_delete','=','1')
                          ->get();
 
         return $staffData;
@@ -40,7 +40,10 @@ class Staff extends Model {
         
         $data['staff']['user_id'] = $insertedid;
         $result_staff = DB::table('staff')->insert($data['staff']);
-        return $result_staff;
+
+         $staffid = DB::getPdo()->lastInsertId();
+
+        return $staffid;
     }
 
 
@@ -49,6 +52,7 @@ class Staff extends Model {
      */
     public function staffEdit($data) {
         
+
         $data['updated_date'] = date("Y-m-d H:i:s");
         $result = DB::table('staff')->where('id', '=', $data['id'])->update($data);
         return $result;
@@ -63,7 +67,7 @@ class Staff extends Model {
     public function staffDetail($staffId) {
         $staffData = DB::table('staff')->where('status','=','1')->where('id','=',$staffId)->get();
        
-        $UserData = DB::table('users')->where('status','=','1')->where('id','=',$staffData[0]->user_id)->get();
+        $UserData = DB::table('users')->select('user_name','email','password','role_id')->where('status','=','1')->where('id','=',$staffData[0]->user_id)->get();
 
         $combine_array = array();
 
@@ -91,9 +95,25 @@ class Staff extends Model {
     {
         if(!empty($id))
         {
-            $result = DB::table('users')->where('id','=',$user_id)->update(array("is_delete" => '1'));
-          //  $result = DB::table('staff')->where('id','=',$id)->update(array("is_delete" => '1'));
+            $result = DB::table('users')->where('id','=',$user_id)->update(array("is_delete" => '0'));
+          //  $result = DB::table('staff')->where('id','=',$id)->update(array("is_delete" => '0'));
             return $result;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+     public function staffImageUpdate($insertedid,$newfilename)
+    {
+        if(!empty($insertedid))
+        {
+            
+           $result =  DB::table('staff')
+                        ->where('id', $insertedid)
+                        ->update(['photo' => $newfilename]);
+           return $result;
         }
         else
         {

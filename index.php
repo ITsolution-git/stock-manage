@@ -65,9 +65,13 @@
   <script src="scripts/directives/ui-fullscreen.js"></script>
   <script src="scripts/directives/ui-scroll.js"></script>
   <script src="scripts/directives/ui-toggle.js"></script>
+  <script src="scripts/directives/filemodel.js"></script>
+
   <script src="scripts/filters/fromnow.js"></script>
   <script src="scripts/services/ngstore.js"></script>
   <script src="scripts/services/ui-load.js"></script>
+  <script src="scripts/services/ui-load.js"></script>
+  <script src="scripts/services/fileupload.js"></script>
 
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
   <script src="scripts/services/services.js"></script>

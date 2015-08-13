@@ -1,4 +1,7 @@
-app.controller('StaffCtrl', ['$scope','$http','$location','$state','$stateParams', function($scope,$http,$location,$state,$stateParams) {
+
+
+
+app.controller('StaffCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload', function($scope,$http,$location,$state,$stateParams,fileUpload) {
   
 
                          $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
@@ -19,11 +22,100 @@ app.controller('StaffCtrl', ['$scope','$http','$location','$state','$stateParams
                          
                           });
 
+                    $scope.files = [];
+                    $scope.setFiles = function (element) {
+                        $scope.$apply(function ($scope) {
+                            console.log('files:', element.files);
 
-                         $scope.saveStaff = function(staff,users) {
+                            var uploadFile, uploadFileExt;
+                            // Turn the FileList object into an Array
+                            $scope.files = []
+                            for (var i = 0; i < element.files.length; i++) {
+                                uploadFile = element.files[i].name
+                                uploadFileExt = uploadFile.split('.').pop() // Find the upload file extension for select valid images only
+
+                                if (uploadFileExt == 'jpg' || uploadFileExt == 'png' || uploadFileExt == 'jpeg' || uploadFileExt == 'bmp' || uploadFileExt == 'gif')
+                                {
+                                    $scope.files.push(element.files[i])
+                                }
+                                else
+                                {
+                                    angular.element("input[type='file']").val(null)
+                                    var data = {"status": "error", "message": "Please select image file to upload"}
+                                    
+                                    return false;
+                                }
+                            }
+                        });
+                    };
+
+                     /**
+                     * Edit Account
+                     * @returns {undefined}
+                     */
+                    $scope.saveStaff = function () {
+                        var user_data_staff = $scope.staff;
+                        var user_data_users = $scope.users;
+                        
+                        var fd = new FormData()
+                        for (var i in $scope.files) {
+                            fd.append("image", $scope.files[i])
+                        }
+
+
+                         $.each(user_data_staff, function( index, value ) {
+                            fd.append(index, value)
+                          });
+
+                           $.each(user_data_users, function( index, value ) {
+                            fd.append(index, value)
+                          });
+
+
+                       var xhr = new XMLHttpRequest()
+                        xhr.onreadystatechange = function () {
                          
+
+                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                var data = JSON.parse(xhr.responseText)
+
+                                
+                                if (data.success === '0') {
+                                    return false;
+                                }
+                                else {
+
+
+                                  setTimeout(function () {
+                                      
+                                        
+                                          $scope.$apply(function ($scope) {
+                                                     $location.url('/staff/list');
+                                     });
+                                    }, 10);
+
+                                }
+                            }
+                        }
+                        if(user_data_staff.id) {
+
+                           xhr.open("POST","api/public/admin/staffEdit")
+                           xhr.send(fd);
+
+                        } else {
+                           xhr.open("POST","api/public/admin/staffAdd")
+                           xhr.send(fd);
+                        }
+
+                       
+                    };
+
+
+                        /* $scope.saveStaff = function(staff,users) {
                          
-                          
+                         var file = $scope.myFile;
+                         fileUpload.uploadFileToUrl(file, uploadUrl);
+
                           var combine_array = {};
                           combine_array.staff = staff;
                           combine_array.users = users;
@@ -58,7 +150,7 @@ app.controller('StaffCtrl', ['$scope','$http','$location','$state','$stateParams
                          
 
                          };
-
+*/
 
                          $scope.delete = function (staff_id,user_id) {
                           
