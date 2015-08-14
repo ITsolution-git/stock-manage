@@ -401,6 +401,133 @@ public function create_dir($dir_path) {
     }
 
 
+    /**
+     * Notes of the staff.
+     *
+     * @param  
+     * @return Data Response
+     */
+
+    public function note() {
+        $data = Input::all();
+        
+        $result = $this->staff->noteList($data[0]);
+       
+        if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        } else {
+           
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+    /**
+     * change the is_delete status of the users and delete
+     *
+     * @param  user_id,id
+     * @return Data Response
+     */
+
+
+    public function notedelete()
+    {
+        $post = Input::all();
+      
+        if(!empty($post['note_id']) && !empty($post['staff_id']))
+        {
+            $getData = $this->staff->noteDelete($post['note_id'],$post['staff_id']);
+            if($getData)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
+
+
+    /**
+     * Notes Add.
+     *
+     * @param  all note  data in post
+     * @return Data Response
+     */
+
+    public function noteAdd() {
+
+        $data = Input::all();
+
+          $result = $this->staff->noteAdd($data);
+          if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+
+    /**
+     * Note Detail
+     *
+     * @param  staff detail page
+     * @return Data Response
+     */
+
+    public function notedetail() {
+ 
+         $data = Input::all();
+         
+
+          $result = $this->staff->noteDetail($data);
+          
+
+           if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        } else {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+    /**
+     * Notes Edit.
+     *
+     * @param  all note of the Note data in post
+     * @return Data Response
+     */
+
+    public function noteEdit() {
+
+       
+         $data = Input::all();
+         
+          $result = $this->staff->noteEdit($data);
+          if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
 
 
 }

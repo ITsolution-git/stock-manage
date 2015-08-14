@@ -12,7 +12,7 @@ class Staff extends Model {
      * Staff listing
      */
     public function StaffList() {
-        $staffData = DB::table('staff')->where('status','=','1')->get();
+        
 
         $staffData = DB::table('staff as staff')
                          ->Join('users as users', 'users.id', '=', 'staff.user_id')
@@ -119,6 +119,64 @@ class Staff extends Model {
         {
             return false;
         }
+    }
+
+    /**
+     * Staff Detail
+     */
+    public function noteList($staffId) {
+        $noteData = DB::table('notes')->where('status','=','1')->where('type_note','=','staff')->where('all_id','=',$staffId)->get();
+        return $noteData;
+    }
+
+     /**
+     * Delete Staff
+     */
+
+    public function noteDelete($id,$staff_id)
+    {
+        if(!empty($id))
+        {
+            $result = DB::table('notes')->where('id','=',$id)->update(array("is_delete" => '0'));
+          //  $result = DB::table('staff')->where('id','=',$id)->update(array("is_delete" => '0'));
+            return $result;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+
+    /**
+     * Add Note
+     */
+    public function noteAdd($data) {
+        $data['created_date'] = date("Y-m-d H:i:s");
+        $data['updated_date'] = date("Y-m-d H:i:s");
+        $result = DB::table('notes')->insert($data);
+        return $result;
+    }
+
+     /**
+     * Note Detail
+     */
+    public function noteDetail($data) {
+       
+       
+        $noteData = DB::table('notes')->select('note','id','all_id','points')->where('status','=','1')->where('type_note','=','staff')->where('id','=',$data['note_id'])->where('all_id','=',$data['staff_id'])->get();
+        return  $noteData;
+    }
+
+    /**
+     * Edit Staff
+     */
+    public function noteEdit($data) {
+        
+        
+        $data['updated_date'] = date("Y-m-d H:i:s");
+        $result = DB::table('notes')->where('id', '=', $data['id'])->where('all_id', '=', $data['all_id'])->where('type_note', '=','staff')->update($data);
+        return $result;
     }
 
 

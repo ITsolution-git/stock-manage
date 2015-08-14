@@ -499,7 +499,7 @@ angular.module('app')
               url: '/list',
               templateUrl: 'views/staff/staff.html',
               data : { title: 'Staff' },
-              controller: 'StaffCtrl',
+              controller: 'staffCtrl',
               resolve: load(['scripts/controllers/staff.js'])
             })
 
@@ -507,7 +507,7 @@ angular.module('app')
               url: '/add',
               templateUrl: 'views/staff/staff-add.html',
               data : { title: 'Staff Add' },
-               controller: 'StaffCtrl',
+               controller: 'staffCtrl',
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
             })
 
@@ -515,8 +515,32 @@ angular.module('app')
               url: '/edit/:id',
               templateUrl: 'views/staff/staff-add.html',
               data : { title: 'Staff Edit' },
-               controller: 'StaffCtrl',
+               controller: 'staffCtrl',
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
+            })
+
+             .state('staff.note', {
+              url: '/:staff_id/note',
+              templateUrl: 'views/staff/note.html',
+              data : { title: 'Note' },
+              controller: 'noteCtrl',
+              resolve: load(['scripts/controllers/note.js'])
+            })
+
+             .state('staff.noteAdd', {
+              url: '/:staff_id/note',
+              templateUrl: 'views/staff/note-add.html',
+              data : { title: 'Note Add' },
+              controller: 'noteCtrl',
+              resolve: load(['scripts/controllers/note.js'])
+            })
+
+             .state('staff.noteEdit', {
+              url: '/:staff_id/note/:note_id',
+             templateUrl: 'views/staff/note-add.html',
+              data : { title: 'Staff Edit' },
+                controller: 'noteCtrl',
+              resolve: load(['scripts/controllers/note.js'])
             })
 
           .state('account.list', {

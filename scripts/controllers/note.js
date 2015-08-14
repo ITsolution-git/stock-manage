@@ -1,0 +1,135 @@
+
+
+
+app.controller('noteCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+  
+
+
+                         if($stateParams.staff_id) {
+
+                           $http.post('api/public/admin/staff/note',$stateParams.staff_id).success(function(result, status, headers, config) {
+        
+                            $scope.notes = result.data.records;
+                         
+                          });
+
+                         }
+
+
+                         if($stateParams.note_id && $stateParams.staff_id) {
+
+                          var combine_array_id = {};
+                          combine_array_id.staff_id = $stateParams.staff_id;
+                          combine_array_id.note_id = $stateParams.note_id;
+
+                         
+
+                           $http.post('api/public/admin/staff/noteDetail',combine_array_id).success(function(result, status, headers, config) {
+        
+                            if(result.data.success == '1') {
+                                       
+                                     $scope.notesDetail = result.data.records[0];
+                                    
+                             }  else {
+
+
+                              $location.url('/app/dashboard');
+                             }
+                         
+                          });
+
+                         }
+
+
+                          $scope.openStaff = function() {
+                         
+                          $location.url('/staff/list');
+                          return false;
+                         
+                         };
+
+                         $scope.delete = function (note_id,staff_id) {
+                          
+                         
+                           var combine_array_delete = {};
+                          combine_array_delete.staff_id = staff_id;
+                          combine_array_delete.note_id = note_id;
+
+                         
+                            var permission = confirm(deleteMessage);
+                            if (permission == true) {
+                            $http.post('api/public/admin/staff/noteDelete',combine_array_delete).success(function(result, status, headers, config) {
+                                          
+                                          if(result.data.success=='1')
+                                          {
+                                            $state.go('staff.note',{staff_id: $stateParams.staff_id});
+
+                                            $("#note_"+note_id).remove();
+                                            return false;
+                                          }  
+                                     });
+                                  }
+                              } // DELETE Note FINISH
+
+
+                               $scope.openNote = function() {
+
+                                $state.go('staff.noteAdd',{staff_id: $stateParams.staff_id});
+                                return false;
+                               
+                               };
+
+                               $scope.openNoteList = function() {
+                                 
+                                 $state.go('staff.note',{staff_id: $stateParams.staff_id});
+                                 return false;
+                               
+                               };
+
+
+
+                          $scope.saveNote = function(notesDetail) {
+                         
+                         notesDetail.type_note = 'staff';
+                         notesDetail.all_id = $stateParams.staff_id;
+
+
+                         if($stateParams.staff_id && notesDetail.id) {
+                               
+                          $http.post('api/public/admin/staff/noteEdit',notesDetail).success(function(result, status, headers, config) {
+        
+                            if(result.data.success == '1') {
+
+
+                                    $state.go('staff.note',{staff_id: $stateParams.staff_id});
+                                    return false;
+                                   
+
+                             } 
+                         
+                          });
+                          
+                         } else {
+                          
+                           $http.post('api/public/admin/staff/noteAdd',notesDetail).success(function(result, status, headers, config) {
+        
+                            if(result.data.success == '1') {
+
+                                   $state.go('staff.note',{staff_id: $stateParams.staff_id});
+                                    return false;
+                                   
+                             } 
+                         
+                          });
+
+                         }
+                         
+
+                         };
+
+
+
+                        
+                    
+
+}]);
