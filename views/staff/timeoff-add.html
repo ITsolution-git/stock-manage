@@ -1,0 +1,92 @@
+ 
+  <div class="row">
+    <div class="col-sm-12">
+
+      <form name="timeoffForm" class="form-validation" ng-submit="saveTimeoff(timeoffDetail)">
+        
+        <div class="panel panel-default">
+         <input type="hidden" ng-model="timeoffDetail.id" value="{{timeoffDetail.id}}">
+          <div class="panel-body">
+
+          
+
+            <div class="form-group col-sm-12 m-b">
+              <label>Time Off Id</label>
+              <input type="text" 
+                     class="form-control"
+                     ng-model="timeoffDetail.timerecord" 
+                     ng-pattern="/^[0-9]*$/"
+                     name="points">
+
+              <span style="color:#f44336" ng-show="timeoffForm.timerecord.$error.pattern">
+                                    This Field Should Contain only Numeric</span>
+
+            </div>
+
+            <div class="form-group col-sm-12 m-b">
+              <label>Applied Hours</label>
+              <input type="text" 
+                     class="form-control"
+                     ng-model="timeoffDetail.applied_hours" 
+                     ng-pattern="/^[0-9]*$/"
+                     name="points">
+
+              <span style="color:#f44336" ng-show="timeoffForm.applied_hours.$error.pattern">
+                                    This Field Should Contain only Numeric</span>
+
+            </div>
+
+            <!-- datepicker -->
+             <div class="form-group col-sm-12 m-b" ng-controller="DatepickerDemoCtrl">
+              <label>Date Begin <em class="text-muted"></em></label>
+             
+              
+                    <p class="input-group">
+                      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="timeoffDetail.date_begin" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                 
+           
+              </div>
+            <!-- / datepicker -->
+
+
+             <!-- datepicker -->
+                       <div class="form-group col-sm-12 m-b" ng-controller="DatepickerDemoCtrl">
+                        <label>Date End <em class="text-muted"></em></label>
+                       
+                        
+                              <p class="input-group">
+                                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="timeoffDetail.date_end" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                                <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                              </p>
+                           
+                     
+                        </div>
+            <!-- / datepicker -->
+
+            <div class="form-group col-sm-12 m-b">
+              <label>Classification<em class="text-muted"></em></label>
+
+                  <select class="form-control" ng-model="timeoffDetail.classification_id" required>
+                    <option ng-repeat="data in types" value={{data.id}}>{{data.name}}</option>
+                 </select>
+            </div>
+
+
+          </div>
+          <footer class="panel-footer text-right">
+            <button  type="submit" class="btn btn-info" ng-disabled="timeoffForm.$invalid">Submit</button>&nbsp;
+            <button ng-click="openTimeoffList();" type="button"  class="btn btn-info">Cancel</button>&nbsp;
+           
+          </footer>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+ 

@@ -529,5 +529,161 @@ public function create_dir($dir_path) {
     }
 
 
+    /**
+     * Time Off of the staff.
+     *
+     * @param  
+     * @return Data Response
+     */
+
+    public function timeoff() {
+        $data = Input::all();
+        
+        $result = $this->staff->timeoffList($data[0]);
+       
+        if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        } else {
+           
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+    /**
+     * change the is_delete status of the users and delete
+     *
+     * @param  user_id,id
+     * @return Data Response
+     */
+
+
+    public function timeoffDelete()
+    {
+        $post = Input::all();
+      
+        if(!empty($post['timeoff_id']) && !empty($post['staff_id']))
+        {
+            $getData = $this->staff->timeoffDelete($post['timeoff_id'],$post['staff_id']);
+            if($getData)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
+
+
+    /**
+     * Notes Add.
+     *
+     * @param  all note  data in post
+     * @return Data Response
+     */
+
+    public function timeoffAdd() {
+
+        $data = Input::all();
+
+          $result = $this->staff->timeoffAdd($data);
+          if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+
+    /**
+     * Note Detail
+     *
+     * @param  staff detail page
+     * @return Data Response
+     */
+
+    public function timeoffdetail() {
+ 
+         $data = Input::all();
+         
+
+          $result = $this->staff->timeoffDetail($data);
+          
+
+          if($result[0]->date_begin == '0000-00-00 00:00:00') {
+
+             unset($result[0]->date_begin);
+
+         } else {
+
+            $result[0]->date_begin = date("d-F-Y", strtotime($result[0]->date_begin));
+         }
+
+         if($result[0]->date_end == '0000-00-00 00:00:00') {
+
+              unset($result[0]->date_end);
+
+         } else {
+
+            $result[0]->date_end = date("d-F-Y", strtotime($result[0]->date_end));
+         }
+
+
+        if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        } else {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+    /**
+     * Notes Edit.
+     *
+     * @param  all note of the Note data in post
+     * @return Data Response
+     */
+
+    public function timeoffEdit() {
+
+       
+         $data = Input::all();
+
+         if(isset($data['date_begin'])) {
+             $data['date_begin'] = date("Y-m-d", strtotime($data['date_begin']));
+          }
+
+
+          if(isset($data['date_end'])) {
+             $data['date_end'] = date("Y-m-d", strtotime($data['date_end']));
+          }
+
+          $result = $this->staff->timeoffEdit($data);
+          if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+
 
 }

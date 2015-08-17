@@ -45,6 +45,13 @@ Route::post('admin/staff/noteAdd', 'StaffController@noteAdd');
 Route::post('admin/staff/noteEdit', 'StaffController@noteEdit');
 Route::post('admin/staff/noteDetail', 'StaffController@notedetail');
 
+// ADMIN TIME OFF ROUTERS
+Route::post('admin/staff/timeoff', 'StaffController@timeoff');
+Route::post('admin/staff/timeoffDelete', 'StaffController@timeoffDelete');
+Route::post('admin/staff/timeoffAdd', 'StaffController@timeoffAdd');
+Route::post('admin/staff/timeoffEdit', 'StaffController@timeoffEdit');
+Route::post('admin/staff/timeoffDetail', 'StaffController@timeoffdetail');
+
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
 Route::get('common/type/{type}', 'CommonController@type');

@@ -543,6 +543,32 @@ angular.module('app')
               resolve: load(['scripts/controllers/note.js'])
             })
 
+           .state('staff.timeoff', {
+            url: '/:staff_id/timeoff',
+            templateUrl: 'views/staff/timeoff.html',
+            data : { title: 'Time Off' },
+            controller: 'timeoffCtrl',
+            resolve: load(['scripts/controllers/timeoff.js'])
+          })
+
+           .state('staff.timeoffAdd', {
+              url: '/:staff_id/timeoff',
+              templateUrl: 'views/staff/timeoff-add.html',
+              data : { title: 'Timeoff Add' },
+              controller: 'timeoffCtrl',
+             resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/timeoff.js'])
+            })
+
+             .state('staff.timeoffEdit', {
+              url: '/:staff_id/timeoff/:timeoff_id',
+             templateUrl: 'views/staff/timeoff-add.html',
+              data : { title: 'Timeoff Edit' },
+                controller: 'timeoffCtrl',
+              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/timeoff.js'])
+            })
+
+
+
           .state('account.list', {
               url: '/list',
               templateUrl: 'views/account/list.html',
