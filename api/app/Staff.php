@@ -124,7 +124,7 @@ class Staff extends Model {
     {
         if(!empty($id))
         {
-            $result = DB::table('users')->where('id','=',$user_id)->update(array("is_delete" => '0'));
+            $result = DB::table('staff')->where('id','=',$id)->update(array("is_delete" => '0'));
             return $result;
         }
         else

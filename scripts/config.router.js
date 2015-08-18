@@ -494,6 +494,20 @@ angular.module('app')
             }
           })
 
+          .state('vendor', {
+              url: '/vendor',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
 
             .state('staff.list', {
               url: '/list',
@@ -567,6 +581,22 @@ angular.module('app')
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/timeoff.js'])
             })
 
+
+            .state('vendor.list', {
+              url: '/list',
+              templateUrl: 'views/vendor/vendor.html',
+              data : { title: 'Vendor' },
+              controller: 'vendorCtrl',
+              resolve: load(['scripts/controllers/vendor.js'])
+            })
+
+            .state('vendor.add', {
+              url: '/add',
+              templateUrl: 'views/vendor/vendor-add.html',
+              data : { title: 'Vendor Add' },
+               controller: 'vendorCtrl',
+              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/vendor.js'])
+            })
 
 
           .state('account.list', {

@@ -52,6 +52,10 @@ Route::post('admin/staff/timeoffAdd', 'StaffController@timeoffAdd');
 Route::post('admin/staff/timeoffEdit', 'StaffController@timeoffEdit');
 Route::post('admin/staff/timeoffDetail', 'StaffController@timeoffdetail');
 
+// ADMIN STAFF ROUTERS
+Route::get('admin/vendor', 'VendorController@index');
+Route::post('admin/vendorDelete', 'VendorController@delete');
+
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
 Route::get('common/type/{type}', 'CommonController@type');
