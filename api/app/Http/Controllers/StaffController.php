@@ -16,25 +16,22 @@ use Image;
 use Request;
 
 class StaffController extends Controller {  
-    
 
 /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+* Create a new controller instance.      
+* @return void
+*/
     public function __construct(Staff $staff) {
 
         $this->staff = $staff;
        
     }
 
-    /**
-     * Check login functionality.
-     *
-     * @param  
-     * @return Data Response
-     */
+/**
+* Staff Listing controller        
+* @access public index
+* @return json data
+*/
 
     public function index() {
  
@@ -51,13 +48,12 @@ class StaffController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-     /**
-     * Staff Add.
-     *
-     * @param  all staff data in post
-     * @return Data Response
-     */
-
+/**
+* Staff Add controller      
+* @access public add
+* @param  array $data
+* @return json data
+*/
     public function add() {
 
        
@@ -164,15 +160,12 @@ class StaffController extends Controller {
 
     }
 
-     
-
-    /**
-     * Staff Edit.
-     *
-     * @param  all staff data in post
-     * @return Data Response
-     */
-
+/**
+* Staff Edit controller      
+* @access public edit
+* @param  array $data
+* @return json data
+*/
     public function edit() {
  
 
@@ -298,7 +291,12 @@ class StaffController extends Controller {
 return response()->json(["data" => $response]);
     }
 
-    
+/**
+* Making the directory and given path     
+* @access public create_dir
+* @param  string $dir_path
+*/
+
 public function create_dir($dir_path) {
 
         if (!file_exists($dir_path)) {
@@ -308,13 +306,13 @@ public function create_dir($dir_path) {
         }
     }
 
-     /**
-     * Staff Add.
-     *
-     * @param  staff detail page
-     * @return Data Response
-     */
 
+/**
+* Staff Detail controller      
+* @access public detail
+* @param  array $data
+* @return json data
+*/
     public function detail() {
  
          $data = Input::all();
@@ -364,14 +362,12 @@ public function create_dir($dir_path) {
 
     }
 
-     /**
-     * change the is_delete status of the users and delete
-     *
-     * @param  user_id,id
-     * @return Data Response
-     */
-
-
+/**
+* Staff Delete controller      
+* @access public detail
+* @param  array $post
+* @return json data
+*/
     public function delete()
     {
         $post = Input::all();
@@ -401,12 +397,12 @@ public function create_dir($dir_path) {
     }
 
 
-    /**
-     * Notes of the staff.
-     *
-     * @param  
-     * @return Data Response
-     */
+/**
+* Notes Listing of particular staff Controller       
+* @access public note
+* @param  array $data
+* @return json data
+*/
 
     public function note() {
         $data = Input::all();
@@ -424,13 +420,12 @@ public function create_dir($dir_path) {
 
     }
 
-    /**
-     * change the is_delete status of the users and delete
-     *
-     * @param  user_id,id
-     * @return Data Response
-     */
-
+/**
+* Note Delete Controller       
+* @access public notedelete
+* @param  array $post
+* @return json data
+*/
 
     public function notedelete()
     {
@@ -460,14 +455,12 @@ public function create_dir($dir_path) {
 
     }
 
-
-    /**
-     * Notes Add.
-     *
-     * @param  all note  data in post
-     * @return Data Response
-     */
-
+/**
+* Note Add Controller       
+* @access public noteAdd
+* @param  array $data
+* @return json data
+*/
     public function noteAdd() {
 
         $data = Input::all();
@@ -481,13 +474,12 @@ public function create_dir($dir_path) {
 
     }
 
-
-    /**
-     * Note Detail
-     *
-     * @param  staff detail page
-     * @return Data Response
-     */
+/**
+* Note Detail Controller       
+* @access public notedetail
+* @param  array $data
+* @return json data
+*/
 
     public function notedetail() {
  
@@ -507,12 +499,12 @@ public function create_dir($dir_path) {
 
     }
 
-    /**
-     * Notes Edit.
-     *
-     * @param  all note of the Note data in post
-     * @return Data Response
-     */
+/**
+* Note Edit Controller       
+* @access public noteEdit
+* @param  array $data
+* @return json data
+*/
 
     public function noteEdit() {
 
@@ -528,13 +520,12 @@ public function create_dir($dir_path) {
 
     }
 
-
-    /**
-     * Time Off of the staff.
-     *
-     * @param  
-     * @return Data Response
-     */
+/**
+* Timeoff Listing of particular staff Controller       
+* @access public timeoff
+* @param  array $data
+* @return json data
+*/
 
     public function timeoff() {
         $data = Input::all();
@@ -552,14 +543,12 @@ public function create_dir($dir_path) {
 
     }
 
-    /**
-     * change the is_delete status of the users and delete
-     *
-     * @param  user_id,id
-     * @return Data Response
-     */
-
-
+/**
+* Timeoff Delete Controller       
+* @access public timeoffDelete
+* @param  array $post
+* @return json data
+*/
     public function timeoffDelete()
     {
         $post = Input::all();
@@ -588,13 +577,12 @@ public function create_dir($dir_path) {
 
     }
 
-
-    /**
-     * Notes Add.
-     *
-     * @param  all note  data in post
-     * @return Data Response
-     */
+/**
+* Timeoff Add Controller       
+* @access public timeoffAdd
+* @param  array $data
+* @return json data
+*/
 
     public function timeoffAdd() {
 
@@ -609,13 +597,12 @@ public function create_dir($dir_path) {
 
     }
 
-
-    /**
-     * Note Detail
-     *
-     * @param  staff detail page
-     * @return Data Response
-     */
+/**
+* Timeoff Detail Controller       
+* @access public timeoffdetail
+* @param  array $data
+* @return json data
+*/
 
     public function timeoffdetail() {
  
@@ -654,22 +641,20 @@ public function create_dir($dir_path) {
 
     }
 
-    /**
-     * Notes Edit.
-     *
-     * @param  all note of the Note data in post
-     * @return Data Response
-     */
+/**
+* Timeoff Edit Controller       
+* @access public noteEdit
+* @param  array $data
+* @return json data
+*/
 
     public function timeoffEdit() {
 
-       
          $data = Input::all();
 
          if(isset($data['date_begin'])) {
              $data['date_begin'] = date("Y-m-d", strtotime($data['date_begin']));
           }
-
 
           if(isset($data['date_end'])) {
              $data['date_end'] = date("Y-m-d", strtotime($data['date_end']));
@@ -681,9 +666,5 @@ public function create_dir($dir_path) {
         } 
         
         return response()->json(["data" => $response]);
-
     }
-
-
-
 }

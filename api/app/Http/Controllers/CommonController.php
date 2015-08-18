@@ -13,12 +13,21 @@ use Request;
 // Common Controller for default data
 class CommonController extends Controller {  
 
+/**
+* Create a new controller instance.      
+* @return void
+*/
 
 	public function __construct(Common $common) 
  	{
         $this->common = $common;
 
     }
+
+/**
+* Get Admin roles controller        
+* @return json data
+*/
 
 	public function getAdminRoles()
 	{
@@ -32,12 +41,11 @@ class CommonController extends Controller {
 
 	}
 
-	/**
-     * All types data.
-     *
-     * @param  
-     * @return Data Response
-     */
+/**
+* Get All types controller   
+* @param  string $type    
+* @return json data
+*/
 
     public function type($type) {
  
@@ -53,6 +61,11 @@ class CommonController extends Controller {
         
         return response()->json(["data" => $response]);
     }
+
+/**
+* Get All Staff roles controller   
+* @return json data
+*/
 
     public function getStaffRoles()
     {

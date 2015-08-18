@@ -30,10 +30,10 @@
               <input type="text" class="form-control col-sm-2 m-b" ng-model="staff.prime_address_state" required>
               <input type="text" class="form-control col-sm-4 m-b" ng-model="staff.prime_address_zip" required>
             </div>
-<div class="form-group col-sm-12 m-b">
-<input type="file" title="Upload Profile Picture"  data-ui-file-upload  onchange="angular.element(this).scope().setFiles(this)">
- <img  ng-if="staff.photo" ng-src="{{staff.all_url_photo}}" width="100" height="100">
-</div>
+            <div class="form-group col-sm-12 m-b">
+            <input type="file" title="Upload Profile Picture"  data-ui-file-upload  ng-change="angular.element(this).scope().setFiles(this)">
+             <img  ng-if="staff.photo" ng-src="{{staff.all_url_photo}}" width="100" height="100">
+            </div>
 
             <div class="form-group col-sm-12 m-b">
               <label>Phone</label>

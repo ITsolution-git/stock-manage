@@ -40,6 +40,7 @@ app.controller('staffCtrl', ['$scope','$http','$location','$state','$stateParams
                                 }
                                 else
                                 {
+                                  
                                     angular.element("input[type='file']").val(null)
                                     var data = {"status": "error", "message": "Please select image file to upload"}
                                     
@@ -49,10 +50,7 @@ app.controller('staffCtrl', ['$scope','$http','$location','$state','$stateParams
                         });
                     };
 
-                     /**
-                     * Edit Account
-                     * @returns {undefined}
-                     */
+                   
                     $scope.saveStaff = function () {
                         var user_data_staff = $scope.staff;
                         var user_data_users = $scope.users;

@@ -8,10 +8,14 @@ use DateTime;
 
 class Staff extends Model {
 
-    /**
-     * Staff listing
-     */
-    public function StaffList() {
+
+/**
+* Staff listing array           
+* @access public staffList
+* @return array $staffData
+*/
+
+    public function staffList() {
         
         $whereConditions = ['users.is_delete' => '1','staff.is_delete' => '1'];
         $listArray = ['staff.user_id','staff.id','staff.first_name','staff.last_name','staff.prime_phone_main','staff.date_start','staff.status','roles.title'];
@@ -25,6 +29,13 @@ class Staff extends Model {
 
         return $staffData;
     }
+
+/**
+* Staff Add data           
+* @access public staffAdd
+* @param  array $data
+* @return int $staffid
+*/  
 
      /**
      * Add Staff
@@ -48,9 +59,12 @@ class Staff extends Model {
     }
 
 
-    /**
-     * Edit Staff
-     */
+/**
+* Staff Edit data           
+* @access public staffEdit
+* @param  array $data
+* @return array $result
+*/  
     public function staffEdit($data) {
 
         $data['updated_date'] = date("Y-m-d H:i:s");
@@ -59,11 +73,13 @@ class Staff extends Model {
     }
 
 
+/**
+* Staff Detail           
+* @access public staffDetail
+* @param  int $staffId
+* @return array $combine_array
+*/  
 
-
-    /**
-     * Staff Detail
-     */
     public function staffDetail($staffId) {
 
         $whereStaffConditions = ['status' => '1','id' => $staffId];
@@ -82,9 +98,13 @@ class Staff extends Model {
         return $combine_array;
     }
 
-     /**
-     * Edit Staff
-     */
+/**
+* Edit User           
+* @access public userEdit
+* @param  array $user
+* @return array $result
+*/ 
+
     public function userEdit($user) {
         
         $user['updated_date'] = date("Y-m-d H:i:s");
@@ -92,9 +112,13 @@ class Staff extends Model {
         return $result;
     }
 
-     /**
-     * Delete Staff
-     */
+/**
+* Delete Staff           
+* @access public staffDelete
+* @param  int $id
+* @param  int $user_id
+* @return array $result
+*/ 
 
     public function staffDelete($id,$user_id)
     {
@@ -108,6 +132,14 @@ class Staff extends Model {
             return false;
         }
     }
+
+/**
+* Staff Image Upload          
+* @access public staffImageUpdate
+* @param  int $insertedid
+* @param  array $newfilename
+* @return array $result
+*/ 
 
      public function staffImageUpdate($insertedid,$newfilename)
     {
@@ -125,9 +157,13 @@ class Staff extends Model {
         }
     }
 
-    /**
-      * Notes for particular staff
-     */
+/**
+* Staff Related Notes          
+* @access public noteList
+* @param  int $staffId
+* @return array $noteData
+*/ 
+
     public function noteList($staffId) {
 
         $whereConditions = ['status' => '1','is_delete' => '1','type_note' => 'staff','all_id' => $staffId];
@@ -135,9 +171,13 @@ class Staff extends Model {
         return $noteData;
     }
 
-     /**
-     * Delete Staff
-     */
+/**
+* Note Delete          
+* @access public noteDelete
+* @param  int $id
+* @param  int $staff_id
+* @return array $result
+*/
 
     public function noteDelete($id,$staff_id)
     {
@@ -152,10 +192,13 @@ class Staff extends Model {
         }
     }
 
+/**
+* Note Add          
+* @access public noteAdd
+* @param  array $data
+* @return array $result
+*/
 
-    /**
-     * Add Note
-     */
     public function noteAdd($data) {
         $data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
@@ -163,9 +206,13 @@ class Staff extends Model {
         return $result;
     }
 
-     /**
-     * Note Detail
-     */
+/**
+* Note Detail          
+* @access public noteDetail
+* @param  array $data
+* @return array $noteData
+*/
+
     public function noteDetail($data) {
 
         $whereConditions = ['status' => '1','type_note' => 'staff','id' => $data['note_id'],'all_id' => $data['staff_id']];
@@ -174,9 +221,12 @@ class Staff extends Model {
         return  $noteData;
     }
 
-    /**
-     * Edit Staff
-     */
+/**
+* Note Edit          
+* @access public noteEdit
+* @param  array $data
+* @return array $result
+*/
     public function noteEdit($data) {
 
         $data['updated_date'] = date("Y-m-d H:i:s");
@@ -185,9 +235,13 @@ class Staff extends Model {
         return $result;
     }
 
-     /**
-     * Time Off for particular staff
-     */
+/**
+* Staff Related Timeoffs          
+* @access public timeoffList
+* @param  int $staffId
+* @return array $timeoffData
+*/ 
+
     public function timeoffList($staffId) {
        
         $whereConditions = ['staff_id' => $staffId,'time_off.is_delete' => '1','time_off.status' => '1','type.status' => '1','type.type' => 'timeoff'];
@@ -203,9 +257,13 @@ class Staff extends Model {
         return $timeoffData;
     }
 
-     /**
-     * Delete Time Off
-     */
+/**
+* Timeoff Delete          
+* @access public timeoffDelete
+* @param  int $id
+* @param  int $staff_id
+* @return array $result
+*/
 
     public function timeoffDelete($id,$staff_id)
     {
@@ -220,10 +278,13 @@ class Staff extends Model {
         }
     }
 
+/**
+* Timeoff Add          
+* @access public timeoffAdd
+* @param  array $data
+* @return array $result
+*/
 
-     /**
-     * Add Time Off
-     */
     public function timeoffAdd($data) {
         $data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
@@ -231,19 +292,27 @@ class Staff extends Model {
         return $result;
     }
 
-     /**
-     * Time Off Detail
-     */
+/**
+* Timeoff Detail          
+* @access public timeoffDetail
+* @param  array $data
+* @return array $timeoffData
+*/
+
     public function timeoffDetail($data) {
         $whereConditions = ['status' => '1','id' => $data['timeoff_id'],'staff_id' => $data['staff_id']];
         $listArray = ['id','staff_id','classification_id','date_begin','date_end','timerecord','applied_hours'];
-        $noteData = DB::table('time_off')->select($listArray)->where($whereConditions)->get();
-        return  $noteData;
+        $timeoffData = DB::table('time_off')->select($listArray)->where($whereConditions)->get();
+        return   $timeoffData;
     }
 
-    /**
-     * Edit Time Off
-     */
+/**
+* Timeoff Edit          
+* @access public timeoffEdit
+* @param  array $data
+* @return array $result
+*/
+
     public function timeoffEdit($data) {
        
         $data['updated_date'] = date("Y-m-d H:i:s");
