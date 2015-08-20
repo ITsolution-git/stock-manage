@@ -31,9 +31,9 @@ class AccountController extends Controller {
 	public function listData ()
 	{
 		$getData = $this->account->GetCompanyData();
-
-		$success = count($getData);
-		$message  = ($success>0)? GET_RECORDS:NO_RECORDS;
+		$count = count($getData);
+		$success = 1;
+		$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
 		$data = array("records" => $getData,"success"=>$success,"message"=>$message);
 		
 		return response()->json(['data'=>$data]);
@@ -53,7 +53,7 @@ class AccountController extends Controller {
 		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) )
 		{
 			$post['password'] = md5($post['password']);
-			$post['created_at'] = date('Y-m-d H:i:s');
+			$post['created_date'] = date('Y-m-d H:i:s');
 			$getData = $this->account->InsertCompanyData($post);
 			
 			if($getData)
@@ -88,8 +88,9 @@ class AccountController extends Controller {
 		if(!empty($id))
 		{
 			$getData = $this->account->GetCompanybyId($id);
-			$success = count($getData);
-			$message  = ($success>0)? GET_RECORDS:NO_RECORDS;
+			$count = count($getData);
+			$success = 1;
+			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
 		}
 		else
 		{
@@ -120,6 +121,7 @@ class AccountController extends Controller {
 				{
 					$post['password']=md5($post['password']);
 				}
+			$post['updated_date'] = date('Y-m-d H:i:s');
 			$getData = $this->account->SaveCompanyData($post);
 			$message = UPDATE_RECORD;
 			$success = 1;
@@ -134,6 +136,14 @@ class AccountController extends Controller {
 		$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
 	}
+
+
+	/**
+     * Delete Data
+     *
+     * @param  post.
+     * @return success message.
+     */
 	public function DeleteData()
 	{
 		$post = Input::all();

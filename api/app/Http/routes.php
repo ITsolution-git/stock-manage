@@ -32,6 +32,7 @@ Route::post('admin/account/delete', 'AccountController@DeleteData');
 
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
+Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 
 
 Route::get('auth/session', 'LoginController@check_session');

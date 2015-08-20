@@ -500,7 +500,7 @@ angular.module('app')
               templateUrl: 'views/staff/staff.html',
               data : { title: 'Staff' },
               controller: 'StaffCtrl',
-              resolve: load(['scripts/controllers/staff.js'])
+             
             })
 
              .state('staff.add', {
@@ -523,7 +523,12 @@ angular.module('app')
               url: '/list',
               templateUrl: 'views/account/list.html',
               controller: 'accountListCtrl',
-            
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            }
+                       }
+              
             })
            .state('account.add', {
               url: '/add',

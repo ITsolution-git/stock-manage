@@ -29,5 +29,6 @@ angular
     'oc.lazyLoad',
     'angular-loading-bar',
     'app.services',
-    'app.company'
+    'app.company',
+    'flash',
   ]);
