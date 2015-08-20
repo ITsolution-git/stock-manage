@@ -23,4 +23,7 @@ define ('INSERT_ERROR','Record Cannot Inserted, Please Try Again.');
 define ('UPDATE_RECORD','Record Updated Successfully.');
 define ('DELETE_RECORD','Record Deleted Successfully.');
 define ('CONFIRM_MESSAGE','Are you sure to delete this record ?');
+define ('SOMETHING_WRONG','Something Wrong Please Try agin.');
+define ('LOGIN_SUCCESS','Login Successfull');
+define ('LOGIN_WRONG','Wrong Credential');
 

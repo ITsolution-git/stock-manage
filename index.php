@@ -74,8 +74,8 @@
   <script src="scripts/services/fileupload.js"></script>
 
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
-  <script src="scripts/services/services.js"></script>
-
+  <script src="scripts/common/services.js"></script>
+  <script src="scripts/common/angular-flash.js"></script>
   <script src="scripts/controllers/account.js"></script>
 
 </body>

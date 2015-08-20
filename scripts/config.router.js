@@ -513,8 +513,13 @@ angular.module('app')
               url: '/list',
               templateUrl: 'views/staff/staff.html',
               data : { title: 'Staff' },
+<<<<<<< HEAD
               controller: 'staffListCtrl',
               resolve: load(['scripts/controllers/staff.js'])
+=======
+              controller: 'StaffCtrl',
+             
+>>>>>>> 524c18466e7a0eb96118793b3b0f481f6c2c9ea9
             })
 
              .state('staff.add', {
@@ -611,7 +616,12 @@ angular.module('app')
               url: '/list',
               templateUrl: 'views/account/list.html',
               controller: 'accountListCtrl',
-            
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            }
+                       }
+              
             })
            .state('account.add', {
               url: '/add',

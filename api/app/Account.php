@@ -17,7 +17,7 @@ class Account extends Model {
         $admindata = DB::table('users as usr')
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
         				 ->select('usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','rol.title','usr.id')
-        				 ->where('is_delete','=','0')
+        				 ->where('is_delete','=','1')
         				 ->get();
         return $admindata;
     }
@@ -32,7 +32,7 @@ class Account extends Model {
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
         				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id')
         				 ->where('usr.id','=',$id)
-        				 ->where('usr.is_delete','=','0')
+        				 ->where('usr.is_delete','=','1')
         				 ->get();
         return $admindata;
     }
@@ -52,7 +52,7 @@ class Account extends Model {
     {
     	if(!empty($id))
     	{
-    		$result = DB::table('users')->where('id','=',$id)->update(array("is_delete" => '1'));
+    		$result = DB::table('users')->where('id','=',$id)->update(array("is_delete" => '0'));
     		return $result;
     	}
     	else
