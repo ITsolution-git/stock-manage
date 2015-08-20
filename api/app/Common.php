@@ -17,6 +17,11 @@ class Common extends Model {
         $roles = DB::table('roles')->get();
         return $roles;
     }
+    public function checkemailExist($email)
+    {
+    	$data = DB::table('users')->where('email','=',$email)->get();
+        return $data;
+    }
 
     /**
      * Type listing

@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
-
+require_once(app_path() . '/constants.php');
 
 use App\Login;
 use Input;
@@ -33,27 +31,49 @@ class LoginController extends Controller {
      * Check login functionality.
      *
      * @param  $username,$password
-     * @return Response
+     * @return Response- session
      */
 
     public function loginverify() {
  
- $data = Input::all();
+        $data = Input::all();
 
 
-        $username = $data['username'];
-        $password = $data['password'];
+        $username = htmlentities(trim($data['username']));
+        $password = htmlentities($data['password']);
         
         $result = $this->login->verifylogin($username, $password);
 
-        if (count($result) >= 1) {
-            Session::put('username', $username);
+        if (count($result) > 0) 
+        {
+            if(empty($result[0]->title) || empty( $result[0]->slug) || empty($result[0]->email ))
+            {
+                $response = array('success' => 0, 'message' => SOMETHING_WRONG);
+            }
+            else
+            {
+                Session::put('username', $username);
+                Session::put('password', md5($password));
+                Session::put('useremail', $result[0]->email);
+                Session::put('role_title', $result[0]->title);
+                Session::put('role_slug', $result[0]->slug);
+                $loginid = $this->login->loginRecord($result[0]->id);
+                Session::put('login_id', $loginid);
+                
+                $session = array();
+                $session['username'] = $username;
+                $session['password'] = md5($password);
+                $session['useremail'] = $result[0]->email;
+                $session['role_title'] = $result[0]->title;
+                $session['role_slug'] = $result[0]->slug;
+                $session['login_id'] = $loginid;
 
-            $response = array('success' => 1, 'message' => "Login Successfull");
-        } else {
-            Session::forget('username');
-
-            $response = array('success' => 0, 'message' => "Wrong Credential");
+                $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
+            }
+        } 
+        else 
+        {
+            $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }
         return response()->json(["data" => $response]);
     }
@@ -64,7 +84,13 @@ class LoginController extends Controller {
      * @return Response
      */
     public function logout() {
-        Session::forget('username');
+
+        if (!empty(Session::get("login_id"))) 
+        {
+            $loginid =Session::get("login_id");
+            $this->login->loginRecordUpdate($loginid);
+        }
+          Session::flush(); 
           $response = array('success' => 1, 'message' => "Log out");
         return response()->json(["data" => $response]);
     }
@@ -76,10 +102,10 @@ class LoginController extends Controller {
      */
     public function check_session() {
   
-         if (!empty(Session::get("username"))) {
+        if (!empty(Session::get("username"))) {
             $response = array('success' => 1, 'message' => "session there","username" => Session::get("username"));
         } else {
-           $response = array('success' => 0, 'message' => "Wrong Credential");
+           $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }
         return response()->json(["data" => $response]);
     }

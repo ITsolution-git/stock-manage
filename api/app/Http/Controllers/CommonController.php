@@ -31,6 +31,25 @@ class CommonController extends Controller {
 		return response()->json(['data'=>$data]);
 
 	}
+	public function checkemailExist($email)
+	{
+		if(!empty($email))
+		{
+			$getData = $this->common->checkemailExist($email);
+			$count = count($getData);
+			$success = ($count>0)? '1':'2'; // 2 = EMAIL NOT EXISTS
+			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+		}
+
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+
+	}
 
 	/**
      * All types data.

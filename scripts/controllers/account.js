@@ -2,9 +2,9 @@
     'use strict';
     angular.module('app.company', [])
 
-    .controller('accountListCtrl', ['$scope','$http','$location','$state', function($scope,$http,$location,$state) {
+  .controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
 
-                            
+                            AuthService.AccessService('KK');
                             var delete_params = {};
                             $scope.deletecompany = function (comp_id) {
                             delete_params.id = comp_id;
@@ -14,7 +14,7 @@
                                           
                                           if(result.data.success=='1')
                                           {
-                                            $location.url('/account/list');
+                                            $state.go('account.list');
                                             $("#comp_"+comp_id).remove();
                                             return false;
                                           }  
@@ -29,8 +29,9 @@
                        
 
 }])
-    .controller('accountAddCtrl', ['$scope','$http','$location','$state', function($scope,$http,$location,$state) {
+    .controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
                           
+                          AuthService.AccessService('SA');
                           $scope.CurrentController=$state.current.controller;
                           // GET ADMIN ROLE LIST
                           $http.get('api/public/common/getAdminRoles').success(function(Listdata) {
@@ -46,15 +47,34 @@
         
                                           if(result.data.success=='1')
                                           {
-                                            $location.url('/account/list');
+                                            $state.go('account.list');
                                             return false;
                                           }
                                      });
                                    } 
+                              $scope.checkEmail = function (kem) {
+
+                               var mail = $('#comp_email').val();
+                               $http.get('api/public/common/checkemail/'+mail).success(function(result, status, headers, config) {
+        
+                                          if(result.data.success=='2')
+                                          {
+                                            $("#err_email").hide();
+                                            return false;
+                                          }
+                                          else
+                                          {
+                                            $("#err_email").show();
+                                            return false;
+                                          }
+                                     });
+                              }      
 
 }])
-.controller('accountEditCtrl', ['$scope','$http','$location','$state','$stateParams', function($scope,$http,$location,$state,$stateParams) {
+.controller('accountEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService', function($scope,$http,$location,$state,$stateParams,AuthService) {
                           
+                            AuthService.checksession();
+                            AuthService.AccessService('SA');
                             $scope.CurrentController=$state.current.controller;
 
                             // GET ADMIN ROLE LIST
@@ -79,12 +99,11 @@
 
                             $scope.account.id= $stateParams.id;
                             var company_post = $scope.account;
-
                             $http.post('api/public/admin/account/save',company_post).success(function(result, status, headers, config) {
         
                                           if(result.data.success=='1')
                                           {
-                                            $location.url('/account/list');
+                                            $state.go('account.list');
                                             return false;
                                           }
                                      });
