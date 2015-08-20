@@ -52,9 +52,14 @@ Route::post('admin/staff/timeoffAdd', 'StaffController@timeoffAdd');
 Route::post('admin/staff/timeoffEdit', 'StaffController@timeoffEdit');
 Route::post('admin/staff/timeoffDetail', 'StaffController@timeoffdetail');
 
-// ADMIN STAFF ROUTERS
+
+// ADMIN Vendor ROUTERS
 Route::get('admin/vendor', 'VendorController@index');
 Route::post('admin/vendorDelete', 'VendorController@delete');
+Route::post('admin/vendorAdd', 'VendorController@add');
+Route::post('admin/vendorEdit', 'VendorController@edit');
+Route::post('admin/vendorDetail', 'VendorController@detail');
+Route::get('admin/VendorEdit/{id}', 'VendorController@detail');
 
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');

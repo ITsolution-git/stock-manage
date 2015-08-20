@@ -1,28 +1,53 @@
 
 
 
-app.controller('staffCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
   
-
-                         $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
+  $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
 
                                   $scope.staffs = result.data.records;
                          
                           });
 
-                         $http.get('api/public/common/type/staff').success(function(result, status, headers, config) {
+                         $scope.delete = function (staff_id,user_id) {
+                          
+                           var combine_array_delete = {};
+                          combine_array_delete.staff_id = staff_id;
+                          combine_array_delete.user_id = user_id;
+
+                         
+                            var permission = confirm(deleteMessage);
+                            if (permission == true) {
+                            $http.post('api/public/admin/staffDelete',combine_array_delete).success(function(result, status, headers, config) {
+                                          
+                                          if(result.data.success=='1')
+                                          {
+                                           
+                                            $state.go('staff.list');
+                                            $("#comp_"+staff_id).remove();
+                                            return false;
+                                          }  
+                                     });
+                                  }
+                              } 
+
+}]);
+
+app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+   
+    $http.get('api/public/common/type/staff').success(function(result, status, headers, config) {
 
                                   $scope.types = result.data.records;
                          
                           });
 
-                         $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
+     $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
 
-                                  $scope.staffRoles = result.data.records;
-                         
-                          });
+              $scope.staffRoles = result.data.records;
+     
+      });
 
-                    $scope.files = [];
+   $scope.files = [];
                     $scope.setFiles = function (element) {
                         $scope.$apply(function ($scope) {
                             console.log('files:', element.files);
@@ -50,7 +75,6 @@ app.controller('staffCtrl', ['$scope','$http','$location','$state','$stateParams
                         });
                     };
 
-                   
                     $scope.saveStaff = function () {
                         var user_data_staff = $scope.staff;
                         var user_data_users = $scope.users;
@@ -88,7 +112,7 @@ app.controller('staffCtrl', ['$scope','$http','$location','$state','$stateParams
                                       
                                         
                                           $scope.$apply(function ($scope) {
-                                                     $location.url('/staff/list');
+                                          $state.go('staff.list');
                                      });
                                     }, 10);
 
@@ -108,32 +132,7 @@ app.controller('staffCtrl', ['$scope','$http','$location','$state','$stateParams
                        
                     };
 
-
-
-                         $scope.delete = function (staff_id,user_id) {
-                          
-                           var combine_array_delete = {};
-                          combine_array_delete.staff_id = staff_id;
-                          combine_array_delete.user_id = user_id;
-
-                         
-                            var permission = confirm(deleteMessage);
-                            if (permission == true) {
-                            $http.post('api/public/admin/staffDelete',combine_array_delete).success(function(result, status, headers, config) {
-                                          
-                                          if(result.data.success=='1')
-                                          {
-                                           
-                                            $state.go('staff.list');
-                                            $("#comp_"+staff_id).remove();
-                                            return false;
-                                          }  
-                                     });
-                                  }
-                              } // DELETE STAFF FINISH
-
-
-                         if($stateParams.id) {
+                    if($stateParams.id) {
 
                            $http.post('api/public/admin/staffDetail',$stateParams.id).success(function(result, status, headers, config) {
         
@@ -144,28 +143,13 @@ app.controller('staffCtrl', ['$scope','$http','$location','$state','$stateParams
                                      
 
                              }  else {
-                              $location.url('/app/dashboard');
+                             $state.go('app.dashboard');
                              }
                          
                           });
 
                          }
 
-
-
-                         $scope.openStaff = function() {
-                        
-
-                          $state.go('staff.add');
-                         
-                         };
-
-                          $scope.openList = function() {
-                         
-                          $state.go('staff.list');
-                          return false;
-                         
-                         };
-                    
+                       
 
 }]);

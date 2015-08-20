@@ -513,7 +513,7 @@ angular.module('app')
               url: '/list',
               templateUrl: 'views/staff/staff.html',
               data : { title: 'Staff' },
-              controller: 'staffCtrl',
+              controller: 'staffListCtrl',
               resolve: load(['scripts/controllers/staff.js'])
             })
 
@@ -521,7 +521,7 @@ angular.module('app')
               url: '/add',
               templateUrl: 'views/staff/staff-add.html',
               data : { title: 'Staff Add' },
-               controller: 'staffCtrl',
+               controller: 'staffAddEditCtrl',
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
             })
 
@@ -529,7 +529,7 @@ angular.module('app')
               url: '/edit/:id',
               templateUrl: 'views/staff/staff-add.html',
               data : { title: 'Staff Edit' },
-               controller: 'staffCtrl',
+               controller: 'staffAddEditCtrl',
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
             })
 
@@ -537,7 +537,7 @@ angular.module('app')
               url: '/:staff_id/note',
               templateUrl: 'views/staff/note.html',
               data : { title: 'Note' },
-              controller: 'noteCtrl',
+              controller: 'noteListCtrl',
               resolve: load(['scripts/controllers/note.js'])
             })
 
@@ -545,7 +545,7 @@ angular.module('app')
               url: '/:staff_id/note',
               templateUrl: 'views/staff/note-add.html',
               data : { title: 'Note Add' },
-              controller: 'noteCtrl',
+              controller: 'noteAddeditCtrl',
               resolve: load(['scripts/controllers/note.js'])
             })
 
@@ -553,7 +553,7 @@ angular.module('app')
               url: '/:staff_id/note/:note_id',
              templateUrl: 'views/staff/note-add.html',
               data : { title: 'Staff Edit' },
-                controller: 'noteCtrl',
+                controller: 'noteAddeditCtrl',
               resolve: load(['scripts/controllers/note.js'])
             })
 
@@ -561,7 +561,7 @@ angular.module('app')
             url: '/:staff_id/timeoff',
             templateUrl: 'views/staff/timeoff.html',
             data : { title: 'Time Off' },
-            controller: 'timeoffCtrl',
+            controller: 'timeoffListCtrl',
             resolve: load(['scripts/controllers/timeoff.js'])
           })
 
@@ -569,7 +569,7 @@ angular.module('app')
               url: '/:staff_id/timeoff',
               templateUrl: 'views/staff/timeoff-add.html',
               data : { title: 'Timeoff Add' },
-              controller: 'timeoffCtrl',
+              controller: 'timeoffAddEditCtrl',
              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/timeoff.js'])
             })
 
@@ -577,7 +577,7 @@ angular.module('app')
               url: '/:staff_id/timeoff/:timeoff_id',
              templateUrl: 'views/staff/timeoff-add.html',
               data : { title: 'Timeoff Edit' },
-                controller: 'timeoffCtrl',
+                controller: 'timeoffAddEditCtrl',
               resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/timeoff.js'])
             })
 
@@ -586,7 +586,7 @@ angular.module('app')
               url: '/list',
               templateUrl: 'views/vendor/vendor.html',
               data : { title: 'Vendor' },
-              controller: 'vendorCtrl',
+              controller: 'vendorListCtrl',
               resolve: load(['scripts/controllers/vendor.js'])
             })
 
@@ -594,8 +594,16 @@ angular.module('app')
               url: '/add',
               templateUrl: 'views/vendor/vendor-add.html',
               data : { title: 'Vendor Add' },
-               controller: 'vendorCtrl',
-              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/vendor.js'])
+               controller: 'vendorAddEditCtrl',
+              resolve: load(['scripts/controllers/vendor.js'])
+            })
+
+             .state('vendor.edit', {
+              url: '/edit/:id',
+             templateUrl: 'views/vendor/vendor-add.html',
+              data : { title: 'Vendor Edit' },
+               controller: 'vendorAddEditCtrl',
+              resolve: load(['scripts/controllers/vendor.js'])
             })
 
 

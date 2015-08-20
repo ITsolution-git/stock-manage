@@ -1,11 +1,10 @@
 
 
 
-app.controller('noteCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('noteListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
   
 
-
-                         if($stateParams.staff_id) {
+if($stateParams.staff_id) {
 
                            $http.post('api/public/admin/staff/note',$stateParams.staff_id).success(function(result, status, headers, config) {
         
@@ -15,41 +14,7 @@ app.controller('noteCtrl', ['$scope','$http','$location','$state','$stateParams'
 
                          }
 
-
-                         if($stateParams.note_id && $stateParams.staff_id) {
-
-                          var combine_array_id = {};
-                          combine_array_id.staff_id = $stateParams.staff_id;
-                          combine_array_id.note_id = $stateParams.note_id;
-
-                         
-
-                           $http.post('api/public/admin/staff/noteDetail',combine_array_id).success(function(result, status, headers, config) {
-        
-                            if(result.data.success == '1') {
-                                       
-                                     $scope.notesDetail = result.data.records[0];
-                                    
-                             }  else {
-
-
-                              $location.url('/app/dashboard');
-                             }
-                         
-                          });
-
-                         }
-
-
-                          $scope.openStaff = function() {
-                         
-                          $location.url('/staff/list');
-                          return false;
-                         
-                         };
-
                          $scope.delete = function (note_id,staff_id) {
-                          
                          
                            var combine_array_delete = {};
                           combine_array_delete.staff_id = staff_id;
@@ -79,12 +44,43 @@ app.controller('noteCtrl', ['$scope','$http','$location','$state','$stateParams'
                                
                                };
 
-                               $scope.openNoteList = function() {
+
+}]);
+
+
+app.controller('noteAddeditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+  
+ $scope.openNoteList = function() {
                                  
                                  $state.go('staff.note',{staff_id: $stateParams.staff_id});
                                  return false;
                                
                                };
+
+ if($stateParams.note_id && $stateParams.staff_id) {
+
+                          var combine_array_id = {};
+                          combine_array_id.staff_id = $stateParams.staff_id;
+                          combine_array_id.note_id = $stateParams.note_id;
+
+                         
+
+                           $http.post('api/public/admin/staff/noteDetail',combine_array_id).success(function(result, status, headers, config) {
+        
+                            if(result.data.success == '1') {
+                                       
+                                     $scope.notesDetail = result.data.records[0];
+                                    
+                             }  else {
+
+
+                              $state.go('app.dashboard');
+                             }
+                         
+                          });
+
+                         }
+
 
 
 
@@ -127,9 +123,5 @@ app.controller('noteCtrl', ['$scope','$http','$location','$state','$stateParams'
 
                          };
 
-
-
-                        
-                    
 
 }]);

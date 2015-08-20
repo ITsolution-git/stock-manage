@@ -1,7 +1,6 @@
 
 
-
-app.controller('timeoffCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('timeoffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
   
 
 
@@ -15,45 +14,7 @@ app.controller('timeoffCtrl', ['$scope','$http','$location','$state','$statePara
 
                          }
 
-                         $http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
-
-                                  $scope.types = result.data.records;
-                         
-                          });
-
-
-                         if($stateParams.timeoff_id && $stateParams.staff_id) {
-
-                          var combine_array_id = {};
-                          combine_array_id.staff_id = $stateParams.staff_id;
-                          combine_array_id.timeoff_id = $stateParams.timeoff_id;
-
-                         
-
-                           $http.post('api/public/admin/staff/timeoffDetail',combine_array_id).success(function(result, status, headers, config) {
-        
-                            if(result.data.success == '1') {
-                                       
-                                     $scope.timeoffDetail = result.data.records[0];
-                                    
-                             }  else {
-
-
-                              $location.url('/app/dashboard');
-                             }
-                         
-                          });
-
-                         }
-
-
-                          $scope.openStaff = function() {
-                         
-                          $location.url('/staff/list');
-                          return false;
-                         
-                         };
-
+                        
                          $scope.delete = function (timeoff_id,staff_id) {
                           
                          
@@ -85,13 +46,50 @@ app.controller('timeoffCtrl', ['$scope','$http','$location','$state','$statePara
                                
                                };
 
-                               $scope.openTimeoffList = function() {
+                            
+
+}]);
+
+
+app.controller('timeoffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+  
+   $scope.openTimeoffList = function() {
                                  
                                  $state.go('staff.timeoff',{staff_id: $stateParams.staff_id});
                                  return false;
                                
                                };
+                               
+ $http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
 
+                                  $scope.types = result.data.records;
+                         
+                          });
+
+
+                         if($stateParams.timeoff_id && $stateParams.staff_id) {
+
+                          var combine_array_id = {};
+                          combine_array_id.staff_id = $stateParams.staff_id;
+                          combine_array_id.timeoff_id = $stateParams.timeoff_id;
+
+                         
+
+                           $http.post('api/public/admin/staff/timeoffDetail',combine_array_id).success(function(result, status, headers, config) {
+        
+                            if(result.data.success == '1') {
+                                       
+                                     $scope.timeoffDetail = result.data.records[0];
+                                    
+                             }  else {
+
+
+                             $state.go('app.dashboard');
+                             }
+                         
+                          });
+
+                         }
 
 
                           $scope.saveTimeoff = function(timeoffDetail) {
@@ -133,9 +131,5 @@ app.controller('timeoffCtrl', ['$scope','$http','$location','$state','$statePara
 
                          };
 
-
-
                         
-                    
-
 }]);
