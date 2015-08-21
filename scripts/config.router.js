@@ -42,6 +42,7 @@ angular.module('app')
           .state('app', {
             abstract: true,
             url: '/app',
+            controller: 'dasboardCtrl',
             views: {
               '': {
                 templateUrl: 'views/layout.html'
@@ -54,12 +55,15 @@ angular.module('app')
               }
             }
           })
+
+
             .state('app.dashboard', {
               url: '/dashboard',
+              controller: 'dasboardCtrl',
               templateUrl: 'views/pages/dashboard.html',
               data : { title: 'Dashboard', folded: true },
              
-              resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+              resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js','scripts/controllers/dashboard.js'])
               
             })
             .state('app.analysis', {
@@ -513,13 +517,8 @@ angular.module('app')
               url: '/list',
               templateUrl: 'views/staff/staff.html',
               data : { title: 'Staff' },
-<<<<<<< HEAD
               controller: 'staffListCtrl',
               resolve: load(['scripts/controllers/staff.js'])
-=======
-              controller: 'StaffCtrl',
-             
->>>>>>> 524c18466e7a0eb96118793b3b0f481f6c2c9ea9
             })
 
              .state('staff.add', {

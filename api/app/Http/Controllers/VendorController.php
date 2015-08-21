@@ -89,7 +89,9 @@ class VendorController extends Controller {
 * @return json data
 */
     public function add() {
-       
+      
+      $vendor_contact = json_decode($_REQUEST['vendor_contact_data_all']);
+    
         $data['vendor'] = array('name_company' => isset($_REQUEST['name_company']) ? $_REQUEST['name_company'] : '',
             'prime_address_city' => isset($_REQUEST['prime_address_city']) ? $_REQUEST['prime_address_city'] : '',
             'prime_address_state' => isset($_REQUEST['prime_address_state']) ? $_REQUEST['prime_address_state'] : '',
@@ -124,10 +126,10 @@ class VendorController extends Controller {
             'd_qb_results' => isset($_REQUEST['d_qb_results']) ? $_REQUEST['d_qb_results'] : '',
 
 
-
-
             'status' => isset($_REQUEST['status']) ? $_REQUEST['status'] : '',
         );
+
+
 
                 foreach($data['vendor'] as $key => $link) 
                 { 
@@ -138,7 +140,9 @@ class VendorController extends Controller {
                     } 
                 } 
 
-          $insertedid = $this->vendor->vendorAdd($data);
+
+
+          $insertedid = $this->vendor->vendorAdd($data,$vendor_contact);
 
           if ($insertedid && $_FILES) {
 

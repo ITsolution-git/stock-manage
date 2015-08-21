@@ -62,25 +62,18 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
 
 
                         var vendor_data = $scope.vendor;
-                       
-                        
+
+
                         var fd = new FormData()
                         for (var i in $scope.files) {
 
                             fd.append("image", $scope.files[i])
                         }
+ fd.append("vendor_contact_data_all", angular.toJson($scope.allContacts))
 
-
-
-                         
-                        /* for (var j in $scope.allContacts) {
-
-                          for (var k in $scope.allContacts[j]) {
-                            fd.append("vendor_contact_data", $scope.allContacts[j])
-                          }
+                       /*for (var j in $scope.allContacts) {
+                            fd.append("vendor_contact_data_all[]", angular.toJson($scope.allContacts[j]))
                         }*/
-
-
 
                          $.each(vendor_data, function( index, value ) {
                             fd.append(index, value)
