@@ -5,7 +5,7 @@
   .controller('dasboardCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
 
   	AuthService.AccessService('ALL');
-  	email = sessionService.get('useremail');
+  	var email = sessionService.get('useremail');
 
   }]);
 }).call(this);
