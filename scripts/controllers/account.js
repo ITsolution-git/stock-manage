@@ -24,7 +24,7 @@
                         var account = {};
                         
                         $http.get('api/public/admin/account/list').success(function(result) {
-                            return   $scope.account  = result.data; 
+                             $scope.account  = result.data; 
                          });
                        
 
@@ -48,8 +48,7 @@
                                           if(result.data.success=='1')
                                           {
                                             $state.go('account.list');
-                                            return false;
-                                          }
+                                           }
                                      });
                                    } 
                               $scope.checkEmail = function (kem) {
