@@ -77,6 +77,6 @@
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
   <script src="scripts/controllers/account.js"></script>
-
+  <script src="scripts/controllers/dashboard.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 
   .controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
 
-                            AuthService.AccessService('KK');
+                            AuthService.AccessService('SA');
                             var delete_params = {};
                             $scope.deletecompany = function (comp_id) {
                             delete_params.id = comp_id;
@@ -24,7 +24,7 @@
                         var account = {};
                         
                         $http.get('api/public/admin/account/list').success(function(result) {
-                            return   $scope.account  = result.data; 
+                             $scope.account  = result.data; 
                          });
                        
 
@@ -48,8 +48,7 @@
                                           if(result.data.success=='1')
                                           {
                                             $state.go('account.list');
-                                            return false;
-                                          }
+                                           }
                                      });
                                    } 
                               $scope.checkEmail = function (kem) {
