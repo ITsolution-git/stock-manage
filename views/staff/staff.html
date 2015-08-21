@@ -1,0 +1,92 @@
+
+  <div class="panel panel-default">
+    <!-- <div class="panel-heading">
+      Footable - make HTML tables on smaller devices look awesome
+    </div> -->
+    <div class="panel-body b-b b-light">
+      Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+
+      <button class="btn btn-fw btn-danger pull-right" md-ink-ripple="" ui-sref="staff.add">
+      New
+      <div class="md-ripple-container" style=""></div>
+      </button>
+
+    </div>
+
+    <div ng-show="staffs.length > 0">
+
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="5">
+        <thead>
+          <tr>
+              <th data-toggle="true">
+                  First Name
+              </th>
+              <th>
+                  Last Name
+              </th>
+              <th data-hide="phone,tablet">
+                  Position
+              </th>
+              <th data-hide="phone,tablet">
+                  Phone
+              </th>
+              <th data-hide="phone,tablet" data-name="Date Of Birth">
+                  Hire Date
+              </th>
+              <th data-hide="phone">
+                  Status
+              </th>
+
+              <th data-hide="phone">
+                  Operations
+              </th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr ng-repeat="data in staffs" id="comp_{{data.id}}">
+              <td>{{data.first_name}}</td>
+              <td>{{data.last_name}}</td>
+              <td>{{data.title}}</td>
+              <td>{{data.prime_phone_main}}</td>
+              
+
+              <td data-value="78025368997">{{ data.date_start == "0000-00-00 00:00:00" ? "" : data.date_start }}</td>
+              <td data-value="1">{{data.status}}</td>
+              <td style="white-space: nowrap">
+
+                <div class="buttons" ng-show="!rowform.$visible" aria-hidden="false">
+                  <button class="btn btn-xs btn-info" ui-sref="staff.timeoff({ staff_id: data.id })" tabindex="0">Time Off</button>
+                  <button class="btn btn-xs btn-info" ui-sref="staff.note({ staff_id: data.id })" tabindex="0">Notes</button>
+                  <button class="btn btn-xs btn-info" ui-sref="staff.edit({ id: data.id })" tabindex="0">Edit</button>
+                  <button class="btn btn-xs btn-danger" ng-click="delete(data.id,data.user_id)" tabindex="1">Delete</button>
+                </div>
+             </td>
+
+          </tr>
+
+           
+         
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+          <tr>
+              <td colspan="7" class="text-center">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+<div ng-show="staffs.length == 0">
+        <div class="col-md-12">
+            <h4>No Records found</h4>
+        </div>
+    </div>
+
+   
+  </div>
+
+
+ 
