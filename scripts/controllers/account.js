@@ -4,7 +4,7 @@
 
   .controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
 
-                            AuthService.AccessService('KK');
+                            AuthService.AccessService('SA');
                             var delete_params = {};
                             $scope.deletecompany = function (comp_id) {
                             delete_params.id = comp_id;

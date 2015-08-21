@@ -51,20 +51,26 @@ class Vendor extends Model {
      /**
      * Add Staff
      */
-    public function vendorAdd($data) {
+    public function vendorAdd($data,$vendor_contact) {
+    
+   
+     $vendor_contact_array = json_decode(json_encode( $vendor_contact), true);
+     
+
         $data['vendor']['created_date'] = date("Y-m-d H:i:s");
         $data['vendor']['updated_date'] = date("Y-m-d H:i:s");
-        //$data['users']['updated_date'] = date("Y-m-d H:i:s");
-       // $data['users']['updated_date'] = date("Y-m-d H:i:s");
-        
-      //  $result = DB::table('users')->insert($data['users']);
-       
-      //  $insertedid = DB::getPdo()->lastInsertId();
-        
-      //  $data['staff']['user_id'] = $insertedid;
+
         $result_vendor = DB::table('vendors')->insert($data['vendor']);
 
          $vendorid = DB::getPdo()->lastInsertId();
+
+           foreach($vendor_contact_array as $key => $link) 
+              { 
+                
+                $vendor_contact_array[$key]['vendor_id'] = $vendorid;
+                $result_vendor = DB::table('vendor_contacts')->insert($vendor_contact_array[$key]);
+              }
+
 
         return  $vendorid;
     }
