@@ -112,15 +112,16 @@ class Vendor extends Model {
         $whereVendorConditions = ['status' => '1','id' => $vendorId];
         $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
 
-    /*$whereConditions = ['status' => '1','id' => $staffData[0]->user_id];
-    $listArray = ['user_name','email','password','role_id'];
+
+    $whereConditions = ['vendor_id' => $vendorId];
+    $listArray = ['first_name','last_name','position','prime_email','prime_phone'];
    
-    $UserData = DB::table('users')->select($listArray)->where($whereConditions)->get();*/
+    $UserData = DB::table('vendor_contacts')->select($listArray)->where($whereConditions)->get();
 
         $combine_array = array();
 
         $combine_array['vendor'] = $vendorData;
-       // $combine_array['users'] = $UserData;
+        $combine_array['allContacts'] = $UserData;
 
         return $combine_array;
     }

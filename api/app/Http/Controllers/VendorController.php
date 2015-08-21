@@ -191,9 +191,9 @@ class VendorController extends Controller {
 
 
            if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['vendor']/*,'users_records' => $result['users']*/);
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['vendor'],'allContacts' => $result['allContacts']);
         } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['vendor']/*,'users_records' => $result['users']*/);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['vendor'],'allContacts' => $result['allContacts']);
         }
         
         return response()->json(["data" => $response]);
