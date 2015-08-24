@@ -42,6 +42,7 @@ angular.module('app')
           .state('app', {
             abstract: true,
             url: '/app',
+            controller: 'dasboardCtrl',
             views: {
               '': {
                 templateUrl: 'views/layout.html'
@@ -54,12 +55,15 @@ angular.module('app')
               }
             }
           })
+
+
             .state('app.dashboard', {
               url: '/dashboard',
+              controller: 'dasboardCtrl',
               templateUrl: 'views/pages/dashboard.html',
               data : { title: 'Dashboard', folded: true },
              
-              resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js'])
+              resolve: load(['scripts/controllers/chart.js','scripts/controllers/vectormap.js','scripts/controllers/dashboard.js'])
               
             })
             .state('app.analysis', {

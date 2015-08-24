@@ -20,15 +20,17 @@
                 });
             },
             AccessService: function (ret) {
-                console.log(ret);
-                if(sessionService.get('role_slug')!=ret)
+                //console.log(ret);
+                var role = sessionService.get('role_slug');
+                //console.log(role)
+                if(ret.indexOf(role) <= -1 && ret != 'ALL')
                 {
-                    console.log('error');
+                   // console.log('error');
                     $state.go('app.dashboard');
                    // $location.url('/app/dashboard');
                     return false;
                 }
-            },
+             },
         }
     })
     .factory('sessionService', [
