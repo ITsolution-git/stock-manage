@@ -57,10 +57,12 @@ class LoginController extends Controller {
                 Session::put('useremail', $result[0]->email);
                 Session::put('role_title', $result[0]->title);
                 Session::put('role_slug', $result[0]->slug);
+                Session::put('name', $result[0]->name);
                 $loginid = $this->login->loginRecord($result[0]->id);
                 Session::put('login_id', $loginid);
                 
                 $session = array();
+                $session['name'] = $result[0]->name;
                 $session['username'] = $username;
                 $session['password'] = md5($password);
                 $session['useremail'] = $result[0]->email;

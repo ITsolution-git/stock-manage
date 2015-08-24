@@ -1,21 +1,24 @@
 (function () {
     angular.module('app.services', [])
 
-.factory('AuthService', function ($rootScope,$location, $http,$state, $q,flash,sessionService) {
-    var currentUser = {}
+.factory('AuthService', function ($rootScope,$location, $http,$state, $q,flash,sessionService,$cacheFactory) {
+                    var currentUser = {}
+                    var $httpDefaultCache = $cacheFactory.get('$http');
+                    $httpDefaultCache.removeAll();
     return {
         checksession: function (option) {
+
                 $http.get('api/public/auth/session').success(function(result, status, headers, config) 
                 {
                     if(result.data.success == '0') 
                     {
-                         flash('danger','Please login first.'); 
-                         $location.url('/access/signin');
-                         return false;
+                        $state.go('access.signin');
+                        return false;
                     } 
                     else 
                     {
                         $rootScope.username = result.data.username;
+                        return true;
                     }
                 });
             },
@@ -34,7 +37,9 @@
         }
     })
     .factory('sessionService', [
-                '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
+                '$rootScope', '$state', '$http','$cacheFactory', function ($rootScope, $state, $http,$cacheFactory) {
+                    var $httpDefaultCache = $cacheFactory.get('$http');
+                    $httpDefaultCache.removeAll();
                     return {
                         set: function (key, value) {
                             return sessionStorage.setItem(key, value);

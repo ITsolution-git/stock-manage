@@ -18,7 +18,7 @@ class Login extends Model {
     */
     public function verifylogin($username, $password) {
         $admindata = DB::table('users as usr')
-                    ->select('usr.id','usr.email','usr.status','usr.name','r.title','r.slug')
+                    ->select('usr.id','usr.email','usr.status','usr.name','r.title','r.slug','usr.name')
         			 ->leftjoin('roles as r','r.id', '=' ,'usr.role_id')
         			 ->where('usr.user_name', '=', $username)
         			 ->where('usr.password', '=', md5($password))
