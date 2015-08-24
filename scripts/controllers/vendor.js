@@ -123,8 +123,9 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
         
                             if(result.data.success == '1') {
                                        
+
                                      $scope.vendor = result.data.records[0];
-                                     $scope.allContacts = result.data.allContacts[0];
+                                     $scope.allContacts = result.data.allContacts;
                                      
 
                              }  else {
