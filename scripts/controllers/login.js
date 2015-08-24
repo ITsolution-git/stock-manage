@@ -21,6 +21,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
                                    sessionService.set('role_title',result.data.records.role_title);
                                    sessionService.set('role_slug',result.data.records.role_slug);
                                    sessionService.set('login_id',result.data.records.login_id);
+                                   sessionService.set('name',result.data.records.name);
 
                                    $state.go('app.dashboard');
                                    return false;
