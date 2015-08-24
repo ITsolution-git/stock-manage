@@ -127,4 +127,40 @@ class Vendor extends Model {
     }
 
 
+/**
+* Vendor Edit data           
+* @access public vendorEdit
+* @param  array $data
+* @return array $result
+*/  
+    public function vendorEdit($data) {
+
+        $data['updated_date'] = date("Y-m-d H:i:s");
+        $result = DB::table('vendors')->where('id', '=', $data['id'])->update($data);
+        return $result;
+    }
+
+ /**
+* Vendor Contact Edit data           
+* @access public vendorEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function vendorContactEdit($vendor_contact,$vendorId) {
+    
+    DB::table('vendor_contacts')->where('vendor_id', '=', $vendorId)->delete();
+
+     $vendor_contact_array = json_decode(json_encode($vendor_contact), true);
+     
+           foreach($vendor_contact_array as $key => $link) 
+              { 
+                
+                $vendor_contact_array[$key]['vendor_id'] = $vendorId;
+                $result_vendor = DB::table('vendor_contacts')->insert($vendor_contact_array[$key]);
+              }
+        return  $vendorId;
+    }
+
+
 }
