@@ -69,18 +69,13 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
 
                             fd.append("image", $scope.files[i])
                         }
- fd.append("vendor_contact_data_all", angular.toJson($scope.allContacts))
 
-                       /*for (var j in $scope.allContacts) {
-                            fd.append("vendor_contact_data_all[]", angular.toJson($scope.allContacts[j]))
-                        }*/
+                       fd.append("vendor_contact_data_all", angular.toJson($scope.allContacts))
 
+                      
                          $.each(vendor_data, function( index, value ) {
                             fd.append(index, value)
                           });
-
-                          
-
 
                        var xhr = new XMLHttpRequest()
                         xhr.onreadystatechange = function () {
@@ -128,8 +123,9 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
         
                             if(result.data.success == '1') {
                                        
+
                                      $scope.vendor = result.data.records[0];
-                                     //$scope.users = result.data.users_records[0];
+                                     $scope.allContacts = result.data.allContacts;
                                      
 
                              }  else {
