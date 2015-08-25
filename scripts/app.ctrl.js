@@ -14,13 +14,15 @@ angular.module('app')
       var isIE = !!navigator.userAgent.match(/MSIE/i) || !!navigator.userAgent.match(/Trident.*rv:11\./);
       isIE && angular.element($window.document.body).addClass('ie');
       isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
-      
+                  
       // config
       $scope.app = {
         sitename: 'Stockk Up',
         version: '1.0.2',
         useremail : sessionService.get('useremail'),
         name : sessionService.get('name'),
+        role_title : sessionService.get('role_title'),
+        role : sessionService.get('role_slug'),
         // for chart colors
         color: {
           primary: '#3f51b5',
