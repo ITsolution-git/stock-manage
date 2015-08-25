@@ -117,6 +117,8 @@ class VendorController extends Controller {
             'url' => isset($_REQUEST['url']) ? $_REQUEST['url'] : '',
             'order_minimum' => isset($_REQUEST['order_minimum']) ? $_REQUEST['order_minimum'] : '',
 
+            'note' => isset($_REQUEST['note']) ? $_REQUEST['note'] : '',
+
 
             'd_qb_terms' => isset($_REQUEST['d_qb_terms']) ? $_REQUEST['d_qb_terms'] : '',
             'd_qb_list_id' => isset($_REQUEST['d_qb_list_id']) ? $_REQUEST['d_qb_list_id'] : '',
@@ -208,6 +210,8 @@ $vendor_contact = json_decode($_REQUEST['vendor_contact_data_all']);
 
             'url' => isset($_REQUEST['url']) ? $_REQUEST['url'] : '',
             'order_minimum' => isset($_REQUEST['order_minimum']) ? $_REQUEST['order_minimum'] : '',
+
+            'note' => isset($_REQUEST['note']) ? $_REQUEST['note'] : '',
 
 
             'd_qb_terms' => isset($_REQUEST['d_qb_terms']) ? $_REQUEST['d_qb_terms'] : '',

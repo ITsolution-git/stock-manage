@@ -29,6 +29,13 @@ app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateP
 
 app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
   
+  $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
+
+              $scope.staffRoles = result.data.records;
+     
+      });
+
+
                          $scope.files = [];
                          $scope.setFiles = function (element) {
                         $scope.$apply(function ($scope) {
@@ -127,6 +134,7 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
                                      $scope.vendor = result.data.records[0];
                                      $scope.allContacts = result.data.allContacts;
                                      
+                                     
 
                              }  else {
                                $state.go('app.dashboard');
@@ -138,7 +146,7 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
 
                           $scope.allContacts = [];
                           $scope.addInput = function(){
-                            $scope.allContacts.push({first_name:'', last_name:'', position:'', prime_email:'', prime_phone:''});
+                            $scope.allContacts.push({first_name:'', last_name:'', role_id:'', prime_email:'', prime_phone:''});
                           }
 
                           $scope.removeInput = function(index){

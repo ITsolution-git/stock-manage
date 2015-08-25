@@ -83,6 +83,14 @@
         <li>
           <a href data-toggle="tab" data-target="#tab4">QB</a>
         </li>
+         <li>
+          <a href data-toggle="tab" data-target="#tab5">Note</a>
+        </li>
+
+        <li>
+          <a href data-toggle="tab" data-target="#tab6">Web Portal</a>
+        </li>
+
       </ul>
 
       <div class="tab-content p b-a no-b-t bg-white m-b-md">
@@ -104,9 +112,14 @@
                 <div ng-repeat="vendor_contacts in allContacts">
                     <input type="text"   ng-model="vendor_contacts.first_name" />
                     <input type="text"  ng-model="vendor_contacts.last_name" />
-                    <input type="text"  ng-model="vendor_contacts.position" />
+
+                     <select  ng-model="vendor_contacts.role_id" required>
+                     <option ng-selected="vendor_contacts.role_id==data.id" ng-repeat="data in staffRoles" value={{data.id}}>{{data.title}}</option>
+                     </select>
+
+                    
                     <input type="text"   ng-model="vendor_contacts.prime_email" />
-                    <input type="text"    ng-model="vendor_contacts.prime_phone" />
+                    <input type="text"   ng-model="vendor_contacts.prime_phone" />
 
                     <button ng-click="removeInput($index)">Remove</button>
                 </div>
@@ -187,6 +200,31 @@
             <div class="form-group">
               <label>QB Result<em class="text-muted"></em></label>
               <textarea rows="5" class="form-control" ng-model="vendor.d_qb_results"></textarea>
+            </div>
+
+        </div>
+
+
+         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab5">
+
+           <div class="form-group">
+              <label>Note <em class="text-muted"></em></label>
+              <textarea rows="5" class="form-control" ng-model="vendor.note"></textarea>
+            </div>
+
+           
+            </div>
+
+
+             <div role="tabpanel" class="tab-pane animated fadeIn" id="tab6">
+
+              <div class="embed-responsive embed-responsive-16by9">
+                  <object data="http://google.com" width="600" height="400">
+                    <embed src="http://google.com" width="600" height="400"> </embed>
+                    Error: Embedded data could not be displayed.
+                </object>
+              </div>
+
             </div>
 
         </div>

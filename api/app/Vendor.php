@@ -114,7 +114,7 @@ class Vendor extends Model {
 
 
     $whereConditions = ['vendor_id' => $vendorId];
-    $listArray = ['first_name','last_name','position','prime_email','prime_phone'];
+    $listArray = ['first_name','last_name','role_id','prime_email','prime_phone'];
    
     $UserData = DB::table('vendor_contacts')->select($listArray)->where($whereConditions)->get();
 
