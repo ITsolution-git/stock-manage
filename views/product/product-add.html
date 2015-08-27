@@ -1,0 +1,25 @@
+ 
+  <div class="row">
+    <div class="col-sm-12">
+
+      <form name="productForm" class="form-validation" ng-submit="saveProduct()">
+        
+        <div class="panel panel-default">
+         <input type="hidden" ng-model="product.id" value="{{product.id}}">
+          <div class="panel-body">
+            <div class="form-group col-sm-4 m-b">
+              <label>Product Description<em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="product.description" required >
+            </div>
+          </div>
+          <footer class="panel-footer text-right">
+            <button  type="submit" class="btn btn-info" ng-disabled="productForm.$invalid">Submit</button>&nbsp;
+            <button ui-sref="product.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
+           
+          </footer>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+ 

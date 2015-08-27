@@ -178,6 +178,21 @@ angular.module('app')
             }
           })
 
+          .state('product', {
+              url: '/product',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
             .state('staff.list', {
               url: '/list',
               templateUrl: 'views/staff/staff.html',
@@ -304,6 +319,31 @@ angular.module('app')
               controller: 'accountEditCtrl',
               resolve: load('scripts/controllers/account.js')
             })
+
+            .state('product.list', {
+              url: '/list',
+              templateUrl: 'views/product/product.html',
+              data : { title: 'Product' },
+              controller: 'productListCtrl',
+              resolve: load(['scripts/controllers/product.js'])
+            })
+
+            .state('product.add', {
+              url: '/add',
+              templateUrl: 'views/product/product-add.html',
+              data : { title: 'Product Add' },
+               controller: 'productAddEditCtrl',
+              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/product.js'])
+            })
+
+             .state('product.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/product/product-add.html',
+              data : { title: 'Product Edit' },
+               controller: 'productAddEditCtrl',
+              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/product.js'])
+            })
+
 ;
 
           function load(srcs, callback) {
