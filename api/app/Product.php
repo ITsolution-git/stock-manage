@@ -58,7 +58,7 @@ class Product extends Model {
 
     public function productDetail($productId) {
 
-        $whereProductConditions = ['status' => '1','id' => $productId];
+        $whereProductConditions = ['id' => $productId];
         $productData = DB::table('products')->where($whereProductConditions)->get();
 
         $combine_array['product'] = $productData;

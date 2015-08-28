@@ -94,7 +94,10 @@ class ProductController extends Controller {
          $data = Input::all();
          
           $result = $this->product->productDetail($data);
-         
+
+
+          $result['product'][0]->all_url_photo = UPLOAD_PATH.'product/'.$result["product"][0]->id.'/'.$result['product'][0]->photo;
+
            if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['product']);
             } else {
@@ -115,7 +118,12 @@ class ProductController extends Controller {
 
        
        $data['product'] = array('description' => isset($_REQUEST['description']) ? $_REQUEST['description'] : '',
-                                'vendor_id' => isset($_REQUEST['vendor_id']) ? $_REQUEST['vendor_id'] : ''
+                                'vendor_id' => isset($_REQUEST['vendor_id']) ? $_REQUEST['vendor_id'] : '',
+                                'brand' => isset($_REQUEST['brand']) ? $_REQUEST['brand'] : '',
+                                'vendor_sku' => isset($_REQUEST['vendor_sku']) ? $_REQUEST['vendor_sku'] : '',
+                                'name' => isset($_REQUEST['name']) ? $_REQUEST['name'] : '',
+                                'note' => isset($_REQUEST['note']) ? $_REQUEST['note'] : '',
+                                'status' => isset($_REQUEST['status']) ? $_REQUEST['status'] : ''
           );
 
                 foreach($data['product'] as $key => $link) 
@@ -138,7 +146,7 @@ class ProductController extends Controller {
                     $info = new SplFileInfo($filename);
                     $extention = $info->getExtension();
                     $uploaddir = FILEUPLOAD . "product/" . $insertedid;
-                    StaffController::create_dir($uploaddir);
+                    ProductController::create_dir($uploaddir);
                     
                     $newfilename = "product_main_" . $insertedid . "." . $extention;
 
@@ -168,7 +176,12 @@ class ProductController extends Controller {
  
           $data['product'] = array('id' => isset($_REQUEST['id']) ? $_REQUEST['id'] : '',
             'description' => isset($_REQUEST['description']) ? $_REQUEST['description'] : '',
-            'vendor_id' => isset($_REQUEST['vendor_id']) ? $_REQUEST['vendor_id'] : ''
+            'vendor_id' => isset($_REQUEST['vendor_id']) ? $_REQUEST['vendor_id'] : '',
+            'brand' => isset($_REQUEST['brand']) ? $_REQUEST['brand'] : '',
+            'vendor_sku' => isset($_REQUEST['vendor_sku']) ? $_REQUEST['vendor_sku'] : '',
+            'name' => isset($_REQUEST['name']) ? $_REQUEST['name'] : '',
+            'note' => isset($_REQUEST['note']) ? $_REQUEST['note'] : '',
+            'status' => isset($_REQUEST['status']) ? $_REQUEST['status'] : ''
           );
 
                 foreach($data['product'] as $key => $link) 
