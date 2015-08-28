@@ -117,7 +117,11 @@ angular.module('app')
               url: '/signin',
               templateUrl: 'views/pages/signin.html',
               controller: 'loginCtrl',
-              resolve: load('scripts/controllers/login.js')
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
             .state('access.signup', {
               url: '/signup',
@@ -131,7 +135,11 @@ angular.module('app')
              url: '/signin',
               templateUrl: 'views/pages/signin.html',
               controller: 'logoutCtrl',
-              resolve: load('scripts/controllers/logout.js')
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
         .state('staff', {
@@ -198,7 +206,11 @@ angular.module('app')
               templateUrl: 'views/staff/staff.html',
               data : { title: 'Staff' },
               controller: 'staffListCtrl',
-              resolve: load(['scripts/controllers/staff.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('staff.add', {
@@ -206,7 +218,11 @@ angular.module('app')
               templateUrl: 'views/staff/staff-add.html',
               data : { title: 'Staff Add' },
                controller: 'staffAddEditCtrl',
-              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('staff.edit', {
@@ -214,7 +230,11 @@ angular.module('app')
               templateUrl: 'views/staff/staff-add.html',
               data : { title: 'Staff Edit' },
                controller: 'staffAddEditCtrl',
-              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/staff.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('staff.note', {
@@ -222,7 +242,11 @@ angular.module('app')
               templateUrl: 'views/staff/note.html',
               data : { title: 'Note' },
               controller: 'noteListCtrl',
-              resolve: load(['scripts/controllers/note.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('staff.noteAdd', {
@@ -230,7 +254,11 @@ angular.module('app')
               templateUrl: 'views/staff/note-add.html',
               data : { title: 'Note Add' },
               controller: 'noteAddeditCtrl',
-              resolve: load(['scripts/controllers/note.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('staff.noteEdit', {
@@ -238,7 +266,11 @@ angular.module('app')
              templateUrl: 'views/staff/note-add.html',
               data : { title: 'Staff Edit' },
                 controller: 'noteAddeditCtrl',
-              resolve: load(['scripts/controllers/note.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
            .state('staff.timeoff', {
@@ -246,7 +278,11 @@ angular.module('app')
             templateUrl: 'views/staff/timeoff.html',
             data : { title: 'Time Off' },
             controller: 'timeoffListCtrl',
-            resolve: load(['scripts/controllers/timeoff.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
           })
 
            .state('staff.timeoffAdd', {
@@ -254,7 +290,11 @@ angular.module('app')
               templateUrl: 'views/staff/timeoff-add.html',
               data : { title: 'Timeoff Add' },
               controller: 'timeoffAddEditCtrl',
-             resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/timeoff.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('staff.timeoffEdit', {
@@ -262,7 +302,11 @@ angular.module('app')
              templateUrl: 'views/staff/timeoff-add.html',
               data : { title: 'Timeoff Edit' },
                 controller: 'timeoffAddEditCtrl',
-              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/timeoff.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
 
@@ -271,7 +315,11 @@ angular.module('app')
               templateUrl: 'views/vendor/vendor.html',
               data : { title: 'Vendor' },
               controller: 'vendorListCtrl',
-              resolve: load(['scripts/controllers/vendor.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
             .state('vendor.add', {
@@ -279,7 +327,11 @@ angular.module('app')
               templateUrl: 'views/vendor/vendor-add.html',
               data : { title: 'Vendor Add' },
                controller: 'vendorAddEditCtrl',
-              resolve: load(['scripts/controllers/vendor.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('vendor.edit', {
@@ -287,7 +339,11 @@ angular.module('app')
              templateUrl: 'views/vendor/vendor-add.html',
               data : { title: 'Vendor Edit' },
                controller: 'vendorAddEditCtrl',
-              resolve: load(['scripts/controllers/vendor.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
 
@@ -298,7 +354,7 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
-                            }
+                            },
                        }
               
             })
@@ -306,18 +362,30 @@ angular.module('app')
               url: '/add',
               templateUrl: 'views/account/add.html',
               controller: 'accountAddCtrl',
-              resolve: load('scripts/controllers/account.js')
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
            .state('account.edit', {
               url: '/edit/:id',
               templateUrl: 'views/account/add.html',
               controller: 'accountEditCtrl',
-              resolve: load('scripts/controllers/account.js')
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
            .state('account.delete', {
               url: '/delete/:id',
               controller: 'accountEditCtrl',
-              resolve: load('scripts/controllers/account.js')
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
             .state('product.list', {
@@ -325,7 +393,11 @@ angular.module('app')
               templateUrl: 'views/product/product.html',
               data : { title: 'Product' },
               controller: 'productListCtrl',
-              resolve: load(['scripts/controllers/product.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
             .state('product.add', {
@@ -333,7 +405,11 @@ angular.module('app')
               templateUrl: 'views/product/product-add.html',
               data : { title: 'Product Add' },
                controller: 'productAddEditCtrl',
-              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/product.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
              .state('product.edit', {
@@ -341,7 +417,11 @@ angular.module('app')
               templateUrl: 'views/product/product-add.html',
               data : { title: 'Product Edit' },
                controller: 'productAddEditCtrl',
-              resolve: load(['scripts/controllers/bootstrap.js','scripts/controllers/product.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
 
 ;

@@ -1,8 +1,4 @@
-(function () {
-    'use strict';
-    angular.module('app.company', [])
-
-  .controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
+app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
 
                                 AuthService.AccessService('SA');
                             
@@ -30,8 +26,8 @@
                       
                        
 
-}])
-    .controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
+}]);
+app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
                           
                           AuthService.AccessService('SA');
                           $scope.CurrentController=$state.current.controller;
@@ -71,8 +67,8 @@
                                      });
                               }      
 
-}])
-.controller('accountEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService', function($scope,$http,$location,$state,$stateParams,AuthService) {
+}]);
+app.controller('accountEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService', function($scope,$http,$location,$state,$stateParams,AuthService) {
                           
                             AuthService.checksession();
                             AuthService.AccessService('SA');
@@ -113,6 +109,4 @@
 
 
 
-}])
-
-  }).call(this);
+}]);

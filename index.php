@@ -76,7 +76,18 @@
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
+
+  <!-- LOAD ALL CONTROLLER -->
   <script src="scripts/controllers/account.js"></script>
   <script src="scripts/controllers/dashboard.js"></script>
+  <script src="scripts/controllers/product.js"></script>
+  <script src="scripts/controllers/bootstrap.js"></script>
+  <script src="scripts/controllers/timeoff.js"></script>
+  <script src="scripts/controllers/vendor.js"></script>
+  <script src="scripts/controllers/note.js"></script>
+  <script src="scripts/controllers/staff.js"></script>
+  <script src="scripts/controllers/logout.js"></script>
+  <script src="scripts/controllers/login.js"></script>
+
 </body>
 </html>
