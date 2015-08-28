@@ -14,7 +14,7 @@ class Common extends Model {
 * @return array $roles
 */
     public function getAdminRoles() {
-        $roles = DB::table('roles')->get();
+        $roles = DB::table('roles')->where('slug','<>','SA')->get();
         return $roles;
     }
     public function checkemailExist($email)
@@ -46,6 +46,19 @@ class Common extends Model {
         $staffRoles = DB::table('roles')->whereNotIn('id', [7,8])->get();
 
         return $staffRoles;
+    }
+
+/**
+* Get All Vendors
+* @access public getAllVendors
+* @return array $staffRoles
+*/
+
+    public function getAllVendors() {
+        
+        $whereVendorConditions = ['status' => '1','is_delete' => '1'];
+        $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
+        return $vendorData;
     }
 
 

@@ -17,21 +17,20 @@
           <i class="mdi-action-search i-24"></i>
         </a>
       </li>
-      <li>
+<!--       <li>
         <a md-ink-ripple data-toggle="modal" data-target="#user">
-          <i class="mdi-social-person-outline i-24"></i>
-        </a>
-      </li>
-      <li class="dropdown">
-        <a md-ink-ripple data-toggle="dropdown">
           <i class="mdi-navigation-more-vert i-24"></i>
         </a>
-        <ul class="dropdown-menu dropdown-menu-scale pull-right pull-up text-color">
-          <li><a href>Single-column view</a></li>
-          <li><a href>Sort by date</a></li>
-          <li><a href>Sort by name</a></li>
+      </li> -->
+      <li class="dropdown">
+        <a md-ink-ripple data-toggle="dropdown">
+         <i class="mdi-social-person-outline i-24"></i> 
+        </a>
+        <ul class="dropdown-menu dropdown-menu-scale pull-right pull-up text-color" ng-controller="AppCtrl">
+          <li><a href>{{app.role_title}}</a></li>
+          <li><a href>{{app.useremail}}</a></li>
           <li class="divider"></li>
-          <li><a href>Help &amp; feedback</a></li>
+          <li><a ui-sref="access.lockme">Logout</a></li>
         </ul>
       </li>
     </ul>

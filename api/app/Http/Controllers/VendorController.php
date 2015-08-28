@@ -117,6 +117,8 @@ class VendorController extends Controller {
             'url' => isset($_REQUEST['url']) ? $_REQUEST['url'] : '',
             'order_minimum' => isset($_REQUEST['order_minimum']) ? $_REQUEST['order_minimum'] : '',
 
+            'note' => isset($_REQUEST['note']) ? $_REQUEST['note'] : '',
+
 
             'd_qb_terms' => isset($_REQUEST['d_qb_terms']) ? $_REQUEST['d_qb_terms'] : '',
             'd_qb_list_id' => isset($_REQUEST['d_qb_list_id']) ? $_REQUEST['d_qb_list_id'] : '',
@@ -173,6 +175,112 @@ class VendorController extends Controller {
     }
 
 
+    /**
+* Vendor Edit controller      
+* @access public edit
+* @param  array $data
+* @return json data
+*/
+    public function edit() {
+ 
+$vendor_contact = json_decode($_REQUEST['vendor_contact_data_all']);
+         
+          $data['vendor'] = array('id' => isset($_REQUEST['id']) ? $_REQUEST['id'] : '',
+            'name_company' => isset($_REQUEST['name_company']) ? $_REQUEST['name_company'] : '',
+            'prime_address_city' => isset($_REQUEST['prime_address_city']) ? $_REQUEST['prime_address_city'] : '',
+            'prime_address_state' => isset($_REQUEST['prime_address_state']) ? $_REQUEST['prime_address_state'] : '',
+            'prime_address_zip' => isset($_REQUEST['prime_address_zip']) ? $_REQUEST['prime_address_zip'] : '',
+            'prime_address1' => isset($_REQUEST['prime_address1']) ? $_REQUEST['prime_address1'] : '',
+            'prime_address2' => isset($_REQUEST['prime_address2']) ? $_REQUEST['prime_address2'] : '',
+            'prime_phone_no' => isset($_REQUEST['prime_phone_no']) ? $_REQUEST['prime_phone_no'] : '',
+            'fax_number' => isset($_REQUEST['fax_number']) ? $_REQUEST['fax_number'] : '',
+
+            'mailing_address1' => isset($_REQUEST['mailing_address1']) ? $_REQUEST['mailing_address1'] : '',
+            'mailing_address2' => isset($_REQUEST['mailing_address2']) ? $_REQUEST['mailing_address2'] : '',
+            'mailing_address_city' => isset($_REQUEST['mailing_address_city']) ? $_REQUEST['mailing_address_city'] : '',
+            'mailing_address_state' => isset($_REQUEST['mailing_address_state']) ? $_REQUEST['mailing_address_state'] : '',
+            'mailing_address_zip' => isset($_REQUEST['mailing_address_zip']) ? $_REQUEST['mailing_address_zip'] : '',
+
+
+            'billing_address1' => isset($_REQUEST['billing_address1']) ? $_REQUEST['billing_address1'] : '',
+            'billing_address2' => isset($_REQUEST['billing_address2']) ? $_REQUEST['billing_address2'] : '',
+            'billing_address_city' => isset($_REQUEST['billing_address_city']) ? $_REQUEST['billing_address_city'] : '',
+            'billing_address_state' => isset($_REQUEST['billing_address_state']) ? $_REQUEST['billing_address_state'] : '',
+            'billing_address_zip' => isset($_REQUEST['billing_address_zip']) ? $_REQUEST['billing_address_zip'] : '',
+
+            'url' => isset($_REQUEST['url']) ? $_REQUEST['url'] : '',
+            'order_minimum' => isset($_REQUEST['order_minimum']) ? $_REQUEST['order_minimum'] : '',
+
+            'note' => isset($_REQUEST['note']) ? $_REQUEST['note'] : '',
+
+
+            'd_qb_terms' => isset($_REQUEST['d_qb_terms']) ? $_REQUEST['d_qb_terms'] : '',
+            'd_qb_list_id' => isset($_REQUEST['d_qb_list_id']) ? $_REQUEST['d_qb_list_id'] : '',
+            'd_qb_edit_sequence' => isset($_REQUEST['d_qb_edit_sequence']) ? $_REQUEST['d_qb_edit_sequence'] : '',
+            'd_qb_full_name' => isset($_REQUEST['d_qb_full_name']) ? $_REQUEST['d_qb_full_name'] : '',
+            'd_qb_is_active' => isset($_REQUEST['d_qb_is_active']) ? $_REQUEST['d_qb_is_active'] : '',
+            'd_qb_results' => isset($_REQUEST['d_qb_results']) ? $_REQUEST['d_qb_results'] : '',
+
+
+            'status' => isset($_REQUEST['status']) ? $_REQUEST['status'] : '',
+        );
+
+         foreach($data['vendor'] as $key => $link) 
+        { 
+
+            if($link == '') 
+            { 
+                unset($data['vendor'][$key]); 
+            } 
+        } 
+
+
+
+        
+          $result = $this->vendor->vendorEdit($data['vendor']);
+          $resultContact = $this->vendor->vendorContactEdit($vendor_contact,$_REQUEST['id']);
+
+          if (count($result) > 0) {
+
+
+            if ($_FILES) {
+
+                if (!$_FILES['image']['error'] && isset($data['staff']['id'])) {
+
+
+                     array_map('unlink', glob(FILEUPLOAD . "vendor/" . $data['vendor']['id']."/*"));
+
+                    $filename = $_FILES['image']['name'];
+                    $info = new SplFileInfo($filename);
+                    $extention = $info->getExtension();
+                    $uploaddir = FILEUPLOAD . "vendor/" . $data['vendor']['id'];
+                    StaffController::create_dir($uploaddir);
+                    
+                    $newfilename = "vendor_main_" . $data['vendor']['id'] . "." . $extention;
+
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
+                       
+                       $result = $this->vendor->vendorImageUpdate($data['vendor']['id'],$newfilename);
+                    }
+                }
+
+            
+        } 
+
+         $response = array('success' => 1, 'message' => UPDATE_RECORD,'records' => $result);
+        
+
+
+           
+        } else {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS,'records' => '');
+        }
+        
+
+return response()->json(["data" => $response]);
+    }
+
+
 /**
 * Vendor Detail controller      
 * @access public detail
@@ -191,9 +299,9 @@ class VendorController extends Controller {
 
 
            if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['vendor']/*,'users_records' => $result['users']*/);
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['vendor'],'allContacts' => $result['allContacts']);
         } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['vendor']/*,'users_records' => $result['users']*/);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['vendor'],'allContacts' => $result['allContacts']);
         }
         
         return response()->json(["data" => $response]);

@@ -259,6 +259,7 @@ class StaffController extends Controller {
 
                 if (!$_FILES['image']['error'] && isset($data['staff']['id'])) {
 
+
                      array_map('unlink', glob(FILEUPLOAD . "staff/" . $data['staff']['id']."/*"));
 
                     $filename = $_FILES['image']['name'];

@@ -14,14 +14,15 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
 
                                 } else {
                                    flash('success',result.data.message); 
-
                                    sessionService.set('username',result.data.records.username);
                                    sessionService.set('password',result.data.records.password);
                                    sessionService.set('useremail',result.data.records.useremail);
                                    sessionService.set('role_title',result.data.records.role_title);
                                    sessionService.set('role_slug',result.data.records.role_slug);
                                    sessionService.set('login_id',result.data.records.login_id);
+                                   sessionService.set('name',result.data.records.name);
 
+                                   //$location.url('/app/dashboard');
                                    $state.go('app.dashboard');
                                    return false;
 

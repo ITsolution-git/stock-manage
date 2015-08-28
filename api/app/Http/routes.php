@@ -61,6 +61,14 @@ Route::post('admin/vendorEdit', 'VendorController@edit');
 Route::post('admin/vendorDetail', 'VendorController@detail');
 Route::get('admin/VendorEdit/{id}', 'VendorController@detail');
 
+// ADMIN PRODUCT ROUTERS
+Route::get('admin/product', 'ProductController@index');
+Route::post('admin/productAdd', 'ProductController@add');
+Route::post('admin/productEdit', 'ProductController@edit');
+Route::post('admin/productDelete', 'ProductController@delete');
+Route::post('admin/productDetail', 'ProductController@detail');
+Route::get('admin/productEdit/{id}', 'ProductController@detail');
+
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
 Route::get('common/type/{type}', 'CommonController@type');
@@ -68,6 +76,7 @@ Route::get('common/staffRole', 'CommonController@getStaffRoles');
 Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
+Route::get('common/getAllVendors', 'CommonController@getAllVendors');
 
 
 

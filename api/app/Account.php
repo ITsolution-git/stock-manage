@@ -17,7 +17,8 @@ class Account extends Model {
         $admindata = DB::table('users as usr')
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
         				 ->select('usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','rol.title','usr.id')
-        				 ->where('is_delete','=','1')
+        				 ->where('usr.is_delete','=','1')
+                         ->where('rol.slug','<>','SA')
         				 ->get();
         return $admindata;
     }

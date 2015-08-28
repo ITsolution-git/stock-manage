@@ -1,43 +1,45 @@
 
-app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+
+
+app.controller('productListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
   
+  $http.get('api/public/admin/product').success(function(result, status, headers, config) {
 
-                         $http.get('api/public/admin/vendor').success(function(result, status, headers, config) {
-
-                                  $scope.vendors = result.data.records;
+                                  $scope.products = result.data.records;
                          
                           });
 
-                         $scope.delete = function (vendor_id) {
-                         
+                         $scope.delete = function (product_id) {
+                          
                             var permission = confirm(deleteMessage);
                             if (permission == true) {
-                            $http.post('api/public/admin/vendorDelete',vendor_id).success(function(result, status, headers, config) {
+                            $http.post('api/public/admin/productDelete',product_id).success(function(result, status, headers, config) {
                                           
                                           if(result.data.success=='1')
                                           {
                                            
-                                            $state.go('vendor.list');
-                                            $("#vendor_"+vendor_id).remove();
+                                            $state.go('product.list');
+                                            $("#product_"+product_id).remove();
                                             return false;
                                           }  
                                      });
                                   }
-                              }
+                              } 
 
 }]);
 
-app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
-  
-  $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
 
-              $scope.staffRoles = result.data.records;
-     
-      });
+app.controller('productAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+   
+   
+ $http.get('api/public/common/getAllVendors').success(function(result, status, headers, config) {
 
+      $scope.vendors = result.data.records;
+                         
+  });
 
-                         $scope.files = [];
-                         $scope.setFiles = function (element) {
+   $scope.files = [];
+                    $scope.setFiles = function (element) {
                         $scope.$apply(function ($scope) {
                             console.log('files:', element.files);
 
@@ -64,25 +66,21 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
                         });
                     };
 
+                    $scope.saveProduct = function () {
 
-                    $scope.saveVendor = function () {
-
-
-                        var vendor_data = $scope.vendor;
-
-
+                        var user_data_product = $scope.product;
+                       
+                        
                         var fd = new FormData()
                         for (var i in $scope.files) {
-
                             fd.append("image", $scope.files[i])
                         }
 
-                       fd.append("vendor_contact_data_all", angular.toJson($scope.allContacts))
 
-                      
-                         $.each(vendor_data, function( index, value ) {
+                         $.each(user_data_product, function( index, value ) {
                             fd.append(index, value)
                           });
+
 
                        var xhr = new XMLHttpRequest()
                         xhr.onreadystatechange = function () {
@@ -102,63 +100,42 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
                                       
                                         
                                           $scope.$apply(function ($scope) {
-                                          $state.go('vendor.list');
+                                          $state.go('product.list');
                                      });
                                     }, 10);
 
                                 }
                             }
                         }
-                        if(vendor_data.id) {
+                        if(user_data_product.id) {
 
-                           xhr.open("POST","api/public/admin/vendorEdit")
+                           xhr.open("POST","api/public/admin/productEdit")
                            xhr.send(fd);
 
                         } else {
-                           xhr.open("POST","api/public/admin/vendorAdd")
+                           xhr.open("POST","api/public/admin/productAdd")
                            xhr.send(fd);
                         }
 
                        
                     };
 
-                         
+                        if($stateParams.id) {
 
-                          if($stateParams.id) {
-
-                           $http.post('api/public/admin/vendorDetail',$stateParams.id).success(function(result, status, headers, config) {
+                           $http.post('api/public/admin/productDetail',$stateParams.id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
                                        
-
-                                     $scope.vendor = result.data.records[0];
-                                     $scope.allContacts = result.data.allContacts;
-                                     
-                                     
-
+                                     $scope.product = result.data.records[0];
+                                   
                              }  else {
-                               $state.go('app.dashboard');
+                             $state.go('app.dashboard');
                              }
                          
                           });
 
                          }
 
-                          $scope.allContacts = [];
-                          $scope.addInput = function(){
-                            $scope.allContacts.push({first_name:'', last_name:'', role_id:'', prime_email:'', prime_phone:''});
-                          }
-
-                          $scope.removeInput = function(index){
-                              $scope.allContacts.splice(index,1);
-                          }
-
-
-                          $scope.addpopup = function(url){
-
-                          window.open(url,'1440657862503','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');
-                          return false;
-                          }
-
-
 }]);
+
+
