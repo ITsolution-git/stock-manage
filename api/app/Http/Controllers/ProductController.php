@@ -105,5 +105,136 @@ class ProductController extends Controller {
 
     }
 
+/**
+* Product Add controller      
+* @access public add
+* @param  array $data
+* @return json data
+*/
+    public function add() {
+
+       
+       $data['product'] = array('description' => isset($_REQUEST['description']) ? $_REQUEST['description'] : '',
+                                'vendor_id' => isset($_REQUEST['vendor_id']) ? $_REQUEST['vendor_id'] : ''
+          );
+
+                foreach($data['product'] as $key => $link) 
+                { 
+
+                    if($link == '') 
+                    { 
+                        unset($data['product'][$key]); 
+                    } 
+                } 
+
+
+          $insertedid = $this->product->productAdd($data);
+
+          if ($insertedid && $_FILES) {
+
+                if (!$_FILES['image']['error'] && isset($insertedid)) {
+
+                    $filename = $_FILES['image']['name'];
+                    $info = new SplFileInfo($filename);
+                    $extention = $info->getExtension();
+                    $uploaddir = FILEUPLOAD . "product/" . $insertedid;
+                    StaffController::create_dir($uploaddir);
+                    
+                    $newfilename = "product_main_" . $insertedid . "." . $extention;
+
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
+                       
+                       $result = $this->product->productImageUpdate($insertedid,$newfilename);
+                    }
+                }
+
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } else {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS,'records' => '');
+        }
+
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+/**
+* Product Edit controller      
+* @access public edit
+* @param  array $data
+* @return json data
+*/
+    public function edit() {
+ 
+          $data['product'] = array('id' => isset($_REQUEST['id']) ? $_REQUEST['id'] : '',
+            'description' => isset($_REQUEST['description']) ? $_REQUEST['description'] : '',
+            'vendor_id' => isset($_REQUEST['vendor_id']) ? $_REQUEST['vendor_id'] : ''
+          );
+
+                foreach($data['product'] as $key => $link) 
+                { 
+
+                    if($link == '') 
+                    { 
+                        unset($data['product'][$key]); 
+                    } 
+                } 
+
+          $result = $this->product->productEdit($data['product']);
+          
+
+          if (count($result) > 0) {
+
+
+            if ($_FILES) {
+
+                if (!$_FILES['image']['error'] && isset($data['product']['id'])) {
+
+
+                     array_map('unlink', glob(FILEUPLOAD . "product/" . $data['product']['id']."/*"));
+
+                    $filename = $_FILES['image']['name'];
+                    $info = new SplFileInfo($filename);
+                    $extention = $info->getExtension();
+                    $uploaddir = FILEUPLOAD . "product/" . $data['product']['id'];
+                    ProductController::create_dir($uploaddir);
+                    
+                    $newfilename = "product_main_" . $data['product']['id'] . "." . $extention;
+
+                    if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
+                       
+                       $result = $this->product->productImageUpdate($data['product']['id'],$newfilename);
+                    }
+                }
+
+            
+        } 
+
+         $response = array('success' => 1, 'message' => UPDATE_RECORD,'records' => $result);
+        
+
+
+           
+        } else {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS,'records' => '');
+        }
+        
+    return response()->json(["data" => $response]);
+    }
+
+/**
+* Making the directory and given path     
+* @access public create_dir
+* @param  string $dir_path
+*/
+
+public function create_dir($dir_path) {
+
+        if (!file_exists($dir_path)) {
+            mkdir($dir_path, 0777, true);
+        } else {
+            chmod($dir_path, 0777);
+        }
+    }
 
 }

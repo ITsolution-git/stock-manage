@@ -11,6 +11,16 @@
               <label>Product Description<em class="text-muted"></em></label>
               <input type="text" class="form-control" ng-model="product.description" required >
             </div>
+
+            <div class="form-group col-sm-4 m-b">
+              <label>Vendor<em class="text-muted"></em></label>
+
+              <select class="form-control" ng-model="product.vendor_id" required>
+                    <option ng-repeat="data in vendors" value={{data.id}}>{{data.name_company}}</option>
+                 </select>
+
+            </div>                  
+
           </div>
           <footer class="panel-footer text-right">
             <button  type="submit" class="btn btn-info" ng-disabled="productForm.$invalid">Submit</button>&nbsp;

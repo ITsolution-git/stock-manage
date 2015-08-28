@@ -65,5 +65,34 @@ class Product extends Model {
         return $combine_array;
     }
 
+/**
+* Product Add data           
+* @access public productAdd
+* @param  array $data
+* @return array $result
+*/
+    public function productAdd($data) {
+        $data['product']['created_date'] = date("Y-m-d H:i:s");
+        $data['product']['updated_date'] = date("Y-m-d H:i:s");
+     
+        $result_product = DB::table('products')->insert($data['product']);
+        $productid = DB::getPdo()->lastInsertId();
+        return $productid;
+    }
+
+
+/**
+* Product Edit data           
+* @access public productEdit
+* @param  array $data
+* @return array $result
+*/  
+
+    public function productEdit($data) {
+        $data['updated_date'] = date("Y-m-d H:i:s");
+        $result = DB::table('products')->where('id', '=', $data['id'])->update($data);
+        return $result;
+    }
+
 
 }

@@ -48,5 +48,18 @@ class Common extends Model {
         return $staffRoles;
     }
 
+/**
+* Get All Vendors
+* @access public getAllVendors
+* @return array $staffRoles
+*/
+
+    public function getAllVendors() {
+        
+        $whereVendorConditions = ['status' => '1','is_delete' => '1'];
+        $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
+        return $vendorData;
+    }
+
 
 }
