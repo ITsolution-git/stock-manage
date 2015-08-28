@@ -246,7 +246,7 @@ public function create_dir($dir_path) {
         if (!file_exists($dir_path)) {
             mkdir($dir_path, 0777, true);
         } else {
-            chmod($dir_path, 0777);
+          //  chmod($dir_path, 0777);
         }
     }
 
