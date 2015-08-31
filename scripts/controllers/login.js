@@ -1,6 +1,6 @@
 app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sessionService', function($scope,$http,$location,$state,flash,sessionService) {
 
-
+    var role = sessionService.get('role_slug');
 
    $scope.dosignin = function () {
                         var user_data = $scope.user;
@@ -24,11 +24,12 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
 
                                    //$location.url('/app/dashboard');
                                    $state.go('app.dashboard');
+                                   setTimeout(function(){ window.location.reload(); }, 500);
+                                   //window.location.href="#/app/dashboard";
                                    return false;
 
                                 }
                          
                     });
                     }
-
 }]);
