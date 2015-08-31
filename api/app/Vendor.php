@@ -109,7 +109,7 @@ class Vendor extends Model {
 
     public function vendorDetail($vendorId) {
 
-        $whereVendorConditions = ['status' => '1','id' => $vendorId];
+        $whereVendorConditions = ['id' => $vendorId];
         $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
 
 

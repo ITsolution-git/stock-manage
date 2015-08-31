@@ -54,8 +54,14 @@
           <tr ng-repeat="data in notes" id="note_{{data.id}}">
               <td>{{ data.note | limitTo: 100 }}{{data.note.length > 100 ? '...' : ''}}</td>
               <td>{{data.points}}</td>
-              <td data-value="78025368997">{{ data.created_date == "0000-00-00 00:00:00" ? "" : data.created_date }}</td>
-              <td data-value="1">{{data.status}}</td>
+              <td>{{ data.created_date | dateWithFormat}}</td>
+
+
+             <td ng-if="data.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
+              <td ng-if="data.status == 0" ><span class="label bg-danger" title="Deactive">Deactive</span></td>
+
+
+
               <td style="white-space: nowrap">
 
                 <div class="buttons" ng-show="!rowform.$visible" aria-hidden="false">

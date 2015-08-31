@@ -33,8 +33,10 @@ app.controller('staffListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage,$filter) {
    
+    
+
     $http.get('api/public/common/type/staff').success(function(result, status, headers, config) {
 
                                   $scope.types = result.data.records;
@@ -137,7 +139,12 @@ app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stat
                            $http.post('api/public/admin/staffDetail',$stateParams.id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
-                                       
+                                      
+                                    
+                                     result.data.records[0]['date_start'] = $filter('dateWithFormat')(result.data.records[0]['date_start']);
+                                     result.data.records[0]['birthday'] = $filter('dateWithFormat')(result.data.records[0]['birthday']);
+                                     result.data.records[0]['date_end'] = $filter('dateWithFormat')(result.data.records[0]['date_end']); 
+                                     
                                      $scope.staff = result.data.records[0];
                                      $scope.users = result.data.users_records[0];
                                      

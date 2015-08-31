@@ -82,7 +82,7 @@ class Staff extends Model {
 
     public function staffDetail($staffId) {
 
-        $whereStaffConditions = ['status' => '1','id' => $staffId];
+        $whereStaffConditions = ['id' => $staffId];
         $staffData = DB::table('staff')->where($whereStaffConditions)->get();
 
         $whereConditions = ['status' => '1','id' => $staffData[0]->user_id];
@@ -215,7 +215,7 @@ class Staff extends Model {
 
     public function noteDetail($data) {
 
-        $whereConditions = ['status' => '1','type_note' => 'staff','id' => $data['note_id'],'all_id' => $data['staff_id']];
+        $whereConditions = ['type_note' => 'staff','id' => $data['note_id'],'all_id' => $data['staff_id']];
         $listArray = ['note','id','all_id','points'];
         $noteData = DB::table('notes')->select($listArray)->where($whereConditions)->get();
         return  $noteData;
@@ -300,7 +300,7 @@ class Staff extends Model {
 */
 
     public function timeoffDetail($data) {
-        $whereConditions = ['status' => '1','id' => $data['timeoff_id'],'staff_id' => $data['staff_id']];
+        $whereConditions = ['id' => $data['timeoff_id'],'staff_id' => $data['staff_id']];
         $listArray = ['id','staff_id','classification_id','date_begin','date_end','timerecord','applied_hours'];
         $timeoffData = DB::table('time_off')->select($listArray)->where($whereConditions)->get();
         return   $timeoffData;
@@ -320,7 +320,5 @@ class Staff extends Model {
         $result = DB::table('time_off')->where($whereConditions)->update($data);
         return $result;
     }
-
-
 
 }
