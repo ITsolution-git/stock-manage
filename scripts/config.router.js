@@ -49,7 +49,7 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
-                       }
+                       },
             })
            
           
@@ -138,7 +138,7 @@ angular.module('app')
           })
           .state('account', {
               url: '/account',
-            views: {
+              views: {
               '': {
                 templateUrl: 'views/layout.html'
               },
@@ -148,7 +148,12 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+              },
+              resolve: {
+                checklogin: function (AuthService) {
+                   return AuthService.checksession();
+                },
+              }
           })
 
           .state('vendor', {

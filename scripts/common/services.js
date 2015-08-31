@@ -30,7 +30,7 @@
                 {
                    // console.log('error');
                     $state.go('app.dashboard');
-                   // $location.url('/app/dashboard');
+                    window.location.reload();
                     return false;
                 }
              },
