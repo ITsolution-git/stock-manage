@@ -1,0 +1,143 @@
+ 
+  <div class="row">
+    <div class="col-sm-12">
+
+      <form name="priceForm" class="form-validation" ng-submit="savePrice(price)">
+        
+        <div class="panel panel-default">
+         <input type="hidden" ng-model="price.id" value="{{price.id}}">
+          <div class="panel-body">
+
+
+            <div class="form-group col-sm-4 m-b">
+              <label>Price Grid <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="price.name" required >
+            </div>
+
+
+
+
+            <div class="form-group col-sm-12 m-b">
+              <ul class="nav nav-tabs">
+                <li class="active">
+                  <a href data-toggle="tab" data-target="#tab1">Charges</a>
+                </li>
+                <li>
+                  <a href data-toggle="tab" data-target="#tab2">Charges List</a>
+                </li>
+       
+      </ul>
+
+      <div class="tab-content p b-a no-b-t bg-white m-b-md">
+
+
+        <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab1">
+
+           <div class="form-group">
+                  <label>Discharge<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.discharge">
+            </div>
+
+             <div class="form-group">
+                  <label>Speciality<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.specialty">
+            </div>
+
+             <div class="form-group">
+                  <label>Color Matching<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.color_matching">
+            </div>
+
+             <div class="form-group">
+                  <label>Embroidered Names<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.embroidered_names">
+            </div>
+
+             <div class="form-group">
+                  <label>Foil<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.foil">
+            </div>
+
+             <div class="form-group">
+                  <label>Folding<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.folding">
+            </div>
+
+             <div class="form-group">
+                  <label>Hang Tag<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.hang_tag">
+            </div>
+
+             <div class="form-group">
+                  <label>Ink Changes<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.ink_changes"  >
+            </div>
+
+             <div class="form-group">
+                  <label>Numbers on Dark<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.number_on_dark">
+            </div>
+
+             <div class="form-group">
+                  <label>Numbers on Light<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.number_on_light">
+            </div>
+
+             <div class="form-group">
+                  <label>Oversize<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.over_size">
+            </div>
+
+             <div class="form-group">
+                  <label>Oversize screens<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.over_size_screens">
+            </div>
+
+             <div class="form-group">
+                  <label>Poly Bagging<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.poly_bagging">
+            </div>
+
+             <div class="form-group">
+                  <label>Press Setup<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.press_setup">
+            </div>
+
+             <div class="form-group">
+                  <label>Printed Names<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.printed_names">
+            </div>
+
+             <div class="form-group">
+                  <label>Screen Fees<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.screen_fees">
+            </div>
+
+             <div class="form-group">
+                  <label>Shipping Charge<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="price.shipping_charge">
+            </div>
+
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
+ 
+        </div>
+
+      </div>
+            </div>
+
+            
+          </div>
+          <footer class="panel-footer text-right">
+            <button  type="submit" class="btn btn-info" ng-disabled="priceForm.$invalid">Submit</button>&nbsp;
+            <button ui-sref="setting.price" type="button"  class="btn btn-info">Cancel</button>&nbsp;
+           
+          </footer>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+ 

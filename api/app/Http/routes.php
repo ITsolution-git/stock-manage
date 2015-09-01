@@ -69,6 +69,15 @@ Route::post('admin/productDelete', 'ProductController@delete');
 Route::post('admin/productDetail', 'ProductController@detail');
 Route::get('admin/productEdit/{id}', 'ProductController@detail');
 
+// ADMIN SETTING ROUTERS
+Route::get('admin/price', 'SettingController@price');
+Route::post('admin/priceDelete', 'SettingController@delete');
+Route::post('admin/priceAdd', 'SettingController@priceAdd');
+Route::post('admin/priceEdit', 'SettingController@priceEdit');
+Route::post('admin/priceDetail', 'SettingController@priceDetail');
+Route::get('admin/priceEdit/{id}', 'SettingController@priceDetail');
+
+
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
 Route::get('common/type/{type}', 'CommonController@type');
