@@ -408,6 +408,31 @@ angular.module('app')
                             },
                        }
             })
+            .state('client', {
+              url: '/front/client',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
+            .state('client.list', {
+              url: '/list',
+              templateUrl: 'views/front/client/list.html',
+              data : { title: 'Client listing' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
 
 ;
 
