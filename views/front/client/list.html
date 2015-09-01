@@ -1,0 +1,29 @@
+ 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>List Clients</h4>
+    </div>
+    <div class="panel-body b-b b-light">
+      Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+      <button class="btn btn-default m-b-lg pull-right">Add Client</button>
+    </div>
+     
+    <div>
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="5">
+        <thead>
+          
+        </thead>
+        <tbody>
+
+          <tr ><td>In Process...</td></tr>
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+          <tr>
+              <td colspan="6" class="text-center">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
