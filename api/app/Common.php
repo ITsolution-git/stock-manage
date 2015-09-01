@@ -60,6 +60,4 @@ class Common extends Model {
         $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
         return $vendorData;
     }
-
-
 }

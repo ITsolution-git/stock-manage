@@ -51,7 +51,7 @@ app.controller('timeoffListCtrl', ['$scope','$http','$location','$state','$state
 }]);
 
 
-app.controller('timeoffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('timeoffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage,$filter) {
   
    $scope.openTimeoffList = function() {
                                  
@@ -78,6 +78,10 @@ app.controller('timeoffAddEditCtrl', ['$scope','$http','$location','$state','$st
                            $http.post('api/public/admin/staff/timeoffDetail',combine_array_id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
+                                       
+                                     result.data.records[0]['date_begin'] = $filter('dateWithFormat')(result.data.records[0]['date_begin']);
+                                     result.data.records[0]['date_end'] = $filter('dateWithFormat')(result.data.records[0]['date_end']);
+                                     
                                        
                                      $scope.timeoffDetail = result.data.records[0];
                                     

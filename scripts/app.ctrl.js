@@ -14,7 +14,7 @@ angular.module('app')
       var isIE = !!navigator.userAgent.match(/MSIE/i) || !!navigator.userAgent.match(/Trident.*rv:11\./);
       isIE && angular.element($window.document.body).addClass('ie');
       isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
-                  
+      //console.log(sessionService.get('role_slug'));
       // config
       $scope.app = {
         sitename: 'Stockk Up',

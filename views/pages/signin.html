@@ -8,13 +8,13 @@
           <path d="M 8 80 L 50 0 L 50 100 Z" fill="#fff"></path>
           <path d="M 50 0 L 8 80 L 0 14 Z" fill="rgba(255, 255, 255, 0.6)"></path>
         </svg>
-        <span class="m-l inline">{{app.name}}</span>
+        <span class="m-l inline">{{app.sitename}}</span>
       </div>
     </div>
  <flash:messages></flash:messages>
     <div class="p-lg panel md-whiteframe-z1 text-color m">
       <div class="m-b text-sm">
-        Sign in with your {{app.name}} Account
+        Sign in with your {{app.sitename}} Account
       </div>
       <form name="form" name="loginForm" class="form-horizontal form-validation" data-ng-submit="dosignin()">
         <div class="md-form-group float-label">
@@ -26,17 +26,17 @@
           <input type="password" class="md-input" ng-model="user.password" required>
           <label>Password</label>
         </div>      
-        <div class="m-b-md">        
+  <!--       <div class="m-b-md">        
           <label class="md-check">
             <input type="checkbox"><i class="indigo"></i> Keep me signed in
           </label>
-        </div>
+        </div> -->
         <button md-ink-ripple type="submit" class="md-btn md-raised pink btn-block p-h-md">Sign in</button>
       </form>
     </div>
 
-    <div class="p-v-lg text-center">
+<!--     <div class="p-v-lg text-center">
       <div class="m-b"><button ui-sref="access.forgot-password" class="md-btn">Forgot password?</button></div>
       <div>Do not have an account? <button ui-sref="access.signup" class="md-btn">Create an account</button></div>
-    </div>
+    </div> -->
   </div>

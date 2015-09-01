@@ -76,6 +76,7 @@
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
+  <script src="scripts/common/date.js"></script>
 
   <!-- LOAD ALL CONTROLLER -->
   <script src="scripts/controllers/account.js"></script>

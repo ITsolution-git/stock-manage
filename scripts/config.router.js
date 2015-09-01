@@ -13,23 +13,6 @@ angular.module('app')
       function ( $rootScope,   $state,  $stateParams ,$location,$http) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-
-
-          $http.get('api/public/auth/session').success(function(result, status, headers, config) {
-        
-              if(result.data.success == '0') {
-
-                $location.url('/access/signin');
-                return false;
-
-              } else {
-
-                $rootScope.username = result.data.username;
-
-              }
-        });
-
-
       }
     ]
   )
@@ -62,6 +45,11 @@ angular.module('app')
               controller: 'dasboardCtrl',
               templateUrl: 'views/pages/dashboard.html',
               data : { title: 'Dashboard', folded: true }, 
+              resolve: { 
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       },
             })
            
           
@@ -117,11 +105,7 @@ angular.module('app')
               url: '/signin',
               templateUrl: 'views/pages/signin.html',
               controller: 'loginCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('access.signup', {
               url: '/signup',
@@ -135,11 +119,7 @@ angular.module('app')
              url: '/signin',
               templateUrl: 'views/pages/signin.html',
               controller: 'logoutCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
 
         .state('staff', {
@@ -158,7 +138,7 @@ angular.module('app')
           })
           .state('account', {
               url: '/account',
-            views: {
+              views: {
               '': {
                 templateUrl: 'views/layout.html'
               },
@@ -168,7 +148,12 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+              },
+              resolve: {
+                checklogin: function (AuthService) {
+                   return AuthService.checksession();
+                },
+              }
           })
 
           .state('vendor', {

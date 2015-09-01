@@ -45,7 +45,10 @@
               <td>{{data.main_contact_person_phone}}</td>
               <td>{{data.prime_phone_no}}</td>
              
-              <td data-value="1">{{data.status}}</td>
+              <td ng-if="data.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
+              <td ng-if="data.status == 0" ><span class="label bg-danger" title="Deactive">Deactive</span></td>
+
+              
               <td style="white-space: nowrap">
 
                 <div class="buttons" ng-show="!rowform.$visible" aria-hidden="false">

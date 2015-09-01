@@ -8,7 +8,7 @@
         <span class="font-normal">Dashboard</span>
       
     </li>
-    <li ng-class="{active:$state.includes('account')}">
+    <li ng-class="{active:$state.includes('account')}" ng-show="app.role=='SA'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -26,7 +26,7 @@
        
       </ul>
     </li>
-    <li>
+    <li ng-show="app.role=='FM'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -49,7 +49,7 @@
 
 <!-- Code start for Products tab -->
 
-    <li>
+    <li ng-show="app.role=='BC'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -73,7 +73,7 @@
 
 <!-- Code start for Vendors tab -->
 
-    <li>
+    <li ng-show="app.role=='PU'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -97,7 +97,7 @@
 
 <!-- Code start for Reports tab -->
 
-    <li>
+    <li ng-show="app.role=='FM'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -121,7 +121,7 @@
 
 <!-- Code start for Settings tab -->
 
-    <li>
+    <li ng-show="app.role=='FM'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -131,10 +131,10 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="setting.list">List</a>
+          <a md-ink-ripple ui-sref="setting.list">Price Grid</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="setting.add">Add</a>
+          <a md-ink-ripple ui-sref="setting.add">Quick book</a>
         </li>
        
       </ul>
@@ -145,7 +145,7 @@
 
 <!-- Code start for Misc tab -->
 
-    <li>
+    <li ng-show="app.role=='FM'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -167,12 +167,12 @@
 <!-- Code end for Misc tab -->
    
 
-    <li class="b-b b m-v-sm"></li>
+<!--     <li class="b-b b m-v-sm"></li>
     <li>
       <a md-ink-ripple ui-toggle-class="hide, show" target="#nav, #account">
         <span>Settings</span>
       </a>
-    </li>
+    </li> -->
     
   </ul>
 </nav>

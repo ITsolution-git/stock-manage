@@ -30,7 +30,7 @@
                 {
                    // console.log('error');
                     $state.go('app.dashboard');
-                   // $location.url('/app/dashboard');
+                    window.location.reload();
                     return false;
                 }
              },
@@ -57,5 +57,32 @@
                         }
                     };
                 }
-            ]);
+            ])
+
+    .filter('dateWithFormat', function($filter) {
+     
+         return function(input)
+         {
+          if(input == null){ return ""; } 
+     
+          if(input !=  "0000-00-00 00:00:00")
+          {
+            var d1 = Date.parse(input);
+           
+          var _date = d1.toString('M/d/yyyy');
+          }
+          else {
+            var _date = '';
+          }
+         
+          return _date;
+
+         };
+    })
+
 }).call(this);
+
+
+
+
+

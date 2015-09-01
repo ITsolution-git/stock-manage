@@ -324,35 +324,7 @@ public function create_dir($dir_path) {
 
           $result['staff'][0]->all_url_photo = UPLOAD_PATH.'staff/'.$result["staff"][0]->id.'/'.$result['staff'][0]->photo;
 
-         // if blank birthdaye is enter then we will not calculate date
-         if($result['staff'][0]->birthday == '0000-00-00 00:00:00') {
-
-             unset($result['staff'][0]->birthday);
-
-         } else {
-
-            $result['staff'][0]->birthday = date("d-F-Y", strtotime($result['staff'][0]->birthday));
-         }
-
-         if($result['staff'][0]->date_start == '0000-00-00 00:00:00') {
-
-              unset($result['staff'][0]->date_start);
-
-         } else {
-
-            $result['staff'][0]->date_start = date("d-F-Y", strtotime($result['staff'][0]->date_start));
-         }
-
-         if($result['staff'][0]->date_end == '0000-00-00 00:00:00') {
-
-              unset($result['staff'][0]->date_end);
-
-         } else {
-
-            $result['staff'][0]->date_end = date("d-F-Y", strtotime($result['staff'][0]->date_end));
-         }
-
-
+       
            if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['staff'],'users_records' => $result['users']);
         } else {
@@ -609,29 +581,8 @@ public function create_dir($dir_path) {
  
          $data = Input::all();
          
-
-          $result = $this->staff->timeoffDetail($data);
+        $result = $this->staff->timeoffDetail($data);
           
-
-          if($result[0]->date_begin == '0000-00-00 00:00:00') {
-
-             unset($result[0]->date_begin);
-
-         } else {
-
-            $result[0]->date_begin = date("d-F-Y", strtotime($result[0]->date_begin));
-         }
-
-         if($result[0]->date_end == '0000-00-00 00:00:00') {
-
-              unset($result[0]->date_end);
-
-         } else {
-
-            $result[0]->date_end = date("d-F-Y", strtotime($result[0]->date_end));
-         }
-
-
         if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
         } else {
