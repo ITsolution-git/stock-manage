@@ -58,9 +58,16 @@ class Price extends Model {
 
     public function priceDetail($priceId) {
 
-        $whereStaffConditions = ['id' => $priceId];
-        $priceData = DB::table('price_grid')->where($whereStaffConditions)->get();
+        $wherePriceConditions = ['id' => $priceId];
+        $priceData = DB::table('price_grid')->where($wherePriceConditions)->get();
+
+
+        $whereConditions = ['price_id' => $priceId];
+        $listArray = ['item','time','charge','is_gps_distrib','is_gps_opt','is_per_line','is_per_order','is_per_screen_set'];
+        $priceCharge = DB::table('price_grid_charges')->select($listArray)->where($whereConditions)->get();
+
         $combine_array['price'] = $priceData;
+        $combine_array['allPriceGrid'] = $priceCharge;
         return $combine_array;
     }
 
@@ -71,11 +78,20 @@ class Price extends Model {
 * @return array $result
 */
 
-    public function priceAdd($data) {
+    public function priceAdd($data,$priceData) {
         $data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
         $result = DB::table('price_grid')->insert($data);
-        return $result;
+
+        $priceid = DB::getPdo()->lastInsertId();
+
+           foreach($priceData as $key => $link) 
+              { 
+                $priceData[$key]['price_id'] = $priceid;
+                $result_vendor = DB::table('price_grid_charges')->insert($priceData[$key]);
+              }
+
+        return $priceid;
     }
 
 /**
@@ -90,6 +106,25 @@ class Price extends Model {
         $whereConditions = ['id' => $data['id']];
         $result = DB::table('price_grid')->where($whereConditions)->update($data);
         return $result;
+    }
+
+/**
+* Price charges data           
+* @access public priceChargesEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function priceChargesEdit($priceData,$priceId) {
+    
+    DB::table('price_grid_charges')->where('price_id', '=', $priceId)->delete();
+     
+           foreach($priceData as $key => $link) 
+              { 
+                $priceData[$key]['price_id'] = $priceId;
+                $result_vendor = DB::table('price_grid_charges')->insert($priceData[$key]);
+              }
+        return  $priceId;
     }
 
 
