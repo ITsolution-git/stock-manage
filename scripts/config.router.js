@@ -186,6 +186,21 @@ angular.module('app')
             }
           })
 
+          .state('setting', {
+              url: '/setting',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
             .state('staff.list', {
               url: '/list',
               templateUrl: 'views/staff/staff.html',
@@ -402,6 +417,66 @@ angular.module('app')
               templateUrl: 'views/product/product-add.html',
               data : { title: 'Product Edit' },
                controller: 'productAddEditCtrl',
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+            .state('client', {
+              url: '/front/client',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
+            .state('client.list', {
+              url: '/list',
+              templateUrl: 'views/front/client/list.html',
+              data : { title: 'Client listing' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+
+            .state('setting.price', {
+              url: '/price',
+              templateUrl: 'views/setting/price.html',
+              data : { title: 'Price Grid' },
+              controller: 'priceListCtrl',
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+
+            .state('setting.priceedit', {
+              url: '/edit/:id',
+              templateUrl: 'views/setting/price-add.html',
+              data : { title: 'Price Edit' },
+               controller: 'priceAddEditCtrl',
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+
+            .state('setting.priceadd', {
+              url: '/add',
+               templateUrl: 'views/setting/price-add.html',
+               controller: 'priceAddEditCtrl',
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();

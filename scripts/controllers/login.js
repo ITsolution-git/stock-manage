@@ -24,7 +24,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
 
                                    //$location.url('/app/dashboard');
                                    $state.go('app.dashboard');
-                                   setTimeout(function(){ window.location.reload(); }, 500);
+                                   setTimeout(function(){ window.location.reload(); }, 200);
                                    //window.location.href="#/app/dashboard";
                                    return false;
 
