@@ -433,6 +433,17 @@ angular.module('app')
                             },
                        }
             })
+            .state('client.add', {
+              url: '/add',
+              templateUrl: 'views/front/client/add.html',
+               controller: 'clientAddCtrl',
+              data : { title: 'Client listing' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
 
 ;
 
