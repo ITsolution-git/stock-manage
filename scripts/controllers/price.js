@@ -72,6 +72,7 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
 
                                       
                                       $scope.allPriceGrid = result.data.allPriceGrid;
+                                      $scope.allScreenPrimary = result.data.allScreenPrimary;
 
                                      
                              }  else {
@@ -83,11 +84,12 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                          }
 
 
-                          $scope.savePrice = function(price,price_grid) {
+                          $scope.savePrice = function(price,price_grid,price_primary) {
                          
                           var combine_array_data = {};
                           combine_array_data.price = price;
                           combine_array_data.price_grid = price_grid;
+                          combine_array_data.price_primary = price_primary;
 
                          if(price.id) {
                                
@@ -129,6 +131,16 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
 
                           $scope.removeInput = function(index){
                               $scope.allPriceGrid.splice(index,1);
+                          }
+
+
+                          $scope.allScreenPrimary = [];
+                          $scope.addScreenPrimary = function(){
+                            $scope.allScreenPrimary.push({range_low:'', range_high:'', pricing_1c:'', pricing_2c:'', pricing_3c:'', pricing_4c:'', pricing_5c:'', pricing_6c:'',pricing_7c:'',pricing_8c:'',pricing_9c:'',pricing_10c:'',pricing_11c:'',pricing_12c:''});
+                          }
+
+                          $scope.removeScreenPrimary = function(index){
+                              $scope.allScreenPrimary.splice(index,1);
                           }
 
 
