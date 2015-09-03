@@ -90,8 +90,7 @@
   <script src="scripts/controllers/staff.js"></script>
   <script src="scripts/controllers/logout.js"></script>
   <script src="scripts/controllers/login.js"></script>
+  <script src="scripts/controllers/client.js"></script>
   <script src="scripts/controllers/price.js"></script>
-
-
 </body>
 </html>
