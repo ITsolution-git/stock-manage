@@ -62,9 +62,9 @@ class SettingController extends Controller {
           $result = $this->price->priceDetail($data);
           
            if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['price']);
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['price'],'allPriceGrid' => $result['allPriceGrid'],'allScreenPrimary' => $result['allScreenPrimary']);
         } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['price']);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['price'],'allPriceGrid' => $result['allPriceGrid'],'allScreenPrimary' => $result['allScreenPrimary']);
         }
         
         return response()->json(["data" => $response]);
@@ -116,7 +116,7 @@ class SettingController extends Controller {
 
         $data = Input::all();
 
-          $result = $this->price->priceAdd($data);
+          $result = $this->price->priceAdd($data['price'],$data['price_grid'],$data['price_primary']);
           if (count($result) > 0) {
             $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
         } 
@@ -137,7 +137,10 @@ class SettingController extends Controller {
        
          $data = Input::all();
          
-          $result = $this->price->priceEdit($data);
+          $result = $this->price->priceEdit($data['price']);
+          $resultContact = $this->price->priceChargesEdit($data['price_grid'],$data['price']['id']);
+          $resultPricePrimary = $this->price->priceChargesPrimaryEdit($data['price_primary'],$data['price']['id']);
+
           if (count($result) > 0) {
             $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
         } 
