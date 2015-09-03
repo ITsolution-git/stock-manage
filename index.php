@@ -72,11 +72,12 @@
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/fileupload.js"></script>
-
+<script src="scripts/controllers/material.js"></script>
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
   <script src="scripts/common/date.js"></script>
+  
 
   <!-- LOAD ALL CONTROLLER -->
   <script src="scripts/controllers/account.js"></script>
@@ -90,5 +91,6 @@
   <script src="scripts/controllers/logout.js"></script>
   <script src="scripts/controllers/login.js"></script>
   <script src="scripts/controllers/client.js"></script>
+  <script src="scripts/controllers/price.js"></script>
 </body>
 </html>

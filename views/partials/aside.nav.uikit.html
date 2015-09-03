@@ -131,10 +131,10 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="setting.list">Price Grid</a>
+          <a md-ink-ripple ui-sref="setting.price">Price Grid</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="setting.add">Quick book</a>
+          <a md-ink-ripple ui-sref="setting.quick">Quick book</a>
         </li>
        
       </ul>
@@ -165,7 +165,18 @@
     </li>
 <!-- Code end for Misc tab -->
 
-<!-- Code end for Client tab -->
+<!-- Code Start for Home tab -->
+    <li ng-show="app.role=='BC'">
+      <a md-ink-ripple>
+            
+        <i class="icon fa fa-home i-20"></i>
+        <span class="font-normal">Home</span>
+      </a>
+    </li>
+
+  <!-- Code end for Home tab -->
+
+<!-- Code Start for Client tab -->
     <li ng-show="app.role=='BC'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
@@ -176,7 +187,7 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple List</a>
+          <a md-ink-ripple> List</a>
         </li>
         <li ui-sref-active="active">
           <a md-ink-ripple >Add</a>
@@ -184,8 +195,109 @@
        
       </ul>
     </li>
-
   <!-- Code end for Client tab --> 
+
+ <!-- Code Start for Orders tab -->
+    <li ng-show="app.role=='BC'">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="icon fa fa-reorder i-20"></i>
+        <span class="font-normal">Orders</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple> List</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple >Add</a>
+        </li>
+       
+      </ul>
+    </li>
+  <!-- Code end for Orders tab --> 
+
+ <!-- Code Start for Purchasing tab -->
+    <li ng-show="app.role=='BC'">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="icon fa fa-shopping-cart i-20"></i>
+        <span class="font-normal">Purchasing</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple > Culture PO</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple >Supplied Garments</a>
+        </li>
+       <li ui-sref-active="active">
+          <a md-ink-ripple >Contact Print</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple >Contact Embrodiery</a>
+        </li>
+      </ul>
+    </li>
+  <!-- Code end for Purchasing tab --> 
+
+
+ <!-- Code Start for Art tab -->
+    <li ng-show="app.role=='BC'">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="icon fa fa-pie-chart i-20"></i>
+        <span class="font-normal">Art</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple>Screen List</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple >Add</a>
+        </li>
+       
+      </ul>
+    </li>
+  <!-- Code end for Art tab --> 
+
+
+  <!-- Code Start for Production tab -->
+    <li ng-show="app.role=='BC'">
+      <a md-ink-ripple>
+       
+        <i class="icon fa fa-tags i-20"></i>
+        <span class="font-normal">Production</span>
+      </a>
+    </li>
+  <!-- Code end for Production tab --> 
+
+
+ <!-- Code Start for Shipping tab -->
+    <li ng-show="app.role=='BC'">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+        <i class="icon fa fa-truck i-20"></i>
+        <span class="font-normal">Shipping</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple>List</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple >Add</a>
+        </li>
+       
+      </ul>
+    </li>
+  <!-- Code end for Shipping tab --> 
 
 <!--     <li class="b-b b m-v-sm"></li>
     <li>
