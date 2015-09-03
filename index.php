@@ -89,6 +89,6 @@
   <script src="scripts/controllers/staff.js"></script>
   <script src="scripts/controllers/logout.js"></script>
   <script src="scripts/controllers/login.js"></script>
-
+  <script src="scripts/controllers/client.js"></script>
 </body>
 </html>
