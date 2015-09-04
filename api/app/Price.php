@@ -72,9 +72,21 @@ class Price extends Model {
         $priceScreenPrimary = DB::table('price_screen_primary')->select($listArrayPrimary)->where($whereConditionsScreenPrimary)->get();
 
 
+        $whereConditionsScreenSecondary = ['price_id' => $priceId];
+        $listArraySecondary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $priceScreenSecondary = DB::table('price_screen_secondary')->select($listArraySecondary)->where($whereConditionsScreenSecondary)->get();
+
+
+        $whereConditionsGarmentMackup = ['price_id' => $priceId];
+        $listArrayGarmentMackup = ['range_high','range_low','percentage'];
+        $priceGarmentMackup = DB::table('price_garment_mackup')->select($listArrayGarmentMackup)->where($whereConditionsGarmentMackup)->get();
+
+
         $combine_array['price'] = $priceData;
         $combine_array['allPriceGrid'] = $priceCharge;
         $combine_array['allScreenPrimary'] = $priceScreenPrimary;
+        $combine_array['allScreenSecondary'] = $priceScreenSecondary;
+        $combine_array['allGarmentMackup'] = $priceGarmentMackup;
         return $combine_array;
     }
 
@@ -85,7 +97,7 @@ class Price extends Model {
 * @return array $result
 */
 
-    public function priceAdd($data,$priceData,$priceScreenPrimary) {
+    public function priceAdd($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup) {
         $data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
         $result = DB::table('price_grid')->insert($data);
@@ -102,6 +114,18 @@ class Price extends Model {
               { 
                 $priceScreenPrimary[$keyprimary]['price_id'] = $priceid;
                 $result_primary = DB::table('price_screen_primary')->insert($priceScreenPrimary[$keyprimary]);
+              }
+
+              foreach($priceScreenSecondary as $keysecondary => $linksecondary) 
+              { 
+                $priceScreenSecondary[$keysecondary]['price_id'] = $priceid;
+                $result_secondary = DB::table('price_screen_secondary')->insert($priceScreenSecondary[$keysecondary]);
+              }
+
+               foreach($priceGarmentMackup as $keygarmack => $linkgarmack) 
+              { 
+                $priceGarmentMackup[$keygarmack]['price_id'] = $priceid;
+                $result_garment_mackup = DB::table('price_garment_mackup')->insert($priceGarmentMackup[$keygarmack]);
               }
 
         return $priceid;
@@ -141,7 +165,7 @@ public function priceChargesEdit($priceData,$priceId) {
     }
 
 
-    /**
+/**
 * Price charges Primary data           
 * @access public priceChargesPrimaryEdit
 * @param  array $data
@@ -156,6 +180,45 @@ public function priceChargesPrimaryEdit($price_primary,$priceId) {
               { 
                 $price_primary[$key]['price_id'] = $priceId;
                 $result_price_primary = DB::table('price_screen_primary')->insert($price_primary[$key]);
+              }
+        return  $priceId;
+    }
+
+/**
+* Price charges Secondary data           
+* @access public priceChargesSecondaryEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function priceChargesSecondaryEdit($price_secondary,$priceId) {
+    
+    DB::table('price_screen_secondary')->where('price_id', '=', $priceId)->delete();
+     
+           foreach($price_secondary as $key => $link) 
+              { 
+                $price_secondary[$key]['price_id'] = $priceId;
+                $result_price_secondary = DB::table('price_screen_secondary')->insert($price_secondary[$key]);
+              }
+        return  $priceId;
+    }
+
+
+/**
+* Price charges Garment Mackup data           
+* @access public priceGarmentMackupEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function priceGarmentMackupEdit($garment_mackup,$priceId) {
+    
+    DB::table('price_garment_mackup')->where('price_id', '=', $priceId)->delete();
+     
+           foreach($garment_mackup as $key => $link) 
+              { 
+                $garment_mackup[$key]['price_id'] = $priceId;
+                $result_garment_markup = DB::table('price_garment_mackup')->insert($garment_mackup[$key]);
               }
         return  $priceId;
     }

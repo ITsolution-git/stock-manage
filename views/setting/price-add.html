@@ -2,7 +2,7 @@
   <div class="row">
     <div>
 
-      <form name="priceForm" class="form-validation" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary)">
+      <form name="priceForm" class="form-validation" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup)">
         
         <div class="panel panel-default col-sm-5">
          <input type="hidden" ng-model="price.id" value="{{price.id}}">
@@ -243,7 +243,48 @@
 
         <div role="tabpanel" class="tab-pane animated fadeIn" id="screenprintsecondary">
             
-            
+            <div class="form-group">
+                  <label>Low<em class="text-muted"></em></label>
+                  <label>High<em class="text-muted"></em></label>
+                  <label>1c<em class="text-muted"></em></label>
+                  <label>2c<em class="text-muted"></em></label>
+                  <label>3c<em class="text-muted"></em></label>
+                  <label>4c<em class="text-muted"></em></label>
+                  <label>5c<em class="text-muted"></em></label>
+                  <label>6c<em class="text-muted"></em></label>
+                  <label>7c<em class="text-muted"></em></label>
+                  <label>8c<em class="text-muted"></em></label>
+                  <label>9c<em class="text-muted"></em></label>
+                  <label>10c<em class="text-muted"></em></label>
+                  <label>11c<em class="text-muted"></em></label>
+                  <label>12c<em class="text-muted"></em></label>
+                     
+              </div>
+
+              
+            <div class="form-group">
+              
+                <div ng-repeat="price_secondary in allScreenSecondary">
+                    <input type="text"   ng-model="price_secondary.range_low"/>
+                    <input type="text"   ng-model="price_secondary.range_high"/>
+                    <input type="text"   ng-model="price_secondary.pricing_1c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_2c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_3c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_4c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_5c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_6c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_7c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_8c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_9c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_10c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_11c"/>
+                    <input type="text"   ng-model="price_secondary.pricing_12c"/>
+                    
+
+                     <button ng-click="removeScreenSecondary($index)">Remove</button> 
+                </div>
+                     <button type="button" ng-click="addScreenSecondary()">add input</button>
+            </div>
 
         </div>
 
@@ -261,7 +302,26 @@
 
         <div role="tabpanel" class="tab-pane animated fadeIn" id="garmentmarkup">
             
-            
+             <div class="form-group">
+                  <label>Low<em class="text-muted"></em></label>
+                  <label>High<em class="text-muted"></em></label>
+                  <label>Percentage<em class="text-muted"></em></label>
+                 
+                     
+              </div>
+
+              
+            <div class="form-group">
+              
+                <div ng-repeat="garment_mackup in allGarmentMackup">
+                    <input type="text"   ng-model="garment_mackup.range_low"/>
+                    <input type="text"   ng-model="garment_mackup.range_high"/>
+                    <input type="text"   ng-model="garment_mackup.percentage"/>
+                   
+                     <button ng-click="removeGarmentMackup($index)">Remove</button> 
+                </div>
+                     <button type="button" ng-click="addGarmentMackup()">add input</button>
+            </div>
 
         </div>
 

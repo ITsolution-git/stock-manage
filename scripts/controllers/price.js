@@ -73,6 +73,8 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                                       
                                       $scope.allPriceGrid = result.data.allPriceGrid;
                                       $scope.allScreenPrimary = result.data.allScreenPrimary;
+                                      $scope.allScreenSecondary = result.data.allScreenSecondary;
+                                      $scope.allGarmentMackup = result.data.allGarmentMackup;
 
                                      
                              }  else {
@@ -84,12 +86,14 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                          }
 
 
-                          $scope.savePrice = function(price,price_grid,price_primary) {
+                          $scope.savePrice = function(price,price_grid,price_primary,price_secondary,garment_mackup) {
                          
                           var combine_array_data = {};
                           combine_array_data.price = price;
                           combine_array_data.price_grid = price_grid;
                           combine_array_data.price_primary = price_primary;
+                          combine_array_data.price_secondary = price_secondary;
+                          combine_array_data.garment_mackup = garment_mackup;
 
                          if(price.id) {
                                
@@ -141,6 +145,24 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
 
                           $scope.removeScreenPrimary = function(index){
                               $scope.allScreenPrimary.splice(index,1);
+                          }
+
+                          $scope.allScreenSecondary = [];
+                          $scope.addScreenSecondary = function(){
+                            $scope.allScreenSecondary.push({range_low:'', range_high:'', pricing_1c:'', pricing_2c:'', pricing_3c:'', pricing_4c:'', pricing_5c:'', pricing_6c:'',pricing_7c:'',pricing_8c:'',pricing_9c:'',pricing_10c:'',pricing_11c:'',pricing_12c:''});
+                          }
+
+                          $scope.removeScreenSecondary = function(index){
+                              $scope.allScreenSecondary.splice(index,1);
+                          }
+
+                           $scope.allGarmentMackup = [];
+                          $scope.addGarmentMackup = function(){
+                            $scope.allGarmentMackup.push({range_low:'', range_high:'', percentage:''});
+                          }
+
+                          $scope.removeGarmentMackup = function(index){
+                              $scope.allGarmentMackup.splice(index,1);
                           }
 
 

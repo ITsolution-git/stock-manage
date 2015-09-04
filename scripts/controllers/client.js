@@ -1,4 +1,56 @@
 app.controller('clientAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log', function($scope,$http,$location,$state,$modal,AuthService,$log) {
+                          AuthService.AccessService('BC');
+                          $scope.CurrentController=$state.current.controller;
+
+                          $http.get('api/public/common/type/client').success(function(Listdata) {
+                                  $scope.Typelist = Listdata.data
+                            });
+
+                          $scope.SaveClient = function () {
+                            var company_post = $scope.client;
+                            if($scope.client.client_company!='')
+                            {
+                              $http.post('api/public/client/addclient',company_post).success(function(Listdata) {
+                                      if(Listdata.data.success=='1')
+                                       {
+                                           $state.go('client.list');
+                                           return false;
+                                       }  
+                              });
+                            }
+                            
+                          }
+
+}]);
+app.controller('clientListCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log', function($scope,$http,$location,$state,$modal,AuthService,$log) {
+                          AuthService.AccessService('BC');
+                          $scope.CurrentController=$state.current.controller;
+                          var delete_params = {};
+                          $scope.deleteclient = function (comp_id) {
+                                delete_params.id = comp_id;
+                                var permission = confirm("Are you sure to delete this record ?");
+                                if (permission == true) {
+                                $http.post('api/public/client/DeleteClient',delete_params).success(function(result, status, headers, config) {
+                                              
+                                              if(result.data.success=='1')
+                                              {
+                                                $state.go('client.list');
+                                                $("#comp_"+comp_id).remove();
+                                                return false;
+                                              }  
+                                         });
+                                      }
+                                  } // DELETE COMPANY FINISH
+                          $http.get('api/public/client/ListClient').success(function(Listdata) {
+                                       if(Listdata.data.success=='1')
+                                       {
+                                          $scope.ListClient = Listdata.data
+                                       }
+                                  });
+
+
+}]);
+app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log', function($scope,$http,$location,$state,$modal,AuthService,$log) {
                           
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;

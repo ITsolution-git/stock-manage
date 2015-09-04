@@ -87,6 +87,9 @@ Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
 
-
+// CLIENT CONTROLLER 
+Route::post('client/addclient', 'ClientController@addclient');
+Route::get('client/ListClient', 'ClientController@ListClient');
+Route::post('client/DeleteClient', 'ClientController@DeleteClient');
 
 

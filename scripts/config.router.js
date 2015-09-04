@@ -441,6 +441,7 @@ angular.module('app')
             .state('client.list', {
               url: '/list',
               templateUrl: 'views/front/client/list.html',
+              controller: 'clientListCtrl',
               data : { title: 'Client listing' },
               resolve: {
                             checklogin: function (AuthService) {
