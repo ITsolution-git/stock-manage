@@ -1,10 +1,10 @@
 (function () {
     angular.module('app.services', [])
 
-.factory('AuthService', function ($rootScope,$location, $http,$state, $q,flash,sessionService,$cacheFactory) {
+.factory('AuthService', function ($rootScope,$location, $http,$state, $q,flash,sessionService) {
                     var currentUser = {}
-                    var $httpDefaultCache = $cacheFactory.get('$http');
-                    $httpDefaultCache.removeAll();
+                    
+
     return {
         checksession: function (option) {
 
@@ -30,16 +30,15 @@
                 {
                    // console.log('error');
                     $state.go('app.dashboard');
-                    window.location.reload();
+                    setTimeout(function(){ window.location.reload(); }, 200);
                     return false;
                 }
              },
         }
     })
     .factory('sessionService', [
-                '$rootScope', '$state', '$http','$cacheFactory', function ($rootScope, $state, $http,$cacheFactory) {
-                    var $httpDefaultCache = $cacheFactory.get('$http');
-                    $httpDefaultCache.removeAll();
+                '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
+
                     return {
                         set: function (key, value) {
                             return sessionStorage.setItem(key, value);
