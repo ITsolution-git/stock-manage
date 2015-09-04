@@ -32,14 +32,10 @@ class CommonController extends Controller {
 	public function getAdminRoles()
 	{
 		$listRoels = $this->common->getAdminRoles();
-
-		$success = count($listRoels);
-		$message  = ($success>0)? GET_RECORDS:NO_RECORDS;
-
-		$data = array("records" => $listRoels,"success"=>$success,"message"=>$message);
-		return response()->json(['data'=>$data]);
-
+		return $this->return_response($listRoels);
 	}
+
+
 	public function checkemailExist($email)
 	{
 		if(!empty($email))
@@ -66,19 +62,10 @@ class CommonController extends Controller {
 * @return json data
 */
 
-    public function type($type) {
- 
-        
+    public function type($type) 
+    {
         $result = $this->common->TypeList($type);
-       
-        if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
-        } else {
-           
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
-        }
-        
-        return response()->json(["data" => $response]);
+        return $this->return_response($result);
     }
 
 /**
@@ -89,16 +76,7 @@ class CommonController extends Controller {
     public function getStaffRoles()
     {
         $result = $this->common->getStaffRoles();
-
-         if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
-        } else {
-           
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
-        }
-        
-        return response()->json(["data" => $response]);
-
+        return return_response($result);
     }
 
 /**
@@ -109,18 +87,23 @@ class CommonController extends Controller {
     public function getAllVendors()
     {
         $result = $this->common->getAllVendors();
+        return $this->return_response($result);
+     }
 
-         if (count($result) > 0) {
+    /**
+    * Get Array
+    * @return json data
+    */
+    public function return_response($result)
+    {
+        if (count($result) > 0) 
+        {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
-        } else {
-           
+        } 
+        else 
+        {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
-        
-        return response()->json(["data" => $response]);
-
+        return  response()->json(["data" => $response]);
     }
-
-
-
 }

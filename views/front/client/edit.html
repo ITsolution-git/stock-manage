@@ -1,0 +1,249 @@
+ 
+  <div class="row">
+    <div class="col-sm-12">
+
+      <form name="staffForm" class="form-validation" ng-submit="saveStaff()">
+        
+        <div class="panel panel-default">
+         <input type="hidden" ng-model="staff.id">
+          <div class="panel-body">
+            <div class="form-group col-sm-6 m-b">
+              
+              <div class="input-group col-sm-12 m-b">
+              <label>Company <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.first_name"  >
+              </div>
+
+
+              <div class="col-md-6 m-b">
+              <label>Main contact <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.first_name"  >
+              </div>
+              
+              <div class=" col-md-6 m-b">
+              <label>Billing Email <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.last_name"  >
+              </div>
+
+              <div class="col-md-6 m-b">
+              <label>Main Contact Phone <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.first_name"  >
+              </div>
+              
+              <div class=" col-md-6 m-b">
+              <label>company Phone <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.last_name" >
+              </div>
+               <div class="col-md-6 m-b">
+              <label>Contact's Phone <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.first_name" >
+              </div>
+              
+              <div class=" col-md-6 m-b">
+              <label>Company URL <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.last_name" >
+              </div>
+               <div class="col-md-6 m-b">
+              <label>Type <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.first_name" >
+              </div>
+              
+              <div class=" col-md-6">
+              <label>Desposition <em class="text-muted"></em></label>
+              <input type="text" class="form-control" ng-model="staff.last_name" >
+              </div>
+             
+              <div class="input-group col-sm-5 m-b"></div>
+
+              <ul class="nav nav-tabs input-group col-sm-12">
+                <li class="active">
+                  <a href data-toggle="tab" data-target="#tab0">Logo</a>
+                </li>
+                <li>
+                  <a href data-toggle="tab" data-target="#tab1">contact</a>
+                </li>
+                <li>
+                  <a href data-toggle="tab" data-target="#tab2">Address</a>
+                </li>
+                <li>
+                  <a href data-toggle="tab" data-target="#tab3">Sales Detail</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab4">Credit/QB</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab5"> Tax</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab6"> Document</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab7"> Pay Method</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab8"> PI Imp</a>
+                </li>
+              </ul>
+
+               
+                <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab0">Logo</div>
+                
+                <!-- CONTACTS TAB START -->
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab1">
+                  <div class="form-group">
+                    <div ng-repeat="client_contacts in allContacts">
+                        <input type="radio" name="contact_main" class="pull-left" style="margin: 0 5px 0 0 !important;"  ng-model="client_contacts.contactmain">
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.contactfirst_name" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.contactlast_name" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.contactlocation" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.contactphone" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.contactemail" />
+                         
+                        <button type="button" ng-click="removeContacts($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <button type="button" ng-click="addContacts()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                </div>
+                </div>
+                <!-- CONTACTS TAB END -->
+
+                <!-- ADDRESS TAB START -->
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
+                   <div class="form-group">
+                    <div ng-repeat="client_address in alladdress">
+ 
+                         
+                        <button type="button" ng-click="removeAddress($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <button type="button" ng-click="addAddress()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                </div>
+                </div>
+                <!-- ADDRESS TAB END -->
+
+                <!-- SALES TAB START -->
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab3">
+
+                  <div class="input-group col-sm-12 m-b">
+                    <label>Web <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="staff.first_name"  >
+                  </div>
+                  <div class="input-group col-sm-12 m-b">
+                    <label>Anniversary Date <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="staff.first_name"  >
+                  </div>
+                   <div class="input-group col-sm-12 m-b">
+                    <label>Sales Person <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="staff.first_name"  >
+                  </div>
+                   <div class="input-group col-sm-12 m-b">
+                    <label>Defualt PriceGrid <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="staff.first_name"  >
+                  </div>
+
+                </div>
+                <!-- SALES TAB END -->
+
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab4">CreditCard Details, Multiple</div>
+
+                <!-- TAX TAB START -->
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab5">
+
+                  <div class="input-group col-sm-12 m-b">
+                    <label>TaxId <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="client_tax.tax_id"  >
+                  </div>
+                  <div class="input-group col-sm-12 m-b">
+                    <label>TaxId Document <em class="text-muted"></em></label>
+                    <textarea class="form-control" ng-model="client_tax.tax_doc"  ></textarea> 
+                  </div>
+                  <div class="input-group col-sm-12 m-b">
+                    <label>Tax Rate % <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="client_tax.tax_rate"  >
+                  </div>
+                  <div class="input-group col-sm-12 m-b">
+                    <label>Tax Exampt <em class="text-muted"></em></label><br>
+                    <md-checkbox class="pull-left" style="margin: 0 5px 0 0 !important;"  ng-model="client_tax.yes">Yes</md-checkbox>
+                    <md-checkbox class="pull-left" style="margin: 0 5px 0 0 !important;"  ng-model="client_contacts.no">No</md-checkbox>
+                  </div>
+
+                </div>
+                <!-- TAX TAB START -->
+
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab6">
+                 
+                <div class="panel b-a ng-scope">
+                      <script id="myModalContent.html" type="text/ng-template">
+                        &lt;div ng-include="'views/front/client/document.html'"&gt;&lt;/div&gt;
+                      </script>
+                      
+                      <div class="panel-body">
+                        <button ng-click="open()" class="btn btn-success" tabindex="0">+</button>
+                      </div>
+                  </div>
+
+                  </div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab7">Payments</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab8">PI Form</div>
+
+
+                </div>
+            </div>
+
+            <div class="form-group col-sm-6 m-b">
+               <ul class="nav nav-tabs input-group col-sm-12">
+                <li class="active">
+                  <a href data-toggle="tab" data-target="#tab10">Note</a>
+                </li>
+                <li>
+                  <a href data-toggle="tab" data-target="#tab11">Tasks</a>
+                </li>
+                <li>
+                  <a href data-toggle="tab" data-target="#tab12">Orders</a>
+                </li>
+                <li>
+                  <a href data-toggle="tab" data-target="#tab13">Distribution Address</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab14">Screen sets</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab15"> Web Portal</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab16"> Logos</a>
+                </li>
+                 <li>
+                  <a href data-toggle="tab" data-target="#tab17"> Art</a>
+                </li>
+               </ul>
+                <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab10">Logo</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Contacts Multiple</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Addresses Multiple</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">Sales Detail</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab14">CreditCard Details, Multiple</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab15">Tax</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab16">Documents</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab17">Payments</div>
+
+
+                </div>
+            </div>
+
+       
+            <div>&nbsp;</div>
+
+            <div class="form-group col-sm-12 m-b"></div>
+            
+          </div>
+          <footer class="panel-footer text-right">
+            <button  type="submit" class="btn btn-info" ng-disabled="staffForm.$invalid">Submit</button>&nbsp;
+            <button ui-sref="staff.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
+           
+          </footer>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+ 
