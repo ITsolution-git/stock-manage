@@ -82,11 +82,17 @@ class Price extends Model {
         $priceGarmentMackup = DB::table('price_garment_mackup')->select($listArrayGarmentMackup)->where($whereConditionsGarmentMackup)->get();
 
 
+        $whereConditionsAllGarment = ['price_id' => $priceId];
+        $listArrayAllGarment = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $priceAllGarment = DB::table('price_direct_garment')->select($listArrayAllGarment)->where($whereConditionsAllGarment)->get();
+
+
         $combine_array['price'] = $priceData;
         $combine_array['allPriceGrid'] = $priceCharge;
         $combine_array['allScreenPrimary'] = $priceScreenPrimary;
         $combine_array['allScreenSecondary'] = $priceScreenSecondary;
         $combine_array['allGarmentMackup'] = $priceGarmentMackup;
+        $combine_array['allGarment'] = $priceAllGarment;
         return $combine_array;
     }
 
@@ -97,7 +103,7 @@ class Price extends Model {
 * @return array $result
 */
 
-    public function priceAdd($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup) {
+    public function priceAdd($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup,$priceDirectGarment) {
         $data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
         $result = DB::table('price_grid')->insert($data);
@@ -126,6 +132,12 @@ class Price extends Model {
               { 
                 $priceGarmentMackup[$keygarmack]['price_id'] = $priceid;
                 $result_garment_mackup = DB::table('price_garment_mackup')->insert($priceGarmentMackup[$keygarmack]);
+              }
+
+              foreach($priceDirectGarment as $keydgarm => $linkdgarm) 
+              { 
+                $priceDirectGarment[$keydgarm]['price_id'] = $priceid;
+                $result_direct_garment = DB::table('price_direct_garment')->insert($priceDirectGarment[$keydgarm]);
               }
 
         return $priceid;
@@ -219,6 +231,25 @@ public function priceGarmentMackupEdit($garment_mackup,$priceId) {
               { 
                 $garment_mackup[$key]['price_id'] = $priceId;
                 $result_garment_markup = DB::table('price_garment_mackup')->insert($garment_mackup[$key]);
+              }
+        return  $priceId;
+    }
+
+/**
+* Price charges Direct Garment data           
+* @access public priceDirectGarmentEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function priceDirectGarmentEdit($direct_garment,$priceId) {
+    
+    DB::table('price_direct_garment')->where('price_id', '=', $priceId)->delete();
+     
+           foreach($direct_garment as $key => $link) 
+              { 
+                $direct_garment[$key]['price_id'] = $priceId;
+                $result_direct_garment = DB::table('price_direct_garment')->insert($direct_garment[$key]);
               }
         return  $priceId;
     }
