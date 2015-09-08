@@ -61,9 +61,9 @@ class SettingController extends Controller {
           $result = $this->price->priceDetail($data);
           
            if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['price'],'allPriceGrid' => $result['allPriceGrid'],'allScreenPrimary' => $result['allScreenPrimary'],'allScreenSecondary' => $result['allScreenSecondary'],'allGarmentMackup' => $result['allGarmentMackup'],'allGarment' => $result['allGarment']);
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['price'],'allPriceGrid' => $result['allPriceGrid'],'allScreenPrimary' => $result['allScreenPrimary'],'allScreenSecondary' => $result['allScreenSecondary'],'allGarmentMackup' => $result['allGarmentMackup'],'allGarment' => $result['allGarment'],'embroswitch' => $result['embroswitch'],'allEmbroidery' => $result['allEmbroidery']);
         } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['price'],'allPriceGrid' => $result['allPriceGrid'],'allScreenPrimary' => $result['allScreenPrimary'],'allScreenSecondary' => $result['allScreenSecondary'],'allGarmentMackup' => $result['allGarmentMackup'],'allGarment' => $result['allGarment']);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['price'],'allPriceGrid' => $result['allPriceGrid'],'allScreenPrimary' => $result['allScreenPrimary'],'allScreenSecondary' => $result['allScreenSecondary'],'allGarmentMackup' => $result['allGarmentMackup'],'allGarment' => $result['allGarment'],'embroswitch' => $result['embroswitch'],'allEmbroidery' => $result['allEmbroidery']);
         }
         
         return response()->json(["data" => $response]);
@@ -115,7 +115,7 @@ class SettingController extends Controller {
 
         $data = Input::all();
 
-          $result = $this->price->priceAdd($data['price'],$data['price_grid'],$data['price_primary'],$data['price_secondary'],$data['garment_mackup'],$data['garment']);
+          $result = $this->price->priceAdd($data['price'],$data['price_grid'],$data['price_primary'],$data['price_secondary'],$data['garment_mackup'],$data['garment'],$data['embroswitch'],$data['allEmbroidery']);
           if (count($result) > 0) {
             $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
         } 
@@ -133,15 +133,18 @@ class SettingController extends Controller {
 
     public function priceEdit() {
 
-       
+      
          $data = Input::all();
-         
+
+        
           $result = $this->price->priceEdit($data['price']);
           $resultContact = $this->price->priceChargesEdit($data['price_grid'],$data['price']['id']);
           $resultPricePrimary = $this->price->priceChargesPrimaryEdit($data['price_primary'],$data['price']['id']);
           $resultPriceSecondary = $this->price->priceChargesSecondaryEdit($data['price_secondary'],$data['price']['id']);
           $resultGarmentMackup = $this->price->priceGarmentMackupEdit($data['garment_mackup'],$data['price']['id']);
           $resultDirectGarment = $this->price->priceDirectGarmentEdit($data['garment'],$data['price']['id']);
+          $resultEmbroSwitch = $this->price->priceEmbroSwitchEdit($data['embroswitch'],$data['price']['id']);
+          $resultPriceEmbro = $this->price->priceEmbroEdit($data['allEmbroidery'],$data['price']['id'],$data['embroswitch']['id']);
 
           if (count($result) > 0) {
             $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
