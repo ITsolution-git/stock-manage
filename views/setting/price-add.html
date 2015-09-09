@@ -15,6 +15,8 @@
               <input type="text" class="form-control" ng-model="price.name" required >
             </div>
 
+
+
             <div class="form-group col-sm-12 m-b">
               <ul class="nav nav-tabs">
                 <li class="active">
@@ -210,7 +212,7 @@
                   <label>10c<em class="text-muted"></em></label>
                   <label>11c<em class="text-muted"></em></label>
                   <label>12c<em class="text-muted"></em></label>
-                     
+                      <button  ng-click="duplicateprimary(price.id,allScreenPrimary)" type="button"  class="btn btn-info pull-right">Duplicate Primary</button>&nbsp;
               </div>
 
               
@@ -437,9 +439,9 @@
         </div>
 
         <footer class="panel-footer text-right">
+            <button ng-click="duplicate(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)" type="button"  class="btn btn-info">Duplicate Price Grid</button>&nbsp;
             <button  type="submit" class="btn btn-info" ng-disabled="priceForm.$invalid">Submit</button>&nbsp;
             <button ui-sref="setting.price" type="button"  class="btn btn-info">Cancel</button>&nbsp;
-           
           </footer>
       </form>
     </div>

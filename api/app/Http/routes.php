@@ -72,10 +72,12 @@ Route::get('admin/productEdit/{id}', 'ProductController@detail');
 // ADMIN SETTING ROUTERS
 Route::get('admin/price', 'SettingController@price');
 Route::post('admin/priceDelete', 'SettingController@delete');
-Route::post('admin/priceAdd', 'SettingController@priceAdd');
+Route::post('admin/priceGridDuplicate', 'SettingController@priceGridDuplicate');
 Route::post('admin/priceEdit', 'SettingController@priceEdit');
 Route::post('admin/priceDetail', 'SettingController@priceDetail');
 Route::get('admin/priceEdit/{id}', 'SettingController@priceDetail');
+Route::post('admin/priceGridPrimaryDuplicate', 'SettingController@priceGridPrimaryDuplicate');
+Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 
 
 // COMMON CONTROLLER 

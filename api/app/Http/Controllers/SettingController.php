@@ -106,16 +106,18 @@ class SettingController extends Controller {
     }
 
 /**
-* Price Add Controller       
-* @access public priceAdd
+* Price Grid Duplicate Controller       
+* @access public priceGridDuplicate
 * @param  array $data
 * @return json data
 */
-    public function priceAdd() {
+    public function priceGridDuplicate() {
 
         $data = Input::all();
 
-          $result = $this->price->priceAdd($data['price'],$data['price_grid'],$data['price_primary'],$data['price_secondary'],$data['garment_mackup'],$data['garment'],$data['embroswitch'],$data['allEmbroidery']);
+        
+
+          $result = $this->price->priceGridDuplicate($data['price'],$data['price_grid'],$data['price_primary'],$data['price_secondary'],$data['garment_mackup'],$data['garment'],$data['embroswitch'],$data['allEmbroidery']);
           if (count($result) > 0) {
             $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
         } 
@@ -149,6 +151,86 @@ class SettingController extends Controller {
           if (count($result) > 0) {
             $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
         } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+    /**
+* Price Duplicate controller      
+* @access public duplicate
+* @param  array $post
+* @return json data
+*/
+    public function duplicate()
+    {
+        $post = Input::all();
+       
+
+        if(!empty($post[0]))
+        {
+            $getData = $this->price->priceGridDuplicate($post[0]);
+            if($getData)
+            {
+                $message = INSERT_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
+
+/**
+* Price Grid Primary Duplicate Controller       
+* @access public priceGridPrimaryDuplicate
+* @param  array $data
+* @return json data
+*/
+    public function priceGridPrimaryDuplicate() {
+
+        $data = Input::all();
+
+        
+        $resultPricePrimary = $this->price->priceChargesPrimaryEdit($data['price_primary'],$data['price_id']);
+        $resultPriceSecondary = $this->price->priceChargesSecondaryEdit($data['price_primary'],$data['price_id']);
+
+          if (count($resultPriceSecondary) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $resultPriceSecondary);
+           }
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+
+/**
+* Price Secondary controller      
+* @access public priceSecondary
+* @param  array $data
+* @return json data
+*/
+    public function priceSecondary() {
+ 
+         $data = Input::all();
+         
+          $result = $this->price->priceSecondary($data);
+          
+           if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'allScreenSecondary' => $result['allScreenSecondary']);
+        } else {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'allScreenSecondary' => $result['allScreenSecondary']);
+        }
         
         return response()->json(["data" => $response]);
 

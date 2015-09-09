@@ -120,7 +120,7 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                           
                          } else {
                           
-                           $http.post('api/public/admin/priceAdd',combine_array_data).success(function(result, status, headers, config) {
+                          /* $http.post('api/public/admin/priceAdd',combine_array_data).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
 
@@ -129,7 +129,9 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                                    
                              } 
                          
-                          });
+                          });*/
+                            $state.go('app.dashboard');
+                            return false;
 
                          }
                          
@@ -192,6 +194,79 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                           $scope.removeEmbroidery = function(index){
                               $scope.allEmbroidery.splice(index,1);
                           }
+
+
+                           $scope.duplicate = function (price,price_grid,price_primary,price_secondary,garment_mackup,garment,embroswitch,allEmbroidery) {
+                          
+                            var combine_array_data = {};
+                            combine_array_data.price = price;
+                            combine_array_data.price_grid = price_grid;
+                            combine_array_data.price_primary = price_primary;
+                            combine_array_data.price_secondary = price_secondary;
+                            combine_array_data.garment_mackup = garment_mackup;
+                            combine_array_data.garment = garment;
+                            combine_array_data.embroswitch = embroswitch;
+                            combine_array_data.allEmbroidery = allEmbroidery;
+
+                            var permission = confirm("Are you sure you want to duplicate this record ?");
+
+                            if (permission == true) {
+                            
+                                  $http.post('api/public/admin/priceGridDuplicate',combine_array_data).success(function(result, status, headers, config) {
+        
+                                  if(result.data.success == '1') {
+
+                                         $state.go('setting.price');
+                                          return false;
+                                         
+                                   } 
+                         
+                              });
+
+                            }
+                        } 
+
+
+                        $scope.duplicateprimary = function (price_id,price_primary) {
+                          
+                            var combine_array_data = {};
+                            combine_array_data.price_id = $stateParams.id;
+                            
+                            combine_array_data.price_primary = price_primary;
+                            
+ 
+                            var permission = confirm("Are you sure you want to duplicate primary record ?");
+
+                            if (permission == true) {
+                            
+                                  $http.post('api/public/admin/priceGridPrimaryDuplicate',combine_array_data).success(function(result, status, headers, config) {
+        
+                                  if(result.data.success == '1') {
+
+
+                                  $http.post('api/public/admin/priceSecondary',$stateParams.id).success(function(result, status, headers, config) {
+                
+                                    if(result.data.success == '1') {
+                                             
+                                              $scope.allScreenSecondary = result.data.allScreenSecondary;
+                                             
+                                     }  else {
+                                     $state.go('app.dashboard');
+                                     }
+                                 
+                                  });
+
+                                         $("ul.nav-tabs li").removeClass("active"); 
+                                         $( "ul li:nth-child(2)").addClass( "active" );
+
+                                        
+                                         
+                                   } 
+                         
+                              });
+
+                            }
+                        } 
 
 
                        
