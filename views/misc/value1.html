@@ -1,0 +1,73 @@
+
+  <div class="panel panel-default">
+    <div class="panel-body b-b b-light">
+      Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+
+     
+
+    </div>
+
+    <div ng-show="value1.length > 0">
+
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
+        <thead>
+          <tr>
+              <th data-toggle="true">Approval / Order Sequence</th>
+              <th data-toggle="true">Art Type</th>
+              <th data-toggle="true">Boxing Type</th>
+              <th data-toggle="true">Charge Apply</th>
+              <th data-toggle="true">Color Group</th>
+              <th data-toggle="true">Direct to Garment</th>
+              <th data-toggle="true">Dir. to Garment Sz.</th>
+              <th data-toggle="true">Disposition</th>
+              <th data-toggle="true">Graphic Size</th>
+              <th data-toggle="true">Level</th>
+              <th data-toggle="true">Yes No</th>
+              <th data-toggle="true">PO Status</th>
+              <th data-toggle="true">Address Type</th>
+              
+             
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr ng-repeat="data in value1" id="price_{{data.id}}">
+              <td>{{data.approval}}</td>
+              <td>{{ miscData[data.misc_art_type_id] }}</td>
+              <td>{{ miscData[data.misc_boxing_type] }}</td>
+              <td>{{ miscData[data.misc_charge_apply] }}</td>
+              <td>{{ miscData[data.misc_color_group] }}</td>
+              <td>{{ miscData[data.misc_direct_garment] }}</td>
+              <td>{{ miscData[data.misc_Direct_garment_sz] }}</td>
+              <td>{{ miscData[data.misc_disposition] }}</td>
+              <td>{{ miscData[data.misc_graphic_size] }}</td>
+              <td>{{ miscData[data.misc_level] }}</td>
+              <td>{{ miscData[data.misc_yesno] }}</td>
+              <td>{{ miscData[data.misc_po_status] }}</td>
+              <td>{{ miscData[data.misc_address_type] }}</td>
+          </tr>
+
+           
+         
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+          <tr>
+              <td colspan="12" class="text-center">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+<div ng-show="value1.length == 0">
+        <div class="col-md-12">
+            <h4>No Records found</h4>
+        </div>
+    </div>
+
+   
+  </div>
+
+
+ 
