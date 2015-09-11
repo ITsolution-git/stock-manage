@@ -27,26 +27,7 @@ class MiscController extends Controller {
        
     }
 
-/**
-* Price Listing controller        
-* @access public value1
-* @return json data
-*/
 
-    public function value1() {
- 
-        $result = $this->misc->value1List();
-       
-       
-        if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
-        } else {
-           
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
-        }
-        
-        return response()->json(["data" => $response]);
-    }
 
 
 

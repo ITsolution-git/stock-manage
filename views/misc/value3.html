@@ -1,0 +1,67 @@
+
+  <div class="panel panel-default">
+    <div class="panel-body b-b b-light">
+      Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+
+     
+
+    </div>
+
+    <div>
+
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
+        <thead>
+          <tr>
+              <th data-toggle="true">id</th>
+              <th data-toggle="true">Shipping Method</th>
+              <th data-toggle="true">Time off Type</th>
+              <th data-toggle="true">PO Type</th>
+              <th data-toggle="true">Art Filter</th>
+              <th data-toggle="true">Purchasing Filter</th>
+              <th data-toggle="true">Shipping Filter</th>
+              <th data-toggle="true">Status Filter</th>
+              <th data-toggle="true">Production Filter</th>
+              <th data-toggle="true">Production Shipped</th>
+              <th data-toggle="true">Production Paid</th>
+              <th data-toggle="true">Production On Press</th>
+              <th data-toggle="true">Finishing</th>
+              
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr data-ng-repeat="i in range">
+              <td>{{i}}</td>
+              <td>{{miscData.shipping_method[i]}}</td>
+              <td>{{miscData.time_off_type[i]}}</td>
+              <td>{{miscData.po_type[i]}}</td>
+              <td>{{miscData.art_filter[i]}}</td>
+              <td>{{miscData.purchasing_filter[i]}}</td>
+              <td>{{miscData.shipping_filter[i]}}</td>
+               <td>{{miscData.status[i]}}</td>
+              <td>{{miscData.production_filter[i]}}</td>
+              <td>{{miscData.production_shipped[i]}}</td>
+              <td>{{miscData.production_paid[i]}}</td>
+              <td>{{miscData.production_on_press[i]}}</td>
+              <td>{{miscData.finishing[i]}}</td>
+              
+         </tr>
+          
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+          <tr>
+              <td colspan="12" class="text-center">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+
+   
+  </div>
+
+
+ 

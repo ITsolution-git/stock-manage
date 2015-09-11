@@ -75,9 +75,10 @@ class Common extends Model {
         $allData = array ();
         foreach($MiscData as $data) {
            
-            $allData[$data->id] = $data->value;
+            $allData[$data->type][] = $data->value;
         }
 
+          
         return $allData;
     }
 
