@@ -60,4 +60,27 @@ class Common extends Model {
         $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
         return $vendorData;
     }
+
+/**
+* Get All Misc type
+* @access public getAllMiscData
+* @return array $Misc
+*/
+
+    public function getAllMiscData() {
+        
+        $whereMiscConditions = ['status' => '1','is_delete' => '1'];
+        $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
+
+        $allData = array ();
+        foreach($MiscData as $data) {
+           
+            $allData[$data->type][] = $data->value;
+        }
+
+          
+        return $allData;
+    }
+
+
 }

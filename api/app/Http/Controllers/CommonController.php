@@ -90,6 +90,18 @@ class CommonController extends Controller {
         return $this->return_response($result);
      }
 
+
+/**
+* Get All Misc Data controller   
+* @return json data
+*/
+
+    public function getAllMiscData()
+    {
+        $result = $this->common->getAllMiscData();
+        return $this->return_response($result);
+    }
+
     /**
     * Get Array
     * @return json data
@@ -106,4 +118,6 @@ class CommonController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+
+
 }

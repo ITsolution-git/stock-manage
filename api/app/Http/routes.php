@@ -79,6 +79,10 @@ Route::get('admin/priceEdit/{id}', 'SettingController@priceDetail');
 Route::post('admin/priceGridPrimaryDuplicate', 'SettingController@priceGridPrimaryDuplicate');
 Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 
+// ADMIN MISC ROUTERS
+
+
+
 
 // COMMON CONTROLLER 
 Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
@@ -88,6 +92,7 @@ Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
+Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');

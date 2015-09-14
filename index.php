@@ -92,5 +92,6 @@
   <script src="scripts/controllers/login.js"></script>
   <script src="scripts/controllers/client.js"></script>
   <script src="scripts/controllers/price.js"></script>
+  <script src="scripts/controllers/misc.js"></script>
 </body>
 </html>

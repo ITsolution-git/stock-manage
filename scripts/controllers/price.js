@@ -235,7 +235,7 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                             combine_array_data.price_primary = price_primary;
                             
  
-                            var permission = confirm("Are you sure you want to duplicate primary record ?");
+                            var permission = confirm("This will over right the current settings if any in the secondary price grid panel.");
 
                             if (permission == true) {
                             
