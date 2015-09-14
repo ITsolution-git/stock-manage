@@ -9,7 +9,15 @@
 [ui-view].ng-leave.smooth {
   display: block;
 }
-
+  .float-none-sm {
+    float: none !important;
+  }
+  .float-right-sm {
+    float: right !important;
+  }
+  .float-left-sm {
+    float: left !important;
+  }
 .smooth.ng-animate {
   position: absolute;
   width: 100%;
@@ -1103,7 +1111,7 @@ a.list-group-item.hover {
 }
 
 .nav > li > a {
-  padding: 10px 16px;
+  padding: 10px;
 }
 
 .nav.nav-lg > li > a {

@@ -86,10 +86,16 @@ Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
+Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
+Route::get('common/getStaffList', 'CommonController@getStaffList');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
 Route::get('client/ListClient', 'ClientController@ListClient');
 Route::post('client/DeleteClient', 'ClientController@DeleteClient');
-
-
+Route::post('client/ClientContacts', 'ClientController@ClientContacts');
+Route::post('client/getContacts', 'ClientController@getContacts');
+Route::post('client/ClientAddress', 'ClientController@ClientAddress');
+Route::post('client/getAddress', 'ClientController@getAddress');
+Route::get('client/GetclientDetail/{id}','ClientController@GetclientDetail');
+Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');

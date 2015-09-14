@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body b-b b-light">
       Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
-      <button class="btn btn-default m-b-lg pull-right" ui-sref="client.add">Add Company</button>
+      <button class="btn btn-default m-b-lg pull-right" ui-sref="client.add">Add Client</button>
     </div>
      
     <div>
@@ -41,7 +41,7 @@
               <!-- <td ng-if="value.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
               <td ng-if="value.status == 0" ><span class="label bg-danger" title="Deactive">Deactive</span></td> -->
               <td>
-                <!-- <button class="btn btn-xs btn-info" ui-sref="ListClient.edit({ id: value.client_id })">Edit</button> -->
+                <button class="btn btn-xs btn-info" ui-sref="client.edit({ id: value.client_id })">Edit</button>
                 <button class="btn btn-xs btn-danger" ng-click="deleteclient(value.client_id)">Delete</button>
               </td> 
           </tr>
