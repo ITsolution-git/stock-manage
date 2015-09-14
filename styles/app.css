@@ -6196,3 +6196,46 @@ a.text-dark:hover {
     width: 100%;
   }
 }
+
+/*custom css by vinit */
+nav ul.nav li{
+	float:left;
+}
+nav ul.nav li a, nav ul.nav li .nav-item{
+	float:left;
+	padding:5px 16px;
+}
+nav{
+	overflow:visible;
+	float:left;
+	width:100%;
+	position:relative;
+	z-index:2;
+}
+.nav-sub{
+	min-width:150px;
+	width:100%;
+	float:left;
+	position:absolute;
+	top:50px;
+	background-color:#f3f3f3;
+}
+.nav-sub li{
+	float:left;
+	width:100%;
+}
+nav ul.nav li li a{
+	float:left;
+	width:100%;
+	padding:10px 8px;
+}
+.app{
+	position:relative;
+}
+.content-main{
+	width:100%;
+	float:left;
+	margin:20px 0;
+	padding:0 15px;
+}
+/* custom css by vinit ends here */
