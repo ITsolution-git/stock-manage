@@ -1,0 +1,47 @@
+/* Navigation Styles */
+nav ul.nav li {
+	width:13%;
+}
+
+nav ul.nav li a,
+nav ul.nav li.active > a {
+	width:100%;
+}
+
+nav ul.nav li ul.nav-sub li {
+	width:100%;
+}
+nav ul.nav li:hover ul.nav-sub {
+	max-height:999px;
+}
+
+.md-whiteframe-z1 {
+	box-shadow:none;
+}
+
+#aside .navbar.navbar-header {
+	position:fixed;
+	top:0;
+	left:0;
+}
+#aside .navbar.navbar-header {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+}
+#nav nav {
+	position:fixed;
+	top:64px;
+	left:0;
+}
+.navbar .navbar-brand {	
+	float:left;
+	width:180px;
+}
+#content {
+	padding-top:115px;
+}
+#content .tab-content p.input-group {
+	z-index:1;
+}
