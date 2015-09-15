@@ -30,6 +30,9 @@ nav ul.nav li:hover ul.nav-sub {
 	left:0;
 	width:100%;
 }
+#aside .navbar.navbar-header.indigo {
+	background:#2e2e2e;
+}
 #nav nav {
 	position:fixed;
 	top:64px;
@@ -37,7 +40,7 @@ nav ul.nav li:hover ul.nav-sub {
 }
 .navbar .navbar-brand {	
 	float:left;
-	width:180px;
+	padding-top:5px;
 }
 #content {
 	padding-top:115px;
