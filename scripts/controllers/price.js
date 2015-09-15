@@ -75,6 +75,11 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                                       $scope.allScreenPrimary = result.data.allScreenPrimary;
                                       $scope.allScreenSecondary = result.data.allScreenSecondary;
                                       $scope.allGarmentMackup = result.data.allGarmentMackup;
+                                      $scope.allGarment = result.data.allGarment;
+                                      $scope.embroswitch = result.data.embroswitch[0];
+                                      $scope.allEmbroidery = result.data.allEmbroidery;
+                                      
+                                      
 
                                      
                              }  else {
@@ -86,7 +91,7 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                          }
 
 
-                          $scope.savePrice = function(price,price_grid,price_primary,price_secondary,garment_mackup) {
+                          $scope.savePrice = function(price,price_grid,price_primary,price_secondary,garment_mackup,garment,embroswitch,allEmbroidery) {
                          
                           var combine_array_data = {};
                           combine_array_data.price = price;
@@ -94,6 +99,9 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                           combine_array_data.price_primary = price_primary;
                           combine_array_data.price_secondary = price_secondary;
                           combine_array_data.garment_mackup = garment_mackup;
+                          combine_array_data.garment = garment;
+                          combine_array_data.embroswitch = embroswitch;
+                          combine_array_data.allEmbroidery = allEmbroidery;
 
                          if(price.id) {
                                
@@ -112,7 +120,7 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                           
                          } else {
                           
-                           $http.post('api/public/admin/priceAdd',combine_array_data).success(function(result, status, headers, config) {
+                          /* $http.post('api/public/admin/priceAdd',combine_array_data).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
 
@@ -121,7 +129,9 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                                    
                              } 
                          
-                          });
+                          });*/
+                            $state.go('app.dashboard');
+                            return false;
 
                          }
                          
@@ -156,6 +166,17 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                               $scope.allScreenSecondary.splice(index,1);
                           }
 
+
+                           $scope.allGarment = [];
+                          $scope.addGarment = function(){
+                            $scope.allGarment.push({range_low:'', range_high:'', pricing_1c:'', pricing_2c:'', pricing_3c:'', pricing_4c:'', pricing_5c:'', pricing_6c:'',pricing_7c:'',pricing_8c:'',pricing_9c:'',pricing_10c:'',pricing_11c:'',pricing_12c:''});
+                          }
+
+                          $scope.removeGarment = function(index){
+                              $scope.allGarment.splice(index,1);
+                          }
+
+
                            $scope.allGarmentMackup = [];
                           $scope.addGarmentMackup = function(){
                             $scope.allGarmentMackup.push({range_low:'', range_high:'', percentage:''});
@@ -164,6 +185,88 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                           $scope.removeGarmentMackup = function(index){
                               $scope.allGarmentMackup.splice(index,1);
                           }
+
+                            $scope.allEmbroidery = [];
+                          $scope.addEmbroidery = function(){
+                            $scope.allEmbroidery.push({range_low:'', range_high:'', pricing_1c:'', pricing_2c:'', pricing_3c:'', pricing_4c:'', pricing_5c:'', pricing_6c:'',pricing_7c:'',pricing_8c:'',pricing_9c:'',pricing_10c:'',pricing_11c:'',pricing_12c:''});
+                          }
+
+                          $scope.removeEmbroidery = function(index){
+                              $scope.allEmbroidery.splice(index,1);
+                          }
+
+
+                           $scope.duplicate = function (price,price_grid,price_primary,price_secondary,garment_mackup,garment,embroswitch,allEmbroidery) {
+                          
+                            var combine_array_data = {};
+                            combine_array_data.price = price;
+                            combine_array_data.price_grid = price_grid;
+                            combine_array_data.price_primary = price_primary;
+                            combine_array_data.price_secondary = price_secondary;
+                            combine_array_data.garment_mackup = garment_mackup;
+                            combine_array_data.garment = garment;
+                            combine_array_data.embroswitch = embroswitch;
+                            combine_array_data.allEmbroidery = allEmbroidery;
+
+                            var permission = confirm("Are you sure you want to duplicate this record ?");
+
+                            if (permission == true) {
+                            
+                                  $http.post('api/public/admin/priceGridDuplicate',combine_array_data).success(function(result, status, headers, config) {
+        
+                                  if(result.data.success == '1') {
+
+                                         $state.go('setting.price');
+                                          return false;
+                                         
+                                   } 
+                         
+                              });
+
+                            }
+                        } 
+
+
+                        $scope.duplicateprimary = function (price_id,price_primary) {
+                          
+                            var combine_array_data = {};
+                            combine_array_data.price_id = $stateParams.id;
+                            
+                            combine_array_data.price_primary = price_primary;
+                            
+ 
+                            var permission = confirm("This will over right the current settings if any in the secondary price grid panel.");
+
+                            if (permission == true) {
+                            
+                                  $http.post('api/public/admin/priceGridPrimaryDuplicate',combine_array_data).success(function(result, status, headers, config) {
+        
+                                  if(result.data.success == '1') {
+
+
+                                  $http.post('api/public/admin/priceSecondary',$stateParams.id).success(function(result, status, headers, config) {
+                
+                                    if(result.data.success == '1') {
+                                             
+                                              $scope.allScreenSecondary = result.data.allScreenSecondary;
+                                             
+                                     }  else {
+                                     $state.go('app.dashboard');
+                                     }
+                                 
+                                  });
+
+                                         $("ul.nav-tabs li").removeClass("active"); 
+                                         $( "ul li:nth-child(2)").addClass( "active" );
+
+                                        
+                                         
+                                   } 
+                         
+                              });
+
+                            }
+                        } 
 
 
                        

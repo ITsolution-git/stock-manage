@@ -1,0 +1,70 @@
+
+  <div class="panel panel-default">
+    <div class="panel-body b-b b-light">
+      Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+
+     
+
+    </div>
+
+    <div>
+
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
+        <thead>
+          <tr>
+              <th data-toggle="true">id</th>
+              <th data-toggle="true">Approval / Order Sequence</th>
+              <th data-toggle="true">Art Type</th>
+              <th data-toggle="true">Boxing Type</th>
+              <th data-toggle="true">Charge Apply</th>
+              <th data-toggle="true">Color Group</th>
+              <th data-toggle="true">Direct to Garment</th>
+              <th data-toggle="true">Dir. to Garment Sz.</th>
+              <th data-toggle="true">Disposition</th>
+              <th data-toggle="true">Graphic Size</th>
+              <th data-toggle="true">Level</th>
+              <th data-toggle="true">Yes No</th>
+              <th data-toggle="true">PO Status</th>
+              <th data-toggle="true">Address Type</th>
+              
+             
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr data-ng-repeat="i in range">
+              <td>{{i}}</td>
+              <td>{{miscData.approval[i]}}</td>
+              <td>{{miscData.art_type[i]}}</td>
+              <td>{{miscData.boxing_type[i]}}</td>
+              <td>{{miscData.charges_apply[i]}}</td>
+              <td>{{miscData.color_group[i]}}</td>
+              <td>{{miscData.direct_to_garment[i]}}</td>
+              <td>{{miscData.dir_to_garment_sz[i]}}</td>
+              <td>{{miscData.disposition[i]}}</td>
+              <td>{{miscData.graphic_size[i]}}</td>
+              <td>{{miscData.level[i]}}</td>
+              <td>{{miscData.yesno[i]}}</td>
+              <td>{{miscData.po_status[i]}}</td>
+              <td>{{miscData.address_type[i]}}</td>
+
+         </tr>
+          
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+          <tr>
+              <td colspan="12" class="text-center">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+
+   
+  </div>
+
+
+ 

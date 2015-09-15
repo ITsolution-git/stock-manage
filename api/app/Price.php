@@ -82,11 +82,31 @@ class Price extends Model {
         $priceGarmentMackup = DB::table('price_garment_mackup')->select($listArrayGarmentMackup)->where($whereConditionsGarmentMackup)->get();
 
 
+        $whereConditionsAllGarment = ['price_id' => $priceId];
+        $listArrayAllGarment = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $priceAllGarment = DB::table('price_direct_garment')->select($listArrayAllGarment)->where($whereConditionsAllGarment)->get();
+
+
+        $whereConditionsembroSwitch = ['price_id' => $priceId];
+        $listArrayAllEmbroSwitch = ['id','range_high_1','range_low_1','range_high_2','range_low_2','range_high_3','range_low_3','range_high_4','range_low_4','range_high_5','range_low_5','range_high_6','range_low_6','range_high_7','range_low_7','range_high_8','range_low_8','range_high_9','range_low_9','range_high_10','range_low_10','range_high_11','range_low_11','range_high_12','range_low_12'];
+        $priceAllEmbroSwitch = DB::table('embroidery_switch_count')->select($listArrayAllEmbroSwitch)->where($whereConditionsembroSwitch)->get();
+
+
+        $priceAllEmbro = array();
+        if(!empty($priceAllEmbroSwitch)){
+        $whereConditionsAllEmbro = ['price_id' => $priceId,'embroidery_switch_id' => $priceAllEmbroSwitch[0]->id];
+        $listArrayAllEmbro = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $priceAllEmbro = DB::table('price_screen_embroidery')->select($listArrayAllEmbro)->where($whereConditionsAllEmbro)->get();
+         }
+
         $combine_array['price'] = $priceData;
         $combine_array['allPriceGrid'] = $priceCharge;
         $combine_array['allScreenPrimary'] = $priceScreenPrimary;
         $combine_array['allScreenSecondary'] = $priceScreenSecondary;
         $combine_array['allGarmentMackup'] = $priceGarmentMackup;
+        $combine_array['allGarment'] = $priceAllGarment;
+        $combine_array['embroswitch'] = $priceAllEmbroSwitch;
+        $combine_array['allEmbroidery'] = $priceAllEmbro;
         return $combine_array;
     }
 
@@ -97,7 +117,9 @@ class Price extends Model {
 * @return array $result
 */
 
-    public function priceAdd($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup) {
+    public function priceAdd($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup,$priceDirectGarment,$priceEmbroSwitch,$price_embro) {
+        
+        print_r($data);exit;
         $data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
         $result = DB::table('price_grid')->insert($data);
@@ -127,6 +149,29 @@ class Price extends Model {
                 $priceGarmentMackup[$keygarmack]['price_id'] = $priceid;
                 $result_garment_mackup = DB::table('price_garment_mackup')->insert($priceGarmentMackup[$keygarmack]);
               }
+
+              foreach($priceDirectGarment as $keydgarm => $linkdgarm) 
+              { 
+                $priceDirectGarment[$keydgarm]['price_id'] = $priceid;
+                $result_direct_garment = DB::table('price_direct_garment')->insert($priceDirectGarment[$keydgarm]);
+              }
+
+              
+                $priceEmbroSwitch['price_id'] = $priceid;
+                $result_embro_switch = DB::table('embroidery_switch_count')->insert($priceEmbroSwitch);
+              
+
+                $switchId = DB::getPdo()->lastInsertId();
+
+               foreach($price_embro as $key => $link) 
+              { 
+                $price_embro[$key]['price_id'] = $priceid;
+                $price_embro[$key]['embroidery_switch_id'] = $switchId;
+                $result_direct_garment = DB::table('price_screen_embroidery')->insert($price_embro[$key]);
+              }
+
+
+
 
         return $priceid;
     }
@@ -222,6 +267,159 @@ public function priceGarmentMackupEdit($garment_mackup,$priceId) {
               }
         return  $priceId;
     }
+
+/**
+* Price charges Direct Garment data           
+* @access public priceDirectGarmentEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function priceDirectGarmentEdit($direct_garment,$priceId) {
+    
+    DB::table('price_direct_garment')->where('price_id', '=', $priceId)->delete();
+     
+           foreach($direct_garment as $key => $link) 
+              { 
+                $direct_garment[$key]['price_id'] = $priceId;
+                $result_direct_garment = DB::table('price_direct_garment')->insert($direct_garment[$key]);
+              }
+        return  $priceId;
+    }
+
+
+
+/**
+* Price charges Embro Switch data           
+* @access public priceEmbroSwitchEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function priceEmbroSwitchEdit($embro_switch,$priceId) {
+    
+    DB::table('embroidery_switch_count')->where('price_id', '=', $priceId)->delete();
+     
+    $embro_switch['price_id'] = $priceId;
+    $result_embro_switch = DB::table('embroidery_switch_count')->insert($embro_switch);
+              
+    return  $priceId;
+    }
+
+
+/**
+* Price charges Embroidery data           
+* @access public priceEmbroEdit
+* @param  array $data
+* @return array $result
+*/  
+
+public function priceEmbroEdit($price_embro,$priceId,$switchId) {
+    
+    DB::table('price_screen_embroidery')->where('price_id', '=', $priceId)->where('embroidery_switch_id', '=', $switchId)->delete();
+     
+           foreach($price_embro as $key => $link) 
+              { 
+                $price_embro[$key]['price_id'] = $priceId;
+                $price_embro[$key]['embroidery_switch_id'] = $switchId;
+                $result_direct_garment = DB::table('price_screen_embroidery')->insert($price_embro[$key]);
+              }
+        return  $priceId;
+    }
+
+
+    /**
+* Price Add          
+* @access public priceDuplicate
+* @param  array $data
+* @return array $result
+*/
+
+    public function priceGridDuplicate($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup,$priceDirectGarment,$priceEmbroSwitch,$price_embro) {
+        
+        unset($data['id']);
+
+        $data['name'] = $data['name'].' Copy';
+        $data['created_date'] = date("Y-m-d H:i:s");
+        $data['updated_date'] = date("Y-m-d H:i:s");
+        $result = DB::table('price_grid')->insert($data);
+
+        $priceid = DB::getPdo()->lastInsertId();
+
+           foreach($priceData as $key => $link) 
+              { 
+                $priceData[$key]['price_id'] = $priceid;
+                $result_price = DB::table('price_grid_charges')->insert($priceData[$key]);
+              }
+
+             foreach($priceScreenPrimary as $keyprimary => $linkprimary) 
+              { 
+                $priceScreenPrimary[$keyprimary]['price_id'] = $priceid;
+                $result_primary = DB::table('price_screen_primary')->insert($priceScreenPrimary[$keyprimary]);
+              }
+
+              foreach($priceScreenSecondary as $keysecondary => $linksecondary) 
+              { 
+                $priceScreenSecondary[$keysecondary]['price_id'] = $priceid;
+                $result_secondary = DB::table('price_screen_secondary')->insert($priceScreenSecondary[$keysecondary]);
+              }
+
+               foreach($priceGarmentMackup as $keygarmack => $linkgarmack) 
+              { 
+                $priceGarmentMackup[$keygarmack]['price_id'] = $priceid;
+                $result_garment_mackup = DB::table('price_garment_mackup')->insert($priceGarmentMackup[$keygarmack]);
+              }
+
+              foreach($priceDirectGarment as $keydgarm => $linkdgarm) 
+              { 
+                $priceDirectGarment[$keydgarm]['price_id'] = $priceid;
+                $result_direct_garment = DB::table('price_direct_garment')->insert($priceDirectGarment[$keydgarm]);
+              }
+
+              
+                unset($priceEmbroSwitch['id']);
+
+                $priceEmbroSwitch['price_id'] = $priceid;
+                $result_embro_switch = DB::table('embroidery_switch_count')->insert($priceEmbroSwitch);
+              
+
+                $switchId = DB::getPdo()->lastInsertId();
+
+               foreach($price_embro as $key => $link) 
+              { 
+                $price_embro[$key]['price_id'] = $priceid;
+                $price_embro[$key]['embroidery_switch_id'] = $switchId;
+                $result_direct_garment = DB::table('price_screen_embroidery')->insert($price_embro[$key]);
+              }
+
+
+
+
+        return $priceid;
+    }
+
+
+    /**
+* Price Secondary           
+* @access public priceSecondary
+* @param  int $priceId
+* @return array $combine_array
+*/  
+
+    public function priceSecondary($priceId) {
+
+        $whereConditionsScreenSecondary = ['price_id' => $priceId];
+        $listArraySecondary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $priceScreenSecondary = DB::table('price_screen_secondary')->select($listArraySecondary)->where($whereConditionsScreenSecondary)->get();
+
+        $combine_array['allScreenSecondary'] = $priceScreenSecondary;
+       
+        return $combine_array;
+    }
+
+
+
+
 
 
 }

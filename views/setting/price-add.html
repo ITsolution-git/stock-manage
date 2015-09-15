@@ -2,10 +2,11 @@
   <div class="row">
     <div>
 
-      <form name="priceForm" class="form-validation" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup)">
+      <form name="priceForm" class="form-validation" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)">
         
         <div class="panel panel-default col-sm-5">
          <input type="hidden" ng-model="price.id" value="{{price.id}}">
+         <input type="hidden" ng-model="embroswitch.id" value="{{embroswitch.id}}">
           <div class="panel-body">
 
 
@@ -13,6 +14,8 @@
               <label>Price Grid <em class="text-muted"></em></label>
               <input type="text" class="form-control" ng-model="price.name" required >
             </div>
+
+
 
             <div class="form-group col-sm-12 m-b">
               <ul class="nav nav-tabs">
@@ -209,7 +212,7 @@
                   <label>10c<em class="text-muted"></em></label>
                   <label>11c<em class="text-muted"></em></label>
                   <label>12c<em class="text-muted"></em></label>
-                     
+                      <button  ng-click="duplicateprimary(price.id,allScreenPrimary)" type="button"  class="btn btn-info pull-right">Duplicate Primary</button>&nbsp;
               </div>
 
               
@@ -290,13 +293,115 @@
 
         <div role="tabpanel" class="tab-pane animated fadeIn" id="embroidery">
             
-            
+
+          <div class="form-group">
+            <label> Range Low<em class="text-muted"></em></label>
+                   <input type="text"   ng-model="embroswitch.range_low_1"/>
+                   <input type="text"   ng-model="embroswitch.range_low_2"/>
+                   <input type="text"   ng-model="embroswitch.range_low_3"/>
+                   <input type="text"   ng-model="embroswitch.range_low_4"/>
+                   <input type="text"   ng-model="embroswitch.range_low_5"/>
+                   <input type="text"   ng-model="embroswitch.range_low_6"/>
+                   <input type="text"   ng-model="embroswitch.range_low_7"/>
+                   <input type="text"   ng-model="embroswitch.range_low_8"/>
+                   <input type="text"   ng-model="embroswitch.range_low_9"/>
+                   <input type="text"   ng-model="embroswitch.range_low_10"/>
+                   <input type="text"   ng-model="embroswitch.range_low_11"/>
+                   <input type="text"   ng-model="embroswitch.range_low_12"/>
+                   <br />
+<label> Range High<em class="text-muted"></em></label>
+                   <input type="text"   ng-model="embroswitch.range_high_1"/>
+                   <input type="text"   ng-model="embroswitch.range_high_2"/>
+                   <input type="text"   ng-model="embroswitch.range_high_3"/>
+                   <input type="text"   ng-model="embroswitch.range_high_4"/>
+                   <input type="text"   ng-model="embroswitch.range_high_5"/>
+                   <input type="text"   ng-model="embroswitch.range_high_6"/>
+                   <input type="text"   ng-model="embroswitch.range_high_7"/>
+                   <input type="text"   ng-model="embroswitch.range_high_8"/>
+                   <input type="text"   ng-model="embroswitch.range_high_9"/>
+                   <input type="text"   ng-model="embroswitch.range_high_10"/>
+                   <input type="text"   ng-model="embroswitch.range_high_11"/>
+                   <input type="text"   ng-model="embroswitch.range_high_12"/>
+
+           </div>      
+
+
+
+
+
+
+             <div class="form-group">
+              
+                <div ng-repeat="price_embroidery in allEmbroidery">
+                    <input type="text"   ng-model="price_embroidery.range_low"/>
+                    <input type="text"   ng-model="price_embroidery.range_high"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_1c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_2c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_3c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_4c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_5c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_6c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_7c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_8c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_9c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_10c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_11c"/>
+                    <input type="text"   ng-model="price_embroidery.pricing_12c"/>
+                    
+
+                     <button ng-click="removeEmbroidery($index)">Remove</button> 
+                </div>
+                     <button type="button" ng-click="addEmbroidery()">add input</button>
+            </div>
+
+
 
         </div>
 
         <div role="tabpanel" class="tab-pane animated fadeIn" id="dtogarment">
             
-            
+            <div class="form-group">
+                  <label>Low<em class="text-muted"></em></label>
+                  <label>High<em class="text-muted"></em></label>
+                  <label>4*4 Light<em class="text-muted"></em></label>
+                  <label>4*4 Dark<em class="text-muted"></em></label>
+                  <label>6*6 Light<em class="text-muted"></em></label>
+                  <label>6*6 Dark<em class="text-muted"></em></label>
+                  <label>10*10 Light<em class="text-muted"></em></label>
+                  <label>10*10 Dark<em class="text-muted"></em></label>
+                  <label>12*12 Light<em class="text-muted"></em></label>
+                  <label>12*12 Dark<em class="text-muted"></em></label>
+                  <label><em class="text-muted"></em></label>
+                  <label><em class="text-muted"></em></label>
+                  <label><em class="text-muted"></em></label>
+                  <label><em class="text-muted"></em></label>
+                     
+              </div>
+
+              
+            <div class="form-group">
+              
+                <div ng-repeat="d_garment in allGarment">
+                    <input type="text"   ng-model="d_garment.range_low"/>
+                    <input type="text"   ng-model="d_garment.range_high"/>
+                    <input type="text"   ng-model="d_garment.pricing_1c"/>
+                    <input type="text"   ng-model="d_garment.pricing_2c"/>
+                    <input type="text"   ng-model="d_garment.pricing_3c"/>
+                    <input type="text"   ng-model="d_garment.pricing_4c"/>
+                    <input type="text"   ng-model="d_garment.pricing_5c"/>
+                    <input type="text"   ng-model="d_garment.pricing_6c"/>
+                    <input type="text"   ng-model="d_garment.pricing_7c"/>
+                    <input type="text"   ng-model="d_garment.pricing_8c"/>
+                    <input type="text"   ng-model="d_garment.pricing_9c"/>
+                    <input type="text"   ng-model="d_garment.pricing_10c"/>
+                    <input type="text"   ng-model="d_garment.pricing_11c"/>
+                    <input type="text"   ng-model="d_garment.pricing_12c"/>
+                    
+
+                     <button ng-click="removeGarment($index)">Remove</button> 
+                </div>
+                     <button type="button" ng-click="addGarment()">add input</button>
+            </div>
 
         </div>
 
@@ -334,9 +439,9 @@
         </div>
 
         <footer class="panel-footer text-right">
+            <button ng-click="duplicate(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)" type="button"  class="btn btn-info">Duplicate Price Grid</button>&nbsp;
             <button  type="submit" class="btn btn-info" ng-disabled="priceForm.$invalid">Submit</button>&nbsp;
             <button ui-sref="setting.price" type="button"  class="btn btn-info">Cancel</button>&nbsp;
-           
           </footer>
       </form>
     </div>

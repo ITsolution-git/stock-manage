@@ -1,0 +1,63 @@
+
+  <div class="panel panel-default">
+    <div class="panel-body b-b b-light">
+      Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+
+     
+
+    </div>
+
+    <div>
+
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
+        <thead>
+          <tr>
+              <th data-toggle="true">id</th>
+              <th data-toggle="true">Placement Type</th>
+              <th data-toggle="true">Position</th>
+              <th data-toggle="true">Production</th>
+              <th data-toggle="true">Production Sub Type</th>
+              <th data-toggle="true">Production Type</th>
+              <th data-toggle="true">Size Group</th>
+              <th data-toggle="true">Staff Type</th>
+              <th data-toggle="true">Status</th>
+              <th data-toggle="true">Symbol Description</th>
+              <th data-toggle="true">Terms</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr data-ng-repeat="i in range">
+               <td>{{i}}</td>
+              <td>{{miscData.placement_type[i]}}</td>
+              <td>{{miscData.position[i]}}</td>
+              <td>{{miscData.production[i]}}</td>
+              <td>{{miscData.production_sub_type[i]}}</td>
+              <td>{{miscData.product_type[i]}}</td>
+              <td>{{miscData.size_group[i]}}</td>
+              <td>{{miscData.staff_type[i]}}</td>
+              <td>{{miscData.status[i]}}</td>
+              <td>{{miscData.symbol_description[i]}}</td>
+              <td>{{miscData.terms[i]}}</td>
+              
+
+         </tr>
+          
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+          <tr>
+              <td colspan="12" class="text-center">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+
+   
+  </div>
+
+
+ 
