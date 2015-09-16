@@ -60,4 +60,48 @@ class Common extends Model {
         $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
         return $vendorData;
     }
+
+/**
+* Get All Misc type
+* @access public getAllMiscData
+* @return array $Misc
+*/
+
+    public function getAllMiscData() {
+        
+        $whereMiscConditions = ['status' => '1','is_delete' => '1'];
+        $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
+
+        $allData = array ();
+        foreach($MiscData as $data) {
+           
+           if($data->value == ''){
+            $data->value = '-'; 
+            $allData[$data->type][] = $data;
+           } else {
+            $allData[$data->type][] = $data;
+           }
+
+
+            
+
+        }
+
+          
+        return $allData;
+    }
+
+    public function GetMicType($type)
+    {
+        $whereVendorConditions = ['status' => '1','is_delete' => '1','type'=>$type];
+        $misc_type = DB::table('misc_type')->where($whereVendorConditions)->where('value','!=','')->get();
+        return $misc_type;
+    }
+    public function getStaffList()
+    {
+        $whereConditions = ['is_delete' => '1'];
+        $stafflist = DB::table('staff')->select('id','first_name','last_name')->where($whereConditions)->get();
+        return $stafflist;
+
+}
 }

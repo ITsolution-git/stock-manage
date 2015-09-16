@@ -1,12 +1,12 @@
 <nav ui-nav>
-  <ul class="nav">
+  <ul class="nav md-navbar navbar-default">
    
     
     <li ui-sref-active="active" class="active">
       <a ui-sref="app.dashboard" md-ink-ripple="">
         <i class="icon mdi-action-settings-input-svideo i-20"></i>
         <span class="font-normal">Dashboard</span>
-      
+      </a>
     </li>
     <li ng-class="{active:$state.includes('account')}" ng-show="app.role=='SA'">
       <a md-ink-ripple>
@@ -154,12 +154,19 @@
         <span class="font-normal">Misc</span>
       </a>
       <ul class="nav nav-sub">
+        
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="misc.list">List</a>
+          <a md-ink-ripple ui-sref="misc.value1">Value 1</a>
         </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="misc.add">Add</a>
+
+         <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="misc.value2">Value 2</a>
         </li>
+
+         <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="misc.value3">Value 3</a>
+        </li>
+       
        
       </ul>
     </li>

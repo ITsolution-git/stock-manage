@@ -1,0 +1,72 @@
+
+  <div class="panel panel-default">
+    <div class="panel-body b-b b-light">
+      Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+
+     
+
+    </div>
+
+    <div>
+
+      <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10" ng-controller="miscListCtrl">
+        <thead>
+          <tr>
+              <th data-toggle="true">id</th>
+              <th data-toggle="true">Placement Type</th>
+              <th data-toggle="true">Position</th>
+              <th data-toggle="true">Production</th>
+              <th data-toggle="true">Production Sub Type</th>
+              <th data-toggle="true">Production Type</th>
+              <th data-toggle="true">Size Group</th>
+              <th data-toggle="true">Staff Type</th>
+              <th data-toggle="true">Status</th>
+              <th data-toggle="true">Symbol Description</th>
+              <th data-toggle="true">Terms</th> 
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr data-ng-repeat="i in range">
+               <td>{{i}}</td>
+
+               <td><a editable-text="miscData.placement_type[i].value" onaftersave="updateUser(miscData.placement_type[i].value,miscData.placement_type[i].id)">{{miscData.placement_type[i].value}}</a></td>
+
+               <td><a editable-text="miscData.position[i].value" onaftersave="updateUser(miscData.position[i].value,miscData.position[i].id)">{{miscData.position[i].value}}</a></td>
+
+               <td><a editable-text="miscData.production[i].value" onaftersave="updateUser(miscData.production[i].value,miscData.production[i].id)">{{miscData.production[i].value}}</a></td>
+
+               <td><a editable-text="miscData.production_sub_type[i].value" onaftersave="updateUser(miscData.production_sub_type[i].value,miscData.production_sub_type[i].id)">{{miscData.production_sub_type[i].value}}</a></td>
+
+               <td><a editable-text="miscData.product_type[i].value" onaftersave="updateUser(miscData.product_type[i].value,miscData.product_type[i].id)">{{miscData.product_type[i].value}}</a></td>
+
+               <td><a editable-text="miscData.size_group[i].value" onaftersave="updateUser(miscData.size_group[i].value,miscData.size_group[i].id)">{{miscData.size_group[i].value}}</a></td>
+
+               <td><a editable-text="miscData.staff_type[i].value" onaftersave="updateUser(miscData.staff_type[i].value,miscData.staff_type[i].id)">{{miscData.staff_type[i].value}}</a></td>
+
+               <td><a editable-text="miscData.status[i].value" onaftersave="updateUser(miscData.status[i].value,miscData.status[i].id)">{{miscData.status[i].value}}</a></td>
+
+                <td><a editable-text="miscData.symbol_description[i].value" onaftersave="updateUser(miscData.symbol_description[i].value,miscData.symbol_description[i].id)">{{miscData.symbol_description[i].value}}</a></td>
+
+                <td><a editable-text="miscData.terms[i].value" onaftersave="updateUser(miscData.terms[i].value,miscData.terms[i].id)">{{miscData.terms[i].value}}</a>
+                </td>
+         </tr>
+          
+        </tbody>
+        <tfoot class="hide-if-no-paging">
+          <tr>
+              <td colspan="12" class="text-center">
+                  <ul class="pagination"></ul>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+
+   
+  </div>
+
+
+ 

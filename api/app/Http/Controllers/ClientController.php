@@ -74,7 +74,7 @@ class ClientController extends Controller {
     }
 
     /**
-    * Get Array List of Client details
+    * Get Array List of All Client details
     * @return json data
     */
     public function ListClient()
@@ -115,4 +115,151 @@ class ClientController extends Controller {
 		return response()->json(['data'=>$data]);
 
 	}
+	/**
+    * INSERT CONTACTS AS MULTIPLE SENT
+    * @return json data
+    */
+	public function ClientContacts()
+	{
+		$post = Input::all();
+		if(!empty($post['id']))
+		{
+			foreach ($post['data'] as $key => $value) 
+			{
+				$post['data'][$key]['client_id']=$post['id'];
+				if(isset($post['maincontact']) && $post['maincontact']==$key)
+				{
+					$post['data'][$key]['contact_main'] = '1';
+				}
+				else
+				{
+					$post['data'][$key]['contact_main'] = '0';
+				}
+			}
+			$message = INSERT_RECORD;
+			$success = 1;
+			$this->client->ClientContacts($post['data'],$post['id']);
+		}
+		else
+		{
+			$message = MISSING_PARAMS.", id";
+			$success = 0;
+		}
+		
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+		
+	}
+	/**
+    * Get Array List of All Client contacts for edit tab display
+    * @return json data
+    */
+	public function getContacts()
+	{
+		$post = Input::all();
+		$result = $this->client->getContacts($post[0]);
+    	return $this->return_response($result);
+	}
+	/**
+    * INSERT MULTIPLE ADDRESS FROM CLIENT EDIT FORM
+    * @return json data
+    */
+	public function clientAddress()
+	{
+		$post = Input::all();
+		if(!empty($post['id']))
+		{
+			foreach ($post['data'] as $key => $value) 
+			{
+				$post['data'][$key]['client_id']=$post['id'];
+				unset($post['data'][$key]['id']);
+				unset($post['data'][$key]['address_main']);
+				unset($post['data'][$key]['address_shipping']);
+				unset($post['data'][$key]['address_billing']);
+				unset($post['data'][$key]['street']);
+				
+			}
+
+
+			//echo "<pre>"; print_r($post['data']); echo "</pre>"; die;
+			$message = INSERT_RECORD;
+			$success = 1;
+			$this->client->clientAddress($post['data'],$post['id'],$post['permadd']);
+		}
+		else
+		{
+			$message = MISSING_PARAMS.", id";
+			$success = 0;
+		}
+		
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Get Array List of All Client Address
+    * @return json data
+    */
+	public function getAddress()
+	{
+		$post = Input::all();
+		$result = $this->client->getAddress($post[0]);
+    	return $this->return_response($result);
+	}
+	/**
+    * Get Array List of Client details(added from client create page)
+    * @return json data
+    */
+	public function GetclientDetail($id)
+	{
+
+		$result = $this->client->GetclientDetail($id);
+    	return $this->return_response($result);
+	}
+	/**
+    * Sales tabe in client edit form data seve, refrence of client ID.
+    * @return json data
+    */
+	public function SaveSalesDetails()
+	{
+		$post = Input::all();
+		$result = $this->client->SaveSalesDetails($post['data'],$post['id']);
+
+    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Update client form data, .
+    * @return json data
+    */
+	public function SaveCleintDetails()
+	{
+		$post = Input::all();
+		$result = $this->client->SaveCleintDetails($post['data'],$post['id']);
+
+    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Update client Tax data, .
+    * @return json data
+    */
+	public function SaveCleintTax()
+	{
+		$post = Input::all();
+		$result = $this->client->SaveCleintTax($post['data'],$post['id']);
+
+    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+
+	public function SaveCleintPlimp()
+	{
+		$post = Input::all();
+		$result = $this->client->SaveCleintPlimp($post['data'],$post['id']);
+
+    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+
+	
 }

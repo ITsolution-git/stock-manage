@@ -72,10 +72,16 @@ Route::get('admin/productEdit/{id}', 'ProductController@detail');
 // ADMIN SETTING ROUTERS
 Route::get('admin/price', 'SettingController@price');
 Route::post('admin/priceDelete', 'SettingController@delete');
-Route::post('admin/priceAdd', 'SettingController@priceAdd');
+Route::post('admin/priceGridDuplicate', 'SettingController@priceGridDuplicate');
 Route::post('admin/priceEdit', 'SettingController@priceEdit');
 Route::post('admin/priceDetail', 'SettingController@priceDetail');
 Route::get('admin/priceEdit/{id}', 'SettingController@priceDetail');
+Route::post('admin/priceGridPrimaryDuplicate', 'SettingController@priceGridPrimaryDuplicate');
+Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
+
+// ADMIN MISC ROUTERS
+Route::post('admin/miscSave', 'MiscController@miscSave');
+
 
 
 // COMMON CONTROLLER 
@@ -86,10 +92,20 @@ Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
+Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
+Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
+Route::get('common/getStaffList', 'CommonController@getStaffList');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
 Route::get('client/ListClient', 'ClientController@ListClient');
 Route::post('client/DeleteClient', 'ClientController@DeleteClient');
-
-
+Route::post('client/ClientContacts', 'ClientController@ClientContacts');
+Route::post('client/getContacts', 'ClientController@getContacts');
+Route::post('client/ClientAddress', 'ClientController@ClientAddress');
+Route::post('client/getAddress', 'ClientController@getAddress');
+Route::get('client/GetclientDetail/{id}','ClientController@GetclientDetail');
+Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
+Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
+Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
+Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');

@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="styles/material-design-icons.css" type="text/css" />
   <link rel="stylesheet" href="styles/font.css" type="text/css" />
   <link rel="stylesheet" href="styles/app.css" type="text/css" />
+  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" />
+  <link rel="stylesheet" href="styles/stokkup-styles-1024.css" type="text/css" />
 </head>
 <body ng-app="app">
   <div class="app" ui-view ng-controller="AppCtrl"></div>
@@ -72,7 +74,8 @@
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/fileupload.js"></script>
-<script src="scripts/controllers/material.js"></script>
+  <script src="scripts/controllers/material.js"></script>
+  <script src="scripts/controllers/xeditable.js"></script>
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
@@ -92,5 +95,6 @@
   <script src="scripts/controllers/login.js"></script>
   <script src="scripts/controllers/client.js"></script>
   <script src="scripts/controllers/price.js"></script>
+  <script src="scripts/controllers/misc.js"></script>
 </body>
 </html>

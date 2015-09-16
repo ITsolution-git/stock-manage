@@ -201,6 +201,21 @@ angular.module('app')
             }
           })
 
+          .state('misc', {
+              url: '/misc',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
             .state('staff.list', {
               url: '/list',
               templateUrl: 'views/staff/staff.html',
@@ -460,7 +475,17 @@ angular.module('app')
                             },
                        }
             })
-
+            .state('client.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/front/client/edit.html',
+               controller: 'clientEditCtrl',
+              data : { title: 'Client Edit' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
             .state('setting.price', {
               url: '/price',
               templateUrl: 'views/setting/price.html',
@@ -480,12 +505,12 @@ angular.module('app')
                controller: 'priceAddEditCtrl',
               resolve: {
                             checklogin: function (AuthService) {
-                               return AuthService.checksession();
+                               //return AuthService.checksession();
                             },
                        }
             })
 
-            .state('setting.priceadd', {
+            /*.state('setting.priceadd', {
               url: '/add',
                templateUrl: 'views/setting/price-add.html',
                controller: 'priceAddEditCtrl',
@@ -494,6 +519,30 @@ angular.module('app')
                                return AuthService.checksession();
                             },
                        }
+            })*/
+
+              .state('misc.value1', {
+              url: '/value1',
+              templateUrl: 'views/misc/value1.html',
+              data : { title: 'Misc' },
+              controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
+            })
+
+              .state('misc.value2', {
+              url: '/value2',
+              templateUrl: 'views/misc/value2.html',
+              data : { title: 'Misc' },
+             controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
+            })
+
+              .state('misc.value3', {
+              url: '/value3',
+              templateUrl: 'views/misc/value3.html',
+              data : { title: 'Misc' },
+             controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
 
 ;
