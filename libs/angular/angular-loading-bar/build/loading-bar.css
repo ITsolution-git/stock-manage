@@ -36,7 +36,7 @@
   -o-transition: width 350ms;
   transition: width 350ms;
 
-  background: #29d;
+  background: #c79933;
   position: fixed;
   z-index: 10002;
   top: 0;
@@ -63,7 +63,7 @@
   -webkit-border-radius: 100%;
   border-radius: 100%;
 }
-
+/*
 #loading-bar-spinner {
   display: block;
   position: fixed;
@@ -108,3 +108,4 @@
   0%   { transform: rotate(0deg);   transform: rotate(0deg); }
   100% { transform: rotate(360deg); transform: rotate(360deg); }
 }
+*/
