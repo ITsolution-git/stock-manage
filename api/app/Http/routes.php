@@ -80,7 +80,7 @@ Route::post('admin/priceGridPrimaryDuplicate', 'SettingController@priceGridPrima
 Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 
 // ADMIN MISC ROUTERS
-
+Route::post('admin/miscSave', 'MiscController@miscSave');
 
 
 
@@ -108,3 +108,4 @@ Route::get('client/GetclientDetail/{id}','ClientController@GetclientDetail');
 Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
+Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
