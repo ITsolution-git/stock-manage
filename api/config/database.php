@@ -52,7 +52,7 @@ return [
 			'prefix'   => '',
 		],
 
-		'mysql' => [
+	/*	'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => env('DB_HOST', '10.0.0.113'),
 			'database'  => env('DB_DATABASE', 'cs'),
@@ -62,9 +62,9 @@ return [
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
-		],
+		],*/
 
-		/*'mysql' => [
+		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => env('DB_HOST', 'localhost'),
 			'database'  => env('DB_DATABASE', 'cs'),
@@ -74,7 +74,7 @@ return [
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
-		],*/
+		],
 
 		'pgsql' => [
 			'driver'   => 'pgsql',
