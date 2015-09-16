@@ -80,7 +80,7 @@ Route::post('admin/priceGridPrimaryDuplicate', 'SettingController@priceGridPrima
 Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 
 // ADMIN MISC ROUTERS
-
+Route::post('admin/miscSave', 'MiscController@miscSave');
 
 
 

@@ -525,36 +525,24 @@ angular.module('app')
               url: '/value1',
               templateUrl: 'views/misc/value1.html',
               data : { title: 'Misc' },
-              controller: 'miscListCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+              controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
 
               .state('misc.value2', {
               url: '/value2',
               templateUrl: 'views/misc/value2.html',
               data : { title: 'Misc' },
-              controller: 'miscListCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+             controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
 
               .state('misc.value3', {
               url: '/value3',
               templateUrl: 'views/misc/value3.html',
               data : { title: 'Misc' },
-              controller: 'miscListCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+             controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
 
 ;
