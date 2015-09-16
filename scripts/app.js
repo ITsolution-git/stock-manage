@@ -31,4 +31,5 @@ angular
     'app.services',
     'flash',
     'app.dashboard'
+    
   ]);

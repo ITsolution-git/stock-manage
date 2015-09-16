@@ -251,4 +251,15 @@ class ClientController extends Controller {
     	$data = array("success"=>1,"message"=>UPDATE_RECORD);
 		return response()->json(['data'=>$data]);
 	}
+
+	public function SaveCleintPlimp()
+	{
+		$post = Input::all();
+		$result = $this->client->SaveCleintPlimp($post['data'],$post['id']);
+
+    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+
+	
 }
