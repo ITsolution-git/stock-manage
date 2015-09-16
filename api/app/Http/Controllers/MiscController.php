@@ -27,6 +27,26 @@ class MiscController extends Controller {
        
     }
 
+/**
+* Misc save data       
+* @access public miscSave
+* @param  array $data
+* @return json data
+*/
+
+    public function miscSave() {
+
+          $data = Input::all();
+          $result = $this->misc->miscSave($data);
+         
+          if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
 
 
 

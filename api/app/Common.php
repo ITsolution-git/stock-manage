@@ -75,7 +75,16 @@ class Common extends Model {
         $allData = array ();
         foreach($MiscData as $data) {
            
-            $allData[$data->type][] = $data->value;
+           if($data->value == ''){
+            $data->value = '-'; 
+            $allData[$data->type][] = $data;
+           } else {
+            $allData[$data->type][] = $data;
+           }
+
+
+            
+
         }
 
           

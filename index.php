@@ -72,7 +72,8 @@
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/fileupload.js"></script>
-<script src="scripts/controllers/material.js"></script>
+  <script src="scripts/controllers/material.js"></script>
+  <script src="scripts/controllers/xeditable.js"></script>
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
