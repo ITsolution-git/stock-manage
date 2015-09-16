@@ -79,3 +79,14 @@ nav ul.nav li:hover ul.nav-sub {
 	padding-left:0;
 	padding-right:0;
 }
+.indigo-button{
+	 background-color: #4f1f25;
+	 color: #fff;
+}
+.login-flash {
+	padding: 0;
+}
+.login-flash .danger{
+	color: #f00;
+	
+}
