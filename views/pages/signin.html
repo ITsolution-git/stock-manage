@@ -5,27 +5,31 @@
         
       </div>
     </div>
- <flash:messages></flash:messages>
+ 
     <div class="p-lg panel md-whiteframe-z1 text-color m">
       <div class="m-b text-sm">
-        Sign in with your {{app.sitename}} Account
+        <flash:messages class="login-flash"></flash:messages>
       </div>
-      <form name="form" name="loginForm" class="form-horizontal form-validation" data-ng-submit="dosignin()">
+      <form name="loginform" name="loginForm" class="form-horizontal form-validation" data-ng-submit="dosignin()">
         <div class="md-form-group float-label">
           <!-- <input type="email" class="md-input" ng-model="user.email" required> -->
-          <input type="username" class="md-input" ng-model="user.username" required>
-          <label>User Name</label>
+          <input type="username" name="username" class="md-input" ng-model="user.username"  ng-required="true">
+
+          <label>User Name <span style="color:#f44336" ng-show="loginform.username.$error.required">
+                                    *</span></label>
         </div>
         <div class="md-form-group float-label">
-          <input type="password" class="md-input" ng-model="user.password" required>
-          <label>Password</label>
+          <input type="password" name="password" class="md-input" ng-model="user.password" ng-required="true">
+      
+          <label>Password<span style="color:#f44336" ng-show="loginform.password.$error.required">
+                                    *</span></label>
         </div>      
   <!--       <div class="m-b-md">        
           <label class="md-check">
             <input type="checkbox"><i class="indigo"></i> Keep me signed in
           </label>
         </div> -->
-        <button md-ink-ripple type="submit" class="md-btn md-raised pink btn-block p-h-md">Sign in</button>
+        <button md-ink-ripple type="submit" class="md-btn md-raised indigo-button btn-block p-h-md">Sign in</button>
       </form>
     </div>
 
