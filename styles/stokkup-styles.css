@@ -55,7 +55,7 @@ nav ul.nav li:hover ul.nav-sub {
 
 
 /* Product Section */
-.prod-form  .col-sm-8 {
+.nopad-form  .col-sm-8 {
 	padding-left:0;
 	padding-right:0;
 }
