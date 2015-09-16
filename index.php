@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="styles/material-design-icons.css" type="text/css" />
   <link rel="stylesheet" href="styles/font.css" type="text/css" />
   <link rel="stylesheet" href="styles/app.css" type="text/css" />
+  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" />
+  <link rel="stylesheet" href="styles/stokkup-styles-1024.css" type="text/css" />
 </head>
 <body ng-app="app">
   <div class="app" ui-view ng-controller="AppCtrl"></div>
