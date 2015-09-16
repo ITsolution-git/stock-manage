@@ -475,7 +475,17 @@ angular.module('app')
                             },
                        }
             })
-
+            .state('client.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/front/client/edit.html',
+               controller: 'clientEditCtrl',
+              data : { title: 'Client Edit' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
             .state('setting.price', {
               url: '/price',
               templateUrl: 'views/setting/price.html',

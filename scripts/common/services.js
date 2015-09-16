@@ -25,10 +25,10 @@
             AccessService: function (ret) {
                 //console.log(ret);
                 var role = sessionService.get('role_slug');
-                //console.log(role)
+                console.log('Permission Allow for Role - '+role)
                 if(ret.indexOf(role) <= -1 && ret != 'ALL')
                 {
-                   // console.log('error');
+                    console.log('error');
                     $state.go('app.dashboard');
                     setTimeout(function(){ window.location.reload(); }, 200);
                     return false;
@@ -78,6 +78,29 @@
 
          };
     })
+      .factory('Common_Misc', [
+                '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
+    return {
+
+        GetMicType: function (art_type) {
+                      
+                $http.get('api/public/common/GetMicType/'+art_type).success(function(result, status, headers, config) 
+                {
+                    var totalData = {};
+                    console.log(result.data);
+                    if(result.data.success == '0') 
+                    {
+                        totalData =result.data;
+                    } 
+                    
+                });
+                return sharedService = {thing:totalData};
+               
+            }
+        }
+        }
+       ])
+
 
 }).call(this);
 

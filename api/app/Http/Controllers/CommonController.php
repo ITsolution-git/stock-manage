@@ -76,7 +76,7 @@ class CommonController extends Controller {
     public function getStaffRoles()
     {
         $result = $this->common->getStaffRoles();
-        return return_response($result);
+        return $this->return_response($result);
     }
 
 /**
@@ -90,7 +90,6 @@ class CommonController extends Controller {
         return $this->return_response($result);
      }
 
-
 /**
 * Get All Misc Data controller   
 * @return json data
@@ -102,6 +101,23 @@ class CommonController extends Controller {
         return $this->return_response($result);
     }
 
+
+     public function GetMicType($type)
+     {
+        $result = $this->common->GetMicType($type);
+        return $this->return_response($result);
+     }
+    
+    /**
+    * Get Array of field selection, condition and table name.
+    * @return json data
+    */
+     public function getStaffList()
+     {
+
+        $result = $this->common->getStaffList();
+        return $this->return_response($result);
+     }
     /**
     * Get Array
     * @return json data

@@ -1,4 +1,4 @@
-<div class="box">
+<div class="">
   <!-- Content Navbar -->
   <div class="navbar md-whiteframe-z1 no-radius" ng-class="$state.current.data.theme ? $state.current.data.theme.primary : app.setting.theme.primary">
     <!-- Open side - Naviation on mobile -->
@@ -57,7 +57,16 @@
   <!-- Content -->
   <div class="box-row">
     <div class="box-cell">
-      <div class="box-inner padding" ui-view id="view">
+      <div class="box-inner">
+       
+        <div id="nav" ng-include="'views/partials/aside.nav.uikit.html'"></div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="box-row">
+    <div class="box-cell">
+      <div class="box-inner content-main padding" ui-view id="view">
       </div>
     </div>
   </div>
