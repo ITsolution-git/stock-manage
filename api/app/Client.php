@@ -147,6 +147,28 @@ class Client extends Model {
     			$result['tax']['tax_rate'] = $value->tax_rate;
     			$result['tax']['tax_exempt'] = $value->tax_exempt;
 
+    			$result['pl_imp']['pl_businessname'] = $value->pl_businessname;
+    			$result['pl_imp']['pl_address'] = $value->pl_address;
+    			$result['pl_imp']['pl_city'] = $value->pl_city;
+    			$result['pl_imp']['pl_state'] = $value->pl_state;
+    			$result['pl_imp']['pl_pincode'] = $value->pl_pincode;
+    			$result['pl_imp']['pl_account_status'] = $value->pl_account_status;
+    			$result['pl_imp']['pl_salesrep'] = $value->pl_salesrep;
+    			$result['pl_imp']['pl_deposite'] = $value->pl_deposite;
+    			$result['pl_imp']['pl_tax'] = $value->pl_tax;
+    			$result['pl_imp']['pl_contactid'] = $value->pl_contactid;
+    			$result['pl_imp']['pl_contact'] = $value->pl_contact;
+    			$result['pl_imp']['pl_firstname'] = $value->pl_firstname;
+    			$result['pl_imp']['pl_lastname'] = $value->pl_lastname;
+    			$result['pl_imp']['pl_businesstitle'] = $value->pl_businesstitle;
+    			$result['pl_imp']['pl_email'] = $value->pl_email;
+    			$result['pl_imp']['pl_homenumber'] = $value->pl_homenumber;
+    			$result['pl_imp']['pl_fax'] = $value->pl_fax;
+    			$result['pl_imp']['pl_altphone'] = $value->pl_altphone;
+    			$result['pl_imp']['pl_notes'] = $value->pl_notes;
+
+
+
     		}
     	}
     	return $result;
@@ -168,6 +190,13 @@ class Client extends Model {
     	return $result;
    }
    public function SaveCleintTax($post,$id)
+   {
+   		$result = DB::table('client')
+   						->where('client_id','=',$id)
+   						->update($post);
+    	return $result;
+   }
+    public function SaveCleintPlimp($post,$id)
    {
    		$result = DB::table('client')
    						->where('client_id','=',$id)

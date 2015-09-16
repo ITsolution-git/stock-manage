@@ -116,6 +116,7 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                                         $scope.maincompcontact =result.data.records.contact;
                                         $scope.main =result.data.records.main;
                                         $scope.client_tax =result.data.records.tax;
+                                        $scope.pl_imp =result.data.records.pl_imp;
                                     } 
                                     
                                 });
@@ -264,6 +265,16 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                               Tax_data.data = TaxDetails;
                               Tax_data.id = $stateParams.id;
                               $http.post('api/public/client/SaveCleintTax',Tax_data).success(function(Listdata) {
+                                    //getClientDetail(getclient_id );
+                              });
+                          };
+                          $scope.SavePlimpDetails=function(PlimpDetails)
+                          {
+                              var Plimp_data = {};
+                              //console.log(TaxDetails); return false;
+                              Plimp_data.data = PlimpDetails;
+                              Plimp_data.id = $stateParams.id;
+                              $http.post('api/public/client/SaveCleintPlimp',Plimp_data).success(function(Listdata) {
                                     //getClientDetail(getclient_id );
                               });
                           };
