@@ -172,12 +172,19 @@ class ClientController extends Controller {
 			foreach ($post['data'] as $key => $value) 
 			{
 				$post['data'][$key]['client_id']=$post['id'];
+				unset($post['data'][$key]['id']);
+				unset($post['data'][$key]['address_main']);
+				unset($post['data'][$key]['address_shipping']);
+				unset($post['data'][$key]['address_billing']);
+				unset($post['data'][$key]['street']);
+				
 			}
+
 
 			//echo "<pre>"; print_r($post['data']); echo "</pre>"; die;
 			$message = INSERT_RECORD;
 			$success = 1;
-			$this->client->clientAddress($post['data'],$post['id']);
+			$this->client->clientAddress($post['data'],$post['id'],$post['permadd']);
 		}
 		else
 		{
@@ -216,6 +223,30 @@ class ClientController extends Controller {
 	{
 		$post = Input::all();
 		$result = $this->client->SaveSalesDetails($post['data'],$post['id']);
+
+    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Update client form data, .
+    * @return json data
+    */
+	public function SaveCleintDetails()
+	{
+		$post = Input::all();
+		$result = $this->client->SaveCleintDetails($post['data'],$post['id']);
+
+    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Update client Tax data, .
+    * @return json data
+    */
+	public function SaveCleintTax()
+	{
+		$post = Input::all();
+		$result = $this->client->SaveCleintTax($post['data'],$post['id']);
 
     	$data = array("success"=>1,"message"=>UPDATE_RECORD);
 		return response()->json(['data'=>$data]);
