@@ -1,4 +1,4 @@
-  
+
   <div class="row">
     <div class="col-sm-12">
 
@@ -7,53 +7,72 @@
         <div class="panel panel-default">
          <input type="hidden" ng-model="staff.id">
           <div class="panel-body">
-            <div class="form-group col-sm-6 m-b">
+            <div class="col-sm-6 m-b  panel panel-default">
               
-              <div class="input-group col-sm-12 m-b">
-              <label>Company <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
+              <div class="form-group col-sm-8 m-b">
+                
+                <div class="input-group col-sm-12 m-b">
+                <label>Company <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="main.client_company"  >
+                </div>
 
 
-              <div class="col-md-6 m-b">
-              <label>Main contact <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="maincompcontact.first_name"  >
-              </div>
-              
-              <div class=" col-md-6 m-b">
-              <label>Billing Email <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="mainaddress.last_name"  >
-              </div>
+                <div class="col-md-6 m-b">
+                <label>Main contact <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="maincompcontact.first_name"  >
+                </div>
+                
+                <div class="col-md-6 m-b">
+                <label>Billing Email <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="main.billing_email"  >
+                </div>
 
-              <div class="col-md-6 m-b">
-              <label>Main Contact Phone <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
+                <div class="col-md-6 m-b">
+                <label>Main Contact Phone <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
+                </div>
+                
+                <div class=" col-md-6 m-b">
+                <label>company Phone <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="main.company_phone" >
+                </div>
+                 <div class="col-md-6 m-b">
+                <label>Contact's Email <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="maincompcontact.email" >
+                </div>
+                
+                <div class=" col-md-6 m-b">
+                <label>Company URL <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="main.salesweb" >
+                </div>
+                
+                <div class="col-md-6 m-b">
+                <label>Type <em class="text-muted"></em></label>
+                 <select class="form-control" ng-model="main.client_type">
+                    <option value="">Select Type</option>
+                     <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
+                </select>
+                </div>
+                
+                <div class=" col-md-6">
+                <label>Desposition <em class="text-muted"></em></label>
+                
+                 <select class="form-control" ng-model="main.client_desposition">
+                    <option value="">Select Type</option>
+                     <option ng-repeat="item in Arrdisposition" value="{{item.id}}"  ng-selected="{{main.client_desposition==item.id}}">{{item.value}}</option>
+                </select>
+
+                </div>
+               
+              <div class="input-group col-sm-5 m-b">
+              <br>
+                    <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>&nbsp;
+                    <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
               </div>
-              
-              <div class=" col-md-6 m-b">
-              <label>company Phone <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="staff.last_name" >
-              </div>
-               <div class="col-md-6 m-b">
-              <label>Contact's Email <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="maincompcontact.email" >
-              </div>
-              
-              <div class=" col-md-6 m-b">
-              <label>Company URL <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="staff.last_name" >
-              </div>
-               <div class="col-md-6 m-b">
-              <label>Type <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="staff.first_name" >
-              </div>
-              
-              <div class=" col-md-6">
-              <label>Desposition <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="staff.last_name" >
-              </div>
-             
-              <div class="input-group col-sm-5 m-b"></div>
+            </div>
+            <div class="form-group col-sm-4 m-b">
+            LOGO
+            </div>
 
               <ul class="nav nav-tabs input-group col-sm-12">
                 <li class="active">
@@ -137,30 +156,29 @@
                         <button type="button" ng-click="removeAddress($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
                     </div>
                     
-                          <div class="col-md-3">
-                          Main Address
-                        <select class="form-control" ng-model="client_address.type">
-
-                         <option value="">Select Type</option>
-                          <option ng-repeat="(key,client_address) in alladdress" value="{{client_address.id}}"  ng-selected="{{client_address.type==item.id}}">{{client_address.address}}</option>
-                        </select>
-                        </div>
-                         <div class="col-md-3">
+                    <div class="col-md-3">
+                           Main Address
+                           <select class="form-control" ng-model="permadd.address_main">
+                           <option value="">Select Type</option>
+                           <option ng-repeat="(key,client_address) in alladdress" ng-value="{{client_address.address}}"  ng-selected="{{client_address.address==permadd.address_main}}">{{client_address.address}}</option>
+                           </select>
+                    </div>
+                    <div class="col-md-3">
                          Billing Address
-                        <select class="form-control" ng-model="client_address.type">
+                         <select class="form-control" ng-model="permadd.address_billing">
                          <option value="">Select Type</option>
-                          <option ng-repeat="(key,client_address) in alladdress" value="{{client_address.id}}"  ng-selected="{{client_address.type==item.id}}">{{client_address.address}}</option>
-                        </select>
-                        </div>
-                         <div class="col-md-3">
+                          <option ng-repeat="(key,client_address) in alladdress" ng-value="{{client_address.address}}"  ng-selected="{{client_address.address==permadd.address_billing}}">{{client_address.address}}</option>
+                         </select>
+                   </div>
+                    <div class="col-md-3">
                          Shipping Address
-                        <select class="form-control" ng-model="client_address.type">
-                         <option value="">Select Type</option>
-                          <option ng-repeat="(key,client_address) in alladdress" value="{{client_address.id}}"  ng-selected="{{client_address.type==item.id}}">{{client_address.address}}</option>
-                        </select>
-                        </div>
+                          <select class="form-control" ng-model="permadd.address_shipping">
+                          <option value="">Select Type</option>
+                          <option ng-repeat="(key,client_address) in alladdress" ng-value="{{client_address.address}}"  ng-selected="{{client_address.address==permadd.address_shipping}}">{{client_address.address}}</option>
+                          </select>
+                    </div>
                     <button type="button" ng-click="addAddress()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-                    <button  type="submit" class="btn btn-info" ng-click="SaveClientAddress(alladdress)" >Save</button>
+                    <button  type="submit" class="btn btn-info" ng-click="SaveClientAddress(alladdress,permadd)" >Save</button>
                 </div>
                 </div>
   <!-- ADDRESS TAB END -->
@@ -203,7 +221,7 @@
                   </div>
                   <div class="input-group col-sm-12 m-b">
                     <label>TaxId Document <em class="text-muted"></em></label>
-                    <textarea class="form-control" ng-model="client_tax.tax_doc"  ></textarea> 
+                    <textarea class="form-control"  ></textarea> 
                   </div>
                   <div class="input-group col-sm-12 m-b">
                     <label>Tax Rate % <em class="text-muted"></em></label>
@@ -211,12 +229,16 @@
                   </div>
                   <div class="input-group col-sm-12 m-b">
                     <label>Tax Exampt <em class="text-muted"></em></label><br>
-                    <md-checkbox class="pull-left" style="margin: 0 5px 0 0 !important;"  ng-model="client_tax.yes">Yes</md-checkbox>
-                    <md-checkbox class="pull-left" style="margin: 0 5px 0 0 !important;"  ng-model="client_tax.no">No</md-checkbox>
+                    NO 
+                    <label class="ui-switch ui-switch-md bg-info m-t-xs">
+                     <input type="checkbox" ng-model="client_tax.tax_exempt" ng-true-value="'1'" ng-false-value="'0'" name="tax_exempt"> 
+                    <i></i>
+                  </label>
+                    YES
                   </div>
-
+                   <button  type="submit" class="btn btn-info" ng-click="SaveTaxDetails(client_tax)" >Save</button>
                 </div>
- <!-- TAX TAB START -->
+ <!-- TAX TAB END -->
 
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="tab6">
                  
@@ -231,9 +253,93 @@
                   </div>
 
                   </div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab7">Payments</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab8">PI Form</div>
 
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab7">Payments</div>
+ <!-- PL Imp START -->  
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab8">
+                    <div class="input-group col-sm-12 m-b">
+                         <div class="col-sm-6 m-b">
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Business Name <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Address <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>City <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>State <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Zip Code <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div><div class="input-group col-sm-12 m-b">
+                                <label>Account Status <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div><div class="input-group col-sm-12 m-b">
+                                <label>Sales Rep <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div><div class="input-group col-sm-12 m-b">
+                                <label>Deposite <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Tax <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Contact Id <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                         </div>
+                          <div class="col-sm-6 m-b">
+                              
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Contact <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>First Name <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Last Name <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Business Title <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Email Address <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Home Number <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Fax Number <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div><div class="input-group col-sm-12 m-b">
+                                <label>Alt Phone <em class="text-muted"></em></label>
+                                <input type="text" class="form-control" ng-model="PLimp.tax_id"  >
+                              </div>
+                              <div class="input-group col-sm-12 m-b">
+                                <label>Notes <em class="text-muted"></em></label>
+                                <textarea class="form-control" cols="8" rows="4" ng-model="PLimp.tax_id" ></textarea>
+                              </div>
+                              
+                         </div>
+                         <button  type="submit" class="btn btn-info" >Save</button>
+                    </div>
+                </div>
+<!-- PL IMP END -->  
 
                 </div>
             </div>
@@ -285,11 +391,6 @@
             <div class="form-group col-sm-12 m-b"></div>
             
           </div>
-          <footer class="panel-footer text-right">
-            <button  type="submit" class="btn btn-info" ng-disabled="staffForm.$invalid">Submit</button>&nbsp;
-            <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
-           
-          </footer>
         </div>
       </form>
     </div>
