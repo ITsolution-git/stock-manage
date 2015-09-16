@@ -55,8 +55,13 @@ nav ul.nav li:hover ul.nav-sub {
 	z-index:1;
 }
 /* Login Page */
-.ng-scope {
+
+.app-login {
 	background:url(../images/bg_login.jpg) repeat 0 0;
+}
+
+.app-login .indigo {
+	background:none;
 }
 #loginCtrl {
 	background:none;
