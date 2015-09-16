@@ -505,7 +505,7 @@ angular.module('app')
                controller: 'priceAddEditCtrl',
               resolve: {
                             checklogin: function (AuthService) {
-                               return AuthService.checksession();
+                               //return AuthService.checksession();
                             },
                        }
             })

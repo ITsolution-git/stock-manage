@@ -54,6 +54,7 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                           var client_contacts=[];
                           var AddrTypeData={};
                           var PriceGrid={};
+                          var Arrdisposition={};
 
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
@@ -68,24 +69,16 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                               } 
                               
                           });
-                            
-                           getClientDetail(getclient_id );
-                           function getClientDetail(getclient_id)
-                           {
-                                $http.get('api/public/client/GetclientDetail/'+getclient_id).success(function(result, status, headers, config) 
-                                {
-                                    if(result.data.success == '1') 
-                                    {
-                                        $scope.mainaddress =result.data.records.address;
-                                        $scope.salesDetails =result.data.records.sales;
-                                        $scope.maincompcontact =result.data.records.contact;
-                                        $scope.main =result.data.records.main;
-                                    } 
-                                    
-                                });
-                            }
-                         
-                         $http.get('api/public/admin/price').success(function(result, status, headers, config) 
+
+                          $http.get('api/public/common/GetMicType/disposition').success(function(result, status, headers, config) 
+                          {
+                              if(result.data.success == '1') 
+                              {
+                                  $scope.Arrdisposition =result.data.records;
+                              } 
+                              
+                          });
+                           $http.get('api/public/admin/price').success(function(result, status, headers, config) 
                           {
                               if(result.data.success == '1') 
                               {
@@ -103,6 +96,35 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                               
                           });
 
+                          $http.get('api/public/common/type/company').success(function(result, status, headers, config) 
+                          {
+                              if(result.data.success == '1') 
+                              {
+                                  $scope.ArrCleintType =result.data.records;
+                              } 
+                              
+                          });  
+                           getClientDetail(getclient_id );
+                           function getClientDetail(getclient_id)
+                           {
+                                $http.get('api/public/client/GetclientDetail/'+getclient_id).success(function(result, status, headers, config) 
+                                {
+                                    if(result.data.success == '1') 
+                                    {
+                                        $scope.mainaddress =result.data.records.address;
+                                        $scope.salesDetails =result.data.records.sales;
+                                        $scope.maincompcontact =result.data.records.contact;
+                                        $scope.main =result.data.records.main;
+                                        $scope.client_tax =result.data.records.tax;
+                                        $scope.pl_imp =result.data.records.pl_imp;
+                                    } 
+                                    
+                                });
+                            }
+                         
+
+
+    //****************  CONTACTS TAB CODE START  ****************                          
                           getContacts($stateParams.id );
                           $scope.currentActivity = 1;
                           function getContacts(getclient_id)
@@ -129,18 +151,21 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                           $scope.removeContacts = function(index){
                               $scope.allContacts.splice(index,1);
                           }
-
-                          //****************  ADDRESS TAB CODE START  ****************
+    //****************  CONTACTS TAB CODE START  ****************
+    //****************  ADDRESS TAB CODE START  ****************
                          
                           
                            getAdress(getclient_id );
                            function getAdress(getclient_id)
                            {
+                              //var permadd={};
                               $http.post('api/public/client/getAddress',getclient_id).success(function(Listdata) 
                               {
                                    if(Listdata.data.success=='1')
                                    {
-                                      $scope.alladdress = Listdata.data.records
+
+                                      $scope.permadd=Listdata.data.records.address;
+                                      $scope.alladdress = Listdata.data.records.result
                                    }
                                    else
                                    {
@@ -156,16 +181,8 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                           $scope.removeAddress = function(index){
                               $scope.alladdress.splice(index,1);
                           }
-                           $scope.SaveClientAddress=function(arrAddress)
-                          {
-                             var address_data = {};
-                             address_data.data = arrAddress;
-                             address_data.id = $stateParams.id;
-                             $http.post('api/public/client/ClientAddress',address_data).success(function(Listdata) {
-                                    getAdress(getclient_id );
-                              });
-                          };
-                          // **************** ADDRESS TAB CODE END  ****************
+
+     // **************** ADDRESS TAB CODE END  ****************
 
 
                           $scope.items = ['item1', 'item2', 'item3'];
@@ -198,6 +215,17 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                           $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                           };
+
+                          $scope.SaveClientAddress=function(arrAddress,permadd)
+                          {
+                             var address_data = {};
+                             address_data.data = arrAddress;
+                             address_data.permadd = permadd;
+                             address_data.id = $stateParams.id;
+                             $http.post('api/public/client/ClientAddress',address_data).success(function(Listdata) {
+                                    getAdress(getclient_id );
+                              });
+                          };
                           $scope.SaveClientContact=function (arrContact)
                           {
                               var contact_data = {};
@@ -220,6 +248,34 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                                     getClientDetail(getclient_id );
                               });
                           };
-                         
-                        
+                         $scope.SaveCleintDetails=function(ClientDetails)
+                          {
+                              var Cleint_data = {};
+                              //console.log(ClientDetails); return false;
+                              Cleint_data.data = ClientDetails;
+                              Cleint_data.id = $stateParams.id;
+                              $http.post('api/public/client/SaveCleintDetails',Cleint_data).success(function(Listdata) {
+                                    getClientDetail(getclient_id );
+                              });
+                          };
+                         $scope.SaveTaxDetails=function(TaxDetails)
+                          {
+                              var Tax_data = {};
+                              //console.log(TaxDetails); return false;
+                              Tax_data.data = TaxDetails;
+                              Tax_data.id = $stateParams.id;
+                              $http.post('api/public/client/SaveCleintTax',Tax_data).success(function(Listdata) {
+                                    //getClientDetail(getclient_id );
+                              });
+                          };
+                          $scope.SavePlimpDetails=function(PlimpDetails)
+                          {
+                              var Plimp_data = {};
+                              //console.log(TaxDetails); return false;
+                              Plimp_data.data = PlimpDetails;
+                              Plimp_data.id = $stateParams.id;
+                              $http.post('api/public/client/SaveCleintPlimp',Plimp_data).success(function(Listdata) {
+                                    //getClientDetail(getclient_id );
+                              });
+                          };
 }]);
