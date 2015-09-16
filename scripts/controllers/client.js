@@ -215,7 +215,7 @@ app.controller('clientEditCtrl', ['$scope','$http','$location','$state','$modal'
                           $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                           };
-
+ 
                           $scope.SaveClientAddress=function(arrAddress,permadd)
                           {
                              var address_data = {};
