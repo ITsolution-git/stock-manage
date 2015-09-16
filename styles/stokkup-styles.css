@@ -1,8 +1,12 @@
 /* Navigation Styles */
 nav ul.nav li {
-	width:13%;
+	width:12%;
 }
-
+nav ul.nav li a > .icon, 
+nav ul.nav li .nav-item > .icon{
+	min-width:30px;
+	margin-right:0;
+}
 nav ul.nav li a,
 nav ul.nav li.active > a {
 	width:100%;
@@ -47,4 +51,11 @@ nav ul.nav li:hover ul.nav-sub {
 }
 #content .tab-content p.input-group {
 	z-index:1;
+}
+
+
+/* Product Section */
+.prod-form  .col-sm-8 {
+	padding-left:0;
+	padding-right:0;
 }
