@@ -8,6 +8,12 @@ nav ul.nav li.active > a {
 	width:100%;
 }
 
+nav ul.nav li a > .icon, 
+nav ul.nav li .nav-item > .icon {
+	min-width:30px;
+	margin-right:0;
+}
+
 nav ul.nav li ul.nav-sub li {
 	width:100%;
 }
@@ -31,7 +37,7 @@ nav ul.nav li:hover ul.nav-sub {
 	width:100%;
 }
 #aside .navbar.navbar-header.indigo {
-	background:#2e2e2e;
+	background:#4f1f25;
 }
 #nav nav {
 	position:fixed;
@@ -47,4 +53,24 @@ nav ul.nav li:hover ul.nav-sub {
 }
 #content .tab-content p.input-group {
 	z-index:1;
+}
+/* Login Page */
+.ng-scope {
+	background:url(../images/bg_login.jpg) repeat 0 0;
+}
+#loginCtrl {
+	background:none;
+}
+#loginCtrl .navbar-brand {
+	float:none;	
+	width:180px;
+	height:200px;
+	margin:0 auto;
+	overflow:hidden;
+}
+/*----- / -----*/
+/* Product Section */
+.nopad-form  .col-sm-8 {
+	padding-left:0;
+	padding-right:0;
 }
