@@ -30,5 +30,8 @@ angular.module('app')
     $translateProvider.useLocalStorage();
   }])
 
-app.constant('deleteMessage', 'Are you sure want to delete this record ?');
 
+app.constant("AllConstant", {
+      "deleteMessage": 'Are you sure want to delete this record ?',
+      "pagination": 15
+   });

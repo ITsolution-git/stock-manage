@@ -1,16 +1,17 @@
 
-app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
 
                          $http.get('api/public/admin/vendor').success(function(result, status, headers, config) {
 
                                   $scope.vendors = result.data.records;
+                                  $scope.pagination = AllConstant.pagination;
                          
                           });
 
                          $scope.delete = function (vendor_id) {
                          
-                            var permission = confirm(deleteMessage);
+                            var permission = confirm(AllConstant.deleteMessage);
                             if (permission == true) {
                             $http.post('api/public/admin/vendorDelete',vendor_id).success(function(result, status, headers, config) {
                                           
@@ -27,7 +28,7 @@ app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateP
 
 }]);
 
-app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
   $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
 

@@ -1,17 +1,18 @@
 
 
 
-app.controller('productListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('productListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
   $http.get('api/public/admin/product').success(function(result, status, headers, config) {
 
                                   $scope.products = result.data.records;
+                                  $scope.pagination = AllConstant.pagination;
                          
                           });
 
                          $scope.delete = function (product_id) {
                           
-                            var permission = confirm(deleteMessage);
+                            var permission = confirm(AllConstant.deleteMessage);
                             if (permission == true) {
                             $http.post('api/public/admin/productDelete',product_id).success(function(result, status, headers, config) {
                                           
@@ -29,7 +30,7 @@ app.controller('productListCtrl', ['$scope','$http','$location','$state','$state
 }]);
 
 
-app.controller('productAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('productAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
    
    
  $http.get('api/public/common/getAllVendors').success(function(result, status, headers, config) {
