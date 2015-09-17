@@ -25,10 +25,10 @@
             AccessService: function (ret) {
                 //console.log(ret);
                 var role = sessionService.get('role_slug');
-                console.log('Permission Allow for Role - '+role)
+                //console.log('Permission Allow for Role - '+role)
                 if(ret.indexOf(role) <= -1 && ret != 'ALL')
                 {
-                    console.log('error');
+                    //console.log('error');
                     $state.go('app.dashboard');
                     setTimeout(function(){ window.location.reload(); }, 200);
                     return false;
