@@ -1,7 +1,7 @@
 
 
 
-app.controller('noteListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('noteListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
 
 if($stateParams.staff_id) {
@@ -21,7 +21,7 @@ if($stateParams.staff_id) {
                           combine_array_delete.note_id = note_id;
 
                          
-                            var permission = confirm(deleteMessage);
+                            var permission = confirm(AllConstant.deleteMessage);
                             if (permission == true) {
                             $http.post('api/public/admin/staff/noteDelete',combine_array_delete).success(function(result, status, headers, config) {
                                           
@@ -48,7 +48,7 @@ if($stateParams.staff_id) {
 }]);
 
 
-app.controller('noteAddeditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('noteAddeditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
  $scope.openNoteList = function() {
                                  
