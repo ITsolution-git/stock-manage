@@ -1,4 +1,31 @@
-/* Navigation Styles */
+
+/*==========================
+	GENERAL STYLES 
+==========================*/
+.nopad-form {
+	padding-left:0;
+	padding-right:0;
+}
+.nopad-left {
+	padding-left:0;
+}
+.nopad-right {
+	padding-right:0;
+}
+.t-mid {
+	text-align:center;
+}
+.t-l {
+	text-align:left;
+}
+.t-r {
+	text-align:right;
+}
+/*---------- END ----------*/
+
+/*==========================
+	Navigation Styles
+==========================*/
 nav ul.nav li {
 	width:12%;
 }
@@ -54,8 +81,11 @@ nav ul.nav li:hover ul.nav-sub {
 #content .tab-content p.input-group {
 	z-index:1;
 }
-/* Login Page */
+/*---------- END ----------*/
 
+/*==========================
+	Login Page - Admin
+==========================*/
 .app-login {
 	background:url(../images/bg_login.jpg) repeat 0 0;
 }
@@ -73,8 +103,11 @@ nav ul.nav li:hover ul.nav-sub {
 	margin:0 auto;
 	overflow:hidden;
 }
-/*----- / -----*/
-/* Product Section */
+/*---------- END ----------*/
+
+/*==========================
+	Product Page - Admin
+==========================*/
 .nopad-form  .col-sm-8 {
 	padding-left:0;
 	padding-right:0;
@@ -92,3 +125,72 @@ nav ul.nav li:hover ul.nav-sub {
 .login-flash .success{
 	color: #008000;
 }
+/*---------- END ----------*/
+
+
+/*==========================
+	Staff Form - Admin
+==========================*/
+	.stokkupForm img {
+		max-width:100%;
+		height:100%;
+		margin-top:10px;
+	}	
+	.stokkupForm .tab-content .form-group {
+		margin-bottom:0;		
+	}
+	.stokkupForm .tab-content .form-group .formNotes {
+		margin:10px 0;
+		min-height:35px;
+	}
+	.stokkupForm .tab-content .form-group input,
+	.stokkupForm .tab-content .form-group label {
+		margin-right:10px;	
+		margin-bottom:0;		
+	}
+	.stokkupForm .tab-content .form-group label {
+		font-size:1em;
+		font-weight:bold;
+		color:#0e0e0e;
+	}
+	.stokkupForm .tab-content .form-group button.formBtns {
+		width:35px;
+		height:35px;
+		border:0 none;
+		text-indent:-9999px;
+		background:url(../images/icon-sprite.png) no-repeat 0 0;
+	}
+	.stokkupForm .tab-content .form-group button.removeRecord {
+		background-position:0 -135px;
+	}
+	.stokkupForm .tab-content .form-group button.newRecord {
+		background-position:0 0;
+		width:166px;
+	}
+	.stokkupForm .tab-content .form-group input {
+		min-height:34px;	
+		z-index:1;		
+	}
+	.stokkupForm .tab-content {
+		overflow:hidden;
+		min-height:350px;
+	}
+	.stokkupForm .tab-content .form-group .timeOffData {		
+		margin:0;
+		clear:both;
+	}
+	
+	.stokkupForm .tab-content #timeoff label {
+		margin-right:0;
+	}
+	.stokkupForm .tab-content #timeoff .form-group {
+		margin-bottom:15px;
+	}
+	.stokkupForm .tab-content .form-group .timeOffData select {
+		min-height:34px;
+	}
+	.stokkupForm .tab-content .form-group .timeOffData .datePick {
+		z-index:12;
+	}
+	
+/*---------- END ----------*/
