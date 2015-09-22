@@ -88,5 +88,7 @@ nav ul.nav li:hover ul.nav-sub {
 }
 .login-flash .danger{
 	color: #f00;
-	
+}
+.login-flash .success{
+	color: #008000;
 }

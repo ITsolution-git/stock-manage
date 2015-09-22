@@ -1,11 +1,12 @@
 
 
 
-app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
   $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
 
                                   $scope.staffs = result.data.records;
+                                  $scope.pagination = AllConstant.pagination;
                          
                           });
 
@@ -16,7 +17,7 @@ app.controller('staffListCtrl', ['$scope','$http','$location','$state','$statePa
                           combine_array_delete.user_id = user_id;
 
                          
-                            var permission = confirm(deleteMessage);
+                            var permission = confirm(AllConstant.deleteMessage);
                             if (permission == true) {
                             $http.post('api/public/admin/staffDelete',combine_array_delete).success(function(result, status, headers, config) {
                                           
@@ -33,7 +34,7 @@ app.controller('staffListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage,$filter) {
+app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,$filter) {
    
     
 
