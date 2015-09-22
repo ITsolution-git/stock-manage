@@ -56,7 +56,9 @@ class StaffController extends Controller {
 */
     public function add() {
 
-       
+       $notes_data_all = json_decode($_REQUEST['notes_data_all']);
+       $timeoff_data_all = json_decode($_REQUEST['timeoff_data_all']);
+
         $data['staff'] = array('last_name' => isset($_REQUEST['last_name']) ? $_REQUEST['last_name'] : '',
             'first_name' => isset($_REQUEST['first_name']) ? $_REQUEST['first_name'] : '',
             'middle_name' => isset($_REQUEST['middle_name']) ? $_REQUEST['middle_name'] : '',
@@ -130,7 +132,7 @@ class StaffController extends Controller {
           $data['users']['password'] = md5($data['users']['password']);
           $data['users']['name'] = $data['staff']['first_name'].' '.$data['staff']['last_name'];
 
-          $insertedid = $this->staff->staffAdd($data);
+          $insertedid = $this->staff->staffAdd($data,$timeoff_data_all,$notes_data_all);
 
           if ($insertedid && $_FILES) {
 
@@ -168,6 +170,9 @@ class StaffController extends Controller {
 */
     public function edit() {
  
+          $notes_data_all = json_decode($_REQUEST['notes_data_all']);
+          $timeoff_data_all = json_decode($_REQUEST['timeoff_data_all']);
+
 
          
           $data['staff'] = array('id' => isset($_REQUEST['id']) ? $_REQUEST['id'] : '',
@@ -248,7 +253,10 @@ class StaffController extends Controller {
           $data['users']['password'] = md5($data['users']['password']);
           $data['users']['name'] = $data['staff']['first_name'].' '.$data['staff']['last_name'];
 
-          
+
+          $resultNotes = $this->staff->staffNotesEdit($notes_data_all,$_REQUEST['id']);
+          $resultTimeOff = $this->staff->staffTimeOffEdit($timeoff_data_all,$_REQUEST['id']);
+
           $result = $this->staff->staffEdit($data['staff']);
           $resultUsers = $this->staff->userEdit($data['users']);
 
@@ -326,9 +334,9 @@ public function create_dir($dir_path) {
 
        
            if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['staff'],'users_records' => $result['users']);
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['staff'],'users_records' => $result['users'],'allnotes' => $result['allnotes'],'allTimeOff' => $result['allTimeOff']);
         } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['staff'],'users_records' => $result['users']);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['staff'],'users_records' => $result['users'],'allnotes' => $result['allnotes'],'allTimeOff' => $result['allTimeOff']);
         }
         
         return response()->json(["data" => $response]);

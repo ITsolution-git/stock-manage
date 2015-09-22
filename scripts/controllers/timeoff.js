@@ -1,6 +1,6 @@
 
 
-app.controller('timeoffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('timeoffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
 
 
@@ -23,7 +23,7 @@ app.controller('timeoffListCtrl', ['$scope','$http','$location','$state','$state
                           combine_array_delete.timeoff_id = timeoff_id;
 
                          
-                            var permission = confirm(deleteMessage);
+                            var permission = confirm(AllConstant.deleteMessage);
                             if (permission == true) {
                             $http.post('api/public/admin/staff/timeoffDelete',combine_array_delete).success(function(result, status, headers, config) {
                                           
@@ -51,7 +51,7 @@ app.controller('timeoffListCtrl', ['$scope','$http','$location','$state','$state
 }]);
 
 
-app.controller('timeoffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage,$filter) {
+app.controller('timeoffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,$filter) {
   
    $scope.openTimeoffList = function() {
                                  

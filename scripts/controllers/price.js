@@ -1,15 +1,17 @@
 
-app.controller('priceListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('priceListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
   $http.get('api/public/admin/price').success(function(result, status, headers, config) {
 
                                   $scope.price = result.data.records;
+                                  $scope.pagination = AllConstant.pagination;
+
                          
                           });
 
                          $scope.delete = function (price_id) {
                           
-                            var permission = confirm(deleteMessage);
+                            var permission = confirm(AllConstant.deleteMessage);
                             if (permission == true) {
                             $http.post('api/public/admin/priceDelete',price_id).success(function(result, status, headers, config) {
                                           
@@ -26,7 +28,7 @@ app.controller('priceListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage,$filter) {
+app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,$filter) {
    
                     if($stateParams.id) {
 

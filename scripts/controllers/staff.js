@@ -1,11 +1,12 @@
 
 
 
-app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage) {
+app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
   $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
 
                                   $scope.staffs = result.data.records;
+                                  $scope.pagination = AllConstant.pagination;
                          
                           });
 
@@ -16,7 +17,7 @@ app.controller('staffListCtrl', ['$scope','$http','$location','$state','$statePa
                           combine_array_delete.user_id = user_id;
 
                          
-                            var permission = confirm(deleteMessage);
+                            var permission = confirm(AllConstant.deleteMessage);
                             if (permission == true) {
                             $http.post('api/public/admin/staffDelete',combine_array_delete).success(function(result, status, headers, config) {
                                           
@@ -33,9 +34,17 @@ app.controller('staffListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','deleteMessage','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,deleteMessage,$filter) {
+app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,$filter) {
    
     
+
+$http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
+
+                                  $scope.timeOffTypes = result.data.records;
+                         
+                          });
+
+
 
     $http.get('api/public/common/type/staff').success(function(result, status, headers, config) {
 
@@ -85,6 +94,10 @@ app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stat
                         for (var i in $scope.files) {
                             fd.append("image", $scope.files[i])
                         }
+
+                        fd.append("notes_data_all", angular.toJson($scope.allnotes))
+                        fd.append("timeoff_data_all", angular.toJson($scope.allTimeOff))
+
 
 
                          $.each(user_data_staff, function( index, value ) {
@@ -148,6 +161,24 @@ app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stat
                                      $scope.staff = result.data.records[0];
                                      $scope.users = result.data.users_records[0];
                                      
+                                     var count_no = 0;
+                                     angular.forEach(result.data.allTimeOff, function(){
+                                     
+
+                                     result.data.allTimeOff[count_no].date_begin = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_begin);
+                                     result.data.allTimeOff[count_no].date_begin = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_begin);
+
+
+                                     result.data.allTimeOff[count_no].date_end = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_end);
+                                     result.data.allTimeOff[count_no].date_end = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_end); 
+                                      count_no++;
+
+                                   
+                                    });
+
+                                     $scope.allnotes = result.data.allnotes;
+                                     $scope.allTimeOff = result.data.allTimeOff;
+                                     
 
                              }  else {
                              $state.go('app.dashboard');
@@ -156,6 +187,27 @@ app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stat
                           });
 
                          }
+
+
+                         $scope.allnotes = [];
+                          $scope.addNotes = function(){
+                            $scope.allnotes.push({note:'', points:''});
+                          }
+
+                          $scope.removeNotes = function(index){
+                              $scope.allnotes.splice(index,1);
+                          }
+
+
+                          $scope.allTimeOff = [];
+                          $scope.addTimeOff = function(){
+                            $scope.allTimeOff.push({classification:'', date_begin:'',date_end:'', applied_hours:''});
+                          }
+
+                          $scope.removeTimeOff = function(index){
+                              $scope.allTimeOff.splice(index,1);
+                          }
+
 
                        
 
