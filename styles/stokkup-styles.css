@@ -128,11 +128,11 @@ nav ul.nav li:hover ul.nav-sub {
 /*---------- END ----------*/
 
 
-/*==========================
-	Staff Form - Admin
-==========================*/
+/*=====================================
+	Staff Form Add/Edit - Admin
+=====================================*/
 	.stokkupForm img {
-		max-width:100%;
+		width:100%;
 		height:100%;
 		margin-top:10px;
 	}	
@@ -165,7 +165,6 @@ nav ul.nav li:hover ul.nav-sub {
 	}
 	.stokkupForm .tab-content .form-group button.newRecord {
 		background-position:0 0;
-		width:166px;
 	}
 	.stokkupForm .tab-content .form-group input {
 		min-height:34px;	
@@ -186,11 +185,42 @@ nav ul.nav li:hover ul.nav-sub {
 	.stokkupForm .tab-content #timeoff .form-group {
 		margin-bottom:15px;
 	}
-	.stokkupForm .tab-content .form-group .timeOffData select {
+	.stokkupForm .tab-content .form-group select {
 		min-height:34px;
 	}
 	.stokkupForm .tab-content .form-group .timeOffData .datePick {
 		z-index:12;
 	}
-	
+/*---------- END ----------*/	
+
+/*=====================================
+	Vendor Form Add/Edit - Admin
+=====================================*/
+	.vendorForm .tab-content .form-group select {
+		margin-right:0;
+		padding:0;
+	}
+	.stokkupForm.vendorForm .tab-content .form-group input,
+	.stokkupForm.vendorForm .tab-content .form-group label {
+		padding:5px;
+		margin:0 0 10px 0;
+	}
+	.vendorForm .tab-content .form-group .vendor_contacts {
+		margin-bottom:5px;
+	}
+	.vendorForm .vendor_left_form .addressRow input  {
+		border:1px solid #ccc;		
+	}
+	.vendorForm .vendor_left_form .addressRow div input {
+		margin-left:16px;	
+		border:1px solid #ccc;	
+		min-height:34px;
+	}
+	.vendorForm .vendor_left_form .addressRow div input:first-child ,
+	.vendorForm #tab2 .addressRow div input {		
+		margin:0;
+	}
+	.vendorForm #tab2 .addressRow div input {				
+		border:1px solid #ccc;		
+	}
 /*---------- END ----------*/
