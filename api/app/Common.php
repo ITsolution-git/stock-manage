@@ -81,13 +81,7 @@ class Common extends Model {
            } else {
             $allData[$data->type][] = $data;
            }
-
-
-            
-
         }
-
-          
         return $allData;
     }
 
@@ -103,5 +97,38 @@ class Common extends Model {
         $stafflist = DB::table('staff')->select('id','first_name','last_name')->where($whereConditions)->get();
         return $stafflist;
 
-}
+    }
+    public function InsertRecords($table,$records)
+    {
+        $result = DB::table($table)->insert($records);
+        return $result;
+    }
+    public function GetTableRecords($table,$cond)
+    {
+        $result = DB::table($table);
+        if(count($cond)>0)
+        {
+            foreach ($cond as $key => $value) 
+            {
+                if(!empty($value))
+                    $result =$result ->where($key,'=',$value);
+            }
+        }
+        $result=$result->get();
+        return $result;
+    }
+    public function UpdateTableRecords($table,$cond,$data)
+    {
+         $result = DB::table($table);
+        if(count($cond)>0)
+        {
+            foreach ($cond as $key => $value) 
+            {
+                if(!empty($value))
+                    $result =$result ->where($key,'=',$value);
+            }
+        }
+        $result=$result->update($data);
+        return $result;
+    }
 }

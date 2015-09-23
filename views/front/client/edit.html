@@ -211,7 +211,7 @@
                 </div>
  <!-- SALES TAB END -->
 
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab4">CreditCard Details, Multiple</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab4">Depends Order Module</div>
 
 <!-- TAX TAB START -->
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="tab5">
@@ -244,18 +244,14 @@
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="tab6">
                  
                 <div class="panel b-a ng-scope">
-                      <script id="myModalContent.html" type="text/ng-template">
-                        &lt;div ng-include="'views/front/client/document.html'"&gt;&lt;/div&gt;
-                      </script>
-                      
                       <div class="panel-body">
-                        <button ng-click="open()" class="btn btn-success" tabindex="0">+</button>
+                        <button ng-click="openPopup('document.html')" class="btn btn-success" tabindex="0">+</button>
                       </div>
-                  </div>
+                </div>
 
                   </div>
 
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab7">Payments</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab7">Depends Order Module</div>
  <!-- PL Imp START -->  
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="tab8">
                     <div class="input-group col-sm-12 m-b">
@@ -373,14 +369,80 @@
                 </li>
                </ul>
                 <div class="tab-content p b-a no-b-t bg-white m-b-md">
-                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab10">Notes</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Contacts Multiple</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Addresses Multiple</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">Sales Detail</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab14">CreditCard Details, Multiple</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab15">Tax</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab16">Documents</div>
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab17">Payments</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab10">
+                  
+                 
+                      <ul class="nav nav-tabs input-group col-sm-12">
+                          <li class="active">
+                            <a href data-toggle="tab" data-target="#tab_client">Client Note</a>
+                          </li>
+                          <li>
+                            <a href data-toggle="tab" data-target="#tab_activejob">Active Job</a>
+                          </li>
+                          <li>
+                            <a href data-toggle="tab" data-target="#tab_oldjob">Old Job</a>
+                          </li>
+                      </ul>
+                  <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                      <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab_client">
+                          
+                          <div ng-repeat="client_note in allclientnotes">
+                            
+                            <input type="text" class="col-md-2" disabled="" ng-model="client_note.user_name">
+                            <input type="text" class="col-md-2" disabled="" ng-model="client_note.created_date">
+                            <input type="text" class="col-md-6" ng-model="client_note.client_notes">
+
+
+                            <button type="button" ng-click="removeclientnotes($index,client_note.note_id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                            <button type="button" ng-click="EditPopup(client_note.note_id)" class="btn btn-default addButton">edit</button>
+                          </div>
+                          <button type="button" ng-click="openPopup('note.html')" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
+                        
+                      </div>
+                      <div role="tabpanel" class="tab-pane animated fadeIn" id="tab_activejob">Active</div>
+                      <div role="tabpanel" class="tab-pane animated fadeIn" id="tab_oldjob">old</div>
+                  </div>
+
+                </div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Depends Order Module</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Depends Order Module</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">
+                      
+                 <div class="form-group">
+                  <b style="margin: 0 5px 0 0 !important;"  class="col-md-2">Description</b> <b class="col-md-2">Address</b>
+                  <b class="col-md-2">City</b><b class="col-md-2">State</b>
+                </div><br>
+                  <div class="form-group">
+                    <div ng-repeat="(key,client_destaddress) in AllDistAddress">
+                        
+                        <input type="text" class="col-md-2"  ng-model="client_destaddress.description" placeholder="First Name" />
+                        <input type="text" class="col-md-2"  ng-model="client_destaddress.address" placeholder="Last Name" />
+                        <input type="text" class="col-md-2"  ng-model="client_destaddress.city" placeholder="Location" />
+                        <input type="text" class="col-md-2"  ng-model="client_destaddress.state" placeholder="Phone" />
+                         
+                        <button type="button" ng-click="removeDestAddress($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                        <button type="button" ng-click="EditeDistAddress(client_destaddress.id)" class="btn btn-default addButton">edit</button>
+                    </div>
+                    <button type="button" ng-click="openPopup('address.html')" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
+                </div>
+                </div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab14">screen cast</div>
+                
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab15">
+
+                    <div class="input-group col-sm-12 m-b">
+                      <label>Client Url <em class="text-muted"></em></label>
+                      <input type="text" class="form-control col-sm-8" ng-model="main.salesweb"  >
+                      <button type="button" ng-click="SaveCleintDetails(main)" class="btn btn-default addButton m-l m-b">Check</button>
+                      <a ng-href="{{main.salesweb}}" target="_blank"><button type="button" class="btn btn-default addButton m-l m-b">Open</button></a>
+                    </div>
+                    <iframe ng-src="{{currentProjectUrl}}" height="500" width="100%"> Please wait...</iframe>
+            
+                </div>
+
+
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab16">Logos</div>
+                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab17">Depends Art</div>
 
 
                 </div>
