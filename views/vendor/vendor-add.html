@@ -4,7 +4,7 @@
 
       <form name="vendorForm" class="form-validation" ng-submit="saveVendor()">
         
-        <div class="panel panel-default">
+        <div class="panel panel-default col-sm-5">
          <input type="hidden" ng-model="vendor.id" value="{{vendor.id}}">
           <div class="panel-body">
             <div class="form-group col-sm-12 m-b">
@@ -83,13 +83,7 @@
         <li>
           <a href data-toggle="tab" data-target="#tab4">QB</a>
         </li>
-         <li>
-          <a href data-toggle="tab" data-target="#tab5">Note</a>
-        </li>
-
-        <li>
-          <a href data-toggle="tab" data-target="#tab6">Web Portal</a>
-        </li>
+        
 
       </ul>
 
@@ -223,7 +217,45 @@
         </div>
 
 
-         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab5">
+        </div>
+
+
+      </div>
+            </div>
+
+            <footer class="panel-footer text-right">
+            <button  type="submit" class="btn btn-info" ng-disabled="vendorForm.$invalid">Submit</button>&nbsp;
+            <button  ui-sref="vendor.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
+           
+          </footer>
+            
+          </div>
+
+
+
+           <div class="panel panel-default col-sm-7">
+        
+          <div class="panel-body">
+
+
+          
+            <div class="form-group col-sm-12 m-b">
+              <ul class="nav nav-tabs">
+                 <li class="active">
+                <a href data-toggle="tab" data-target="#tab5">Notes</a>
+              </li>
+
+              <li>
+                <a href data-toggle="tab" data-target="#tab6">Web Portal</a>
+              </li>
+               
+       
+      </ul>
+
+      <div class="tab-content p b-a no-b-t bg-white m-b-md">
+
+
+       <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab5">
 
            <div class="form-group">
               <label>Note <em class="text-muted"></em></label>
@@ -239,19 +271,20 @@
               <a  ng-click="addpopup(vendor.url)">Pop-up Window</a>
 
             </div>
+       
 
-        </div>
+        
 
+        
 
       </div>
             </div>
+
             
           </div>
-          <footer class="panel-footer text-right">
-            <button  type="submit" class="btn btn-info" ng-disabled="vendorForm.$invalid">Submit</button>&nbsp;
-            <button  ui-sref="vendor.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
-           
-          </footer>
+          
+        </div>
+          
         </div>
       </form>
     </div>
