@@ -1,0 +1,18 @@
+<div  ng-controller="clientEditCtrl">
+	<div class="modal-header">
+	    <h3 class="modal-title">Notes</h3>
+	</div>
+	<div class="modal-body">
+
+    	<div class="input-group col-sm-12 m-b">
+	    	<label>Notes<em class="text-muted"></em></label>
+	    	<textarea class="form-control" ng-model="thisclientNote[0].client_notes"  ></textarea>
+    	</div>
+    	
+	</div>
+	<div class="modal-footer">                  
+<!--   		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+ -->	    <button class="btn btn-primary" ng-if="edit=='add'" ng-click="Savenotes(thisclientNote[0])">Save</button>
+	    <button class="btn btn-primary" ng-if="edit=='edit'" ng-click="Updatenotes(thisclientNote)">Update</button>
+	</div>
+</div>
