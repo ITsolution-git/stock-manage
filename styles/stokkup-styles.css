@@ -1,7 +1,7 @@
 
-/*==========================
-	GENERAL STYLES 
-==========================*/
+/*==========================================
+			GENERAL STYLES 
+==========================================*/
 .nopad-form {
 	padding-left:0;
 	padding-right:0;
@@ -23,9 +23,9 @@
 }
 /*---------- END ----------*/
 
-/*==========================
-	Navigation Styles
-==========================*/
+/*==========================================
+			Navigation Styles
+==========================================*/
 nav ul.nav li {
 	width:12%;
 }
@@ -83,9 +83,9 @@ nav ul.nav li:hover ul.nav-sub {
 }
 /*---------- END ----------*/
 
-/*==========================
-	Login Page - Admin
-==========================*/
+/*==========================================
+				LOGIN PAGE
+==========================================*/
 .app-login {
 	background:url(../images/bg_login.jpg) repeat 0 0;
 }
@@ -105,9 +105,9 @@ nav ul.nav li:hover ul.nav-sub {
 }
 /*---------- END ----------*/
 
-/*==========================
-	Product Page - Admin
-==========================*/
+/*====================================
+		ADMIN - Product Page
+====================================*/
 .nopad-form  .col-sm-8 {
 	padding-left:0;
 	padding-right:0;
@@ -129,7 +129,7 @@ nav ul.nav li:hover ul.nav-sub {
 
 
 /*=====================================
-	Staff Form Add/Edit - Admin
+	ADMIN - Staff Form Add/Edit
 =====================================*/
 	.stokkupForm img {
 		width:100%;
@@ -194,7 +194,7 @@ nav ul.nav li:hover ul.nav-sub {
 /*---------- END ----------*/	
 
 /*=====================================
-	Vendor Form Add/Edit - Admin
+	ADMIN - Vendor Form Add/Edit
 =====================================*/
 	.vendorForm .tab-content .form-group select {
 		margin-right:0;
@@ -209,7 +209,8 @@ nav ul.nav li:hover ul.nav-sub {
 		margin-bottom:5px;
 	}
 	.vendorForm .vendor_left_form .addressRow input  {
-		border:1px solid #ccc;		
+		border:1px solid #ccc;
+		min-height:34px;
 	}
 	.vendorForm .vendor_left_form .addressRow div input {
 		margin-left:16px;	
@@ -223,4 +224,47 @@ nav ul.nav li:hover ul.nav-sub {
 	.vendorForm #tab2 .addressRow div input {				
 		border:1px solid #ccc;		
 	}
+/*---------- END ----------*/
+
+
+/*=====================================
+	ADMIN - Misc View
+=====================================*/
+.panel-default.misc-view {
+	overflow:auto;
+	min-height:100%;
+}
+.misc-view .misc-view-details {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.misc-view-details.horizontal-only {
+	height: 100%;
+	max-height: 100%;
+}
+#misc-view table th,
+#misc-view table td {
+	margin:0;
+	padding:5px 10px;	
+	display:table-cell;
+	vertical-align:middle;
+	font-size:0.875em;
+	border-left:1px solid #ccc;
+}
+#misc-view table th {
+	text-align:center;
+}
+#misc-view table th:first-child,
+#misc-view table td:first-child {	
+	border-left:0 none;
+}
+#misc-view table td {
+}
+#misc-view table th,
+#misc-view table td {
+	-webkit-transition: width 4s;	
+    transition: width 4s;
+}
+
 /*---------- END ----------*/
