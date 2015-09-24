@@ -249,7 +249,7 @@ nav ul.nav li:hover ul.nav-sub {
 	padding:5px 10px;	
 	display:table-cell;
 	vertical-align:middle;
-	font-size:0.875em;
+	font-size:1em;
 	border-left:1px solid #ccc;
 }
 #misc-view table th {
