@@ -281,4 +281,13 @@ nav ul.nav li:hover ul.nav-sub {
 	float:right;
 }
 
+/* Right Side Section */
+#tab_client .tabTitle {
+	font-weight: bold;
+	margin-bottom:10px;
+}
+#tab_client .tab_client_details {
+	margin-bottom:10px;
+}
+
 /*---------- END ----------*/
