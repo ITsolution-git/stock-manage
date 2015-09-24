@@ -1,260 +1,215 @@
- 
-  <div class="row">
-    <div class="col-sm-12">
-
-      <form name="vendorForm" class="form-validation" ng-submit="saveVendor()">
-        
-        <div class="panel panel-default">
-         <input type="hidden" ng-model="vendor.id" value="{{vendor.id}}">
+<div class="row">
+  <div class="col-md-12">
+  	<form name="vendorForm" class="form-validation stokkupForm vendorForm" ng-submit="saveVendor()">
+        <div class="panel panel-default col-md-12 nopad-form">          
           <div class="panel-body">
-            <div class="form-group col-sm-12 m-b">
-              <label>Company<em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="vendor.name_company" required >
-            </div>
-
-            <div class="form-group col-sm-12 m-b">
-              <label>Address<em class="text-muted"></em></label>
-              <input type="text" class="form-control col-sm-6 m-b" ng-model="vendor.prime_address1" required >
-              <input type="text" class="form-control col-sm-6 m-b" ng-model="vendor.prime_address2" required >
-              <input type="text" class="form-control col-sm-6 m-b" ng-model="vendor.prime_address_city" required>
-              <input type="text" class="form-control col-sm-2 m-b" ng-model="vendor.prime_address_state" required>
-              <input type="text" class="form-control col-sm-4 m-b" ng-model="vendor.prime_address_zip" required>
-            </div>
-            <div class="form-group col-sm-12 m-b">
-            <input type="file" title="Upload Profile Picture"  data-ui-file-upload  onchange="angular.element(this).scope().setFiles(this)">
-             <img  ng-if="vendor.photo" ng-src="{{vendor.all_url_photo}}" width="100" height="100">
-            </div>
-
-            <div class="form-group col-sm-12 m-b">
-              <label>Phone</label>
-              <input type="text" 
-                     class="form-control" 
-                     placeholder="XXXXXXXXXX" 
-                     ng-model="vendor.prime_phone_no" 
-                     ng-pattern="/^[0-9]{10,10}$/"
-                     required 
-                     name="phone">
-
-              <span style="color:#f44336" ng-show="vendorForm.phone.$error.pattern">
-                                    This Field Should Contain 10 Numeric</span>
-
-            </div>
-
-
-            <div class="form-group col-sm-12 m-b">
-              <label>Fax</label>
-              <input type="text" 
-                     class="form-control" 
-                     placeholder="XXXXXX" 
-                     ng-model="vendor.fax_number" 
-                     ng-pattern="/^\+?[0-9]{6,}$/"
-                     required 
-                     name="fax">
-
-              <span style="color:#f44336" ng-show="vendorForm.fax.$error.pattern">
-                                    This Field Should Contain only Numeric(min 6)</span>
-
-            </div>
-
-
-            <div class="form-group col-sm-12 m-b">
-              <label>Status</label>
-               <select class="form-control" ng-model="vendor.status" required>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                    
-                 </select>
-            </div>
-
-        
-            <div>&nbsp;</div>
-
-            <div class="form-group col-sm-12 m-b">
-              <ul class="nav nav-tabs">
-        <li class="active">
-          <a href data-toggle="tab" data-target="#tab1">Contacts</a>
-        </li>
-        <li>
-          <a href data-toggle="tab" data-target="#tab2">Alt.Address</a>
-        </li>
-        <li>
-          <a href data-toggle="tab" data-target="#tab3">Details</a>
-        </li>
-        <li>
-          <a href data-toggle="tab" data-target="#tab4">QB</a>
-        </li>
-         <li>
-          <a href data-toggle="tab" data-target="#tab5">Note</a>
-        </li>
-
-        <li>
-          <a href data-toggle="tab" data-target="#tab6">Web Portal</a>
-        </li>
-
-      </ul>
-
-      <div class="tab-content p b-a no-b-t bg-white m-b-md">
-
-        <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab1">
-
-         
-               <div class="form-group">
-                  <label>First<em class="text-muted"></em></label>
-                   <label>Last<em class="text-muted"></em></label>
-                     <label>Position<em class="text-muted"></em></label>
-                     <label>Email<em class="text-muted"></em></label>
-                     <label>Phone #<em class="text-muted"></em></label>
-              </div>
-
-              
-            <div class="form-group">
-              
-                <div ng-repeat="vendor_contacts in allContacts">
-                    <input type="text"   ng-model="vendor_contacts.first_name" />
-                    <input type="text"  ng-model="vendor_contacts.last_name" />
-
-                     <select  ng-model="vendor_contacts.role_id" required>
-                     <option ng-selected="vendor_contacts.role_id==data.id" ng-repeat="data in staffRoles" value={{data.id}}>{{data.title}}</option>
-                     </select>
-
-                    
-                    <input type="email"   ng-model="vendor_contacts.prime_email" />
-
-                    <input type="text" 
-                    
-                     placeholder="XXXXXXXXXX" 
-                     ng-model="vendor_contacts.prime_phone" 
-                     ng-pattern="/^[0-9]{10,10}$/"
-                     name="telephone">
-
-                    <span style="color:#f44336" ng-show="vendorForm.telephone.$error.pattern">
-                                    This Field Should Contain 10 Numeric</span>
-
-                    <button ng-click="removeInput($index)">Remove</button>
+          	<!-- LEFT SIDE FORM DETAILS -->
+            <div class="col-md-6 nopad-form">
+                <input type="hidden" ng-model="vendor.id" value="{{vendor.id}}">
+                <div class="row">
+                    <div class="col-md-8 nopad-left vendor_left_form">
+                        <div class="form-group col-md-12 m-b">
+                          <label>Company<em class="text-muted"></em></label>
+                          <input type="text" class="form-control" ng-model="vendor.name_company" required >
+                        </div>
+                        <div class="form-group col-md-12 m-b addressRow">
+                          <label>Address<em class="text-muted"></em></label>
+                          <input type="text" class="col-md-12 m-b" ng-model="vendor.prime_address1" required >
+                          <input type="text" class="col-md-12 m-b" ng-model="vendor.prime_address2" required >
+						  <div class="col-md-12 nopad-form">
+								<div class="col-md-5 m-b nopad-left">
+									<input type="text" class="form-control" ng-model="vendor.prime_address_city" required>
+								</div>
+								<div class="col-md-4 m-b nopad-form">
+									<input type="text" class="form-control" ng-model="vendor.prime_address_state" required>
+								</div>
+								<div class="col-md-3 m-b nopad-right">
+									<input type="text" class="form-control" ng-model="vendor.prime_address_zip" required>
+								</div>
+						  </div>
+                        </div>                        
+                        <div class="form-group col-md-12 m-b">
+                          <label>Phone</label>
+                          <input type="text" class="form-control" placeholder="XXXXXXXXXX" ng-model="vendor.prime_phone_no" ng-pattern="/^[0-9]{10,10}$/" required name="phone">
+                          <span style="color:#f44336" ng-show="vendorForm.phone.$error.pattern"> This Field Should Contain 10 Numeric</span> 
+                        </div>
+                        <div class="form-group col-md-12 m-b">
+                          <label>Fax</label>
+                          <input type="text" class="form-control" placeholder="XXXXXX" ng-model="vendor.fax_number" ng-pattern="/^\+?[0-9]{6,}$/" required name="fax">
+                          <span style="color:#f44336" ng-show="vendorForm.fax.$error.pattern"> This Field Should Contain only Numeric(min 6)</span> 
+                        </div>
+                        <div class="form-group col-md-12 m-b">
+                          <label>Status</label>
+                          <select class="form-control" ng-model="vendor.status" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                          </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 nopad-left">
+                        <div class="form-group">
+                          <input type="file" title="Upload Profile Picture"  data-ui-file-upload  onchange="angular.element(this).scope().setFiles(this)">
+                          <img  ng-if="vendor.photo" ng-src="{{vendor.all_url_photo}}" width="100" height="100"> 
+						</div>
+                    </div>
                 </div>
-                     <button type="button" ng-click="addInput()">add input</button>
-            </div>
-
-
-        </div>
-
-
-        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
-
-            <div class="form-group">
-              <label>Mailing Address<em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="vendor.mailing_address1" >
-              <input type="text" class="form-control" ng-model="vendor.mailing_address2" >
-              <input type="text" class="form-control" ng-model="vendor.mailing_address_city">
-              <input type="text" class="form-control" ng-model="vendor.mailing_address_state">
-              <input type="text" class="form-control" ng-model="vendor.mailing_address_zip">
-            </div>
-
-             <div class="form-group">
-              <label>Billing Address<em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="vendor.billing_address1" >
-              <input type="text" class="form-control" ng-model="vendor.billing_address2" >
-              <input type="text" class="form-control" ng-model="vendor.billing_address_city">
-              <input type="text" class="form-control" ng-model="vendor.billing_address_state">
-              <input type="text" class="form-control" ng-model="vendor.billing_address_zip">
-            </div>
-        </div>
-
-        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab3">
-           <div class="form-group">
-                  <label>Web<em class="text-muted"></em></label>
-                 
-                  <input type="text" 
-                     class="form-control" 
-                     placeholder="XXXXXX" 
-                     ng-model="vendor.url" 
-                     ng-pattern="/^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i"
-                     name="url">
-
-              <span style="color:#f44336" ng-show="vendorForm.url.$error.pattern">
-                                    This URL is not Valid.</span>
-
-            </div>
-
-            <div class="form-group">
-                  <label>Order Minimum<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="vendor.order_minimum"  >
-            </div>
-
-        </div>
-
-
-         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab4">
-           <div class="form-group">
-                  <label>QB Terms<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="vendor.d_qb_terms">
-            </div>
-
-            <div class="form-group">
-                  <label>QB List ID<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="vendor.d_qb_list_id">
-            </div>
-
-            <div class="form-group">
-                  <label>QB Edit Sequence<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="vendor.d_qb_edit_sequence">
-            </div>
-
-            <div class="form-group">
-                  <label>QB Full Name<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="vendor.d_qb_full_name">
-            </div>
-
-            <div class="form-group">
-                  <label>QB Is Active<em class="text-muted"></em></label>
-
-                  <select class="form-control" ng-model="vendor.d_qb_is_active">
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
-                    
-                 </select>
-            </div>
-
-            <div class="form-group">
-              <label>QB Result<em class="text-muted"></em></label>
-              <textarea rows="5" class="form-control" ng-model="vendor.d_qb_results"></textarea>
-            </div>
-
-        </div>
-
-
-         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab5">
-
-           <div class="form-group">
-              <label>Note <em class="text-muted"></em></label>
-              <textarea rows="5" class="form-control" ng-model="vendor.note"></textarea>
-            </div>
-
-           
-            </div>
-
-
-             <div role="tabpanel" class="tab-pane animated fadeIn" id="tab6">
-
-              <a  ng-click="addpopup(vendor.url)">Pop-up Window</a>
-
-            </div>
-
-        </div>
-
-
-      </div>
+                <div class="form-group col-md-12 m-b nopad-form">
+                  <ul class="nav nav-tabs">
+                    <li class="active"> <a href data-toggle="tab" data-target="#tab1">Contacts</a> </li>
+                    <li> <a href data-toggle="tab" data-target="#tab2">Alt.Address</a> </li>
+                    <li> <a href data-toggle="tab" data-target="#tab3">Details</a> </li>
+                    <li> <a href data-toggle="tab" data-target="#tab4">QB</a> </li>
+                  </ul>
+                  <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                    <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab1">
+                      <div class="form-group col-md-12 nopad-form">
+                        <label class="col-md-2 nopad-left">First<em class="text-muted"></em></label>
+                        <label class="col-md-2 nopad-left">Last<em class="text-muted"></em></label>
+                        <label class="col-md-2 nopad-left">Position<em class="text-muted"></em></label>
+                        <label class="col-md-3 nopad-left">Email<em class="text-muted"></em></label>
+                        <label class="col-md-2 nopad-left">Phone #<em class="text-muted"></em></label>
+                      </div>
+                      <div class="form-group col-md-12 nopad-form">
+                        <div ng-repeat="vendor_contacts in allContacts" class="vendor_contacts">
+							<div class="col-md-2 nopad-left">
+								<input type="text" ng-model="vendor_contacts.first_name" class="form-control" />
+							</div>
+							<div class="col-md-2 nopad-left">
+								<input type="text" ng-model="vendor_contacts.last_name" class="form-control" />
+							</div>
+							<div class="col-md-2 nopad-left">
+								<select  ng-model="vendor_contacts.role_id" required class="form-control">
+									<option ng-selected="vendor_contacts.role_id==data.id" ng-repeat="data in staffRoles" value={{data.id}}>{{data.title}}</option>
+								</select>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="email"   ng-model="vendor_contacts.prime_email" class="form-control" />
+							</div>
+							<div class="col-md-2 nopad-left">
+								<input type="text" placeholder="XXXXXXXXXX" ng-model="vendor_contacts.prime_phone" ng-pattern="/^[0-9]{10,10}$/" name="telephone" class="form-control">
+								<span style="color:#f44336" ng-show="vendorForm.telephone.$error.pattern" class="form-control"> This Field Should Contain 10 Numeric</span>
+							</div>	
+							<div class="col-md-1 nopad-form">							
+								<!--button ng-click="removeInput($index)" class="col-md-1">Remove</button-->
+								<button ng-click="removeInput($index)" class="removeRecord formBtns">Remove</button>					
+							</div>
+                        </div>
+                        <!--button type="button" ng-click="addInput()">add input</button-->
+						<div class="col-md-12 nopad-form">
+							<button type="button" ng-click="addInput()" class="newRecord formBtns">add input</button>					
+						</div>
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
+                      <div class="form-group addressRow">
+                        <label>Mailing Address<em class="text-muted"></em></label>
+                        <input type="text" class="form-control" ng-model="vendor.mailing_address1" >
+                        <input type="text" class="form-control" ng-model="vendor.mailing_address2" >
+						<div class="col-md-12 nopad-form">
+							<div class="col-md-6 m-b nopad-left">
+								<input type="text" class="form-control" ng-model="vendor.mailing_address_city">
+							</div>
+							<div class="col-md-3 m-b nopad-form">
+								<input type="text" class="form-control" ng-model="vendor.mailing_address_state">
+							</div>
+							<div class="col-md-3 m-b nopad-right">
+								<input type="text" class="form-control" ng-model="vendor.mailing_address_zip">
+							</div>
+						</div>
+                      </div>
+                      <div class="form-group addressRow">
+                        <label>Billing Address<em class="text-muted"></em></label>
+                        <input type="text" class="form-control" ng-model="vendor.billing_address1" >
+                        <input type="text" class="form-control" ng-model="vendor.billing_address2" >
+						<div class="col-md-12 nopad-form">
+							<div class="col-md-6 m-b nopad-left">
+								<input type="text" class="form-control" ng-model="vendor.billing_address_city">
+							</div>
+							<div class="col-md-3 m-b nopad-form">
+								<input type="text" class="form-control" ng-model="vendor.billing_address_state">
+							</div>
+							<div class="col-md-3 m-b nopad-right">
+								<input type="text" class="form-control" ng-model="vendor.billing_address_zip">
+							</div>
+						</div>
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane animated fadeIn" id="tab3">
+                      <div class="form-group">
+                        <label>Web<em class="text-muted"></em></label>
+                        <input type="text" class="form-control" placeholder="XXXXXX" ng-model="vendor.url" ng-pattern="/^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?$/i" name="url">
+                        <span style="color:#f44336" ng-show="vendorForm.url.$error.pattern"> This URL is not Valid.</span> 
+                      </div>
+                      <div class="form-group">
+                        <label>Order Minimum<em class="text-muted"></em></label>
+                        <input type="text" class="form-control" ng-model="vendor.order_minimum"  >
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane animated fadeIn" id="tab4">
+						<div class="col-md-12 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="form-group">
+									<label>QB Terms<em class="text-muted"></em></label>
+									<input type="text" class="form-control" ng-model="vendor.d_qb_terms">
+								</div>
+								<div class="form-group">
+									<label>QB Result<em class="text-muted"></em></label>
+									<textarea rows="5" class="form-control" ng-model="vendor.d_qb_results"></textarea>
+								</div>
+							</div>
+							<div class="col-md-6 nopad-right">
+								<div class="form-group">
+									<label>QB List ID<em class="text-muted"></em></label>
+									<input type="text" class="form-control" ng-model="vendor.d_qb_list_id">
+								</div>
+								<div class="form-group">
+									<label>QB Edit Sequence<em class="text-muted"></em></label>
+									<input type="text" class="form-control" ng-model="vendor.d_qb_edit_sequence">
+								</div>
+								<div class="form-group">
+									<label>QB Full Name<em class="text-muted"></em></label>
+									<input type="text" class="form-control" ng-model="vendor.d_qb_full_name">
+								</div>
+								<div class="form-group">
+									<label>QB Is Active<em class="text-muted"></em></label>
+									<select class="form-control" ng-model="vendor.d_qb_is_active">
+									  <option value="1">Yes</option>
+									  <option value="0">No</option>
+									</select>
+								</div>
+							</div>
+						</div>                      
+                    </div>
+                  </div>
+                </div>
             </div>
             
+            <!-- RIGHT SIDE FORM DETAILS -->
+            <div class="col-md-6">
+            	<div class="form-group col-md-12 m-b">
+                  <ul class="nav nav-tabs">
+                    <li class="active"> <a href data-toggle="tab" data-target="#tab5">Notes</a> </li>
+                    <li> <a href data-toggle="tab" data-target="#tab6">Web Portal</a> </li>
+                  </ul>
+                  <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                    <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab5">
+                      <div class="form-group">
+                        <label>Note <em class="text-muted"></em></label>
+                        <textarea rows="5" class="form-control" ng-model="vendor.note"></textarea>
+                      </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane animated fadeIn" id="tab6"> <a  ng-click="addpopup(vendor.url)">Pop-up Window</a> </div>
+                  </div>
+            </div>
+            </div>
           </div>
           <footer class="panel-footer text-right">
-            <button  type="submit" class="btn btn-info" ng-disabled="vendorForm.$invalid">Submit</button>&nbsp;
-            <button  ui-sref="vendor.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
-           
-          </footer>
-        </div>
-      </form>
-    </div>
-    
-  </div>
- 
+			<button  type="submit" class="btn btn-info" ng-disabled="vendorForm.$invalid">Submit</button>
+			&nbsp;
+			<button  ui-sref="vendor.list" type="button"  class="btn btn-info">Cancel</button>
+			&nbsp; 
+		  </footer>
+        </div>    
+    </form>
+  </div>  
+</div>

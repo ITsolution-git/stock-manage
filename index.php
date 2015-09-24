@@ -17,7 +17,8 @@
   <link rel="stylesheet" href="styles/material-design-icons.css" type="text/css" />
   <link rel="stylesheet" href="styles/font.css" type="text/css" />
   <link rel="stylesheet" href="styles/app.css" type="text/css" />
-  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" />
+  <link rel="stylesheet" href="libs/custom-scroll/scroller.css" type="text/css" />  
+  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" />  
   <link rel="stylesheet" href="styles/stokkup-styles-1024.css" type="text/css" />
 </head>
 <body ng-app="app">
@@ -96,5 +97,13 @@
   <script src="scripts/controllers/client.js"></script>
   <script src="scripts/controllers/price.js"></script>
   <script src="scripts/controllers/misc.js"></script>
+  
+  <!-- CUSTOM SCROLL -->
+  <script src="libs/custom-scroll/scroller.js"></script>
+  <script src="libs/custom-scroll/mwheelIntent.js"></script>
+  <script src="libs/custom-scroll/mouseWheel.js"></script>
+  
+  <!-- CUSTOM SCRIPTS -->
+  <script src="libs/custom-scripts.js"></script>
 </body>
 </html>
