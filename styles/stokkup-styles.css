@@ -1,7 +1,7 @@
 
-/*==========================
-	GENERAL STYLES 
-==========================*/
+/*==========================================
+			GENERAL STYLES 
+==========================================*/
 .nopad-form {
 	padding-left:0;
 	padding-right:0;
@@ -23,9 +23,9 @@
 }
 /*---------- END ----------*/
 
-/*==========================
-	Navigation Styles
-==========================*/
+/*==========================================
+			Navigation Styles
+==========================================*/
 nav ul.nav li {
 	width:12%;
 }
@@ -83,9 +83,9 @@ nav ul.nav li:hover ul.nav-sub {
 }
 /*---------- END ----------*/
 
-/*==========================
-	Login Page - Admin
-==========================*/
+/*==========================================
+				LOGIN PAGE
+==========================================*/
 .app-login {
 	background:url(../images/bg_login.jpg) repeat 0 0;
 }
@@ -105,9 +105,9 @@ nav ul.nav li:hover ul.nav-sub {
 }
 /*---------- END ----------*/
 
-/*==========================
-	Product Page - Admin
-==========================*/
+/*====================================
+		ADMIN - Product Page
+====================================*/
 .nopad-form  .col-sm-8 {
 	padding-left:0;
 	padding-right:0;
@@ -128,11 +128,11 @@ nav ul.nav li:hover ul.nav-sub {
 /*---------- END ----------*/
 
 
-/*==========================
-	Staff Form - Admin
-==========================*/
+/*=====================================
+	ADMIN - Staff Form Add/Edit
+=====================================*/
 	.stokkupForm img {
-		max-width:100%;
+		width:100%;
 		height:100%;
 		margin-top:10px;
 	}	
@@ -165,7 +165,6 @@ nav ul.nav li:hover ul.nav-sub {
 	}
 	.stokkupForm .tab-content .form-group button.newRecord {
 		background-position:0 0;
-		width:166px;
 	}
 	.stokkupForm .tab-content .form-group input {
 		min-height:34px;	
@@ -186,11 +185,86 @@ nav ul.nav li:hover ul.nav-sub {
 	.stokkupForm .tab-content #timeoff .form-group {
 		margin-bottom:15px;
 	}
-	.stokkupForm .tab-content .form-group .timeOffData select {
+	.stokkupForm .tab-content .form-group select {
 		min-height:34px;
 	}
 	.stokkupForm .tab-content .form-group .timeOffData .datePick {
 		z-index:12;
 	}
-	
+/*---------- END ----------*/	
+
+/*=====================================
+	ADMIN - Vendor Form Add/Edit
+=====================================*/
+	.vendorForm .tab-content .form-group select {
+		margin-right:0;
+		padding:0;
+	}
+	.stokkupForm.vendorForm .tab-content .form-group input,
+	.stokkupForm.vendorForm .tab-content .form-group label {
+		padding:5px;
+		margin:0 0 10px 0;
+	}
+	.vendorForm .tab-content .form-group .vendor_contacts {
+		margin-bottom:5px;
+	}
+	.vendorForm .vendor_left_form .addressRow input  {
+		border:1px solid #ccc;
+		min-height:34px;
+	}
+	.vendorForm .vendor_left_form .addressRow div input {
+		margin-left:16px;	
+		border:1px solid #ccc;	
+		min-height:34px;
+	}
+	.vendorForm .vendor_left_form .addressRow div input:first-child ,
+	.vendorForm #tab2 .addressRow div input {		
+		margin:0;
+	}
+	.vendorForm #tab2 .addressRow div input {				
+		border:1px solid #ccc;		
+	}
+/*---------- END ----------*/
+
+
+/*=====================================
+	ADMIN - Misc View
+=====================================*/
+.panel-default.misc-view {
+	overflow:auto;
+	min-height:100%;
+}
+.misc-view .misc-view-details {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.misc-view-details.horizontal-only {
+	height: 100%;
+	max-height: 100%;
+}
+#misc-view table th,
+#misc-view table td {
+	margin:0;
+	padding:5px 10px;	
+	display:table-cell;
+	vertical-align:middle;
+	font-size:1em;
+	border-left:1px solid #ccc;
+}
+#misc-view table th {
+	text-align:center;
+}
+#misc-view table th:first-child,
+#misc-view table td:first-child {	
+	border-left:0 none;
+}
+#misc-view table td {
+}
+#misc-view table th,
+#misc-view table td {
+	-webkit-transition: width 4s;	
+    transition: width 4s;
+}
+
 /*---------- END ----------*/
