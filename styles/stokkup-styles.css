@@ -40,7 +40,10 @@ nav ul.nav li .nav-item > .icon {
 	min-width:30px;
 	margin-right:0;
 }
-
+nav ul.nav li a > .pull-right i,
+nav ul.nav li .nav-item > .pull-right i {
+	margin-left:14px;
+}
 nav ul.nav li ul.nav-sub li {
 	width:100%;
 }
@@ -153,18 +156,9 @@ nav ul.nav li:hover ul.nav-sub {
 		font-weight:bold;
 		color:#0e0e0e;
 	}
-	.stokkupForm .tab-content .form-group button.formBtns {
-		width:35px;
-		height:35px;
-		border:0 none;
-		text-indent:-9999px;
-		background:url(../images/icon-sprite.png) no-repeat 0 0;
-	}
-	.stokkupForm .tab-content .form-group button.removeRecord {
-		background-position:0 -135px;
-	}
-	.stokkupForm .tab-content .form-group button.newRecord {
-		background-position:0 0;
+	.stokkupForm .tab-content .form-group button.btn-default .fa {
+		display:block;
+		padding:3px 0;
 	}
 	.stokkupForm .tab-content .form-group input {
 		min-height:34px;	
@@ -250,7 +244,6 @@ nav ul.nav li:hover ul.nav-sub {
 	display:table-cell;
 	vertical-align:middle;
 	font-size:1em;
-	border-left:1px solid #ccc;
 }
 #misc-view table th {
 	text-align:center;
