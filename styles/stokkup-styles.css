@@ -222,7 +222,7 @@ nav ul.nav li:hover ul.nav-sub {
 
 
 /*=====================================
-	ADMIN - Misc View
+	SUPER ADMIN - Misc View
 =====================================*/
 .panel-default.misc-view {
 	overflow:auto;
@@ -258,6 +258,27 @@ nav ul.nav li:hover ul.nav-sub {
 #misc-view table td {
 	-webkit-transition: width 4s;	
     transition: width 4s;
+}
+/*---------- END ----------*/
+
+/*=====================================
+		CLIENT - EDIT PAGE
+=====================================*/
+.client-form .clientTab .form-control {
+	padding:5px 5px;
+}
+.client-form .nav.nav-tabs {
+	font-size:0.9285em;
+}
+.stokkupForm .tab-content .form-group .radioButton input {	
+	min-height:0:
+}
+.stokkupForm .tab-content .clientDetails {
+	overflow:hidden;
+	margin:10px 0;
+}
+.stokkupForm .tab-content .clientTab button.btn-info {
+	float:right;
 }
 
 /*---------- END ----------*/
