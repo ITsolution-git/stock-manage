@@ -282,11 +282,11 @@ nav ul.nav li:hover ul.nav-sub {
 }
 
 /* Right Side Section */
-#tab_client .tabTitle {
+.client-form .tab-pane .tabTitle {
 	font-weight: bold;
 	margin-bottom:10px;
 }
-#tab_client .tab_client_details {
+.client-form .tab-pane .tab_client_details {
 	margin-bottom:10px;
 }
 
