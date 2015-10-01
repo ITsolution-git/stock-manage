@@ -202,4 +202,43 @@ class Client extends Model {
    						->update($post);
     	return $result;
    }
+     public function GetNoteDetails($id)
+   {
+   		$result = DB::table('client_notes as cn')
+   					->select('cn.client_notes','cn.note_id','cn.created_date','u.user_name')
+   					->join('users as u','u.id','=','cn.user_id')
+   					->where('cn.client_id','=',$id)
+   					->where('cn.note_status','=','1')
+   					->get();
+   		return $result;
+   }
+   public function SaveCleintNotes($post)
+   {
+   		$result = DB::table('client_notes')->insert($post);
+   		return $result;
+   }
+   public function  DeleteCleintNotes($id)
+   {
+   		$result = DB::table('client_notes')
+   						->where('note_id','=',$id)
+   						->update(array('note_status'=>'0'));
+   		return $result;
+   }
+   public function GetClientDetailById($id)
+   {
+   		$result = DB::table('client_notes')->where('note_id','=',$id)->get();
+   		return $result;
+   }
+   public function UpdateCleintNotes($post)
+   {
+   			$result = DB::table('client_notes')
+   						->where('note_id','=',$post['note_id'])
+   						->update(array('client_notes'=>$post['client_notes']));
+   		return $result;
+   }
+   public function SaveDistAddress($post)
+   {
+   	
+   }
+ 
 }
