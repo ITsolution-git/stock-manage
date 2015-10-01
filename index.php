@@ -98,7 +98,7 @@
   <script src="scripts/controllers/price.js"></script>
   <script src="scripts/controllers/misc.js"></script>
   <script src="scripts/controllers/purchase.js"></script>
-  
+  <script src="scripts/controllers/order.js"></script>
   <!-- CUSTOM SCROLL -->
   <script src="libs/custom-scroll/scroller.js"></script>
   <script src="libs/custom-scroll/mwheelIntent.js"></script>

@@ -1,0 +1,180 @@
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <form name="mainForm" class="form-validation">
+        
+        <div class="panel panel-default">
+         <input type="hidden" ng-model="order.id">
+          <div class="panel-body">
+           
+            <div class="col-sm-12 m-b  panel panel-default">
+              <div class="col-sm-12 m-b"></div>
+              <div class="form-group col-sm-12 m-b">
+                
+                <div class="col-sm-3 m-b">
+                <label>CS Job Name <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-maxlength="255" name="cs_job_name"  ng-model="order.job_name"  required>
+                  <br>
+                  <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
+                </div>
+
+
+                <div class="col-md-3 m-b">
+               <label>Company <em class="text-muted"></em></label>
+
+                  <select  ng-model="order.client_id"  class="form-control">
+                  <option ng-selected="order.client_id==data.client_id" ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
+                </select>
+                </div>
+                
+                <div class="col-md-2 m-b">
+                <label>Price Grid<em class="text-muted"></em></label>
+
+                 <select  ng-model="order.price_id"  class="form-control">
+                  <option ng-selected="order.price_id==data.id" ng-repeat="data in allGrid" value={{data.id}}>{{data.name}}</option>
+                </select>
+                </div>
+
+                <div class="col-md-2 m-b">
+                <label>Approval<em class="text-muted"></em></label>
+
+                   <select  ng-model="order.f_approval"  class="form-control">
+
+                  <option ng-selected="order.f_approval==data.id" ng-repeat="data in allMisc" value={{data.id}}>{{data.value}}</option>
+                </select>
+                </div>
+                
+
+                <div class=" col-md-2 m-b">
+               <label>Blind<em class="text-muted"></em></label>
+                  <select class="form-control" ng-model="order.is_blind">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                    
+                  </select>
+                </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <div class="form-group col-sm-12 m-b">
+                
+                <div class="col-sm-3 m-b">
+                <label>Sales <em class="text-muted"></em></label>
+
+                     <select  class="form-control" ng-model="order.sales_id">
+                      <option ng-repeat="staff in staffList" ng-selected="{{order.sales_id==staff.id}}" value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
+                    </select>
+                
+                </div>
+
+
+                <div class="col-md-3 m-b">
+               <label>Brand Coordinator <em class="text-muted"></em></label>
+
+                  <select  class="form-control" ng-model="order.brand_id">
+                      <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
+                    </select>
+
+                </div>
+                
+                <div class="col-md-2 m-b">
+                <label>Expediter<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-maxlength="255" name="cs_expediter"  ng-model="order.expediter"  required>
+                  <br>
+                  <span style="color:#f44336" ng-show="orderAddForm.cs_expediter.$error.maxlength">Please enter Name less then 255 characters.</span>
+                </div>
+
+                <div class="col-md-2 m-b">
+               <label>Customer PO<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-maxlength="255" name="cs_customer_po"  ng-model="order.customer_po_id"  required>
+                  <br>
+                  <span style="color:#f44336" ng-show="orderAddForm.cs_customer_po.$error.maxlength">Please enter Name less then 255 characters.</span>
+                </div>
+                
+
+                <div class=" col-md-2 m-b">
+               <label>Order Main Contact<em class="text-muted"></em></label>
+                   <select  class="form-control" ng-model="order.contact_main_id">
+                      <option ng-repeat="user in client_main_data" ng-selected="{{order.contact_main_id==user.id}}" value="{{user.id}}">{{user.first_name}}&nbsp;{{user.last_name}}</option>
+                    </select>
+                </div>
+
+                </div>
+
+               
+              <div class="input-group col-sm-5 m-b">
+              <br>
+                    <button  type="submit" class="btn btn-info" ng-click="saveOrderDetails(order,order.id)" ng-disabled="mainForm.$invalid">Submit</button>&nbsp;
+                    <button ui-sref="order.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
+              </div>
+            
+           
+
+              <ul class="nav nav-tabs input-group col-sm-12">
+                <li class="active"><a href data-toggle="tab" data-target="#tab1">position</a></li>
+                <li> <a href data-toggle="tab" data-target="#tab2">Order Lines</a> </li>
+                <li> <a href data-toggle="tab" data-target="#tab3">Distribution</a> </li>
+                <li> <a href data-toggle="tab" data-target="#tab4">Notes</a> </li>
+                <li> <a href data-toggle="tab" data-target="#tab5">Purchase Orders</a> </li>
+                <li> <a href data-toggle="tab" data-target="#tab6">Screen Sets</a> </li>
+                <li> <a href data-toggle="tab" data-target="#tab7">Art Work</a> </li>
+                <li> <a href data-toggle="tab" data-target="#tab8">Payments</a> </li>
+              </ul>
+
+               
+                <div class="tab-content p b-a no-b-t bg-white m-b-md">
+              
+ <!-- CONTACTS TAB START -->
+                <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab1">
+                <div class="form-group">
+                  <b style="margin: 0 5px 0 0 !important;"  class="col-md-2">FistName</b> <b class="col-md-2">LastName</b>
+                  <b class="col-md-2">Location</b><b class="col-md-2">Phone</b><b class="col-md-2">Email</b>
+                </div><br>
+                  <div class="form-group">
+                    <div ng-repeat="(key,client_contacts) in allContacts">
+                        <input type="radio" name="contact_main" value="{{client_contacts.contact_main}}" ng-model="currentActivity" ng-click="allContacts.maincontact=key" class="pull-left" style="margin: 0 5px 0 0 !important;"  >
+
+
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.first_name" placeholder="First Name" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.last_name" placeholder="Last Name" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.location" placeholder="Location" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.phone" placeholder="Phone" />
+                        <input type="text" class="col-md-2"  ng-model="client_contacts.email" placeholder="Email"  />
+                         
+                        <button type="button" ng-click="removeContacts($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                    </div>
+                    <button type="button" ng-click="addContacts()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
+                    <button  type="submit" class="btn btn-info" ng-click="SaveClientContact(allContacts)" >Save</button>
+                </div>
+                </div>
+ <!-- CONTACTS TAB END -->
+
+ 
+
+                </div>
+            </div>
+
+           
+
+       
+            <div>&nbsp;</div>
+
+            <div class="form-group col-sm-12 m-b"></div>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+    
+  </div>
+ 

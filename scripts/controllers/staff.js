@@ -46,11 +46,29 @@ $http.get('api/public/common/type/timeoff').success(function(result, status, hea
 
 
 
-    $http.get('api/public/common/type/staff').success(function(result, status, headers, config) {
+    /*$http.get('api/public/common/type/staff').success(function(result, status, headers, config) {
 
                                   $scope.types = result.data.records;
                          
-                          });
+                          });*/
+
+
+    var miscData = {};
+      miscData.table ='misc_type'
+      miscData.cond ={status:1,is_delete:1,type:'staff_type'}
+      miscData.notcond ={value:""}
+      $http.post('api/public/common/GetTableRecords',miscData).success(function(result) {
+          if(result.data.success == '1') 
+          {
+              $scope.types =result.data.records;
+          } 
+          else
+          {
+              $scope.types=[];
+          }
+        });
+
+
 
      $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
 

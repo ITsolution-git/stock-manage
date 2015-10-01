@@ -566,6 +566,57 @@ angular.module('app')
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
 
+              .state('order', {
+              url: '/front/order',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
+            .state('order.list', {
+              url: '/list',
+              templateUrl: 'views/front/order/list.html',
+              controller: 'orderListCtrl',
+              data : { title: 'Order listing' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+
+             .state('order.add', {
+              url: '/add',
+              templateUrl: 'views/front/order/add.html',
+               controller: 'orderAddCtrl',
+              data : { title: 'Order Add' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+            .state('order.edit', {
+              url: '/:id/edit/:client_id',
+              templateUrl: 'views/front/order/edit.html',
+               controller: 'orderEditCtrl',
+              data : { title: 'Order Edit' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+
+
 ;
 
           function load(srcs, callback) {
