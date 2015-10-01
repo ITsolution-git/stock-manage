@@ -81,7 +81,13 @@ class Common extends Model {
            } else {
             $allData[$data->type][] = $data;
            }
+
+
+            
+
         }
+
+          
         return $allData;
     }
 
@@ -93,7 +99,6 @@ class Common extends Model {
     }
     public function getStaffList()
     {
-       
 
 
         $whereConditions = ['misc.status' => '1','misc.is_delete' => '1','staff.is_delete' => '1','misc.type' => 'staff_type'];
@@ -173,4 +178,5 @@ class Common extends Model {
         $result=$result->update($data);
         return $result;
     }
+
 }

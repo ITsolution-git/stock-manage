@@ -95,10 +95,12 @@ Route::get('common/getAllVendors', 'CommonController@getAllVendors');
 Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
+
 Route::post('common/InsertRecords', 'CommonController@InsertRecords'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/UpdateTableRecords', 'CommonController@UpdateTableRecords'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::get('common/getBrandCo', 'CommonController@getBrandCo');
+
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
@@ -113,6 +115,7 @@ Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
 Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
+
 Route::get('client/GetNoteDetails/{id}', 'ClientController@GetNoteDetails');
 Route::post('client/SaveCleintNotes', 'ClientController@SaveCleintNotes');
 Route::get('client/EditCleintNotes/{id}', 'ClientController@EditCleintNotes');
@@ -131,3 +134,4 @@ Route::post('order/deleteOrder', 'OrderController@deleteOrder');
 Route::post('order/orderAdd', 'OrderController@add');
 Route::post('order/orderEdit', 'OrderController@edit');
 Route::post('order/orderDetail', 'OrderController@orderDetail');
+
