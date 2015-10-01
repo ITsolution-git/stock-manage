@@ -1,4 +1,4 @@
-<div  ng-controller="clientEditCtrl">
+<div >
 	<div class="modal-header">
 	    <h3 class="modal-title">Notes</h3>
 	</div>
@@ -11,8 +11,8 @@
     	
 	</div>
 	<div class="modal-footer">                  
-<!--   		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
- -->	    <button class="btn btn-primary" ng-if="edit=='add'" ng-click="Savenotes(thisclientNote[0])">Save</button>
+  		<button class="btn btn-warning" type="button" ng-click="ClosePopup('cancel')">Cancel</button>
+	    <button class="btn btn-primary" ng-if="edit=='add'" ng-click="Savenotes(thisclientNote[0])">Save</button>
 	    <button class="btn btn-primary" ng-if="edit=='edit'" ng-click="Updatenotes(thisclientNote)">Update</button>
 	</div>
 </div>

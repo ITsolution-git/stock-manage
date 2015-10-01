@@ -96,6 +96,12 @@ Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
 
+Route::post('common/InsertRecords', 'CommonController@InsertRecords'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
+Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
+Route::post('common/UpdateTableRecords', 'CommonController@UpdateTableRecords'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
+Route::get('common/getBrandCo', 'CommonController@getBrandCo');
+
+
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
 Route::get('client/ListClient', 'ClientController@ListClient');
@@ -109,3 +115,23 @@ Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
 Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
+
+Route::get('client/GetNoteDetails/{id}', 'ClientController@GetNoteDetails');
+Route::post('client/SaveCleintNotes', 'ClientController@SaveCleintNotes');
+Route::get('client/EditCleintNotes/{id}', 'ClientController@EditCleintNotes');
+Route::get('client/DeleteCleintNotes/{id}', 'ClientController@DeleteCleintNotes');
+Route::get('client/GetClientDetailById/{id}', 'ClientController@GetClientDetailById');
+Route::post('client/UpdateCleintNotes', 'ClientController@UpdateCleintNotes');
+Route::post('client/SaveDistAddress', 'ClientController@SaveDistAddress');
+Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail');
+
+//PURCHASE CONTROLLER
+Route::get('purchase/ListPurchase/{id}', 'PurchaseController@ListPurchase');
+
+// ORDER CONTROLLER 
+Route::get('order/listOrder', 'OrderController@listOrder');
+Route::post('order/deleteOrder', 'OrderController@deleteOrder');
+Route::post('order/orderAdd', 'OrderController@add');
+Route::post('order/orderEdit', 'OrderController@edit');
+Route::post('order/orderDetail', 'OrderController@orderDetail');
+
