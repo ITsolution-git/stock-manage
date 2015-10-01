@@ -232,16 +232,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                               $scope.allclientnotes.splice(index,1);
                           }
  
-                          $scope.Savenotes=function(saveNoteDetails)
-                          {
-                              var Note_data = {};
-                              Note_data.data = saveNoteDetails;
-                              Note_data.data.client_id = $stateParams.id;
-                               Note_data.data.user_id = $scope.CurrentUserId
-                              $http.post('api/public/client/SaveCleintNotes',Note_data).success(function(Listdata) {
-                                    getNotesDetail(getclient_id );
-                              });
-                          };
+
                            $scope.Editnotes=function(NoteDetails)
                           {
                               var Note_data = {};
@@ -252,36 +243,11 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                                     //getNotesDetail(getclient_id );
                               });
                           };
-                           $scope.Updatenotes=function(UpdateNote)
-                          {
-                              var UpdateNote_data = {};
-                              //console.log(Note_data); return false;
-                              UpdateNote_data.data = UpdateNote;
-                              $http.post('api/public/client/UpdateCleintNotes',UpdateNote_data).success(function(Listdata) {
-                                    getNotesDetail(getclient_id );
-                              });
-                          };
+                          
 
   // **************** NOTES TAB CODE END  ****************
   // **************** DISTRIBUTION POPUP TAB CODE END  ****************
-                          $scope.SaveDistAddress=function (ArrDistAddress)
-                          {
-                              var Address_data = {};
-                              Address_data.data = ArrDistAddress;
-                              Address_data.data.client_id = $stateParams.id;
-                              Address_data.table ='client_distaddress'
-
-                              $http.post('api/public/common/InsertRecords',Address_data).success(function(result) {
-                                  if(result.data.success == '1') 
-                                  {
-                                      getDistAdressDetail();
-                                  }
-                                  else
-                                  {
-                                      console.log(result.data.message);
-                                  }
-                              });
-                          }
+                          
                           getDistAdressDetail('');
                           function getDistAdressDetail()
                           {
@@ -313,16 +279,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                                
                               });
                           }
-                          $scope.UpdateDistAdress=function(postArray,id)
-                          {
-                            var Address_data = {};
-                            Address_data.table ='client_distaddress'
-                            Address_data.data =postArray
-                            Address_data.cond ={id:id}
-                            $http.post('api/public/common/UpdateTableRecords',Address_data).success(function(result) {
-                                
-                              });
-                          }
+                          
                           $scope.EditeDistAddress= function (id) {
                             getDistAdressDetailbyId(id);
                             $scope.edit='edit';
@@ -337,9 +294,24 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                             modalInstanceEdit.result.then(function (selectedItem) {
                               $scope.selected = selectedItem;
                             }, function () {
-                              getDistAdressDetail();
+                              
                               $log.info('Modal dismissed at: ' + new Date());
                             });
+                            $scope.ClosePopup = function (cancel)
+                            {
+                               modalInstanceEdit.dismiss('cancel');
+                            };
+                            $scope.UpdateDistAdress=function(postArray,id)
+                            {
+                              var Address_data = {};
+                              Address_data.table ='client_distaddress'
+                              Address_data.data =postArray
+                              Address_data.cond ={id:id}
+                              $http.post('api/public/common/UpdateTableRecords',Address_data).success(function(result) {
+                                  getDistAdressDetail();
+                                  modalInstanceEdit.dismiss('cancel');
+                                });
+                            }
                           };
                        
 
@@ -353,17 +325,50 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                             var modalInstance = $modal.open({
                               templateUrl: 'views/front/client/'+page,
                               scope : $scope,
-                              controller:'clientEditCtrl'
+                              
                             });
 
                             modalInstance.result.then(function (selectedItem) {
                               $scope.selected = selectedItem;
 
                             }, function () {
-                              getNotesDetail(getclient_id );
-                              getDistAdressDetail();
                               $log.info('Modal dismissed at: ' + new Date());
                             });
+                            $scope.ClosePopup = function (cancel)
+                            {
+                               modalInstance.dismiss('cancel');
+                            };
+                            $scope.Savenotes=function(saveNoteDetails)
+                            {
+                                var Note_data = {};
+                                Note_data.data = saveNoteDetails;
+                                Note_data.data.client_id = $stateParams.id;
+                                 Note_data.data.user_id = $scope.CurrentUserId
+                                $http.post('api/public/client/SaveCleintNotes',Note_data).success(function(Listdata) {
+                                      getNotesDetail(getclient_id );
+                                });
+                                modalInstance.dismiss('cancel');
+                            };
+                            $scope.SaveDistAddress=function (ArrDistAddress)
+                            {
+                                var Address_data = {};
+                                Address_data.data = ArrDistAddress;
+                                Address_data.data.client_id = $stateParams.id;
+                                Address_data.table ='client_distaddress'
+
+                                $http.post('api/public/common/InsertRecords',Address_data).success(function(result) {
+                                    if(result.data.success == '1') 
+                                    {
+                                        getDistAdressDetail();
+                                    }
+                                    else
+                                    {
+                                        console.log(result.data.message);
+                                    }
+                                });
+                                 modalInstance.dismiss('cancel');
+                            }
+
                           };
 
                           $scope.EditPopup = function (id) {
@@ -373,16 +378,29 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                             var modalInstanceEdit = $modal.open({
                               templateUrl: 'views/front/client/note.html',
                               scope : $scope,
-                              controller:'clientEditCtrl'
-
                             });
 
                             modalInstanceEdit.result.then(function (selectedItem) {
                               $scope.selected = selectedItem;
                             }, function () {
-                              getNotesDetail(getclient_id );
+                              
                               $log.info('Modal dismissed at: ' + new Date());
                             });
+
+                             $scope.ClosePopup = function (cancel)
+                            {
+                               modalInstanceEdit.dismiss('cancel');
+                            };
+                             $scope.Updatenotes=function(UpdateNote)
+                            {
+                                var UpdateNote_data = {};
+                                //console.log(Note_data); return false;
+                                UpdateNote_data.data = UpdateNote;
+                                $http.post('api/public/client/UpdateCleintNotes',UpdateNote_data).success(function(Listdata) {
+                                      getNotesDetail(getclient_id );
+                                });
+                                modalInstanceEdit.dismiss('cancel');
+                            };
                           };
                        
 

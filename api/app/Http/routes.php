@@ -118,6 +118,9 @@ Route::get('client/EditCleintNotes/{id}', 'ClientController@EditCleintNotes');
 Route::get('client/DeleteCleintNotes/{id}', 'ClientController@DeleteCleintNotes');
 Route::get('client/GetClientDetailById/{id}', 'ClientController@GetClientDetailById');
 Route::post('client/UpdateCleintNotes', 'ClientController@UpdateCleintNotes');
-
 Route::post('client/SaveDistAddress', 'ClientController@SaveDistAddress');
 Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail');
+
+//PURCHASE CONTROLLER
+Route::get('purchase/ListPurchase/{id}', 'PurchaseController@ListPurchase');
+

@@ -544,6 +544,27 @@ angular.module('app')
              controller: 'XeditableCtrl',
               resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
+            .state('purchase', {
+                  url: '/front/purchase',
+                views: {
+                  '': {
+                    templateUrl: 'views/layout.html'
+                  },
+                  'aside': {
+                    templateUrl: 'views/aside.html'
+                  },
+                  'content': {
+                    templateUrl: 'views/content.html'
+                  }
+                }
+              })
+              .state('purchase.list', {
+              url: '/list/:id',
+              templateUrl: 'views/front/purchase/index.html',
+              data : { title: 'Purchase Listing' },
+             controller: 'PurchaseListCtrl',
+              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+            })
 
 ;
 
