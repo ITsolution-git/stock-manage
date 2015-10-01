@@ -134,27 +134,72 @@
                
                 <div class="tab-content p b-a no-b-t bg-white m-b-md">
               
- <!-- CONTACTS TAB START -->
+ <!-- POSITION TAB START -->
                 <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab1">
-                <div class="form-group">
-                  <b style="margin: 0 5px 0 0 !important;"  class="col-md-2">FistName</b> <b class="col-md-2">LastName</b>
-                  <b class="col-md-2">Location</b><b class="col-md-2">Phone</b><b class="col-md-2">Email</b>
+                <div class="form-group col-md-12">
+                  <b style="margin: 0 5px 0 0 !important;"  class="col-md-1">Position</b> 
+                  <b class="col-md-1">Description</b>
+                  <b class="col-md-1">Placement Type</b>
+                  <b class="col-md-1">Stitch/Color Count</b>
+                  <b class="col-md-1">Qnty</b>
+                  <b class="col-md-1">Discharge</b>
+                  <b class="col-md-1">Speciality</b>
+                  <b class="col-md-1">Foil</b>
+                  <b class="col-md-1">Ink Charge</b>
+                  <b class="col-md-1">Number on Dark</b>
+                  <b class="col-md-1">Number on Light</b>
+                  <b class="col-md-1">Oversize Screen(s)</b>
+                  <b class="col-md-1">Press Setup</b>
+                  <b class="col-md-1">Screen Fee(s)</b>
+                  <b class="col-md-1">DtG Size</b>
+                  <b class="col-md-1">DtG On</b>
+                 
                 </div><br>
                   <div class="form-group">
-                    <div ng-repeat="(key,client_contacts) in allContacts">
-                        <input type="radio" name="contact_main" value="{{client_contacts.contact_main}}" ng-model="currentActivity" ng-click="allContacts.maincontact=key" class="pull-left" style="margin: 0 5px 0 0 !important;"  >
+                     <div ng-repeat="(key,order_position) in orderPositionAll"> 
+
+                        <input type="hidden" name="all_ids[]" value="{{order_position.id}}">
+                         <select  ng-model="order_position.position_id"  class="col-md-2">
+                           <option ng-selected="order_position.position_id==misc_pos.id" ng-repeat="misc_pos in allMiscPos" value={{misc_pos.id}}>{{misc_pos.value}}</option>
+                         </select>
+
+                        <input type="text" class="col-md-2"  ng-model="order_position.description" placeholder="Description" />
 
 
-                        <input type="text" class="col-md-2"  ng-model="client_contacts.first_name" placeholder="First Name" />
-                        <input type="text" class="col-md-2"  ng-model="client_contacts.last_name" placeholder="Last Name" />
-                        <input type="text" class="col-md-2"  ng-model="client_contacts.location" placeholder="Location" />
-                        <input type="text" class="col-md-2"  ng-model="client_contacts.phone" placeholder="Phone" />
-                        <input type="text" class="col-md-2"  ng-model="client_contacts.email" placeholder="Email"  />
+                        <select  ng-model="order_position.placement_type"  class="col-md-2">
+                           <option ng-selected="order_position.placement_type==misc_placement.id" ng-repeat="misc_placement in allMiscPlacement" value={{misc_placement.id}}>{{misc_placement.value}}</option>
+                         </select>
+
+
+                        <input type="text" class="col-md-1"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" />
+
+
+                        <input type="text" class="col-md-1"  ng-model="order_position.qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.discharge_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.speciality_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.foil_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.ink_charge_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.number_on_light_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.number_on_dark_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.oversize_screens_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.press_setup_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.screen_fees_qnty"/>
+
+
+                         <select  ng-model="order_position.dtg_size"  class="col-md-2">
+                           <option ng-selected="order_position.dtg_size==misc_dtgsize.id" ng-repeat="misc_dtgsize in allMiscDtgSize" value={{misc_dtgsize.id}}>{{misc_dtgsize.value}}</option>
+                         </select>
+
+                         <select  ng-model="order_position.dtg_on"  class="col-md-2">
+                           <option ng-selected="order_position.dtg_on==misc_dtg_on.id" ng-repeat="misc_dtg_on in allMiscDtgOn" value={{misc_dtg_on.id}}>{{misc_dtg_on.value}}</option>
+                         </select>
+
+
                          
-                        <button type="button" ng-click="removeContacts($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
-                    </div>
-                    <button type="button" ng-click="addContacts()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
-                    <button  type="submit" class="btn btn-info" ng-click="SaveClientContact(allContacts)" >Save</button>
+                        <button type="button" ng-click="removeOrder($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                     </div>
+                    <button type="button" ng-click="addOrder()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
+                    <button  type="submit" class="btn btn-info" ng-click="savePositionData(order_position,all_ids)" >Save</button>
                 </div>
                 </div>
  <!-- CONTACTS TAB END -->

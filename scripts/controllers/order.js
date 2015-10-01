@@ -101,6 +101,15 @@ $scope.openpopup = function () {
 app.controller('orderEditCtrl', ['$scope','$http','$location','$state','$stateParams','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$stateParams,$modal,AuthService,$log,AllConstant) {
                           
      
+$scope.addOrder = function(){
+                            $scope.orderPositionAll.push({ position_id:'' ,description:'', placement_type:'', color_stitch_count:'', qnty:'',discharge_qnty:''
+                                                    ,speciality_qnty:'', foil_qnty:'', ink_charge_qnty:'', number_on_light_qnty:'',number_on_dark_qnty:''
+                                                  ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
+                          }
+
+$scope.removeOrder = function(index){
+    $scope.orderPositionAll.splice(index,1);
+}
 
 
 if($stateParams.id && $stateParams.client_id) {
@@ -117,6 +126,7 @@ if($stateParams.id && $stateParams.client_id) {
                                      $scope.order = result.data.records[0];
                                      $scope.client_data = result.data.client_data;
                                      $scope.client_main_data = result.data.client_main_data;
+                                     $scope.orderPositionAll = result.data.order_position;
                                     
 
                                     
@@ -177,6 +187,74 @@ if($stateParams.id && $stateParams.client_id) {
         });
 
 
+
+
+      var miscDataPos = {};
+      miscDataPos.table ='misc_type'
+      miscDataPos.cond ={status:1,is_delete:1,type:'position'}
+      miscDataPos.notcond ={value:''}
+      $http.post('api/public/common/GetTableRecords',miscDataPos).success(function(result) {
+          if(result.data.success == '1') 
+          {
+              $scope.allMiscPos =result.data.records;
+          } 
+          else
+          {
+              $scope.allMiscPos=[];
+          }
+        });
+
+
+      var miscDataPlacement = {};
+      miscDataPlacement.table ='misc_type'
+      miscDataPlacement.cond ={status:1,is_delete:1,type:'placement_type'}
+      miscDataPlacement.notcond ={value:''}
+      $http.post('api/public/common/GetTableRecords',miscDataPlacement).success(function(result) {
+          if(result.data.success == '1') 
+          {
+              $scope.allMiscPlacement =result.data.records;
+          } 
+          else
+          {
+              $scope.allMiscPlacement=[];
+          }
+        });
+
+
+      var miscDataDtgSize = {};
+      miscDataDtgSize.table ='misc_type'
+      miscDataDtgSize.cond ={status:1,is_delete:1,type:'dir_to_garment_sz'}
+      miscDataDtgSize.notcond ={value:''}
+      $http.post('api/public/common/GetTableRecords',miscDataDtgSize).success(function(result) {
+          if(result.data.success == '1') 
+          {
+              $scope.allMiscDtgSize =result.data.records;
+          } 
+          else
+          {
+              $scope.allMiscDtgSize=[];
+          }
+        });
+
+      var miscDataDtgOn = {};
+      miscDataDtgOn.table ='misc_type'
+      miscDataDtgOn.cond ={status:1,is_delete:1,type:'direct_to_garment'}
+      miscDataDtgOn.notcond ={value:''}
+      $http.post('api/public/common/GetTableRecords',miscDataDtgOn).success(function(result) {
+          if(result.data.success == '1') 
+          {
+              $scope.allMiscDtgOn =result.data.records;
+          } 
+          else
+          {
+              $scope.allMiscDtgOn=[];
+          }
+        });
+
+      
+
+
+
       $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) 
                           {
                               if(result.data.success == '1') 
@@ -207,6 +285,24 @@ if($stateParams.id && $stateParams.client_id) {
                                  $state.go('order.list');
                               });
                           }
+
+
+        $scope.savePositionData=function(postArray,allid)
+                          {
+                           
+                            console.log(postArray);return false;
+                            var order_data = {};
+                            order_data.table ='order'
+                            order_data.data =postArray
+                            order_data.cond ={id:id}
+                            $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                                 $state.go('order.list');
+                              });
+                          }
+
+
+
+                          
 
 
 

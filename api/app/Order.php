@@ -41,6 +41,12 @@ class Order extends Model {
         $orderData = DB::table('order')->where($whereOrderConditions)->get();
 
 
+
+        $whereOrderPositionConditions = ['order_id' => $data['id']];
+        $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
+
+
+
        
 
         $whereClientConditions = ['status' => '1','is_delete' => '1','client_id' => $data['client_id']];
@@ -69,6 +75,7 @@ class Order extends Model {
         $combine_array = array();
 
         $combine_array['order'] = $orderData;
+        $combine_array['order_position'] = $orderPositionData;
         $combine_array['client_data'] = $clientData;
         $combine_array['client_main_data'] = $clientMainData;
        
