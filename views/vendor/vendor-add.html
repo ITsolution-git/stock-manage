@@ -90,13 +90,20 @@
 								<span style="color:#f44336" ng-show="vendorForm.telephone.$error.pattern" class="form-control"> This Field Should Contain 10 Numeric</span>
 							</div>	
 							<div class="col-md-1 nopad-form">							
-								<!--button ng-click="removeInput($index)" class="col-md-1">Remove</button-->
-								<button ng-click="removeInput($index)" class="removeRecord formBtns">Remove</button>					
+								<!--button ng-click="removeInput($index)" class="col-md-1">Remove</button>
+								<button ng-click="removeInput($index)" class="removeRecord formBtns">Remove</button-->
+								<button class="btn btn-default addButton" ng-click="removeInput($index)" type="button" tabindex="0">
+									<i class="fa fa-minus"></i>
+								</button>								
 							</div>
                         </div>
-                        <!--button type="button" ng-click="addInput()">add input</button-->
+                        <!--button type="button" ng-click="addInput()">add input</button>
+						<button type="button" ng-click="addInput()" class="newRecord formBtns">add input</button>
+						-->
 						<div class="col-md-12 nopad-form">
-							<button type="button" ng-click="addInput()" class="newRecord formBtns">add input</button>					
+							<button class="btn btn-default addButton" ng-click="addInput()" type="button" tabindex="0">
+								<i class="fa fa-plus"></i>
+							</button>			
 						</div>
                       </div>
                     </div>

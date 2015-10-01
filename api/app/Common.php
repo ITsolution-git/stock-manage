@@ -81,7 +81,13 @@ class Common extends Model {
            } else {
             $allData[$data->type][] = $data;
            }
+
+
+            
+
         }
+
+          
         return $allData;
     }
 
@@ -93,17 +99,48 @@ class Common extends Model {
     }
     public function getStaffList()
     {
-        $whereConditions = ['is_delete' => '1'];
-        $stafflist = DB::table('staff')->select('id','first_name','last_name')->where($whereConditions)->get();
-        return $stafflist;
 
+
+        $whereConditions = ['misc.status' => '1','misc.is_delete' => '1','staff.is_delete' => '1','misc.type' => 'staff_type'];
+        $listArray = ['staff.id','staff.first_name','staff.last_name'];
+
+        $staffData = DB::table('staff as staff')
+                         ->Join('misc_type as misc', 'staff.staff_type', '=', 'misc.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $staffData;
     }
+
+
+    public function getBrandCordinator()
+    {
+       
+
+
+        $whereConditions = ['users.status' => '1','users.is_delete' => '1','roles.slug' => 'BC'];
+        $listArray = ['users.id','users.name'];
+
+        $brandCordinatorData = DB::table('users as users')
+                         ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $brandCordinatorData;
+    }
+
+
     public function InsertRecords($table,$records)
     {
         $result = DB::table($table)->insert($records);
-        return $result;
+
+        $id = DB::getPdo()->lastInsertId();
+
+        return $id;
     }
-    public function GetTableRecords($table,$cond)
+    public function GetTableRecords($table,$cond,$notcond)
     {
         $result = DB::table($table);
         if(count($cond)>0)
@@ -114,6 +151,16 @@ class Common extends Model {
                     $result =$result ->where($key,'=',$value);
             }
         }
+
+        if(count($notcond)>0)
+        {
+            foreach ($notcond as $key => $value) 
+            {
+                
+                    $result =$result ->where($key,'!=',$value);
+            }
+        }
+
         $result=$result->get();
         return $result;
     }
@@ -131,4 +178,5 @@ class Common extends Model {
         $result=$result->update($data);
         return $result;
     }
+
 }

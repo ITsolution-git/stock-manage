@@ -71,7 +71,7 @@ class StaffController extends Controller {
             'prime_address_city' => isset($_REQUEST['prime_address_city']) ? $_REQUEST['prime_address_city'] : '',
             'prime_address_state' => isset($_REQUEST['prime_address_state']) ? $_REQUEST['prime_address_state'] : '',
             'prime_address_zip' => isset($_REQUEST['prime_address_zip']) ? $_REQUEST['prime_address_zip'] : '',
-            'prime_address1' => isset($_REQUEST['staff_type']) ? $_REQUEST['staff_type'] : '',
+            'staff_type' => isset($_REQUEST['staff_type']) ? $_REQUEST['staff_type'] : '',
             'prime_address1' => isset($_REQUEST['prime_address1']) ? $_REQUEST['prime_address1'] : '',
             'prime_address2' => isset($_REQUEST['prime_address2']) ? $_REQUEST['prime_address2'] : '',
             'birthday' => isset($_REQUEST['birthday']) ? $_REQUEST['birthday'] : '',
@@ -170,8 +170,10 @@ class StaffController extends Controller {
 */
     public function edit() {
  
+ 
           $notes_data_all = json_decode($_REQUEST['notes_data_all']);
           $timeoff_data_all = json_decode($_REQUEST['timeoff_data_all']);
+
 
 
          
@@ -188,7 +190,7 @@ class StaffController extends Controller {
             'prime_address_city' => isset($_REQUEST['prime_address_city']) ? $_REQUEST['prime_address_city'] : '',
             'prime_address_state' => isset($_REQUEST['prime_address_state']) ? $_REQUEST['prime_address_state'] : '',
             'prime_address_zip' => isset($_REQUEST['prime_address_zip']) ? $_REQUEST['prime_address_zip'] : '',
-            'prime_address1' => isset($_REQUEST['staff_type']) ? $_REQUEST['staff_type'] : '',
+            'staff_type' => isset($_REQUEST['staff_type']) ? $_REQUEST['staff_type'] : '',
             'prime_address1' => isset($_REQUEST['prime_address1']) ? $_REQUEST['prime_address1'] : '',
             'prime_address2' => isset($_REQUEST['prime_address2']) ? $_REQUEST['prime_address2'] : '',
             'birthday' => isset($_REQUEST['birthday']) ? $_REQUEST['birthday'] : '',

@@ -215,10 +215,10 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple> List</a>
+          <a md-ink-ripple ui-sref="order.list"> List</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple >Add</a>
+          <a md-ink-ripple ui-sref="order.add">Add</a>
         </li>
        
       </ul>
@@ -236,16 +236,16 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple > Culture PO</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:1 })"> Culture PO</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple >Supplied Garments</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:2 })">Supplied Garments</a>
         </li>
        <li ui-sref-active="active">
-          <a md-ink-ripple >Contact Print</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:3 })">Contact Print</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple >Contact Embrodiery</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:4 })" >Contact Embrodiery</a>
         </li>
       </ul>
     </li>

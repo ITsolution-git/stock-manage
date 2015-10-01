@@ -20,7 +20,7 @@ for(var i=0;i<15;i++) {
 $scope.range = range;
 
 
-
+$('.footable-page a').filter('[data-page="0"]').trigger('click');
 
 $scope.updateUser = function(value,id) {
 

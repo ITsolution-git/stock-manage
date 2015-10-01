@@ -54,7 +54,6 @@ class LoginController extends Controller {
                 else
                 {
                     Session::put('username', $username);
-                    Session::put('user_id', $result[0]->id);
                     Session::put('password', md5($password));
                     Session::put('useremail', $result[0]->email);
                     Session::put('role_title', $result[0]->title);
@@ -71,7 +70,6 @@ class LoginController extends Controller {
                     $session['role_title'] = $result[0]->title;
                     $session['role_slug'] = $result[0]->slug;
                     $session['login_id'] = $loginid;
-                    $session['user_id'] = $result[0]->id;
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
                 }
@@ -112,7 +110,7 @@ class LoginController extends Controller {
      * @return Response
      */
     public function check_session() {
-        
+  
         if (!empty(Session::get("username"))) {
             $response = array('success' => 1, 'message' => "session there","username" => Session::get("username"));
         } else {

@@ -118,6 +118,20 @@ class CommonController extends Controller {
         $result = $this->common->getStaffList();
         return $this->return_response($result);
      }
+
+
+    /**
+    * Get Array of field selection, condition and table name.
+    * @return json data
+    */
+     public function getBrandCo()
+     {
+
+        $result = $this->common->getBrandCordinator();
+        return $this->return_response($result);
+     }
+
+
     /**
     * Insert record for any single table.
     * @params Table name, Post array
@@ -131,6 +145,7 @@ class CommonController extends Controller {
         if(!empty($post['table']) && !empty($post['data']))
         {
             $result = $this->common->InsertRecords($post['table'],$post['data']);
+            $id = $result;
             $message = INSERT_RECORD;
             $success = 1;
         }
@@ -140,7 +155,7 @@ class CommonController extends Controller {
             $success = 0;
         }
         
-        $data = array("success"=>$success,"message"=>$message);
+        $data = array("success"=>$success,"message"=>$message,"id"=>$id);
         return response()->json(['data'=>$data]);
      }
       /**
@@ -152,9 +167,18 @@ class CommonController extends Controller {
      {
         $post = Input::all();
         //echo "<pre>"; print_r($post); echo "</pre>"; die;
+        if(empty($post['cond'])){
+            $post['cond'] = array();
+        }
+
+        if(empty($post['notcond'])){
+            $post['notcond'] = array();
+        }
+        
+       
         if(!empty($post['table']))
         {
-             $result = $this->common->GetTableRecords($post['table'],$post['cond']);
+             $result = $this->common->GetTableRecords($post['table'],$post['cond'],$post['notcond']);
              return $this->return_response($result);
         }
         else
