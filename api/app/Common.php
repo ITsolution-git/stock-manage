@@ -179,4 +179,20 @@ class Common extends Model {
         return $result;
     }
 
+     public function DeleteTableRecords($table,$cond)
+    {
+
+        $result = DB::table($table);
+        if(count($cond)>0)
+        {
+            foreach ($cond as $key => $value) 
+            {
+                if(!empty($value))
+                    $result =$result ->where($key,'=',$value);
+            }
+        }
+        $result=$result->delete();
+        return $result;
+    }
+
 }

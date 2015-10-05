@@ -107,8 +107,24 @@ $scope.addOrder = function(){
                                                   ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
                           }
 
-$scope.removeOrder = function(index){
-    $scope.orderPositionAll.splice(index,1);
+$scope.removeOrder = function(index,id){
+  
+  if(angular.isUndefined(id)){
+     $scope.orderPositionAll.splice(index,1);
+  } else {
+
+ var order_data = {};
+order_data.table ='order_positions'
+order_data.cond ={id:id}
+$http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+     
+
+  });
+
+
+     $scope.orderPositionAll.splice(index,1);
+  }
+   
 }
 
 
@@ -287,18 +303,50 @@ if($stateParams.id && $stateParams.client_id) {
                           }
 
 
-        $scope.savePositionData=function(postArray,allid)
+                          $scope.savePositionData=function(postArray)
                           {
+
+                           if(postArray.length != 0) {
+
+                            order_id = $stateParams.id
+                            client_id = $stateParams.client_id
                            
-                            console.log(postArray);return false;
-                            var order_data = {};
-                            order_data.table ='order'
-                            order_data.data =postArray
-                            order_data.cond ={id:id}
-                            $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-                                 $state.go('order.list');
-                              });
+                           angular.forEach(postArray, function(value, key){
+                            
+                            if(angular.isUndefined(value.id)){
+
+                            var order_data_insert  = {};
+                             value.order_id = order_id;
+
+                             order_data_insert.data = value;
+                             // Address_data.data.client_id = $stateParams.id;
+                              order_data_insert.table ='order_positions'
+
+
+                              $http.post('api/public/common/InsertRecords',order_data_insert).success(function(result) {
+                               
+                               });
+                              
+
+                            } else {
+                               
+                                var order_data = {};
+                                order_data.table ='order_positions'
+                                order_data.data =value
+                                order_data.cond ={id:value.id}
+                                $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                                     
+
+                                  });
+                                }
+
+                            });
+
+                                $state.go('order.edit',{id: order_id,client_id:client_id},{reload:true});
+                                return false;
+
                           }
+                        }
 
 
 

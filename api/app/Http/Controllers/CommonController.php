@@ -211,6 +211,29 @@ class CommonController extends Controller {
         return response()->json(['data'=>$data]);
      }
 
+
+    /**
+    * DELETE record for any single table.
+    * @params Table name, Condition array
+    * @return json data
+    */
+     public function DeleteTableRecords()
+     {
+        $post = Input::all();
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+
+        if(!empty($post['table'])   && !empty($post['cond']))
+        {
+          $result = $this->common->DeleteTableRecords($post['table'],$post['cond']);
+          $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        else
+        {
+            $data = array("success"=>0,"message"=>MISSING_PARAMS);
+        }
+        return response()->json(['data'=>$data]);
+     }
+
     /**
     * Get Array
     * @return json data
