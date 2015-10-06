@@ -46,6 +46,10 @@ class Order extends Model {
         $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
 
 
+        $whereOrderLineConditions = ['order_id' => $data['id']];
+        $orderLineData = DB::table('order_orderlines')->where($whereOrderLineConditions)->get();
+
+
 
        
 
@@ -56,21 +60,6 @@ class Order extends Model {
         $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
 
 
-/*
-
-        $whereTimeoffConditions = ['staff_id' => $staffId,'time_off.is_delete' => '1','time_off.status' => '1','type.status' => '1','type.type' => 'timeoff'];
-        $listArrayTimeoff = ['time_off.classification_id','time_off.id','time_off.staff_id','time_off.timerecord','time_off.applied_hours','time_off.date_begin',
-                      'time_off.date_end', 'time_off.status','type.name'];
-
-         $timeoffData = DB::table('time_off as time_off')
-                         ->Join('type as type', 'type.id', '=', 'time_off.classification_id')
-                         ->select($listArrayTimeoff)
-                         ->where($whereTimeoffConditions)
-                         ->get();
-
-
-
-*/
 
         $combine_array = array();
 
@@ -78,6 +67,7 @@ class Order extends Model {
         $combine_array['order_position'] = $orderPositionData;
         $combine_array['client_data'] = $clientData;
         $combine_array['client_main_data'] = $clientMainData;
+        $combine_array['order_line'] = $orderLineData;
        
 
         return $combine_array;
