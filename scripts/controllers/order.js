@@ -108,6 +108,9 @@ $scope.addOrder = function(){
                           }
 
 $scope.removeOrder = function(index,id){
+
+  var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+                                if (permission == true) {
   
   if(angular.isUndefined(id)){
      $scope.orderPositionAll.splice(index,1);
@@ -124,6 +127,8 @@ $http.post('api/public/common/DeleteTableRecords',order_data).success(function(r
 
      $scope.orderPositionAll.splice(index,1);
   }
+
+}
    
 }
 
