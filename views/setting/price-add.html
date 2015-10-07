@@ -1,450 +1,610 @@
- 
-  <div class="row">
-    <div>
 
-      <form name="priceForm" class="form-validation" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)">
-        
-        <div class="panel panel-default col-sm-5">
-         <input type="hidden" ng-model="price.id" value="{{price.id}}">
-         <input type="hidden" ng-model="embroswitch.id" value="{{embroswitch.id}}">
-          <div class="panel-body">
-
-
-            <div class="form-group col-sm-4 m-b">
-              <label>Price Grid <em class="text-muted"></em></label>
-              <input type="text" class="form-control" ng-model="price.name" required >
+<div class="row">
+  <div>
+    <form name="priceForm" class="form-validation stokkupForm priceGrid" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)">
+      <div class="panel panel-default col-md-12 col-sm-12 col-xs-12">
+      	<input type="hidden" ng-model="price.id" value="{{price.id}}">
+        <input type="hidden" ng-model="embroswitch.id" value="{{embroswitch.id}}">
+        <div class="col-md-12 col-sm-12 col-xs-12 nopad-form">
+            <div class="form-group col-md-4 col-sm-4 col-xs-12 m-b nopad-form">
+                <label>Price Grid <em class="text-muted"></em></label>
+                <input type="text" class="form-control" ng-model="price.name" required >
             </div>
-
-
-
-            <div class="form-group col-sm-12 m-b">
-              <ul class="nav nav-tabs">
-                <li class="active">
-                  <a href data-toggle="tab" data-target="#tab1">Charges</a>
-                </li>
-                <li>
-                  <a href data-toggle="tab" data-target="#tab2">Charges List</a>
-                </li>
-       
-      </ul>
-
-      <div class="tab-content p b-a no-b-t bg-white m-b-md">
-
-
-        <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab1">
-
-           <div class="form-group">
+        </div>
+        <div class="panel-body nopad-form">
+          <div class="form-group col-md-12 col-sm-12 col-xs-12 m-b nopad-form">
+            <ul class="nav nav-tabs">
+              <li class="active"> <a href data-toggle="tab" data-target="#tab1">Charges</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab2">Charges List</a> </li>
+              <li> <a href data-toggle="tab" data-target="#screenprintprimary">Screen Printing-Primary</a> </li>
+              <li> <a href data-toggle="tab" data-target="#screenprintsecondary">Screen Printing-Secondary</a> </li>
+              <li> <a href data-toggle="tab" data-target="#embroidery">Embroidery</a> </li>
+              <li> <a href data-toggle="tab" data-target="#dtogarment">Direct to Garment</a> </li>
+              <li> <a href data-toggle="tab" data-target="#garmentmarkup">Garment Markup</a> </li>
+            </ul>
+            <div class="tab-content p b-a no-b-t bg-white m-b-md">
+              <div role="tabpanel" class="tab-pane animated fadeIn active col-md-12 nopad-form" id="tab1">
+                <div class="form-group col-md-3">
                   <label>Discharge<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.discharge">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Speciality<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.specialty">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Color Matching<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.color_matching">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Embroidered Names<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.embroidered_names">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Foil<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.foil">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Folding<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.folding">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Hang Tag<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.hang_tag">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Ink Changes<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.ink_changes"  >
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Numbers on Dark<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.number_on_dark">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Numbers on Light<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.number_on_light">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Oversize<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.over_size">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Oversize screens<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.over_size_screens">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Poly Bagging<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.poly_bagging">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Press Setup<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.press_setup">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Printed Names<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.printed_names">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Screen Fees<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.screen_fees">
-            </div>
-
-             <div class="form-group">
+                </div>
+                <div class="form-group col-md-3">
                   <label>Shipping Charge<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.shipping_charge">
-            </div>
-
-        </div>
-
-
-        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
-            
-              <div class="form-group">
-                  <label>Item<em class="text-muted"></em></label>
-                   <label>Charge<em class="text-muted"></em></label>
-                     <label>Time<em class="text-muted"></em></label>
-                     <label>Available to<em class="text-muted"></em></label>
-                     
-              </div>
-
-              
-            <div class="form-group">
-              
-                <div ng-repeat="price_grid in allPriceGrid" ng-controller="MDCheckboxCtrl">
-                    <input type="text"   ng-model="price_grid.item" />
-                    <input type="text"   ng-model="price_grid.time" />
-                    <input type="text"   ng-model="price_grid.charge" />
-
-                    <md-checkbox ng-model="price_grid.is_gps_distrib" >GPS Distrib</md-checkbox>
-                    <md-checkbox ng-model="price_grid.is_gps_opt">GPS Opt</md-checkbox>
-                    <md-checkbox ng-model="price_grid.is_per_line">per Line</md-checkbox>
-                    <md-checkbox ng-model="price_grid.is_per_order">per Order</md-checkbox>
-                    <md-checkbox ng-model="price_grid.is_per_screen_set" >per Screen Set</md-checkbox>
-
-                    <!-- <button ng-click="removeInput($index)">Remove</button> -->
                 </div>
-                     <button type="button" ng-click="addInput()">add input</button>
+              </div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
+                <div class="form-group col-md-12 nopad-form">
+                  <label class="col-md-2 nopad-left">Item<em class="text-muted"></em></label>
+                  <label class="col-md-2 nopad-left">Charge<em class="text-muted"></em></label>
+                  <label class="col-md-2 nopad-left">Time<em class="text-muted"></em></label>
+                  <label class="col-md-6 nopad-left">Available to<em class="text-muted"></em></label>
+                </div>
+                <div class="form-group col-md-12 nopad-form">
+                  <div ng-repeat="price_grid in allPriceGrid" ng-controller="MDCheckboxCtrl">
+                  	<ul class="form-fields col-md-6">
+                    	<li class="col-md-4 nopad-left"><input type="text"   ng-model="price_grid.item" /></li>
+                   		<li class="col-md-4 nopad-left"><input type="text"   ng-model="price_grid.time" /></li>
+                    	<li class="col-md-4 nopad-left"><input type="text"   ng-model="price_grid.charge" /></li>
+                    </ul>
+                    <ul class="form-fields col-md-6 nopad-left chkBoxes">
+                    	<li><md-checkbox ng-model="price_grid.is_gps_distrib" >GPS Distrib</md-checkbox></li>
+                        <li><md-checkbox ng-model="price_grid.is_gps_opt">GPS Opt</md-checkbox></li>
+                        <li><md-checkbox ng-model="price_grid.is_per_line">per Line</md-checkbox></li>
+                        <li><md-checkbox ng-model="price_grid.is_per_order">per Order</md-checkbox></li>
+                        <li><md-checkbox ng-model="price_grid.is_per_screen_set" >per Screen Set</md-checkbox></li>
+                    </ul>
+                    <!-- <button ng-click="removeInput($index)">Remove</button>
+                    <button class="btn btn-default addButton" ng-click="removeInput($index)" type="button" tabindex="0">
+                        <i class="fa fa-minus"></i>
+                    </button> -->
+                  </div>
+                  <button class="btn btn-default addButton" ng-click="addInput()" type="button" tabindex="0">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                  <!--button type="button" ng-click="addInput()">add input</button-->
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="screenprintprimary">
+              	<div class="form-group col-md-12 col-sm-12 nopad-form">
+                	<label class="col-md-2 nopad-form t-a-c">Range<em class="text-muted"></em></label>
+                    <button  ng-click="duplicateprimary(price.id,allScreenPrimary)" type="button"  class="btn btn-info pull-right">Duplicate Primary</button>
+                </div>
+                <div class="form-group">
+                  <div class="form-fields col-md-2 nopad-form">
+                      <label class="col-md-6 nopad-left t-a-c">Low<em class="text-muted"></em></label>
+                      <label class="col-md-6 nopad-left t-a-c">High<em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-fields col-md-9 nopad-form">
+                      <label class="col-md-1 nopad-form t-a-c">1c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">2c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">3c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">4c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">5c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">6c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">7c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">8c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">9c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">10c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">11c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">12c<em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-fields col-md-1 nopad-form"></div>
+                </div>
+                <div class="form-group">
+                  <div ng-repeat="price_primary in allScreenPrimary" class="price_primary">
+                  	<div class="form-fields col-md-2 nopad-form">
+                    	<div class="col-md-6 nopad-left">
+    	                    <input type="text" ng-model="price_primary.range_low"/>
+                        </div>
+                        <div class="col-md-6 nopad-left">
+	                        <input type="text" ng-model="price_primary.range_high"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-9 nopad-form">
+                    	<div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_1c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                        	<input type="text" ng-model="price_primary.pricing_2c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                        	<input type="text" ng-model="price_primary.pricing_3c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                        	<input type="text" ng-model="price_primary.pricing_4c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                        	<input type="text" ng-model="price_primary.pricing_5c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_6c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_7c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_8c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_9c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_10c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_11c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_primary.pricing_12c"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-1 nopad-right">
+                    	<button class="btn btn-default addButton" ng-click="removeScreenPrimary($index)" type="button" tabindex="0">
+							<i class="fa fa-minus"></i>
+						</button>
+	                    <!--button ng-click="removeScreenPrimary($index)">Remove</button-->
+                    </div>
+                  </div>
+                  <div class="col-md-12 nopad-left">
+	                  <!--button type="button" ng-click="addScreenPrimary()">add input</button-->
+                      <button class="btn btn-default addButton" ng-click="addScreenPrimary()" type="button" tabindex="0">
+						<i class="fa fa-plus"></i>
+					  </button>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="screenprintsecondary">
+                <div class="form-group">
+                  <div class="form-group col-md-12 col-sm-12 nopad-form">
+                       <label class="col-md-2 nopad-form t-a-c">Range<em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-fields col-md-2 nopad-form">
+                  	  <div class="col-md-6 nopad-left">
+    	                  <label class="col-md-6 nopad-form t-a-c">Low<em class="text-muted"></em></label>
+                      </div>
+                      <div class="col-md-6 nopad-left">
+	                      <label class="col-md-6 nopad-form t-a-c">High<em class="text-muted"></em></label>
+                      </div>
+                  </div>
+                  <div class="form-fields col-md-9 nopad-form">
+                      <label class="col-md-1 nopad-form t-a-c">1c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">2c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">3c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">4c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">5c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">6c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">7c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">8c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">9c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">10c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">11c<em class="text-muted"></em></label>
+                      <label class="col-md-1 nopad-form t-a-c">12c<em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-fields col-md-1 nopad-form"></div>
+                </div>
+                <div class="form-group">
+                  <div ng-repeat="price_secondary in allScreenSecondary" class="price_secondary">
+                  	<div class="form-fields col-md-2 nopad-form">
+                    	<div class="col-md-6 nopad-left">
+		                    <input type="text" ng-model="price_secondary.range_low"/>
+                        </div>
+                        <div class="col-md-6 nopad-left">
+	    	                <input type="text" ng-model="price_secondary.range_high"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-9 nopad-form">
+                    	<div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_1c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+    	                    <input type="text" ng-model="price_secondary.pricing_2c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_3c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_4c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_5c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_6c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_7c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_8c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_9c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_10c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_11c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="price_secondary.pricing_12c"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-1 nopad-right">
+	                    <!--button ng-click="removeScreenSecondary($index)">Remove</button-->
+                        <button class="btn btn-default addButton" ng-click="removeScreenSecondary($index)" type="button" tabindex="0">
+							<i class="fa fa-minus"></i>
+						</button>
+                    </div>
+                  </div>
+                  <div class="form-fields col-md-12 nopad-left">
+                      <!--button type="button" ng-click="addScreenSecondary()">add input</button-->
+                      <button class="btn btn-default addButton" ng-click="addScreenSecondary()" type="button" tabindex="0">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="embroidery">
+                <div class="form-group col-md-12 nopad-form">
+                	  <div class="form-fields col-md-2 nopad-form">
+	                      <label class="form-fields col-md-6 nopad-left t-a-c"> Range <em class="text-muted"></em></label>
+                          <label class="form-fields col-md-6 nopad-left t-a-c"> Low <em class="text-muted"></em></label>
+                      </div>
+                      <div class="form-fields col-md-9 nopad-form">                      
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_low_1"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_low_2"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_low_3"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_4"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_5"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_6"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_7"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_8"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_9"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_10"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_low_11"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-form">
+                            <input type="text" ng-model="embroswitch.range_low_12"/>
+                          </div>
+                      </div>
+                      <div class="form-fields col-md-1 nopad-form"></div>
+                </div> 
+                
+                <div class="form-group col-md-12 nopad-form">
+                	  <div class="form-fields col-md-2 nopad-form">     
+	                      <label class="form-fields col-md-6 nopad-left t-a-c"> Low<em class="text-muted"></em></label>
+                          <label class="form-fields col-md-6 nopad-left t-a-c"> High<em class="text-muted"></em></label>
+                      </div>
+                      
+                      <div class="form-fields col-md-9 nopad-form">     
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_high_1"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">                      
+                            <input type="text" ng-model="embroswitch.range_high_2"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_high_3"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_high_4"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_high_5"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                            <input type="text" ng-model="embroswitch.range_high_6"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_high_7"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_high_8"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_high_9"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_high_10"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-left">
+                              <input type="text" ng-model="embroswitch.range_high_11"/>
+                          </div>
+                          <div class="form-fields col-md-1 nopad-form">
+                              <input type="text"   ng-model="embroswitch.range_high_12"/>
+                          </div>
+                      </div>
+                      <div class="form-fields col-md-1 nopad-form"></div>
+                </div>
+                <div class="form-group col-md-12 nopad-form">
+                  <div ng-repeat="price_embroidery in allEmbroidery" class="price_embroidery">
+                  	<div class="form-fields col-md-2 nopad-form">
+                    	<div class="form-fields col-md-6 nopad-left">     
+	                    	<input type="text" ng-model="price_embroidery.range_low"/>
+                        </div>
+                        <div class="form-fields col-md-6 nopad-left">     
+	                    	<input type="text" ng-model="price_embroidery.range_high"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-9 nopad-form">
+                    	<div class="form-fields col-md-1 nopad-left">
+	                        <input type="text" ng-model="price_embroidery.pricing_1c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_2c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_3c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_4c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_5c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_6c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_7c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_8c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_9c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                       	 	<input type="text" ng-model="price_embroidery.pricing_10c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-left">
+                        	<input type="text" ng-model="price_embroidery.pricing_11c"/>
+                        </div>
+                        <div class="form-fields col-md-1 nopad-form">
+                        	<input type="text" ng-model="price_embroidery.pricing_12c"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-1 nopad-right">
+	                    <!--button ng-click="removeEmbroidery($index)">Remove</button-->
+                        <button class="btn btn-default addButton" ng-click="removeEmbroidery($index)" type="button" tabindex="0">
+                        	<i class="fa fa-minus"></i>
+                      	</button>
+                    </div>
+                  </div>
+                  <div class="form-fields col-md-12 nopad-form">
+	                  <!--button type="button" ng-click="addEmbroidery()">add input</button-->
+                      <button class="btn btn-default addButton" ng-click="addEmbroidery()" type="button" tabindex="0">
+                        	<i class="fa fa-plus"></i>
+                      </button>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="dtogarment">
+              	<div class="form-group col-md-12 nopad-form">
+                	<label class="col-md-2 nopad-form t-a-c">Range<em class="text-muted"></em></label>
+                </div>
+                <div class="form-group col-md-12 nopad-form">
+                	<div class="form-fields col-md-2 nopad-form">
+                  		<label class="col-md-6 nopad-left t-a-c">Low<em class="text-muted"></em></label>
+		                <label class="col-md-6 nopad-left t-a-c">High<em class="text-muted"></em></label>
+                    </div>
+                    <div class="form-fields col-md-9 nopad-form">
+                          <label class="col-md-1 nopad-form t-a-c">4*4<br />Light<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c">4*4<br />Dark<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c">6*6<br />Light<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c">6*6<br />Dark<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c">10*10<br />Light<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c">10*10<br />Dark<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c">12*12<br />Light<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c">12*12<br />Dark<em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c"><em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c"><em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c"><em class="text-muted"></em></label>
+                          <label class="col-md-1 nopad-form t-a-c"><em class="text-muted"></em></label>
+                     </div>
+                     <div class="form-fields col-md-1 nopad-form"></div>                     
+                </div>
+                <div class="form-group col-md-12 nopad-form">
+                  <div ng-repeat="d_garment in allGarment" class="d_garment">
+                  	<div class="form-fields col-md-2 nopad-form">
+                    	<div class="col-md-6 nopad-left">
+		                    <input type="text" ng-model="d_garment.range_low"/>
+                        </div>
+                        <div class="col-md-6 nopad-left">
+	    	                <input type="text" ng-model="d_garment.range_high"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-9 nopad-form">
+						<div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="d_garment.pricing_1c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="d_garment.pricing_2c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                        	<input type="text" ng-model="d_garment.pricing_3c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="d_garment.pricing_4c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="d_garment.pricing_5c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="d_garment.pricing_6c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                    	    <input type="text" ng-model="d_garment.pricing_7c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                	        <input type="text" ng-model="d_garment.pricing_8c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+            	            <input type="text" ng-model="d_garment.pricing_9c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+        	                <input type="text" ng-model="d_garment.pricing_10c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+    	                    <input type="text" ng-model="d_garment.pricing_11c"/>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+	                        <input type="text" ng-model="d_garment.pricing_12c"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-1 nopad-right">
+	                    <!--button ng-click="removeGarment($index)">Remove</button-->
+                        <button class="btn btn-default addButton" ng-click="removeGarment($index)" type="button" tabindex="0">
+                        	<i class="fa fa-minus"></i>
+                      	</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12 nopad-left">
+	                  <!--button type="button" ng-click="addGarment()">add input</button-->
+                      <button class="btn btn-default addButton" ng-click="addGarment()" type="button" tabindex="0">
+                        	<i class="fa fa-plus"></i>
+                      </button>
+                  </div>
+                </div>
+              </div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="garmentmarkup">	            
+                <div class="form-group">
+                  <div class="form-group col-md-12 nopad-form">
+                	<label class="col-md-2 nopad-left t-a-c">Range<em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-fields col-md-2 nopad-form">
+	                  <label class="col-md-6 nopad-left t-a-c">Low<em class="text-muted"></em></label>
+    	              <label class="col-md-6 nopad-left t-a-c">High<em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-fields col-md-9 nopad-form">
+	                  <label>Percentage<em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-fields col-md-1 nopad-form"></div>
+                </div>
+                <div class="form-group">
+                  <div ng-repeat="garment_mackup in allGarmentMackup" class="garment_mackup">
+                  	<div class="form-fields col-md-2 nopad-form">
+	                    <div class="form-fields col-md-6 nopad-left">
+    	                	<input type="text" ng-model="garment_mackup.range_low"/>
+                        </div>
+                        <div class="form-fields col-md-6 nopad-left">
+	                   	 	<input type="text" ng-model="garment_mackup.range_high"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-9 nopad-form">
+                    	<div class="form-fields col-md-1 nopad-form">
+	                    	<input type="text" ng-model="garment_mackup.percentage"/>
+                        </div>
+                    </div>
+                    <div class="form-fields col-md-1 nopad-right">
+	                    <!--button ng-click="removeGarmentMackup($index)">Remove</button-->
+                        <button class="btn btn-default addButton" ng-click="removeGarmentMackup($index)" type="button" tabindex="0">
+                        	<i class="fa fa-minus"></i>
+                      	</button>
+                    </div>
+                  </div>
+                  <div class="form-fields col-md-12 nopad-left">
+	                  <!--button type="button" ng-click="addGarmentMackup()">add input</button-->
+                      <button class="btn btn-default addButton" ng-click="addGarmentMackup()" type="button" tabindex="0">
+                        	<i class="fa fa-plus"></i>
+                      </button>
+                  </div>
+                </div>
+              </div>
             </div>
-
-        </div>
-
-      </div>
-            </div>
-
-            
           </div>
-          
         </div>
-
-
-
-
-
-         <div class="panel panel-default col-sm-7">
-         <input type="hidden" ng-model="price.id" value="{{price.id}}">
-          <div class="panel-body">
-
-
-          
-
-            <div class="form-group col-sm-12 m-b">
-              <ul class="nav nav-tabs">
-                <li class="active">
-                  <a href data-toggle="tab" data-target="#screenprintprimary">Screen Printing-Primary</a>
-                </li>
-                <li>
-                  <a href data-toggle="tab" data-target="#screenprintsecondary">Screen Printing-Secondary</a>
-                </li>
-                <li>
-                  <a href data-toggle="tab" data-target="#embroidery">Embroidery</a>
-                </li>
-                <li>
-                  <a href data-toggle="tab" data-target="#dtogarment">Direct to Garment</a>
-                </li>
-                <li>
-                  <a href data-toggle="tab" data-target="#garmentmarkup">Garment Markup</a>
-                </li>
-       
-      </ul>
-
-      <div class="tab-content p b-a no-b-t bg-white m-b-md">
-
-
-        <div role="tabpanel" class="tab-pane animated fadeIn active" id="screenprintprimary">
-
-
-            <div class="form-group">
-                  <label>Low<em class="text-muted"></em></label>
-                  <label>High<em class="text-muted"></em></label>
-                  <label>1c<em class="text-muted"></em></label>
-                  <label>2c<em class="text-muted"></em></label>
-                  <label>3c<em class="text-muted"></em></label>
-                  <label>4c<em class="text-muted"></em></label>
-                  <label>5c<em class="text-muted"></em></label>
-                  <label>6c<em class="text-muted"></em></label>
-                  <label>7c<em class="text-muted"></em></label>
-                  <label>8c<em class="text-muted"></em></label>
-                  <label>9c<em class="text-muted"></em></label>
-                  <label>10c<em class="text-muted"></em></label>
-                  <label>11c<em class="text-muted"></em></label>
-                  <label>12c<em class="text-muted"></em></label>
-                      <button  ng-click="duplicateprimary(price.id,allScreenPrimary)" type="button"  class="btn btn-info pull-right">Duplicate Primary</button>&nbsp;
-              </div>
-
-              
-            <div class="form-group">
-              
-                <div ng-repeat="price_primary in allScreenPrimary">
-                    <input type="text"   ng-model="price_primary.range_low"/>
-                    <input type="text"   ng-model="price_primary.range_high"/>
-                    <input type="text"   ng-model="price_primary.pricing_1c"/>
-                    <input type="text"   ng-model="price_primary.pricing_2c"/>
-                    <input type="text"   ng-model="price_primary.pricing_3c"/>
-                    <input type="text"   ng-model="price_primary.pricing_4c"/>
-                    <input type="text"   ng-model="price_primary.pricing_5c"/>
-                    <input type="text"   ng-model="price_primary.pricing_6c"/>
-                    <input type="text"   ng-model="price_primary.pricing_7c"/>
-                    <input type="text"   ng-model="price_primary.pricing_8c"/>
-                    <input type="text"   ng-model="price_primary.pricing_9c"/>
-                    <input type="text"   ng-model="price_primary.pricing_10c"/>
-                    <input type="text"   ng-model="price_primary.pricing_11c"/>
-                    <input type="text"   ng-model="price_primary.pricing_12c"/>
-                    
-
-                     <button ng-click="removeScreenPrimary($index)">Remove</button> 
-                </div>
-                     <button type="button" ng-click="addScreenPrimary()">add input</button>
-            </div>
-         
-
-        </div>
-
-
-        <div role="tabpanel" class="tab-pane animated fadeIn" id="screenprintsecondary">
-            
-            <div class="form-group">
-                  <label>Low<em class="text-muted"></em></label>
-                  <label>High<em class="text-muted"></em></label>
-                  <label>1c<em class="text-muted"></em></label>
-                  <label>2c<em class="text-muted"></em></label>
-                  <label>3c<em class="text-muted"></em></label>
-                  <label>4c<em class="text-muted"></em></label>
-                  <label>5c<em class="text-muted"></em></label>
-                  <label>6c<em class="text-muted"></em></label>
-                  <label>7c<em class="text-muted"></em></label>
-                  <label>8c<em class="text-muted"></em></label>
-                  <label>9c<em class="text-muted"></em></label>
-                  <label>10c<em class="text-muted"></em></label>
-                  <label>11c<em class="text-muted"></em></label>
-                  <label>12c<em class="text-muted"></em></label>
-                     
-              </div>
-
-              
-            <div class="form-group">
-              
-                <div ng-repeat="price_secondary in allScreenSecondary">
-                    <input type="text"   ng-model="price_secondary.range_low"/>
-                    <input type="text"   ng-model="price_secondary.range_high"/>
-                    <input type="text"   ng-model="price_secondary.pricing_1c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_2c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_3c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_4c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_5c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_6c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_7c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_8c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_9c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_10c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_11c"/>
-                    <input type="text"   ng-model="price_secondary.pricing_12c"/>
-                    
-
-                     <button ng-click="removeScreenSecondary($index)">Remove</button> 
-                </div>
-                     <button type="button" ng-click="addScreenSecondary()">add input</button>
-            </div>
-
-        </div>
-
-        <div role="tabpanel" class="tab-pane animated fadeIn" id="embroidery">
-            
-
-          <div class="form-group">
-            <label> Range Low<em class="text-muted"></em></label>
-                   <input type="text"   ng-model="embroswitch.range_low_1"/>
-                   <input type="text"   ng-model="embroswitch.range_low_2"/>
-                   <input type="text"   ng-model="embroswitch.range_low_3"/>
-                   <input type="text"   ng-model="embroswitch.range_low_4"/>
-                   <input type="text"   ng-model="embroswitch.range_low_5"/>
-                   <input type="text"   ng-model="embroswitch.range_low_6"/>
-                   <input type="text"   ng-model="embroswitch.range_low_7"/>
-                   <input type="text"   ng-model="embroswitch.range_low_8"/>
-                   <input type="text"   ng-model="embroswitch.range_low_9"/>
-                   <input type="text"   ng-model="embroswitch.range_low_10"/>
-                   <input type="text"   ng-model="embroswitch.range_low_11"/>
-                   <input type="text"   ng-model="embroswitch.range_low_12"/>
-                   <br />
-<label> Range High<em class="text-muted"></em></label>
-                   <input type="text"   ng-model="embroswitch.range_high_1"/>
-                   <input type="text"   ng-model="embroswitch.range_high_2"/>
-                   <input type="text"   ng-model="embroswitch.range_high_3"/>
-                   <input type="text"   ng-model="embroswitch.range_high_4"/>
-                   <input type="text"   ng-model="embroswitch.range_high_5"/>
-                   <input type="text"   ng-model="embroswitch.range_high_6"/>
-                   <input type="text"   ng-model="embroswitch.range_high_7"/>
-                   <input type="text"   ng-model="embroswitch.range_high_8"/>
-                   <input type="text"   ng-model="embroswitch.range_high_9"/>
-                   <input type="text"   ng-model="embroswitch.range_high_10"/>
-                   <input type="text"   ng-model="embroswitch.range_high_11"/>
-                   <input type="text"   ng-model="embroswitch.range_high_12"/>
-
-           </div>      
-
-
-
-
-
-
-             <div class="form-group">
-              
-                <div ng-repeat="price_embroidery in allEmbroidery">
-                    <input type="text"   ng-model="price_embroidery.range_low"/>
-                    <input type="text"   ng-model="price_embroidery.range_high"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_1c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_2c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_3c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_4c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_5c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_6c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_7c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_8c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_9c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_10c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_11c"/>
-                    <input type="text"   ng-model="price_embroidery.pricing_12c"/>
-                    
-
-                     <button ng-click="removeEmbroidery($index)">Remove</button> 
-                </div>
-                     <button type="button" ng-click="addEmbroidery()">add input</button>
-            </div>
-
-
-
-        </div>
-
-        <div role="tabpanel" class="tab-pane animated fadeIn" id="dtogarment">
-            
-            <div class="form-group">
-                  <label>Low<em class="text-muted"></em></label>
-                  <label>High<em class="text-muted"></em></label>
-                  <label>4*4 Light<em class="text-muted"></em></label>
-                  <label>4*4 Dark<em class="text-muted"></em></label>
-                  <label>6*6 Light<em class="text-muted"></em></label>
-                  <label>6*6 Dark<em class="text-muted"></em></label>
-                  <label>10*10 Light<em class="text-muted"></em></label>
-                  <label>10*10 Dark<em class="text-muted"></em></label>
-                  <label>12*12 Light<em class="text-muted"></em></label>
-                  <label>12*12 Dark<em class="text-muted"></em></label>
-                  <label><em class="text-muted"></em></label>
-                  <label><em class="text-muted"></em></label>
-                  <label><em class="text-muted"></em></label>
-                  <label><em class="text-muted"></em></label>
-                     
-              </div>
-
-              
-            <div class="form-group">
-              
-                <div ng-repeat="d_garment in allGarment">
-                    <input type="text"   ng-model="d_garment.range_low"/>
-                    <input type="text"   ng-model="d_garment.range_high"/>
-                    <input type="text"   ng-model="d_garment.pricing_1c"/>
-                    <input type="text"   ng-model="d_garment.pricing_2c"/>
-                    <input type="text"   ng-model="d_garment.pricing_3c"/>
-                    <input type="text"   ng-model="d_garment.pricing_4c"/>
-                    <input type="text"   ng-model="d_garment.pricing_5c"/>
-                    <input type="text"   ng-model="d_garment.pricing_6c"/>
-                    <input type="text"   ng-model="d_garment.pricing_7c"/>
-                    <input type="text"   ng-model="d_garment.pricing_8c"/>
-                    <input type="text"   ng-model="d_garment.pricing_9c"/>
-                    <input type="text"   ng-model="d_garment.pricing_10c"/>
-                    <input type="text"   ng-model="d_garment.pricing_11c"/>
-                    <input type="text"   ng-model="d_garment.pricing_12c"/>
-                    
-
-                     <button ng-click="removeGarment($index)">Remove</button> 
-                </div>
-                     <button type="button" ng-click="addGarment()">add input</button>
-            </div>
-
-        </div>
-
-        <div role="tabpanel" class="tab-pane animated fadeIn" id="garmentmarkup">
-            
-             <div class="form-group">
-                  <label>Low<em class="text-muted"></em></label>
-                  <label>High<em class="text-muted"></em></label>
-                  <label>Percentage<em class="text-muted"></em></label>
-                 
-                     
-              </div>
-
-              
-            <div class="form-group">
-              
-                <div ng-repeat="garment_mackup in allGarmentMackup">
-                    <input type="text"   ng-model="garment_mackup.range_low"/>
-                    <input type="text"   ng-model="garment_mackup.range_high"/>
-                    <input type="text"   ng-model="garment_mackup.percentage"/>
-                   
-                     <button ng-click="removeGarmentMackup($index)">Remove</button> 
-                </div>
-                     <button type="button" ng-click="addGarmentMackup()">add input</button>
-            </div>
-
-        </div>
-
       </div>
-            </div>
-
-            
-          </div>
-          
-        </div>
-
-        <footer class="panel-footer text-right">
-            <button ng-click="duplicate(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)" type="button"  class="btn btn-info">Duplicate Price Grid</button>&nbsp;
-            <button  type="submit" class="btn btn-info" ng-disabled="priceForm.$invalid">Submit</button>&nbsp;
-            <button ui-sref="setting.price" type="button"  class="btn btn-info">Cancel</button>&nbsp;
-          </footer>
-      </form>
-    </div>
-    
+      <footer class="panel-footer text-right">
+        <button ng-click="duplicate(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)" type="button"  class="btn btn-info">Duplicate Price Grid</button>
+        &nbsp;
+        <button  type="submit" class="btn btn-info" ng-disabled="priceForm.$invalid">Submit</button>
+        &nbsp;
+        <button ui-sref="setting.price" type="button"  class="btn btn-info">Cancel</button>
+        &nbsp; </footer>
+    </form>
   </div>
- 
+</div>

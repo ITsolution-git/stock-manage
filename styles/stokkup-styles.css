@@ -21,6 +21,9 @@
 .t-r {
 	text-align:right;
 }
+.t-a-c {
+	text-align: center;
+}
 /*---------- END ----------*/
 
 /*==========================================
@@ -258,6 +261,49 @@ nav ul.nav li:hover ul.nav-sub {
 #misc-view table td {
 	-webkit-transition: width 4s;	
     transition: width 4s;
+}
+/*---------- END ----------*/
+
+/*=====================================
+	SUPER ADMIN - Setting Price Grid
+=====================================*/
+
+.priceGrid .panel {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.priceGrid .tab-content .form-group label {
+	margin:15px 0 10px 0;
+}
+
+.priceGrid .tab-content ul.form-fields {
+	overflow: hidden;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.priceGrid .tab-content .form-group input {
+	width: 100%;
+}
+.priceGrid .tab-content ul.form-fields.chkBoxes li {
+	float: left;
+	width: auto;
+	margin-left: 15px;
+}
+.priceGrid .tab-content ul.form-fields.chkBoxes li:first-child {	
+	margin-left: 0;
+}
+.priceGrid .tab-content ul.form-fields.chkBoxes li md-checkbox:first-child {
+	margin-left: 0;
+}
+.priceGrid .tab-content .price_primary,
+.priceGrid .tab-content .price_secondary,
+.priceGrid .tab-content .price_embroidery,
+.priceGrid .tab-content .d_garment,
+.priceGrid .tab-content .garment_mackup {
+	clear: both;
+	overflow: hidden;
+	margin-bottom: 15px;
 }
 /*---------- END ----------*/
 
