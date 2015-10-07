@@ -283,7 +283,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                           $scope.EditeDistAddress= function (id) {
                             getDistAdressDetailbyId(id);
                             $scope.edit='edit';
-                            console.log('edit');
+                            //console.log('edit');
                             var modalInstanceEdit = $modal.open({
                               templateUrl: 'views/front/client/address.html',
                               scope : $scope,
@@ -295,7 +295,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                               $scope.selected = selectedItem;
                             }, function () {
                               
-                              $log.info('Modal dismissed at: ' + new Date());
+                              //$log.info('Modal dismissed at: ' + new Date());
                             });
                             $scope.ClosePopup = function (cancel)
                             {
@@ -332,7 +332,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                               $scope.selected = selectedItem;
 
                             }, function () {
-                              $log.info('Modal dismissed at: ' + new Date());
+                              //$log.info('Modal dismissed at: ' + new Date());
                             });
                             $scope.ClosePopup = function (cancel)
                             {
@@ -384,7 +384,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                               $scope.selected = selectedItem;
                             }, function () {
                               
-                              $log.info('Modal dismissed at: ' + new Date());
+                              //$log.info('Modal dismissed at: ' + new Date());
                             });
 
                              $scope.ClosePopup = function (cancel)

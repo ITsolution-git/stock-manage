@@ -99,8 +99,78 @@ $scope.openpopup = function () {
 
 
 app.controller('orderEditCtrl', ['$scope','$http','$location','$state','$stateParams','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$stateParams,$modal,AuthService,$log,AllConstant) {
-                          
+                  
+$http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
+              $scope.miscData = result.data.records;
+      });
+
+$scope.addOrder = function(){
+                            $scope.orderPositionAll.push({ position_id:'' ,description:'', placement_type:'', color_stitch_count:'', qnty:'',discharge_qnty:''
+                                                    ,speciality_qnty:'', foil_qnty:'', ink_charge_qnty:'', number_on_light_qnty:'',number_on_dark_qnty:''
+                                                  ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
+                          }
+
+
+
+
+$scope.removeOrder = function(index,id){
+
+  var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+                                if (permission == true) {
+  
+  if(angular.isUndefined(id)){
+     $scope.orderPositionAll.splice(index,1);
+  } else {
+
+ var order_data = {};
+order_data.table ='order_positions'
+order_data.cond ={id:id}
+$http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
      
+
+  });
+
+
+     $scope.orderPositionAll.splice(index,1);
+  }
+
+}
+   
+}
+
+
+$scope.addOrderLine = function(){
+                            $scope.orderLineAll.push({ size_group_id:'' ,product_id:'', qnty:'', size_1:'', qnty_1:'',size_2:''
+                                                    ,qnty_2:'', size_3:'', qnty_3:'', size_4:'',qnty_4:''
+                                                  ,size_5:'', qnty_5:'', size_6:'', qnty_6:'',size_7:'', qnty_7:'',markup:'',override:'',peritem:''});
+                          }
+
+
+$scope.removeOrderLine = function(index,id){
+
+  var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+                                if (permission == true) {
+  
+  if(angular.isUndefined(id)){
+     $scope.orderLineAll.splice(index,1);
+  } else {
+
+ var order_data = {};
+order_data.table ='order_orderlines'
+order_data.cond ={id:id}
+$http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+     
+
+  });
+
+
+     $scope.orderLineAll.splice(index,1);
+  }
+
+}
+   
+}
+
 
 
 if($stateParams.id && $stateParams.client_id) {
@@ -117,6 +187,8 @@ if($stateParams.id && $stateParams.client_id) {
                                      $scope.order = result.data.records[0];
                                      $scope.client_data = result.data.client_data;
                                      $scope.client_main_data = result.data.client_main_data;
+                                     $scope.orderPositionAll = result.data.order_position;
+                                     $scope.orderLineAll = result.data.order_line;
                                     
 
                                     
@@ -162,17 +234,19 @@ if($stateParams.id && $stateParams.client_id) {
 
           
 
-      var miscData = {};
-      miscData.table ='misc_type'
-      miscData.cond ={status:1,is_delete:1,type:'approval'}
-      $http.post('api/public/common/GetTableRecords',miscData).success(function(result) {
+
+
+     var productData = {};
+      productData.table ='products'
+      productData.cond ={status:1,is_delete:1}
+      $http.post('api/public/common/GetTableRecords',productData).success(function(result) {
           if(result.data.success == '1') 
           {
-              $scope.allMisc =result.data.records;
+              $scope.allProduct =result.data.records;
           } 
           else
           {
-              $scope.allMisc=[];
+              $scope.allProduct=[];
           }
         });
 
@@ -207,6 +281,100 @@ if($stateParams.id && $stateParams.client_id) {
                                  $state.go('order.list');
                               });
                           }
+
+
+                          $scope.savePositionData=function(postArray)
+                          {
+
+                           if(postArray.length != 0) {
+
+                            order_id = $stateParams.id
+                            client_id = $stateParams.client_id
+                           
+                           angular.forEach(postArray, function(value, key){
+                            
+                            if(angular.isUndefined(value.id)){
+
+                            var order_data_insert  = {};
+                             value.order_id = order_id;
+
+                             order_data_insert.data = value;
+                             // Address_data.data.client_id = $stateParams.id;
+                              order_data_insert.table ='order_positions'
+
+
+                              $http.post('api/public/common/InsertRecords',order_data_insert).success(function(result) {
+                               
+                               });
+                              
+
+                            } else {
+                               
+                                var order_data = {};
+                                order_data.table ='order_positions'
+                                order_data.data =value
+                                order_data.cond ={id:value.id}
+                                $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                                     
+
+                                  });
+                                }
+
+                            });
+
+
+                                $state.go('order.edit',{id: order_id,client_id:client_id},{reload:true});
+                                return false;
+
+                          }
+                        }
+
+
+
+                                     $scope.saveOrderLineData=function(postArray)
+                                    {
+
+                                     if(postArray.length != 0) {
+
+                                      order_id = $stateParams.id
+                                      client_id = $stateParams.client_id
+                                     
+                                     angular.forEach(postArray, function(value, key){
+                                      
+                                      if(angular.isUndefined(value.id)){
+
+                                      var order_data_insert  = {};
+                                       value.order_id = order_id;
+
+                                       order_data_insert.data = value;
+                                       // Address_data.data.client_id = $stateParams.id;
+                                        order_data_insert.table ='order_orderlines'
+
+
+                                        $http.post('api/public/common/InsertRecords',order_data_insert).success(function(result) {
+                                         
+                                         });
+                                        
+
+                                      } else {
+                                         
+                                          var order_data = {};
+                                          order_data.table ='order_orderlines'
+                                          order_data.data =value
+                                          order_data.cond ={id:value.id}
+                                          $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                                               
+
+                                            });
+                                          }
+
+                                      });
+
+                                          $state.go('order.edit',{id: order_id,client_id:client_id},{reload:true});
+                                          return false;
+
+                                    }
+                                  }       
 
 
 

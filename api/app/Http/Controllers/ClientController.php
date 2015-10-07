@@ -260,6 +260,96 @@ class ClientController extends Controller {
     	$data = array("success"=>1,"message"=>UPDATE_RECORD);
 		return response()->json(['data'=>$data]);
 	}
+/**
+   * Get Client notes.
+   * @return json data
+   */
+	public function GetNoteDetails($id)
+	{
+		$result = $this->client->GetNoteDetails($id);
+   	return $this->return_response($result);
+	}
 
+	/**
+   * Save Client notes.
+   * @return json data
+    */
+	public function SaveCleintNotes()
+	{
+		$post = Input::all();
+		$post['data']['created_date']=date('Y-m-d');
+ 
 	
-}
+		if(!empty($post['data']['client_id']) && !empty($post['data']['client_notes']))
+		{
+			$result = $this->client->SaveCleintNotes($post['data']);
+			$message = INSERT_RECORD;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS.", id";
+			$success = 0;
+		}
+		
+    	$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Delete Client note tab record.
+    * @params note_id
+    * @return json data
+    */
+	public function DeleteCleintNotes($id)
+	{
+		$result = $this->client->DeleteCleintNotes($id);
+		$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Get Client Details by ID
+    * @params client_id
+    * @return json data
+    */
+	public function GetClientDetailById($id)
+	{
+		$result = $this->client->GetClientDetailById($id);
+    	return $this->return_response($result);
+	}
+	/**
+    * Update Client Note tab record
+    * @params client note array
+    * @return json data
+    */
+	public function UpdateCleintNotes()
+	{
+		$post = Input::all();
+		$result = $this->client->UpdateCleintNotes($post['data'][0]);
+		$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		return response()->json(['data'=>$data]);
+	}
+	/**
+    * Save Distribution address
+    * @params Form array
+    * @return json data
+    */
+	public function SaveDistAddress()
+	{
+		$post = Input::all();
+		
+		if(!empty($post['data']['client_id']) && !empty($post['data']['address']))
+		{
+			$result = $this->client->SaveDistAddress($post);
+			$message = INSERT_RECORD;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS.", id";
+			$success = 0;
+		}
+		
+    	$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
+ } 

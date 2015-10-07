@@ -78,9 +78,9 @@ class OrderController extends Controller {
           $result = $this->order->orderDetail($data);
           
            if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data']);
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line']);
         } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data']);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line']);
         }
         
         return response()->json(["data" => $response]);
