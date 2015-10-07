@@ -103,9 +103,9 @@
                 <div class="form-group col-md-12 nopad-form">
                   <div ng-repeat="price_grid in allPriceGrid" ng-controller="MDCheckboxCtrl">
                   	<ul class="form-fields col-md-6">
-                    	<li class="col-md-4 nopad-left"><input type="text"   ng-model="price_grid.item" /></li>
-                   		<li class="col-md-4 nopad-left"><input type="text"   ng-model="price_grid.time" /></li>
-                    	<li class="col-md-4 nopad-left"><input type="text"   ng-model="price_grid.charge" /></li>
+                    	<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.item" /></li>
+                   		<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.time" /></li>
+                    	<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.charge" /></li>
                     </ul>
                     <ul class="form-fields col-md-6 nopad-left chkBoxes">
                     	<li><md-checkbox ng-model="price_grid.is_gps_distrib" >GPS Distrib</md-checkbox></li>
@@ -155,48 +155,48 @@
                   <div ng-repeat="price_primary in allScreenPrimary" class="price_primary">
                   	<div class="form-fields col-md-2 nopad-form">
                     	<div class="col-md-6 nopad-left">
-    	                    <input type="text" ng-model="price_primary.range_low"/>
+    	                    <input type="text" class="form-control" ng-model="price_primary.range_low"/>
                         </div>
                         <div class="col-md-6 nopad-left">
-	                        <input type="text" ng-model="price_primary.range_high"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.range_high"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-9 nopad-form">
                     	<div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_1c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_1c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-                        	<input type="text" ng-model="price_primary.pricing_2c"/>
+                        	<input type="text" class="form-control" ng-model="price_primary.pricing_2c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-                        	<input type="text" ng-model="price_primary.pricing_3c"/>
+                        	<input type="text" class="form-control" ng-model="price_primary.pricing_3c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-                        	<input type="text" ng-model="price_primary.pricing_4c"/>
+                        	<input type="text" class="form-control" ng-model="price_primary.pricing_4c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-                        	<input type="text" ng-model="price_primary.pricing_5c"/>
+                        	<input type="text" class="form-control" ng-model="price_primary.pricing_5c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_6c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_6c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_7c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_7c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_8c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_8c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_9c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_9c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_10c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_10c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_11c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_11c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_primary.pricing_12c"/>
+	                        <input type="text" class="form-control" ng-model="price_primary.pricing_12c"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-1 nopad-right">
@@ -247,48 +247,48 @@
                   <div ng-repeat="price_secondary in allScreenSecondary" class="price_secondary">
                   	<div class="form-fields col-md-2 nopad-form">
                     	<div class="col-md-6 nopad-left">
-		                    <input type="text" ng-model="price_secondary.range_low"/>
+		                    <input type="text" class="form-control" ng-model="price_secondary.range_low"/>
                         </div>
                         <div class="col-md-6 nopad-left">
-	    	                <input type="text" ng-model="price_secondary.range_high"/>
+	    	                <input type="text" class="form-control" ng-model="price_secondary.range_high"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-9 nopad-form">
                     	<div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_1c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_1c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-    	                    <input type="text" ng-model="price_secondary.pricing_2c"/>
+    	                    <input type="text" class="form-control" ng-model="price_secondary.pricing_2c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_3c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_3c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_4c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_4c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_5c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_5c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_6c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_6c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_7c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_7c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_8c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_8c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_9c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_9c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_10c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_10c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_11c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_11c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="price_secondary.pricing_12c"/>
+	                        <input type="text" class="form-control" ng-model="price_secondary.pricing_12c"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-1 nopad-right">
@@ -314,40 +314,40 @@
                       </div>
                       <div class="form-fields col-md-9 nopad-form">                      
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_low_1"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_low_1"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_low_2"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_low_2"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_low_3"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_low_3"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_4"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_4"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_5"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_5"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_6"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_6"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_7"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_7"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_8"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_8"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_9"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_9"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_10"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_10"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_low_11"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_11"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-form">
-                            <input type="text" ng-model="embroswitch.range_low_12"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_low_12"/>
                           </div>
                       </div>
                       <div class="form-fields col-md-1 nopad-form"></div>
@@ -361,40 +361,40 @@
                       
                       <div class="form-fields col-md-9 nopad-form">     
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_high_1"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_high_1"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">                      
-                            <input type="text" ng-model="embroswitch.range_high_2"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_high_2"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_high_3"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_high_3"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_high_4"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_high_4"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_high_5"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_high_5"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                            <input type="text" ng-model="embroswitch.range_high_6"/>
+                            <input type="text" class="form-control" ng-model="embroswitch.range_high_6"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_high_7"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_high_7"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_high_8"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_high_8"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_high_9"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_high_9"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_high_10"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_high_10"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-left">
-                              <input type="text" ng-model="embroswitch.range_high_11"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_high_11"/>
                           </div>
                           <div class="form-fields col-md-1 nopad-form">
-                              <input type="text"   ng-model="embroswitch.range_high_12"/>
+                              <input type="text" class="form-control" ng-model="embroswitch.range_high_12"/>
                           </div>
                       </div>
                       <div class="form-fields col-md-1 nopad-form"></div>
@@ -403,48 +403,48 @@
                   <div ng-repeat="price_embroidery in allEmbroidery" class="price_embroidery">
                   	<div class="form-fields col-md-2 nopad-form">
                     	<div class="form-fields col-md-6 nopad-left">     
-	                    	<input type="text" ng-model="price_embroidery.range_low"/>
+	                    	<input type="text" class="form-control" ng-model="price_embroidery.range_low"/>
                         </div>
                         <div class="form-fields col-md-6 nopad-left">     
-	                    	<input type="text" ng-model="price_embroidery.range_high"/>
+	                    	<input type="text" class="form-control" ng-model="price_embroidery.range_high"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-9 nopad-form">
                     	<div class="form-fields col-md-1 nopad-left">
-	                        <input type="text" ng-model="price_embroidery.pricing_1c"/>
+	                        <input type="text" class="form-control" ng-model="price_embroidery.pricing_1c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_2c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_2c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_3c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_3c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_4c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_4c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_5c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_5c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_6c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_6c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_7c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_7c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_8c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_8c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_9c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_9c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                       	 	<input type="text" ng-model="price_embroidery.pricing_10c"/>
+                       	 	<input type="text" class="form-control" ng-model="price_embroidery.pricing_10c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-left">
-                        	<input type="text" ng-model="price_embroidery.pricing_11c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_11c"/>
                         </div>
                         <div class="form-fields col-md-1 nopad-form">
-                        	<input type="text" ng-model="price_embroidery.pricing_12c"/>
+                        	<input type="text" class="form-control" ng-model="price_embroidery.pricing_12c"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-1 nopad-right">
@@ -491,48 +491,48 @@
                   <div ng-repeat="d_garment in allGarment" class="d_garment">
                   	<div class="form-fields col-md-2 nopad-form">
                     	<div class="col-md-6 nopad-left">
-		                    <input type="text" ng-model="d_garment.range_low"/>
+		                    <input type="text" class="form-control" ng-model="d_garment.range_low"/>
                         </div>
                         <div class="col-md-6 nopad-left">
-	    	                <input type="text" ng-model="d_garment.range_high"/>
+	    	                <input type="text" class="form-control" ng-model="d_garment.range_high"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-9 nopad-form">
 						<div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="d_garment.pricing_1c"/>
+	                        <input type="text" class="form-control" ng-model="d_garment.pricing_1c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="d_garment.pricing_2c"/>
+	                        <input type="text" class="form-control" ng-model="d_garment.pricing_2c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-                        	<input type="text" ng-model="d_garment.pricing_3c"/>
+                        	<input type="text" class="form-control" ng-model="d_garment.pricing_3c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="d_garment.pricing_4c"/>
+	                        <input type="text" class="form-control" ng-model="d_garment.pricing_4c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="d_garment.pricing_5c"/>
+	                        <input type="text" class="form-control" ng-model="d_garment.pricing_5c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="d_garment.pricing_6c"/>
+	                        <input type="text" class="form-control" ng-model="d_garment.pricing_6c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-                    	    <input type="text" ng-model="d_garment.pricing_7c"/>
+                    	    <input type="text" class="form-control" ng-model="d_garment.pricing_7c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-                	        <input type="text" ng-model="d_garment.pricing_8c"/>
+                	        <input type="text" class="form-control" ng-model="d_garment.pricing_8c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-            	            <input type="text" ng-model="d_garment.pricing_9c"/>
+            	            <input type="text" class="form-control" ng-model="d_garment.pricing_9c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-        	                <input type="text" ng-model="d_garment.pricing_10c"/>
+        	                <input type="text" class="form-control" ng-model="d_garment.pricing_10c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-    	                    <input type="text" ng-model="d_garment.pricing_11c"/>
+    	                    <input type="text" class="form-control" ng-model="d_garment.pricing_11c"/>
                         </div>
                         <div class="col-md-1 nopad-form">
-	                        <input type="text" ng-model="d_garment.pricing_12c"/>
+	                        <input type="text" class="form-control" ng-model="d_garment.pricing_12c"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-1 nopad-right">
@@ -568,15 +568,15 @@
                   <div ng-repeat="garment_mackup in allGarmentMackup" class="garment_mackup">
                   	<div class="form-fields col-md-2 nopad-form">
 	                    <div class="form-fields col-md-6 nopad-left">
-    	                	<input type="text" ng-model="garment_mackup.range_low"/>
+    	                	<input type="text" class="form-control" ng-model="garment_mackup.range_low"/>
                         </div>
                         <div class="form-fields col-md-6 nopad-left">
-	                   	 	<input type="text" ng-model="garment_mackup.range_high"/>
+	                   	 	<input type="text" class="form-control" ng-model="garment_mackup.range_high"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-9 nopad-form">
                     	<div class="form-fields col-md-1 nopad-form">
-	                    	<input type="text" ng-model="garment_mackup.percentage"/>
+	                    	<input type="text" class="form-control" ng-model="garment_mackup.percentage"/>
                         </div>
                     </div>
                     <div class="form-fields col-md-1 nopad-right">
