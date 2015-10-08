@@ -88,6 +88,83 @@ class OrderController extends Controller {
     }
 
 
+   /**
+   * Get Order notes.
+   * @return json data
+   */
+    public function getOrderNoteDetails($id)
+    {
+
+        $result = $this->order->getOrderNoteDetails($id);
+        return $this->return_response($result);
+        
+    }
+
+    /**
+    * Get Client Details by ID
+    * @params order_id
+    * @return json data
+    */
+    public function getOrderDetailById($id)
+    {
+        $result = $this->order->getOrderDetailById($id);
+        return $this->return_response($result);
+    }
+
+
+    /**
+    * Update Order Note tab record
+    * @params order note array
+    * @return json data
+    */
+    public function updateOrderNotes()
+    {
+        $post = Input::all();
+        $result = $this->order->updateOrderNotes($post['data'][0]);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+    /**
+    * Delete order note tab record.
+    * @params note_id
+    * @return json data
+    */
+    public function deleteOrderNotes($id)
+    {
+        $result = $this->order->deleteOrderNotes($id);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+
+
+   /**
+   * Save Order notes.
+   * @return json data
+    */
+    public function saveOrderNotes()
+    {
+        $post = Input::all();
+        $post['data']['created_date']=date('Y-m-d');
+ 
+    
+        if(!empty($post['data']['order_id']) && !empty($post['data']['order_notes']))
+        {
+            $result = $this->order->saveOrderNotes($post['data']);
+            $message = INSERT_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS.", id";
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
 
 
 	/**

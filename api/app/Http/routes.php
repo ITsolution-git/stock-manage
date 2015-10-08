@@ -136,4 +136,10 @@ Route::post('order/deleteOrder', 'OrderController@deleteOrder');
 Route::post('order/orderAdd', 'OrderController@add');
 Route::post('order/orderEdit', 'OrderController@edit');
 Route::post('order/orderDetail', 'OrderController@orderDetail');
+Route::get('order/getOrderNoteDetails/{id}','OrderController@getOrderNoteDetails');
+Route::get('order/getOrderDetailById/{id}', 'OrderController@getOrderDetailById');
+Route::post('order/updateOrderNotes', 'OrderController@updateOrderNotes');
+Route::post('order/saveOrderNotes', 'OrderController@saveOrderNotes');
+Route::get('order/deleteOrderNotes/{id}', 'OrderController@deleteOrderNotes');
+
 
