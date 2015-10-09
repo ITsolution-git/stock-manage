@@ -15,10 +15,11 @@ class Order extends Model {
 	$whereConditions = ['order.is_delete' => '1'];
         $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_date','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
-                      'order.status','client.client_company'];
+                      'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
 
         $orderData = DB::table('order as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
+                         ->leftJoin('misc_type as misc_type', 'order.f_approval', '=', 'misc_type.id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
@@ -46,6 +47,10 @@ class Order extends Model {
         $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
 
 
+        $whereOrderLineConditions = ['order_id' => $data['id']];
+        $orderLineData = DB::table('order_orderlines')->where($whereOrderLineConditions)->get();
+
+
 
        
 
@@ -56,21 +61,6 @@ class Order extends Model {
         $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
 
 
-/*
-
-        $whereTimeoffConditions = ['staff_id' => $staffId,'time_off.is_delete' => '1','time_off.status' => '1','type.status' => '1','type.type' => 'timeoff'];
-        $listArrayTimeoff = ['time_off.classification_id','time_off.id','time_off.staff_id','time_off.timerecord','time_off.applied_hours','time_off.date_begin',
-                      'time_off.date_end', 'time_off.status','type.name'];
-
-         $timeoffData = DB::table('time_off as time_off')
-                         ->Join('type as type', 'type.id', '=', 'time_off.classification_id')
-                         ->select($listArrayTimeoff)
-                         ->where($whereTimeoffConditions)
-                         ->get();
-
-
-
-*/
 
         $combine_array = array();
 
@@ -78,10 +68,95 @@ class Order extends Model {
         $combine_array['order_position'] = $orderPositionData;
         $combine_array['client_data'] = $clientData;
         $combine_array['client_main_data'] = $clientMainData;
+        $combine_array['order_line'] = $orderLineData;
        
 
         return $combine_array;
     }
+
+
+/**
+* Order Note Details           
+* @access public getOrderNoteDetails
+* @param  int $orderId
+* @return array $result
+*/ 
+
+     public function getOrderNoteDetails($id)
+   {
+       
+        $whereConditions = ['on.order_id' => '1','on.note_status' => '1'];
+        $listArray = ['on.order_notes','on.note_id','on.created_date','u.user_name'];
+
+        $orderNoteData = DB::table('order_notes as on')
+                         ->Join('users as u', 'u.id', '=', 'on.user_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+        return $orderNoteData;  
+
+   }
+
+/**
+* Order Note Details           
+* @access public getOrderDetailById
+* @param  int $orderId
+* @return array $result
+*/
+
+
+   public function getOrderDetailById($id)
+   {
+        $result = DB::table('order_notes')->where('note_id','=',$id)->get();
+        return $result;
+   }
+
+/**
+* Insert Order Note           
+* @access public saveOrderNotes
+* @param  array $post
+* @return array $result
+*/
+
+
+public function saveOrderNotes($post)
+   {
+        $result = DB::table('order_notes')->insert($post);
+        return $result;
+   }
+
+
+/**
+* Delete Order Note           
+* @access public deleteOrderNotes
+* @param  array $post
+* @return array $result
+*/
+    public function  deleteOrderNotes($id)
+   {
+        $result = DB::table('order_notes')
+                        ->where('note_id','=',$id)
+                        ->update(array('note_status'=>'0'));
+        return $result;
+   }
+
+
+/**
+* Update Order Note           
+* @access public updateOrderNotes
+* @param  array $post
+* @return array $result
+*/
+
+
+    public function updateOrderNotes($post)
+   {
+            $result = DB::table('order_notes')
+                        ->where('note_id','=',$post['note_id'])
+                        ->update(array('order_notes'=>$post['order_notes']));
+        return $result;
+   }
+
 
 
     public function deleteOrder($id)

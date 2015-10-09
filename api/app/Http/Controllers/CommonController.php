@@ -101,6 +101,14 @@ class CommonController extends Controller {
         return $this->return_response($result);
     }
 
+     public function getAllMiscDataWithoutBlank()
+    {
+        $result = $this->common->getAllMiscDataWithoutBlank();
+        return $this->return_response($result);
+    }
+
+    
+
 
      public function GetMicType($type)
      {

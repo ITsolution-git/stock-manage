@@ -93,6 +93,7 @@ Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
 Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
+Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
 
@@ -135,4 +136,10 @@ Route::post('order/deleteOrder', 'OrderController@deleteOrder');
 Route::post('order/orderAdd', 'OrderController@add');
 Route::post('order/orderEdit', 'OrderController@edit');
 Route::post('order/orderDetail', 'OrderController@orderDetail');
+Route::get('order/getOrderNoteDetails/{id}','OrderController@getOrderNoteDetails');
+Route::get('order/getOrderDetailById/{id}', 'OrderController@getOrderDetailById');
+Route::post('order/updateOrderNotes', 'OrderController@updateOrderNotes');
+Route::post('order/saveOrderNotes', 'OrderController@saveOrderNotes');
+Route::get('order/deleteOrderNotes/{id}', 'OrderController@deleteOrderNotes');
+
 
