@@ -23,7 +23,7 @@
                 <div class="col-md-3 m-b">
                <label>Company <em class="text-muted"></em></label>
 
-                  <select  ng-model="order.client_id"  class="form-control">
+                  <select  ng-model="order.client_id"  class="form-control" required>
                   <option ng-selected="order.client_id==data.client_id" ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
                 </select>
                 </div>
@@ -91,14 +91,14 @@
                 
                 <div class="col-md-2 m-b">
                 <label>Expediter<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-maxlength="255" name="cs_expediter"  ng-model="order.expediter"  required>
+                  <input type="text" class="form-control" ng-maxlength="255" name="cs_expediter"  ng-model="order.expediter">
                   <br>
                   <span style="color:#f44336" ng-show="orderAddForm.cs_expediter.$error.maxlength">Please enter Name less then 255 characters.</span>
                 </div>
 
                 <div class="col-md-2 m-b">
                <label>Customer PO<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-maxlength="255" name="cs_customer_po"  ng-model="order.customer_po_id"  required>
+                  <input type="text" class="form-control" ng-maxlength="255" name="cs_customer_po"  ng-model="order.customer_po_id">
                   <br>
                   <span style="color:#f44336" ng-show="orderAddForm.cs_customer_po.$error.maxlength">Please enter Name less then 255 characters.</span>
                 </div>
@@ -211,6 +211,9 @@
 
 
 
+
+
+
  <!-- ORDER LINES TAB START -->
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
                 <div class="form-group col-md-12">
@@ -271,6 +274,59 @@
                 </div>
                 </div>
  <!-- ORDER LINES TAB END -->
+
+
+
+ <!-- Notes TAB START -->
+                <div role="tabpanel" class="tab-pane  animated fadeIn" id="tab4">
+                
+                  <ul class="nav nav-tabs input-group col-sm-12">
+                  <li class="active"> <a href data-toggle="tab" data-target="#tab_notes">Notes</a> </li>
+                  <li> <a href data-toggle="tab" data-target="#tab_tasks">Tasks</a> </li>
+                  
+                </ul>
+                <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                  <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab_notes">
+                    <div class="form-group col-md-12 nopad-form tabTitle m-b">
+                     
+                      <div class="col-md-2 nopad-left">Created</div>
+                      <div class="col-md-6 nopad-left">Note</div>
+                      <div class="col-md-1"></div>
+                      <div class="col-md-1"></div>
+                    </div>
+                    <div ng-repeat="order_note in allordernotes" class="col-md-12 nopad-form">                      
+                      <div class="form-group col-md-12 nopad-form m-b">
+                        
+                        <div class="col-md-2 nopad-left">
+                          <input type="text" class="form-control" disabled="" ng-model="order_note.created_date">
+                        </div>
+                        <div class="col-md-6 nopad-left">
+                          <input type="text" class="form-control" ng-model="order_note.order_notes">
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                          <button type="button" ng-click="editOrderPopup(order_note.note_id)" class="btn btn-default addButton">
+                          <i class="fa fa-edit"></i>
+                          </button>
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                          <button type="button" ng-click="removeordernotes($index,order_note.note_id)" class="btn btn-default addButton">
+                          <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>                      
+                    </div>  
+                    <div class="col-md-12 nopad-form m-b">
+                        <button type="button" ng-click="openOrderPopup('order_note.html')" class="btn btn-default addButton">
+                          <i class="fa fa-plus"></i>
+                        </button>
+                      </div>                 
+                    &nbsp; 
+                    </div>
+                  
+                </div>
+
+                </div>
+ <!-- Notes TAB END -->
 
  
 

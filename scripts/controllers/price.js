@@ -210,6 +210,8 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                             combine_array_data.embroswitch = embroswitch;
                             combine_array_data.allEmbroidery = allEmbroidery;
 
+                            
+
                             var permission = confirm("Are you sure you want to duplicate this record ?");
 
                             if (permission == true) {

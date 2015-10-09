@@ -21,7 +21,6 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
                                       }
       } // DELETE ORDER FINISH
 
-$scope.items = ['item1', 'item2', 'item3'];
 
 var companyData = {};
       companyData.table ='client'
@@ -98,8 +97,21 @@ $scope.openpopup = function () {
 }]);
 
 
-app.controller('orderEditCtrl', ['$scope','$http','$location','$state','$stateParams','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$stateParams,$modal,AuthService,$log,AllConstant) {
+app.controller('orderEditCtrl', ['$scope','$http','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$http,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
                   
+
+                          $scope.modalInstanceEdit  ='';
+
+                         
+                          $scope.CurrentUserId =  sessionService.get('user_id');
+
+
+                          $scope.CurrentController=$state.current.controller;
+                         
+                                      var order_id = $stateParams.id
+                                      var client_id = $stateParams.client_id
+
+
 $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
               $scope.miscData = result.data.records;
       });
@@ -336,8 +348,7 @@ if($stateParams.id && $stateParams.client_id) {
 
                                      if(postArray.length != 0) {
 
-                                      order_id = $stateParams.id
-                                      client_id = $stateParams.client_id
+                                     
                                      
                                      angular.forEach(postArray, function(value, key){
                                       
@@ -375,6 +386,138 @@ if($stateParams.id && $stateParams.client_id) {
 
                                     }
                                   }       
+
+
+
+                            
+                          $scope.openOrderPopup = function (page) {
+                            $scope.edit='add';
+                            var modalInstance = $modal.open({
+                              templateUrl: 'views/front/order/'+page,
+                              scope : $scope,
+                              
+                            });
+
+                            modalInstance.result.then(function (selectedItem) {
+                              $scope.selected = selectedItem;
+
+                            }, function () {
+                              //$log.info('Modal dismissed at: ' + new Date());
+                            });
+                            $scope.closePopup = function (cancel)
+                            {
+                               modalInstance.dismiss('cancel');
+                            };
+                            $scope.saveNotes=function(saveNoteDetails)
+                              {
+                                  var Note_data = {};
+                                  Note_data.data = saveNoteDetails;
+                                  Note_data.data.order_id = $stateParams.id;
+                                  Note_data.data.user_id = $scope.CurrentUserId;
+                                  Note_data.data.user_id = '1';
+                                  
+                                  $http.post('api/public/order/saveOrderNotes',Note_data).success(function(Listdata) {
+                                        getNotesDetail(order_id);
+                                  });
+                                  modalInstance.dismiss('cancel');
+                              };
+                          
+
+                          };
+
+                              
+
+
+                           // **************** NOTES TAB CODE END  ****************
+                          
+                           getNotesDetail(order_id);
+                           function getNotesDetail(order_id)
+                           {
+                                $http.get('api/public/order/getOrderNoteDetails/'+order_id).success(function(result, status, headers, config) 
+                                {
+                                    if(result.data.success == '1') 
+                                    {
+                                        $scope.allordernotes =result.data.records;
+                                    } 
+                                    else
+                                    {
+                                        $scope.allordernotes=[];
+                                    }
+                                    
+                                });
+                            }
+                            function getOrderDetailById(id)
+                            {
+                               $http.get('api/public/order/getOrderDetailById/'+id).success(function(result) {
+                                    
+                                    if(result.data.success == '1') 
+                                    {
+                                      $scope.thisorderNote =result.data.records;
+
+                                    }
+                                    else
+                                    {
+                                      $scope.thisorderNote=[];
+                                    }
+                              });
+                            }
+
+                            $scope.removeordernotes = function(index,id){
+                              $http.get('api/public/order/deleteOrderNotes/'+id).success(function(Listdata) {
+                                //getNotesDetail(order_id);
+                              });
+                              $scope.allordernotes.splice(index,1);
+                          }
+ 
+
+                           $scope.Editnotes=function(NoteDetails)
+                          {
+                              var Note_data = {};
+                              //console.log(Note_data); return false;
+                              Note_data.data = NoteDetails;
+                              Note_data.note_id = NoteDetails;
+                              $http.post('api/public/client/EditCleintNotes',Note_data).success(function(Listdata) {
+                                    //getNotesDetail(order_id );
+                              });
+                          };
+
+
+
+                          $scope.editOrderPopup = function (id) {
+                            getOrderDetailById(id);
+                            $scope.edit='edit';
+                            //console.log($scope);
+                            var modalInstanceEdit = $modal.open({
+                              templateUrl: 'views/front/order/order_note.html',
+                              scope : $scope,
+                            });
+
+                            modalInstanceEdit.result.then(function (selectedItem) {
+                              $scope.selected = selectedItem;
+                            }, function () {
+                              
+                              //$log.info('Modal dismissed at: ' + new Date());
+                            });
+
+                             $scope.closePopup = function (cancel)
+                            {
+                               modalInstanceEdit.dismiss('cancel');
+                            };
+                             $scope.updateNotes=function(updateNote)
+                            {
+                                var updateNoteData = {};
+                                //console.log(Note_data); return false;
+                                updateNoteData.data = updateNote;
+                                $http.post('api/public/order/updateOrderNotes',updateNoteData).success(function(Listdata) {
+                                      getNotesDetail(order_id );
+                                });
+                                modalInstanceEdit.dismiss('cancel');
+                            };
+                          };
+                       
+                          
+
+  // **************** NOTES TAB CODE END  ****************
 
 
 
