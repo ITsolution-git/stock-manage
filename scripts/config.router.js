@@ -51,6 +51,19 @@ angular.module('app')
                             },
                        },
             })
+
+
+            .state('app.home', {
+              url: '/home',
+              controller: 'dasboardCtrl',
+              templateUrl: 'views/pages/home.html',
+              data : { title: 'Home', folded: true }, 
+              resolve: { 
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       },
+            })
            
           
             
