@@ -5,60 +5,62 @@
       <div class="panel panel-default">
         <input type="hidden" ng-model="staff.id">
         <div class="panel-body">
-          <div class="col-sm-6 m-b  panel panel-default">
-            <div class="col-sm-12 m-b"></div>
-            <div class="form-group col-sm-8 m-b">
-              <div class="col-sm-12 m-b">
-                <label>Company <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
+          <div class="col-sm-6 m-b panel nopad-left">            
+            <div class="col-md-12 nopad-form">
+              <div class="form-group col-sm-8 m-b nopad-left">
+                <div class="col-sm-12 m-b nopad-left">
+                  <label>Company <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="main.client_company"  >
+                </div>
+                <div class="col-md-6 m-b nopad-left">
+                  <label>Main contact <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="maincompcontact.first_name"  >
+                </div>
+                <div class="col-md-6 m-b nopad-left">
+                  <label>Billing Email <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="main.billing_email"  >
+                </div>
+                <div class="col-md-6 m-b nopad-left">
+                  <label>Main Contact Phone <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
+                </div>
+                <div class=" col-md-6 m-b nopad-left">
+                  <label>company Phone <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="main.company_phone" >
+                </div>
+                <div class="col-md-6 m-b nopad-left">
+                  <label>Contact's Email <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="maincompcontact.email" >
+                </div>
+                <div class=" col-md-6 m-b nopad-left">
+                  <label>Company URL <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="main.salesweb" >
+                </div>
+                <div class="col-md-6 m-b nopad-left">
+                  <label>Type <em class="text-muted"></em></label>
+                  <select class="form-control" ng-model="main.client_type">
+                    <option value="">Select Type</option>
+                    <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
+                  </select>
+                </div>
+                <div class=" col-md-6 nopad-left">
+                  <label>Desposition <em class="text-muted"></em></label>
+                  <select class="form-control" ng-model="main.client_desposition">
+                    <option value="">Select Type</option>
+                    <option ng-repeat="item in Arrdisposition" value="{{item.id}}"  ng-selected="{{main.client_desposition==item.id}}">{{item.value}}</option>
+                  </select>
+                </div>
               </div>
-              <div class="col-md-6 m-b">
-                <label>Main contact <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="maincompcontact.first_name"  >
+              <div class="form-group col-sm-4 m-b nopad-right">
+                <label>LOGO <em class="text-muted"></em></label>
+                <div class="form-group col-sm-12 m-b panel panel-default" style="height:300px;"> </div>
               </div>
-              <div class="col-md-6 m-b">
-                <label>Billing Email <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.billing_email"  >
-              </div>
-              <div class="col-md-6 m-b">
-                <label>Main Contact Phone <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
-              </div>
-              <div class=" col-md-6 m-b">
-                <label>company Phone <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.company_phone" >
-              </div>
-              <div class="col-md-6 m-b">
-                <label>Contact's Email <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="maincompcontact.email" >
-              </div>
-              <div class=" col-md-6 m-b">
-                <label>Company URL <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.salesweb" >
-              </div>
-              <div class="col-md-6 m-b">
-                <label>Type <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_type">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
-                </select>
-              </div>
-              <div class=" col-md-6">
-                <label>Desposition <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_desposition">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in Arrdisposition" value="{{item.id}}"  ng-selected="{{main.client_desposition==item.id}}">{{item.value}}</option>
-                </select>
-              </div>
-              <div class="input-group col-sm-5 m-b"> <br>
+              <div class="input-group col-sm-12 m-b form-buttons">
                 <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
                 &nbsp;
                 <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>
-                &nbsp; </div>
-            </div>
-            <div class="form-group col-sm-4 m-b ">
-              <label>LOGO <em class="text-muted"></em></label>
-              <div class="form-group col-sm-12 m-b panel panel-default" style="height:300px;"> </div>
+                &nbsp; 
+              </div>
             </div>
             <ul class="nav nav-tabs input-group col-sm-12">
               <li class="active"> <a href data-toggle="tab" data-target="#tab1">contact</a> </li>
@@ -458,8 +460,6 @@
               <div role="tabpanel" class="tab-pane animated fadeIn" id="tab17">Depends Art</div>
             </div>
           </div>
-          <div>&nbsp;</div>
-          <div class="form-group col-sm-12 m-b"></div>
           <!-- RIGHT SIDE FORM -->
         </div>
       </div>

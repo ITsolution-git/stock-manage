@@ -24,6 +24,14 @@
 .t-a-c {
 	text-align: center;
 }
+
+.stokkupForm .form-buttons {
+	text-align: right;
+}
+.stokkupForm .panel-body .panel {
+	box-shadow: none;
+	margin: 0;
+}
 /*---------- END ----------*/
 
 /*==========================================
@@ -170,6 +178,7 @@ nav ul.nav li:hover ul.nav-sub {
 	.stokkupForm .tab-content {
 		overflow:hidden;
 		min-height:350px;
+		margin-bottom: 0;
 	}
 	.stokkupForm .tab-content .form-group .timeOffData {		
 		margin:0;

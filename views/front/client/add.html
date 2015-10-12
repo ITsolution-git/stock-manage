@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-sm-12">
 
-      <form name="clientAddForm" class="form-validation" >
+      <form name="clientAddForm" class="form-validation stokkupForm" >
         
-        <div class="panel panel-default col-sm-6 m-b">
+        <div class="panel panel-default col-sm-6 m-b nopad-form">
           <div class="panel-body">
             <div class="form-group ">
               
-              <div class="panel-heading bg-white">
+              <div class="panel-heading bg-white nopad-left">
                 <h4>Add Client</h4>
               </div>
               <div class="input-group col-sm-12 m-b">
@@ -17,7 +17,7 @@
                   <br>
                   <span style="color:#f44336" ng-show="clientAddForm.client_company.$error.maxlength">Please enter Name less then 255 characters.</span>
               </div>
-              <div class="input-group col-sm-6 m-b">
+              <div class="input-group col-sm-12 m-b">
                   <label>Type <em class="text-muted"></em></label>
                   <select class="form-control" name="client_companytype" data-ng-model="client.client_companytype"  required>
                     <option ng-repeat="item in Typelist.records" value="{{item.id}}">{{item.name}}</option>
@@ -25,8 +25,8 @@
                   </select>
               </div>
 
-              <div class="col-sm-6 m-b">
-                    <div class="panel-heading bg-white">
+              <div class="col-sm-6 m-b nopad-left">
+                    <div class="panel-heading bg-white nopad-left">
                       <h4 >Main Contact</h4>
                     </div>
                     <div class="m-b">
@@ -51,8 +51,8 @@
                     </div>
               </div>
 
-              <div class="col-sm-6 m-b">
-                    <div class="panel-heading bg-white">
+              <div class="col-sm-6 m-b nopad-left">
+                    <div class="panel-heading bg-white nopad-left">
                       <h4 >Main Address</h4>
                     </div>
                      <div class=" m-b">
@@ -68,12 +68,12 @@
                         <label>city <em class="text-muted"></em></label>
                         <input type="text" class="form-control" ng-model="client.add.city" required>
                     </div>
-                    <div class=" m-b col-md-6">
+                    <div class=" m-b col-md-6 nopad-left">
                         <label>State <em class="text-muted"></em></label>
                         <input type="text" class="form-control" ng-pattern="/^[a-zA-Z]{1,4}$/" name="state" ng-model="client.add.state" required>
                         <span style="color:#f44336" ng-show="clientAddForm.state.$error.pattern">Please enter short state name.</span>
                     </div>
-                    <div class=" m-b col-md-6">
+                    <div class=" m-b col-md-6 nopad-right">
                         <label>Zip <em class="text-muted"></em></label>
                         <input type="text" class="form-control" ng-model="client.add.postal_code" required>
                     </div>
