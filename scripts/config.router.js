@@ -569,28 +569,28 @@ angular.module('app')
               url: '/po/:id',
               templateUrl: 'views/front/purchase/po.html',
               data : { title: 'Purchase Orders' },
-             controller: 'PurchaseListCtrl',
+             controller: 'PurchasePOCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
             .state('purchase.sg', {
               url: '/sg/:id',
               templateUrl: 'views/front/purchase/sg.html',
               data : { title: 'Supplied Garments' },
-             controller: 'PurchaseListCtrl',
+             controller: 'PurchaseSGCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
             .state('purchase.ce', {
               url: '/ce/:id',
               templateUrl: 'views/front/purchase/ce.html',
               data : { title: 'Contract Embrodiery' },
-             controller: 'PurchaseListCtrl',
+             controller: 'PurchaseCECtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
             .state('purchase.cp', {
               url: '/cp/:id',
               templateUrl: 'views/front/purchase/cp.html',
               data : { title: 'Contract Printing' },
-             controller: 'PurchaseListCtrl',
+             controller: 'PurchaseCPCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
 

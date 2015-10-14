@@ -1,16 +1,25 @@
 
 <div class="row">
-  <div class="col-sm-12">
-    <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
-      <div class="panel panel-default">
-        <div class="panel-body">
-        <div class="input-group col-sm-5 m-b"> <br>
+<div class="col-sm-12 m-b"> <br>
                 <button  type="button" class="btn btn-info"  ui-sref="purchase.po">Cultural PO</button>
                 &nbsp;
                 <button  type="button" ui-sref="purchase.sg" class="btn btn-info">Supplied Garments</button>
                 <button  type="button" ui-sref="purchase.cp" class="btn btn-info">Contract Prints</button>
                 <button  type="button" ui-sref="purchase.ce" class="btn btn-info">Contract Embrodiery</button>
                 &nbsp; </div>
+
+    <div class="form-group col-sm-12 m-b">
+        <ul class="nav nav-tabs input-group col-sm-12">
+          <li class="active"> <a href data-toggle="tab" data-target="#tab01">Webportal</a> </li>
+          <li> <a href data-toggle="tab" data-target="#tab02">Unassigned</a> </li>
+        </ul>
+    </div>
+  <div class="tab-pane active animated fadeIn" id="tab01">
+    <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
+      <div class="panel panel-default">
+
+        <div class="panel-body">
+       
             <div class="col-sm-12 m-b">
               <div class="col-sm-2 m-b">
                 <label>Vendor <em class="text-muted"></em></label>
@@ -71,17 +80,11 @@
               </div>
               <div class="col-md-2 m-b">
                 <label>Vendor SKU <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_type">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
-                </select>
+                <input type="text" class="form-control" ng-model="main.salesweb" >
               </div>
               <div class=" col-md-2">
                 <label>Line Total <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_desposition">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in Arrdisposition" value="{{item.id}}"  ng-selected="{{main.client_desposition==item.id}}">{{item.value}}</option>
-                </select>
+                <input type="text" class="form-control" ng-model="main.salesweb" >
               </div>
               <!-- <div class="input-group col-sm-5 m-b"> <br>
                 <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
