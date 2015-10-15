@@ -523,6 +523,14 @@ angular.module('app')
                        }
             })
 
+            .state('setting.placement', {
+              url: '/placement',
+              templateUrl: 'views/setting/placement.html',
+              data : { title: 'Misc' },
+              controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
+            })
+
             /*.state('setting.priceadd', {
               url: '/add',
                templateUrl: 'views/setting/price-add.html',
