@@ -213,40 +213,6 @@ class SettingController extends Controller {
 
     }
 
-/**
-* Placement Update data       
-* @access public placementSave
-* @param  array $data
-* @return json data
-*/
-    public function placementSave() {
-          $data = Input::all();
-          $result = $this->price->placementSave($data);
-         
-          if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
-        } 
-        
-        return response()->json(["data" => $response]);
-    }
-/**
-* Placement Insert data       
-* @access public placementInsert
-* @param  array $data
-* @return json data
-*/
-    public function placementInsert() {
-          $data = Input::all();
-          $result = $this->price->placementInsert($data);
-         
-          if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
-        } 
-        
-        return response()->json(["data" => $response]);
-    }
-
-
 
 /**
 * Placement Update data       
