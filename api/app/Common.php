@@ -231,10 +231,6 @@ class Common extends Model {
 
     public function getAllPlacementData() {
         
-        $listArray = ['placement.misc_id','placement.misc_value','placement.id','misc_type.value as position'];
-
-    public function getAllPlacementData() {
-        
 
         $listArray = ['placement.misc_id','placement.misc_value','placement.id','misc_type.value as position'];
 
