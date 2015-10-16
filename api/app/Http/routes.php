@@ -98,6 +98,10 @@ Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
+Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
+Route::get('common/getMiscData', 'CommonController@getMiscData');
+
+
 
 Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
 Route::get('common/getMiscData', 'CommonController@getMiscData');

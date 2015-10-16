@@ -223,15 +223,21 @@ class Common extends Model {
         return $result;
     }
 
-
-      /**
+ /**
 * Get All Placement data
 * @access public getAllPlacementData
 * @return array $Misc
 */
+
     public function getAllPlacementData() {
         
         $listArray = ['placement.misc_id','placement.misc_value','placement.id','misc_type.value as position'];
+
+    public function getAllPlacementData() {
+        
+
+        $listArray = ['placement.misc_id','placement.misc_value','placement.id','misc_type.value as position'];
+
         $wherePlacementConditions = ['placement.status' => '1','placement.is_delete' => '1'];
         $placementData = DB::table('placement')
         ->leftJoin('misc_type as misc_type', 'placement.misc_id', '=', 'misc_type.id')
@@ -239,11 +245,13 @@ class Common extends Model {
         ->where($wherePlacementConditions)->get();          
         return $placementData;
     }
+
       /**
 * Get All Misc type
 * @access public getMiscData
 * @return array $Misc
 */
+
     public function getMiscData() {
         
         $whereMiscConditions = ['status' => '1','is_delete' => '1','type'=>'position'];

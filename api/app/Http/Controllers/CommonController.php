@@ -107,6 +107,7 @@ class CommonController extends Controller {
         return $this->return_response($result);
     }
 
+
     
 
 
@@ -247,6 +248,7 @@ class CommonController extends Controller {
         $result = $this->common->getAllPlacementData();
         return $this->return_response($result);
     }
+
      public function getMiscData()
     {
         $result = $this->common->getMiscData();
