@@ -579,11 +579,39 @@ angular.module('app')
                   }
                 }
               })
-              .state('purchase.list', {
+            .state('purchase.list', {
               url: '/list/:id',
               templateUrl: 'views/front/purchase/index.html',
               data : { title: 'Purchase Listing' },
              controller: 'PurchaseListCtrl',
+              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+            })
+            .state('purchase.po', {
+              url: '/po/:id',
+              templateUrl: 'views/front/purchase/po.html',
+              data : { title: 'Purchase Orders' },
+             controller: 'PurchasePOCtrl',
+              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+            })
+            .state('purchase.sg', {
+              url: '/sg/:id',
+              templateUrl: 'views/front/purchase/sg.html',
+              data : { title: 'Supplied Garments' },
+             controller: 'PurchaseSGCtrl',
+              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+            })
+            .state('purchase.ce', {
+              url: '/ce/:id',
+              templateUrl: 'views/front/purchase/ce.html',
+              data : { title: 'Contract Embrodiery' },
+             controller: 'PurchaseCECtrl',
+              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+            })
+            .state('purchase.cp', {
+              url: '/cp/:id',
+              templateUrl: 'views/front/purchase/cp.html',
+              data : { title: 'Contract Printing' },
+             controller: 'PurchaseCPCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
 
