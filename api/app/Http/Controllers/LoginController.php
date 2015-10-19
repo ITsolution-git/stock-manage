@@ -59,6 +59,7 @@ class LoginController extends Controller {
                     Session::put('role_title', $result[0]->title);
                     Session::put('role_slug', $result[0]->slug);
                     Session::put('name', $result[0]->name);
+                    Session::put('user_id', $result[0]->id);
                     $loginid = $this->login->loginRecord($result[0]->id);
                     Session::put('login_id', $loginid);
                     
@@ -70,6 +71,7 @@ class LoginController extends Controller {
                     $session['role_title'] = $result[0]->title;
                     $session['role_slug'] = $result[0]->slug;
                     $session['login_id'] = $loginid;
+                    $session['user_id'] = $result[0]->id;
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
                 }
