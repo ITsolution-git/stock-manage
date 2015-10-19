@@ -158,10 +158,14 @@
                  
                 </div><br>
                   <div class="form-group">
+
                      <div ng-repeat="(key,order_position) in orderPositionAll"> 
+
 
                        <input type="hidden" class="col-md-1"  ng-model="order_position.order_id" ng-value="order_position.order_id"/>
                          
+
+                         <numeric_tag input-value="123" input-name="wks.name"/>
 
                          <select  ng-model="order_position.position_id"  class="col-md-2">
                            <option ng-selected="order_position.position_id==misc_pos.id" ng-repeat="misc_pos in miscData.position" value={{misc_pos.id}}>{{misc_pos.value}}</option>

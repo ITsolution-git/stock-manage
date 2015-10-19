@@ -81,6 +81,8 @@ Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 
 // ADMIN MISC ROUTERS
 Route::post('admin/miscSave', 'MiscController@miscSave');
+Route::post('admin/placementSave', 'SettingController@placementSave');
+Route::post('admin/placementInsert', 'SettingController@placementInsert');
 
 
 
@@ -96,6 +98,13 @@ Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
+Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
+Route::get('common/getMiscData', 'CommonController@getMiscData');
+
+
+
+Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
+Route::get('common/getMiscData', 'CommonController@getMiscData');
 
 Route::post('common/InsertRecords', 'CommonController@InsertRecords'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.

@@ -107,6 +107,7 @@ class CommonController extends Controller {
         return $this->return_response($result);
     }
 
+
     
 
 
@@ -241,6 +242,18 @@ class CommonController extends Controller {
         }
         return response()->json(['data'=>$data]);
      }
+
+      public function getAllPlacementData()
+    {
+        $result = $this->common->getAllPlacementData();
+        return $this->return_response($result);
+    }
+
+     public function getMiscData()
+    {
+        $result = $this->common->getMiscData();
+        return $result;
+    }
 
     /**
     * Get Array

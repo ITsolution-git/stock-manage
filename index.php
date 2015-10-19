@@ -69,6 +69,7 @@
   <script src="scripts/directives/ui-scroll.js"></script>
   <script src="scripts/directives/ui-toggle.js"></script>
   <script src="scripts/directives/filemodel.js"></script>
+  <script src="scripts/directives/validation.js"></script>
 
   <script src="scripts/filters/fromnow.js"></script>
   <script src="scripts/services/ngstore.js"></script>
@@ -97,6 +98,7 @@
   <script src="scripts/controllers/client.js"></script>
   <script src="scripts/controllers/price.js"></script>
   <script src="scripts/controllers/misc.js"></script>
+  <script src="scripts/controllers/placement.js"></script>
   <script src="scripts/controllers/purchase.js"></script>
   <script src="scripts/controllers/order.js"></script>
   <!-- CUSTOM SCROLL -->

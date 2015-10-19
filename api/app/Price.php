@@ -418,7 +418,41 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
     }
 
 
+/**
+* Placement Save          
+* @access public placementSave
+* @param  array $data
+* @return array $result
+*/
+    public function placementSave($data) {
+        
+         
+        $data[$data['columnname']] = $data['updatedcolumn'];
+        unset($data['columnname']);
+        unset($data['updatedcolumn']);
+        
+        $whereConditions = ['id' => $data['id']];
+        $result = DB::table('placement')->where($whereConditions)->update($data);
+        return $result;
+    }
 
+
+    /**
+* Placement Insert          
+* @access public placementInsert
+* @param  array $data
+* @return array $result
+*/
+    public function placementInsert($data) {
+        
+         
+        $data[$data['columnname']] = $data['updatedcolumn'];
+        unset($data['columnname']);
+        unset($data['updatedcolumn']);
+        
+        $result = DB::table('placement')->insert($data);
+        return $result;
+    }
 
 
 
