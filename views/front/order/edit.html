@@ -183,7 +183,7 @@
 
                         
                         <input type="text" class="col-md-1"  ng-model="order_position.qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.discharge_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.discharge_qnty" ng-keyup="keyPress($event)"/>
                         <input type="text" class="col-md-1"  ng-model="order_position.speciality_qnty"/>
                         <input type="text" class="col-md-1"  ng-model="order_position.foil_qnty"/>
                         <input type="text" class="col-md-1"  ng-model="order_position.ink_charge_qnty"/>
