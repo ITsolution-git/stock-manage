@@ -1,4 +1,3 @@
-
 /*==========================================
 			GENERAL STYLES 
 ==========================================*/
@@ -24,7 +23,17 @@
 .t-a-c {
 	text-align: center;
 }
+.tab-content .active {
+	overflow: hidden;
+}
+.nmb {
+	margin-bottom: 0;
+}
 
+
+/*==========================================
+			LAYOUT STYLES 
+==========================================*/
 .stokkupForm .form-buttons {
 	text-align: right;
 }
@@ -345,4 +354,43 @@ nav ul.nav li:hover ul.nav-sub {
 	margin-bottom:10px;
 }
 
+/*---------- END ----------*/
+
+
+/*=====================================
+		CLIENT - HOME PAGE
+=====================================*/
+.stokkupForm.client_home_page.panel-default {
+	border: 0 none;
+}
+.client_home_page .panel-body {
+	padding: 0;
+}
+.client_home_page .form-control {
+	padding: 5px;
+}
+
+.client_home_page .editButton {
+	min-height: 34px;
+	padding: 5px;
+}
+.stokkupForm.client_home_page .tab-content .form-group {
+	margin-bottom: 10px;
+}
+.stokkupForm.client_home_page .tab-content .form-group.nmb {
+	margin-bottom: 0;
+}
+
+.client_home_page .task_assign_details {
+	clear: both;
+	max-height: 600px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.client_home_page .tab-content .form-group span.tab_title {
+	display:block;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+}
 /*---------- END ----------*/

@@ -1,1 +1,2023 @@
- <h3 class="no-margin">Welcome Home page, {{name}}</h3>
+ <!--h3 class="no-margin">Welcome Home page, {{name}}</h3--> 
+<div class="panel panel-default stokkupForm client_home_page">
+	<div class="panel-body">		
+		<ul class="nav nav-tabs input-group col-md-12">
+		  <li class="active"> <a href data-toggle="tab" data-target="#homeTasks">Tasks</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeOrders">Orders</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeEstimates">Estimates</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeEvents">Events</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homePurchasing">Purchasing</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeArtDept">Art Department</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeProduction">Production</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeFinishing">Finishing</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeShipping">Shipping</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homereadyShip">Ready To Ship</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeCreditHold">Credit Hold</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeShipPick">Shipped / Picked Up</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeOrderPaid">Order Paid in full</a> </li>
+		</ul>
+		<!-- TAB CONTAINER -->
+		<div class="tab-content p b-a no-b-t bg-white m-b-md">
+			<!-- TASKS -->
+			<div role="tabpanel" class="tab-pane active animated fadeIn clientTab" id="homeTasks">
+				<div class="selectBox col-md-2 nopad-left m-b">
+					<select name="user_info" id="user_info" class="form-control">
+						<option value="0">Rich Santo</option>
+						<option value="1">Rich Santo 1</option>
+						<option value="2">Rich Santo 2</option>
+					</select>
+				</div>
+			    <ul class="nav nav-tabs input-group col-md-12">
+				  <li class="active"> 
+				  	<a href data-toggle="tab" data-target="#homeTasksAssigned">Assigned</a> 
+				  </li>
+				  <li> 
+				  	<a href data-toggle="tab" data-target="#homeTaskCreated">Created</a> 
+				  </li>
+				  <li> 
+				  	<a href data-toggle="tab" data-target="#homeTaskCompleted">Completed</a> 
+				  </li>
+				</ul>
+				
+				<div class="tab-content p b-a no-b-t bg-white m-b-md">
+					<div role="tabpanel" class="tab-pane active animated fadeIn clientTab" id="homeTasksAssigned">
+						<div class="form-group col-md-12 tabTitle nopad-form">
+							<div class="form-group col-md-1 tabTitle nopad-form pull-right nmb">
+								<button type="button" class="btn btn-default addButton pull-right">
+			                		<i class="fa fa-plus"></i>
+			                	</button>
+		                	</div>
+						</div>
+						<div class="form-group col-md-12 tabTitle nopad-form">
+							<div class="col-md-4 nopad-left">
+				                <div class="col-md-1 nopad-left"></div>			                
+				                <div class="col-md-2 nopad-left">Staff</div>
+				                <div class="col-md-3 nopad-left">Task</div>
+				                <div class="col-md-3 nopad-left">Client</div>
+			                	<div class="col-md-3 nopad-left">Job Name</div>
+			                </div>			                
+			                <div class="col-md-4 nopad-left">Note</div>
+			                <div class="col-md-4 nopad-left">
+				                <div class="col-md-4 nopad-left">Due Time</div>
+				                <div class="col-md-4 nopad-left">Due Date</div>
+				                <div class="col-md-4 nopad-left">Status</div>
+			                </div>
+		                </div>
+
+		                <div class="task_assign_details">
+			                <!-- Assign Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Assigned" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Assign Fields -->
+
+			                <!-- Assign Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Assigned" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Assign Fields -->
+
+			               	<!-- Assign Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Assigned" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Assign Fields -->
+			            </div>
+					</div>
+					<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeTaskCreated">
+						<div class="form-group col-md-12 tabTitle nopad-form">
+							<div class="form-group col-md-1 tabTitle nopad-form pull-right nmb">
+								<button type="button" class="btn btn-default addButton pull-right">
+			                		<i class="fa fa-plus"></i>
+			                	</button>
+		                	</div>
+						</div>
+						<div class="form-group col-md-12 tabTitle nopad-form">
+							<div class="col-md-4 nopad-left">
+				                <div class="col-md-1 nopad-left"></div>			                
+				                <div class="col-md-2 nopad-left">Staff</div>
+				                <div class="col-md-3 nopad-left">Task</div>
+				                <div class="col-md-3 nopad-left">Client</div>
+			                	<div class="col-md-3 nopad-left">Job Name</div>
+			                </div>			                
+			                <div class="col-md-4 nopad-left">Note</div>
+			                <div class="col-md-4 nopad-left">
+				                <div class="col-md-4 nopad-left">Due Time</div>
+				                <div class="col-md-4 nopad-left">Due Date</div>
+				                <div class="col-md-4 nopad-left">Status</div>
+			                </div>
+		                </div>
+
+		                <div class="task_assign_details">
+			                <!-- Created Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Open" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Created Fields -->
+
+			                <!-- Created Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Open" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Created Fields -->
+
+			               	<!-- Created Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Open" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Created Fields -->
+			            </div>
+					</div>
+					<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeTaskCompleted">
+						<div class="form-group col-md-12 tabTitle nopad-form">
+							<div class="form-group col-md-1 tabTitle nopad-form pull-right nmb">
+								<button type="button" class="btn btn-default addButton pull-right">
+			                		<i class="fa fa-plus"></i>
+			                	</button>
+		                	</div>
+						</div>
+						<div class="form-group col-md-12 tabTitle nopad-form">
+							<div class="col-md-4 nopad-left">
+				                <div class="col-md-1 nopad-left"></div>			                
+				                <div class="col-md-2 nopad-left"><span class="tab_title">Staff</span></div>
+				                <div class="col-md-3 nopad-left"><span class="tab_title">Task</span></div>
+				                <div class="col-md-3 nopad-left"><span class="tab_title">Client</span></div>
+			                	<div class="col-md-3 nopad-left"><span class="tab_title">Job Name</span></div>
+			                </div>			                
+			                <div class="col-md-4 nopad-left"><span class="tab_title">Note</span></div>
+			                <div class="col-md-4 nopad-left">
+				                <div class="col-md-4 nopad-left"><span class="tab_title">Due Time</span></div>
+				                <div class="col-md-4 nopad-left"><span class="tab_title">Due Date</span></div>
+				                <div class="col-md-4 nopad-left"><span class="tab_title">Status</span></div>
+			                </div>
+		                </div>
+
+		                <div class="task_assign_details">
+			                <!-- Completed Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Complet" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Completed Fields -->
+
+			                <!-- Completed Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Complet" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Completed Fields -->
+
+			               	<!-- Completed Fields -->
+			                <div class="form-group col-md-12 tabTitle nopad-form">
+								<div class="col-md-4 nopad-left">
+					                <div class="col-md-1 nopad-left">
+					                	<button type="button" class="btn btn-default editButton">
+					                		<i class="fa fa-edit"></i>
+					                	</button>
+					                </div>			                
+					                <div class="col-md-2 nopad-left">
+					                	<input type="text" class="form-control" placeholder="RS" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-3 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+				                	<div class="col-md-3 nopad-left">
+				                		<input type="text" class="form-control" />
+				                	</div>
+				                </div>			                
+				                <div class="col-md-4 nopad-left">
+				                	<input type="text" class="form-control" />
+				                </div>
+				                <div class="col-md-4 nopad-left">
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" />
+					                </div>
+					                <div class="col-md-4 nopad-left">
+					                	<input type="text" class="form-control" placeholder="Complet" />
+					                </div>
+				                </div>
+			                </div>
+			                <!-- End Completed Fields -->
+			            </div>
+					</div>
+				</div>
+			</div>    
+			<!-- TASKS -->
+
+			<!-- Orders -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeOrders">
+				<div class="col-md-12 nopad-form m-b">
+					<!-- Top Panel -->
+					<div class="form-group col-md-8 nopad-form">
+						<div class="col-md-3 nopad-left">
+							<select class="form-control">
+								<option>Order - Acknowledgement</option>
+								<option>Order - Acknowledgement</option>
+								<option>Order - Acknowledgement</option>
+							</select>
+						</div>
+						<div class="col-md-1 nopad-left">
+							<input type="text" class="form-control" value="144" />
+						</div>
+						<div class="col-md-2 nopad-left">
+							<select class="form-control">
+								<option></option>
+								<option>1</option>
+								<option>2</option>
+							</select>
+						</div>
+						<div class="col-md-1 nopad-left">
+							<button type="button" class="btn btn-default addButton">
+			                	<i class="fa fa-minus"></i>
+			                </button>
+						</div>
+						<div class="col-md-1 nopad-left">
+							<input type="text" class="form-control" value="" />
+						</div>
+						<div class="col-md-2 nopad-left">
+							<select class="form-control">
+								<option></option>
+								<option>1</option>
+								<option>2</option>
+							</select>
+						</div>
+						<div class="col-md-1 nopad-left">
+							<button type="button" class="btn btn-default addButton">
+			                	<i class="fa fa-minus"></i>
+			                </button>
+						</div>
+						<div class="col-md-1 nopad-left">
+							<input type="text" class="form-control" value="" />
+						</div>
+					</div>
+					<!-- / -->
+					<!-- Order Paid in Full Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-4 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-4 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">							
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+				                	<i class="fa fa-edit"></i>
+				                </button>
+							</div>
+							<div class="col-md-11 nopad-left">
+								<input type="text" class="form-control" value="" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- End Fields -->
+				</div>
+			</div>    
+			<!-- Orders -->
+
+			<!-- Estimates -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeEstimates">
+				<div class="col-md-12 nopad-left m-b">
+					<div class="col-md-12 nopad-form m-b">
+						<!-- Top Panel -->
+						<div class="form-group col-md-8 nopad-form">
+							<div class="col-md-3 nopad-left">
+								<select class="form-control">
+									<option>Order - Acknowledgement</option>
+									<option>Order - Acknowledgement</option>
+									<option>Order - Acknowledgement</option>
+								</select>
+							</div>
+							<div class="col-md-1 nopad-left">
+								<input type="text" class="form-control" value="144" />
+							</div>
+							<div class="col-md-2 nopad-left">
+								<select class="form-control">
+									<option></option>
+									<option>1</option>
+									<option>2</option>
+								</select>
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+				                	<i class="fa fa-minus"></i>
+				                </button>
+							</div>
+							<div class="col-md-1 nopad-left">
+								<input type="text" class="form-control" value="" />
+							</div>
+							<div class="col-md-2 nopad-left">
+								<select class="form-control">
+									<option></option>
+									<option>1</option>
+									<option>2</option>
+								</select>
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+				                	<i class="fa fa-minus"></i>
+				                </button>
+							</div>
+							<div class="col-md-1 nopad-left">
+								<input type="text" class="form-control" value="" />
+							</div>
+						</div>
+						<!-- / -->
+						<!-- Order Paid in Full Fields -->
+						<div class="form-group col-md-12 nopad-form">
+							<div class="col-md-5 nopad-form">						
+								<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+								<div class="col-md-4 nopad-left"><span class="tab_title">Client</span></div>
+								<div class="col-md-4 nopad-left"><span class="tab_title">Approval</span></div>
+							</div>
+
+							<div class="col-md-7 nopad-form">
+								<div class="col-md-6 nopad-left">
+									<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+									<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+									<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+									<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+								</div>
+								<div class="col-md-6 nopad-left">
+									<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+									<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+									<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+									<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+								</div>
+							</div>
+						</div>
+
+						<!-- INPUT Details -->
+						<div class="form-group col-md-12 nopad-form">
+							<div class="col-md-5 nopad-form">							
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-1 nopad-left">
+									<button type="button" class="btn btn-default addButton">
+				                		<i class="fa fa-edit"></i>
+				                	</button>
+								</div>
+								<div class="col-md-4 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-4 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+
+							<div class="col-md-7 nopad-form">
+								<div class="col-md-6 nopad-left">
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-form">
+										<input type="text" class="form-control" />
+									</div>
+								</div>
+								<div class="col-md-6 nopad-left">
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-form">
+										<input type="text" class="form-control" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Calendar Boxes ROW -->
+						<div class="form-group col-md-12 nopad-form">
+							<div class="col-md-5 nopad-form">
+								<div class="col-md-1 nopad-left">
+									<button type="button" class="btn btn-default addButton">
+					                	<i class="fa fa-edit"></i>
+					                </button>
+								</div>
+								<div class="col-md-11 nopad-left">
+									<input type="text" class="form-control" value="" />
+								</div>
+							</div>
+
+							<div class="col-md-7 nopad-form">
+								<div class="col-md-6 nopad-left">
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-form">
+										<input type="text" class="form-control" />
+									</div>
+								</div>
+								<div class="col-md-6 nopad-left">
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-left">
+										<input type="text" class="form-control" />
+									</div>
+									<div class="col-md-3 nopad-form"></div>
+								</div>
+							</div>
+						</div>
+						<!-- End Fields -->
+					</div>
+				</div>
+			</div>    
+			<!-- Estimates -->
+
+			<!-- Events -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeEvents">
+				<div class="col-md-12 nopad-left m-b">
+					Events
+				</div>
+			</div>    
+			<!-- Events -->
+
+			<!-- Purchasing -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homePurchasing">
+				<div class="form-group col-md-12 nopad-form">
+					<!-- purchase select boxes -->
+					<div class="col-md-2 nopad-left">
+						<select class="form-control">
+							<option>Pending Garments</option>
+							<option>1</option>
+							<option>2</option>
+						</select>
+					</div>
+					<div class="col-md-2 nopad-left">
+						<select class="form-control">
+							<option>Select</option>
+							<option>1</option>
+							<option>2</option>
+						</select>
+					</div>
+				</div>
+				<!-- / -->
+
+				<!-- Purchase Fields -->
+				<div class="form-group col-md-12 nopad-form">
+					<div class="col-md-5 nopad-form">						
+						<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+						<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+						<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+					</div>
+
+					<div class="col-md-7 nopad-form">
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+							<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+						</div>
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+							<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- INPUT Details -->
+				<div class="form-group col-md-12 nopad-form">
+					<div class="col-md-5 nopad-form">
+						<div class="col-md-1 nopad-left">
+							<button type="button" class="btn btn-default addButton">
+		                		<i class="fa fa-edit"></i>
+		                	</button>
+						</div>
+						<div class="col-md-3 nopad-left">
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-md-1 nopad-left">
+							<button type="button" class="btn btn-default addButton">
+		                		<i class="fa fa-edit"></i>
+		                	</button>
+						</div>
+						<div class="col-md-4 nopad-left">
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-md-3 nopad-left">
+							<input type="text" class="form-control" />
+						</div>
+					</div>
+
+					<div class="col-md-7 nopad-form">
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Calendar Boxes ROW -->
+				<div class="form-group col-md-12 nopad-form">
+					<div class="col-md-5 nopad-form"></div>
+
+					<div class="col-md-7 nopad-form">
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form"></div>
+						</div>
+					</div>
+				</div>
+				<!-- INPUT Details Ends -->
+
+				<!-- INPUT Details 2nd Row -->
+				<div class="form-group col-md-12 nopad-form">
+					<div class="col-md-5 nopad-form">
+						<div class="col-md-1 nopad-left">
+							<button type="button" class="btn btn-default addButton">
+		                		<i class="fa fa-edit"></i>
+		                	</button>
+						</div>
+						<div class="col-md-3 nopad-left">
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-md-1 nopad-left">
+							<button type="button" class="btn btn-default addButton">
+		                		<i class="fa fa-edit"></i>
+		                	</button>
+						</div>
+						<div class="col-md-4 nopad-left">
+							<input type="text" class="form-control" />
+						</div>
+						<div class="col-md-3 nopad-left">
+							<input type="text" class="form-control" />
+						</div>
+					</div>
+
+					<div class="col-md-7 nopad-form">
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Calendar Boxes ROW -->
+				<div class="form-group col-md-12 nopad-form">
+					<div class="col-md-5 nopad-form"></div>
+
+					<div class="col-md-7 nopad-form">
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="col-md-6 nopad-left">
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-form"></div>
+						</div>
+					</div>
+				</div>
+				<!-- INPUT Details 2nd Row Ends -->
+				<!-- Purchase Fields Ends Here -->
+			</div>    
+			<!-- Purchasing -->
+
+			<!-- Art Department -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeArtDept">
+				<div class="col-md-12 nopad-form m-b">
+					<!-- Art Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Art Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Art Department -->
+
+			<!-- Production -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeProduction">
+				<div class="col-md-12 nopad-form m-b">
+					<!-- Production Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Production Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Production -->
+
+			<!-- Finishing -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeFinishing">
+				<div class="col-md-12 nopad-form m-b">
+					<!-- Finishing Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Finishing Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Finishing -->
+
+			<!-- Shipping -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeShipping">
+				<div class="col-md-12 nopad-form m-b">
+					<!-- Shipping Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Shipping Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Shipping -->
+
+			<!-- Ready To Ship -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homereadyShip">
+				<div class="col-md-12 nopad-form m-b">
+					<!-- Ready To Ship Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Ready To Ship Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Ready To Ship -->
+
+			<!-- Credit Hold -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeCreditHold">
+				<div class="col-md-12 nopad-form m-b">
+					<!-- Credit Hold Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Credit Hold Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Credit Hold -->
+
+			<!-- Shipped / Picked up -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeShipPick">
+				<div class="col-md-12 nopad-form m-b">					
+					<!-- Shipped / Picked up Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Shipped / Picked up Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Shipped / Picked up -->
+
+			<!-- Order Paid in Full -->
+			<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeOrderPaid">
+				<div class="col-md-12 nopad-form m-b">					
+					<!-- Order Paid in Full Fields -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">						
+							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
+							<div class="col-md-5 nopad-left"><span class="tab_title">Client</span></div>
+							<div class="col-md-3 nopad-left"><span class="tab_title">Approval</span></div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
+								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
+								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
+							</div>
+						</div>
+					</div>
+
+					<!-- INPUT Details -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form">
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-1 nopad-left">
+								<button type="button" class="btn btn-default addButton">
+			                		<i class="fa fa-edit"></i>
+			                	</button>
+							</div>
+							<div class="col-md-4 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+							<div class="col-md-3 nopad-left">
+								<input type="text" class="form-control" />
+							</div>
+						</div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Calendar Boxes ROW -->
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-md-5 nopad-form"></div>
+
+						<div class="col-md-7 nopad-form">
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form">
+									<input type="text" class="form-control" />
+								</div>
+							</div>
+							<div class="col-md-6 nopad-left">
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-left">
+									<input type="text" class="form-control" />
+								</div>
+								<div class="col-md-3 nopad-form"></div>
+							</div>
+						</div>
+					</div>
+					<!-- INPUT Details Ends -->
+					<!-- Order Paid in Full Fields Ends Here -->
+				</div>
+			</div>    
+			<!-- Order Paid in Full -->
+	  	</div>
+	  	<!-- End TAB CONTAINER -->
+  	</div>
+</div>
