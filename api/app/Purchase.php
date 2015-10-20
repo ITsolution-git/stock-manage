@@ -18,7 +18,7 @@ class Purchase extends Model {
 					->where('pl.type_value','=',$id)
 					->get();
 		return $result;
-	}.
+	}
 	function ListPodata($id)
 	{
 		$result = DB::table('order as ol')
@@ -27,7 +27,7 @@ class Purchase extends Model {
 					->where('pl.type_value','=',$id)
 					->get();
 		return $result;
-	}.
+	}
 	function ListSgData($id)
 	{
 		$result = DB::table('purchase_list as pl')
