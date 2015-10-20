@@ -138,6 +138,9 @@ Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail'
 
 //PURCHASE CONTROLLER
 Route::get('purchase/ListPurchase/{id}', 'PurchaseController@ListPurchase');
+Route::get('purchase/GetPodata/{id}', 'PurchaseController@GetPodata');
+Route::get('purchase/GetSgData/{id}', 'PurchaseController@GetSgData');
+
 
 // ORDER CONTROLLER 
 Route::get('order/listOrder', 'OrderController@listOrder');

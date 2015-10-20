@@ -36,4 +36,30 @@ class PurchaseController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+    public function GetPodata($id)
+    {
+    	if(empty($id))
+    	{
+    		$result = $this->purchase->GetPoadata($id);
+    		return  response()->json(["data" => $response]);
+    		die();
+    	}
+    	else
+    	{
+    		$result = $this->purchase->GetPoadata($id);
+    	}
+    }
+    public function GetSgdata($id)
+    {
+    	if(empty($id))
+    	{
+    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		return  response()->json(["data" => $response]);
+    		die();
+    	}
+    	else
+    	{
+    		$result = $this->purchase->GetSgdata($id);
+    	}
+    }
 }
