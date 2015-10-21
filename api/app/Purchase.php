@@ -25,7 +25,7 @@ class Purchase extends Model {
 	}
 	function GetPodata($id)
 	{
-		$result = DB::select("SELECT p.name as product_name,v.name_company,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,mt.value,oo.*
+		$result = DB::select("SELECT p.name as product_name,v.name_company,v.url,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,mt.value,oo.*
 		FROM orders ord
 		left join order_orderlines oo on oo.order_id = ord.id
 		left join price_grid pg on pg.id = price_id
@@ -35,7 +35,7 @@ class Purchase extends Model {
 		Left join vendors v on v.id = p.vendor_id 
 		where ord.status='1' AND ord.is_delete='1' 
 		AND ord.id='".$id."' ");
-		
+
 		return $result;
 	}
 	function ListSgData($id)
