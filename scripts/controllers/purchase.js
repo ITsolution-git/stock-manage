@@ -9,22 +9,17 @@ app.controller('PurchaseListCtrl', ['$scope',  '$http','$state','$stateParams', 
 }]);
 app.controller('PurchasePOCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
-                           $http.get('api/public/purchase/GetPodata/'+$id ).success(function(Listdata) 
+                          
+                           $order_id = $stateParams.id;
+                           $http.get('api/public/purchase/GetPodata/'+$order_id ).success(function(PoData) 
                           		  {
-                                          $scope.ListPurchase = Listdata.data;
-                                  });
-                           $http.get('api/public/purchase/GetReceiving/'+$id ).success(function(Listdata) 
-                          		  {
-                                          $scope.ListPurchase = Listdata.data;
+                                          $scope.ArrPo = PoData.data.records[0];
                                   });
 
 }]);
 app.controller('PurchaseSGCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
-                           $http.get('api/public/purchase/GetSgdata/'+$id ).success(function(Listdata) 
-                          		  {
-                                          $scope.ListPurchase = Listdata.data;
-                                  });
+
 
 
 }]);

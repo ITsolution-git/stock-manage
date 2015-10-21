@@ -46,8 +46,10 @@ class PurchaseController extends Controller {
     	}
     	else
     	{
-    		$result = $this->purchase->GetPoadata($id);
+    		$result = $this->purchase->GetPodata($id);
+    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     	}
+    	return  response()->json(["data" => $response]);
     }
     public function GetSgdata($id)
     {
