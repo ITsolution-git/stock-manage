@@ -49,43 +49,45 @@
 
               <div class="col-sm-6 m-b  panel panel-default">
 
-                <div class="form-group col-sm-12 m-b">
+                <div class="form-group col-sm-12 m-b" ng-repeat="(key,poline) in ArrPoLine">
                   <div class="col-md-1 nopad-left">
                     <label>Item <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="main.client_company"  >
+                    <input type="text" disabled="" class="form-control" ng-model="poline.job_name"  >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Size Grp <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="maincompcontact.first_name"  >
+                    <input type="text" disabled="" class="form-control" ng-model="poline.size_group"  >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Color <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="main.billing_email"  >
+                    <input type="text" disabled="" class="form-control" ng-model="poline.color"  >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Size <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
+                    <input type="text" disabled="" class="form-control" ng-model="poline.size"  >
                   </div>
                   <div class=" col-md-1 nopad-left">
                     <label>Qnty <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="main.company_phone" >
+                    <input type="text" disabled="" class="form-control" ng-model="poline.qnty" >
                   </div>
                   <div class="col-md-2 nopad-left">
                     <label>Qnty Ordered<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="maincompcontact.email" >
+                    <input type="text" class="form-control" ng-model="poline.qnty_ordered" >
                   </div>
                   <div class=" col-md-2 nopad-left">
                     <label>Unit Price <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="main.salesweb" >
+                    <input type="text" class="form-control" ng-model="poline.unit_price" >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Vendor<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="main.salesweb" >
+                    <input type="text" disabled="" class="form-control" ng-model="poline.name_company" >
                   </div>
                   <div class=" col-md-2">
                     <label>Line Total <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="main.salesweb" >
+                    <input type="text" class="form-control" ng-model="poline.line_total" >
+                    <i class="mdi-content-send text-lg m-t-sm pull-left" ng-click="ChangeOrderStatus(order_id,0)"></i>
                   </div>
+
                   <!-- <div class="input-group col-sm-5 m-b"> <br>
                     <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
                     &nbsp;
@@ -107,9 +109,48 @@
                 <div class="tab-content p b-a no-b-t bg-white m-b-md">
                   <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab10">
                     
-                    <iframe ng-src="{{ArrPo.url}}" height="500" width="100%"> Please wait...</iframe>
+                    <!-- <iframe ng-src="{{ArrPo.url}}" height="500" width="100%"> Please wait...</iframe> -->
                   </div>
-                  <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Unassigned</div>
+                  <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">
+
+                <div class="form-group col-sm-12 m-b" ng-repeat="(key,unassign) in ArrUnassign">
+                <div class="col-md-1 nopad-left">
+                <label> <em class="text-muted"></em></label>
+                  <i class="mdi-av-fast-rewind text-lg m-t-sm pull-left" ng-click="ChangeOrderStatus(order_id,1)"></i>
+                </div>
+                  <div class="col-md-2 nopad-left">
+                    <label>Item <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="unassign.job_name"  >
+                  </div>
+                  <div class="col-md-2 nopad-left">
+                    <label>Size Grp <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="unassign.size_group"  >
+                  </div>
+                  <div class="col-md-2 nopad-left">
+                    <label>Color <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="unassign.color"  >
+                  </div>
+                  <div class="col-md-2 nopad-left">
+                    <label>Size <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="unassign.size"  >
+                  </div>
+                  <div class=" col-md-1 nopad-left">
+                    <label>Qnty <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="unassign.qnty" >
+                  </div>
+
+                  <div class="col-md-2 nopad-left">
+                    <label>Vendor<em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="unassign.name_company" >
+                  </div>
+
+                  <!-- <div class="input-group col-sm-5 m-b"> <br>
+                    <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
+                    &nbsp;
+                    <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>
+                    &nbsp; </div> -->
+                </div>
+                  </div>
                   <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Drop ship Instruction</div>
                   <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">notes</div>
                   

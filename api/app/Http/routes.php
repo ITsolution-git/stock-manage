@@ -140,7 +140,7 @@ Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail'
 Route::get('purchase/ListPurchase/{id}', 'PurchaseController@ListPurchase');
 Route::get('purchase/GetPodata/{id}', 'PurchaseController@GetPodata');
 Route::get('purchase/GetSgData/{id}', 'PurchaseController@GetSgData');
-
+Route::get('purchase/ChangeOrderStatus/{id}/{value}', 'PurchaseController@ChangeOrderStatus');
 
 // ORDER CONTROLLER 
 Route::get('order/listOrder', 'OrderController@listOrder');

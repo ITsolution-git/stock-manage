@@ -40,13 +40,17 @@ class PurchaseController extends Controller {
     {
     	if(empty($id))
     	{
-    		$result = $this->purchase->GetPoadata($id);
+    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
     		return  response()->json(["data" => $response]);
     		die();
     	}
     	else
     	{
-    		$result = $this->purchase->GetPodata($id);
+    		$po = $this->purchase->GetPodata($id);
+    		$poline = $this->purchase->GetPoLinedata($id,'1');
+    		$unassign_order = $this->purchase->GetPoLinedata();
+
+    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     	}
     	return  response()->json(["data" => $response]);
@@ -63,5 +67,21 @@ class PurchaseController extends Controller {
     	{
     		$result = $this->purchase->GetSgdata($id);
     	}
+    }
+
+    public function ChangeOrderStatus($id,$val)
+    {
+    	if(empty($id))
+    	{
+    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		return  response()->json(["data" => $response]);
+    		die();
+    	}
+    	else
+    	{
+    		$result = $this->purchase->GetPodata($id,$val);
+    		$response = array('success' => 1, 'message' => GET_RECORDS);
+    	}
+    	return  response()->json(["data" => $response]);
     }
 }
