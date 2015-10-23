@@ -145,10 +145,10 @@ class OrderController extends Controller {
     */
     public function saveOrderNotes()
     {
+
         $post = Input::all();
         $post['data']['created_date']=date('Y-m-d');
  
-    
         if(!empty($post['data']['order_id']) && !empty($post['data']['order_notes']))
         {
             $result = $this->order->saveOrderNotes($post['data']);
