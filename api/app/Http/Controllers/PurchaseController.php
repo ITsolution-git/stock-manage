@@ -120,4 +120,11 @@ class PurchaseController extends Controller {
     	$response = array('success' => 1, 'message' => DELETE_RECORD);
     	return  response()->json(["data" => $response]);
 	}
+	public function Update_shiftlock()
+	{
+		$post = Input::all();
+		$result = $this->purchase->Update_shiftlock($post);
+    	$response = array('success' => 1, 'message' => UPDATE_RECORD);
+    	return  response()->json(["data" => $response]);
+	}
 }

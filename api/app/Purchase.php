@@ -25,9 +25,10 @@ class Purchase extends Model {
 	}
 	function GetPodata($id)
 	{
-		$result = DB::select("SELECT p.name as product_name,v.name_company,v.url,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,oo.*
+		$result = DB::select("SELECT p.name as product_name,po.shipt_block,v.name_company,v.url,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,oo.*
 		FROM orders ord
 		left join order_orderlines oo on oo.order_id = ord.id
+		left join purchase_order po on po.order_id = ord.id
 		left join price_grid pg on pg.id = price_id
 		left join client_contact cc on cc.client_id = ord.client_id AND contact_main='1'
 		Left join products p on p.id = oo.product_id
@@ -132,6 +133,13 @@ class Purchase extends Model {
 	{
 		$result = DB::table('purchase_received')->where('id', '=',$id )->delete();
 		return $result;
+	}
+	function Update_shiftlock($post)
+	{
+		$result = DB::table('purchase_order')
+   						->where('order_id','=',$post['order_id'])
+   						->update(array('shipt_block'=>$post['data']));
+    	return $result;
 	}
 
 }

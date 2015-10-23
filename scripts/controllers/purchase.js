@@ -43,7 +43,16 @@ app.controller('PurchasePOCtrl', ['$scope',  '$http','$state','$stateParams', 'A
                           }
                           $scope.shipttoblock = function($event,id){
 
-                          		console.log(id);
+                          		 var Arrshift = {};
+	                              
+	                              Arrshift.data = $event.target.value;
+	                              Arrshift.order_id = id;
+								//console.log(Arrshift); return false;
+
+                          		$http.post('api/public/purchase/Update_shiftlock',Arrshift ).success(function() 
+                          		  {
+                                       GetPodata(order_id ); 
+                                  });
                           }
                           $scope.Receive_order = function(data){
 

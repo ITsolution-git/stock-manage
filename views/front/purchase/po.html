@@ -156,7 +156,7 @@
                   </div>
                   <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">
                    <label>Shipt to Block<em class="text-muted"></em></label><br>
-                  <textarea cols="40" ui-event="{ blur : 'shipttoblock($event,5)' }"  rows="8"></textarea>
+                  <textarea cols="40" ui-event="{ blur : 'shipttoblock($event,order_id)' }" ng-model="ArrPo.shipt_block"  rows="8"></textarea>
                   </div>
 
                   <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">notes</div>
