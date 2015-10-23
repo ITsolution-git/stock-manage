@@ -67,7 +67,7 @@ $scope.openpopup = function () {
  var order_data = {};
   order_data.data = orderData;
  // Address_data.data.client_id = $stateParams.id;
-  order_data.table ='order'
+  order_data.table ='orders'
 
 
   $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
@@ -292,7 +292,7 @@ if($stateParams.id && $stateParams.client_id) {
                           {
                            
                             var order_data = {};
-                            order_data.table ='order'
+                            order_data.table ='orders'
                             order_data.data =postArray
                             order_data.cond ={id:id}
                             $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
