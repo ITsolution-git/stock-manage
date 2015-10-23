@@ -7,7 +7,7 @@ app.controller('PurchaseListCtrl', ['$scope',  '$http','$state','$stateParams', 
                                           $scope.ListPurchase = Listdata.data;
                                   });
 }]);
-app.controller('PurchasePOCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {
+app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$state','$stateParams', 'AuthService',function($scope,$sce,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
                           
                            $scope.order_id = $stateParams.id;
@@ -24,7 +24,8 @@ app.controller('PurchasePOCtrl', ['$scope',  '$http','$state','$stateParams', 'A
                                           $scope.ordered = PoData.data.records.order_total[0].ordered;
                                           $scope.received = PoData.data.records.received_total[0].received;
                                           $scope.received_line = PoData.data.records.received_line;
-                                         // console.log(PoData.data.records);
+                                          $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
+                                         console.log(currentPOUrl);
                                   });
                        		}
                            $scope.ChangeOrderStatus = function(order_id,value){
