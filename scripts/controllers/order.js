@@ -21,7 +21,6 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
                                       }
       } // DELETE ORDER FINISH
 
-
 var companyData = {};
       companyData.table ='client'
       companyData.cond ={status:1,is_delete:1}
