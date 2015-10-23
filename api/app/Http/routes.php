@@ -138,6 +138,14 @@ Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail'
 
 //PURCHASE CONTROLLER
 Route::get('purchase/ListPurchase/{id}', 'PurchaseController@ListPurchase');
+Route::get('purchase/GetPodata/{id}', 'PurchaseController@GetPodata');
+Route::get('purchase/GetSgData/{id}', 'PurchaseController@GetSgData');
+Route::get('purchase/ChangeOrderStatus/{id}/{value}', 'PurchaseController@ChangeOrderStatus');
+Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
+Route::post('purchase/Receive_order', 'PurchaseController@Receive_order');
+Route::get('purchase/RemoveReceiveLine/{id}', 'PurchaseController@RemoveReceiveLine');
+Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
+
 
 // ORDER CONTROLLER 
 Route::get('order/listOrder', 'OrderController@listOrder');

@@ -17,7 +17,7 @@ class Order extends Model {
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
 
-        $orderData = DB::table('order as order')
+        $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('misc_type as misc_type', 'order.f_approval', '=', 'misc_type.id')
                          ->select($listArray)
@@ -39,7 +39,7 @@ class Order extends Model {
          
 
         $whereOrderConditions = ['id' => $data['id']];
-        $orderData = DB::table('order')->where($whereOrderConditions)->get();
+        $orderData = DB::table('orders')->where($whereOrderConditions)->get();
 
 
 
@@ -163,7 +163,7 @@ public function saveOrderNotes($post)
     {
         if(!empty($id))
         {
-                $result = DB::table('order')->where('id','=',$id)->update(array("is_delete" => '0'));
+                $result = DB::table('orders')->where('id','=',$id)->update(array("is_delete" => '0'));
                 return $result;
         }
         else
