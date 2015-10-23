@@ -46,11 +46,27 @@ class PurchaseController extends Controller {
     	}
     	else
     	{
+    		$po_id=0;
+    		$order_total=''; $received_total='';$received_line='';
     		$po = $this->purchase->GetPodata($id);
     		$poline = $this->purchase->GetPoLinedata($id,'1');
     		$unassign_order = $this->purchase->GetPoLinedata();
 
-    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order);
+    		if(count($poline)>0)
+    		{
+    			$po_id = $poline[0]->po_id;
+    			
+    		}
+    		else
+    		{
+				$po_id = $unassign_order[0]->po_id;
+    		}
+	    		
+	    		$order_total = $this->purchase->getOrdarTotal($po_id);
+	    		$received_total = $this->purchase->getreceivedTotal($po_id);
+	    		$received_line = $this->purchase->GetPoReceived($po_id);
+    		
+    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line );
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     	}
     	return  response()->json(["data" => $response]);
@@ -79,9 +95,29 @@ class PurchaseController extends Controller {
     	}
     	else
     	{
-    		$result = $this->purchase->GetPodata($id,$val);
+    		$result = $this->purchase->ChangeOrderStatus($id,$val);
     		$response = array('success' => 1, 'message' => GET_RECORDS);
     	}
     	return  response()->json(["data" => $response]);
     }
+    public function EditOrderLine()
+    {
+    	 $post = Input::all();
+    	 $result = $this->purchase->EditOrderLine($post);
+    	 $response = array('success' => 1, 'message' => GET_RECORDS);
+    	 return  response()->json(["data" => $response]);
+    }
+    public function Receive_order()
+    {
+    	$post = Input::all();
+    	$result = $this->purchase->Receive_order($post);
+    	$response = array('success' => 1, 'message' => GET_RECORDS);
+    	return  response()->json(["data" => $response]);
+    }
+    public function RemoveReceiveLine($id)
+	{
+		$result = $this->purchase->RemoveReceiveLine($id);
+    	$response = array('success' => 1, 'message' => DELETE_RECORD);
+    	return  response()->json(["data" => $response]);
+	}
 }
