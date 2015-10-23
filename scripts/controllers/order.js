@@ -100,6 +100,13 @@ $scope.openpopup = function () {
 app.controller('orderEditCtrl', ['$scope','$http','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$http,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
                   
 
+
+  $scope.myFunct = function(e){
+    var charCode = (e.which) ? e.which : e.keyCode;    
+   console.log(charCode); 
+}
+
+
                           $scope.modalInstanceEdit  ='';
 
                          
@@ -518,6 +525,7 @@ if($stateParams.id && $stateParams.client_id) {
                           
 
   // **************** NOTES TAB CODE END  ****************
+
 
 
 
