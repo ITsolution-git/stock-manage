@@ -7,9 +7,9 @@ app.controller('PurchaseListCtrl', ['$scope',  '$http','$state','$stateParams', 
                                           $scope.ListPurchase = Listdata.data;
                                   });
 }]);
-app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$state','$stateParams', 'AuthService',function($scope,$sce,$http,$state,$stateParams,AuthService) {
-                          AuthService.AccessService('BC');
-                          
+app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,AuthService) {
+                           AuthService.AccessService('BC');
+                           var modalInstance='';
                            $scope.order_id = $stateParams.id;
                            var order_id = $stateParams.id;
                            
@@ -25,9 +25,66 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$state','$statePara
                                           $scope.received = PoData.data.records.received_total[0].received;
                                           $scope.received_line = PoData.data.records.received_line;
                                           $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
-                                         console.log(currentPOUrl);
+                                          $scope.po_id = PoData.data.records.po_id;
+                                          getNotesDetail($scope.po_id);
                                   });
                        		}
+
+                       	  
+                          function getNotesDetail(po_id)
+                          {
+                            var ArrNotes = {};
+                            ArrNotes.table ='purchase_notes'
+                            ArrNotes.cond ={po_id: po_id}
+                            $http.post('api/public/common/GetTableRecords',ArrNotes).success(function(result) {
+                                if(result.data.success == '1') 
+                                {
+                                    $scope.AllNotesData =result.data.records;
+                                } 
+                              });
+                          }
+                       	  $scope.items = 'item1';
+                          $scope.addNotes = function () {
+	                            $scope.edit='add';
+	                            var modalInstance = $modal.open({
+	                              templateUrl: 'views/front/purchase/note.html',
+	                              scope : $scope,
+	                              
+	                            });
+	                             modalInstance.result.then(function (selectedItem) {
+	                                 $scope.selected = selectedItem;
+	                             }, function () {
+	                              //$log.info('Modal dismissed at: ' + new Date());
+	                             });
+	                              $scope.ClosePopup = function (cancel)
+	                             {
+	                               	modalInstance.dismiss('cancel');
+	                             };
+	                             $scope.Savenotes=function(notes)
+	                            {
+	                                var Note_data = {};
+	                                Note_data.data = notes;
+	                                Note_data.data.po_id = $scope.po_id;
+	                                Note_data.table = 'purchase_notes';
+	                                Note_data.data.note_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
+
+	                                $http.post('api/public/common/InsertRecords',Note_data).success(function(Listdata) {
+	                                      getNotesDetail($scope.po_id);
+	                                });
+	                                modalInstance.dismiss('cancel');
+	                            };
+                          }
+                         
+ 						 $scope.removeNotes = function(index,id){
+ 						 	  var Note_data = {};
+	                          Note_data.cond = {id:id};
+	                          Note_data.table = 'purchase_notes';
+                              $http.post('api/public/common/DeleteTableRecords',Note_data).success(function(Listdata) {
+                                //getNotesDetail(getclient_id);
+                              });
+                              $scope.AllNotesData.splice(index,1);
+                          }
+
                            $scope.ChangeOrderStatus = function(order_id,value){
                            //	console.log(value);
                             	  $http.get('api/public/purchase/ChangeOrderStatus/'+order_id+'/'+value ).success(function(PoData) 

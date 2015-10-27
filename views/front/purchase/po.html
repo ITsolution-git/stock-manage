@@ -32,9 +32,9 @@
                     <label>Job <em class="text-muted"></em></label>
                     <input type="text" class="form-control" ng-model="ArrPo.job_name"  >
                   </div>
-                  <div class="col-sm-2 m-b">
+                  <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>ShipDate <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.ship_date"  >
+                    <input type="text" datepicker-popup="{{format}}" ng-model="staff.date_end" is-open="opened" datepicker-options="dateOptions"   close-text="Close" class="form-control" ng-model="ArrPo.ship_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>In Hand Date <em class="text-muted"></em></label>
@@ -112,7 +112,7 @@
                 <div class="tab-content p b-a no-b-t bg-white m-b-md">
                   <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab10">
                     
-                     <iframe ng-src="{{currentPOUrl}}" height="500" width="100%"> Please wait...</iframe> 
+                     <!-- <iframe ng-src="{{currentPOUrl}}" height="500" width="100%"> Please wait...</iframe>  -->
                   </div>
                   <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">
 
@@ -159,7 +159,33 @@
                   <textarea cols="40" ui-event="{ blur : 'shipttoblock($event,order_id)' }" ng-model="ArrPo.shipt_block"  rows="8"></textarea>
                   </div>
 
-                  <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">notes</div>
+                  <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">
+                    <div class="form-group col-md-12 nopad-form tabTitle m-b">
+                      <div class="col-md-2 nopad-left">Date</div>
+                      <div class="col-md-2 nopad-left">Note</div>
+                     
+                    </div>
+                    <div ng-repeat="po_note in AllNotesData" class="col-md-12 nopad-form tab_client_details">                      
+                      <div class="form-group col-md-12 nopad-form m-b">
+                        <div class="col-md-2 nopad-left">
+                          <input type="text" class="form-control" disabled="" ng-model="po_note.note_date">
+                        </div>
+                        <div class="col-md-8 nopad-left">
+                          <input type="text" class="form-control" ng-model="po_note.note">
+                        </div>
+                        <div class="col-md-1 nopad-form">
+                          <button type="button" ng-click="removeNotes($index,po_note.id)" class="btn btn-default addButton">
+                          <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>                      
+                    </div> 
+                    <div class="col-md-12 nopad-form m-b">
+                        <button type="button" ng-click="addNotes()" class="btn btn-default addButton">
+                          <i class="fa fa-plus"></i>
+                        </button>
+                      </div> 
+                  </div>
                   
                 </div>
               </div>
