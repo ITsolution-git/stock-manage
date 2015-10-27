@@ -1,0 +1,18 @@
+<div >
+	<div class="modal-header">
+	    <h3 class="modal-title">Notes</h3>
+	</div>
+	<div class="modal-body">
+
+    	<div class="input-group col-sm-12 m-b">
+	    	<label>Notes<em class="text-muted"></em></label>
+	    	<textarea class="form-control" ng-model="UpdateNote[0].note"  ></textarea>
+    	</div>
+    	
+	</div>
+	<div class="modal-footer">                  
+  		<button class="btn btn-warning" type="button" ng-click="ClosePopup('cancel')">Cancel</button>
+	    <button class="btn btn-primary" ng-if="edit=='add'" ng-click="Savenotes(UpdateNote[0])">Save</button>
+	    <button class="btn btn-primary" ng-if="edit=='edit'" ng-click="Updatenotes(UpdateNote)">Update</button>
+	</div>
+</div>
