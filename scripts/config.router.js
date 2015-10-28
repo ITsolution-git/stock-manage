@@ -664,6 +664,31 @@ angular.module('app')
                             },
                        }
             })
+            .state('finishing', {
+              url: '/front/finishing',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+            .state('finishing.list', {
+                url: '/list',
+                templateUrl: 'views/front/finishing/list.html',
+                controller: 'finishingListCtrl',
+                data : { title: 'Finishing' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
 
 
 ;
@@ -702,3 +727,17 @@ angular.module('app')
       }
     ]
   );
+/**
+ * Returns the formatted date 
+ * @returns {date}
+ */
+function get_formated_date(unixdate)
+{
+    var date = ("0" + unixdate.getDate()).slice(-2);
+    var month = unixdate.getMonth() + 1;
+    month = ("0" + month).slice(-2);
+    var year = unixdate.getFullYear();
+
+    var new_date = year + "-" + month + "-" + date;
+    return new_date;
+}
