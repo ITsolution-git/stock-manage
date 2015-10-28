@@ -1,119 +1,206 @@
 
 <div class="row">
-  <div class="col-sm-12">
-    <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
-      <div class="panel panel-default">
-        <div class="panel-body">
-        <div class="col-sm-12"> <br>
-                 <button  type="button" class="btn btn-info"  ui-sref="purchase.po">Cultural PO</button>
-                &nbsp;
-                <button  type="button" ui-sref="purchase.sg" class="btn btn-info">Supplied Garments</button>
-                <button  type="button" ui-sref="purchase.cp" class="btn btn-info">Contract Prints</button>
-                <button  type="button" ui-sref="purchase.ce" class="btn btn-info">Contract Embrodiery</button>
-                &nbsp; </div>
-            <div class="col-sm-12 m-b">
-              <div class="col-sm-2 m-b">
-                <label>Vendor <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>Contact <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>Job <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>ShipDate <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>In Hand Date <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>Arrival Date <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-            </div>
+<div class="col-sm-12 m-b"> <br>
+    <button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Cultural PO</button>
+     <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
+ <!--   <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
+    <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button> -->
+    &nbsp; 
+    </div>
+    <div class="form-group col-sm-12 m-b">
+        <ul class="nav nav-tabs input-group col-sm-12">
+        <li class="active"> <a href data-toggle="tab" data-target="#tab01">Details</a> </li>
+        <li><a href data-toggle="tab" data-target="#tab02">Intarnal Notes</a> </li>
+        <li><a href data-toggle="tab" data-target="#tab03">Tracking</a> </li>
+          
+        </ul>
+     <div class="tab-content p b-a no-b-t bg-white m-b-md">
+     <! --- ************ Second Tab data ************------>
+      <div class="tab-pane active animated fadeIn" id="tab01">
 
-          <div class="col-sm-6 m-b  panel panel-default">
+        <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
+          <div class="panel panel-default">
+            <div class="panel-body">
+           
+                <div class="col-sm-12 m-b">
+                  <div class="col-sm-2 m-b">
+                    <label>Vendor <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.name_company"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Arrival Date <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.arrival_date"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Complete<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                  </div>
+                </div>
 
-            <div class="form-group col-sm-12 m-b">
-              <div class="col-sm-2 m-b">
-                <label>Item <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-md-2 m-b">
-                <label>Size Group <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="maincompcontact.first_name"  >
-              </div>
-              <div class="col-md-2 m-b">
-                <label>Color <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.billing_email"  >
-              </div>
-              <div class="col-md-2 m-b">
-                <label>Size <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
-              </div>
-              <div class=" col-md-2 m-b">
-                <label>Qnty <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.company_phone" >
-              </div>
-              <div class="col-md-2 m-b">
-                <label>Qnty Ordered<em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="maincompcontact.email" >
-              </div>
-              <div class=" col-md-2 m-b">
-                <label>Unit Price <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.salesweb" >
-              </div>
-              <div class="col-md-2 m-b">
-                <label>Vendor SKU <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_type">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
-                </select>
-              </div>
-              <div class=" col-md-2">
-                <label>Line Total <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_desposition">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in Arrdisposition" value="{{item.id}}"  ng-selected="{{main.client_desposition==item.id}}">{{item.value}}</option>
-                </select>
-              </div>
-              <!-- <div class="input-group col-sm-5 m-b"> <br>
-                <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
-                &nbsp;
-                <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>
-                &nbsp; </div> -->
-            </div>
+              <div class="col-sm-6 m-b tab-pane  panel panel-default">
 
-          </div>
+                <div class="form-group col-sm-12 m-b" ng-repeat="(key,poline) in ArrPoLine">
+                  <div class="col-md-1 nopad-left">
+                    <label>Item <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="poline.job_name"  >
+                  </div>
+                  <div class="col-md-1 nopad-left">
+                    <label>Size Grp <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="poline.size_group"  >
+                  </div>
+                  <div class="col-md-1 nopad-left">
+                    <label>Color <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="poline.color"  >
+                  </div>
+                  <div class="col-md-1 nopad-left">
+                    <label>Size <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="poline.size"  >
+                  </div>
+                  <div class=" col-md-1 nopad-left">
+                    <label>Qnty <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="poline.qnty" >
+                  </div>
+                  <div class="col-md-2 nopad-left">
+                    <label>Qnty Ordered<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" disabled="" ng-model="poline.qnty_ordered" >
+                  </div>
+                  <div class=" col-md-2 nopad-left">
+                    <label>Total Received <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" disabled="" ng-model="poline.total_qnty" >
+                  </div>
+                  <div class="col-md-1 nopad-left">
+                    <label>short<em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" disabled="" ng-model="poline.short" >
+                  </div>
+                  <div class=" col-md-1 nopad-left">
+                    <label>Over <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" disabled="" ng-model="poline.over" >
+                   
+                  </div>
+                    <div class=" col-md-1 nopad-left">
+                    <label><em class="text-muted"></em></label><br>
+                     <i class="mdi-navigation-arrow-forward text-lg m-t-sm pull-left" title="Unassign" ng-click="Receive_order(poline)"></i>
+                    </div>
 
-          <!-- RIGHT SIDE FORM -->
-          <div class="form-group col-sm-6 m-b">
-            <ul class="nav nav-tabs input-group col-sm-12">
-              <li class="active"> <a href data-toggle="tab" data-target="#tab10">Webportal</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab11">Unassigned</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab12">Drop ship Instruction</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab13">Notes</a> </li>
+                  <!-- <div class="input-group col-sm-5 m-b"> <br>
+                    <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
+                    &nbsp;
+                    <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>
+                    &nbsp; </div> -->
+                </div>
+                
+              </div>
 
-            </ul>
-            <div class="tab-content p b-a no-b-t bg-white m-b-md">
-              <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab10">Webportal</div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Unassigned</div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Drop ship Instruction</div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">notes</div>
+
+              <!-- RIGHT SIDE FORM -->
+              <div class="form-group col-sm-6 m-b tab-pane  panel panel-default">
+
+                <div class="form-group col-sm-12 m-b" ng-repeat="(key,received_data) in received_line">
+           
+                  <div class="col-md-2 nopad-left">
+                    <label>Qnty Received <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ui-event="{ blur : 'updateReceiveData($event,received_data.pr_id)' }" ng-model="received_data.qnty_received"  >
+                  </div>
+                  <div class="col-md-1 nopad-left">
+                    <label>Item <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="received_data.job_name"  >
+                  </div>
+                  <div class="col-md-2 nopad-left">
+                    <label>Size Group <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="received_data.size_group"  >
+                  </div>
+                  <div class="col-md-1 nopad-left">
+                    <label>Color <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="received_data.color"  >
+                  </div>
+                  <div class=" col-md-1 nopad-left">
+                    <label>Size <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="received_data.size" >
+                  </div>
+
+                  <div class="col-md-2 nopad-left">
+                    <label>Vendor<em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="received_data.name_company" >
+                  </div>
+                  <div class="col-md-2 nopad-left">
+                    <label>Time<em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="received_data.date" >
+                  </div>
+                   <div class="col-md-1 nopad-left">
+                    <label><em class="text-muted"></em></label><br>
+                    <i class="mdi-content-clear text-lg m-t-sm pull-left" title="remove" ng-click="RemoveReceiveLine(received_data.pr_id)"></i>
+                  </div>
+
+                  <!-- <div class="input-group col-sm-5 m-b"> <br>
+                    <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
+                    &nbsp;
+                    <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>
+                    &nbsp; </div> -->
+                </div>
+                 
+                 
+                  
+                </div>
+                <div style="clear:both;">&nbsp;</div>
+                <div class="col-md-2 nopad-left">
+                    <label>Ordered <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="ordered"  >
+                  </div>
+                  <div class="col-md-1 nopad-left">
+                    <label>Received <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="received"  >
+                  </div>
+
+              </div>
               
+              <div class="form-group col-sm-12 m-b"></div>
+              <!-- RIGHT SIDE FORM -->
             </div>
           </div>
-          <div>&nbsp;</div>
-          <div class="form-group col-sm-12 m-b"></div>
-          <!-- RIGHT SIDE FORM -->
+     <div class="tab-pane animated fadeIn" id="tab02">
+       
+       <div class="form-group col-md-8 nopad-form tabTitle m-b">
+        <div class="form-group col-md-12 nopad-form tabTitle m-b">
+          <div class="col-md-2 nopad-left">Date</div>
+          <div class="col-md-2 nopad-left">Note</div>
+         
         </div>
+        <div ng-repeat="po_note in AllNotesData" class="col-md-12 nopad-form tab_client_details">                      
+          <div class="form-group col-md-12 nopad-form m-b">
+            <div class="col-md-2 nopad-left">
+              <input type="text" class="form-control" disabled="" ng-model="po_note.note_date">
+            </div>
+            <div class="col-md-8 nopad-left">
+              <input type="text" class="form-control" ui-event="{ blur : 'Updatenotes($event,po_note.id)' }"  ng-model="po_note.note">
+            </div>
+            <div class="col-md-1 nopad-form">
+              <button type="button" ng-click="removeNotes($index,po_note.id)" class="btn btn-default addButton">
+              <i class="fa fa-minus"></i>
+              </button>
+            </div>
+          </div>                      
+        </div> 
+        <div class="col-md-12 nopad-form m-b">
+            <button type="button" ng-click="addNotes()" class="btn btn-default addButton">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div> 
+     </div>
+
+        <div class="form-group col-md-4 nopad-form tabTitle m-b">
+          <label>Received Notes<em class="text-muted"></em></label><br>
+          <textarea cols="40" ui-event="{ blur : 'sgreceivedNotes($event,order_id)' }" ng-model="ArrPo.received_notes"  rows="8"></textarea>
+        </div>
+     </div>
+
+     <div class="tab-pane animated fadeIn" id="tab03">
+        Tracking
+     </div>
+      
+      
+      
       </div>
-    </form>
-  </div>
+    </div>
+    </div>
+    
 </div>

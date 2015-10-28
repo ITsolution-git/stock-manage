@@ -114,12 +114,7 @@ class PurchaseController extends Controller {
     	$response = array('success' => 1, 'message' => GET_RECORDS);
     	return  response()->json(["data" => $response]);
     }
-    public function RemoveReceiveLine($id)
-	{
-		$result = $this->purchase->RemoveReceiveLine($id);
-    	$response = array('success' => 1, 'message' => DELETE_RECORD);
-    	return  response()->json(["data" => $response]);
-	}
+
 	public function Update_shiftlock()
 	{
 		$post = Input::all();

@@ -130,11 +130,7 @@ class Purchase extends Model {
 				  //echo "<pre>"; print_r($result); die;
 		return $result;
 	}
-	function RemoveReceiveLine($id)
-	{
-		$result = DB::table('purchase_received')->where('id', '=',$id )->delete();
-		return $result;
-	}
+
 	function Update_shiftlock($post)
 	{
 		$result = DB::table('purchase_order')

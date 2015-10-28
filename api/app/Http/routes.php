@@ -143,7 +143,6 @@ Route::get('purchase/GetSgData/{id}', 'PurchaseController@GetSgData');
 Route::get('purchase/ChangeOrderStatus/{id}/{value}', 'PurchaseController@ChangeOrderStatus');
 Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
 Route::post('purchase/Receive_order', 'PurchaseController@Receive_order');
-Route::get('purchase/RemoveReceiveLine/{id}', 'PurchaseController@RemoveReceiveLine');
 Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
 
 

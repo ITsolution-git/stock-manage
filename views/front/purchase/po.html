@@ -2,8 +2,8 @@
 <div class="row">
 <div class="col-sm-12 m-b"> <br>
     <button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Cultural PO</button>
-<!--     <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
-    <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
+    <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
+    <!-- <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
     <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button> -->
     &nbsp; 
     </div>
@@ -171,7 +171,7 @@
                           <input type="text" class="form-control" disabled="" ng-model="po_note.note_date">
                         </div>
                         <div class="col-md-8 nopad-left">
-                          <input type="text" class="form-control" ng-model="po_note.note">
+                          <input type="text" class="form-control" ui-event="{ blur : 'Updatenotes($event,po_note.id)' }"  ng-model="po_note.note">
                         </div>
                         <div class="col-md-1 nopad-form">
                           <button type="button" ng-click="removeNotes($index,po_note.id)" class="btn btn-default addButton">
@@ -281,7 +281,7 @@
            
                   <div class="col-md-2 nopad-left">
                     <label>Qnty Received <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="received_data.qnty_received "  >
+                    <input type="text" class="form-control" ui-event="{ blur : 'updateReceiveData($event,received_data.pr_id)' }" ng-model="received_data.qnty_received"  >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Item <em class="text-muted"></em></label>
