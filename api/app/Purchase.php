@@ -57,7 +57,7 @@ class Purchase extends Model {
 				  ->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
 				  ->leftJoin('products as p','p.id','=','oo.product_id')
 				  ->leftJoin('vendors as v','v.id','=','p.vendor_id')
-				  ->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pd.*')
+				  ->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pd.*',DB::raw('(select sum(qnty_received) from purchase_received where poline_id=pd.id) as total_qnty') )
 				  ->where('ord.status','=','1')
 				  ->where('ord.is_delete','=','1')
 				  ->where('oo.status','=','1')
@@ -71,7 +71,7 @@ class Purchase extends Model {
 				  }
 				  $result = $result->get();
 
-				  //echo "<pre>"; print_r($result); die;
+				 // echo "<pre>"; print_r($result); die;
 		return $result;
 	}
 	function getOrdarTotal($po_id)
@@ -101,6 +101,7 @@ class Purchase extends Model {
 	}
 	function EditOrderLine ($post)
 	{
+		$post['line_total'] = $post['qnty_ordered'] * $post['unit_price'];
 		$result = DB::table('purchase_detail')
    						->where('id','=',$post['id'])
    						->update(array('qnty_ordered'=>$post['qnty_ordered'],'unit_price'=>$post['unit_price'],'line_total'=>$post['line_total']));
@@ -129,11 +130,7 @@ class Purchase extends Model {
 				  //echo "<pre>"; print_r($result); die;
 		return $result;
 	}
-	function RemoveReceiveLine($id)
-	{
-		$result = DB::table('purchase_received')->where('id', '=',$id )->delete();
-		return $result;
-	}
+
 	function Update_shiftlock($post)
 	{
 		$result = DB::table('purchase_order')

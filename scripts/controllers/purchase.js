@@ -93,7 +93,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                   });
                           }
                           $scope.EditOrderLine = function(Poline_data){
-
+                          			
                             	  $http.post('api/public/purchase/EditOrderLine',Poline_data ).success(function(PoData) 
                           		  {
                                        GetPodata(order_id ); 
@@ -121,12 +121,33 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                           }
 
                           $scope.RemoveReceiveLine = function(id){
-
-                          		$http.get('api/public/purchase/RemoveReceiveLine/'+id).success(function() 
-                          		  {
-                                       GetPodata(order_id ); 
-                                  });
+                          	  var RecLine = {};
+	                          RecLine.cond = {id:id};
+	                          RecLine.table = 'purchase_received';
+                              $http.post('api/public/common/DeleteTableRecords',RecLine).success(function(Listdata) {
+                               		GetPodata(order_id ); 
+                              });
                           }
+
+                          $scope.updateReceiveData = function($event,id){
+                          		  var Receive_data = {};
+	                              Receive_data.table ='purchase_received'
+	                              Receive_data.data ={qnty_received:$event.target.value}
+	                              Receive_data.cond ={id:id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+                                  		GetPodata(order_id ); 
+                                });
+                          }
+                           $scope.Updatenotes = function($event,note_id){
+                          		  var Receive_data = {};
+	                              Receive_data.table ='purchase_notes'
+	                              Receive_data.data ={note:$event.target.value}
+	                              Receive_data.cond ={id:note_id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+                                  		getNotesDetail($scope.po_id);
+                                });
+                          }
+                          
 }]);
 app.controller('PurchaseSGCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
