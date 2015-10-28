@@ -83,7 +83,7 @@
                   </div>
                   <div class=" col-md-2 nopad-left">
                     <label>Line Total <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ui-event="{ blur : 'EditOrderLine(poline)' }" ng-model="poline.line_total" >
+                    <input type="text" class="form-control" disabled="" ng-model="poline.line_total" >
                    
                   </div>
                     <div class=" col-md-1 nopad-left">
@@ -248,7 +248,7 @@
                   </div>
                   <div class=" col-md-2 nopad-left">
                     <label>Total Received <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" disabled="" ng-model="poline.unit_price" >
+                    <input type="text" class="form-control" disabled="" ng-model="poline.total_qnty" >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>short<em class="text-muted"></em></label>
@@ -281,7 +281,7 @@
            
                   <div class="col-md-2 nopad-left">
                     <label>Qnty Received <em class="text-muted"></em></label>
-                    <input type="text" disabled="" class="form-control" ng-model="received_data.qnty_received "  >
+                    <input type="text" class="form-control" ng-model="received_data.qnty_received "  >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Item <em class="text-muted"></em></label>
