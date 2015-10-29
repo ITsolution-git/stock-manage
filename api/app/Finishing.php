@@ -9,20 +9,25 @@ use DateTime;
 class Finishing extends Model {
 
 	
-	public function getFinishingdata($data)
+	public function getFinishingdata()
 	{
         
-        $listArray = ['o.id','ol.qnty','o.job_name','p.name', DB::raw('CONCAT(c.pl_firstname," ",c.pl_lastname) as client_name'),'o.job_name',
-                      'o.category_id','c.client_id','on.order_notes'];
+        $listArray = ['o.id','f.qty','fc.category_name', DB::raw('CONCAT(c.pl_firstname," ",c.pl_lastname) as client_name'),'o.job_name',
+                      'o.status','f.note','f.category_id','c.client_id'];
 
-        $finishingData = DB::table('orders as o')
+        $query = DB::table('orders as o')
+                         ->leftJoin('finishing as f', 'o.id', '=', 'f.order_id')
                          ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
-                         ->leftJoin('order_orderlines as ol', 'o.id', '=', 'ol.order_id')
-                         ->leftJoin('products as p', 'p.id', '=', 'ol.product_id')
-                         ->leftJoin('order_notes as on', 'on.order_id', '=', 'o.id')
-                         ->select($listArray)
-                         ->where('o.in_finish_done', '!=', '')
-                         ->get();
+                         ->leftJoin('finishing_category as fc', 'f.category_id', '=', 'fc.id')
+                         ->select($listArray);
+
+        if(!empty($data))
+        {
+            $query->where('o.created_date', '=', $data['order_date']);
+        }
+        
+        $finishingData = $query->get();
+
         return $finishingData;	
 	}
 

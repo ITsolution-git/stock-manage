@@ -36,48 +36,60 @@ class FinishingController extends Controller {
     */
     public function listFinishing()
     {
-    	$post = array();
         $post = Input::all();
-        $data = $this->finishing->getFinishingdata($post);
+        $data = $this->finishing->getFinishingdata();
 
-        foreach ($data as $value) {
-            
-            $value->category_id = explode(",", $value->category_id);
-
-            $result['all'][] = $value;
-            
-            if (in_array(1,  $value->category_id))
-            {
-                $result['poly_bagging'][] = $value;
+        if(!empty($data))
+        {
+            foreach ($data as $value) {
+                
+                $result['all'][] = $value;
+                
+                if ($value->category_id == '1')
+                {
+                    $result['poly_bagging'][] = $value;
+                }
+                if ($value->category_id == '2')
+                {
+                    $result['hang_tag'][] = $value;
+                }
+                if ($value->category_id == '3')
+                {
+                    $result['tag_removal'][] = $value;
+                }
+                if ($value->category_id == '4')
+                {
+                    $result['speciality'][] = $value;
+                }
+                if ($value->category_id == '5')
+                {
+                    $result['packing'][] = $value;
+                }
+                if ($value->category_id == '6')
+                {
+                    $result['sticker'][] = $value;
+                }
+                if ($value->category_id == '7')
+                {
+                    $result['sew_on_women_tag'][] = $value;
+                }
+                if ($value->category_id == '8')
+                {
+                    $result['inside_tag'][] = $value;
+                }
+                if ($value->status == '1')
+                {
+                    $result['active'][] = $value;
+                }
+                if ($value->status == '2')
+                {
+                    $result['completed'][] = $value;
+                }
             }
-            if (in_array(2,  $value->category_id))
-            {
-                $result['hang_tag'][] = $value;
-            }
-            if (in_array(3,  $value->category_id))
-            {
-                $result['tag_removal'][] = $value;
-            }
-            if (in_array(4,  $value->category_id))
-            {
-                $result['speciality'][] = $value;
-            }
-            if (in_array(5,  $value->category_id))
-            {
-                $result['packing'][] = $value;
-            }
-            if (in_array(6,  $value->category_id))
-            {
-                $result['sticker'][] = $value;
-            }
-            if (in_array(7,  $value->category_id))
-            {
-                $result['sew_on_women_tag'][] = $value;
-            }
-            if (in_array(8,  $value->category_id))
-            {
-                $result['inside_tag'][] = $value;
-            }
+        }
+        else
+        {
+            $result = $data;
         }
     	return $this->return_response($result);
     }

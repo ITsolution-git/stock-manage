@@ -25,17 +25,19 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
 
     $scope.getList = function ()
     {
-        var date = get_formated_date($scope.finishing.date);
-        var request = $http({
-                            method: "post",
-                            url: "api/public/finishing/listFinishing",
-                            data: {
-                                order_date: date
-                            },
-                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                        });
-        request.success(function (Listdata) {
-            $scope.listFinishing = Listdata.data;
+        if($scope.finishing.date != null)
+        {
+            var date = get_formated_date($scope.finishing.date);
+            var data = {order_date:date};
+        }
+        else
+        {
+            var data = {};
+        }
+
+        $http.post('api/public/finishing/listFinishing',data).success(function(result)
+        {
+            $scope.listFinishing = result.data;
         });
     }
 
