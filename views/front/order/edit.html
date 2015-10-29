@@ -60,14 +60,6 @@
                 </div>
 
 
-
-
-
-
-
-
-
-
                 <div class="form-group col-sm-12 m-b">
                 
                 <div class="col-sm-3 m-b">
@@ -183,7 +175,7 @@
 
                         
                         <input type="text" class="col-md-1"  ng-model="order_position.qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.discharge_qnty"/>
+                        <input type="text" class="col-md-1"  ng-model="order_position.discharge_qnty" ng-keyup="keyPress($event)"/>
                         <input type="text" class="col-md-1"  ng-model="order_position.speciality_qnty"/>
                         <input type="text" class="col-md-1"  ng-model="order_position.foil_qnty"/>
                         <input type="text" class="col-md-1"  ng-model="order_position.ink_charge_qnty"/>
@@ -290,7 +282,7 @@
                   
                 </ul>
                 <div class="tab-content p b-a no-b-t bg-white m-b-md">
-                  <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab_notes">
+                  <div role="tabpanel" class="tab-pane animated fadeIn active col-md-8" id="tab_notes">
                     <div class="form-group col-md-12 nopad-form tabTitle m-b">
                      
                       <div class="col-md-2 nopad-left">Created</div>
@@ -326,6 +318,27 @@
                       </div>                 
                     &nbsp; 
                     </div>
+
+                    <div class="col-md-4">
+
+
+                      <label>Invoice Note<em class="text-muted"></em></label><br>
+                      <textarea cols="40" name="invoice_note" ui-event="{ blur : 'notesave($event,order_id)' }" ng-model="order.invoice_note" rows="8"></textarea>
+
+
+                    </div>
+
+
+                    <div class="col-md-4">
+
+
+                      <label>Garment Link<em class="text-muted"></em></label><br>
+                      <textarea cols="40" name="garment_link" ui-event="{ blur : 'notesave($event,order_id)' }" ng-model="order.garment_link" rows="8"></textarea>
+
+
+                    </div>
+
+
                   
                 </div>
 

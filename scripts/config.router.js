@@ -597,7 +597,7 @@ angular.module('app')
               url: '/sg/:id',
               templateUrl: 'views/front/purchase/sg.html',
               data : { title: 'Supplied Garments' },
-             controller: 'PurchaseSGCtrl',
+             controller: 'PurchasePOCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
             .state('purchase.ce', {
