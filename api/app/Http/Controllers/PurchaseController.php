@@ -66,7 +66,7 @@ class PurchaseController extends Controller {
 	    		$received_total = $this->purchase->getreceivedTotal($po_id);
 	    		$received_line = $this->purchase->GetPoReceived($po_id);
     		
-    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line );
+    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'po_id'=>$po_id );
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     	}
     	return  response()->json(["data" => $response]);
@@ -114,12 +114,7 @@ class PurchaseController extends Controller {
     	$response = array('success' => 1, 'message' => GET_RECORDS);
     	return  response()->json(["data" => $response]);
     }
-    public function RemoveReceiveLine($id)
-	{
-		$result = $this->purchase->RemoveReceiveLine($id);
-    	$response = array('success' => 1, 'message' => DELETE_RECORD);
-    	return  response()->json(["data" => $response]);
-	}
+
 	public function Update_shiftlock()
 	{
 		$post = Input::all();
