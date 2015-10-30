@@ -3,7 +3,7 @@
         <h4>List Finishing</h4>
     </div>
     <div class="panel-body b-b b-light">
-        <div class="form-group" ng-controller="DatepickerDemoCtrl">
+        <!-- <div class="form-group" ng-controller="DatepickerDemoCtrl">
             <label>Select Date <em class="text-muted"></em></label>
             <p class="input-group" style="width:300px;">
                 <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="finishing.date" is-open="opened" datepicker-options="dateOptions"  ng-change="getList()" close-text="Close" />
@@ -11,7 +11,7 @@
                     <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
             </p>
-        </div>
+        </div> -->
         Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
     </div>
     <div role="tabpanel" class="tab-pane animated fadeIn clientTab">
@@ -52,607 +52,609 @@
         </ul>
         <div class="tab-content p b-a no-b-t bg-white m-b-md">
             <div role="tabpanel" class="tab-pane active animated fadeIn clientTab" id="all">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.all" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.all" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="poly_bagging">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.poly_bagging" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.poly_bagging" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="hang_tag">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.hang_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.hang_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="tag_removal">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.tag_removal" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.tag_removal" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="speciality">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.speciality" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.speciality" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="packing">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.packing" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.packing" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sticker">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.sticker" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sticker" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sew_on_women_tag">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.sew_on_women_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sew_on_women_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="inside_tag">
-                <table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
-                    <thead>
-                        <tr>
-                            <th data-toggle="true">
-                              Job #
-                            </th>
-                            <th data-toggle="true">
-                                Qty
-                            </th>
-                            <th data-toggle="true">
-                                Finishing Item
-                            </th>
-                            <th data-toggle="true">
-                                Client
-                            </th>
-                            <th data-toggle="true">
-                                Job name
-                            </th>
-                            <th data-toggle="true">
-                                Note
-                            </th>
-                            <th data-toggle="true">
-                                Time(hrs)
-                            </th>
-                            <th data-toggle="true">
-                                Start
-                            </th>
-                            <th data-toggle="true">
-                                End
-                            </th>
-                            <th data-toggle="true">
-                                EST Completion Time
-                            </th>
-                            <th data-hide="phone">
-                              Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="value in listFinishing.records.inside_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                            <td>{{value.id}}</td>
-                            <td>{{value.qnty}}</td>
-                            <td>{{value.name}}</td>
-                            <td>{{value.client_name}}</td>
-                            <td>{{value.job_name}}</td>
-                            <td>{{value.order_notes}}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
-                            </td> 
-                        </tr>
-                        <tr ng-if="listFinishing.success==0"><td>{{listFinishing.message}}</td></tr>
-                    </tbody>
-                    <tfoot class="hide-if-no-paging">
-                      <tr>
-                          <td colspan="13" class="text-center">
-                              <ul class="pagination"></ul>
-                          </td>
-                      </tr>
-                    </tfoot>
-                </table>
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.inside_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="active">
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="completed">
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                    <div class="col-md-12 nopad-left">
+                        <div class="col-md-1 ">Job #</div>
+                        <div class="col-md-1 ">Qty</div>
+                        <div class="col-md-1 ">Finishing Item</div>
+                        <div class="col-md-1 ">Client</div>
+                        <div class="col-md-1 ">Job Name</div>
+                        <div class="col-md-2 ">Note</div>
+                        <div class="col-md-1 ">Time(hrs)</div>
+                        <div class="col-md-1 ">Start</div>
+                        <div class="col-md-1 ">End</div>
+                        <div class="col-md-1 ">EST Completion Time</div>
+                        <div class="col-md-1 ">Action</div>
+                    </div>                          
+                </div>
+                <div class="task_assign_details">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.completed" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.category_name}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="{{value.job_name}}" />
+                        </div>
+                        <div class="col-md-2 nopad-left">
+                            <input type="text" class="form-control" value="{{value.order_notes}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <input type="text" class="form-control" value="" />
+                        </div>
+                        <div class="col-md-1 nopad-left">
+                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
+                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
