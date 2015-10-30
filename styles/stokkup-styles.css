@@ -394,3 +394,44 @@ nav ul.nav li:hover ul.nav-sub {
 	text-align: center;
 }
 /*---------- END ----------*/
+
+
+/*=====================================
+		CLIENT - Order Page
+=====================================*/
+.client_order_form .panel-body {
+	padding-bottom: 0;
+}
+
+/*------------------------
+		LIST PAGE
+------------------------*/
+#table_list table > thead > tr > th {
+	padding: 10px 23px !important;
+	text-align: left;
+}
+#table_list table th.footable-last-column,
+#table_list table td.footable-last-column {	
+	text-align: center;
+}
+
+/* Notes Tab */
+.orderNoteTab .tab-content {
+	overflow: hidden;
+}
+.order_notes button {
+	margin-left: 7px;
+}
+.order_notes button:first-child {
+	margin-left: 0;
+}
+
+.order_notes textarea {
+	resize:none;
+	margin-bottom: 10px;
+}
+.order_notes label {
+	font-size: 1em;
+	font-weight: bold;
+}
+/*---------- END ----------*/
