@@ -99,18 +99,27 @@ $scope.openpopup = function () {
 app.controller('orderEditCtrl', ['$scope','$http','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$http,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
                   
 
-
-  $scope.keyPress = function(event){
-   console.log(event); 
-}
+                        $scope.notesave = function($event,id){
 
 
                           $scope.modalInstanceEdit  ='';
 
-                         
+                            var event_column_name =  $event.target.name;
+                            console.log(event_column_name);
+
+                            $scope.order_data_note = {};
+                            $scope.order_data_note.data = {};
+                            $scope.order_data_note.cond = {};
+                            $scope.order_data_note['table'] ='orders'
+                            $scope.order_data_note.data[event_column_name] = $event.target.value;
+                            $scope.order_data_note.cond['id'] = $stateParams.id;
+                            $http.post('api/public/common/UpdateTableRecords',$scope.order_data_note).success(function(result) {
+                                
+                              });
+                          }
+
+                          $scope.modalInstanceEdit  ='';
                           $scope.CurrentUserId =  sessionService.get('user_id');
-
-
                           $scope.CurrentController=$state.current.controller;
                          
                                       var order_id = $stateParams.id
@@ -547,9 +556,3 @@ app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','
         });
 
 }]);
-
-
-
-
-
-
