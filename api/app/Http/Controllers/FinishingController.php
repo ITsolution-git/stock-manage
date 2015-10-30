@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
 use App\Login;
+use App\Category;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -14,9 +15,10 @@ use Request;
 
 class FinishingController extends Controller { 
 
-	public function __construct(Finishing $finishing) 
+	public function __construct(Finishing $finishing, Category $category)
  	{
         $this->finishing = $finishing;
+        $this->category = $category;
     }
 
     /**
@@ -36,48 +38,60 @@ class FinishingController extends Controller {
     */
     public function listFinishing()
     {
-    	$post = array();
         $post = Input::all();
-        $data = $this->finishing->getFinishingdata($post);
+        $data = $this->finishing->getFinishingdata();
 
-        foreach ($data as $value) {
-            
-            $value->category_id = explode(",", $value->category_id);
-
-            $result['all'][] = $value;
-            
-            if (in_array(1,  $value->category_id))
-            {
-                $result['poly_bagging'][] = $value;
+        if(!empty($data))
+        {
+            foreach ($data as $value) {
+                
+                $result['all'][] = $value;
+                
+                if ($value->category_id == '1')
+                {
+                    $result['poly_bagging'][] = $value;
+                }
+                if ($value->category_id == '2')
+                {
+                    $result['hang_tag'][] = $value;
+                }
+                if ($value->category_id == '3')
+                {
+                    $result['tag_removal'][] = $value;
+                }
+                if ($value->category_id == '4')
+                {
+                    $result['speciality'][] = $value;
+                }
+                if ($value->category_id == '5')
+                {
+                    $result['packing'][] = $value;
+                }
+                if ($value->category_id == '6')
+                {
+                    $result['sticker'][] = $value;
+                }
+                if ($value->category_id == '7')
+                {
+                    $result['sew_on_women_tag'][] = $value;
+                }
+                if ($value->category_id == '8')
+                {
+                    $result['inside_tag'][] = $value;
+                }
+                if ($value->status == '1')
+                {
+                    $result['active'][] = $value;
+                }
+                if ($value->status == '2')
+                {
+                    $result['completed'][] = $value;
+                }
             }
-            if (in_array(2,  $value->category_id))
-            {
-                $result['hang_tag'][] = $value;
-            }
-            if (in_array(3,  $value->category_id))
-            {
-                $result['tag_removal'][] = $value;
-            }
-            if (in_array(4,  $value->category_id))
-            {
-                $result['speciality'][] = $value;
-            }
-            if (in_array(5,  $value->category_id))
-            {
-                $result['packing'][] = $value;
-            }
-            if (in_array(6,  $value->category_id))
-            {
-                $result['sticker'][] = $value;
-            }
-            if (in_array(7,  $value->category_id))
-            {
-                $result['sew_on_women_tag'][] = $value;
-            }
-            if (in_array(8,  $value->category_id))
-            {
-                $result['inside_tag'][] = $value;
-            }
+        }
+        else
+        {
+            $result = $data;
         }
     	return $this->return_response($result);
     }
@@ -90,7 +104,6 @@ class FinishingController extends Controller {
 	public function DeleteFinishing()
 	{
 		$post = Input::all();
-
 
 		if(!empty($post[0]))
 		{
@@ -116,110 +129,28 @@ class FinishingController extends Controller {
 
 	}
 
-
-
-/**
-* Finishing Detail controller      
-* @access public detail
-* @param  array $data
-* @return json data
-*/
-    public function finishingDetail() {
- 
-         $data = Input::all();
-         
-
-          $result = $this->finishing->finishingDetail($data);
-          
-           if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['finishing'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'finishing_position' => $result['finishing_position'],'finishing_line' => $result['finishing_line']);
-        } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['finishing'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'finishing_position' => $result['finishing_position'],'finishing_line' => $result['finishing_line']);
-        }
-        
-        return response()->json(["data" => $response]);
-
-    }
-
-
-   /**
-   * Get Finishing notes.
-   * @return json data
-   */
-    public function getFinishingNoteDetails($id)
-    {
-
-        $result = $this->finishing->getFinishingNoteDetails($id);
-        return $this->return_response($result);
-        
-    }
-
     /**
-    * Get Client Details by ID
-    * @params finishing_id
+    * Update Finishing record
+    * @params finishing array
     * @return json data
     */
-    public function getFinishingDetailById($id)
-    {
-        $result = $this->finishing->getFinishingDetailById($id);
-        return $this->return_response($result);
-    }
-
-
-    /**
-    * Update Finishing Note tab record
-    * @params finishing note array
-    * @return json data
-    */
-    public function updateFinishingNotes()
+    public function updateFinishing()
     {
         $post = Input::all();
+
+        if($post['field'] == 'category_name')
+        {
+            $category = $this->category->getCategoryByName($post['value']);
+            if(empty($category))
+            {
+                $category = $this->category->addcategory(array());
+            }
+        }
+        exit;
         $result = $this->finishing->updateFinishingNotes($post['data'][0]);
         $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
     }
-
-    /**
-    * Delete finishing note tab record.
-    * @params note_id
-    * @return json data
-    */
-    public function deleteFinishingNotes($id)
-    {
-        $result = $this->finishing->deleteFinishingNotes($id);
-        $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        return response()->json(['data'=>$data]);
-    }
-
-
-
-   /**
-   * Save Finishing notes.
-   * @return json data
-    */
-    public function saveFinishingNotes()
-    {
-
-        $post = Input::all();
-        $post['data']['created_date']=date('Y-m-d');
- 
-        if(!empty($post['data']['finishing_id']) && !empty($post['data']['finishing_notes']))
-        {
-            $result = $this->finishing->saveFinishingNotes($post['data']);
-            $message = INSERT_RECORD;
-            $success = 1;
-        }
-        else
-        {
-            $message = MISSING_PARAMS.", id";
-            $success = 0;
-        }
-        
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
-
 
 	/**
     * Get Array
