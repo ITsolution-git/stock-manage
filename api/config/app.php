@@ -137,7 +137,7 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
-
+		'Latrell\Swagger\SwaggerServiceProvider',
 		/*
 		 * Application Service Providers...
 		 */
