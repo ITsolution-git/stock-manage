@@ -99,9 +99,10 @@ $scope.openpopup = function () {
 app.controller('orderEditCtrl', ['$scope','$http','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$http,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
                   
 
-
                         $scope.notesave = function($event,id){
 
+
+                          $scope.modalInstanceEdit  ='';
 
                             var event_column_name =  $event.target.name;
                             console.log(event_column_name);
@@ -555,9 +556,3 @@ app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','
         });
 
 }]);
-
-
-
-
-
-
