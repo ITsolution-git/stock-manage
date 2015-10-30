@@ -287,8 +287,9 @@
                         <div class="col-md-12 nopad-form order_notes">
                           
                           <div class="col-md-8 nopad-left tabTitle m-b">                          
-                            <div class="col-md-3 nopad-left"><label>Created</label></div>
+                            <div class="col-md-2 nopad-left"><label>Created</label></div>
                             <div class="col-md-8 nopad-left"><label>Note</label></div>
+                            <div class="col-md-1"></div>
                             <div class="col-md-1"></div>
                           </div>
 
@@ -300,18 +301,19 @@
 
                           <div class="col-md-8 nopad-left m-b order_notes">                          
                             <div ng-repeat="order_note in allordernotes" class="col-md-12 nopad-form form-group">
-                              <div class="col-md-3 nopad-left">
+                              <div class="col-md-2 nopad-left">
                                 <input type="text" class="form-control" disabled="" ng-model="order_note.created_date">
                               </div>
                               <div class="col-md-8 nopad-left">
                                 <input type="text" class="form-control" ng-model="order_note.order_notes">
                               </div>
-                              <div class="col-md-1 nopad-left">
+                              <div class="col-md-1">
                                 <button type="button" ng-click="editOrderPopup(order_note.note_id)" class="btn btn-default addButton">
                                 <i class="fa fa-edit"></i>
                                 </button>
-
-                                <button type="button" ng-click="removeordernotes($index,order_note.note_id)" class="btn btn-default addButton">
+                              </div>
+                              <div class="col-md-1">
+                                 <button type="button" ng-click="removeordernotes($index,order_note.note_id)" class="btn btn-default addButton">
                                 <i class="fa fa-minus"></i>
                                 </button>
                               </div>
