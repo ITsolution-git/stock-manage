@@ -11,11 +11,11 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
         var permission = confirm(AllConstant.deleteMessage);
         if (permission == true)
         {
-            $http.post('api/public/finishing/deleteOrder',order_id).success(function(result, status, headers, config)
+            $http.post('api/public/finishing/deleteFinishing',order_id).success(function(result, status, headers, config)
             {
                       if(result.data.success=='1')
                       {
-                        $state.go('order.list');
+                        $state.go('finishing.list');
                         $("#order_"+order_id).remove();
                         return false;
                       }  
@@ -25,17 +25,19 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
 
     $scope.getList = function ()
     {
-        var date = get_formated_date($scope.finishing.date);
-        var request = $http({
-                            method: "post",
-                            url: "api/public/finishing/listFinishing",
-                            data: {
-                                order_date: date
-                            },
-                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                        });
-        request.success(function (Listdata) {
-            $scope.listFinishing = Listdata.data;
+        if($scope.finishing.date != null)
+        {
+            var date = get_formated_date($scope.finishing.date);
+            var data = {order_date:date};
+        }
+        else
+        {
+            var data = {};
+        }
+
+        $http.post('api/public/finishing/listFinishing',data).success(function(result)
+        {
+            $scope.listFinishing = result.data;
         });
     }
 
@@ -54,53 +56,21 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
           }
     });
 
-    $scope.openpopup = function ()
+    $scope.updateFinishing = function (table,field,id)
     {
-        var modalInstance = $modal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: 'views/front/finishing/add.html',
-            scope: $scope,
-            size: 'sm'
-        });
-
-        modalInstance.result.then(function (selectedItem)
+        var value = $("#category_name_"+id).val();
+        
+        var finishing = {value:value,table:table,field:field,id:id};
+        $http.post('api/public/finishing/updateFinishing',finishing).success(function(result)
         {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
+              if(result.data.success == '1') 
+              {
+                  $scope.allCompany =result.data.records;
+              }
+              else
+              {
+                  $scope.allCompany=[];
+              }
         });
-
-        $scope.ok = function (orderData)
-        {
-            /*$http.post('api/public/finishing/orderAdd',data).success(function(result, status, headers, config)
-            {
-                $state.go('order.list');
-                return false;
-            });*/
-
-            var order_data = {};
-            order_data.data = orderData;
-            // Address_data.data.client_id = $stateParams.id;
-            order_data.table ='orders'
-
-            $http.post('api/public/common/InsertRecords',order_data).success(function(result)
-            {
-                if(result.data.success == '1') 
-                {
-                    modalInstance.close($scope);
-                    $state.go('order.edit',{id: result.data.id,client_id:order_data.data.client_id});
-                    return false;
-                }
-                else
-                {
-                    console.log(result.data.message);
-                }
-            });
-           // modalInstance.close($scope.selected.item);
-        };
-
-        $scope.cancel = function () {
-            modalInstance.dismiss('cancel');
-        };
-    };
+    }
 }]);
