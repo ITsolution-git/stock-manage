@@ -41,21 +41,6 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
         });
     }
 
-    var companyData = {};
-    companyData.table ='client'
-    companyData.cond ={status:1,is_delete:1}
-    $http.post('api/public/common/GetTableRecords',companyData).success(function(result)
-    {
-          if(result.data.success == '1') 
-          {
-              $scope.allCompany =result.data.records;
-          } 
-          else
-          {
-              $scope.allCompany=[];
-          }
-    });
-
     $scope.updateFinishing = function (table,field,id)
     {
         var value = $("#category_name_"+id).val();
