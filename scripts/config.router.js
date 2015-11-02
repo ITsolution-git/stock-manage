@@ -604,14 +604,14 @@ angular.module('app')
               url: '/ce/:id',
               templateUrl: 'views/front/purchase/ce.html',
               data : { title: 'Contract Embrodiery' },
-             controller: 'PurchaseCECtrl',
+             controller: 'PurchasePOCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
             .state('purchase.cp', {
               url: '/cp/:id',
               templateUrl: 'views/front/purchase/cp.html',
               data : { title: 'Contract Printing' },
-             controller: 'PurchaseCPCtrl',
+             controller: 'PurchasePOCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
 
