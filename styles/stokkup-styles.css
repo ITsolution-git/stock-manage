@@ -29,8 +29,14 @@
 .nmb {
 	margin-bottom: 0;
 }
-
-
+.form-group label {
+	font-size: 1em;	
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.form-group .form-control {
+	padding: 5px;
+}
 /*==========================================
 			LAYOUT STYLES 
 ==========================================*/
@@ -47,7 +53,7 @@
 			Navigation Styles
 ==========================================*/
 nav ul.nav li {
-	width:12%;
+	width:11%;
 }
 
 nav ul.nav li a,
@@ -62,7 +68,8 @@ nav ul.nav li .nav-item > .icon {
 }
 nav ul.nav li a > .pull-right i,
 nav ul.nav li .nav-item > .pull-right i {
-	margin-left:14px;
+	margin-left: 0px;
+	/*margin-left:14px;*/
 }
 nav ul.nav li ul.nav-sub li {
 	width:100%;
@@ -393,4 +400,72 @@ nav ul.nav li:hover ul.nav-sub {
 	font-weight: bold;
 	text-align: center;
 }
+/*---------- END ----------*/
+
+
+/*=====================================
+		CLIENT - Order Page
+=====================================*/
+.client_order_form .panel-body {
+	padding-bottom: 0;
+}
+
+/*------------------------
+		LIST PAGE
+------------------------*/
+#table_list table > thead > tr > th {
+	padding: 10px 23px !important;
+	text-align: left;
+}
+#table_list table th.footable-last-column,
+#table_list table td.footable-last-column {	
+	text-align: center;
+}
+
+/* Notes Tab */
+.orderNoteTab .tab-content {
+	overflow: hidden;
+}
+.order_notes button {
+	margin-left: 7px;
+}
+.order_notes button:first-child {
+	margin-left: 0;
+}
+
+.order_notes textarea {
+	resize:none;
+	margin-bottom: 10px;
+}
+.order_notes label {
+	font-size: 1em;
+	font-weight: bold;
+}
+/*---------- END ----------*/
+
+
+/*=====================================
+		CLIENT - Purchasing Page
+=====================================*/
+/*----------------------
+	Cultural PO Tab
+----------------------*/
+.cultural_po_details {
+	padding: 30px 15px 0 15px; 
+	min-height: 391px;
+}
+.cultural_unassigned {
+	padding: 10px 15px 0 15px; 
+}
+.cultural_po_details i.mdi-navigation-arrow-forward,
+.cultural_unassigned i.mdi-navigation-arrow-back {
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+
+.stokkupForm .tab-content .cultural_unassigned .form-group {
+	margin-bottom: 15px;	
+}
+
 /*---------- END ----------*/
