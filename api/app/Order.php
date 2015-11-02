@@ -85,7 +85,7 @@ class Order extends Model {
      public function getOrderNoteDetails($id)
    {
        
-        $whereConditions = ['on.order_id' => '1','on.note_status' => '1'];
+        $whereConditions = ['on.order_id' => $id,'on.note_status' => '1'];
         $listArray = ['on.order_notes','on.note_id','on.created_date','u.user_name'];
 
         $orderNoteData = DB::table('order_notes as on')
