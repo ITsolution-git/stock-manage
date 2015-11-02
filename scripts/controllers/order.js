@@ -428,7 +428,7 @@ if($stateParams.id && $stateParams.client_id) {
                                   Note_data.data = saveNoteDetails;
                                   Note_data.data.order_id = $stateParams.id;
                                   Note_data.data.user_id = $scope.CurrentUserId;
-                                  Note_data.data.user_id = '1';
+                               
                                   
                                   $http.post('api/public/order/saveOrderNotes',Note_data).success(function(Listdata) {
                                         getNotesDetail(order_id);
