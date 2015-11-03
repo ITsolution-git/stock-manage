@@ -418,7 +418,7 @@
                 <div class="form-group col-sm-12 m-b" ng-repeat="(key,received_data) in received_line">
            
                   <div class="col-md-1 nopad-left">
-                    <input type="text" class="form-control" ui-event="{ blur : 'updateReceiveData($event,received_data.pr_id)' }" ng-model="received_data.qnty_received"  >
+                    <input type="text" class="form-control" ui-event="{ blur : 'updateReceiveData($event,received_data.pr_id,received_data.poline_id)' }" ng-model="received_data.qnty_received"  >
                   </div>
                   <div class="col-md-2 nopad-left">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.job_name"  >
@@ -440,7 +440,7 @@
                     <input type="text" disabled="" class="form-control" ng-model="received_data.date" >
                   </div>
                    <div class="col-md-1 nopad-left">
-                    <i class="mdi-content-clear text-lg m-t-sm pull-left" title="remove" ng-click="RemoveReceiveLine(received_data.pr_id)"></i>
+                    <i class="mdi-content-clear text-lg m-t-sm pull-left" title="remove" ng-click="RemoveReceiveLine(received_data.pr_id,received_data.poline_id)"></i>
                   </div>
 
                   <!-- <div class="input-group col-sm-5 m-b"> <br>

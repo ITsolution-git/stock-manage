@@ -447,15 +447,15 @@ nav ul.nav li:hover ul.nav-sub {
 /*---------------------------
 		POSITION TAB
 ---------------------------*/
-#orderTab_scroll {	
-	overflow: hidden;
+.orderTab_scroll {	
+	
 }
 
-#orderTab_scroll .positionTab_content {
+.orderTab_scroll .positionTab_content {
 	clear: both;
 	overflow: hidden;	
 }
-#orderTab_scroll .positionTab_content .form-group label {
+.orderTab_scroll .positionTab_content .form-group label {
 	font-size: 13px;
 	display: table-cell;
     vertical-align: bottom;
@@ -463,19 +463,76 @@ nav ul.nav li:hover ul.nav-sub {
     width: 100%;
     box-sizing:border-box;
 }
-#orderTab_scroll .positionTab_content .form-group label.rotateText {
+.orderTab_scroll .positionTab_content .form-group label.rotateText {
 	display: block;
 	padding: 25px 0 0 0;
 	margin-bottom: 0;
 }
 
-#orderTab_scroll .positionTab_content .form-group label.rotateText span {	
+.orderTab_scroll .positionTab_content .form-group label.rotateText span {	
 	display: inline-block;
 	-ms-transform: rotate(270deg); /* IE 9 */
     -webkit-transform: rotate(270deg); /* Chrome, Safari, Opera */
     -o-transform: rotate(270deg); /* Chrome, Safari, Opera */
     -moz-transform: rotate(270deg); /* Chrome, Safari, Opera */
     transform: rotate(270deg);
+}
+
+/*---------------------------
+		ORDER LINE TAB
+---------------------------*/
+.orderLineLeft {
+	overflow-x:scroll;
+	overflow-y: hidden;
+	border: 1px solid #cccccc;
+	box-sizing:border-box;
+	padding: 20px 0 0 20px;
+}
+.orderLineTabScroll {
+	width: 1910px !important;
+	overflow: hidden;
+}
+.cols {
+	float: left;	
+	margin-left: 15px;
+	overflow: hidden;
+}
+.cols:first-child {
+	margin-left: 0;
+}
+.cols.col-1 {
+	width: 500px;
+}
+.cols .form-group { 
+	float: left;
+}
+.cols.col-1 .form-group {	
+	margin-left: 15px;
+	width: 90px;
+}
+.cols.col-1 .secondContainer {
+	width: 230px;	
+}
+.cols.col-1 .form-group:first-child {
+	margin-left: 0;
+	width: 150px
+}
+.cols.col-2 {
+	width: 980px;
+}
+
+.orderLineTabScroll.formFields .cols.col-2 .form-group {
+	width: 70px;
+}
+.cols.col-3 {	
+	width: 400px;
+}
+.cols.col-3 .form-group {		
+	width: 100px;
+	margin-left: 10px;
+}
+.cols.col-3 .form-group.lastItem {
+	width: 60px
 }
 
 /*---------- END ----------*/

@@ -129,7 +129,7 @@
               
 <!-- POSITION TAB START -->
                 <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab1">
-                  <div id="orderTab_scroll" class="col-md-12 nopad-form">
+                  <div class="orderTab_scroll" class="col-md-12 nopad-form">
 
                     <!-- POSITION TAB TITLE -->
                     <div class="positionTab_content">                    
@@ -284,68 +284,144 @@
                       <button  type="submit" class="btn btn-info" ng-click="savePositionData(orderPositionAll)" >Save</button>
                     </div>
                   </div>
+                  
               </div>
  <!-- POSITION TAB END -->
 
  <!-- ORDER LINES TAB START -->
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
-                <div class="form-group col-md-12">
-                  <b style="margin: 0 5px 0 0 !important;"  class="col-md-1">Size Group / Product Color</b> 
-                  <b class="col-md-1">Product / Product Vendor</b>
-                  <b class="col-md-1">Qnty / Client Supplied</b>
-                  <b class="col-md-5">-------------------------------------------------------Size / Qnty------------------------------------------------------------</b>
-                  <b class="col-md-1">Markup %</b>
-                  <b class="col-md-1">Over Ride</b>
-                  <b class="col-md-1">Per Item / Sales Total</b>
-                 
-                 
-                </div><br>
-                  <div class="form-group">
-                     <div ng-repeat="(key,order_line) in orderLineAll"> 
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
+                <div class="col-md-12 nopad-form">
+                   <div class="col-md-9 nopad-left">
+                  <div class="form-group orderLineLeft">
 
-                       
-                         <select  ng-model="order_line.size_group_id"  class="col-md-1">
+                    <!-- Orderline Tab Title -->
+                    <div class="orderLineTabScroll">                      
+                      <div class="cols col-1">
+                        <div class="form-group">
+                          <label>Size Group / <br />Product Color</label>
+                        </div>
+                        <div class="form-group secondContainer">
+                          <label>Product / <br />Product Vendor</label>
+                        </div>
+                        <div class="form-group">
+                          <label>Qnty / <br />Client Supplied</label>
+                        </div>
+                      </div>
+
+                      <div class="cols col-2">
+                        <div class="form-group">
+                          <label>----------------------------------------------------------------Size / Qnty----------------------------------------------------------------</label>
+                        </div>
+                      </div>
+
+                      <div class="cols col-3">
+                        <div class="form-group">
+                          <label>Markup %</label>
+                        </div>
+                        <div class="form-group">
+                          <label>Over Ride</label>
+                        </div>
+                        <div class="form-group">
+                          <label>Per Item / <br />Sales Total</label>
+                        </div>
+                        <div class="form-group lastItem">
+                          
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Orderline Tab Fields -->
+                    <div class="orderLineTabScroll formFields" ng-repeat="(key,order_line) in orderLineAll">
+                      <div class="cols col-1">
+                        <div class="form-group">
+                          <select  ng-model="order_line.size_group_id"  class="form-control">
                            <option ng-selected="order_line.size_group_id==misc_size_group.id" ng-repeat="misc_size_group in miscData.size_group" value={{misc_size_group.id}}>{{misc_size_group.value}}</option>
-                         </select>
-
-
-                          <select  ng-model="order_line.product_id"  class="col-md-1">
+                          </select>
+                        </div>
+                        <div class="form-group secondContainer">
+                          <select  ng-model="order_line.product_id"  class="form-control">
                            <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
-                         </select>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty"/>
+                        </div>
+                      </div>
 
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty"/>
+                      <div class="cols col-2">
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.size_1"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty_1"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.size_2"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty_2"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.size_3"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty_3"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.size_4"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty_4"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.size_5"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty_5"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.size_6"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty_6"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.size_7"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.qnty_7"/>
+                        </div>
+                      </div>
 
+                      <div class="cols col-3">
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.markup"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.override"/>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control"  ng-model="order_line.peritem"/>
+                        </div>
+                        <div class="form-group lastItem">
+                          <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <button type="button" ng-click="addOrderLine()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                    </div>                    
+                    </div>
+                    <div class="form-group pull-right">
+                      <button  type="submit" class="btn btn-info" ng-click="saveOrderLineData(orderLineAll)" >Save</button>
+                    </div>
+                  </div>
 
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_1"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_1"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_2"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_2"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_3"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_3"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_4"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_4"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_5"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_5"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_6"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_6"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_7"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_7"/>
-
-
-
-                         <input type="text" class="col-md-1"  ng-model="order_line.markup"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.override"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.peritem"/>
-
-                        
-
-                         
-                        <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
-                     </div>
-                    <button type="button" ng-click="addOrderLine()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
-                    <button  type="submit" class="btn btn-info" ng-click="saveOrderLineData(orderLineAll)" >Save</button>
-                </div>
-                </div>
+                  <div class="col-md-3 nopad-right">
+                    Right side content
+                  </div>
+                </div>  
+              </div>
  <!-- ORDER LINES TAB END -->
 
 
