@@ -27,7 +27,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                           $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
                                           $scope.po_id = PoData.data.records.po_id;
                                           getNotesDetail($scope.po_id);
-                                         console.log($scope.ordered);
+                                        // console.log($scope.ordered);
                                   });
                        		}
 
@@ -130,12 +130,16 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                               });
                           }
 
-                          $scope.updateReceiveData = function($event,id){
+                          $scope.updateReceiveData = function($event,id,poline_id){
                           		  var Receive_data = {};
 	                              Receive_data.table ='purchase_received'
 	                              Receive_data.data ={qnty_received:$event.target.value}
 	                              Receive_data.cond ={id:id}
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+
+	                              		$http.get('api/public/purchase/short_over/'+poline_id).success(function(result) {
+
+	                              		});
                                   		GetPodata(order_id ); 
                                 });
                           }
@@ -145,6 +149,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                              Receive_data.data ={note:$event.target.value}
 	                              Receive_data.cond ={id:note_id}
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+
                                   		getNotesDetail($scope.po_id);
                                 });
                           }

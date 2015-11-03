@@ -112,7 +112,28 @@ class Purchase extends Model {
 		 $result = DB::table('purchase_received')->insert(array('poline_id'=>$post['id'],'qnty_received'=>$post['qnty_ordered'],'po_id'=>$post['po_id']));
         return $result;
 	}
-	
+	function shor_over($id)
+	{
+
+		 $result = DB::table('purchase_detail as pd')
+		 			->leftJoin('purchase_received as pr','pd.id','=','pr.poline_id')
+		 			->where('pd.id','=',$id)
+		 			->select('pd.qnty_ordered',DB::raw('sum(pr.qnty_received) as receiver_total'))
+		 			->get();
+
+		 if(count($result)>0)
+		 {
+		 	$short = ($result[0]->qnty_ordered > $result[0]->receiver_total)? $result[0]->qnty_ordered - $result[0]->receiver_total : 0;
+		 	$over = ($result[0]->qnty_ordered < $result[0]->receiver_total)? $result[0]->receiver_total -$result[0]->qnty_ordered : 0 ;
+		 	//echo $short."-".$over;
+		 	//die();
+		 	$result = DB::table('purchase_detail')
+   						->where('id','=',$id)
+   						->update(array('short'=>$short,'over'=>$over));
+		 }
+		 
+    	 return $result;
+	}
 	function GetPoReceived($po_id)
 	{
 		$result = DB::table('orders as ord')
@@ -123,7 +144,7 @@ class Purchase extends Model {
 				  ->leftJoin('products as p','p.id','=','oo.product_id')
 				  ->leftJoin('vendors as v','v.id','=','p.vendor_id')
 				  ->join('purchase_received as pr','pr.poline_id','=','pd.id')
-				  ->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pr.id as pr_id','pr.qnty_received','pd.*')
+				  ->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pr.id as pr_id','pr.poline_id','pr.qnty_received','pd.*')
 				  ->where('pr.po_id','=',$po_id)
 				  ->get();
 
