@@ -116,22 +116,20 @@ class Purchase extends Model {
 	{
 
 		 $result = DB::table('purchase_detail as pd')
-		 			->leftJoin('purchase_received as pr','pd.id','=','pr.poline_id')
+		 			->join('purchase_received as pr','pd.id','=','pr.poline_id')
 		 			->where('pd.id','=',$id)
 		 			->select('pd.qnty_ordered',DB::raw('sum(pr.qnty_received) as receiver_total'))
 		 			->get();
-
+		 $short=0; $over=0;
 		 if(count($result)>0)
 		 {
 		 	$short = ($result[0]->qnty_ordered > $result[0]->receiver_total)? $result[0]->qnty_ordered - $result[0]->receiver_total : 0;
 		 	$over = ($result[0]->qnty_ordered < $result[0]->receiver_total)? $result[0]->receiver_total -$result[0]->qnty_ordered : 0 ;
 		 	//echo $short."-".$over;
-		 	//die();
-		 	$result = DB::table('purchase_detail')
+		 }
+		 $result = DB::table('purchase_detail')
    						->where('id','=',$id)
    						->update(array('short'=>$short,'over'=>$over));
-		 }
-		 
     	 return $result;
 	}
 	function GetPoReceived($po_id)

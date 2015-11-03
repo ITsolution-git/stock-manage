@@ -31,7 +31,12 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                   });
                        		}
 
-                       	  
+                       	  function short_over(poline_id)
+                          {
+                          		$http.get('api/public/purchase/short_over/'+poline_id).success(function(result) {
+
+	                             });
+                          }
                           function getNotesDetail(po_id)
                           {
                             var ArrNotes = {};
@@ -121,11 +126,12 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                   });
                           }
 
-                          $scope.RemoveReceiveLine = function(id){
+                          $scope.RemoveReceiveLine = function(id,poline_id){
                           	  var RecLine = {};
 	                          RecLine.cond = {id:id};
 	                          RecLine.table = 'purchase_received';
                               $http.post('api/public/common/DeleteTableRecords',RecLine).success(function(Listdata) {
+                              		short_over(poline_id );
                                		GetPodata(order_id ); 
                               });
                           }
@@ -137,9 +143,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                              Receive_data.cond ={id:id}
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
 
-	                              		$http.get('api/public/purchase/short_over/'+poline_id).success(function(result) {
-
-	                              		});
+	                              		short_over(poline_id ); 
                                   		GetPodata(order_id ); 
                                 });
                           }
