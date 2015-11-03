@@ -79,7 +79,7 @@ class Purchase extends Model {
 		$result = DB::table('purchase_detail as pd')
 					->where('pd.po_id','=',$po_id)
 				  	->where('pd.status','=','1')
-				  	->select(DB::raw('sum(pd.qnty_ordered) as ordered'))
+				  	->select(DB::raw('sum(pd.qnty_ordered) as ordered'),DB::raw('sum(pd.line_total) as total_amount'))
 				  	->get();
 		return $result;	
 	}

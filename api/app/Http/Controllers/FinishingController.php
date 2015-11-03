@@ -46,45 +46,43 @@ class FinishingController extends Controller {
         {
             foreach ($data as $value) {
                 
-                $result['all'][] = $value;
-                
-                if ($value->category_id == '1')
+                if ($value->category_id == '1' && $value->status == '0')
                 {
                     $result['poly_bagging'][] = $value;
                 }
-                if ($value->category_id == '2')
+                if ($value->category_id == '2' && $value->status == '0')
                 {
                     $result['hang_tag'][] = $value;
                 }
-                if ($value->category_id == '3')
+                if ($value->category_id == '3' && $value->status == '0')
                 {
                     $result['tag_removal'][] = $value;
                 }
-                if ($value->category_id == '4')
+                if ($value->category_id == '4' && $value->status == '0')
                 {
                     $result['speciality'][] = $value;
                 }
-                if ($value->category_id == '5')
+                if ($value->category_id == '5' && $value->status == '0')
                 {
                     $result['packing'][] = $value;
                 }
-                if ($value->category_id == '6')
+                if ($value->category_id == '6' && $value->status == '0')
                 {
                     $result['sticker'][] = $value;
                 }
-                if ($value->category_id == '7')
+                if ($value->category_id == '7' && $value->status == '0')
                 {
                     $result['sew_on_women_tag'][] = $value;
                 }
-                if ($value->category_id == '8')
+                if ($value->category_id == '8' && $value->status == '0')
                 {
                     $result['inside_tag'][] = $value;
                 }
-                if ($value->status == '1')
+                if ($value->status == '0')
                 {
                     $result['active'][] = $value;
                 }
-                if ($value->status == '2')
+                if ($value->status == '1')
                 {
                     $result['completed'][] = $value;
                 }
@@ -165,6 +163,11 @@ class FinishingController extends Controller {
         if($post['field'] == 'note')
         {
             $finishingData['field'] = array('note' => $post['value']);
+            $finishingData['where'] = array('id' => $post['id']);
+        }
+        if($post['field'] == 'status')
+        {
+            $finishingData['field'] = array('status' => $post['value']);
             $finishingData['where'] = array('id' => $post['id']);
         }
         if(isset($post['start_time']))

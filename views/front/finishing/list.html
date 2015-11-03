@@ -68,7 +68,7 @@
                     </div>                          
                 </div>
                 <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.all" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
@@ -103,6 +103,12 @@
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
                         </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
+                        </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
                             <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
@@ -129,7 +135,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.poly_bagging" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -159,6 +165,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -186,7 +198,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.hang_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -216,6 +228,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -243,7 +261,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.tag_removal" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -273,6 +291,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -300,7 +324,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.speciality" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -330,6 +354,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -357,7 +387,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.packing" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -387,6 +417,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -414,7 +450,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sticker" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -444,6 +480,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -471,7 +513,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sew_on_women_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -501,6 +543,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -528,7 +576,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.inside_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -558,6 +606,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -585,7 +639,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -615,6 +669,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
@@ -642,7 +702,7 @@
                 <div class="task_assign_details">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.completed" ng-if="listFinishing.success>0" id="order_{{value.id}}">
                         <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.id}}" readonly/>
+                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input type="text" class="form-control" value="{{value.qty}}" readonly />
@@ -672,6 +732,12 @@
                         </div>
                         <div class="col-md-1 nopad-left">
                             <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
+                        </div>
+                        <div class="col-md-1 nopad-left">    
+                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
+                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                            </select>
                         </div>
                         <div class="col-md-1 nopad-left">
                             <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->

@@ -21,12 +21,13 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                           $scope.ArrPo = PoData.data.records.po[0];
                                           $scope.ArrPoLine = PoData.data.records.poline;
                                           $scope.ArrUnassign = PoData.data.records.unassign_order;
-                                          $scope.ordered = PoData.data.records.order_total[0].ordered;
+                                          $scope.ordered = PoData.data.records.order_total[0];
                                           $scope.received = PoData.data.records.received_total[0].received;
                                           $scope.received_line = PoData.data.records.received_line;
                                           $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
                                           $scope.po_id = PoData.data.records.po_id;
                                           getNotesDetail($scope.po_id);
+                                         console.log($scope.ordered);
                                   });
                        		}
 
