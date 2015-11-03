@@ -55,7 +55,13 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
         {
             var value = $("#note_"+id).val();
         }
-
+        if(field == 'status')
+        {
+            var value = $("#status_"+id).val();
+        }
+        alert(id);
+        alert(value);
+        alert(db_value);
         if(value != db_value)
         {
             var finishing = {value:value,table:table,field:field,id:id};
@@ -71,10 +77,6 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
                   }
             });
         }
-    }
-    $scope.updateFinishing = function ()
-    {
-
     }
     $scope.setTime = function (id,param)
     {
