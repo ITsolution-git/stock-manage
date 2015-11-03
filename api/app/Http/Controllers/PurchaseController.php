@@ -21,7 +21,7 @@ class PurchaseController extends Controller {
     {
     	if(empty($id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
     		return  response()->json(["data" => $response]);
     		die();
     	}
@@ -40,7 +40,7 @@ class PurchaseController extends Controller {
     {
     	if(empty($id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
     		return  response()->json(["data" => $response]);
     		die();
     	}
@@ -65,7 +65,9 @@ class PurchaseController extends Controller {
 	    		$order_total = $this->purchase->getOrdarTotal($po_id);
 	    		$received_total = $this->purchase->getreceivedTotal($po_id);
 	    		$received_line = $this->purchase->GetPoReceived($po_id);
-    		
+    			
+
+
     		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'po_id'=>$po_id );
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     	}
@@ -75,7 +77,7 @@ class PurchaseController extends Controller {
     {
     	if(empty($id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
     		return  response()->json(["data" => $response]);
     		die();
     	}
@@ -89,7 +91,7 @@ class PurchaseController extends Controller {
     {
     	if(empty($id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
     		return  response()->json(["data" => $response]);
     		die();
     	}
@@ -121,5 +123,20 @@ class PurchaseController extends Controller {
 		$result = $this->purchase->Update_shiftlock($post);
     	$response = array('success' => 1, 'message' => UPDATE_RECORD);
     	return  response()->json(["data" => $response]);
+	}
+	public function short_over($id)
+	{	
+		if(empty($id))
+		{
+			$response = array('success' => 0, 'message' => MISSING_PARAMS."- PoLine ID");
+    		return  response()->json(["data" => $response]);
+    		die();
+		}
+    	else
+    	{
+    		$short_over = $this->purchase->shor_over($id);
+			$response = array('success' => 1, 'message' => UPDATE_RECORD);
+    		return  response()->json(["data" => $response]);
+    	}
 	}
 }

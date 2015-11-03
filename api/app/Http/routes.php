@@ -144,6 +144,7 @@ Route::get('purchase/ChangeOrderStatus/{id}/{value}', 'PurchaseController@Change
 Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
 Route::post('purchase/Receive_order', 'PurchaseController@Receive_order');
 Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
+Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
 
 
 // ORDER CONTROLLER 
