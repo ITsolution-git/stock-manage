@@ -4,85 +4,92 @@
     <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
       <div class="panel panel-default">
         <div class="panel-body">
-        <div class="input-group col-sm-5 m-b"> <br>
-                 <button  type="button" class="btn btn-info"  ui-sref="purchase.po">Cultural PO</button>
-                &nbsp;
-                <button  type="button" ui-sref="purchase.sg" class="btn btn-info">Supplied Garments</button>
-                <button  type="button" ui-sref="purchase.cp" class="btn btn-info">Contract Prints</button>
-                <button  type="button" ui-sref="purchase.ce" class="btn btn-info">Contract Embrodiery</button>
-                &nbsp; </div>
+<div class="col-sm-12 m-b">
+    <button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Cultural PO</button>
+    <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
+    <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
+    <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button>    
+    </div>
             <div class="col-sm-12 m-b">
               <div class="col-sm-2 m-b">
-                <label>Vendor <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>Contact <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>Job <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>ShipDate <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>In Hand Date <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
-              <div class="col-sm-2 m-b">
-                <label>Arrival Date <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.client_company"  >
-              </div>
+                    <label>Purchase OrderId <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.name_company"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Client<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.arrival_date"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Job<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Created dor date<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Product to vendor Arrival<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Vendor deadline<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Vendor<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Contact<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                  </div>
             </div>
 
           <div class="col-sm-6 m-b  panel panel-default">
 
+        
             <div class="form-group col-sm-12 m-b">
+                
+                  <div class="form-group col-sm-2 m-b">
+                      <label>Location <em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-group col-sm-2 m-b">
+                      <label>Instruction <em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-group col-sm-2 m-b">
+                      <label>Color <em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-group col-sm-1 m-b">
+                      <label>Qnty <em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-group col-sm-2 m-b">
+                      <label>Price <em class="text-muted"></em></label>
+                  </div>
+                  <div class="form-group col-sm-2 m-b">
+                      <label>Total <em class="text-muted"></em></label>
+                  </div>
+                
               <div class="col-sm-2 m-b">
-                <label>Item <em class="text-muted"></em></label>
+               
                 <input type="text" class="form-control" ng-model="main.client_company"  >
               </div>
               <div class="col-md-2 m-b">
-                <label>Size Group <em class="text-muted"></em></label>
+               
                 <input type="text" class="form-control" ng-model="maincompcontact.first_name"  >
               </div>
               <div class="col-md-2 m-b">
-                <label>Color <em class="text-muted"></em></label>
                 <input type="text" class="form-control" ng-model="main.billing_email"  >
               </div>
-              <div class="col-md-2 m-b">
-                <label>Size <em class="text-muted"></em></label>
+              <div class="col-md-1 m-b">
                 <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
               </div>
               <div class=" col-md-2 m-b">
-                <label>Qnty <em class="text-muted"></em></label>
                 <input type="text" class="form-control" ng-model="main.company_phone" >
               </div>
               <div class="col-md-2 m-b">
-                <label>Qnty Ordered<em class="text-muted"></em></label>
                 <input type="text" class="form-control" ng-model="maincompcontact.email" >
               </div>
-              <div class=" col-md-2 m-b">
-                <label>Unit Price <em class="text-muted"></em></label>
-                <input type="text" class="form-control" ng-model="main.salesweb" >
-              </div>
-              <div class="col-md-2 m-b">
-                <label>Vendor SKU <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_type">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
-                </select>
-              </div>
-              <div class=" col-md-2">
-                <label>Line Total <em class="text-muted"></em></label>
-                <select class="form-control" ng-model="main.client_desposition">
-                  <option value="">Select Type</option>
-                  <option ng-repeat="item in Arrdisposition" value="{{item.id}}"  ng-selected="{{main.client_desposition==item.id}}">{{item.value}}</option>
-                </select>
-              </div>
+              
               <!-- <div class="input-group col-sm-5 m-b"> <br>
                 <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
                 &nbsp;
@@ -95,17 +102,19 @@
           <!-- RIGHT SIDE FORM -->
           <div class="form-group col-sm-6 m-b">
             <ul class="nav nav-tabs input-group col-sm-12">
-              <li class="active"> <a href data-toggle="tab" data-target="#tab10">Webportal</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab11">Unassigned</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab12">Drop ship Instruction</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab13">Notes</a> </li>
+              <li class="active"> <a href data-toggle="tab" data-target="#tab10">Placement1</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab11">Placement2</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab12">Placement3</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab13">Placement4</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab14">Garments</a> </li>
 
             </ul>
             <div class="tab-content p b-a no-b-t bg-white m-b-md">
-              <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab10">Webportal</div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Unassigned</div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Drop ship Instruction</div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">notes</div>
+              <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab10">Working</div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Working</div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Working</div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">Working</div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab14">Working</div>
               
             </div>
           </div>
