@@ -312,6 +312,8 @@ if($stateParams.id && $stateParams.client_id) {
                           $scope.savePositionData=function(postArray)
                           {
 
+
+
                            if(postArray.length != 0) {
 
                             order_id = $stateParams.id
@@ -360,6 +362,7 @@ if($stateParams.id && $stateParams.client_id) {
                                      $scope.saveOrderLineData=function(postArray)
                                     {
 
+                                     console.log(postArray);return false;
                                      if(postArray.length != 0) {
 
                                      
