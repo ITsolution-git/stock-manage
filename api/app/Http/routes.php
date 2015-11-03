@@ -162,5 +162,6 @@ Route::get('order/deleteOrderNotes/{id}', 'OrderController@deleteOrderNotes');
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/deleteFinishing', 'FinishingController@deleteFinishing');
+Route::post('finishing/updateFinishing', 'FinishingController@updateFinishing');
 Route::post('finishing/orderAdd', 'FinishingController@add');
 Route::post('finishing/orderEdit', 'FinishingController@edit');
