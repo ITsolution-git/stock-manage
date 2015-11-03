@@ -265,6 +265,20 @@
             </div>
           </div>
           <div>&nbsp;</div>
+                    
+                    <div class="col-md-1 nopad-left">                
+                      <div class="form-group">
+                        <label>Vendor ship charge<em class="text-muted"></em></label>
+                        <input type="text" class="form-control" ng-model="ArrPo.vendor_charge"  >
+                      </div>
+                    </div>
+                    <div class="col-md-1 nopad-left f-r">                
+                      <div class="form-group">
+                        <label>Total Amount<em class="text-muted"></em></label>
+                        <input type="text" disabled="" class="form-control" ng-model="ordered.total_amount"  >
+                      </div>
+                    </div>
+
           <div class="form-group col-sm-12 m-b"></div>
           <!-- RIGHT SIDE FORM -->
         </form>
@@ -442,7 +456,7 @@
                 <div style="clear:both;">&nbsp;</div>
                 <div class="col-md-2 nopad-left">
                     <label>Ordered <em class="text-muted"></em></label>
-                    <input type="text" disabled="" class="form-control" ng-model="ordered"  >
+                    <input type="text" disabled="" class="form-control" ng-model="ordered.ordered"  >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Received <em class="text-muted"></em></label>
