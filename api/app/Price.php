@@ -119,7 +119,7 @@ class Price extends Model {
 
     public function priceAdd($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup,$priceDirectGarment,$priceEmbroSwitch,$price_embro) {
         
-        print_r($data);exit;
+        
         $data['created_date'] = date("Y-m-d H:i:s");
         $data['updated_date'] = date("Y-m-d H:i:s");
         $result = DB::table('price_grid')->insert($data);

@@ -167,6 +167,50 @@ class OrderController extends Controller {
 
 
 
+/**
+   * Save Orderline order.
+   * @return json data
+    */
+    public function orderLineadd()
+    {
+
+        $post = Input::all();
+        
+
+        $post['data']['created_date']=date('Y-m-d');
+ 
+       
+            $result = $this->order->saveOrderLineData($post['data']);
+            $message = INSERT_RECORD;
+            $success = 1;
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
+
+    /**
+   * Update Orderline order.
+   * @return json data
+    */
+    public function orderLineupdate()
+    {
+
+        $post = Input::all();
+        
+
+        $post['data']['created_date']=date('Y-m-d');
+ 
+       
+            $result = $this->order->updateOrderLineData($post['data']);
+            $message = INSERT_RECORD;
+            $success = 1;
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
+
 	/**
     * Get Array
     * @return json data

@@ -362,7 +362,7 @@ if($stateParams.id && $stateParams.client_id) {
                                      $scope.saveOrderLineData=function(postArray)
                                     {
 
-                                     console.log(postArray);return false;
+                                    
                                      if(postArray.length != 0) {
 
                                      
@@ -371,6 +371,7 @@ if($stateParams.id && $stateParams.client_id) {
                                       
                                       if(angular.isUndefined(value.id)){
 
+                                      
                                       var order_data_insert  = {};
                                        value.order_id = order_id;
 
@@ -378,8 +379,7 @@ if($stateParams.id && $stateParams.client_id) {
                                        // Address_data.data.client_id = $stateParams.id;
                                         order_data_insert.table ='order_orderlines'
 
-
-                                        $http.post('api/public/common/InsertRecords',order_data_insert).success(function(result) {
+                                        $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
                                          
                                          });
                                         
@@ -390,7 +390,7 @@ if($stateParams.id && $stateParams.client_id) {
                                           order_data.table ='order_orderlines'
                                           order_data.data =value
                                           order_data.cond ={id:value.id}
-                                          $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                                          $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
                                                
 
                                             });
