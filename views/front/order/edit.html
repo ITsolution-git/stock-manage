@@ -290,8 +290,9 @@
 
  <!-- ORDER LINES TAB START -->
               <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
-                <div class="col-md-12 nopad-form">                  
-                  <div class="col-md-9 nopad-left orderLineLeft">
+                <div class="col-md-12 nopad-form">
+                   <div class="col-md-9 nopad-left">
+                  <div class="form-group orderLineLeft">
 
                     <!-- Orderline Tab Title -->
                     <div class="orderLineTabScroll">                      
@@ -309,7 +310,7 @@
 
                       <div class="cols col-2">
                         <div class="form-group">
-                          <label>----------------------------------------------------------------------------------------------------------------Size / Qnty----------------------------------------------------------------------------------------------------------------------</label>
+                          <label>----------------------------------------------------------------Size / Qnty----------------------------------------------------------------</label>
                         </div>
                       </div>
 
@@ -409,6 +410,7 @@
                     </div>
                     <div class="form-group">
                       <button type="button" ng-click="addOrderLine()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                    </div>                    
                     </div>
                     <div class="form-group pull-right">
                       <button  type="submit" class="btn btn-info" ng-click="saveOrderLineData(orderLineAll)" >Save</button>
