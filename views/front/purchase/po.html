@@ -265,6 +265,20 @@
             </div>
           </div>
           <div>&nbsp;</div>
+                    
+                    <div class="col-md-1 nopad-left">                
+                      <div class="form-group">
+                        <label>Vendor ship charge<em class="text-muted"></em></label>
+                        <input type="text" class="form-control" ng-model="ArrPo.vendor_charge"  >
+                      </div>
+                    </div>
+                    <div class="col-md-1 nopad-left f-r">                
+                      <div class="form-group">
+                        <label>Total Amount<em class="text-muted"></em></label>
+                        <input type="text" disabled="" class="form-control" ng-model="ordered.total_amount"  >
+                      </div>
+                    </div>
+
           <div class="form-group col-sm-12 m-b"></div>
           <!-- RIGHT SIDE FORM -->
         </form>
@@ -293,47 +307,70 @@
                 </div>
 
               <div class="col-sm-6 m-b tab-pane  panel panel-default">
+              
+              <div class="col-md-12 nopad-right">
+              <div class="form-group">
+                <div class="col-md-1 nopad-left">
+                  <label>Item <em class="text-muted"></em></label>                  
+                </div>
+                <div class="col-md-1 nopad-left">
+                  <label>Size Grp <em class="text-muted"></em></label>
+                </div>
+                <div class="col-md-1 nopad-left">
+                  <label>Color <em class="text-muted"></em></label>
+                </div>
+                <div class="col-md-1 nopad-left">
+                  <label>Size <em class="text-muted"></em></label>
+                </div>
+                <div class=" col-md-1 nopad-left">
+                  <label>Qnty <em class="text-muted"></em></label>
+                </div>
+                <div class="col-md-2 nopad-left">
+                  <label>Qnty Ordered<em class="text-muted"></em></label>
+                </div>
+                <div class=" col-md-2 nopad-left">
+                  <label>Total Received <em class="text-muted"></em></label>
+                </div>
+                <div class="col-md-1 nopad-left">
+                  <label>short<em class="text-muted"></em></label>
+                </div>
+                <div class=" col-md-1 nopad-left">
+                  <label>Over <em class="text-muted"></em></label>
+                </div>
+                <div class=" col-md-1 nopad-form"></div>
+              </div>
+            </div>
 
                 <div class="form-group col-sm-12 m-b" ng-repeat="(key,poline) in ArrPoLine">
                   <div class="col-md-1 nopad-left">
-                    <label>Item <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="poline.job_name"  >
                   </div>
                   <div class="col-md-1 nopad-left">
-                    <label>Size Grp <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="poline.size_group"  >
                   </div>
                   <div class="col-md-1 nopad-left">
-                    <label>Color <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="poline.color"  >
                   </div>
                   <div class="col-md-1 nopad-left">
-                    <label>Size <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="poline.size"  >
                   </div>
                   <div class=" col-md-1 nopad-left">
-                    <label>Qnty <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="poline.qnty" >
                   </div>
                   <div class="col-md-2 nopad-left">
-                    <label>Qnty Ordered<em class="text-muted"></em></label>
                     <input type="text" class="form-control" disabled="" ng-model="poline.qnty_ordered" >
                   </div>
                   <div class=" col-md-2 nopad-left">
-                    <label>Total Received <em class="text-muted"></em></label>
                     <input type="text" class="form-control" disabled="" ng-model="poline.total_qnty" >
                   </div>
                   <div class="col-md-1 nopad-left">
-                    <label>short<em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" disabled="" ng-model="poline.short" >
                   </div>
                   <div class=" col-md-1 nopad-left">
-                    <label>Over <em class="text-muted"></em></label>
                     <input type="text" class="form-control" disabled="" ng-model="poline.over" >
                    
                   </div>
                     <div class=" col-md-1 nopad-left">
-                    <label><em class="text-muted"></em></label><br>
                      <i class="mdi-navigation-arrow-forward text-lg m-t-sm pull-left" title="Unassign" ng-click="Receive_order(poline)"></i>
                     </div>
 
@@ -350,39 +387,59 @@
               <!-- RIGHT SIDE FORM -->
               <div class="form-group col-sm-6 m-b tab-pane  panel panel-default">
 
+                <div class="col-md-12 nopad-right">
+              <div class="form-group">
+                <div class="col-md-1 nopad-left">
+                  <label>Qnty Received <em class="text-muted"></em></label>                  
+                </div>
+                <div class="col-md-2 nopad-left">
+                  <label>Item <em class="text-muted"></em></label>
+                </div>
+                <div class="col-md-2 nopad-left">
+                  <label>Size Group <em class="text-muted"></em></label>
+                </div>
+                <div class="col-md-1 nopad-left">
+                  <label>Color <em class="text-muted"></em></label>
+                </div>
+                <div class=" col-md-1 nopad-left">
+                  <label>Size <em class="text-muted"></em></label>
+                </div>
+                <div class="col-md-2 nopad-left">
+                  <label>Vendor<em class="text-muted"></em></label>
+                </div>
+                <div class=" col-md-2 nopad-left">
+                  <label>Time <em class="text-muted"></em></label>
+                </div>
+                <div class=" col-md-1 nopad-form"></div>
+              </div>
+            </div>
+
+
                 <div class="form-group col-sm-12 m-b" ng-repeat="(key,received_data) in received_line">
            
-                  <div class="col-md-2 nopad-left">
-                    <label>Qnty Received <em class="text-muted"></em></label>
+                  <div class="col-md-1 nopad-left">
                     <input type="text" class="form-control" ui-event="{ blur : 'updateReceiveData($event,received_data.pr_id)' }" ng-model="received_data.qnty_received"  >
                   </div>
-                  <div class="col-md-1 nopad-left">
-                    <label>Item <em class="text-muted"></em></label>
+                  <div class="col-md-2 nopad-left">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.job_name"  >
                   </div>
                   <div class="col-md-2 nopad-left">
-                    <label>Size Group <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="received_data.size_group"  >
                   </div>
                   <div class="col-md-1 nopad-left">
-                    <label>Color <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="received_data.color"  >
                   </div>
                   <div class=" col-md-1 nopad-left">
-                    <label>Size <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="received_data.size" >
                   </div>
 
                   <div class="col-md-2 nopad-left">
-                    <label>Vendor<em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="received_data.name_company" >
                   </div>
                   <div class="col-md-2 nopad-left">
-                    <label>Time<em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="received_data.date" >
                   </div>
                    <div class="col-md-1 nopad-left">
-                    <label><em class="text-muted"></em></label><br>
                     <i class="mdi-content-clear text-lg m-t-sm pull-left" title="remove" ng-click="RemoveReceiveLine(received_data.pr_id)"></i>
                   </div>
 
@@ -399,7 +456,7 @@
                 <div style="clear:both;">&nbsp;</div>
                 <div class="col-md-2 nopad-left">
                     <label>Ordered <em class="text-muted"></em></label>
-                    <input type="text" disabled="" class="form-control" ng-model="ordered"  >
+                    <input type="text" disabled="" class="form-control" ng-model="ordered.ordered"  >
                   </div>
                   <div class="col-md-1 nopad-left">
                     <label>Received <em class="text-muted"></em></label>
