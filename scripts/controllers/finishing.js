@@ -59,9 +59,6 @@ app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$mod
         {
             var value = $("#status_"+id).val();
         }
-        alert(id);
-        alert(value);
-        alert(db_value);
         if(value != db_value)
         {
             var finishing = {value:value,table:table,field:field,id:id};
