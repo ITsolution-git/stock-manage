@@ -484,9 +484,13 @@ nav ul.nav li:hover ul.nav-sub {
 .orderLineLeft {
 	overflow-x:scroll;
 	overflow-y: hidden;
+	border: 1px solid #cccccc;
+	box-sizing:border-box;
+	padding: 20px 0 0 20px;
 }
 .orderLineTabScroll {
-	width: 1910px !important;	
+	width: 1910px !important;
+	overflow: hidden;
 }
 .cols {
 	float: left;	
