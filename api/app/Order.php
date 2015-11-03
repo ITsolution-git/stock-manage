@@ -158,6 +158,66 @@ public function saveOrderNotes($post)
    }
 
 
+   public function saveOrderLineData($post)
+   {
+       
+        $result = DB::table('order_orderlines')->insert(['order_id'=>$post['order_id'],
+            'size_group_id'=>$post['size_group_id'],
+            'product_id'=>$post['product_id'],
+            'qnty'=>$post['qnty'],
+            'markup'=>$post['markup'],
+            'override'=>$post['override'],
+            'peritem'=>$post['peritem']]);
+
+        $insertedid = DB::getPdo()->lastInsertId();
+
+
+        $post['created_date'] = date("Y-m-d H:i:s");
+
+        for ($x = 1; $x < 8; $x++) {
+             
+            $result123 = DB::table('purchase_detail')->insert(['orderline_id'=>$insertedid,
+            'size'=>$post['size_'.$x],
+            'qnty'=>$post['qnty_'.$x],
+            'date'=>$post['created_date']]);
+
+            } 
+
+   }
+
+
+
+public function updateOrderLineData($post)
+   {
+       
+       
+       print_r($post);exit;
+        $result = DB::table('order_orderlines')
+                        ->where('id','=',$post['id'])
+                        ->update(array('size_group_id'=>$post['size_group_id'],
+            'product_id'=>$post['product_id'],
+            'qnty'=>$post['qnty'],
+            'markup'=>$post['markup'],
+            'override'=>$post['override'],
+            'peritem'=>$post['peritem']));
+
+
+        $post['created_date'] = date("Y-m-d H:i:s");
+
+        for ($x = 1; $x < 8; $x++) {
+             
+            $result123 = DB::table('purchase_detail')
+                        ->where('orderline_id','=',$post['id'])
+                        ->update(array('size'=>$post['size_'.$x],
+            'qnty'=>$post['qnty_'.$x],
+            'date'=>$post['created_date']));
+
+            } 
+
+   }
+
+
+
 
     public function deleteOrder($id)
     {

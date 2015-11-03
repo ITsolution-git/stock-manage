@@ -157,6 +157,8 @@ Route::get('order/getOrderDetailById/{id}', 'OrderController@getOrderDetailById'
 Route::post('order/updateOrderNotes', 'OrderController@updateOrderNotes');
 Route::post('order/saveOrderNotes', 'OrderController@saveOrderNotes');
 Route::get('order/deleteOrderNotes/{id}', 'OrderController@deleteOrderNotes');
+Route::post('order/orderLineAdd', 'OrderController@orderLineadd');
+Route::post('order/orderLineUpdate', 'OrderController@orderLineUpdate');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
