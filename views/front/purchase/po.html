@@ -55,33 +55,33 @@
 
           <div class="col-sm-6 m-b tab-pane panel cultural_po_details panel-default">
             <!-- Cultural Details Titles -->
-            <div class="col-md-12 nopad-right">
+            <div class="col-md-12 nopad-form">
               <div class="form-group">
-                <div class="col-md-2 nopad-left">
+                <div class="col-md-2 nopad-left smallPad ">
                   <label>Item <em class="text-muted"></em></label>                  
                 </div>
-                <div class="col-md-2 nopad-left">
+                <div class="col-md-2 nopad-left smallPad ">
                   <label>Size Grp <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Color <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Size <em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-1 nopad-left">
+                <div class=" col-md-1 nopad-left smallPad ">
                   <label>Qnty <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Qnty Ordered<em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-1 nopad-left">
+                <div class=" col-md-1 nopad-left smallPad ">
                   <label>Unit Price <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Vendor<em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-1 nopad-left">
+                <div class=" col-md-1 nopad-left smallPad ">
                   <label>Line Total <em class="text-muted"></em></label>
                 </div>
                 <div class=" col-md-1 nopad-form"></div>
@@ -89,53 +89,53 @@
             </div>
 
             <!-- Cultural Details Fields -->
-            <div class="col-sm-12 nopad-right m-b" ng-repeat="(key,poline) in ArrPoLine">
-              <div class="col-md-2 nopad-left">
+            <div class="col-sm-12 nopad-form" ng-repeat="(key,poline) in ArrPoLine">
+              <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" disabled="" class="form-control" ng-model="poline.job_name"  >
                 </div>
               </div>
-              <div class="col-md-2 nopad-left">
+              <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" disabled="" class="form-control" ng-model="poline.size_group"  >
                 </div>
               </div>
-              <div class="col-md-1 nopad-left">
+              <div class="col-md-1 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" disabled="" class="form-control" ng-model="poline.color"  >
                 </div>
               </div>
-              <div class="col-md-1 nopad-left">
+              <div class="col-md-1 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" disabled="" class="form-control" ng-model="poline.size"  >
                 </div>
               </div>
-              <div class=" col-md-1 nopad-left">
+              <div class=" col-md-1 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" disabled="" class="form-control" ng-model="poline.qnty" >
                 </div>
               </div>
-              <div class="col-md-1 nopad-left">
+              <div class="col-md-1 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" ui-event="{ blur : 'EditOrderLine(poline)' }" class="form-control" ng-model="poline.qnty_ordered" >
                 </div>
               </div>
-              <div class="col-md-1 nopad-left">
+              <div class="col-md-1 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" class="form-control"  ui-event="{ blur : 'EditOrderLine(poline)' }" ng-model="poline.unit_price" >
                 </div>
               </div>
-              <div class="col-md-1 nopad-left">
+              <div class="col-md-1 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" disabled="" class="form-control" ng-model="poline.name_company" >
                 </div>
               </div>
-              <div class=" col-md-1 nopad-left">
+              <div class=" col-md-1 nopad-left smallPad ">
                 <div class="form-group">
                   <input type="text" class="form-control" disabled="" ng-model="poline.line_total" >
                 </div>
               </div>
-              <div class=" col-md-1 nopad-left">
+              <div class=" col-md-1 nopad-left smallPad ">
                 <!--label><em class="text-muted"></em></label-->
                 <i class="mdi-navigation-arrow-forward text-lg m-t-sm" title="Unassign" ng-click="ChangeOrderStatus(poline.id,0)"></i>
               </div>

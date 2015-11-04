@@ -36,12 +36,12 @@
 	padding: 0 5px;
 }
 .form-group label {
-	font-size: 1em;	
+	font-size: 12px;	
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 .form-group .form-control {
-	padding: 5px;
+	padding: 3px;
 }
 /*==========================================
 			LAYOUT STYLES 
@@ -185,7 +185,7 @@ nav ul.nav li:hover ul.nav-sub {
 		margin-bottom:0;		
 	}
 	.stokkupForm .tab-content .form-group label {
-		font-size:1em;
+		font-size:12px;
 		font-weight:bold;
 		color:#0e0e0e;
 	}
@@ -551,7 +551,7 @@ nav ul.nav li:hover ul.nav-sub {
 	Cultural PO Tab
 ----------------------*/
 .cultural_po_details {
-	padding: 30px 15px 0 15px; 
+	padding: 15px 10px 0 10px; 
 	min-height: 391px;
 }
 .cultural_unassigned {
