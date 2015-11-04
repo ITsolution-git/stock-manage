@@ -6,10 +6,10 @@
 	padding-right:0;
 }
 .nopad-left {
-	padding-left:0;
+	padding-left:0 !important;
 }
 .nopad-right {
-	padding-right:0;
+	padding-right:0 !important;
 }
 .t-mid {
 	text-align:center;
@@ -28,6 +28,12 @@
 }
 .nmb {
 	margin-bottom: 0;
+}
+.npb {
+	padding-bottom: 0;
+}
+.smallPad {
+	padding: 0 5px;
 }
 .form-group label {
 	font-size: 1em;	
@@ -562,4 +568,13 @@ nav ul.nav li:hover ul.nav-sub {
 	margin-bottom: 15px;	
 }
 
+/*---------- END ----------*/
+
+
+/*=====================================
+		CLIENT - Finishing Page
+=====================================*/
+.finishingForm .npb {
+	border: 0 none;	
+}
 /*---------- END ----------*/
