@@ -72,12 +72,25 @@ class OrderController extends Controller {
 */
     public function orderDetail() {
  
-         $data = Input::all();
-         
+        $data = Input::all();
 
-          $result = $this->order->orderDetail($data);
-          
-           if (count($result) > 0) {
+        $result = $this->order->orderDetail($data);
+
+        if(!empty($result['order_line_data']))
+        {
+            foreach($result['order_line_data'] as $row)
+            {
+                $order_line = $this->order->getOrderLineItemById($row->id);
+                $row->items = $order_line;
+                $result['order_line'][] = $row;   
+            }
+        }
+        else
+        {
+            $result['order_line'] = array();
+        }
+
+        if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line']);
         } else {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line']);

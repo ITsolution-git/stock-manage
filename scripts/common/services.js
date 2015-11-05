@@ -37,6 +37,27 @@
              },
         }
     })
+    /**
+     * Notify Service
+     * @param {type} logger
+     * @returns {services_L7.servicesAnonym$2}
+     */
+    .factory('notifyService', [
+        'logger', function (logger) {
+            return {
+                notify: function (type, message) {
+                    switch (type) {
+                        case 'info':
+                            return logger.log(message);
+                        case 'success':
+                            return logger.logSuccess(message);
+                        case 'error':
+                            return logger.logError(message);
+                    }
+                }
+            };
+        }
+    ])
     .factory('sessionService', [
                 '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
 
