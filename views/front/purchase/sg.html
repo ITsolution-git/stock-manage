@@ -1,7 +1,7 @@
 
 <div class="row">
 <div class="col-sm-12 m-b"> 
-<button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Cultural PO</button>
+<button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Company PO</button>
     <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
     <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
     <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button>  
@@ -24,17 +24,34 @@
            
                 <div class="col-sm-12 m-b">
                   <div class="col-sm-2 m-b">
-                    <label>Vendor <em class="text-muted"></em></label>
+                    <label>Client <em class="text-muted"></em></label>
                     <input type="text" class="form-control" ng-model="ArrPo.name_company"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Job Name<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.job_name"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Expected date<em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.expected_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Arrival Date <em class="text-muted"></em></label>
                     <input type="text" class="form-control" ng-model="ArrPo.arrival_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
-                    <label>Complete<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.complete"  >
+                    <label>Job # <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="order_id"  >
                   </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Sales <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.sales"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
+                    <label>Brand <em class="text-muted"></em></label>
+                    <input type="text" class="form-control" ng-model="ArrPo.brand"  >
+                  </div>
+
                 </div>
 
               <div class="col-sm-6 m-b tab-pane  panel panel-default">

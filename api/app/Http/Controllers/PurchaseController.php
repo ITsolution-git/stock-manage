@@ -52,16 +52,9 @@ class PurchaseController extends Controller {
     		$poline = $this->purchase->GetPoLinedata($id,'1');
     		$unassign_order = $this->purchase->GetPoLinedata();
 
-    		if(count($poline)>0)
-    		{
-    			$po_id = $poline[0]->po_id;
-    			
-    		}
-    		else
-    		{
-				$po_id = $unassign_order[0]->po_id;
-    		}
-	    		
+    		
+    			$po_id = $po[0]->po_id;
+    	
 	    		$order_total = $this->purchase->getOrdarTotal($po_id);
 	    		$received_total = $this->purchase->getreceivedTotal($po_id);
 	    		$received_line = $this->purchase->GetPoReceived($po_id);
@@ -87,7 +80,7 @@ class PurchaseController extends Controller {
     	}
     }
 
-    public function ChangeOrderStatus($id,$val)
+    public function ChangeOrderStatus($id,$val,$po_id=0)
     {
     	if(empty($id))
     	{
@@ -97,7 +90,7 @@ class PurchaseController extends Controller {
     	}
     	else
     	{
-    		$result = $this->purchase->ChangeOrderStatus($id,$val);
+    		$result = $this->purchase->ChangeOrderStatus($id,$val,$po_id);
     		$response = array('success' => 1, 'message' => GET_RECORDS);
     	}
     	return  response()->json(["data" => $response]);

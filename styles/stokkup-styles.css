@@ -555,7 +555,7 @@ nav ul.nav li:hover ul.nav-sub {
 	min-height: 391px;
 }
 .cultural_unassigned {
-	padding: 10px 15px 0 15px; 
+	padding: 10px 10px 0 0px; 
 }
 .cultural_po_details i.mdi-navigation-arrow-forward,
 .cultural_unassigned i.mdi-navigation-arrow-back {
