@@ -1,10 +1,10 @@
 
 <div class="row">
-<div class="col-sm-12 m-b">
-    <button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Cultural PO</button>
-    <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
-    <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
-    <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button>    
+    <div class="col-sm-12 m-b">
+          <button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Company PO</button>
+          <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
+          <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
+          <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button>    
     </div>
     <div class="form-group col-sm-12 m-b">
         <ul class="nav nav-tabs input-group col-sm-12">
@@ -137,7 +137,7 @@
               </div>
               <div class=" col-md-1 nopad-left smallPad ">
                 <!--label><em class="text-muted"></em></label-->
-                <i class="mdi-navigation-arrow-forward text-lg m-t-sm" title="Unassign" ng-click="ChangeOrderStatus(poline.id,0)"></i>
+                <i class="mdi-navigation-arrow-forward text-lg m-t-sm" title="Unassign" ng-click="ChangeOrderStatus(poline.id,0,0)"></i>
               </div>
 
               <!-- <div class="input-group col-sm-5 m-b"> <br>
@@ -156,67 +156,67 @@
               <li> <a href data-toggle="tab" data-target="#tab12">Drop ship Instruction</a> </li>
               <li> <a href data-toggle="tab" data-target="#tab13">Notes</a> </li>
             </ul>
-            <div class="tab-content p b-a no-b-t bg-white m-b-md">
+            <div class="tab-content b-a no-b-t bg-white m-b-md">
               <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab10">
                 
                  <!-- <iframe ng-src="{{currentPOUrl}}" height="500" width="100%"> Please wait...</iframe>  -->
               </div>
               <div role="tabpanel" class="tab-pane animated fadeIn cultural_unassigned" id="tab11">
                 <div class="col-md-12 nopad-form">
-                  <div class="form-group col-md-1 nopad-left"></div>
+                  <div class="form-group col-md-1 nopad-left smallPad "></div>
                   <div class="form-group col-md-11 nopad-form">
-                    <div class="col-md-3 nopad-left">
+                    <div class="col-md-3 nopad-left smallPad ">
                       <label>Item <em class="text-muted"></em></label>
                     </div>
-                    <div class="col-md-3 nopad-left">
+                    <div class="col-md-3 nopad-left smallPad ">
                       <label>Size Grp <em class="text-muted"></em></label>
                     </div>
-                    <div class="col-md-2 nopad-left">
+                    <div class="col-md-2 nopad-left smallPad ">
                       <label>Color <em class="text-muted"></em></label>
                     </div>
-                    <div class="col-md-1 nopad-left">
+                    <div class="col-md-1 nopad-left smallPad ">
                       <label>Size <em class="text-muted"></em></label>
                     </div>
-                    <div class="col-md-1 nopad-left">
+                    <div class="col-md-1 nopad-left smallPad ">
                       <label>Qnty <em class="text-muted"></em></label>
                     </div>
-                    <div class="col-md-2 nopad-left">
+                    <div class="col-md-2 nopad-left smallPad ">
                       <label>Vendor<em class="text-muted"></em></label>
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-12 m-b nopad-form" ng-repeat="(key,unassign) in ArrUnassign">
-                  <div class="col-md-1 nopad-left">
+                <div class="col-sm-12 nopad-form" ng-repeat="(key,unassign) in ArrUnassign">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <!--label><em class="text-muted"></em></label-->
-                    <i class="mdi-navigation-arrow-back text-lg m-t-sm pull-left" title="assign" ng-click="ChangeOrderStatus(unassign.id,1)"></i>
+                    <i class="mdi-navigation-arrow-back text-lg m-t-sm pull-left" title="assign" ng-click="ChangeOrderStatus(unassign.id,1,po_id)"></i>
                   </div>
                   <div class="col-md-11 nopad-form">
-                    <div class="col-md-3 nopad-left">
+                    <div class="col-md-3 nopad-left smallPad ">
                       <div class="form-group">
                         <input type="text" disabled="" class="form-control" ng-model="unassign.job_name"  >
                       </div>
                     </div>
-                    <div class="col-md-3 nopad-left">
+                    <div class="col-md-3 nopad-left smallPad ">
                       <div class="form-group">
                         <input type="text" disabled="" class="form-control" ng-model="unassign.size_group"  >
                       </div>
                     </div>
-                    <div class="col-md-2 nopad-left">                
+                    <div class="col-md-2 nopad-left smallPad ">                
                       <div class="form-group">
                         <input type="text" disabled="" class="form-control" ng-model="unassign.color"  >
                       </div>
                     </div>
-                    <div class="col-md-1 nopad-left">                
+                    <div class="col-md-1 nopad-left smallPad ">                
                       <div class="form-group">
                         <input type="text" disabled="" class="form-control" ng-model="unassign.size"  >
                       </div>
                     </div>
-                    <div class=" col-md-1 nopad-left">
+                    <div class=" col-md-1 nopad-left smallPad ">
                       <div class="form-group">
                         <input type="text" disabled="" class="form-control" ng-model="unassign.qnty" >
                       </div>
                     </div>
-                    <div class="col-md-2 nopad-left">
+                    <div class="col-md-2 nopad-left smallPad ">
                       <div class="form-group">
                         <input type="text" disabled="" class="form-control" ng-model="unassign.name_company" >
                       </div>
@@ -230,12 +230,12 @@
                     &nbsp; </div> -->
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">
+              <div role="tabpanel" class="tab-pane col-sm-12 m-b animated fadeIn" id="tab12">
                <label>Shipt to Block<em class="text-muted"></em></label><br>
               <textarea cols="40" ui-event="{ blur : 'shipttoblock($event,order_id)' }" ng-model="ArrPo.shipt_block"  rows="8"></textarea>
               </div>
 
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">
+              <div role="tabpanel" class="tab-pane col-sm-12 m-b animated fadeIn" id="tab13">
                 <div class="form-group col-md-12 nopad-form tabTitle m-b">
                   <div class="col-md-2 nopad-left">Date</div>
                   <div class="col-md-2 nopad-left">Note</div>
@@ -266,10 +266,10 @@
           </div>
           <div>&nbsp;</div>
                     
-                    <div class="col-md-1 nopad-left">                
+                    <div class="col-md-2 nopad-left">                
                       <div class="form-group">
                         <label>Vendor ship charge<em class="text-muted"></em></label>
-                        <input type="text" class="form-control" ng-model="ArrPo.vendor_charge"  >
+                        <input type="text" class="form-control" ui-event="{ blur : 'vendorshipcharte($event)' }"  ng-model="ArrPo.vendor_charge"  >
                       </div>
                     </div>
                     <div class="col-md-1 nopad-left f-r">                

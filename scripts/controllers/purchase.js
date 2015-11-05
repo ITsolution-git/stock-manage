@@ -91,9 +91,9 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                               $scope.AllNotesData.splice(index,1);
                           }
 
-                           $scope.ChangeOrderStatus = function(order_id,value){
+                           $scope.ChangeOrderStatus = function(poline_id,value,po_id){
                            //	console.log(value);
-                            	  $http.get('api/public/purchase/ChangeOrderStatus/'+order_id+'/'+value ).success(function(PoData) 
+                            	  $http.get('api/public/purchase/ChangeOrderStatus/'+poline_id+'/'+value+'/'+po_id ).success(function(PoData) 
                           		  {
                                        GetPodata(order_id ); 
                                   });
@@ -155,6 +155,16 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
 
                                   		getNotesDetail($scope.po_id);
+                                });
+                          }
+                          $scope.vendorshipcharte = function($event){
+                          		  var Receive_data = {};
+	                              Receive_data.table ='purchase_order'
+	                              Receive_data.data ={vendor_charge:$event.target.value}
+	                              Receive_data.cond ={ po_id :$scope.po_id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+
+                                  		//getNotesDetail(po_id);
                                 });
                           }
                           
