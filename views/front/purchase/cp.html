@@ -5,10 +5,10 @@
       <div class="panel panel-default">
         <div class="panel-body">
 <div class="col-sm-12 m-b">
-    <button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Company PO</button>
-    <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
-    <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
-    <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button>    
+    <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info">Company PO</button>
+    <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info">Supplied Garments</button>
+    <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info">Contract Prints</button>
+    <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info">Contract Embrodiery</button>    
     </div>
             <div class="col-sm-12 m-b">
               <div class="col-sm-2 m-b">
@@ -141,6 +141,24 @@
                       <div class="form-group">
                         <label>Total Amount<em class="text-muted"></em></label>
                         <input type="text" disabled="" class="form-control" ng-model="ordered.total_amount"  >
+                      </div>
+                    </div>
+                    <div class="col-md-2 nopad-left smallPad">                
+                      <div class="form-group">
+                        <label>Bill To 3rd Party<em class="text-muted"></em></label>
+                        <textarea cols="30"  ng-model="ArrPo.shipt_block"  rows="8"></textarea>
+                      </div>
+                    </div>
+                    <div class="col-md-2 nopad-left smallPad">                
+                      <div class="form-group">
+                        <label>Ship to<em class="text-muted"></em></label>
+                        <textarea cols="30"  ng-model="ArrPo.shipt_block"  rows="8"></textarea>
+                      </div>
+                    </div>
+                    <div class="col-md-2 nopad-left smallPad">                
+                      <div class="form-group">
+                        <label>Vendor Instruction<em class="text-muted"></em></label>
+                        <textarea cols="40"  ng-model="ArrPo.shipt_block"  rows="8"></textarea>
                       </div>
                     </div>
           <div class="form-group col-sm-12 m-b"></div>
