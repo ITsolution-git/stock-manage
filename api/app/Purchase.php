@@ -14,8 +14,9 @@ class Purchase extends Model {
 					->leftJoin('order_orderlines as oo','oo.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('products as p','p.id','=','oo.product_id')
+					->leftJoin('purchase_order as pr','pr.order_id','=','ord.id')
 					->leftJoin('vendors as v','v.id','=','p.vendor_id')
-					->select('cl.client_company','v.name_company','ord.id','ord.status','ord.type_id','ord.type_value')
+					->select('cl.client_company','v.name_company','ord.id','ord.status','ord.type_id','pr.po_id','ord.type_value')
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->GroupBy('ord.id')
@@ -25,7 +26,7 @@ class Purchase extends Model {
 	}
 	function GetPodata($id)
 	{
-		$result = DB::select("SELECT p.name as product_name,po.shipt_block,v.name_company,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,oo.*,v.url
+		$result = DB::select("SELECT p.name as product_name,po.shipt_block,po.po_id,po.vendor_charge,v.name_company,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,oo.*,v.url
 		FROM orders ord
 		left join order_orderlines oo on oo.order_id = ord.id
 		left join purchase_order po on po.order_id = ord.id
@@ -34,8 +35,8 @@ class Purchase extends Model {
 		Left join products p on p.id = oo.product_id
 		Left join vendors v on v.id = p.vendor_id 
 		where ord.status='1' AND ord.is_delete='1' 
-		AND ord.id='".$id."'
-		GROUP BY ord.id ");
+		AND po.po_id='".$id."'
+		GROUP BY po.po_id ");
 
 		return $result;
 	}
@@ -62,29 +63,36 @@ class Purchase extends Model {
 				  ->where('ord.is_delete','=','1')
 				  ->where('oo.status','=','1')
 				  ->where('oo.is_delete','=','1')
+				  ->where('pd.size','<>','')
+				  ->where('pd.size','<>','0')
+				  ->where('pd.qnty','<>','0')
+				  ->where('pd.qnty','<>','')
 				  ->where('pd.status','=',$postatus);
 
 
-				  if($id!=0)
+				  if(!empty($id))
 				  {
-				  	//$result = $result->where('ord.id','=',$id);
+
+				  	$result = $result->where('pd.po_id','=',$id);
 				  }
 				  $result = $result->get();
 
-				 // echo "<pre>"; print_r($result); die;
+				 //echo "<pre>"; print_r($result); die;
 		return $result;
 	}
 	function getOrdarTotal($po_id)
 	{
-		$result = DB::table('purchase_detail as pd')
-					->where('pd.po_id','=',$po_id)
+		$result = DB::table('purchase_order as po')
+					->LeftJoin('purchase_detail as pd','pd.po_id','=','po.po_id')
+					->where('po.po_id','=',$po_id)
 				  	->where('pd.status','=','1')
-				  	->select(DB::raw('sum(pd.qnty_ordered) as ordered'),DB::raw('sum(pd.line_total) as total_amount'))
+				  	->select(DB::raw('sum(pd.qnty_ordered) as ordered'),'po.order_total as total_amount')
 				  	->get();
 		return $result;	
 	}
 	function getreceivedTotal($po_id)
 	{
+
 		$result = DB::table('purchase_received as pd')
 					->where('pd.po_id','=',$po_id)
 					->select(DB::raw('sum(pd.qnty_received) as received'))
@@ -92,19 +100,42 @@ class Purchase extends Model {
 		return $result;	
 	}
 
-	function ChangeOrderStatus($id,$value=0)
+	function ChangeOrderStatus($id,$value=0,$po_id)
 	{
    		$result = DB::table('purchase_detail')
    						->where('id','=',$id)
-   						->update(array('status'=>$value));
+   						->update(array('status'=>$value,'po_id'=>$po_id));
+   		$this->Update_Ordertotal($po_id);
     	return $result;
+	}
+	function Update_Ordertotal($po_id)
+	{
+
+		$value = DB::table('purchase_order as po')
+					->leftJoin('purchase_detail as pd','po.po_id','=','pd.po_id')
+					->where('po.po_id','=',$po_id)
+					->where('pd.status','=',1)
+					->select(DB::raw('sum(pd.line_total) as total'),'po.vendor_charge')
+					->get();
+		//echo "<pre>"; print_r($value); die;	
+		
+		if(count($value)>0)
+		{	
+			$sum = 	$value[0]->total + $value[0]->vendor_charge; 
+	   		$result = DB::table('purchase_order')
+	   						->where('po_id','=',$po_id)
+	   						->update(array('order_total'=>$sum));
+	    	return $result;
+    	}
 	}
 	function EditOrderLine ($post)
 	{
+		//echo "<pre>"; print_r($post['po_id']) ; die;
 		$post['line_total'] = $post['qnty_ordered'] * $post['unit_price'];
 		$result = DB::table('purchase_detail')
    						->where('id','=',$post['id'])
    						->update(array('qnty_ordered'=>$post['qnty_ordered'],'unit_price'=>$post['unit_price'],'line_total'=>$post['line_total']));
+   		$this->Update_Ordertotal($post['po_id']);
     	return $result;
 	}
 	function Receive_order($post)
@@ -112,7 +143,7 @@ class Purchase extends Model {
 		 $result = DB::table('purchase_received')->insert(array('poline_id'=>$post['id'],'qnty_received'=>$post['qnty_ordered'],'po_id'=>$post['po_id']));
         return $result;
 	}
-	function shor_over($id)
+	function short_over($id)
 	{
 
 		 $result = DB::table('purchase_detail as pd')
@@ -125,7 +156,7 @@ class Purchase extends Model {
 		 {
 		 	$short = ($result[0]->qnty_ordered > $result[0]->receiver_total)? $result[0]->qnty_ordered - $result[0]->receiver_total : 0;
 		 	$over = ($result[0]->qnty_ordered < $result[0]->receiver_total)? $result[0]->receiver_total -$result[0]->qnty_ordered : 0 ;
-		 	//echo $short."-".$over;
+		 	//echo $short."-".$over; die();
 		 }
 		 $result = DB::table('purchase_detail')
    						->where('id','=',$id)
@@ -153,7 +184,7 @@ class Purchase extends Model {
 	function Update_shiftlock($post)
 	{
 		$result = DB::table('purchase_order')
-   						->where('order_id','=',$post['order_id'])
+   						->where('order_id','=',$post['po_id'])
    						->update(array('shipt_block'=>$post['data']));
     	return $result;
 	}

@@ -28,8 +28,10 @@ angular
     'pascalprecht.translate',
     'oc.lazyLoad',
     'angular-loading-bar',
-    'app.services',
     'flash',
-    'app.dashboard'
-    
+    'app.dashboard',
+    'app.ui.ctrls',
+    'app.ui.directives',
+    'app.ui.services',
+    'app.services'
   ]);

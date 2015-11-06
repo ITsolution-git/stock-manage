@@ -6,10 +6,10 @@
 	padding-right:0;
 }
 .nopad-left {
-	padding-left:0;
+	padding-left:0 !important;
 }
 .nopad-right {
-	padding-right:0;
+	padding-right:0 !important;
 }
 .t-mid {
 	text-align:center;
@@ -29,13 +29,19 @@
 .nmb {
 	margin-bottom: 0;
 }
+.npb {
+	padding-bottom: 0;
+}
+.smallPad {
+	padding: 0 5px;
+}
 .form-group label {
-	font-size: 1em;	
+	font-size: 12px;	
 	font-weight: bold;
 	margin-bottom: 10px;
 }
 .form-group .form-control {
-	padding: 5px;
+	padding: 3px;
 }
 /*==========================================
 			LAYOUT STYLES 
@@ -179,7 +185,7 @@ nav ul.nav li:hover ul.nav-sub {
 		margin-bottom:0;		
 	}
 	.stokkupForm .tab-content .form-group label {
-		font-size:1em;
+		font-size:12px;
 		font-weight:bold;
 		color:#0e0e0e;
 	}
@@ -545,11 +551,11 @@ nav ul.nav li:hover ul.nav-sub {
 	Cultural PO Tab
 ----------------------*/
 .cultural_po_details {
-	padding: 30px 15px 0 15px; 
+	padding: 15px 10px 0 10px; 
 	min-height: 391px;
 }
 .cultural_unassigned {
-	padding: 10px 15px 0 15px; 
+	padding: 10px 10px 0 0px; 
 }
 .cultural_po_details i.mdi-navigation-arrow-forward,
 .cultural_unassigned i.mdi-navigation-arrow-back {
@@ -562,4 +568,13 @@ nav ul.nav li:hover ul.nav-sub {
 	margin-bottom: 15px;	
 }
 
+/*---------- END ----------*/
+
+
+/*=====================================
+		CLIENT - Finishing Page
+=====================================*/
+.finishingForm .npb {
+	border: 0 none;	
+}
 /*---------- END ----------*/

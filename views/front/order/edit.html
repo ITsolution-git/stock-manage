@@ -349,48 +349,14 @@
                       </div>
 
                       <div class="cols col-2">
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.size_1"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.qnty_1"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.size_2"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.qnty_2"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.size_3"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.qnty_3"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.size_4"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.qnty_4"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.size_5"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.qnty_5"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.size_6"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.qnty_6"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.size_7"/>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control"  ng-model="order_line.qnty_7"/>
-                        </div>
+                        <span ng-repeat="size_qty in order_line.items">
+                            <div class="form-group">
+                              <input type="text" class="form-control"  ng-model="size_qty.size"/>
+                            </div>
+                            <div class="form-group">
+                              <input type="text" class="form-control"  ng-model="size_qty.qnty"/>
+                            </div>
+                        </span>
                       </div>
 
                       <div class="cols col-3">

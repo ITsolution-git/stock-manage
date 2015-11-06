@@ -1,8 +1,8 @@
-<div class="panel panel-default">
+<div class="panel panel-default finishingForm">
     <div class="panel-heading">
         <h4>List Finishing</h4>
     </div>
-    <div class="panel-body b-b b-light">
+    <div class="panel-body b-b b-light npb">
         <!-- <div class="form-group" ng-controller="DatepickerDemoCtrl">
             <label>Select Date <em class="text-muted"></em></label>
             <p class="input-group" style="width:300px;">
@@ -12,740 +12,952 @@
                 </span>
             </p>
         </div> -->
-        Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
-    </div>
-    <div role="tabpanel" class="tab-pane animated fadeIn clientTab">
-        <ul class="nav nav-tabs input-group col-md-12">
-            <li class="active"> 
-                <a href data-toggle="tab" data-target="#all">Overview</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#poly_bagging">Poly Bagging</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#hang_tag">Hang Tag</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#tag_removal">Tag Removal</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#speciality">Speciality</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#packing">Packing</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#sticker">Sticker</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#sew_on_women_tag">Sew On Women Tag</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#inside_tag">Inside Tag</a> 
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#active">Active</a>
-            </li>
-            <li> 
-                <a href data-toggle="tab" data-target="#completed">Completed</a>
-            </li>
-        </ul>
-        <div class="tab-content p b-a no-b-t bg-white m-b-md">
-            <div role="tabpanel" class="tab-pane active animated fadeIn clientTab" id="all">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+        <div class="form-group">
+            Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+        </div>
+
+        <div class="col-md-12 finishingTab nopad-form">
+        <div role="tabpanel" class="tab-pane animated fadeIn clientTab">
+            <ul class="nav nav-tabs input-group col-md-12">
+                <li class="active"> 
+                    <a href data-toggle="tab" data-target="#all">Overview</a>
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#poly_bagging">Poly Bagging</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#hang_tag">Hang Tag</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#tag_removal">Tag Removal</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#speciality">Speciality</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#packing">Packing</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#sticker">Sticker</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#sew_on_women_tag">Sew On Women Tag</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#inside_tag">Inside Tag</a> 
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#active">Active</a>
+                </li>
+                <li> 
+                    <a href data-toggle="tab" data-target="#completed">Completed</a>
+                </li>
+            </ul>
+            <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                <div role="tabpanel" class="tab-pane active animated fadeIn clientTab" id="all">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end')" ng-if="value.end_time == '00:00:00'"/>
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')" ng-if="value.end_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="poly_bagging">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.poly_bagging" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="poly_bagging">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="hang_tag">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.hang_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="hang_tag">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="tag_removal">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.tag_removal" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="tag_removal">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="speciality">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.speciality" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="speciality">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="packing">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.packing" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="packing">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sticker">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sticker" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sticker">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sew_on_women_tag">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sew_on_women_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sew_on_women_tag">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="inside_tag">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.inside_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="inside_tag">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="active">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="active">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="completed">
-                <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                    <div class="col-md-12 nopad-left">
-                        <div class="col-md-1 ">Job #</div>
-                        <div class="col-md-1 ">Qty</div>
-                        <div class="col-md-1 ">Finishing Item</div>
-                        <div class="col-md-1 ">Client</div>
-                        <div class="col-md-1 ">Job Name</div>
-                        <div class="col-md-2 ">Note</div>
-                        <div class="col-md-1 ">Time(hrs)</div>
-                        <div class="col-md-1 ">Start</div>
-                        <div class="col-md-1 ">End</div>
-                        <div class="col-md-1 ">EST Completion Time</div>
-                        <div class="col-md-1 ">Action</div>
-                    </div>                          
-                </div>
-                <div class="task_assign_details">
-                    <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.completed" ng-if="listFinishing.success>0" id="order_{{value.id}}">
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="completed">
+                    <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                        <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
+                            <div class="col-md-4 nopad-form"><label>Client</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                        <div class="col-md-5 nopad-left smallPad">
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
+                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="category_name_{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name);"/>
+                        <div class="col-md-3 nopad-left smallPad">                          
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"></div>
+                            <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
-                        <div class="col-md-1 nopad-left">
-                            <input type="text" class="form-control" value="{{value.client_name}}" readonly />
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="job_name_{{value.id}}" type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name);"/>
-                        </div>
-                        <div class="col-md-2 nopad-left">
-                            <input id="note_{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note);"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
-                            <input id="time_{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start')" ng-if="value.start_time == '00:00:00'"/>
-                            <input id="start_time_{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start')" ng-if="value.start_time != '00:00:00'"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="end_time_{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end')"/>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <input id="est_{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" />
-                        </div>
-                        <div class="col-md-1 nopad-left">    
-                            <select id="status_{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status)" class="form-control">
-                                <option value="0" ng-selected="{{value.status == 0}}">No</option>
-                                <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                            <!-- <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button> -->
-                            <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                    </div>
+                    <div class="task_assign_details">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                            <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
+                                <div class="col-md-4 nopad-left smallPad">
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.order_id}}" readonly/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input type="text" class="form-control" value="{{value.qty}}" readonly />
+                                    </div>
+                                    <div class="col-md-4 nopad-left smallPad">
+                                        <input id="category_name_all{{value.id}}" type="text" class="form-control" value="{{value.category_name}}" ng-blur="updateFinishing('finishing','category_name',value.id,value.category_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-4 nopad-form">
+                                        <input type="text" class="form-control" value="{{value.client_name}}" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-5 nopad-left smallPad">
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="job_name_all{{value.id}}"  type="text" class="form-control" value="{{value.job_name}}" ng-blur="updateFinishing('orders','job_name',value.id,value.job_name,'all');"/>
+                                    </div>
+                                    <div class="col-md-5 nopad-left smallPad">
+                                        <input id="note_all{{value.id}}" type="text" class="form-control" value="{{value.note}}" ng-blur="updateFinishing('finishing','note',value.id,value.note,'all');"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-left smallPad">
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="0" ng-if="value.time == '00:00:00'"/>
+
+                                        <input id="time_all{{value.id}}" type="text" class="form-control" name="time[]" value="" ng-if="value.time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time == '00:00:00'"/>
+
+                                        <input id="start_time_all{{value.id}}" type="text" name="start_time[]" class="form-control" value="{{value.start_time}}" ng-click="setTime(value.id,'start','all')" ng-if="value.start_time != '00:00:00'"/>
+                                    </div>                            
+                                </div>
+                                <div class="col-md-3 nopad-left smallPad">                          
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time == '00:00:00'"/>
+
+                                        <input id="end_time_all{{value.id}}" type="text" name="end_time[]" class="form-control" value="{{value.end_time}}" ng-click="setTime(value.id,'end','all')" ng-if="value.end_time != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="" ng-if="value.est == '00:00:00'"/>
+
+                                        <input id="est_all{{value.id}}" type="text" name="est[]" class="form-control" value="{{value.est}}" ng-if="value.est != '00:00:00'"/>
+                                    </div>
+                                    <div class="col-md-3 nopad-left smallPad">
+                                        <select id="status_all{{value.id}}" ng-model="status" ng-change="updateFinishing('finishing','status',value.id,value.status,'all')" class="form-control">
+                                            <option value="0" ng-selected="{{value.status == 0}}">No</option>
+                                            <option value="1" ng-selected="{{value.status == 1}}">Yes</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 nopad-form t-a-c">
+                                        <button type="button" ng-click="deleteorder(value.id)" class="btn btn-default addButton" tabindex="0"><i class="fa fa-minus"></i></button>
+                                        <!--button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button-->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>

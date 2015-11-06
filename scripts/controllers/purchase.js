@@ -10,14 +10,23 @@ app.controller('PurchaseListCtrl', ['$scope',  '$http','$state','$stateParams', 
 app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,AuthService) {
                            AuthService.AccessService('BC');
                            var modalInstance='';
-                           $scope.order_id = $stateParams.id;
-                           var order_id = $stateParams.id;
-                           
-                           GetPodata(order_id );
-                           function GetPodata(order_id)
+                           //$scope.order_id = $stateParams.id;
+                           $scope.po_id = $stateParams.id;
+                           if($scope.po_id=='' || $scope.po_id==0)
                            {
-                           		$http.get('api/public/purchase/GetPodata/'+order_id ).success(function(PoData) 
+                           		$state.go('purchase.list',{"id":1});
+                           		return false;
+                           }
+                           GetPodata($scope.po_id);
+                           function GetPodata(po_id)
+                           {
+                           		$http.get('api/public/purchase/GetPodata/'+po_id ).success(function(PoData) 
                           		  {
+                          		  		  if(PoData.data.success==0)
+                          		  		  {
+                          		  		  	$state.go('purchase.list',{"id":1});
+                           					return false;
+                          		  		  }
                                           $scope.ArrPo = PoData.data.records.po[0];
                                           $scope.ArrPoLine = PoData.data.records.poline;
                                           $scope.ArrUnassign = PoData.data.records.unassign_order;
@@ -25,8 +34,8 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                           $scope.received = PoData.data.records.received_total[0].received;
                                           $scope.received_line = PoData.data.records.received_line;
                                           $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
-                                          $scope.po_id = PoData.data.records.po_id;
-                                          getNotesDetail($scope.po_id);
+                                          //$scope.po_id = PoData.data.records.po_id;
+                                          getNotesDetail(po_id);
                                         // console.log($scope.ordered);
                                   });
                        		}
@@ -37,11 +46,11 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 
 	                             });
                           }
-                          function getNotesDetail(po_id)
+                          function getNotesDetail()
                           {
                             var ArrNotes = {};
                             ArrNotes.table ='purchase_notes'
-                            ArrNotes.cond ={po_id: po_id}
+                            ArrNotes.cond ={po_id: $scope.po_id}
                             $http.post('api/public/common/GetTableRecords',ArrNotes).success(function(result) {
                                 if(result.data.success == '1') 
                                 {
@@ -91,18 +100,18 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                               $scope.AllNotesData.splice(index,1);
                           }
 
-                           $scope.ChangeOrderStatus = function(order_id,value){
+                           $scope.ChangeOrderStatus = function(poline_id,value,purchase_id ){
                            //	console.log(value);
-                            	  $http.get('api/public/purchase/ChangeOrderStatus/'+order_id+'/'+value ).success(function(PoData) 
+                            	  $http.get('api/public/purchase/ChangeOrderStatus/'+poline_id+'/'+value+'/'+purchase_id ).success(function(PoData) 
                           		  {
-                                       GetPodata(order_id ); 
+                                       GetPodata($scope.po_id ); 
                                   });
                           }
                           $scope.EditOrderLine = function(Poline_data){
                           			
                             	  $http.post('api/public/purchase/EditOrderLine',Poline_data ).success(function(PoData) 
                           		  {
-                                       GetPodata(order_id ); 
+                                       GetPodata($scope.po_id ); 
                                   });
                           }
                           $scope.shipttoblock = function($event,id){
@@ -110,19 +119,19 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                           		 var Arrshift = {};
 	                              
 	                              Arrshift.data = $event.target.value;
-	                              Arrshift.order_id = id;
+	                              Arrshift.po_id = $scope.po_id;
 								//console.log(Arrshift); return false;
 
                           		$http.post('api/public/purchase/Update_shiftlock',Arrshift ).success(function() 
                           		  {
-                                       GetPodata(order_id ); 
+                                       GetPodata($scope.po_id ); 
                                   });
                           }
                           $scope.Receive_order = function(data){
 
                           		 $http.post('api/public/purchase/Receive_order',data ).success(function() 
                           		  {
-                                       GetPodata(order_id ); 
+                                       GetPodata($scope.po_id ); 
                                   });
                           }
 
@@ -132,7 +141,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                          RecLine.table = 'purchase_received';
                               $http.post('api/public/common/DeleteTableRecords',RecLine).success(function(Listdata) {
                               		short_over(poline_id );
-                               		GetPodata(order_id ); 
+                               		GetPodata($scope.po_id ); 
                               });
                           }
 
@@ -144,7 +153,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
 
 	                              		short_over(poline_id ); 
-                                  		GetPodata(order_id ); 
+                                  		GetPodata($scope.po_id ); 
                                 });
                           }
                            $scope.Updatenotes = function($event,note_id){
@@ -155,6 +164,16 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
 
                                   		getNotesDetail($scope.po_id);
+                                });
+                          }
+                          $scope.vendorshipcharte = function($event){
+                          		  var Receive_data = {};
+	                              Receive_data.table ='purchase_order'
+	                              Receive_data.data ={vendor_charge:$event.target.value}
+	                              Receive_data.cond ={ po_id :$scope.po_id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		GetPodata($scope.po_id);
+                                  		//getNotesDetail(po_id);
                                 });
                           }
                           

@@ -18,8 +18,9 @@
   <link rel="stylesheet" href="styles/font.css" type="text/css" />
   <link rel="stylesheet" href="styles/app.css" type="text/css" />
   <link rel="stylesheet" href="libs/custom-scroll/scroller.css" type="text/css" />  
-  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" />  
+  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" /> 
   <link rel="stylesheet" href="styles/stokkup-styles-1024.css" type="text/css" />
+  <link rel="stylesheet" href="styles/_toastr.scss" type="text/css" />
 </head>
 <body ng-app="app">
   <div class="app app-login" ui-view ng-controller="AppCtrl"></div>
@@ -63,6 +64,7 @@
   <script src="scripts/app.ctrl.js"></script>
 
   <script src="scripts/directives/lazyload.js"></script>
+  <script src="scripts/directives/ui.js"></script>
   <script src="scripts/directives/ui-jp.js"></script>
   <script src="scripts/directives/ui-nav.js"></script>
   <script src="scripts/directives/ui-fullscreen.js"></script>
@@ -76,6 +78,9 @@
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/fileupload.js"></script>
+  <script src="scripts/services/UICtrl.js"></script>
+  <script src="scripts/services/UIDirective.js"></script>
+  <script src="scripts/services/UIService.js"></script>
   <script src="scripts/controllers/material.js"></script>
   <script src="scripts/controllers/xeditable.js"></script>
     <!-- COMMON LOGIN FUNCTION AND CHECK -->

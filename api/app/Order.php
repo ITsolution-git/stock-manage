@@ -36,31 +36,20 @@ class Order extends Model {
 
     public function orderDetail($data) {
 
-         
-
         $whereOrderConditions = ['id' => $data['id']];
         $orderData = DB::table('orders')->where($whereOrderConditions)->get();
-
-
 
         $whereOrderPositionConditions = ['order_id' => $data['id']];
         $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
 
-
         $whereOrderLineConditions = ['order_id' => $data['id']];
         $orderLineData = DB::table('order_orderlines')->where($whereOrderLineConditions)->get();
-
-
-
-       
 
         $whereClientConditions = ['status' => '1','is_delete' => '1','client_id' => $data['client_id']];
         $clientData = DB::table('client')->where($whereClientConditions)->get();
 
-         $whereClientMainContactConditions = ['client_id' => $data['client_id']];
+        $whereClientMainContactConditions = ['client_id' => $data['client_id']];
         $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
-
-
 
         $combine_array = array();
 
@@ -68,7 +57,7 @@ class Order extends Model {
         $combine_array['order_position'] = $orderPositionData;
         $combine_array['client_data'] = $clientData;
         $combine_array['client_main_data'] = $clientMainData;
-        $combine_array['order_line'] = $orderLineData;
+        $combine_array['order_line_data'] = $orderLineData;
        
 
         return $combine_array;
@@ -160,7 +149,6 @@ public function saveOrderNotes($post)
 
    public function saveOrderLineData($post)
    {
-       
         $result = DB::table('order_orderlines')->insert(['order_id'=>$post['order_id'],
             'size_group_id'=>$post['size_group_id'],
             'product_id'=>$post['product_id'],
@@ -174,50 +162,44 @@ public function saveOrderNotes($post)
 
         $post['created_date'] = date("Y-m-d H:i:s");
 
-        for ($x = 1; $x < 8; $x++) {
+        foreach($post['items'] as $row) {
              
             $result123 = DB::table('purchase_detail')->insert(['orderline_id'=>$insertedid,
-            'size'=>$post['size_'.$x],
-            'qnty'=>$post['qnty_'.$x],
-            'date'=>$post['created_date']]);
-
-            } 
+                'size'=>$row['size'],
+                'qnty'=>$row['qnty'],
+                'date'=>$post['created_date']]);
+        } 
 
    }
 
 
 
 public function updateOrderLineData($post)
-   {
-       
-       
-       print_r($post);exit;
-        $result = DB::table('order_orderlines')
-                        ->where('id','=',$post['id'])
-                        ->update(array('size_group_id'=>$post['size_group_id'],
-            'product_id'=>$post['product_id'],
-            'qnty'=>$post['qnty'],
-            'markup'=>$post['markup'],
-            'override'=>$post['override'],
-            'peritem'=>$post['peritem']));
+{
+    $result = DB::table('order_orderlines')
+                    ->where('id','=',$post['id'])
+                    ->update(array('size_group_id'=>$post['size_group_id'],
+                                    'product_id'=>$post['product_id'],
+                                    'qnty'=>$post['qnty'],
+                                    'markup'=>$post['markup'],
+                                    'override'=>$post['override'],
+                                    'peritem'=>$post['peritem'])
+                            );
 
 
-        $post['created_date'] = date("Y-m-d H:i:s");
+    $post['created_date'] = date("Y-m-d H:i:s");
 
-        for ($x = 1; $x < 8; $x++) {
-             
-            $result123 = DB::table('purchase_detail')
-                        ->where('orderline_id','=',$post['id'])
-                        ->update(array('size'=>$post['size_'.$x],
-            'qnty'=>$post['qnty_'.$x],
-            'date'=>$post['created_date']));
+    foreach($post['items'] as $row) {
+         
+        $result123 = DB::table('purchase_detail')
+                    ->where('id','=',$row['id'])
+                    ->update(array( 'size'=>$row['size'],
+                                    'qnty'=>$row['qnty'],
+                                    'date'=>$post['created_date'])
+                            );
+    } 
 
-            } 
-
-   }
-
-
-
+}
 
     public function deleteOrder($id)
     {
@@ -230,6 +212,19 @@ public function updateOrderLineData($post)
         {
                 return false;
         }
+    }
+
+    /**
+    * Order line Details           
+    * @access public getOrderDetailById
+    * @param  int $orderline_id
+    * @return array $result
+    */
+
+    public function getOrderLineItemById($id)
+    {
+        $result = DB::table('purchase_detail')->where('orderline_id','=',$id)->get();
+        return $result;
     }
 	
 }
