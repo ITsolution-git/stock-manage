@@ -70,13 +70,14 @@ class Purchase extends Model {
 				  ->where('pd.status','=',$postatus);
 
 
-				  if($id!=0)
+				  if(!empty($id))
 				  {
-				  	//$result = $result->where('ord.id','=',$id);
+
+				  	$result = $result->where('pd.po_id','=',$id);
 				  }
 				  $result = $result->get();
 
-				 // echo "<pre>"; print_r($result); die;
+				 //echo "<pre>"; print_r($result); die;
 		return $result;
 	}
 	function getOrdarTotal($po_id)
@@ -109,6 +110,7 @@ class Purchase extends Model {
 	}
 	function Update_Ordertotal($po_id)
 	{
+
 		$value = DB::table('purchase_order as po')
 					->leftJoin('purchase_detail as pd','po.po_id','=','pd.po_id')
 					->where('po.po_id','=',$po_id)
@@ -120,7 +122,6 @@ class Purchase extends Model {
 		if(count($value)>0)
 		{	
 			$sum = 	$value[0]->total + $value[0]->vendor_charge; 
-			//die;
 	   		$result = DB::table('purchase_order')
 	   						->where('po_id','=',$po_id)
 	   						->update(array('order_total'=>$sum));
