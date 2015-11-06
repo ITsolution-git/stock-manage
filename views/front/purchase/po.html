@@ -1,10 +1,10 @@
 
 <div class="row">
     <div class="col-sm-12 m-b">
-          <button  type="button" ui-sref="purchase.po({id:order_id})" class="btn btn-info">Company PO</button>
-          <button  type="button" ui-sref="purchase.sg({id:order_id})" class="btn btn-info">Supplied Garments</button>
-          <button  type="button" ui-sref="purchase.cp({id:order_id})" class="btn btn-info">Contract Prints</button>
-          <button  type="button" ui-sref="purchase.ce({id:order_id})" class="btn btn-info">Contract Embrodiery</button>    
+          <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info">Company PO</button>
+          <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info">Supplied Garments</button>
+          <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info">Contract Prints</button>
+          <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info">Contract Embrodiery</button>    
     </div>
     <div class="form-group col-sm-12 m-b">
         <ul class="nav nav-tabs input-group col-sm-12">
@@ -309,68 +309,68 @@
               <div class="col-sm-6 m-b tab-pane  panel panel-default cultural_po_details">
               
               <div class="col-md-12 nopad-right">
-              <div class="form-group">
-                <div class="col-md-1 nopad-left">
+              <div class="form-group nopad-form">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Item <em class="text-muted"></em></label>                  
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Size Grp <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Color <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Size <em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-1 nopad-left">
+                <div class=" col-md-1 nopad-left smallPad ">
                   <label>Qnty <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-2 nopad-left">
+                <div class="col-md-2 nopad-left smallPad ">
                   <label>Qnty Ordered<em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-2 nopad-left">
+                <div class=" col-md-2 nopad-left smallPad ">
                   <label>Total Received <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>short<em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-1 nopad-left">
+                <div class=" col-md-1 nopad-left smallPad ">
                   <label>Over <em class="text-muted"></em></label>
                 </div>
                 <div class=" col-md-1 nopad-form"></div>
               </div>
             </div>
 
-                <div class="form-group col-sm-12 m-b" ng-repeat="(key,poline) in ArrPoLine">
-                  <div class="col-md-1 nopad-left">
+                <div class="form-group nopad-form col-sm-12 m-b" ng-repeat="(key,poline) in ArrPoLine">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="poline.job_name"  >
                   </div>
-                  <div class="col-md-1 nopad-left">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="poline.size_group"  >
                   </div>
-                  <div class="col-md-1 nopad-left">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="poline.color"  >
                   </div>
-                  <div class="col-md-1 nopad-left">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="poline.size"  >
                   </div>
-                  <div class=" col-md-1 nopad-left">
+                  <div class=" col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="poline.qnty" >
                   </div>
-                  <div class="col-md-2 nopad-left">
+                  <div class="col-md-2 nopad-left smallPad ">
                     <input type="text" class="form-control" disabled="" ng-model="poline.qnty_ordered" >
                   </div>
-                  <div class=" col-md-2 nopad-left">
+                  <div class=" col-md-2 nopad-left smallPad ">
                     <input type="text" class="form-control" disabled="" ng-model="poline.total_qnty" >
                   </div>
-                  <div class="col-md-1 nopad-left">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" disabled="" ng-model="poline.short" >
                   </div>
-                  <div class=" col-md-1 nopad-left">
+                  <div class=" col-md-1 nopad-left smallPad ">
                     <input type="text" class="form-control" disabled="" ng-model="poline.over" >
                    
                   </div>
-                    <div class=" col-md-1 nopad-left">
+                    <div class=" col-md-1 nopad-left smallPad ">
                      <i class="mdi-navigation-arrow-forward text-lg m-t-sm pull-left" title="Unassign" ng-click="Receive_order(poline)"></i>
                     </div>
 
@@ -388,26 +388,26 @@
               <div class="form-group col-sm-6 m-b tab-pane cultural_po_details panel panel-default">
 
                 <div class="col-md-12 nopad-right">
-              <div class="form-group">
-                <div class="col-md-1 nopad-left">
+              <div class="form-group nopad-form">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Qnty Received <em class="text-muted"></em></label>                  
                 </div>
-                <div class="col-md-2 nopad-left">
+                <div class="col-md-2 nopad-left smallPad ">
                   <label>Item <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-2 nopad-left">
+                <div class="col-md-2 nopad-left smallPad ">
                   <label>Size Group <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-1 nopad-left">
+                <div class="col-md-1 nopad-left smallPad ">
                   <label>Color <em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-1 nopad-left">
+                <div class=" col-md-1 nopad-left smallPad ">
                   <label>Size <em class="text-muted"></em></label>
                 </div>
-                <div class="col-md-2 nopad-left">
+                <div class="col-md-2 nopad-left smallPad ">
                   <label>Vendor<em class="text-muted"></em></label>
                 </div>
-                <div class=" col-md-2 nopad-left">
+                <div class=" col-md-2 nopad-left smallPad ">
                   <label>Time <em class="text-muted"></em></label>
                 </div>
                 <div class=" col-md-1 nopad-form"></div>
@@ -415,31 +415,31 @@
             </div>
 
 
-                <div class="form-group col-sm-12 m-b" ng-repeat="(key,received_data) in received_line">
+                <div class="form-group col-sm-12 m-b nopad-form" ng-repeat="(key,received_data) in received_line">
            
-                  <div class="col-md-1 nopad-left">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <input type="text" class="form-control" ui-event="{ blur : 'updateReceiveData($event,received_data.pr_id,received_data.poline_id)' }" ng-model="received_data.qnty_received"  >
                   </div>
-                  <div class="col-md-2 nopad-left">
+                  <div class="col-md-2 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.job_name"  >
                   </div>
-                  <div class="col-md-2 nopad-left">
+                  <div class="col-md-2 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.size_group"  >
                   </div>
-                  <div class="col-md-1 nopad-left">
+                  <div class="col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.color"  >
                   </div>
-                  <div class=" col-md-1 nopad-left">
+                  <div class=" col-md-1 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.size" >
                   </div>
 
-                  <div class="col-md-2 nopad-left">
+                  <div class="col-md-2 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.name_company" >
                   </div>
-                  <div class="col-md-2 nopad-left">
+                  <div class="col-md-2 nopad-left smallPad ">
                     <input type="text" disabled="" class="form-control" ng-model="received_data.date" >
                   </div>
-                   <div class="col-md-1 nopad-left">
+                   <div class="col-md-1 nopad-left smallPad ">
                     <i class="mdi-content-clear text-lg m-t-sm pull-left" title="remove" ng-click="RemoveReceiveLine(received_data.pr_id,received_data.poline_id)"></i>
                   </div>
 

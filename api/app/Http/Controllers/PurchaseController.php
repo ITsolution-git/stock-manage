@@ -36,33 +36,36 @@ class PurchaseController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
-    public function GetPodata($id)
+    public function GetPodata($po_id)
     {
-    	if(empty($id))
+    	if(empty($po_id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id");
     		return  response()->json(["data" => $response]);
     		die();
     	}
     	else
     	{
-    		$po_id=0;
+    		$this->purchase->Update_Ordertotal($po_id);
     		$order_total=''; $received_total='';$received_line='';
-    		$po = $this->purchase->GetPodata($id);
-    		$poline = $this->purchase->GetPoLinedata($id,'1');
+    		$po = $this->purchase->GetPodata($po_id);
+    		$poline = $this->purchase->GetPoLinedata($po_id,'1');
     		$unassign_order = $this->purchase->GetPoLinedata();
 
-    		
-    			$po_id = $po[0]->po_id;
-    	
 	    		$order_total = $this->purchase->getOrdarTotal($po_id);
 	    		$received_total = $this->purchase->getreceivedTotal($po_id);
 	    		$received_line = $this->purchase->GetPoReceived($po_id);
-    			
-
-
-    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'po_id'=>$po_id );
-    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+    		if(count($po)>0)
+    		{
+	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line );
+	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+	    		return  response()->json(["data" => $response]);
+	    		die();
+    		}
     	}
     	return  response()->json(["data" => $response]);
     }
@@ -127,7 +130,7 @@ class PurchaseController extends Controller {
 		}
     	else
     	{
-    		$short_over = $this->purchase->shor_over($id);
+    		$short_over = $this->purchase->short_over($id);
 			$response = array('success' => 1, 'message' => UPDATE_RECORD);
     		return  response()->json(["data" => $response]);
     	}
