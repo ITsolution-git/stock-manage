@@ -94,27 +94,31 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     var order_id = $stateParams.id
     var client_id = $stateParams.client_id
 
-    if($stateParams.id && $stateParams.client_id) {
+    get_order_details(order_id,client_id);
+    function get_order_details(order_id,client_id)
+    {
+        if($stateParams.id && $stateParams.client_id) {
 
-        var combine_array_id = {};
-        combine_array_id.id = $stateParams.id;
-        combine_array_id.client_id = $stateParams.client_id;
-        
-        $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
-        
-            if(result.data.success == '1') {
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.client_id = $stateParams.client_id;
+            
+            $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
 
-            $scope.order = result.data.records[0];
-            $scope.client_data = result.data.client_data;
-            $scope.client_main_data = result.data.client_main_data;
-            $scope.orderPositionAll = result.data.order_position;
-            $scope.orderLineAll = result.data.order_line;
+                $scope.order = result.data.records[0];
+                $scope.client_data = result.data.client_data;
+                $scope.client_main_data = result.data.client_main_data;
+                $scope.orderPositionAll = result.data.order_position;
+                $scope.orderLineAll = result.data.order_line;
 
-            }
-            else {
-                $state.go('app.dashboard');
-            }
-        });
+                }
+                else {
+                    $state.go('app.dashboard');
+                }
+            });
+        }
     }
 
     $scope.notesave = function($event,id) {
@@ -322,8 +326,12 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                 }
             });
 
-            //$state.go('order.edit',{id: order_id,client_id:client_id},{reload:true});
-            //return false;
+            setTimeout(function () {
+                                    $('.form-control').removeClass('ng-dirty');
+                                    var data = {"status": "success", "message": "Order position details has been updated"}
+                                    notifyService.notify(data.status, data.message);
+                                    get_order_details(order_id,client_id);
+                                }, 1000);
         }
     }
 
@@ -358,10 +366,11 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             });
 
             setTimeout(function () {
+                                    $('.form-control').removeClass('ng-dirty');
                                     var data = {"status": "success", "message": "Orderline details has been updated"}
                                     notifyService.notify(data.status, data.message);
+                                    get_order_details(order_id,client_id);
                                 }, 1000);
-//            $state.go('order.edit',{id: order_id,client_id:client_id},{reload:true});
         }
         else
         {
