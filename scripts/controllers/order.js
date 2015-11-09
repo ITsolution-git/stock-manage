@@ -411,6 +411,22 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             modalInstance.dismiss('cancel');
         };
     };
+
+
+
+    $scope.saveButtonData=function(newVal,ddd)
+    {
+        
+            var buttonData = {};
+            buttonData.data = newVal;
+            buttonData.order_id = $stateParams.id;
+
+            $http.post('api/public/order/saveButtonData',buttonData).success(function(Listdata) {
+                
+            });
+            
+    }
+
     
     // **************** NOTES TAB CODE END  ****************
 

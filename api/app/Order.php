@@ -226,5 +226,35 @@ public function updateOrderLineData($post)
         $result = DB::table('purchase_detail')->where('orderline_id','=',$id)->get();
         return $result;
     }
+
+
+    /**
+    * Save button data          
+    * @access public getOrderDetailById
+    * @param  int $order_id
+    * @return array $result
+    */
+
+    public function saveButtonData($post)
+    {
+        
+        $result = DB::table('purchase_order')->where('order_id','=',$post['order_id'])->get();
+        $array_count = count($result);
+
+        if($array_count == 0) {
+
+          $result = DB::table('purchase_order')->insert(['order_id'=>$post['order_id'],
+            $post['data']=>1,
+            'date'=>$post['created_date']]);
+
+        } else {
+
+          $result123 = DB::table('purchase_order')
+                    ->where('order_id','=',$post['order_id'])
+                    ->update(array( $post['data']=>1)
+                            );
+        }
+       
+    }
 	
 }

@@ -160,6 +160,7 @@ Route::post('order/saveOrderNotes', 'OrderController@saveOrderNotes');
 Route::get('order/deleteOrderNotes/{id}', 'OrderController@deleteOrderNotes');
 Route::post('order/orderLineAdd', 'OrderController@orderLineadd');
 Route::post('order/orderLineUpdate', 'OrderController@orderLineUpdate');
+Route::post('order/saveButtonData', 'OrderController@saveButtonData');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
