@@ -224,6 +224,30 @@ class OrderController extends Controller {
     }
 
 
+   /**
+   * Save Button Data.
+   * @return json data
+   */
+
+    public function saveButtonData()
+    {
+
+        $post = Input::all();
+
+        $post['created_date']=date('Y-m-d');
+        
+        $result = $this->order->saveButtonData($post);
+        $message = INSERT_RECORD;
+        $success = 1;
+        
+       
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
+
+
 	/**
     * Get Array
     * @return json data
