@@ -176,6 +176,26 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                   		//getNotesDetail(po_id);
                                 });
                           }
+                          $scope.UpdateField_detail = function($event,id){
+                          		  var Receive_data = {};
+                          		  var name_filed = $event.target.name;
+	                              Receive_data.table ='purchase_detail'
+	                              Receive_data.data ={name_filed:$event.target.value}
+	                              Receive_data.cond ={ id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+                                });
+                          }
+                          $scope.UpdateField_order = function($event){
+                          		  var Receive_data = [];
+                          		  Receive_data.data = [];
+                          		  var name_filed = $event.target.name;
+	                              Receive_data.table ='purchase_order'
+	                              Receive_data.data[name_filed]=$event.target.value
+	                              Receive_data.cond ={ po_id :$scope.po_id}
+	                              console.log(Receive_data); return false;
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+                                });
+                          }
                           
 }]);
 app.controller('PurchaseSGCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {

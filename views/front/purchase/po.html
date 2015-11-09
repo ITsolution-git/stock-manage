@@ -36,19 +36,19 @@
               <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                 <div class="form-group">
                   <label>ShipDate <em class="text-muted"></em></label>
-                  <input type="text" datepicker-popup="{{format}}" ng-model="staff.date_end" is-open="opened" datepicker-options="dateOptions"   close-text="Close" class="form-control" ng-model="ArrPo.ship_date">
+                  <input type="text" ui-event="{ blur : 'UpdateField_order($event)' }" name="ship_date" class="form-control" ng-model="ArrPo.ship_date">
                 </div>
               </div>
               <div class="col-sm-2 m-b">
                 <div class="form-group">
                   <label>In Hand Date <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="ArrPo.hand_date"  >
+                  <input type="text" class="form-control" ui-event="{ blur : 'UpdateField_order($event)' }" name="hand_date" ng-model="ArrPo.hand_date"  >
                 </div>
               </div>
               <div class="col-sm-2 m-b nopad-right">
                 <div class="form-group">
                   <label>Arrival Date <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="ArrPo.arrival_date">
+                  <input type="text" class="form-control" ui-event="{ blur : 'UpdateField_order($event)' }" name="arrival_date" ng-model="ArrPo.arrival_date">
                 </div>
               </div>
             </div>
