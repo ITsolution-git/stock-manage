@@ -186,13 +186,15 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                 });
                           }
                           $scope.UpdateField_order = function($event){
-                          		  var Receive_data = [];
-                          		  Receive_data.data = [];
-                          		  var name_filed = $event.target.name;
-	                              Receive_data.table ='purchase_order'
-	                              Receive_data.data[name_filed]=$event.target.value
+                          		  var Receive_data = {};
+                          		 // Receive_data.data = [];
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.table ='purchase_order';
+	                              Receive_data.data = angular.copy(obj);
 	                              Receive_data.cond ={ po_id :$scope.po_id}
-	                              console.log(Receive_data); return false;
+	                              //console.log(Receive_data);
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
                                 });
                           }

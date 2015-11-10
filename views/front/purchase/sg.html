@@ -25,31 +25,31 @@
                 <div class="col-sm-12 m-b">
                   <div class="col-sm-2 m-b">
                     <label>Client <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.name_company"  >
+                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.name_company"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Job Name<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.job_name"  >
+                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.job_name"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Expected date<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.expected_date"  >
+                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" class="form-control" name="expected_date" ng-model="ArrPo.expected_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Arrival Date <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.arrival_date"  >
+                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" class="form-control" name="arrival_date" ng-model="ArrPo.arrival_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Job # <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="order_id"  >
+                    <input type="text" disabled="" class="form-control" ng-model="order_id"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Sales <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.sales"  >
+                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.sales"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Brand <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.brand"  >
+                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" name="brand" class="form-control" ng-model="ArrPo.brand"  >
                   </div>
 
                 </div>

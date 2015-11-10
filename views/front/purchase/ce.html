@@ -13,35 +13,35 @@
             <div class="col-sm-12 m-b">
               <div class="col-sm-2 m-b">
                     <label>Purchase OrderId <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.po_id"  >
+                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.po_id"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Client<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.client"  >
+                    <input type="text" disabled=""   class="form-control" ng-model="ArrPo.client"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Job<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.job_name"  >
+                    <input type="text" disabled=""  class="form-control" ng-model="ArrPo.job_name"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Created for date<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" name="created_for_date" ng-model="ArrPo.created_for_date"  >
+                    <input type="text" class="form-control"   ui-event="{ blur : 'UpdateField_order($event)' }" name="created_for_date" ng-model="ArrPo.created_for_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Product to vendor Arrival<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" name="vendor_arrival_date" ng-model="ArrPo.vendor_arrival_date"  >
+                    <input type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_arrival_date" ng-model="ArrPo.vendor_arrival_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Vendor deadline<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" name="vendor_deadline" ng-model="ArrPo.vendor_deadline"  >
+                    <input type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_deadline" ng-model="ArrPo.vendor_deadline"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Vendor<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.name_company"  >
+                    <input type="text" class="form-control" disabled="" ng-model="ArrPo.name_company"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Contact<em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.first_name"  >
+                    <input type="text" class="form-control" disabled="" ng-model="ArrPo.first_name"  >
                   </div>
             </div>
 
@@ -146,19 +146,19 @@
                     <div class="col-md-2 nopad-left smallPad">                
                       <div class="form-group">
                         <label>Bill To 3rd Party<em class="text-muted"></em></label>
-                        <textarea cols="30"  ng-model="ArrPo.shipt_block"  rows="8"></textarea>
+                        <textarea cols="30"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="vendor_party_bill" ng-model="ArrPo.vendor_party_bill"  rows="8"></textarea>
                       </div>
                     </div>
                     <div class="col-md-2 nopad-left smallPad">                
                       <div class="form-group">
                         <label>Ship to<em class="text-muted"></em></label>
-                        <textarea cols="30"  ng-model="ArrPo.shipt_block"  rows="8"></textarea>
+                        <textarea cols="30"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="ship_to" ng-model="ArrPo.ship_to"  rows="8"></textarea>
                       </div>
                     </div>
                     <div class="col-md-2 nopad-left smallPad">                
                       <div class="form-group">
                         <label>Vendor Instruction<em class="text-muted"></em></label>
-                        <textarea cols="40"  ng-model="ArrPo.shipt_block"  rows="8"></textarea>
+                        <textarea cols="40"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="vendor_instruction"  ng-model="ArrPo.vendor_instruction"  rows="8"></textarea>
                       </div>
                     </div>
           <div class="form-group col-sm-12 m-b"></div>
