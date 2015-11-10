@@ -21,7 +21,7 @@ class Client extends Model {
 			$result = DB::table('client_contact')->insert($contact);
 			$result = DB::table('client_address')->insert($address);
 		}
-    	return $result;	
+    	return $client_id;	
 	}
 	public function getClientdata()
 	{

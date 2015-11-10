@@ -45,13 +45,15 @@ class ClientController extends Controller {
 			{
 				$message = INSERT_RECORD;
 				$success = 1;
+				$data = $result;
 			}
 			else
 			{
 				$message = INSERT_ERROR;
 				$success = 0;
+				$data = '';
 			}
-		$data = array("success"=>$success,"message"=>$message);
+		$data = array("success"=>$success,"message"=>$message,"data"=>$data);
 		return response()->json(['data'=>$data]);
 		
 	}
