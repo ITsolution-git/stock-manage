@@ -81,8 +81,19 @@
              </div>
           </div>
         <footer class="panel-footer text-right">
-            <button  type="submit" class="btn btn-info" ng-click="SaveClient(client)"  ng-disabled="clientAddForm.$invalid">Submit</button>&nbsp;
-            <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
+            <button  type="submit" class="btn btn-info" ng-click="SaveClient(client)"  ng-if="refurl != 'order'" ng-disabled="clientAddForm.$invalid">Submit</button>&nbsp;
+
+
+            <button  type="submit" class="btn btn-info" ng-click="AddClientData(client)"  ng-if="refurl == 'order'" ng-disabled="clientAddForm.$invalid">Save</button>&nbsp;
+
+
+
+            <button ui-sref="client.list" type="button"  ng-if="refurl != 'order'" class="btn btn-info">Cancel</button>&nbsp;
+
+
+            <button class="btn btn-info" type="button" ng-click="closePopup('cancel')" ng-if="refurl == 'order'">Close</button>
+
+
         </footer>
           </div>
         

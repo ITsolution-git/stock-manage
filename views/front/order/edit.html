@@ -13,7 +13,7 @@
               <div class="form-group col-md-12 m-b nopad-form">
                 
                 <div class="col-sm-3 m-b nopad-left">
-                <label>CS Job Name <em class="text-muted"></em></label>
+                <label>Job Name <em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-maxlength="255" name="cs_job_name"  ng-model="order.job_name"  required>
                   <br>
                   <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
@@ -23,6 +23,14 @@
                 <div class="col-md-3 m-b">
                <label>Company <em class="text-muted"></em></label>
 
+
+<i class="mdi-image-control-point" target="_blank" ng-click="addCompany()" title="Add Company" role="button" tabindex="0"></i>
+
+
+               <i class="mdi-content-send pull-right" target="_blank" ng-click="openCompany(order.client_id)" title="Company" role="button" tabindex="0"></i>
+
+
+
                   <select  ng-model="order.client_id"  class="form-control" required>
                   <option ng-selected="order.client_id==data.client_id" ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
                 </select>
@@ -30,6 +38,11 @@
                 
                 <div class="col-md-2 m-b">
                 <label>Price Grid<em class="text-muted"></em></label>
+
+
+                <i class="mdi-content-send pull-right" target="_blank" ng-click="openPriceGrid(order.price_id)" title="Price Grid" role="button" tabindex="0"></i>
+
+
 
                  <select  ng-model="order.price_id"  class="form-control">
                   <option ng-selected="order.price_id==data.id" ng-repeat="data in allGrid" value={{data.id}}>{{data.name}}</option>
@@ -73,7 +86,7 @@
 
 
                 <div class="col-md-3 m-b">
-               <label>Brand Coordinator <em class="text-muted"></em></label>
+               <label>Account Manager<em class="text-muted"></em></label>
 
                   <select  class="form-control" ng-model="order.brand_id">
                       <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
@@ -282,7 +295,7 @@
                     </div>
 
                     <div class="col-md-2">
-                      <button  type="submit" class="btn btn-info" ng-click="saveButtonData('cp')" >Create Contract Screen</button>
+                      <button  type="submit" class="btn btn-info" ng-click="saveButtonData('cp')" >Create Contract Screen PO</button>
                     </div>
 
                     <div class="col-md-1">
