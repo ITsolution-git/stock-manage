@@ -93,6 +93,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
     var order_id = $stateParams.id
     var client_id = $stateParams.client_id
+    
 
     get_order_details(order_id,client_id);
     function get_order_details(order_id,client_id)
@@ -411,6 +412,106 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             modalInstance.dismiss('cancel');
         };
     };
+
+
+
+    $scope.openPriceGrid=function(gridid)
+    {
+       
+        var url = $state.href('setting.priceedit', {id: gridid});
+        window.open(url,'_blank');
+
+    }
+
+
+     $scope.openCompany=function(companyid)
+    {
+       
+        var url = $state.href('client.edit', {id: companyid});
+        window.open(url,'_blank');
+
+    }
+
+    $scope.addCompany=function()
+    {
+        $scope.refurl = "order";
+        var modalInstance = $modal.open({
+                                        animation: $scope.animationsEnabled,
+                                        templateUrl: 'views/front/client/add.html',
+                                        scope: $scope,
+                                        size: 'lg',
+                                        controller:'clientAddCtrl'
+        });
+
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+
+        $scope.ok = function (orderData) {
+
+        };
+
+        $scope.closePopup = function (cancel)
+        {
+            modalInstance.dismiss('cancel');
+        };
+
+
+        $scope.AddClientData = function (client) {
+
+                            var company_post = client;
+                            if(client.client_company!='')
+                            {
+                              $http.post('api/public/client/addclient',company_post).success(function(Listdata) {
+                                      if(Listdata.data.success=='1')
+                                       {
+
+                                          modalInstance.dismiss('cancel');
+
+
+                                            var companyData = {};
+                                            companyData.table ='client'
+                                            companyData.cond ={status:1,is_delete:1}
+                                            $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
+                                                
+                                                if(result.data.success == '1') 
+                                                {
+                                                    $scope.allCompany =result.data.records;
+                                                } 
+                                                else
+                                                {
+                                                    $scope.allCompany=[];
+                                                }
+                                            });
+
+
+
+
+                                          client_id_new = Listdata.data.data;
+
+
+                                            var order_data = {};
+                                            order_data.table ='orders'
+                                            order_data.data ={client_id:client_id_new}
+                                            order_data.cond ={id:order_id}
+                                            
+                                            $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                                                 get_order_details(order_id,client_id_new);
+                                            });
+
+
+
+                                       }  
+                              });
+                            }
+                            
+          }
+    }
+
+
 
 
 
