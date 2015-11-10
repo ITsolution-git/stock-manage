@@ -293,12 +293,16 @@
            
                 <div class="col-sm-12 m-b">
                   <div class="col-sm-2 m-b">
+                    <label>PO Id <em class="text-muted"></em></label>
+                    <input type="text" disabled="" class="form-control" ng-model="po_id"  >
+                  </div>
+                  <div class="col-sm-2 m-b">
                     <label>Vendor <em class="text-muted"></em></label>
                     <input type="text" class="form-control" ng-model="ArrPo.name_company"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Arrival Date <em class="text-muted"></em></label>
-                    <input type="text" class="form-control" ng-model="ArrPo.arrival_date"  >
+                    <input type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" ng-model="ArrPo.arrival_date"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Complete<em class="text-muted"></em></label>

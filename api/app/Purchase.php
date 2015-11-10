@@ -26,7 +26,7 @@ class Purchase extends Model {
 	}
 	function GetPodata($id)
 	{
-		$result = DB::select("SELECT p.name as product_name,po.shipt_block,po.po_id,po.vendor_charge,v.name_company,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,oo.*,v.url
+		$result = DB::select("SELECT p.name as product_name,po.*,v.name_company,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,oo.*,v.url
 		FROM orders ord
 		left join order_orderlines oo on oo.order_id = ord.id
 		left join purchase_order po on po.order_id = ord.id
@@ -38,6 +38,10 @@ class Purchase extends Model {
 		AND po.po_id='".$id."'
 		GROUP BY po.po_id ");
 
+		array_walk_recursive($result[0], function(&$item) {
+            $item = str_replace(array(' ','0000-00-00'),array('',''), $item);
+        });
+		//echo "<pre>"; print_r($result); die;
 		return $result;
 	}
 	function ListSgData($id)
