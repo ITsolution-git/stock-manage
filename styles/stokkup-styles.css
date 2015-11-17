@@ -43,6 +43,15 @@
 .form-group .form-control {
 	padding: 3px;
 }
+
+.panel.panel-default.brdr-panel {
+	background: #e5e5e5;
+	padding: 10px;
+}
+.panel.panel-default.brdr-panel .form-group label {
+	margin: 6px 0 0 0;
+	font-size: 1.1em;
+}
 /*==========================================
 			LAYOUT STYLES 
 ==========================================*/
@@ -195,8 +204,15 @@ nav ul.nav li:hover ul.nav-sub {
 	}
 	.stokkupForm .tab-content .form-group input {
 		min-height:34px;	
-		z-index:1;		
+		z-index:1;
+			
 	}
+
+	.stokkupForm input {
+		
+		border-radius: 5px;		
+	}
+
 	.stokkupForm .tab-content {
 		overflow:hidden;
 		min-height:350px;
@@ -488,54 +504,54 @@ nav ul.nav li:hover ul.nav-sub {
 		ORDER LINE TAB
 ---------------------------*/
 .orderLineLeft {
-	overflow-x:scroll;
-	overflow-y: hidden;
+	overflow:hidden;
 	border: 1px solid #cccccc;
 	box-sizing:border-box;
 	padding: 20px 0 0 20px;
 }
 .orderLineTabScroll {
-	width: 1910px !important;
+	width: 100% !important;
 	overflow: hidden;
 }
 .cols {
 	float: left;	
-	margin-left: 15px;
+	margin-left: 0px;
 	overflow: hidden;
 }
 .cols:first-child {
 	margin-left: 0;
 }
 .cols.col-1 {
-	width: 500px;
+	width: 23%;
 }
 .cols .form-group { 
 	float: left;
 }
 .cols.col-1 .form-group {	
-	margin-left: 15px;
+	margin-left: 5px;
 	width: 90px;
 }
 .cols.col-1 .secondContainer {
-	width: 230px;	
+	width: 90px;	
 }
 .cols.col-1 .form-group:first-child {
 	margin-left: 0;
-	width: 150px
+	width: 90px
 }
 .cols.col-2 {
-	width: 980px;
+	width: 56%;
 }
 
 .orderLineTabScroll.formFields .cols.col-2 .form-group {
-	width: 70px;
+	width: 50px;
+	padding-right: 2px;
 }
 .cols.col-3 {	
-	width: 400px;
+	width: 21%;
 }
 .cols.col-3 .form-group {		
-	width: 100px;
-	margin-left: 10px;
+	width: 60px;
+	margin-left: 5px;
 }
 .cols.col-3 .form-group.lastItem {
 	width: 60px
