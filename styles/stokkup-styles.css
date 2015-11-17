@@ -43,6 +43,15 @@
 .form-group .form-control {
 	padding: 3px;
 }
+
+.panel.panel-default.brdr-panel {
+	background: #e5e5e5;
+	padding: 10px;
+}
+.panel.panel-default.brdr-panel .form-group label {
+	margin: 6px 0 0 0;
+	font-size: 1.1em;
+}
 /*==========================================
 			LAYOUT STYLES 
 ==========================================*/
@@ -195,8 +204,15 @@ nav ul.nav li:hover ul.nav-sub {
 	}
 	.stokkupForm .tab-content .form-group input {
 		min-height:34px;	
-		z-index:1;		
+		z-index:1;
+			
 	}
+
+	.stokkupForm input {
+		
+		border-radius: 5px;		
+	}
+
 	.stokkupForm .tab-content {
 		overflow:hidden;
 		min-height:350px;
