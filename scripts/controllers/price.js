@@ -141,7 +141,11 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                         $scope.amtcalc = function($event) {
                           
                                 var price_in_amt = $event.target.value;
-
+                                 
+                                 if(!price_in_amt.length){
+                                  price_in_amt = 0;
+                                 }
+                                 
                                 if($scope.temp.discharge){
                                   var discharge_value = parseFloat(parseFloat($scope.temp.discharge) + parseFloat(price_in_amt)).toFixed(2)
                                   $scope.price.discharge = discharge_value;
