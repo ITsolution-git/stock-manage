@@ -168,7 +168,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                           }
                           $scope.vendorshipcharte = function($event){
                           		  var Receive_data = {};
-	                              Receive_data.table ='purchase_order'
+	                              Receive_data.table ='purchase_order';
 	                              Receive_data.data ={vendor_charge:$event.target.value}
 	                              Receive_data.cond ={ po_id :$scope.po_id}
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
@@ -178,9 +178,12 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                           }
                           $scope.UpdateField_detail = function($event,id){
                           		  var Receive_data = {};
-                          		  var name_filed = $event.target.name;
-	                              Receive_data.table ='purchase_detail'
-	                              Receive_data.data ={name_filed:$event.target.value}
+                          		  Receive_data.table ='purchase_detail';
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
 	                              Receive_data.cond ={ id :id}
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
                                 });
