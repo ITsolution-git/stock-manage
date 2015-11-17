@@ -73,12 +73,12 @@
               
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control" ng-model="poline.location"  >
+                <input type="text" class="form-control" ng-model="poline.location" name="location"  ui-event="{ blur : 'UpdateField_detail($event,poline.id)' }" >
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control" ng-model="poline.instruction"  >
+                <input type="text" class="form-control" ng-model="poline.instruction" name="instruction"   ui-event="{ blur : 'UpdateField_detail($event,poline.id)' }" >
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
