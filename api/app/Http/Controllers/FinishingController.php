@@ -203,5 +203,31 @@ class FinishingController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+
+    public function removeFinishingItem()
+    {
+        $post = Input::all();
+        $category = $this->category->getCategoryByName($post['item_name']);
+
+        if(!empty($category))
+        {
+            $finishingData['table'] = 'finishing';
+            $finishingData['field'] = array('is_delete' => '1');
+            $finishingData['where'] = array('order_id' => $post['order_id'],'category_id' => $category[0]->id);
+
+            $result = $this->finishing->updateFinishing($finishingData);
+        }
+    }
+    public function addFinishingItem()
+    {
+        $post = Input::all();
+        $category = $this->category->getCategoryByName($post['item_name']);
+
+        if(!empty($category))
+        {
+            $finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qty']);
+            $result = $this->finishing->addFinishing($finishingData);
+        }
+    }
 	
 }

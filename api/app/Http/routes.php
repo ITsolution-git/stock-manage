@@ -167,5 +167,7 @@ Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/deleteFinishing', 'FinishingController@deleteFinishing');
 Route::post('finishing/updateFinishing', 'FinishingController@updateFinishing');
+Route::post('finishing/removeFinishingItem', 'FinishingController@removeFinishingItem');
+Route::post('finishing/addFinishingItem', 'FinishingController@addFinishingItem');
 Route::post('finishing/orderAdd', 'FinishingController@add');
 Route::post('finishing/orderEdit', 'FinishingController@edit');

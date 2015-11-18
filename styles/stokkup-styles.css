@@ -557,6 +557,35 @@ nav ul.nav li:hover ul.nav-sub {
 	width: 60px
 }
 
+.chargesApply .smallPad {
+	padding: 0 5px 5px 5px;	
+}
+.chargesApply .smallPad:first-child {
+	padding-top: 5px;
+}
+.chargesApply .form-group {
+	margin-bottom: 5px;
+}
+.chargesApply input {
+	cursor: pointer;
+}
+.chargesApplyActive {
+	margin-bottom: 5px;
+	/* background-color: green; */
+}
+.chargesApplyActive input {	
+	border-radius: 6px;
+	border:1px solid #101010;
+	background-color: #b3ffb3;
+	color:#101010;
+} 
+.chargesApplyActive input[readonly] {
+	border-radius: 6px;
+	border:1px solid #101010;
+	background-color: #b3ffb3;
+	color:#101010;
+}
+
 /*---------- END ----------*/
 
 
