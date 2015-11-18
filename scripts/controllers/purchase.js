@@ -1,10 +1,12 @@
 app.controller('PurchaseListCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
+                          $("#ajax_loader").show();
                           $scope.CurrentController=$state.current.controller;
                           $type = $stateParams.id;
                           $http.get('api/public/purchase/ListPurchase/'+$type ).success(function(Listdata) 
                           		  {
                                           $scope.ListPurchase = Listdata.data;
+                                          $("#ajax_loader").hide();
                                   });
 }]);
 app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,AuthService) {
