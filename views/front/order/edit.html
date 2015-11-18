@@ -374,7 +374,7 @@
                       <div class="cols col-2">
                         <span ng-repeat="size_qty in order_line.items">
                             <div class="form-group">
-                              <input type="text" class="form-control"  ng-model="size_qty.size"/>
+                              <input type="text" class="form-control c-green"  ng-model="size_qty.size"/>
                             </div>
                             <div class="form-group">
                               <input id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="update_qnty(size_qty.qnty,order_line.orderline_id)"/>

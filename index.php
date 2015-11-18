@@ -114,5 +114,12 @@
   
   <!-- CUSTOM SCRIPTS -->
   <script src="libs/custom-scripts.js"></script>
+
+  <div id="ajax_loader" class="overlay-loader">
+    <div class="loader-background"></div>
+    <img class="loader-icon spinning-cog" src="images/loader/cog05.svg">
+    
+  </div>
+
 </body>
 </html>
