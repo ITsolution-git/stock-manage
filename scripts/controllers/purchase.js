@@ -10,6 +10,10 @@ app.controller('PurchaseListCtrl', ['$scope',  '$http','$state','$stateParams', 
 app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,AuthService) {
                            AuthService.AccessService('BC');
                            var modalInstance='';
+                           var AJloader = $("#ajax_loader");
+                           
+
+
                            //$scope.order_id = $stateParams.id;
                            $scope.po_id = $stateParams.id;
                            if($scope.po_id=='' || $scope.po_id==0)
@@ -20,6 +24,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                            GetPodata($scope.po_id);
                            function GetPodata(po_id)
                            {
+                           		AJloader.show();
                            		$http.get('api/public/purchase/GetPodata/'+po_id ).success(function(PoData) 
                           		  {
                           		  		  if(PoData.data.success==0)
@@ -36,6 +41,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                           $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
                                           //$scope.po_id = PoData.data.records.po_id;
                                           getNotesDetail(po_id);
+                                          AJloader.hide();
                                         // console.log($scope.ordered);
                                   });
                        		}

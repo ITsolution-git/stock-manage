@@ -59,17 +59,14 @@ class OrderController extends Controller {
 		}
 		$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
-
 	}
 
-
-
-/**
-* Order Detail controller      
-* @access public detail
-* @param  array $data
-* @return json data
-*/
+    /**
+    * Order Detail controller      
+    * @access public detail
+    * @param  array $data
+    * @return json data
+    */
     public function orderDetail() {
  
         $data = Input::all();
@@ -80,20 +77,60 @@ class OrderController extends Controller {
         {
             foreach($result['order_line_data'] as $row)
             {
-                $order_line = $this->order->getOrderLineItemById($row->id);
+                $order_line_items = $this->order->getOrderLineItemById($row->id);
+                
+                $count = 1;
+                $order_line = array();
+                foreach ($order_line_items as $line) {
+                     
+                    $line->number = $count;
+                    $order_line[] = $line;
+                    $count++;
+                }
+                $row->orderline_id = $row->id;
                 $row->items = $order_line;
-                $result['order_line'][] = $row;   
+                $result['order_line'][] = $row;
             }
         }
         else
         {
             $result['order_line'] = array();
         }
+        
+        $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
+
+        if(!empty($order_items))
+        {
+            $items = $this->order->getItemsByOrder($data['id']);
+
+            foreach ($order_items as $order_item)
+            {
+                $i = 0;
+                foreach ($items as $item)
+                {
+                    if($item->item_id == $order_item->id)
+                    {
+                        $i = 1;
+                    }
+                }
+                
+                if($i == 1)
+                {
+                    $order_item->selected = '1';
+                    $result['order_item'][] = $order_item;
+                }
+                else
+                {
+                    $order_item->selected = '0';
+                    $result['order_item'][] = $order_item;
+                }
+            }
+        }
 
         if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line']);
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line'],'order_item' => $result['order_item']);
         } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line']);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line'],'order_item' => $result['order_item']);
         }
         
         return response()->json(["data" => $response]);
@@ -151,7 +188,6 @@ class OrderController extends Controller {
     }
 
 
-
    /**
    * Save Order notes.
    * @return json data
@@ -178,11 +214,9 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
-
-
-/**
-   * Save Orderline order.
-   * @return json data
+    /**
+    * Save Orderline order.
+    * @return json data
     */
     public function orderLineadd()
     {
@@ -231,7 +265,6 @@ class OrderController extends Controller {
 
     public function saveButtonData()
     {
-
         $post = Input::all();
 
         $post['created_date']=date('Y-m-d');
@@ -240,13 +273,9 @@ class OrderController extends Controller {
         $message = INSERT_RECORD;
         $success = 1;
         
-       
-        
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
     }
-
-
 
 	/**
     * Get Array
@@ -264,5 +293,4 @@ class OrderController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
-	
 }

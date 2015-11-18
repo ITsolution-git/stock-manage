@@ -11,7 +11,6 @@ class Finishing extends Model {
 	
 	public function getFinishingdata()
 	{
-        
         $listArray = ['o.id as order_id','f.id','f.qty','fc.category_name', DB::raw('CONCAT(c.pl_firstname," ",c.pl_lastname) as client_name'),'o.job_name',
                       'f.status','f.note','f.category_id','c.client_id','f.time','f.start_time','f.end_time','f.est'];
 
@@ -27,14 +26,21 @@ class Finishing extends Model {
         return $finishingData;	
 	}
 
+    public function addFinishing($data)
+    {
+        $result = DB::table('finishing')->insert($data);
+        
+        return $result;
+    }
+
     public function updateFinishing($data)
-   {
+    {
         $result = DB::table($data['table'])
                     ->where($data['where'])
                     ->update($data['field']);
         
         return $result;
-   }
+    }
 
 
 

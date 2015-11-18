@@ -92,6 +92,7 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
 app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$http,logger,notifyService,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
 
     var order_id = $stateParams.id
+    $scope.order_id = $stateParams.id
     var client_id = $stateParams.client_id
     
 
@@ -113,6 +114,12 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                 $scope.client_main_data = result.data.client_main_data;
                 $scope.orderPositionAll = result.data.order_position;
                 $scope.orderLineAll = result.data.order_line;
+                $scope.order_items = result.data.order_item;
+
+                $scope.orderline_id = 0;
+                angular.forEach($scope.orderLineAll, function(value) {
+                    $scope.orderline_id = parseInt(value.id);
+                });
 
                 }
                 else {
@@ -153,6 +160,89 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                                   ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
     }
 
+    $scope.assign_item = function(order_id,order_item_id,item_name) {
+
+        var Selected = $('#item_'+order_item_id);
+
+        if(Selected.hasClass('chargesApplyActive'))
+        {
+            Selected.removeClass('chargesApplyActive')
+            var order_data = {};
+            order_data.table ='order_item_mapping'
+            order_data.cond ={order_id:order_id,item_id:order_item_id}
+            $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+            
+            });
+
+            var item_data = {item_name:item_name,order_id:order_id}
+            $http.post('api/public/finishing/removeFinishingItem',item_data).success(function(result) {
+            
+            });
+        }
+        else
+        {
+            $scope.total_qty = 0;
+            angular.forEach($scope.orderLineAll, function(value) {
+                $scope.total_qty += parseInt(value.qnty);
+            });
+            Selected.addClass('chargesApplyActive')
+            var order_data = {};
+            order_data.table ='order_item_mapping'
+            order_data.data ={order_id:order_id,item_id:order_item_id}
+            $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
+            
+            });
+
+            var item_data = {item_name:item_name,order_id:order_id,total_qty:$scope.total_qty}
+            $http.post('api/public/finishing/addFinishingItem',item_data).success(function(result) {
+            
+            });
+        }
+    }
+
+    $scope.update_qnty = function(qty,id) {
+
+        var i = '';
+        var total = 0;
+
+        if(qty == undefined && id == undefined)
+        {
+            for(i=1;i<=6;i++)
+            {
+                var size = $('#qnty__').val();
+                if(size == '')
+                {
+                    size = '0';
+                }
+                total += parseInt(size);
+            }
+        }
+        else
+        {
+            for(i=1;i<=6;i++)
+            {
+                var size = $('#qnty_'+id+'_'+i).val();
+                if(size == '')
+                {
+                    size = '0';
+                }
+                total += parseInt(size);
+            }
+        }
+
+        $scope.orderLineAllNew = [];
+
+        angular.forEach($scope.orderLineAll, function(value) {
+            
+            if(value.orderline_id == id)
+            {
+                value.qnty = total;
+            }
+            
+            $scope.orderLineAllNew = value;
+        });
+    }
+
     $scope.removeOrder = function(index,id) {
 
         var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
@@ -175,22 +265,27 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     }
 
     $scope.addOrderLine = function() {
-                            $scope.orderLineAll.push({ size_group_id:'' ,
-                                                        product_id:'', 
-                                                        qnty:'',
-                                                        markup:'',
-                                                        items:[
-                                                                {size:'',qnty:'0'},
-                                                                {size:'',qnty:'0'},
-                                                                {size:'',qnty:'0'},
-                                                                {size:'',qnty:'0'},
-                                                                {size:'',qnty:'0'},
-                                                                {size:'',qnty:'0'},
-                                                                {size:'',qnty:'0'}
-                                                        ],
-                                                        override:'',
-                                                        peritem:''
-                                                    });
+        
+        $scope.orderline_id = parseInt($scope.orderline_id + 1);
+
+
+        $scope.orderLineAll.push({ size_group_id:'' ,
+                                    product_id:'', 
+                                    orderline_id:$scope.orderline_id,
+                                    qnty:'0',
+                                    markup:'',
+                                    items:[
+                                            {size:'',qnty:'0',number:'1'},
+                                            {size:'',qnty:'0',number:'2'},
+                                            {size:'',qnty:'0',number:'3'},
+                                            {size:'',qnty:'0',number:'4'},
+                                            {size:'',qnty:'0',number:'5'},
+                                            {size:'',qnty:'0',number:'6'},
+                                            {size:'',qnty:'0',number:'7'}
+                                    ],
+                                    override:'',
+                                    peritem:''
+                                });
     }
 
     $scope.removeOrderLine = function(index,id) {
@@ -338,6 +433,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
     $scope.saveOrderLineData=function(postArray)
     {
+
         if(postArray.length != 0) {
 
             angular.forEach(postArray, function(value, key) {

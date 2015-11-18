@@ -227,7 +227,6 @@ public function updateOrderLineData($post)
         return $result;
     }
 
-
     /**
     * Save button data          
     * @access public getOrderDetailById
@@ -254,7 +253,34 @@ public function updateOrderLineData($post)
                     ->update(array( $post['data']=>1)
                             );
         }
-       
+    }
+
+    /**
+    * Order item Details           
+    * @access public getOrderItemById
+    * @param  int $item_id
+    * @return array $result
+    */
+
+    public function getOrderItemById($id)
+    {
+        $whereConditions = ['price_id' => $id,'is_per_order' => '1'];
+        $result = DB::table('price_grid_charges')->where($whereConditions)->get();
+        return $result;
+    }
+
+    /**
+    * Order item Details           
+    * @access public getItemsByOrder
+    * @param  int $item_id
+    * @return array $result
+    */
+
+    public function getItemsByOrder($id)
+    {
+        $whereConditions = ['order_id' => $id];
+        $result = DB::table('order_item_mapping')->where($whereConditions)->get();
+        return $result;
     }
 	
 }
