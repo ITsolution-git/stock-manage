@@ -1,7 +1,11 @@
 app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
-                          
+          
+          $("#ajax_loader").show();
+                
     $http.get('api/public/order/listOrder').success(function(Listdata) {
         $scope.listOrder = Listdata.data;
+        $("#ajax_loader").hide();
+
     });
 
     $scope.deleteorder = function (order_id) {
@@ -105,6 +109,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             combine_array_id.id = $stateParams.id;
             combine_array_id.client_id = $stateParams.client_id;
             
+            $("#ajax_loader").show();
+
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.data.success == '1') {
@@ -120,6 +126,9 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                 angular.forEach($scope.orderLineAll, function(value) {
                     $scope.orderline_id = parseInt(value.id);
                 });
+
+                $("#ajax_loader").hide();
+
 
                 }
                 else {

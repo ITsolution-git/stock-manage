@@ -2,13 +2,13 @@
 app.controller('miscListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService) {
   
 AuthService.checksession();
-
+$("#ajax_loader").show();
  $http.get('api/public/common/getAllMiscData').success(function(result, status, headers, config) {
 
               
               $scope.miscData = result.data.records;
               $scope.pagination = AllConstant.pagination;
-
+              $("#ajax_loader").hide();
     
       });
 
