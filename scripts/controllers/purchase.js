@@ -12,7 +12,9 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                            var modalInstance='';
                            var AJloader = $("#ajax_loader");
                            
-
+							$scope.getNumber = function(num) {
+							    return new Array(num);   
+							}
 
                            //$scope.order_id = $stateParams.id;
                            $scope.po_id = $stateParams.id;
