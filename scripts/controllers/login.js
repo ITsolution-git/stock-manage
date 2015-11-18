@@ -14,6 +14,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
 
                                 } else {
                                    flash('success',result.data.message); 
+                                   $("#ajax_loader").show();
                                    sessionService.set('username',result.data.records.username);
                                    sessionService.set('password',result.data.records.password);
                                    sessionService.set('useremail',result.data.records.useremail);
