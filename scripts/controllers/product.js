@@ -3,10 +3,12 @@
 
 app.controller('productListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
+  $("#ajax_loader").show();
   $http.get('api/public/admin/product').success(function(result, status, headers, config) {
 
                                   $scope.products = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
+                                  $("#ajax_loader").hide();
                          
                           });
 
@@ -122,12 +124,14 @@ app.controller('productAddEditCtrl', ['$scope','$http','$location','$state','$st
                     };
 
                         if($stateParams.id) {
-
+                           $("#ajax_loader").show();
                            $http.post('api/public/admin/productDetail',$stateParams.id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
                                        
                                      $scope.product = result.data.records[0];
+                                     $("#ajax_loader").hide();
+
                                    
                              }  else {
                              $state.go('app.dashboard');

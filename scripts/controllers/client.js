@@ -41,10 +41,13 @@ app.controller('clientListCtrl', ['$scope','$http','$location','$state','$modal'
                                          });
                                       }
                                   } // DELETE COMPANY FINISH
+
+                                  $("#ajax_loader").show();
                           $http.get('api/public/client/ListClient').success(function(Listdata) {
                                        if(Listdata.data.success=='1')
                                        {
                                           $scope.ListClient = Listdata.data;
+                                          $("#ajax_loader").hide();
                                        }
                                   });
 
@@ -111,6 +114,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                            getClientDetail(getclient_id );
                            function getClientDetail(getclient_id)
                            {
+                                $("#ajax_loader").show();
                                 $http.get('api/public/client/GetclientDetail/'+getclient_id).success(function(result, status, headers, config) 
                                 {
                                     if(result.data.success == '1') 
@@ -123,6 +127,7 @@ app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','
                                         $scope.pl_imp =result.data.records.pl_imp;
 
                                         $scope.currentProjectUrl = $sce.trustAsResourceUrl(result.data.records.main.salesweb);
+                                        $("#ajax_loader").hide();
                                     } 
                                     
                                 });

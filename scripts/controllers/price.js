@@ -1,11 +1,11 @@
 
 app.controller('priceListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
-  
+   $("#ajax_loader").show();
   $http.get('api/public/admin/price').success(function(result, status, headers, config) {
 
                                   $scope.price = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
-
+                                  $("#ajax_loader").hide();
                          
                           });
 
@@ -250,7 +250,7 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
 
 
                     if($stateParams.id) {
-
+                           $("#ajax_loader").show();
                            $http.post('api/public/admin/priceDetail',$stateParams.id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
@@ -302,7 +302,7 @@ app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stat
                                       $scope.embroswitch = result.data.embroswitch[0];
                                       $scope.allEmbroidery = result.data.allEmbroidery;
                                       
-                                      
+                                      $("#ajax_loader").hide();
 
                                      
                              }  else {
