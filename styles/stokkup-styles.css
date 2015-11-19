@@ -43,6 +43,13 @@
 .form-group .form-control {
 	padding: 3px;
 }
+.labelMiddle {
+	padding-top: 8px;
+	box-sizing:border-box;
+}
+.labelMiddle label {
+	margin-bottom: 0;
+}
 .form-group input.form-control,
 .form-group input,
 input
@@ -430,6 +437,7 @@ nav ul.nav li:hover ul.nav-sub {
 /*=====================================
 		CLIENT - Order Page
 =====================================*/
+
 .client_order_form .panel-body {
 	padding-bottom: 0;
 }
@@ -505,6 +513,21 @@ nav ul.nav li:hover ul.nav-sub {
 /*---------------------------
 		ORDER LINE TAB
 ---------------------------*/
+.orderTotalPrice {
+	margin-top: 30px;
+}
+.highlightBox {
+	border: 1px solid #ff4d4d;
+}
+.orderTotalPrice .form-group label {
+	font-size: 14px;
+}
+.orderTotalPrice .labelMiddle {
+	padding-top: 5px;
+}
+.orderLineCal label {
+	margin-top: 8px;
+}
 .orderLineLeft {
 	overflow:hidden;
 	border: 1px solid #cccccc;
@@ -559,6 +582,11 @@ nav ul.nav li:hover ul.nav-sub {
 	width: 60px
 }
 
+.chargesApply {
+	max-height: 400px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
 .chargesApply .smallPad {
 	padding: 0 5px 5px 5px;	
 }
@@ -588,6 +616,9 @@ nav ul.nav li:hover ul.nav-sub {
 .c-green {
 	background-color: #c2ffc3;
 
+}
+.c-blue {
+	background-color: #cceeff;
 }
 /*---------- END ----------*/
 
