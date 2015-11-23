@@ -565,6 +565,9 @@ angular.module('app')
              controller: 'XeditableCtrl',
               resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
+    /*==========================================
+          PURCHASE MODULE CODE START
+    ==========================================*/
             .state('purchase', {
                   url: '/front/purchase',
                 views: {
@@ -614,7 +617,9 @@ angular.module('app')
              controller: 'PurchasePOCtrl',
               resolve: load(['xeditable','scripts/controllers/purchase.js'])
             })
-
+    /*==========================================
+          PURCHASE MODULE CODE END
+    ==========================================*/
               .state('order', {
               url: '/front/order',
             views: {
@@ -689,7 +694,37 @@ angular.module('app')
                             },
                        }
             })
-
+    /*==========================================
+          ART MODULE CODE START
+    ==========================================*/
+    .state('art', {
+              url: '/front/art',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+    .state('art.list', {
+                url: '/list',
+                templateUrl: 'views/front/art/list.html',
+                controller: 'ArtListCtrl',
+                data : { title: 'Art' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+    /*==========================================
+          ART MODULE CODE END
+    ==========================================*/
 
 ;
 
