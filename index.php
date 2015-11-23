@@ -107,6 +107,7 @@
   <script src="scripts/controllers/purchase.js"></script>
   <script src="scripts/controllers/order.js"></script>
   <script src="scripts/controllers/finishing.js"></script>
+  <script src="scripts/controllers/art.js"></script>
   <!-- CUSTOM SCROLL -->
   <script src="libs/custom-scroll/scroller.js"></script>
   <script src="libs/custom-scroll/mwheelIntent.js"></script>
