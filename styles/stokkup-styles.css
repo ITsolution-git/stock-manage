@@ -479,10 +479,6 @@ nav ul.nav li:hover ul.nav-sub {
 /*---------------------------
 		POSITION TAB
 ---------------------------*/
-.orderTab_scroll {	
-	
-}
-
 .orderTab_scroll .positionTab_content {
 	clear: both;
 	overflow: hidden;	
@@ -510,6 +506,44 @@ nav ul.nav li:hover ul.nav-sub {
     transform: rotate(270deg);
 }
 
+/* Popup Box */
+.order_positionBox {
+	padding:40px 70px 20px
+}
+.order_positionBox .modal-header {
+	border-bottom: 0 none;
+	padding-bottom: 0;
+}
+.order_positionBox .modal-header h3 {
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+}
+.order_positionBox .modal-header,
+.order_positionBox .modal-body,
+.order_positionBox .modal-footer {
+	padding-left: 0;
+	padding-right: 0;
+}
+.order_positionBox .modal-body .form-group {
+	margin-bottom: 5px;
+}
+.order_positionBox .modal-body label {
+	cursor: pointer;
+	display: flex;
+	font-size: 14px;
+	font-weight: normal;
+	margin-bottom: 0;
+}
+.order_positionBox .modal-body label i.c-default {
+	background-color: #4F1F25;
+}
+.md-check input[type="checkbox"]:checked + i:after {
+	color: #ffffff;
+}
+.order_positionBox .modal-body label input {
+	margin-right: 5px;
+}
 /*---------------------------
 		ORDER LINE TAB
 ---------------------------*/
