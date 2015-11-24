@@ -565,6 +565,9 @@ angular.module('app')
              controller: 'XeditableCtrl',
               resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
+    /*==========================================
+          PURCHASE MODULE CODE START
+    ==========================================*/
             .state('purchase', {
                   url: '/front/purchase',
                 views: {
@@ -577,44 +580,71 @@ angular.module('app')
                   'content': {
                     templateUrl: 'views/content.html'
                   }
-                }
+                },
+                 resolve: {
+                            checklogin: function (AuthService) {
+                               //return AuthService.checksession();
+                            },
+                       }
               })
             .state('purchase.list', {
               url: '/list/:id',
               templateUrl: 'views/front/purchase/index.html',
               data : { title: 'Purchase Listing' },
              controller: 'PurchaseListCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
             .state('purchase.po', {
               url: '/po/:id',
               templateUrl: 'views/front/purchase/po.html',
               data : { title: 'Purchase Orders' },
              controller: 'PurchasePOCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
             .state('purchase.sg', {
               url: '/sg/:id',
               templateUrl: 'views/front/purchase/sg.html',
               data : { title: 'Supplied Garments' },
              controller: 'PurchasePOCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
             .state('purchase.ce', {
               url: '/ce/:id',
               templateUrl: 'views/front/purchase/ce.html',
               data : { title: 'Contract Embrodiery' },
              controller: 'PurchasePOCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
             .state('purchase.cp', {
               url: '/cp/:id',
               templateUrl: 'views/front/purchase/cp.html',
               data : { title: 'Contract Printing' },
              controller: 'PurchasePOCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
             })
-
+    /*==========================================
+          PURCHASE MODULE CODE END
+    ==========================================*/
               .state('order', {
               url: '/front/order',
             views: {
@@ -689,7 +719,37 @@ angular.module('app')
                             },
                        }
             })
-
+    /*==========================================
+          ART MODULE CODE START
+    ==========================================*/
+    .state('art', {
+              url: '/front/art',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+    .state('art.list', {
+                url: '/list',
+                templateUrl: 'views/front/art/list.html',
+                controller: 'ArtListCtrl',
+                data : { title: 'Art' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+    /*==========================================
+          ART MODULE CODE END
+    ==========================================*/
 
 ;
 

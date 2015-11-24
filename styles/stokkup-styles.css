@@ -43,6 +43,13 @@
 .form-group .form-control {
 	padding: 3px;
 }
+.labelMiddle {
+	padding-top: 8px;
+	box-sizing:border-box;
+}
+.labelMiddle label {
+	margin-bottom: 0;
+}
 .form-group input.form-control,
 .form-group input,
 input
@@ -430,6 +437,7 @@ nav ul.nav li:hover ul.nav-sub {
 /*=====================================
 		CLIENT - Order Page
 =====================================*/
+
 .client_order_form .panel-body {
 	padding-bottom: 0;
 }
@@ -505,6 +513,21 @@ nav ul.nav li:hover ul.nav-sub {
 /*---------------------------
 		ORDER LINE TAB
 ---------------------------*/
+.orderTotalPrice {
+	margin-top: 30px;
+}
+.highlightBox {
+	border: 1px solid #ff4d4d;
+}
+.orderTotalPrice .form-group label {
+	font-size: 14px;
+}
+.orderTotalPrice .labelMiddle {
+	padding-top: 5px;
+}
+.orderLineCal label {
+	margin-top: 8px;
+}
 .orderLineLeft {
 	overflow:hidden;
 	border: 1px solid #cccccc;
@@ -559,6 +582,11 @@ nav ul.nav li:hover ul.nav-sub {
 	width: 60px
 }
 
+.chargesApply {
+	max-height: 400px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
 .chargesApply .smallPad {
 	padding: 0 5px 5px 5px;	
 }
@@ -588,6 +616,13 @@ nav ul.nav li:hover ul.nav-sub {
 .c-green {
 	background-color: #c2ffc3;
 
+}
+.c-blue {
+	background-color: #cceeff;
+}
+
+input[readonly].c-blue {
+	background-color: #cceeff;
 }
 /*---------- END ----------*/
 
@@ -726,4 +761,82 @@ nav ul.nav li:hover ul.nav-sub {
   -ms-animation: shrinking-cog .3s 1 ease forwards;
   -o-animation: shrinking-cog .3s 1 ease forwards;
   animation: shrinking-cog .3s 1 ease forwards;
+}
+
+/* Orderline Popbox 
+.orderLinesecondRow .btn.btn-default.addButton:hover:before {
+	border-bottom: 15px solid transparent;
+    border-right: 15px solid #999;
+    border-top: 15px solid transparent;
+    content: "";
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: -1px;
+    width: 0;
+}*/
+#tab2.tab2Ol {
+	position: relative;
+}
+#orderLinepopup {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;	
+	width: 100%;
+	height: 100%;
+	background-color:rgba(0,0,0,0.7);
+}
+
+#orderLinepopup .orderLineEditBox {
+	position: absolute;
+	top:30%;
+	left: 50%; 
+	margin-left: -100px;
+	background-color: #ffffff;
+	border:1px solid #ccc;
+	border-radius: 5px;
+	box-sizing:border-box;
+	overflow: hidden;
+	padding: 20px 10px;
+	position: relative;
+	width: 200px;
+	height: 400px;
+	overflow: hidden;
+}
+#orderLinepopup .orderLineEditBox .form-group { 
+	margin-bottom: 5px;
+	text-align: center;
+}
+#orderLinepopup .orderLineEditBox .form-group label { 
+	margin-bottom: 0;
+}
+/*
+#orderLinepopup .orderLineEditBox:after {
+    border-bottom: 15px solid transparent;
+    border-right: 15px solid #999;
+    border-top: 15px solid transparent;
+    content: "";
+    height: 0;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 0;
+    margin-top: -10px;
+}*/
+
+#orderLinepopup .orderLineEditBox .closeButtonOL {
+	background: #F00;
+	border:none;
+	border-radius: 5px;
+	color: #ffffff;
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	height: 20px;
+	padding: 0 0 0 0;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+    width: 20px;
 }
