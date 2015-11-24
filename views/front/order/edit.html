@@ -6,7 +6,7 @@
                 <div class="panel-body">
                     <div class="col-sm-12 m-b nopad-form">
                         <div class="col-sm-12 m-b"></div>
-                        <div class="form-group col-md-10 m-b nopad-form">
+                        <div class="col-md-10 nopad-form">
                             <div class="form-group col-md-10 m-b nopad-form">
                                 <div class="col-sm-3 m-b nopad-left">
                                     <label>Job Name <em class="text-muted"></em></label>
@@ -101,11 +101,15 @@
                                     <input type="text" class="form-control"  ng-model="order.sales_order_total" readonly=""/>
                                 </div>
                             </div>
-                        </div>
-                        <div class="input-group col-md-12 nopad-right t-r m-b">              
+
+                             <div class="input-group col-md-12 nopad-right t-r m-b">              
                             <button  type="submit" class="btn btn-info" ng-click="saveOrderDetails(order,order.id)" ng-disabled="mainForm.$invalid">Submit</button>&nbsp;
                             <button ui-sref="order.list" type="button"  class="btn btn-info">Cancel</button>
                         </div>
+
+
+                        </div>
+                       
                         <ul class="nav nav-tabs input-group col-sm-12">
                             <li class="active"><a href data-toggle="tab" data-target="#tab1">position</a></li>
                             <li> <a href data-toggle="tab" data-target="#tab2">Order Lines</a> </li>
