@@ -114,7 +114,7 @@ class LoginController extends Controller {
     public function check_session() {
   
         if (!empty(Session::get("username"))) {
-            $response = array('success' => 1, 'message' => "session there","username" => Session::get("username"));
+            $response = array('success' => 1, 'message' => "session there","username" => Session::get("username"),"role_session"=>Session::get("role_slug"));
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }
