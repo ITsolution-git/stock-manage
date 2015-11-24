@@ -544,6 +544,19 @@ nav ul.nav li:hover ul.nav-sub {
 .order_positionBox .modal-body label input {
 	margin-right: 5px;
 }
+
+.sgpDetails {
+	font-size: 20px;
+	text-align: center;
+}
+.sgpDetails a {
+	display: block;
+    margin: 0 7px 0 8px;
+    background-color: #2E7B2F;
+    color: #ffffff;
+    padding: 4px 0 2px 0;
+    border-radius: 5px;
+}
 /*---------------------------
 		ORDER LINE TAB
 ---------------------------*/

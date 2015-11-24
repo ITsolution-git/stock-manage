@@ -197,8 +197,10 @@
                                             <div class="form-group col-md-4 nopad-left">
                                                 <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" />
                                             </div>
-                                            <div class="form-group col-md-2 nopad-left">
-                                              <i class="mdi-maps-navigation" ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0"></i>
+                                            <div class="form-group col-md-2 nopad-left sgpDetails">
+                                              <a ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0">
+                                                <i class="mdi-maps-navigation"></i>
+                                              </a>
                                             </div>
                                             <div class="form-group col-md-3 nopad-left">
                                                 <select  ng-model="order_position.placement_type" class="form-control">
