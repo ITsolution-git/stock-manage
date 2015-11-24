@@ -893,10 +893,6 @@ $scope.position_id = id;
 
         $scope.order.sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
 
-        alert($scope.order.order_line_total);
-        alert($scope.order.order_charges_total);
-        alert($scope.order.sales_order_total);
-
         $scope.order_data = {};
 
         if(field == 'separations_charge')
