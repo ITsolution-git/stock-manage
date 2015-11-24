@@ -126,6 +126,10 @@ class OrderController extends Controller {
                 }
             }
         }
+        else
+        {
+            $result['order_item'] = array();
+        }
 
         if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['order'],'client_data' => $result['client_data'],'client_main_data' => $result['client_main_data'],'order_position' => $result['order_position'],'order_line' => $result['order_line'],'order_item' => $result['order_item']);
