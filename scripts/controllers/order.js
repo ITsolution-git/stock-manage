@@ -123,10 +123,11 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                 $scope.order_items = result.data.order_item;
 
                 $scope.orderline_id = 0;
+                $scope.total_qty = 0;
                 angular.forEach($scope.orderLineAll, function(value) {
                     $scope.orderline_id = parseInt(value.id);
+                    $scope.total_qty += parseInt(value.qnty);
                 });
-
                 $("#ajax_loader").hide();
 
 
@@ -266,13 +267,14 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
         $scope.orderLineAllNew = [];
 
+        $scope.total_qty = 0;
         angular.forEach($scope.orderLineAll, function(value) {
             
             if(value.orderline_id == id)
             {
                 value.qnty = total;
             }
-            
+            $scope.total_qty += parseInt(value.qnty);
             $scope.orderLineAllNew = value;
         });
     }

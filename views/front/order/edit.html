@@ -386,7 +386,7 @@
                                                                 <input type="text" class="form-control"  ng-model="order_line.markup"/>
                                                             </div>
                                                             <div class="col-md-3 smallPad nopad-left">
-                                                                <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton">
+                                                                <button type="button" class="btn btn-default addButton">
                                                                     <i class="fa fa-plus"></i> Artwork Proof
                                                                 </button>
                                                             </div>
@@ -398,7 +398,7 @@
                                                             </div>
                                                             <div class="col-md-1 smallPad nopad-left text-right OL_id_{{order_line.id}}">
                                                                 <button type="button" class="btn btn-default addButton" ng-click="showOlDiv(order_line.id)">
-                                                                    <i class="fa fa-eye"></i>
+                                                                    <i class="mdi-maps-local-atm"></i>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -434,7 +434,7 @@
                                                     <label> Total Units </label>
                                                 </div>                                                
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" class="form-control" /> 
+                                                    <input type="text" class="form-control" ng-model="total_qty"/> 
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad"></div>
                                             </div>
