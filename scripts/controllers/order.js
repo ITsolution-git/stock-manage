@@ -765,6 +765,20 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             'left':finalPosLeft+'px'
         }); */
 
+        angular.forEach($scope.orderLineAll, function(value) {
+            
+            if(value.id == id)
+            {
+                $scope.avg_garment_cost = '$'+value.avg_garment_cost;
+                $scope.markup_default = '$'+value.markup_default;
+                $scope.avg_garment_price = '$'+value.avg_garment_price;
+                $scope.print_charges = '$'+value.print_charges;
+                $scope.order_line_charge = '$'+value.order_line_charge;
+            }
+            
+            $scope.orderLineAllNew = value;
+        });
+
         popupBoxDiv.show();
     }
 

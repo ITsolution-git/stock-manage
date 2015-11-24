@@ -444,21 +444,21 @@
                                                     <label> Separations </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-left smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.separations_charge" class="form-control c-blue" /> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Rush </label>
                                                 </div>
                                                 <div class="form-group col-md-2 text-right nopad-left smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.rush_charge" class="form-control c-blue" /> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Shipping </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.shipping_charge" class="form-control c-blue" /> 
                                                 </div>
                                             </div>
 
@@ -468,7 +468,7 @@
                                                     <label> Set Up </label>
                                                 </div>
                                                 <div class="form-group col-md-7 nopad-right smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.setup_charge" class="form-control c-blue" /> 
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -490,21 +490,21 @@
                                                     <label> Distribution </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-left smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.distribution_charge" class="form-control c-blue" /> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Digitize </label>
                                                 </div>
                                                 <div class="form-group col-md-2 text-right nopad-left smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.digitize_charge" class="form-control c-blue" /> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Artwork </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.artwork_charge" class="form-control c-blue" /> 
                                                 </div>
                                             </div>
 
@@ -514,7 +514,7 @@
                                                     <label> Discount </label>
                                                 </div>
                                                 <div class="form-group col-md-7 nopad-right smallPad">
-                                                    <input type="text" class="form-control c-blue" /> 
+                                                    <input type="text" ng-model="order.discount" class="form-control c-blue" /> 
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -604,7 +604,7 @@
                                                     <label>Screens</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control c-blue" />
+                                                    <input type="text" ng-model="order.screen_charge" class="form-control c-blue" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -612,7 +612,7 @@
                                                     <label>Press Setup</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control c-blue" />
+                                                    <input type="text" ng-model="order.press_setup_charge" class="form-control c-blue" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -620,7 +620,7 @@
                                                     <label>Lines Total</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" ng-model="order.order_line_total" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -628,7 +628,7 @@
                                                     <label>Order Total</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" ng-model="order.order_total" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -636,7 +636,7 @@
                                                     <label>Tax Rate</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" ng-model="order.tax_rate" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -644,7 +644,7 @@
                                                     <label>Tax</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" ng-model="order.tax" class="form-control" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -652,7 +652,7 @@
                                                     <label>Grand Total</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control highlightBox" />
+                                                    <input type="text" ng-model="order.grand_total" class="form-control highlightBox" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -660,7 +660,7 @@
                                                     <label>Total Payments</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control highlightBox" />
+                                                    <input type="text" ng-model="order.total_payments" class="form-control highlightBox" />
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -668,7 +668,7 @@
                                                     <label>Balance Due </label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" class="form-control highlightBox" />
+                                                    <input type="text" ng-model="order.balance_due" class="form-control highlightBox" />
                                                 </div>
                                             </div>
                                         </div>
@@ -684,7 +684,7 @@
                                                 <label>Average Garment Cost</label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" value="" class="form-control  c-blue" readonly="readonly" />
+                                                <input type="text" ng-model="avg_garment_cost" class="form-control  c-blue" readonly="readonly" />
                                             </div>
                                         </div>                                        
                                         <div class="col-md-12">
@@ -692,7 +692,7 @@
                                                 <label>Markup % Default</label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                                <input type="text" ng-model="markup_default" class="form-control c-blue" readonly="readonly" />
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -700,7 +700,7 @@
                                                 <label>Average Garment Price</label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                                <input type="text" ng-model="avg_garment_price" class="form-control c-blue" readonly="readonly" />
                                             </div>
                                             <div class="form-group">
                                                 <label>+</label>
@@ -711,7 +711,7 @@
                                                 <label>Pin Charges</label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                                <input type="text" ng-model="print_charges" class="form-control c-blue" readonly="readonly" />
                                             </div>
                                             <div class="form-group">
                                                 <label>=</label>
@@ -722,7 +722,7 @@
                                                 <label>Total Line Charge</label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                                <input type="text" ng-model="order_line_charge" class="form-control c-blue" readonly="readonly" />
                                             </div>
                                         </div>
                                         <button class="closeButtonOL" ng-click="closeOLDiv()">x</button>
