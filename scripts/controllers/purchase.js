@@ -9,7 +9,7 @@ app.controller('PurchaseListCtrl', ['$scope',  '$http','$state','$stateParams', 
                                           $("#ajax_loader").hide();
                                   });
 }]);
-app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,AuthService) {
+app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
                            AuthService.AccessService('BC');
                            var modalInstance='';
                            var AJloader = $("#ajax_loader");
@@ -53,7 +53,8 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                        	  function short_over(poline_id)
                           {
                           		$http.get('api/public/purchase/short_over/'+poline_id).success(function(result) {
-
+                          				var data = {"status": "success", "message": "Data Updated successfully"}
+                    				    notifyService.notify(data.status, data.message);
 	                             });
                           }
                           function getNotesDetail()
@@ -105,7 +106,8 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                          Note_data.cond = {id:id};
 	                          Note_data.table = 'purchase_notes';
                               $http.post('api/public/common/DeleteTableRecords',Note_data).success(function(Listdata) {
-                                //getNotesDetail(getclient_id);
+                                		var data = {"status": "error", "message": "1 Note removed"}
+                                        notifyService.notify(data.status, data.message);
                               });
                               $scope.AllNotesData.splice(index,1);
                           }
@@ -114,14 +116,18 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                            //	console.log(value);
                             	  $http.get('api/public/purchase/ChangeOrderStatus/'+poline_id+'/'+value+'/'+purchase_id ).success(function(PoData) 
                           		  {
-                                       GetPodata($scope.po_id ); 
+                                       GetPodata($scope.po_id );
+                                       var data = {"status": "success", "message": "Orderline status change."}
+                    				   notifyService.notify(data.status, data.message); 
                                   });
                           }
                           $scope.EditOrderLine = function(Poline_data){
                           			
                             	  $http.post('api/public/purchase/EditOrderLine',Poline_data ).success(function(PoData) 
                           		  {
-                                       GetPodata($scope.po_id ); 
+                                       GetPodata($scope.po_id );
+                                       var data = {"status": "success", "message": "Data Updated successfully"}
+                    				   notifyService.notify(data.status, data.message); 
                                   });
                           }
                           $scope.shipttoblock = function($event,id){
@@ -134,7 +140,9 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 
                           		$http.post('api/public/purchase/Update_shiftlock',Arrshift ).success(function() 
                           		  {
-                                       GetPodata($scope.po_id ); 
+                                       GetPodata($scope.po_id );
+                                       var data = {"status": "success", "message": "Data Updated successfully"}
+                    				   notifyService.notify(data.status, data.message);  
                                   });
                           }
                           $scope.Receive_order = function(data){
@@ -142,6 +150,8 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                           		 $http.post('api/public/purchase/Receive_order',data ).success(function() 
                           		  {
                                        GetPodata($scope.po_id ); 
+                                       var data = {"status": "success", "message": "One OrderLine Received"}
+                                       notifyService.notify(data.status, data.message);  
                                   });
                           }
 
@@ -151,7 +161,9 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                          RecLine.table = 'purchase_received';
                               $http.post('api/public/common/DeleteTableRecords',RecLine).success(function(Listdata) {
                               		short_over(poline_id );
-                               		GetPodata($scope.po_id ); 
+                               		GetPodata($scope.po_id );
+                               		var data = {"status": "error", "message": "Data removed"}
+                                       notifyService.notify(data.status, data.message);   
                               });
                           }
 
@@ -161,9 +173,10 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                              Receive_data.data ={qnty_received:$event.target.value}
 	                              Receive_data.cond ={id:id}
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
-
 	                              		short_over(poline_id ); 
                                   		GetPodata($scope.po_id ); 
+                                  		var data = {"status": "success", "message": "One OrderLine Received"}
+                                        notifyService.notify(data.status, data.message);  
                                 });
                           }
                            $scope.Updatenotes = function($event,note_id){
@@ -196,6 +209,8 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                           		  
 	                              Receive_data.cond ={ id :id}
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
                                 });
                           }
                           $scope.UpdateField_order = function($event){
@@ -209,6 +224,8 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 	                              Receive_data.cond ={ po_id :$scope.po_id}
 	                              //console.log(Receive_data);
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message);
                                 });
                           }
                           
