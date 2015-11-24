@@ -82,7 +82,7 @@
                                     <label>Order Line Total</label>
                                 </div>
                                 <div class="form-group col-md-7 nopad-form smallPad">
-                                    <input type="text" class="form-control"  ng-model="" readonly=""/>
+                                    <input type="text" class="form-control"  ng-model="order.order_line_total" readonly=""/>
                                 </div>
                             </div>
                             <div class="col-md-12 nopad-form">
@@ -90,7 +90,7 @@
                                     <label>Order Charges Total</label>
                                 </div>
                                 <div class="form-group col-md-7 nopad-form smallPad">
-                                    <input type="text" class="form-control"  ng-model="" readonly=""/>
+                                    <input type="text" class="form-control"  ng-model="order.order_charges_total" readonly=""/>
                                 </div>
                             </div>
                             <div class="col-md-12 nopad-form">
@@ -98,7 +98,7 @@
                                     <label>Sales Order Total</label>
                                 </div>
                                 <div class="form-group col-md-7 nopad-form smallPad">
-                                    <input type="text" class="form-control"  ng-model="" readonly=""/>
+                                    <input type="text" class="form-control"  ng-model="order.sales_order_total" readonly=""/>
                                 </div>
                             </div>
                         </div>
@@ -279,7 +279,7 @@
                             <!-- POSITION TAB END -->
 
                             <!-- ORDER LINES TAB START -->
-                            <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
+                            <div role="tabpanel" class="tab-pane animated fadeIn tab2Ol" id="tab2">
                                 <div class="col-md-12 nopad-form">
                                     <div class="col-md-9 nopad-left">
                                         <div class="form-group orderLineLeft">
@@ -364,17 +364,20 @@
                                                 <div class="col-md-12 nopad-form">
                                                     <div class="cols col-1">
                                                         <div class="form-group">
-                                                            <select  ng-model="order_line.size_group_id"  class="form-control">
-                                                                <option ng-selected="order_line.size_group_id==misc_size_group.id" ng-repeat="misc_size_group in miscData.size_group" value={{misc_size_group.id}}>{{misc_size_group.value}}</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group secondContainer">
-                                                            <select  ng-model="order_line.product_id"  class="form-control">
-                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
+                                                            <select  ng-model="order_line.color_id"  class="form-control">
+                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in colors" value={{color.id}}>{{color.value}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input id="qnty_{{order_line.orderline_id}}" type="text" class="form-control"  ng-model="order_line.qnty" readonly="" />
+                                                            <select  ng-model="order_line.vendor_id"  class="form-control">
+                                                                <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select  ng-model="order_line.client_supplied"  class="form-control">
+                                                                <option ng-selected="order_line.client_supplied==1" value="1">Yes</option>
+                                                                <option ng-selected="order_line.client_supplied==0" value="0">No</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="cols col-2 orderLinesecondRow">
@@ -393,8 +396,8 @@
                                                             <div class="col-md-2 smallPad nopad-left">
                                                                 <input type="text" class="form-control"  ng-model="order_line.override"/>
                                                             </div>
-                                                            <div class="col-md-1 smallPad nopad-left text-right">
-                                                                <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton">
+                                                            <div class="col-md-1 smallPad nopad-left text-right OL_id_{{order_line.id}}">
+                                                                <button type="button" class="btn btn-default addButton" ng-click="showOlDiv(order_line.id)">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </button>
                                                             </div>
@@ -672,6 +675,59 @@
                                         <!-- / -->
                                     </div>
                                 </div>  
+                                <!-- POP UP on Orderline Tab Page -->
+                                <div id="orderLinepopup">
+                                    
+                                    <div class="orderLineEditBox">
+                                        <div class="col-md-12">
+                                            <div class="form-group">                                            
+                                                <label>Average Garment Cost</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" value="" class="form-control  c-blue" readonly="readonly" />
+                                            </div>
+                                        </div>                                        
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Markup % Default</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Average Garment Price</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>+</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Pin Charges</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>=</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Total Line Charge</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" value="" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <button class="closeButtonOL" ng-click="closeOLDiv()">x</button>
+                                    </div>
+                                </div>
                             </div>
                             <!-- ORDER LINES TAB END -->
 
