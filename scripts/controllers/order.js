@@ -93,7 +93,7 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
 
 }]);
 
-app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$http,logger,notifyService,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
+app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$location','$state','$stateParams','$modal','getPDataByPosService','AuthService','$log','sessionService','AllConstant', function($scope,$http,logger,notifyService,$location,$state,$stateParams,$modal,getPDataByPosService,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
 
     var order_id = $stateParams.id
     $scope.order_id = $stateParams.id
@@ -427,33 +427,36 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
     $scope.savePositionData=function(postArray)
     {
+     
         if(postArray.length != 0) {
 
             order_id = $stateParams.id
             client_id = $stateParams.client_id
-
+ 
             angular.forEach(postArray, function(value, key) {
-
+          
                 if(angular.isUndefined(value.id)) {
 
                     var order_data_insert  = {};
                     value.order_id = order_id;
 
                     order_data_insert.data = value;
+                    
                     // Address_data.data.client_id = $stateParams.id;
                     order_data_insert.table ='order_positions'
 
-                    $http.post('api/public/common/InsertRecords',order_data_insert).success(function(result) {
+                    $http.post('api/public/order/insertPositions',order_data_insert).success(function(result) {
 
                     });
                 } 
                 else {
 
+
                     var order_data = {};
                     order_data.table ='order_positions'
                     order_data.data =value
                     order_data.cond ={id:value.id}
-                    $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                    $http.post('api/public/order/updatePositions',order_data).success(function(result) {
 
                     });
                 }
@@ -544,6 +547,91 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             });
             modalInstance.dismiss('cancel');
         };
+    };
+
+
+    $scope.openOrderPlacement = function (page,id,position_index) {
+
+
+if (id) {
+
+
+ /*$scope.orderPositionAll[0] = {
+            placementvalue: [17,18]
+          };
+
+          $scope.orderPositionAll.size_group = {
+            sizegroupvalue: []
+          };*/
+
+
+$scope.position_id = id;   
+        
+        getPDataByPosService.getPlacementDataBySizeGroup().then(function(result){
+           
+            if(result.data.data.success == '1') 
+              {
+                  $scope.size_group =result.data.data.records;
+                  $scope.position_index =position_index;
+
+              } 
+              else
+              {
+                  $scope.size_group=[];
+              }
+        });
+
+
+        getPDataByPosService.getPlacementDataByPosition(id).then(function(result){
+           
+
+            if(result.data.data.success == '1') 
+              {
+                  $scope.positiondata =result.data.data.records;
+
+              } 
+              else
+              {
+                  $scope.positiondata=[];
+              }
+        });
+
+
+        $scope.edit='add';
+        var modalInstance = $modal.open({
+                                templateUrl: 'views/front/order/'+page,
+                                scope : $scope,
+                            });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
+
+        $scope.closePopup = function (cancel)
+        {
+            modalInstance.dismiss('cancel');
+        };
+        
+        
+
+
+        
+
+
+         $scope.saveSizeGroup=function(savePositionDataAll)
+        {
+           
+           modalInstance.dismiss('cancel');
+           
+        };
+
+
+
+    } else {
+     alert("Please select position.");return false;
+    }
     };
 
 
@@ -696,6 +784,11 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         });
     }
 
+
+    
+
+
+
     $scope.removeordernotes = function(index,id) {
         
         $http.get('api/public/order/deleteOrderNotes/'+id).success(function(Listdata) {
@@ -794,3 +887,25 @@ app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','
         }
     });
 }]);
+
+app.factory('getPDataByPosService', function($http){
+    return{
+        getPlacementDataBySizeGroup: function(){
+          var miscData = {};
+          miscData.table ='misc_type'
+          miscData.cond ={status:1,is_delete:1,type:'size_group'}
+          miscData.notcond ={value:""}
+          return $http.post('api/public/common/GetTableRecords',miscData);
+        },
+
+        getPlacementDataByPosition: function(id){
+          var miscData = {};
+          miscData.table ='placement'
+          miscData.cond ={status:1,is_delete:1,misc_id:id}
+          return $http.post('api/public/common/GetTableRecords',miscData);
+        }
+
+
+        
+    };
+});

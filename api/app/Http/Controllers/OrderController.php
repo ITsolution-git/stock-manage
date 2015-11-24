@@ -277,6 +277,61 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
+
+
+    /**
+    * Insert record for any single table.
+    * @params Table name, Post array
+    * @return json data
+    */
+     public function insertPositions()
+     {
+        $post = Input::all();
+
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+        if(!empty($post['table']) && !empty($post['data']))
+        {
+            $result = $this->order->insertPositions($post['table'],$post['data']);
+            $id = $result;
+            $message = INSERT_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message,"id"=>$id);
+        return response()->json(['data'=>$data]);
+     }
+    
+
+    /**
+    * UPDATE record for any single table.
+    * @params Table name, Condition array, Post array
+    * @return json data
+    */
+     public function updatePositions()
+     {
+        $post = Input::all();
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+
+        if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
+        {
+          $result = $this->order->updatePositions($post['table'],$post['cond'],$post['data']);
+          $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        else
+        {
+            $data = array("success"=>0,"message"=>MISSING_PARAMS);
+        }
+        return response()->json(['data'=>$data]);
+     }
+
+
+
+
 	/**
     * Get Array
     * @return json data
