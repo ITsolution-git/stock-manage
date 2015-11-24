@@ -166,7 +166,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         $scope.modalInstanceEdit  ='';
 
         var event_column_name =  $event.target.name;
-        console.log(event_column_name);
 
         $scope.order_data_note = {};
         $scope.order_data_note.data = {};
@@ -800,7 +799,6 @@ $scope.position_id = id;
     $scope.Editnotes=function(NoteDetails)
     {
         var Note_data = {};
-        //console.log(Note_data); return false;
         Note_data.data = NoteDetails;
         Note_data.note_id = NoteDetails;
         $http.post('api/public/client/EditCleintNotes',Note_data).success(function(Listdata) {
@@ -812,7 +810,6 @@ $scope.position_id = id;
         
         getOrderDetailById(id);
         $scope.edit='edit';
-        //console.log($scope);
         var modalInstanceEdit = $modal.open({
             templateUrl: 'views/front/order/order_note.html',
             scope : $scope,
@@ -832,7 +829,6 @@ $scope.position_id = id;
         $scope.updateNotes=function(updateNote)
         {
             var updateNoteData = {};
-            //console.log(Note_data); return false;
             updateNoteData.data = updateNote;
             $http.post('api/public/order/updateOrderNotes',updateNoteData).success(function(Listdata) {
                 getNotesDetail(order_id );
@@ -867,6 +863,14 @@ $scope.position_id = id;
                 $scope.avg_garment_price = '$'+value.avg_garment_price;
                 $scope.print_charges = '$'+value.print_charges;
                 $scope.order_line_charge = '$'+value.order_line_charge;
+            }
+            if(value.id == undefined)
+            {
+                $scope.avg_garment_cost = '0';
+                $scope.markup_default = '0';
+                $scope.avg_garment_price = '0';
+                $scope.print_charges = '0';
+                $scope.order_line_charge = '0';
             }
             
             $scope.orderLineAllNew = value;
