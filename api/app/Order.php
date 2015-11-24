@@ -54,6 +54,16 @@ class Order extends Model {
         $combine_array = array();
 
         $combine_array['order'] = $orderData;
+
+
+        foreach ($orderPositionData as $key=>$alldata){
+
+            $orderPositionData[$key]->placementvalue = explode(',', $alldata->placementvalue);
+            $orderPositionData[$key]->sizegroupvalue = explode(',', $alldata->sizegroupvalue);
+        }
+
+
+        
         $combine_array['order_position'] = $orderPositionData;
         $combine_array['client_data'] = $clientData;
         $combine_array['client_main_data'] = $clientMainData;
@@ -280,6 +290,59 @@ public function updateOrderLineData($post)
     {
         $whereConditions = ['order_id' => $id];
         $result = DB::table('order_item_mapping')->where($whereConditions)->get();
+        return $result;
+    }
+
+
+     public function insertPositions($table,$records)
+    {
+
+         if($records['placementvalue'] && is_array($records['placementvalue'])) {
+          $records['placementvalue'] = implode(',', $records['placementvalue']);
+       
+           }
+
+          if($records['sizegroupvalue']&& is_array($records['sizegroupvalue'])) {
+              $records['sizegroupvalue'] = implode(',', $records['sizegroupvalue']);
+           
+          }
+      
+
+
+        $result = DB::table($table)->insert($records);
+
+        $id = DB::getPdo()->lastInsertId();
+
+        return $id;
+    }
+   
+    public function updatePositions($table,$cond,$data)
+    {
+      
+
+      if($data['placementvalue'] && is_array($data['placementvalue'])) {
+          $data['placementvalue'] = implode(',', $data['placementvalue']);
+       
+      }
+
+      if($data['sizegroupvalue']&& is_array($data['sizegroupvalue'])) {
+          $data['sizegroupvalue'] = implode(',', $data['sizegroupvalue']);
+       
+      }
+      
+       
+       
+
+         $result = DB::table($table);
+        if(count($cond)>0)
+        {
+            foreach ($cond as $key => $value) 
+            {
+                if(!empty($value))
+                    $result =$result ->where($key,'=',$value);
+            }
+        }
+        $result=$result->update($data);
         return $result;
     }
 	

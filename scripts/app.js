@@ -33,5 +33,6 @@ angular
     'app.ui.ctrls',
     'app.ui.directives',
     'app.ui.services',
-    'app.services'
+    'app.services',
+    'checklist-model'
   ]);
