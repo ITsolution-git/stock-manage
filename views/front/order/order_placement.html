@@ -1,0 +1,53 @@
+<div>
+	<div class="modal-header">
+	    <h3 class="modal-title">Select Placement</h3>
+	</div>
+	<div class="modal-body">
+
+    	<div  class="input-group col-sm-12 m-b">
+                   <!--  <ul ng-repeat="placement in positiondata" class="form-fields col-md-6 nopad-left chkBoxes">
+                    	<li ng-model="placement.id"><md-checkbox>{{placement.misc_value}}</md-checkbox></li>
+                    </ul>  
+
+
+                     
+
+
+ -->
+
+                    <ul ng-repeat="placement in positiondata" class="form-fields col-md-6 nopad-left chkBoxes">
+                    	<li ><input type="checkbox" checklist-model="orderPositionAll[position_index].placementvalue" checklist-value="placement.id">{{placement.misc_value}}</li>
+                    </ul>  
+
+
+                   
+        </div>
+    	
+	</div>
+
+
+	<div class="modal-header">
+	    <h3 class="modal-title">Select Size Group</h3>
+	</div>
+	<div class="modal-body">
+
+    	<div  class="input-group col-sm-12 m-b">
+                   
+
+                      <ul ng-repeat="misc_size in size_group" class="form-fields col-md-6 nopad-left chkBoxes">
+                        <li ><input type="checkbox" checklist-model="orderPositionAll[position_index].placementvalue" checklist-value="misc_size.id"> {{misc_size.value}}</li>
+                    </ul> 
+
+
+        </div>
+
+    	
+	</div>
+
+
+	<div class="modal-footer">                  
+  		<button class="btn btn-warning" type="button" ng-click="closePopup('cancel')">Cancel</button>
+	    <button class="btn btn-primary" ng-if="edit=='add'" ng-click="saveSizeGroup(orderPositionAll)">Save</button>
+	    <button class="btn btn-primary" ng-if="edit=='edit'" ng-click="updateNotes(thisorderNote)">Update</button>
+	</div>
+</div>
