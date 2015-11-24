@@ -72,6 +72,7 @@
   <script src="scripts/directives/ui-toggle.js"></script>
   <script src="scripts/directives/filemodel.js"></script>
   <script src="scripts/directives/validation.js"></script>
+  <script src="scripts/directives/checklist-model.js"></script>
 
   <script src="scripts/filters/fromnow.js"></script>
   <script src="scripts/services/ngstore.js"></script>

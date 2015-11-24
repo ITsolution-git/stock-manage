@@ -187,7 +187,7 @@
                                     <div class="positionTab_content" ng-repeat="(key,order_position) in orderPositionAll">
                                         <input type="hidden" class="col-md-1"  ng-model="order_position.order_id" ng-value="order_position.order_id"/>
                                         <numeric_tag input-value="123" input-name="wks.name"/>
-                                    	
+                                      
                                         <div class="col-md-3 nopad-left">                                        
                                             <div class="form-group col-md-3 nopad-left">
                                                 <select  ng-model="order_position.position_id" class="form-control">
@@ -198,7 +198,7 @@
                                                 <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" />
                                             </div>
                                             <div class="form-group col-md-2 nopad-left">
-                                            <!-- Button will be here -->
+                                              <i class="mdi-maps-navigation" ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0"></i>
                                             </div>
                                             <div class="form-group col-md-3 nopad-left">
                                                 <select  ng-model="order_position.placement_type" class="form-control">
@@ -257,7 +257,7 @@
                                             </div>
                                             <div class="col-md-2 nopad-form">
                                                 <button type="button" ng-click="removeOrder($index,order_position.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
-                                    		</div>
+                                        </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -807,4 +807,3 @@
             </div>
         </form>
     </div>
-</div>
