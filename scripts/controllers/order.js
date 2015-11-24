@@ -138,6 +138,29 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         }
     }
 
+    $http.get('api/public/common/getAllVendors').success(function(result, status, headers, config) {
+            $scope.vendors = result.data.records;
+    });
+
+    var color_data = {};
+    color_data.table ='misc_type'
+    color_data.cond ={type:'color_group',is_delete:1,status:1}
+    color_data.notcond ={value:""}
+
+    
+    $http.post('api/public/common/GetTableRecords',color_data).success(function(result) {
+        
+        if(result.data.success == '1') 
+        {
+            $scope.colors =result.data.records;
+        } 
+        else
+        {
+            $scope.colors=[];
+        }
+    });
+    
+
     $scope.notesave = function($event,id) {
 
         $scope.modalInstanceEdit  ='';
@@ -175,6 +198,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
         if(Selected.hasClass('chargesApplyActive'))
         {
+            $("#ajax_loader").show();
             Selected.removeClass('chargesApplyActive')
             var order_data = {};
             order_data.table ='order_item_mapping'
@@ -186,10 +210,12 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             var item_data = {item_name:item_name,order_id:order_id}
             $http.post('api/public/finishing/removeFinishingItem',item_data).success(function(result) {
             
+                $("#ajax_loader").hide();
             });
         }
         else
         {
+            $("#ajax_loader").show();
             $scope.total_qty = 0;
             angular.forEach($scope.orderLineAll, function(value) {
                 $scope.total_qty += parseInt(value.qnty);
@@ -204,7 +230,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
             var item_data = {item_name:item_name,order_id:order_id,total_qty:$scope.total_qty}
             $http.post('api/public/finishing/addFinishingItem',item_data).success(function(result) {
-            
+                $("#ajax_loader").hide();
             });
         }
     }
@@ -279,7 +305,9 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
 
         $scope.orderLineAll.push({ size_group_id:'' ,
-                                    product_id:'', 
+                                    product_id:'',
+                                    vendor_id:'',
+                                    color_id:'',
                                     orderline_id:$scope.orderline_id,
                                     qnty:'0',
                                     markup:'',
@@ -719,6 +747,32 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             modalInstanceEdit.dismiss('cancel');
         };
     };
+
+    $scope.showOlDiv = function(id)
+    {
+        var popupBoxDiv = $('#orderLinepopup');
+        
+       /* var linkAddr = $('.OL_id_'+id);
+        var linkPosTop = linkAddr.offset().top ; //- 150
+        var linkPosLeft = linkAddr.offset().left ; // - 226
+
+        var finalPosTop = parseInt(linkPosTop) - 150; 
+        var finalPosLeft = parseInt(linkPosLeft) - 226; 
+
+        alert('top:' + linkPosTop + ' Left:' +linkPosLeft);
+        popupBoxDiv.css({ 
+            'top':finalPosTop+'px',
+            'left':finalPosLeft+'px'
+        }); */
+
+        popupBoxDiv.show();
+    }
+
+    $scope.closeOLDiv = function()
+    {
+        var popupBoxDiv = $('#orderLinepopup');
+        popupBoxDiv.hide();
+    }
 
   // **************** NOTES TAB CODE END  ****************
 }]);
