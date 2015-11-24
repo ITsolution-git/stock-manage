@@ -684,6 +684,12 @@ nav ul.nav li:hover ul.nav-sub {
 input[readonly].c-blue {
 	background-color: #cceeff;
 }
+
+.orderLinesecondRow .iconCST {
+	display: block;
+	height: 34px;
+	background: url(../images/icon-t-shirt.jpg) no-repeat center center;
+}
 /*---------- END ----------*/
 
 
