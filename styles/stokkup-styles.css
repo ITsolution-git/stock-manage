@@ -593,6 +593,9 @@ nav ul.nav li:hover ul.nav-sub {
 	border: 1px solid #cccccc;
 	box-sizing:border-box;
 	padding: 20px 0 0 20px;
+	max-height: 470px;
+	overflow: hidden;
+	overflow-y:scroll; 
 }
 .orderLineTabScroll {
 	width: 100% !important;
