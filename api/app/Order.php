@@ -199,6 +199,7 @@ public function updateOrderLineData($post)
                                     'qnty'=>$post['qnty'],
                                     'markup'=>$post['markup'],
                                     'override'=>$post['override'],
+                                    'per_line_total'=>$post['per_line_total'],
                                     'peritem'=>$post['peritem'])
                             );
 
