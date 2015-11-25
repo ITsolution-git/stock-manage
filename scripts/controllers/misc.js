@@ -14,7 +14,7 @@ $("#ajax_loader").show();
 
 
 var range = [];
-for(var i=0;i<15;i++) {
+for(var i=0;i<17;i++) {
   range.push(i);
 }
 $scope.range = range;

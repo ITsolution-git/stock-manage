@@ -526,7 +526,7 @@ angular.module('app')
             .state('setting.placement', {
               url: '/placement',
               templateUrl: 'views/setting/placement.html',
-              data : { title: 'Misc' },
+              data : { title: 'Placement' },
               controller: 'XeditableCtrl',
               resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })

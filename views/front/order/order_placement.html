@@ -27,7 +27,7 @@
                 <li>
                     <div class="form-group">
                         <label class="md-check">
-                            <input type="checkbox" checklist-model="orderPositionAll[position_index].placementvalue" checklist-value="misc_size.id"checked="" class="has-value">
+                            <input type="checkbox" checklist-model="orderPositionAll[position_index].sizegroupvalue" checklist-value="misc_size.id"checked="" class="has-value">
                             <i class="c-default"></i>
                             {{misc_size.value}}
                         </label>
@@ -39,7 +39,6 @@
 
 	<div class="modal-footer">                  
   		<button class="btn btn-warning" type="button" ng-click="closePopup('cancel')">Cancel</button>
-	    <button class="btn btn-primary" ng-if="edit=='add'" ng-click="saveSizeGroup(orderPositionAll)">Save</button>
-	    <button class="btn btn-primary" ng-if="edit=='edit'" ng-click="updateNotes(thisorderNote)">Update</button>
+	    <button class="btn btn-primary"  ng-click="saveSizeGroup(orderPositionAll)">Save</button>
 	</div>
 </div>
