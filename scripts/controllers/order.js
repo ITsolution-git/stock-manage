@@ -557,15 +557,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 if (id) {
 
 
- /*$scope.orderPositionAll[0] = {
-            placementvalue: [17,18]
-          };
-
-          $scope.orderPositionAll.size_group = {
-            sizegroupvalue: []
-          };*/
-
-
 $scope.position_id = id;   
         
         getPDataByPosService.getPlacementDataBySizeGroup().then(function(result){
@@ -597,8 +588,6 @@ $scope.position_id = id;
               }
         });
 
-
-        $scope.edit='add';
         var modalInstance = $modal.open({
                                 templateUrl: 'views/front/order/'+page,
                                 scope : $scope,
@@ -615,11 +604,6 @@ $scope.position_id = id;
             modalInstance.dismiss('cancel');
         };
         
-        
-
-
-        
-
 
          $scope.saveSizeGroup=function(savePositionDataAll)
         {
@@ -898,49 +882,74 @@ $scope.position_id = id;
         if(field == 'separations_charge')
         {
             value = $scope.order.separations_charge;
-            $scope.order_data.data = {'separations_charge' : value};
+            $scope.order_data.data = {'separations_charge' : value,
+                                    'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         if(field == 'rush_charge')
         {
             value = $scope.order.rush_charge;
-            $scope.order_data.data = {'rush_charge' : value};
+            $scope.order_data.data = {'rush_charge' : value,'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         if(field == 'shipping_charge')
         {
             value = $scope.order.shipping_charge;
-            $scope.order_data.data = {'shipping_charge' : value};
+            $scope.order_data.data = {'shipping_charge' : value,'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         if(field == 'setup_charge')
         {
             value = $scope.order.setup_charge;
-            $scope.order_data.data = {'setup_charge' : value};
+            $scope.order_data.data = {'setup_charge' : value,'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         if(field == 'distribution_charge')
         {
             value = $scope.order.distribution_charge;
-            $scope.order_data.data = {'distribution_charge' : value};
+            $scope.order_data.data = {'distribution_charge' : value,'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         if(field == 'digitize_charge')
         {
             value = $scope.order.digitize_charge;
-            $scope.order_data.data = {'digitize_charge' : value};
+            $scope.order_data.data = {'digitize_charge' : value,'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         if(field == 'artwork_charge')
         {
             value = $scope.order.artwork_charge;
-            $scope.order_data.data = {'artwork_charge' : value};
+            $scope.order_data.data = {'artwork_charge' : value,'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         if(field == 'discount')
         {
             value = $scope.order.discount;
-            $scope.order_data.data = {'discount' : value};
+            $scope.order_data.data = {'discount' : value,'order_line_total' : $scope.order.order_line_total,
+                                    'order_charges_total' : $scope.order.order_charges_total,
+                                    'sales_order_total' : $scope.order.sales_order_total
+                                    };
         }
         
         $scope.order_data.cond = {id: order_id};
         $scope.order_data['table'] ='orders'
-        /*$http.post('api/public/common/UpdateTableRecords',$scope.order_data).success(function(result) {
+        $http.post('api/public/common/UpdateTableRecords',$scope.order_data).success(function(result) {
 
-        });*/
+        });
     }
 
   // **************** NOTES TAB CODE END  ****************
