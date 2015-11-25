@@ -42,422 +42,470 @@
 				<div class="tab-content p b-a no-b-t bg-white m-b-md">
 					<div role="tabpanel" class="tab-pane active animated fadeIn clientTab" id="homeTasksAssigned">
 						<div class="form-group col-md-12 tabTitle nopad-form">
-							<div class="form-group col-md-1 tabTitle nopad-form pull-right nmb">
-								<button type="button" class="btn btn-default addButton pull-right">
-			                		<i class="fa fa-plus"></i>
-			                	</button>
-		                	</div>
-						</div>
-						<div class="form-group col-md-12 tabTitle nopad-form">
 							<div class="col-md-4 nopad-left">
 				                <div class="col-md-1 nopad-left"></div>			                
-				                <div class="col-md-2 nopad-left">Staff</div>
-				                <div class="col-md-3 nopad-left">Task</div>
-				                <div class="col-md-3 nopad-left">Client</div>
-			                	<div class="col-md-3 nopad-left">Job Name</div>
+				                <div class="col-md-2 nopad-left">
+				                	<label>Staff</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Task</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Client</label>
+				                </div>
+			                	<div class="col-md-3 nopad-left">
+			                		<label>Job Name</label>
+			                	</div>
 			                </div>			                
-			                <div class="col-md-4 nopad-left">Note</div>
 			                <div class="col-md-4 nopad-left">
-				                <div class="col-md-4 nopad-left">Due Time</div>
-				                <div class="col-md-4 nopad-left">Due Date</div>
-				                <div class="col-md-4 nopad-left">Status</div>
+			                	<label>Note</label>
+			                </div>
+			                <div class="col-md-4 nopad-form">
+				                <div class="col-md-4 nopad-left">
+				                	<label>Due Time</label>
+				                </div>
+				                <div class="col-md-4 nopad-left">
+				                	<label>Due Date</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Status</label>
+				                </div>
+				                <div class="col-md-1 nopad-form pull-right">
+				                	<button type="button" class="btn btn-default addButton pull-right">
+				                		<i class="fa fa-plus"></i>
+				                	</button>
+				                </div>
 			                </div>
 		                </div>
 
 		                <div class="task_assign_details">
 			                <!-- Assign Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+			                <div class="detailedList">
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Assigned" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
-			                </div>
-			                <!-- End Assign Fields -->
+				                <!-- End Assign Fields -->
 
-			                <!-- Assign Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+				                <!-- Assign Fields -->
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Assigned" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
-			                </div>
-			                <!-- End Assign Fields -->
+				                <!-- End Assign Fields -->
 
-			               	<!-- Assign Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+				               	<!-- Assign Fields -->
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Assigned" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
+				                <!-- End Assign Fields -->
 			                </div>
-			                <!-- End Assign Fields -->
 			            </div>
 					</div>
 					<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeTaskCreated">
 						<div class="form-group col-md-12 tabTitle nopad-form">
-							<div class="form-group col-md-1 tabTitle nopad-form pull-right nmb">
-								<button type="button" class="btn btn-default addButton pull-right">
-			                		<i class="fa fa-plus"></i>
-			                	</button>
-		                	</div>
-						</div>
-						<div class="form-group col-md-12 tabTitle nopad-form">
 							<div class="col-md-4 nopad-left">
 				                <div class="col-md-1 nopad-left"></div>			                
-				                <div class="col-md-2 nopad-left">Staff</div>
-				                <div class="col-md-3 nopad-left">Task</div>
-				                <div class="col-md-3 nopad-left">Client</div>
-			                	<div class="col-md-3 nopad-left">Job Name</div>
+				                <div class="col-md-2 nopad-left">
+				                	<label>Staff</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Task</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Client</label>
+				                </div>
+			                	<div class="col-md-3 nopad-left">
+			                		<label>Job Name</label>
+			                	</div>
 			                </div>			                
-			                <div class="col-md-4 nopad-left">Note</div>
 			                <div class="col-md-4 nopad-left">
-				                <div class="col-md-4 nopad-left">Due Time</div>
-				                <div class="col-md-4 nopad-left">Due Date</div>
-				                <div class="col-md-4 nopad-left">Status</div>
+			                	<label>Note</label>
+			                </div>
+			                <div class="col-md-4 nopad-form">
+				                <div class="col-md-4 nopad-left">
+				                	<label>Due Time</label>
+				                </div>
+				                <div class="col-md-4 nopad-left">
+				                	<label>Due Date</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Status</label>
+				                </div>
+				                <div class="col-md-1 nopad-form pull-right">
+				                	<button type="button" class="btn btn-default addButton pull-right">
+				                		<i class="fa fa-plus"></i>
+				                	</button>
+				                </div>
 			                </div>
 		                </div>
 
 		                <div class="task_assign_details">
-			                <!-- Created Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+			                <!-- Assign Fields -->
+			                <div class="detailedList">
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Open" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
-			                </div>
-			                <!-- End Created Fields -->
+				                <!-- End Assign Fields -->
 
-			                <!-- Created Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+				                <!-- Assign Fields -->
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Open" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
-			                </div>
-			                <!-- End Created Fields -->
+				                <!-- End Assign Fields -->
 
-			               	<!-- Created Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+				               	<!-- Assign Fields -->
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Open" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
+				                <!-- End Assign Fields -->
 			                </div>
-			                <!-- End Created Fields -->
 			            </div>
 					</div>
 					<div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="homeTaskCompleted">
 						<div class="form-group col-md-12 tabTitle nopad-form">
-							<div class="form-group col-md-1 tabTitle nopad-form pull-right nmb">
-								<button type="button" class="btn btn-default addButton pull-right">
-			                		<i class="fa fa-plus"></i>
-			                	</button>
-		                	</div>
-						</div>
-						<div class="form-group col-md-12 tabTitle nopad-form">
 							<div class="col-md-4 nopad-left">
 				                <div class="col-md-1 nopad-left"></div>			                
-				                <div class="col-md-2 nopad-left"><span class="tab_title">Staff</span></div>
-				                <div class="col-md-3 nopad-left"><span class="tab_title">Task</span></div>
-				                <div class="col-md-3 nopad-left"><span class="tab_title">Client</span></div>
-			                	<div class="col-md-3 nopad-left"><span class="tab_title">Job Name</span></div>
+				                <div class="col-md-2 nopad-left">
+				                	<label>Staff</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Task</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Client</label>
+				                </div>
+			                	<div class="col-md-3 nopad-left">
+			                		<label>Job Name</label>
+			                	</div>
 			                </div>			                
-			                <div class="col-md-4 nopad-left"><span class="tab_title">Note</span></div>
 			                <div class="col-md-4 nopad-left">
-				                <div class="col-md-4 nopad-left"><span class="tab_title">Due Time</span></div>
-				                <div class="col-md-4 nopad-left"><span class="tab_title">Due Date</span></div>
-				                <div class="col-md-4 nopad-left"><span class="tab_title">Status</span></div>
+			                	<label>Note</label>
+			                </div>
+			                <div class="col-md-4 nopad-form">
+				                <div class="col-md-4 nopad-left">
+				                	<label>Due Time</label>
+				                </div>
+				                <div class="col-md-4 nopad-left">
+				                	<label>Due Date</label>
+				                </div>
+				                <div class="col-md-3 nopad-left">
+				                	<label>Status</label>
+				                </div>
+				                <div class="col-md-1 nopad-form pull-right">
+				                	<button type="button" class="btn btn-default addButton pull-right">
+				                		<i class="fa fa-plus"></i>
+				                	</button>
+				                </div>
 			                </div>
 		                </div>
 
 		                <div class="task_assign_details">
-			                <!-- Completed Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+			                <!-- Assign Fields -->
+			                <div class="detailedList">
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Complet" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
-			                </div>
-			                <!-- End Completed Fields -->
+				                <!-- End Assign Fields -->
 
-			                <!-- Completed Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+				                <!-- Assign Fields -->
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Complet" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
-			                </div>
-			                <!-- End Completed Fields -->
+				                <!-- End Assign Fields -->
 
-			               	<!-- Completed Fields -->
-			                <div class="form-group col-md-12 tabTitle nopad-form">
-								<div class="col-md-4 nopad-left">
-					                <div class="col-md-1 nopad-left">
-					                	<button type="button" class="btn btn-default editButton">
-					                		<i class="fa fa-edit"></i>
-					                	</button>
+				               	<!-- Assign Fields -->
+				                <div class="listedItems form-group col-md-12 tabTitle nopad-form">
+									<div class="col-md-4 nopad-left">
+						                <div class="col-md-1 nopad-left">
+						                	<button type="button" class="btn btn-default editButton">
+						                		<i class="fa fa-edit"></i>
+						                	</button>
+						                </div>			                
+						                <div class="col-md-2 nopad-left">
+						                	<input type="text" class="form-control" placeholder="RS" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-3 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+					                	<div class="col-md-3 nopad-left">
+					                		<input type="text" class="form-control" />
+					                	</div>
 					                </div>			                
-					                <div class="col-md-2 nopad-left">
-					                	<input type="text" class="form-control" placeholder="RS" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-3 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-				                	<div class="col-md-3 nopad-left">
-				                		<input type="text" class="form-control" />
-				                	</div>
-				                </div>			                
-				                <div class="col-md-4 nopad-left">
-				                	<input type="text" class="form-control" />
-				                </div>
-				                <div class="col-md-4 nopad-left">
 					                <div class="col-md-4 nopad-left">
 					                	<input type="text" class="form-control" />
 					                </div>
 					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" />
-					                </div>
-					                <div class="col-md-4 nopad-left">
-					                	<input type="text" class="form-control" placeholder="Complet" />
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" />
+						                </div>
+						                <div class="col-md-4 nopad-left">
+						                	<input type="text" class="form-control" placeholder="Assigned" />
+						                </div>
 					                </div>
 				                </div>
+				                <!-- End Assign Fields -->
 			                </div>
-			                <!-- End Completed Fields -->
 			            </div>
 					</div>
 				</div>

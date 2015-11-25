@@ -52,11 +52,9 @@
 }
 .form-group input.form-control,
 .form-group input,
-input
- { 
-		border-radius: 5px !important;		
-	}
-	
+input { 
+	border-radius: 5px !important;		
+}	
 .panel.panel-default.brdr-panel {
 	background: #e5e5e5;
 	padding: 10px;
@@ -64,6 +62,78 @@ input
 .panel.panel-default.brdr-panel .form-group label {
 	margin: 6px 0 0 0;
 	font-size: 1.1em;
+}
+
+/*=========================
+		Tabs Styles 
+=========================*/
+.nav.nav-tabs {
+	background: #e5e5e5; /* Old browsers */
+	background: -moz-linear-gradient(top,  #e5e5e5 1%, #ffffff 51%, #e5e5e5 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #e5e5e5 1%,#ffffff 51%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #e5e5e5 1%,#ffffff 51%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5e5e5', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+	width: auto;
+	clear: both;
+}
+.nav-tabs > li {
+	border-right: 1px solid #ccc;
+	box-sizing:border-box;	
+}
+.nav-tabs > li:first-child {
+	border-left: 1px solid #ccc;
+}
+.nav-tabs > li:hover > a, 
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover, 
+.nav-tabs > li.active > a:focus {
+    border: 0;    
+    border-radius: 0;
+    color: #000000;
+    font-weight: bold;
+    margin: 0;	
+	background: #9e9e9e; /* Old browsers */
+	background: -moz-linear-gradient(top,  #9e9e9e 0%, #ffffff 51%, #9e9e9e 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #9e9e9e 0%,#ffffff 51%,#9e9e9e 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #9e9e9e 0%,#ffffff 51%,#9e9e9e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9e9e9e', endColorstr='#9e9e9e',GradientType=0 ); /* IE6-9 */
+}
+.nav.nav-tabs li a {	
+	border: 0;
+    border-radius: 0;
+    display: inline-block;    
+    margin: 0;
+    font-size: 13px;
+    padding: 10px 20px;
+    box-sizing:border-box;
+}
+
+.stokkupForm .tab-content {
+	border:1px solid #ddd;
+	margin-top: -1px;
+}
+
+/*==========================================
+ 		ODD / EVEN LISTING STYLES
+ =========================================*/
+ .detailedList {
+ }
+
+ .detailedList .listedItems {
+ 	background-color: #ffffff;
+ }
+ .detailedList .listedItems:nth-child(2n) {
+ 	background-color: #e5e5e5;
+ 	padding: 5px 0;
+ }
+
+.detailedList .listedItems:nth-child(2n) input[type='text'],
+.detailedList .listedItems:nth-child(2n) select,
+.detailedList .listedItems:nth-child(2n) textarea {
+	background-color: #e5e5e5;	
+	border-color:#999;
+	box-sizing:border-box;
+	color: #000;
 }
 /*==========================================
 			LAYOUT STYLES 
@@ -207,9 +277,10 @@ nav ul.nav li:hover ul.nav-sub {
 		margin-bottom:0;		
 	}
 	.stokkupForm .tab-content .form-group label {
-		font-size:12px;
+		font-size:13px;
 		font-weight:bold;
 		color:#0e0e0e;
+		margin-bottom: 0;
 	}
 	.stokkupForm .tab-content .form-group button.btn-default .fa {
 		display:block;
@@ -410,7 +481,8 @@ nav ul.nav li:hover ul.nav-sub {
 
 .client_home_page .editButton {
 	min-height: 34px;
-	padding: 5px;
+	padding: 5px 10px;
+	margin-left: 5px;
 }
 .stokkupForm.client_home_page .tab-content .form-group {
 	margin-bottom: 10px;
