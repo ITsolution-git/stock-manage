@@ -557,15 +557,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 if (id) {
 
 
- /*$scope.orderPositionAll[0] = {
-            placementvalue: [17,18]
-          };
-
-          $scope.orderPositionAll.size_group = {
-            sizegroupvalue: []
-          };*/
-
-
 $scope.position_id = id;   
         
         getPDataByPosService.getPlacementDataBySizeGroup().then(function(result){
@@ -597,8 +588,6 @@ $scope.position_id = id;
               }
         });
 
-
-        $scope.edit='add';
         var modalInstance = $modal.open({
                                 templateUrl: 'views/front/order/'+page,
                                 scope : $scope,
@@ -615,11 +604,6 @@ $scope.position_id = id;
             modalInstance.dismiss('cancel');
         };
         
-        
-
-
-        
-
 
          $scope.saveSizeGroup=function(savePositionDataAll)
         {
