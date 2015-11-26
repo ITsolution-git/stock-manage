@@ -220,7 +220,7 @@
                                                 <input type="text" class="form-control"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" />
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.qnty"/>
+                                                <input type="text" class="form-control" ng-class="{ cred: order_position.qnty != total_qty }"  ng-model="order_position.qnty"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
                                                 <input type="text" class="form-control"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)"/>
@@ -360,13 +360,13 @@
                                                     </div>
                                                     <div class="cols col-3">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control"  ng-model="order_line.markup"/>
+                                                            <input type="text" class="form-control"  ng-model="order_line.markup" value="{{order_line.markup}}%" readonly="" />
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control"  ng-model="order_line.override"/>
+                                                            <input type="text" class="form-control"  ng-model="order_line.override" />
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control"  ng-model="order_line.peritem"/>
+                                                            <input type="text" class="form-control"  ng-model="order_line.peritem"/ readonly="">
                                                         </div>
                                                         <div class="form-group lastItem">
                                                             <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
@@ -405,7 +405,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="col-md-5 smallPad nopad-left">
-                                                                <input type="text" class="form-control"  ng-model="order_line.markup"/>
+                                                                <input type="text" class="form-control" ng-model="order_line.override_diff"/>
                                                             </div>
                                                             <div class="col-md-2 smallPad nopad-left">
                                                                 <input type="text" class="form-control"  ng-model="order_line.override"/>
@@ -418,10 +418,10 @@
                                                     <div class="cols col-3">
                                                         <div class="col-md-12 nopad-form smallPad">
                                                             <div class="col-md-4 nopad-left smallPad">
-                                                                <input type="text" class="form-control"  ng-model="order_line.markup"/>
+                                                                <input type="text" class="form-control" ng-model="order_line.override_diff" readonly="" />
                                                             </div>
                                                             <div class="col-md-7 nopad-right smallPad">
-                                                                <input type="text" class="form-control"  ng-model="order_line.per_line_total"/>
+                                                                <input type="text" class="form-control"  ng-model="order_line.per_line_total" readonly="" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -446,7 +446,7 @@
                                                     <label> Total Units </label>
                                                 </div>                                                
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" class="form-control" ng-model="total_qty"/> 
+                                                    <input type="text" class="form-control" ng-class="{ cred: total_qty != position_total_qty}" ng-model="total_qty" readonly="" /> 
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad"></div>
                                             </div>

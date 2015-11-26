@@ -19,7 +19,7 @@
                     } 
                     else 
                     {
-                        console.log('Login with - '+result.data.username);
+                       // console.log('Login with - '+result.data.username);
                         $rootScope.username = result.data.username;
                         sessionService.set('role_slug',result.data.role_session);
                         return true;
@@ -28,7 +28,7 @@
             },
             AccessService: function (ret) {
                 var role = sessionService.get('role_slug');
-                console.log('Permission Allow for Role - '+role);
+                //console.log('Permission Allow for Role - '+role);
                 if(ret.indexOf(role) <= -1 && ret != 'ALL')
                 {
                     //console.log('error');
