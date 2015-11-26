@@ -304,6 +304,7 @@ public function updateOrderLineData($post)
      public function insertPositions($table,$records)
     {
 
+
          if($records['placementvalue'] && is_array($records['placementvalue'])) {
           $records['placementvalue'] = implode(',', $records['placementvalue']);
        
@@ -325,6 +326,7 @@ public function updateOrderLineData($post)
    
     public function updatePositions($table,$cond,$data)
     {
+        
       
 
       if($data['placementvalue'] && is_array($data['placementvalue'])) {
