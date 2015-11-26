@@ -27,6 +27,26 @@
 <!-- jQuery -->
   <script src="libs/jquery/jquery/dist/jquery.js"></script>
   <script src="libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+
+<!-- Background Video JS -->
+<script type="text/javascript">
+  var vid = document.getElementById("bgvid");
+  var pauseButton = document.querySelector("#polina button");
+
+  function vidFade() {
+    vid.classList.add("stopfade");
+  }
+
+  vid.addEventListener('ended', function() {
+    // only functional if "loop" is removed 
+    vid.pause();
+
+    // to capture IE10
+    vidFade();
+  });
+</script>
+<!-- End -->  
+
 <!-- Angular -->
   <script src="libs/angular/angular/angular.js"></script>
   <script src="libs/angular/angular-animate/angular-animate.js"></script>
