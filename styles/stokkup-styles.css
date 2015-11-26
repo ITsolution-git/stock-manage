@@ -202,17 +202,15 @@ nav ul.nav li:first-child {
 }
 nav ul.nav li a,
 nav ul.nav li.active > a {
-	background: #eadddd;
-	color: #643e3e;
 	width:100%;
-	font-size: 18px;
+	font-size: 14px;
 }
+
 nav ul.nav li a:hover,
 nav ul.nav li a:hover span, 
 nav ul.nav li .nav-item:hover, 
 nav ul.nav li a:focus, 
 nav ul.nav li .nav-item:focus {
-	background: #e1cfcf;
 	font-weight: bold;
 }
 nav ul.nav li a > .icon, 
@@ -293,8 +291,11 @@ nav ul.nav li:hover ul.nav-sub {
 	background:none;
 }
 #loginCtrl {
-	background:rgba(0, 0, 0, 0.8);
-	margin-top: 200px;
+	background: rgba(0, 0, 0, 0.8);    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -232px 0 0 -160px;
 }
 #loginCtrl .navbar-brand {
 	float:none;	

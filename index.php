@@ -25,8 +25,10 @@
 <body ng-app="app">
   <!-- Background video -->
   <video autoplay  poster="images/login_bg/bg_vid.jpg" id="bgvid" loop>
-    <!--source src="//demosthenes.info/assets/videos/polina.webm" type="video/webm"-->
+    <!--source src="//demosthenes.info/assets/videos/polina.webm" type="video/webm"    
+    -->
     <source src="images/login_bg/video1.mp4" type="video/mp4">
+    
   </video>
   <!-- End -->
 
@@ -47,7 +49,7 @@
   vid.addEventListener('ended', function() {
     // only functional if "loop" is removed 
     vid.pause();
-    
+
     // to capture IE10
     vidFade();
   });
