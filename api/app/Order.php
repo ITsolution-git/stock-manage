@@ -311,13 +311,13 @@ public function updateOrderLineData($post)
      public function insertPositions($table,$records)
     {
 
-
-         if($records['placementvalue'] && is_array($records['placementvalue'])) {
+        
+         if(array_key_exists('placementvalue', $records) && is_array($records['placementvalue'])) {
           $records['placementvalue'] = implode(',', $records['placementvalue']);
        
            }
 
-          if($records['sizegroupvalue']&& is_array($records['sizegroupvalue'])) {
+          if(array_key_exists('sizegroupvalue', $records) && is_array($records['sizegroupvalue'])) {
               $records['sizegroupvalue'] = implode(',', $records['sizegroupvalue']);
            
           }
@@ -333,15 +333,13 @@ public function updateOrderLineData($post)
    
     public function updatePositions($table,$cond,$data)
     {
-        
-      
 
-      if($data['placementvalue'] && is_array($data['placementvalue'])) {
+      if(array_key_exists('placementvalue', $data)  && is_array($data['placementvalue'])) {
           $data['placementvalue'] = implode(',', $data['placementvalue']);
        
       }
 
-      if($data['sizegroupvalue']&& is_array($data['sizegroupvalue'])) {
+      if(array_key_exists('sizegroupvalue', $data)  && is_array($data['sizegroupvalue'])) {
           $data['sizegroupvalue'] = implode(',', $data['sizegroupvalue']);
        
       }
