@@ -429,6 +429,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     $scope.savePositionData=function(postArray)
     {
      
+       
         if(postArray.length != 0) {
 
             order_id = $stateParams.id
