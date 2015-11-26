@@ -27,10 +27,7 @@
 <!-- jQuery -->
   <script src="libs/jquery/jquery/dist/jquery.js"></script>
   <script src="libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
-
-
-
-<!-- Angular -->
+  <!-- Angular -->
   <script src="libs/angular/angular/angular.js"></script>
   <script src="libs/angular/angular-animate/angular-animate.js"></script>
   <script src="libs/angular/angular-aria/angular-aria.js"></script>
@@ -116,17 +113,14 @@
   <script src="libs/custom-scroll/scroller.js"></script>
   <script src="libs/custom-scroll/mwheelIntent.js"></script>
   <script src="libs/custom-scroll/mouseWheel.js"></script>
-  
+
   <!-- CUSTOM SCRIPTS -->
-  <script src="libs/custom-scripts.js"></script>
+  <script type="text/javascript" charset="utf-8" src="libs/custom-scripts.js"></script>
 
   <div id="ajax_loader" class="overlay-loader">
     <div class="loader-background"></div>
     <img class="loader-icon spinning-cog" src="images/loader/loder.png">
-    
   </div>
-
-
-
+  
 </body>
 </html>

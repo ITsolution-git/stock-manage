@@ -69,14 +69,14 @@ input {
 =========================*/
 video { 
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
     min-width: 100%;
     min-height: 100%;
     width: auto;
     height: auto;
     z-index: -100;
-    transform: translateX(-50%) translateY(-50%);
+    /*transform: translateX(-50%) translateY(-50%);*/
  	background: url('../images/login_bg/bg_vid.jpg') no-repeat;
   	background-size: cover;
   	transition: 1s opacity;
@@ -84,7 +84,6 @@ video {
 .stopfade { 
    opacity: .5;
 }
-
 
 /*=========================
 		Tabs Styles 
