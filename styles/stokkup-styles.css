@@ -831,10 +831,10 @@ nav ul.nav li:hover ul.nav-sub {
 .c-blue {
 	background-color: #cceeff;
 }
-.c-red {
+.cred {
 	background-color: #ff0000;
 }
-input[readonly].c-red {
+input[readonly].cred {
 	background-color: #ff0000;
 }
 

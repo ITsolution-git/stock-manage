@@ -124,19 +124,20 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
                     $scope.orderline_id = 0;
                     $scope.total_qty = 0;
+                    $scope.order.order_line_total = 0;
+                    var order_line_total = 0;
+
                     angular.forEach($scope.orderLineAll, function(value) {
                         $scope.orderline_id = parseInt(value.id);
                         $scope.total_qty += parseInt(value.qnty);
-                        $scope.order.order_line_total += parseFloat(value.per_line_total);
+                        order_line_total += parseFloat(value.per_line_total);
                     });
 
-                    angular.forEach($scope.orderPositionAll, function(value) {
+                    $scope.order.order_line_total = order_line_total.toFixed(2);
 
-                            if(value.qnty != $scope.total_qty)
-                            {
-                                $('#total_qty').addClass('c-red');
-                                $('.position_qty').addClass('c-red');
-                            }
+                    $scope.position_total_qty = 0;
+                    angular.forEach($scope.orderPositionAll, function(value) {
+                        $scope.position_total_qty += parseInt(value.qnty);
                     });
 
                     var price_grid_data = {};
@@ -1120,6 +1121,8 @@ $scope.position_id = id;
                 $scope.orderLineAllNew = [];
 
                 $scope.order.order_line_total = 0;
+                var order_line_total = 0;
+                $scope.total_qty = 0;
                 angular.forEach($scope.orderLineAll, function(value) {
                     
                     if(value.orderline_id == orderline_id)
@@ -1132,8 +1135,17 @@ $scope.position_id = id;
                         value.markup = $scope.shipping_charge;
                     }
                     $scope.orderLineAllNew = value;
-                    $scope.order.order_line_total += parseFloat(value.per_line_total);
+                    order_line_total += parseFloat(value.per_line_total);
+                    $scope.total_qty += parseInt(value.qnty);
                 });
+
+
+                $scope.position_total_qty = 0;
+                angular.forEach($scope.orderPositionAll, function(value) {
+                    $scope.position_total_qty += parseInt(value.qnty);
+                });
+
+                $scope.order.order_line_total = order_line_total.toFixed(2);
 
                 $scope.order.sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
 
