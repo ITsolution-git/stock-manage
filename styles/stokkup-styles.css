@@ -683,6 +683,12 @@ nav ul.nav li:hover ul.nav-sub {
 .c-blue {
 	background-color: #cceeff;
 }
+.c-red {
+	background-color: #ff0000;
+}
+input[readonly].c-red {
+	background-color: #ff0000;
+}
 
 input[readonly].c-blue {
 	background-color: #cceeff;
