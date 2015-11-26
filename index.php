@@ -27,6 +27,9 @@
 <!-- jQuery -->
   <script src="libs/jquery/jquery/dist/jquery.js"></script>
   <script src="libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+
+
+
 <!-- Angular -->
   <script src="libs/angular/angular/angular.js"></script>
   <script src="libs/angular/angular-animate/angular-animate.js"></script>
@@ -122,6 +125,8 @@
     <img class="loader-icon spinning-cog" src="images/loader/loder.png">
     
   </div>
+
+
 
 </body>
 </html>
