@@ -23,10 +23,37 @@
   <link rel="stylesheet" href="styles/_toastr.scss" type="text/css" />
 </head>
 <body ng-app="app">
+  <!-- Background video -->
+  <video autoplay  poster="images/login_bg/bg_vid.jpg" id="bgvid" loop>
+    <!--source src="//demosthenes.info/assets/videos/polina.webm" type="video/webm"-->
+    <source src="images/login_bg/video1.mp4" type="video/mp4">
+  </video>
+  <!-- End -->
+
   <div class="app app-login" ui-view ng-controller="AppCtrl"></div>
 <!-- jQuery -->
   <script src="libs/jquery/jquery/dist/jquery.js"></script>
   <script src="libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+
+<!-- Background Video JS -->
+<script type="text/javascript">
+  var vid = document.getElementById("bgvid");
+  var pauseButton = document.querySelector("#polina button");
+
+  function vidFade() {
+    vid.classList.add("stopfade");
+  }
+
+  vid.addEventListener('ended', function() {
+    // only functional if "loop" is removed 
+    vid.pause();
+    
+    // to capture IE10
+    vidFade();
+  });
+</script>
+<!-- End -->  
+
 <!-- Angular -->
   <script src="libs/angular/angular/angular.js"></script>
   <script src="libs/angular/angular-animate/angular-animate.js"></script>
