@@ -830,6 +830,12 @@ nav ul.nav li:hover ul.nav-sub {
 .c-blue {
 	background-color: #cceeff;
 }
+.cred {
+	background-color: #ff0000;
+}
+input[readonly].cred {
+	background-color: #ff0000;
+}
 
 input[readonly].c-blue {
 	background-color: #cceeff;
