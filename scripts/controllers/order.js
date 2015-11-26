@@ -428,8 +428,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
     $scope.savePositionData=function(postArray)
     {
-     
-     console.log(postArray);return false;
        
         if(postArray.length != 0) {
 

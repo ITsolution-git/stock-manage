@@ -58,8 +58,15 @@ class Order extends Model {
 
         foreach ($orderPositionData as $key=>$alldata){
 
-            $orderPositionData[$key]->placementvalue = explode(',', $alldata->placementvalue);
-            $orderPositionData[$key]->sizegroupvalue = explode(',', $alldata->sizegroupvalue);
+            if($alldata->placementvalue){
+                 $orderPositionData[$key]->placementvalue = explode(',', $alldata->placementvalue);
+            }
+
+            if($alldata->sizegroupvalue){
+                $orderPositionData[$key]->sizegroupvalue = explode(',', $alldata->sizegroupvalue);
+            }
+           
+            
         }
 
 
