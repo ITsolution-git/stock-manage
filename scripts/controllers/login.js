@@ -2,7 +2,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
 
     var role = sessionService.get('role_slug');
 
-<!-- Background Video JS -->
+
 
   var vid = document.getElementById("bgvid");
   var pauseButton = document.querySelector("#polina button");
@@ -19,7 +19,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
     vidFade();
   });
 
-<!-- End -->  
+
 
 
    $scope.dosignin = function () {
