@@ -23,6 +23,8 @@ angular.module('app')
         name : sessionService.get('name'),
         role_title : sessionService.get('role_title'),
         role : sessionService.get('role_slug'),
+        user_id : sessionService.get('user_id'),
+        company_roleid :'17',
         // for chart colors
         color: {
           primary: '#3f51b5',

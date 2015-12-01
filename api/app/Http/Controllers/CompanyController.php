@@ -6,17 +6,17 @@ use App\Login;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use App\Account;
+use App\Company;
 use DB;
 
 use Request;
 // CREATE COMPANY AND SET RIGHTS, MANAGE BY SUPER ADMIN ONLY
-class AccountController extends Controller {  
+class CompanyController extends Controller {  
 
 
- 	public function __construct(Account $account) 
+ 	public function __construct(Company $company) 
  	{
-        $this->account = $account;
+        $this->company = $company;
 
     }
 
@@ -28,22 +28,15 @@ class AccountController extends Controller {
      * @return Response, success, records, message
      */
 
-	public function listData ($parent_id)
+	public function listData ()
 	{
-		if(!empty($parent_id) )
-		{
-			$getData = $this->account->GetCompanyData($parent_id);
+
+			$getData = $this->company->GetCompanyData();
 			$count = count($getData);
 			$success = 1;
 			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
 			$data = array("records" => $getData,"success"=>$success,"message"=>$message);
-		}
-		else
-		{
-			$message = MISSING_PARAMS ." - parent_id";
-			$success = 0;
-			$data = array("success"=>$success,"message"=>$message);
-		}
+
 		return response()->json(['data'=>$data]);
 	}
 
@@ -58,11 +51,11 @@ class AccountController extends Controller {
 		$post = Input::all();
 
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['parent_id']))
+		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['role_id']) )
 		{
 			$post['password'] = md5($post['password']);
 			$post['created_date'] = date('Y-m-d H:i:s');
-			$getData = $this->account->InsertCompanyData($post);
+			$getData = $this->company->InsertCompanyData($post);
 			
 			if($getData)
 			{
@@ -91,14 +84,22 @@ class AccountController extends Controller {
      * @param  id.
      * @return success message, data.
      */
-	public function GetData ($id,$parent_id)
+	public function GetData ($id,$company_id)
 	{
-		if(!empty($id) && !empty($parent_id))
+		if(!empty($id) && !empty($company_id))
 		{
-			$getData = $this->account->GetCompanybyId($id,$parent_id);
+			$getData = $this->company->GetCompanybyId($id,$company_id);
 			$count = count($getData);
-			$success = 1;
-			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
+			if($count>0)
+				{
+					$message = GET_RECORDS;
+					$success = 1;
+				}
+			else 
+				{
+					$message = NO_RECORDS;
+					$success = 0;
+				}
 		}
 		else
 		{
@@ -119,7 +120,7 @@ class AccountController extends Controller {
 	public function SaveData ()
 	{
 		$post = Input::all();
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['id']) && !empty($post['parent_id']))
+		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['id']))
 		{
 			if($post['password']=='testcodal')
 				{
@@ -130,7 +131,7 @@ class AccountController extends Controller {
 					$post['password']=md5($post['password']);
 				}
 			$post['updated_date'] = date('Y-m-d H:i:s');
-			$getData = $this->account->SaveCompanyData($post);
+			$getData = $this->company->SaveCompanyData($post);
 			$message = UPDATE_RECORD;
 			$success = 1;
 
@@ -158,7 +159,7 @@ class AccountController extends Controller {
 
 		if(!empty($post['id']))
 		{
-			$getData = $this->account->DeleteCompanyData($post['id']);
+			$getData = $this->company->DeleteCompanyData($post['id']);
 			if($getData)
 			{
 				$message = DELETE_RECORD;
