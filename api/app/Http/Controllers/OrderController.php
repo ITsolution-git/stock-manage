@@ -75,6 +75,7 @@ class OrderController extends Controller {
 
         if(!empty($result['order_line_data']))
         {
+            $sum = 0;
             foreach($result['order_line_data'] as $row)
             {
                 $order_line_items = $this->order->getOrderLineItemById($row->id);
