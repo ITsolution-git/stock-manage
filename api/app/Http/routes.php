@@ -22,11 +22,19 @@ Route::controllers([
 */
 Route::post('admin/login', 'LoginController@loginverify');
 
-// ADMIN COMPANY ROUTERS
+// COMPANY ROUTERS
+Route::get('admin/company', 'CompanyController@listData');
+Route::get('admin/company/list', 'CompanyController@listData');
+Route::post('admin/company/add', 'CompanyController@addData');
+Route::get('admin/company/edit/{id}/{company_id}', 'CompanyController@GetData');
+Route::post('admin/company/save', 'CompanyController@SaveData');
+Route::post('admin/company/delete', 'CompanyController@DeleteData');
+
+// COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
-Route::get('admin/account/list', 'AccountController@listData');
+Route::get('admin/account/list/{parent_id}', 'AccountController@listData');
 Route::post('admin/account/add', 'AccountController@addData');
-Route::get('admin/account/edit/{id}', 'AccountController@GetData');
+Route::get('admin/account/edit/{id}/{parent}', 'AccountController@GetData');
 Route::post('admin/account/save', 'AccountController@SaveData');
 Route::post('admin/account/delete', 'AccountController@DeleteData');
 
