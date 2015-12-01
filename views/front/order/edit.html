@@ -440,7 +440,7 @@
                                         <div class="col-md-12 nopad-form">
                                             <div class="col-md-4 nopad-left smallPad">
                                                 <div class="form-group col-md-6 nopad-left smallPad">
-                                                    <button  type="submit" class="btn btn-block btn-info" ng-click="saveButtonData('po')" >Create Purchase Order</button>        
+                                                    <button  type="submit" class="btn btn-block btn-info" ng-click="saveOrderLineData(orderLineAll,'po')" >Create Purchase Order</button>        
                                                 </div>
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Total Units </label>
@@ -587,7 +587,7 @@
 
                                         <!-- SAVE Record -->
                                         <div class="form-group pull-right">
-                                            <button  type="submit" class="btn btn-info" ng-click="saveOrderLineData(orderLineAll)" >Save</button>
+                                            <button  type="submit" class="btn btn-info" ng-click="saveOrderLineData(orderLineAll,'savealldata')" >Save</button>
                                         </div>                                        
                                     </div>
                                     <div class="form-group col-md-3 nopad-right">

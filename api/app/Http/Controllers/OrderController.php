@@ -75,6 +75,7 @@ class OrderController extends Controller {
 
         if(!empty($result['order_line_data']))
         {
+            $sum = 0;
             foreach($result['order_line_data'] as $row)
             {
                 $order_line_items = $this->order->getOrderLineItemById($row->id);
@@ -332,6 +333,25 @@ class OrderController extends Controller {
         }
         return response()->json(['data'=>$data]);
      }
+
+
+/**
+    * Save po.
+    * @return json data
+    */
+    public function savePO()
+    {
+        $post = Input::all();
+
+      
+        $post['created_date']=date('Y-m-d');
+        $result = $this->order->savePO($post);
+        $message = INSERT_RECORD;
+        $success = 1;
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
 
 
 
