@@ -518,21 +518,50 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         }
     }
 
-    $scope.saveOrderLineData=function(postArray)
+    $scope.saveOrderLineData=function(postArray,textdata)
     {
+        
 
         if(postArray.length != 0) {
 
-            angular.forEach(postArray, function(value, key) {
+        saveOrderLineAllData(postArray,textdata);
+
+       
+
+            setTimeout(function () {
+                                    $('.form-control').removeClass('ng-dirty');
+                                    var data = {"status": "success", "message": "Orderline details has been updated"}
+                                    notifyService.notify(data.status, data.message);
+                                    get_order_details(order_id,client_id);
+
+                                     if(textdata != 'savealldata') {
+                                      savePoAllData(textdata);
+                                    }
+        
+                                }, 1000);
+        }
+        else
+        {
+            var data = {"status": "error", "message": "Please add atleast one orderline"}
+            notifyService.notify(data.status, data.message);
+        }
+    }
+
+     function saveOrderLineAllData(postArray,textdata)
+    {
+
+        angular.forEach(postArray, function(value, key) {
 
                 if(angular.isUndefined(value.id)) {
 
                     var order_data_insert  = {};
                     value.order_id = order_id;
                     order_data_insert.data = value;
-                    order_data_insert.table ='order_orderlines'
+                    order_data_insert.table ='order_orderlines';
+                    order_data_insert.data.textdata =textdata
 
                     $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
+
 
                     });
 
@@ -543,24 +572,27 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                     order_data.table ='order_orderlines'
                     order_data.data =value
                     order_data.cond ={id:value.id}
+                    order_data.data.textdata =textdata
                     $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
+
 
                     });
                 }
             });
+       
+    }
 
-            setTimeout(function () {
-                                    $('.form-control').removeClass('ng-dirty');
-                                    var data = {"status": "success", "message": "Orderline details has been updated"}
-                                    notifyService.notify(data.status, data.message);
-                                    get_order_details(order_id,client_id);
-                                }, 1000);
-        }
-        else
-        {
-            var data = {"status": "error", "message": "Please add atleast one orderline"}
-            notifyService.notify(data.status, data.message);
-        }
+
+    function savePoAllData(textdata)
+    {
+         var po_data  = {};
+            po_data.order_id = order_id;
+            po_data.textdata =textdata
+
+            $http.post('api/public/order/savePO',po_data).success(function(result) {
+
+                            });
+       
     }
                             
     $scope.openOrderPopup = function (page) {
