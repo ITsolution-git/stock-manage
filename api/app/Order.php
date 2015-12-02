@@ -167,8 +167,6 @@ public function saveOrderNotes($post)
    public function saveOrderLineData($post)
    {
 
-        $text_var = $post['textdata'];
-        unset($post['textdata']);
         $result = DB::table('order_orderlines')->insert(['order_id'=>$post['order_id'],
             'size_group_id'=>$post['size_group_id'],
             'product_id'=>$post['product_id'],
@@ -208,10 +206,6 @@ public function saveOrderNotes($post)
 
 public function updateOrderLineData($post)
 {
-    
-    $text_var = $post['textdata'];
-    unset($post['textdata']);
-
     
     $result = DB::table('order_orderlines')
                     ->where('id','=',$post['id'])
