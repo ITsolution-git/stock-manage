@@ -640,20 +640,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             }
     }
 
-    
-
-
-    function savePoAllData(textdata)
-    {
-         var po_data  = {};
-            po_data.order_id = order_id;
-            po_data.textdata =textdata
-
-            $http.post('api/public/order/savePO',po_data).success(function(result) {
-
-                            });
-       
-    }
                             
     $scope.openOrderPopup = function (page) {
 
@@ -859,16 +845,16 @@ $scope.position_id = id;
 
 
 
-    $scope.saveButtonData=function(newVal,ddd)
+    $scope.saveButtonData=function(textdata)
     {
         
-            var buttonData = {};
-            buttonData.data = newVal;
-            buttonData.order_id = $stateParams.id;
+           var po_data  = {};
+            po_data.order_id = order_id;
+            po_data.textdata =textdata
 
-            $http.post('api/public/order/saveButtonData',buttonData).success(function(Listdata) {
-                
-            });
+            $http.post('api/public/order/saveButtonData',po_data).success(function(result) {
+
+                            });
             
     }
 
