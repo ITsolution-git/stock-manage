@@ -840,7 +840,9 @@ input[readonly].cred {
 input[readonly].c-blue {
 	background-color: #cceeff;
 }
-
+input[readonly].cgreen {
+	background-color: #c2ffc3;
+}
 .orderLinesecondRow .iconCST {
 	display: block;
 	height: 34px;

@@ -395,6 +395,44 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         $scope.calulate_all(id);
     }
 
+    $scope.update_override = function(override_value,orderline_id) {
+
+        if(override_value > '0')
+        {
+            angular.forEach($scope.orderLineAll, function(value) {
+                
+                if(override_value != '' || override_value != '0')
+                {
+                    var subtract = parseFloat(override_value) - parseFloat(value.peritem);
+                    value.override_diff = subtract.toFixed(2);
+                    value.peritem = override_value;
+
+                    var mul = parseInt(value.qnty) * parseFloat(value.peritem);
+                    value.per_line_total = mul.toFixed(2);
+
+                    var orderline_data = {};
+                    orderline_data.data = {
+                                            'peritem' : value.peritem,
+                                            'override': override_value,
+                                            'per_line_total' : value.per_line_total,
+                                            'override_diff' : value.override_diff
+                                        };
+                    orderline_data.cond = {};
+                    orderline_data['table'] ='order_orderlines';
+                    orderline_data.cond['id'] = orderline_id;
+                    $http.post('api/public/common/UpdateTableRecords',orderline_data).success(function(result) {
+
+                    });
+                }
+            });
+        }
+        else
+        {
+            $scope.calulate_all(orderline_id);
+        }
+        
+    }
+
     $scope.removeOrder = function(index,id) {
 
         var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
@@ -627,11 +665,12 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
                 setTimeout(function () {
                                             $('.form-control').removeClass('ng-dirty');
-    /*                                        var data = {"status": "success", "message": "Orderline details has been updated"}
+/*                                            var data = {"status": "success", "message": "Orderline details has been updated"}
                                             notifyService.notify(data.status, data.message);
-    */                                        get_order_details(order_id,client_id);
+                                            get_order_details(order_id,client_id);*/
+                                            $("#ajax_loader").hide();
                 
-                }, 1000);
+                }, 500);
             }
             else
             {
@@ -1361,7 +1400,7 @@ $scope.position_id = id;
                                                 'print_charges' : $scope.print_charges,
                                                 'peritem' : $scope.per_item,
                                                 'per_line_total' : $scope.per_line_total,
-                                                'markup' : $scope.shipping_charge
+                                                'markup' : $scope.shipping_charge,
                                             };
                         orderline_data.cond = {};
                         orderline_data['table'] ='order_orderlines'
@@ -1387,6 +1426,11 @@ $scope.position_id = id;
                         value.peritem = $scope.per_item;
                         value.per_line_total = $scope.per_line_total;
                         value.markup = $scope.shipping_charge;
+
+                        if(value.override == '' || value.override == '0')
+                        {
+                            value.override_diff = '0';
+                        }
                     }
                     $scope.orderLineAllNew = value;
                     order_line_total += parseFloat(value.per_line_total);
