@@ -296,7 +296,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                                   ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
     }
 
-    $scope.assign_item = function(order_id,order_item_id,item_name) {
+    $scope.assign_item = function(order_id,order_item_id,item_name,item_charge) {
 
         var Selected = $('#item_'+order_item_id);
 
@@ -304,6 +304,12 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         {
             $("#ajax_loader").show();
             Selected.removeClass('chargesApplyActive')
+
+            angular.forEach($scope.orderLineAll, function(value) {
+                var subtract = parseFloat(value.peritem) - parseFloat(item_charge);
+                value.peritem = subtract.toFixed(2);
+            });
+
             var order_data = {};
             order_data.table ='order_item_mapping'
             order_data.cond ={order_id:order_id,item_id:order_item_id}
@@ -323,6 +329,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             $scope.total_qty = 0;
             angular.forEach($scope.orderLineAll, function(value) {
                 $scope.total_qty += parseInt(value.qnty);
+                var sum = parseFloat(value.peritem) + parseFloat(item_charge);
+                value.peritem = sum.toFixed(2);
             });
             Selected.addClass('chargesApplyActive')
             var order_data = {};
@@ -411,7 +419,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     $scope.addOrderLine = function() {
         
         $scope.orderline_id = parseInt($scope.orderline_id + 1);
-
+        $("#ajax_loader").show();
 
         $scope.orderLineAll.push({ size_group_id:'' ,
                                     product_id:'',
@@ -434,6 +442,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                     peritem:'0',
                                     per_line_total:'0'
                                 });
+        
+        $scope.saveOrderLineData($scope.orderLineAll);
     }
 
     $scope.removeOrderLine = function(index,id) {
@@ -581,69 +591,56 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         }
     }
 
-    $scope.saveOrderLineData=function(postArray,textdata)
+    $scope.saveOrderLineData=function(postArray)
     {
-        
-
+    
+        $("#ajax_loader").show();
         if(postArray.length != 0) {
 
-        saveOrderLineAllData(postArray,textdata);
+               angular.forEach(postArray, function(value, key) {
 
-       
+                    if(angular.isUndefined(value.id)) {
 
-            setTimeout(function () {
-                                    $('.form-control').removeClass('ng-dirty');
-                                    var data = {"status": "success", "message": "Orderline details has been updated"}
-                                    notifyService.notify(data.status, data.message);
-                                    get_order_details(order_id,client_id);
+                        var order_data_insert  = {};
+                        value.order_id = order_id;
+                        order_data_insert.data = value;
+                        order_data_insert.table ='order_orderlines';
 
-                                     if(textdata != 'savealldata') {
-                                      savePoAllData(textdata);
-                                    }
-        
-                                }, 1000);
-        }
-        else
-        {
-            var data = {"status": "error", "message": "Please add atleast one orderline"}
-            notifyService.notify(data.status, data.message);
-        }
+                        $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
+
+
+                        });
+
+                    }
+                    else {
+
+                        var order_data = {};
+                        order_data.table ='order_orderlines'
+                        order_data.data =value
+                        order_data.cond ={id:value.id}
+                        $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
+
+
+                        });
+                    }
+                });
+
+                setTimeout(function () {
+                                            $('.form-control').removeClass('ng-dirty');
+    /*                                        var data = {"status": "success", "message": "Orderline details has been updated"}
+                                            notifyService.notify(data.status, data.message);
+    */                                        get_order_details(order_id,client_id);
+                
+                }, 1000);
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please add atleast one orderline"}
+                notifyService.notify(data.status, data.message);
+            }
     }
 
-     function saveOrderLineAllData(postArray,textdata)
-    {
-
-        angular.forEach(postArray, function(value, key) {
-
-                if(angular.isUndefined(value.id)) {
-
-                    var order_data_insert  = {};
-                    value.order_id = order_id;
-                    order_data_insert.data = value;
-                    order_data_insert.table ='order_orderlines';
-                    order_data_insert.data.textdata =textdata
-
-                    $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
-
-
-                    });
-
-                }
-                else {
-
-                    var order_data = {};
-                    order_data.table ='order_orderlines'
-                    order_data.data =value
-                    order_data.cond ={id:value.id}
-                    order_data.data.textdata =textdata
-                    $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
-
-
-                    });
-                }
-            });
-       
-    }
+    
 
 
     function savePoAllData(textdata)
@@ -1413,6 +1410,7 @@ $scope.position_id = id;
                 $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
 
                 });
+                $scope.saveOrderLineData($scope.orderLineAll);
             }
 
         }, 500);
