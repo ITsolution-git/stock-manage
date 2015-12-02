@@ -1,7 +1,7 @@
-app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
+app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
 
-                                AuthService.AccessService('SA');
-                            
+                                AuthService.AccessService('CA');
+                                $scope.parent_id = $scope.app.user_id;
                                 var delete_params = {};
                                 $scope.deletecompany = function (comp_id) {
                                 delete_params.id = comp_id;
@@ -20,16 +20,17 @@ app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthSe
                                   } // DELETE COMPANY FINISH
                             var account = {};
                             
-                            $http.get('api/public/admin/account/list').success(function(result) {
+                            $http.get('api/public/admin/account/list/'+$scope.parent_id).success(function(result) {
                                  $scope.account  = result.data; 
                              });
                       
                        
 
 }]);
-app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthService', function($scope,$http,$location,$state,AuthService) {
+app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
                           
-                          AuthService.AccessService('SA');
+                          AuthService.AccessService('CA');
+                         $scope.parent_id = $scope.app.user_id;
                           $scope.CurrentController=$state.current.controller;
                           // GET ADMIN ROLE LIST
                           $http.get('api/public/common/getAdminRoles').success(function(Listdata) {
@@ -40,8 +41,8 @@ app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthSer
                        
                           // COMPANY ADD TIME CALL
                          $scope.addcompany = function () {
-                            var company_post = $scope.account;
-                            $http.post('api/public/admin/account/add',company_post).success(function(result, status, headers, config) {
+                            $scope.account.parent_id = $scope.parent_id;
+                            $http.post('api/public/admin/account/add',$scope.account).success(function(result, status, headers, config) {
         
                                           if(result.data.success=='1')
                                           {
@@ -68,10 +69,11 @@ app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthSer
                               }      
 
 }]);
-app.controller('accountEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService', function($scope,$http,$location,$state,$stateParams,AuthService) {
+app.controller('accountEditCtrl', ['$scope','$http','$stateParams','$location','$state','AuthService','sessionService', function($scope,$http,$stateParams,$location,$state,AuthService,sessionService) {
                           
                             AuthService.checksession();
-                            AuthService.AccessService('SA');
+                            AuthService.AccessService('CA');
+                            $scope.parent_id = $scope.app.user_id;
                             $scope.CurrentController=$state.current.controller;
 
                             // GET ADMIN ROLE LIST
@@ -82,7 +84,7 @@ app.controller('accountEditCtrl', ['$scope','$http','$location','$state','$state
                               });
                               
                               // GET ADMIN ROLE LIST
-                              $http.get('api/public/admin/account/edit/'+$stateParams.id).success(function(Listdata) {
+                              $http.get('api/public/admin/account/edit/'+$stateParams.id+'/'+$scope.parent_id).success(function(Listdata) {
 
                                       $scope.account = Listdata.data.records[0];
                                       $scope.account.password = 'testcodal';
@@ -95,8 +97,8 @@ app.controller('accountEditCtrl', ['$scope','$http','$location','$state','$state
                           $scope.editcompany = function () {
 
                             $scope.account.id= $stateParams.id;
-                            var company_post = $scope.account;
-                            $http.post('api/public/admin/account/save',company_post).success(function(result, status, headers, config) {
+                            $scope.account.parent_id=$scope.parent_id;
+                            $http.post('api/public/admin/account/save',$scope.account).success(function(result, status, headers, config) {
         
                                           if(result.data.success=='1')
                                           {

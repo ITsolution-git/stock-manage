@@ -8,7 +8,7 @@
         <span class="font-normal">Dashboard</span>
       </a>
     </li>
-    <li ng-class="{active:$state.includes('account')}" ng-show="app.role=='SA'">
+    <li ng-class="{active:$state.includes('company')}" ng-show="app.role=='SA'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -18,10 +18,10 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="account.list">List</a>
+          <a md-ink-ripple ui-sref="company.list">List</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="account.add">Add</a>
+          <a md-ink-ripple ui-sref="company.add">Add</a>
         </li>
        
       </ul>
@@ -175,6 +175,27 @@
       </ul>
     </li>
 <!-- Code end for Misc tab -->
+
+ <!-- Code Start for Company tab -->
+    <li ng-class="{active:$state.includes('account')}" ng-show="app.role=='CA'">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+       <i class="icon mdi-editor-insert-drive-file i-20"></i>
+        <span class="font-normal">Company</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="account.list">List</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="account.add">Add</a>
+        </li>
+       
+      </ul>
+    </li>
+  <!-- Code end for Company tab --> 
 
 <!-- Code Start for Home tab -->
     <li ng-show="app.role=='BC'">

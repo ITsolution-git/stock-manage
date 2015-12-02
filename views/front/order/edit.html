@@ -111,7 +111,7 @@
                         </div>
                        
                         <ul class="nav nav-tabs input-group col-sm-12">
-                            <li class="active"><a href data-toggle="tab" data-target="#tab1">position</a></li>
+                            <li class="active"><a href data-toggle="tab" data-target="#tab1">Position</a></li>
                             <li> <a href data-toggle="tab" data-target="#tab2">Order Lines</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab3">Distribution</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab4">Notes</a> </li>
@@ -335,12 +335,12 @@
                                                 <div class="col-md-12 nopad-form">
                                                     <div class="cols col-1">
                                                         <div class="form-group">
-                                                            <select  ng-model="order_line.size_group_id"  class="form-control">
+                                                            <select  ng-model="order_line.size_group_id"  class="form-control" ng-change="saveOrderLineData(orderLineAll)">
                                                                 <option ng-selected="order_line.size_group_id==misc_size_group.id" ng-repeat="misc_size_group in miscData.size_group" value={{misc_size_group.id}}>{{misc_size_group.value}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group secondContainer">
-                                                            <select  ng-model="order_line.product_id"  class="form-control">
+                                                            <select  ng-model="order_line.product_id"  class="form-control" ng-change="saveOrderLineData(orderLineAll)">
                                                                 <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
                                                             </select>
                                                         </div>
@@ -378,12 +378,12 @@
                                                 <div class="col-md-12 nopad-form">
                                                     <div class="cols col-1">
                                                         <div class="form-group">
-                                                            <select  ng-model="order_line.color_id"  class="form-control">
+                                                            <select  ng-model="order_line.color_id"  class="form-control" ng-change="saveOrderLineData(orderLineAll)">
                                                                 <option ng-selected="order_line.color_id==color.id" ng-repeat="color in colors" value={{color.id}}>{{color.value}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select  ng-model="order_line.vendor_id"  class="form-control">
+                                                            <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="saveOrderLineData(orderLineAll)">
                                                                 <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
                                                             </select>
                                                         </div>
@@ -594,7 +594,7 @@
 
                                         <div class="chargesApply col-md-12 nopad-form">
                                             <!-- CHARGES APPLY FORM -->
-                                            <div id="item_{{order_item.id}}" class="col-md-12" ng-repeat="order_item in order_items" ng-click="assign_item(order_id,order_item.id,order_item.item)" ng-class="{chargesApplyActive: order_item.selected==1}">
+                                            <div id="item_{{order_item.id}}" class="col-md-12" ng-repeat="order_item in order_items" ng-click="assign_item(order_id,order_item.id,order_item.item,order_item.charge)" ng-class="{chargesApplyActive: order_item.selected==1}">
                                                 <div class="col-md-8 nopad-form">
                                                     <div class="form-group">
                                                         <input type="text" class="form-control"  ng-model="order_item.item" readonly="" onfocus="this.blur()" />

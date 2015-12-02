@@ -172,6 +172,70 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                         }
                     });
 
+                    var screen_primary = {};
+                    screen_primary.table ='price_screen_primary';
+                    screen_primary.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
+                    
+                    $http.post('api/public/common/GetTableRecords',screen_primary).success(function(result) {
+                        
+                        if(result.data.success == '1') 
+                        {
+                            $scope.price_screen_primary =result.data.records;
+                        } 
+                        else
+                        {
+                            $scope.price_screen_primary=[];
+                        }
+                    });
+
+                    var screen_secondary = {};
+                    screen_secondary.table ='price_screen_secondary';
+                    screen_secondary.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
+                    
+                    $http.post('api/public/common/GetTableRecords',screen_secondary).success(function(result) {
+                        
+                        if(result.data.success == '1')
+                        {
+                            $scope.price_screen_secondary =result.data.records;
+                        } 
+                        else
+                        {
+                            $scope.price_screen_secondary=[];
+                        }
+                    });
+
+                    var direct_garment = {};
+                    direct_garment.table ='price_direct_garment';
+                    direct_garment.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
+                    
+                    $http.post('api/public/common/GetTableRecords',direct_garment).success(function(result) {
+                        
+                        if(result.data.success == '1')
+                        {
+                            $scope.price_direct_garment =result.data.records;
+                        } 
+                        else
+                        {
+                            $scope.price_direct_garment=[];
+                        }
+                    });
+
+                    var switch_count = {};
+                    switch_count.table ='embroidery_switch_count';
+                    switch_count.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
+                    
+                    $http.post('api/public/common/GetTableRecords',switch_count).success(function(result) {
+                        
+                        if(result.data.success == '1')
+                        {
+                            $scope.embroidery_switch_count =result.data.records;
+                        } 
+                        else
+                        {
+                            $scope.embroidery_switch_count=[];
+                        }
+                    });
+
                     $("#ajax_loader").hide();
                 }
                 else {
@@ -232,7 +296,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                                   ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
     }
 
-    $scope.assign_item = function(order_id,order_item_id,item_name) {
+    $scope.assign_item = function(order_id,order_item_id,item_name,item_charge) {
 
         var Selected = $('#item_'+order_item_id);
 
@@ -240,6 +304,12 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         {
             $("#ajax_loader").show();
             Selected.removeClass('chargesApplyActive')
+
+            angular.forEach($scope.orderLineAll, function(value) {
+                var subtract = parseFloat(value.peritem) - parseFloat(item_charge);
+                value.peritem = subtract.toFixed(2);
+            });
+
             var order_data = {};
             order_data.table ='order_item_mapping'
             order_data.cond ={order_id:order_id,item_id:order_item_id}
@@ -259,6 +329,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             $scope.total_qty = 0;
             angular.forEach($scope.orderLineAll, function(value) {
                 $scope.total_qty += parseInt(value.qnty);
+                var sum = parseFloat(value.peritem) + parseFloat(item_charge);
+                value.peritem = sum.toFixed(2);
             });
             Selected.addClass('chargesApplyActive')
             var order_data = {};
@@ -282,7 +354,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
         if(qty == undefined && id == undefined)
         {
-            for(i=1;i<=6;i++)
+            for(i=1;i<=7;i++)
             {
                 var size = $('#qnty__').val();
                 if(size == '')
@@ -294,7 +366,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         }
         else
         {
-            for(i=1;i<=6;i++)
+            for(i=1;i<=7;i++)
             {
                 var size = $('#qnty_'+id+'_'+i).val();
                 if(size == '')
@@ -347,7 +419,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     $scope.addOrderLine = function() {
         
         $scope.orderline_id = parseInt($scope.orderline_id + 1);
-
+        $("#ajax_loader").show();
 
         $scope.orderLineAll.push({ size_group_id:'' ,
                                     product_id:'',
@@ -370,6 +442,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                     peritem:'0',
                                     per_line_total:'0'
                                 });
+        
+        $scope.saveOrderLineData($scope.orderLineAll);
     }
 
     $scope.removeOrderLine = function(index,id) {
@@ -474,7 +548,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
     $scope.savePositionData=function(postArray)
     {
-       
         if(postArray.length != 0) {
 
             order_id = $stateParams.id
@@ -520,47 +593,66 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
     $scope.saveOrderLineData=function(postArray)
     {
-
+    
+        $("#ajax_loader").show();
         if(postArray.length != 0) {
 
-            angular.forEach(postArray, function(value, key) {
+               angular.forEach(postArray, function(value, key) {
 
-                if(angular.isUndefined(value.id)) {
+                    if(angular.isUndefined(value.id)) {
 
-                    var order_data_insert  = {};
-                    value.order_id = order_id;
-                    order_data_insert.data = value;
-                    order_data_insert.table ='order_orderlines'
+                        var order_data_insert  = {};
+                        value.order_id = order_id;
+                        order_data_insert.data = value;
+                        order_data_insert.table ='order_orderlines';
 
-                    $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
+                        $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
 
-                    });
 
-                }
-                else {
+                        });
 
-                    var order_data = {};
-                    order_data.table ='order_orderlines'
-                    order_data.data =value
-                    order_data.cond ={id:value.id}
-                    $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
+                    }
+                    else {
 
-                    });
-                }
-            });
+                        var order_data = {};
+                        order_data.table ='order_orderlines'
+                        order_data.data =value
+                        order_data.cond ={id:value.id}
+                        $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
 
-            setTimeout(function () {
-                                    $('.form-control').removeClass('ng-dirty');
-                                    var data = {"status": "success", "message": "Orderline details has been updated"}
-                                    notifyService.notify(data.status, data.message);
-                                    get_order_details(order_id,client_id);
-                                }, 1000);
-        }
-        else
-        {
-            var data = {"status": "error", "message": "Please add atleast one orderline"}
-            notifyService.notify(data.status, data.message);
-        }
+
+                        });
+                    }
+                });
+
+                setTimeout(function () {
+                                            $('.form-control').removeClass('ng-dirty');
+    /*                                        var data = {"status": "success", "message": "Orderline details has been updated"}
+                                            notifyService.notify(data.status, data.message);
+    */                                        get_order_details(order_id,client_id);
+                
+                }, 1000);
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please add atleast one orderline"}
+                notifyService.notify(data.status, data.message);
+            }
+    }
+
+    
+
+
+    function savePoAllData(textdata)
+    {
+         var po_data  = {};
+            po_data.order_id = order_id;
+            po_data.textdata =textdata
+
+            $http.post('api/public/order/savePO',po_data).success(function(result) {
+
+                            });
+       
     }
                             
     $scope.openOrderPopup = function (page) {
@@ -999,6 +1091,7 @@ $scope.position_id = id;
 
     $scope.calulate_all = function(orderline_id)
     {
+        $("#ajax_loader").show();
         angular.forEach($scope.orderLineAll, function(value) {
             
             if(value.orderline_id == orderline_id)
@@ -1019,93 +1112,256 @@ $scope.position_id = id;
         $scope.press_setup_qnty = 0;
         $scope.screen_fees_qnty = 0;
 
-        angular.forEach($scope.orderPositionAll, function(value) {
-            
-            if(value.color_stitch_count == '') {
-                value.color_stitch_count = 0;
-            }
-            if(value.discharge_qnty == '') {
-                value.discharge_qnty = 0;
-            }
-            if(value.speciality_qnty == '') {
-                value.speciality_qnty = 0;
-            }
-            if(value.foil_qnty == '') {
-                value.foil_qnty = 0;
-            }
-            if(value.ink_charge_qnty == '') {
-                value.ink_charge_qnty = 0;
-            }
-            if(value.number_on_dark_qnty == '') {
-                value.number_on_dark_qnty = 0;
-            }
-            if(value.oversize_screens_qnty == '') {
-                value.oversize_screens_qnty = 0;
-            }
-            if(value.oversize_screens_qnty == '') {
-                value.oversize_screens_qnty = 0;
-            }
-            if(value.press_setup_qnty == '') {
-                value.press_setup_qnty = 0;
-            }
-            if(value.screen_fees_qnty == '') {
-                value.screen_fees_qnty = 0;
-            }
+        $scope.print_charges = 0;
 
-            $scope.color_stitch_count += parseInt(value.color_stitch_count);
-            $scope.position_qty = value.qnty;
-            $scope.discharge_qnty += parseInt(value.discharge_qnty);
-            $scope.speciality_qnty += parseInt(value.speciality_qnty);
-            $scope.foil_qnty += parseInt(value.foil_qnty);
-            $scope.ink_charge_qnty += parseInt(value.ink_charge_qnty);
-            $scope.number_on_dark_qnty += parseInt(value.number_on_dark_qnty);
-            $scope.number_on_light_qnty += parseInt(value.number_on_light_qnty);
-            $scope.oversize_screens_qnty += parseInt(value.oversize_screens_qnty);
-            $scope.press_setup_qnty += parseInt(value.press_setup_qnty);
-            $scope.screen_fees_qnty += parseInt(value.screen_fees_qnty);
-        });
-
-        if($scope.color_stitch_count == 0)
+        if($scope.orderPositionAll.length > 0)
         {
-            var calc_descharge =  parseInt($scope.discharge_qnty) * parseFloat($scope.price_grid.discharge);
-            var calc_speciality =  parseInt($scope.speciality_qnty) * parseFloat($scope.price_grid.specialty);
-            var calc_foil =  parseInt($scope.foil_qnty) * parseFloat($scope.price_grid.foil);
+            angular.forEach($scope.orderPositionAll, function(value) {
+                
+                if(value.color_stitch_count == '') {
+                    value.color_stitch_count = 0;
+                }
+                if(value.discharge_qnty == '') {
+                    value.discharge_qnty = 0;
+                }
+                if(value.speciality_qnty == '') {
+                    value.speciality_qnty = 0;
+                }
+                if(value.foil_qnty == '') {
+                    value.foil_qnty = 0;
+                }
+                if(value.ink_charge_qnty == '') {
+                    value.ink_charge_qnty = 0;
+                }
+                if(value.number_on_dark_qnty == '') {
+                    value.number_on_dark_qnty = 0;
+                }
+                if(value.oversize_screens_qnty == '') {
+                    value.oversize_screens_qnty = 0;
+                }
+                if(value.oversize_screens_qnty == '') {
+                    value.oversize_screens_qnty = 0;
+                }
+                if(value.press_setup_qnty == '') {
+                    value.press_setup_qnty = 0;
+                }
+                if(value.screen_fees_qnty == '') {
+                    value.screen_fees_qnty = 0;
+                }
 
-            var calc_ink_charge = parseFloat($scope.price_grid.ink_changes) / parseInt($scope.position_qty) * parseInt($scope.ink_charge_qnty);
-            var calc_number_on_dark = parseFloat($scope.price_grid.number_on_dark) / parseInt($scope.position_qty) * parseInt($scope.number_on_dark_qnty);
-            var calc_number_on_light = parseFloat($scope.price_grid.number_on_light) / parseInt($scope.position_qty) * parseInt($scope.number_on_light_qnty);
+                $scope.color_stitch_count = parseInt(value.color_stitch_count);
 
-            var calc_oversize =  parseInt($scope.oversize_screens_qnty) * parseFloat($scope.price_grid.over_size_screens);
-            var calc_press_setup =  parseInt($scope.press_setup_qnty) * parseFloat($scope.price_grid.press_setup);
-            var calc_screen_fees =  parseInt($scope.screen_fees_qnty) * parseFloat($scope.price_grid.screen_fees);
+                angular.forEach($scope.orderPositionAll, function(position) {
+                    $scope.position_qty += position.qnty;
+                });
+                
+                $scope.discharge_qnty = parseInt(value.discharge_qnty);
+                $scope.speciality_qnty = parseInt(value.speciality_qnty);
+                $scope.foil_qnty = parseInt(value.foil_qnty);
+                $scope.ink_charge_qnty = parseInt(value.ink_charge_qnty);
+                $scope.number_on_dark_qnty = parseInt(value.number_on_dark_qnty);
+                $scope.number_on_light_qnty = parseInt(value.number_on_light_qnty);
+                $scope.oversize_screens_qnty = parseInt(value.oversize_screens_qnty);
+                $scope.press_setup_qnty = parseInt(value.press_setup_qnty);
+                $scope.screen_fees_qnty = parseInt(value.screen_fees_qnty);
 
-            var calc_total = calc_descharge + calc_speciality + calc_foil + calc_ink_charge + calc_number_on_dark + calc_number_on_light + calc_oversize + calc_press_setup + calc_screen_fees;
-            var print_charges =  calc_total.toFixed(2);
+                if($scope.color_stitch_count == 0)
+                {
+                    var calc_descharge =  parseInt($scope.discharge_qnty) * parseFloat($scope.price_grid.discharge);
+                    var calc_speciality =  parseInt($scope.speciality_qnty) * parseFloat($scope.price_grid.specialty);
+                    var calc_foil =  parseInt($scope.foil_qnty) * parseFloat($scope.price_grid.foil);
 
+                    var calc_ink_charge = parseFloat($scope.price_grid.ink_changes) / parseInt($scope.position_qty) * parseInt($scope.ink_charge_qnty);
+                    var calc_number_on_dark = parseFloat($scope.price_grid.number_on_dark) / parseInt($scope.position_qty) * parseInt($scope.number_on_dark_qnty);
+                    var calc_number_on_light = parseFloat($scope.price_grid.number_on_light) / parseInt($scope.position_qty) * parseInt($scope.number_on_light_qnty);
+
+                    var calc_oversize =  parseInt($scope.oversize_screens_qnty) * parseFloat($scope.price_grid.over_size_screens);
+                    var calc_press_setup =  parseInt($scope.press_setup_qnty) * parseFloat($scope.price_grid.press_setup);
+                    var calc_screen_fees =  parseInt($scope.screen_fees_qnty) * parseFloat($scope.price_grid.screen_fees);
+
+                    var calc_total = calc_descharge + calc_speciality + calc_foil + calc_ink_charge + calc_number_on_dark + calc_number_on_light + calc_oversize + calc_press_setup + calc_screen_fees;
+                    $scope.print_charges +=  calc_total.toFixed(2);
+                }
+                else if($scope.color_stitch_count > 0)
+                {
+                    if(value.placement_type == 43)
+                    {
+                        angular.forEach($scope.price_screen_primary, function(primary) {
+                            
+                            var price_field = 'pricing_'+$scope.color_stitch_count+'c';
+
+                            if(value.qnty >= primary.range_low && value.qnty <= primary.range_high)
+                            {
+                                $scope.print_charges += parseFloat(primary[price_field]);
+                            }
+                        });
+                    }
+                    else if(value.placement_type == 44)
+                    {
+                        angular.forEach($scope.price_screen_secondary, function(secondary) {
+                            
+                            var price_field = 'pricing_'+$scope.color_stitch_count+'c';
+
+                            if(value.qnty >= secondary.range_low && value.qnty <= secondary.range_high)
+                            {
+                                $scope.print_charges += parseFloat(secondary[price_field]);
+                            }
+                        });   
+                    }
+                    else if(value.placement_type == 45)
+                    {
+                        angular.forEach($scope.embroidery_switch_count, function(embroidery) {
+                            
+                            var price_field = 'pricing_'+$scope.color_stitch_count+'c';
+
+                            if($scope.color_stitch_count >= embroidery.range_low_1 && $scope.color_stitch_count <= embroidery.range_high_1)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_1c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_2 && $scope.color_stitch_count <= embroidery.range_high_2)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_2c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_3 && $scope.color_stitch_count <= embroidery.range_high_3)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_3c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_4 && $scope.color_stitch_count <= embroidery.range_high_4)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_4c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_5 && $scope.color_stitch_count <= embroidery.range_high_5)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_5c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_6 && $scope.color_stitch_count <= embroidery.range_high_6)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_6c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_7 && $scope.color_stitch_count <= embroidery.range_high_7)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_7c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_8 && $scope.color_stitch_count <= embroidery.range_high_8)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_8c';
+                            }
+                            if($scope.color_stitch_count >= embroidery.range_low_9 && $scope.color_stitch_count <= embroidery.range_high_9)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_9c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_10 && $scope.color_stitch_count <= embroidery.range_high_10)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_10c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_11 && $scope.color_stitch_count <= embroidery.range_high_11)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_11c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_12 && $scope.color_stitch_count <= embroidery.range_high_12)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_12c';
+                            }
+                        });
+                        var screen_embroidery = {};
+                        screen_embroidery.table ='price_screen_embroidery';
+                        screen_embroidery.cond ={price_id:$scope.order.price_id,embroidery_switch_id:$scope.switch_id,is_delete:1,status:1}
+                        
+                        $http.post('api/public/common/GetTableRecords',screen_embroidery).success(function(result) {
+                            
+                            if(result.data.success == '1')
+                            {
+                                $scope.price_screen_embroidery =result.data.records;
+                            } 
+                            else
+                            {
+                                $scope.price_screen_embroidery=[];
+                            }
+
+                            angular.forEach($scope.price_screen_embroidery, function(embroidery) {
+                            
+                                if(value.qnty >= embroidery.range_low && value.qnty <= embroidery.range_high)
+                                {
+                                    $scope.print_charges += parseFloat(embroidery[$scope.embroidery_field]);
+                                }
+                            });
+                        });
+                    }
+                    if(value.placement_type == 46)
+                    {
+                        if(value.dtg_size == 17 && value.dtg_on == 16){
+                            var garment_field = 'pricing_1c';
+                        }
+                        else if(value.dtg_size == 17 && value.dtg_on == 15){
+                            var garment_field = 'pricing_2c';
+                        }
+                        else if(value.dtg_size == 18 && value.dtg_on == 16){
+                            var garment_field = 'pricing_3c';
+                        }
+                        else if(value.dtg_size == 18 && value.dtg_on == 15){
+                            var garment_field = 'pricing_4c';
+                        }
+                        else if(value.dtg_size == 19 && value.dtg_on == 16){
+                            var garment_field = 'pricing_5c';
+                        }
+                        else if(value.dtg_size == 19 && value.dtg_on == 15){
+                            var garment_field = 'pricing_6c';
+                        }
+                        else if(value.dtg_size == 20 && value.dtg_on == 16){
+                            var garment_field = 'pricing_7c';
+                        }
+                        else if(value.dtg_size == 20 && value.dtg_on == 15){
+                            var garment_field = 'pricing_8c';
+                        }
+                        angular.forEach($scope.price_direct_garment, function(garment) {
+                            
+                            if(value.qnty >= garment.range_low && value.qnty <= garment.range_high)
+                            {
+                                $scope.print_charges += parseFloat(garment[garment_field]);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        setTimeout(function () {
+            
             if($scope.price_grid_markup.length > 0)
             {
                 angular.forEach($scope.price_grid_markup, function(value) {
 
+                    $scope.shipping_charge = value.percentage;
+                    var garment_mackup = parseInt(value.percentage)/100;
+                    var avg_garment_price = parseFloat($scope.price_grid.shipping_charge) * parseFloat(garment_mackup) + parseFloat($scope.price_grid.shipping_charge);
+                    $scope.avg_garment_price = avg_garment_price.toFixed(2);
+                    $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
+
+                    $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges);
+                    var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
+                    $scope.per_line_total = line_total.toFixed(2);
+
                     if(parseInt($scope.position_qty) >= parseInt(value.range_low) && parseInt($scope.position_qty) <= parseInt(value.range_high))
                     {
-                        $scope.shipping_charge = value.percentage;
-                        var garment_mackup = parseInt(value.percentage)/100;
-                        var avg_garment_price = parseFloat($scope.price_grid.shipping_charge) * parseFloat(garment_mackup) + parseFloat($scope.price_grid.shipping_charge);
-                        $scope.avg_garment_price = avg_garment_price.toFixed(2);
-                        $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
-
-                        $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat(print_charges);
-                        var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
-                        $scope.per_line_total = line_total.toFixed(2);
-
-
                         var orderline_data = {};
                         orderline_data.data = {'avg_garment_cost' : $scope.avg_garment_cost,
                                                 'avg_garment_price' : $scope.avg_garment_price,
-                                                'print_charges' : print_charges,
+                                                'print_charges' : $scope.print_charges,
                                                 'peritem' : $scope.per_item,
                                                 'per_line_total' : $scope.per_line_total,
-                                                'markup' : value.percentage
+                                                'markup' : $scope.shipping_charge
                                             };
                         orderline_data.cond = {};
                         orderline_data['table'] ='order_orderlines'
@@ -1114,7 +1370,6 @@ $scope.position_id = id;
 
                         });
                     }
-
                 });
 
                 $scope.orderLineAllNew = [];
@@ -1128,7 +1383,7 @@ $scope.position_id = id;
                     {
                         value.avg_garment_cost = $scope.avg_garment_cost;
                         value.avg_garment_price = $scope.avg_garment_price;
-                        value.print_charges = print_charges;
+                        value.print_charges = $scope.print_charges;
                         value.peritem = $scope.per_item;
                         value.per_line_total = $scope.per_line_total;
                         value.markup = $scope.shipping_charge;
@@ -1155,9 +1410,11 @@ $scope.position_id = id;
                 $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
 
                 });
-
+                $scope.saveOrderLineData($scope.orderLineAll);
             }
-        }
+
+        }, 500);
+        $("#ajax_loader").hide();
     }
 
   // **************** NOTES TAB CODE END  ****************

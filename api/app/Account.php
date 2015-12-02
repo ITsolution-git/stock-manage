@@ -13,12 +13,13 @@ class Account extends Model {
      *
      *
      */
-    public function GetCompanyData() {
+    public function GetCompanyData($parent_id) {
         $admindata = DB::table('users as usr')
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
         				 ->select('usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','rol.title','usr.id')
         				 ->where('usr.is_delete','=','1')
-                         ->where('rol.slug','<>','SA')
+                         ->where('rol.slug','<>','CA')
+                         ->where('parent_id','=',$parent_id)
         				 ->get();
         return $admindata;
     }
@@ -27,13 +28,14 @@ class Account extends Model {
     	$result = DB::table('users')->insert($post);
     	return $result;
     }
-    public function GetCompanybyId($id)
+    public function GetCompanybyId($id,$parent_id)
     {
     	$admindata = DB::table('users as usr')
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
         				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id')
         				 ->where('usr.id','=',$id)
         				 ->where('usr.is_delete','=','1')
+                         ->where('usr.parent_id','=',$parent_id)
         				 ->get();
         return $admindata;
     }

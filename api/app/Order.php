@@ -166,6 +166,7 @@ public function saveOrderNotes($post)
 
    public function saveOrderLineData($post)
    {
+
         $result = DB::table('order_orderlines')->insert(['order_id'=>$post['order_id'],
             'size_group_id'=>$post['size_group_id'],
             'product_id'=>$post['product_id'],
@@ -182,12 +183,21 @@ public function saveOrderNotes($post)
 
         $post['created_date'] = date("Y-m-d H:i:s");
 
+       
+
+
         foreach($post['items'] as $row) {
              
             $result123 = DB::table('purchase_detail')->insert(['orderline_id'=>$insertedid,
                 'size'=>$row['size'],
+                'order_id'=>$post['order_id'],
                 'qnty'=>$row['qnty'],
                 'date'=>$post['created_date']]);
+
+           $insertednewid = DB::getPdo()->lastInsertId();
+
+         
+
         } 
 
    }
@@ -196,6 +206,7 @@ public function saveOrderNotes($post)
 
 public function updateOrderLineData($post)
 {
+    
     $result = DB::table('order_orderlines')
                     ->where('id','=',$post['id'])
                     ->update(array('size_group_id'=>$post['size_group_id'],
@@ -213,6 +224,8 @@ public function updateOrderLineData($post)
 
     $post['created_date'] = date("Y-m-d H:i:s");
 
+   
+
     foreach($post['items'] as $row) {
          
         $result123 = DB::table('purchase_detail')
@@ -221,9 +234,40 @@ public function updateOrderLineData($post)
                                     'qnty'=>$row['qnty'],
                                     'date'=>$post['created_date'])
                             );
+
+      
+         
+
     } 
 
 }
+
+
+public function savePO($post)
+   {
+    
+
+              $result = DB::table('purchase_order')->insert(['order_id'=>$post['order_id'],
+                    'po_type'=>$post['textdata'],
+                    'date'=>$post['created_date']]);
+               $insertedpoid = DB::getPdo()->lastInsertId();
+
+              
+               $whereConditions = ['order_id' => $post['order_id'],'status' => '1'];
+
+               $orderData = DB::table('purchase_detail')->where($whereConditions)->get();
+
+                 foreach ($orderData as $key=>$alldata){
+                    
+                     if(!empty($alldata->size) && $alldata->qnty != 0){
+                     $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
+                    'line_id'=>$alldata->id,
+                    'date'=>$post['created_date']]);
+                     }
+
+                 }
+         
+   }
 
     public function deleteOrder($id)
     {

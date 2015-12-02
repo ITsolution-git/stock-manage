@@ -28,14 +28,22 @@ class AccountController extends Controller {
      * @return Response, success, records, message
      */
 
-	public function listData ()
+	public function listData ($parent_id)
 	{
-		$getData = $this->account->GetCompanyData();
-		$count = count($getData);
-		$success = 1;
-		$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
-		$data = array("records" => $getData,"success"=>$success,"message"=>$message);
-		
+		if(!empty($parent_id) )
+		{
+			$getData = $this->account->GetCompanyData($parent_id);
+			$count = count($getData);
+			$success = 1;
+			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
+			$data = array("records" => $getData,"success"=>$success,"message"=>$message);
+		}
+		else
+		{
+			$message = MISSING_PARAMS ." - parent_id";
+			$success = 0;
+			$data = array("success"=>$success,"message"=>$message);
+		}
 		return response()->json(['data'=>$data]);
 	}
 
@@ -50,7 +58,7 @@ class AccountController extends Controller {
 		$post = Input::all();
 
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) )
+		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['parent_id']))
 		{
 			$post['password'] = md5($post['password']);
 			$post['created_date'] = date('Y-m-d H:i:s');
@@ -83,11 +91,11 @@ class AccountController extends Controller {
      * @param  id.
      * @return success message, data.
      */
-	public function GetData ($id)
+	public function GetData ($id,$parent_id)
 	{
-		if(!empty($id))
+		if(!empty($id) && !empty($parent_id))
 		{
-			$getData = $this->account->GetCompanybyId($id);
+			$getData = $this->account->GetCompanybyId($id,$parent_id);
 			$count = count($getData);
 			$success = 1;
 			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
@@ -111,7 +119,7 @@ class AccountController extends Controller {
 	public function SaveData ()
 	{
 		$post = Input::all();
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['id']))
+		if(!empty($post['email']) && !empty($post['password']) && !empty($post['user_name']) && !empty($post['id']) && !empty($post['parent_id']))
 		{
 			if($post['password']=='testcodal')
 				{
