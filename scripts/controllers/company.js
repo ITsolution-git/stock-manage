@@ -1,17 +1,16 @@
-app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
+app.controller('companyListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
 
-                                AuthService.AccessService('CA');
-                                $scope.parent_id = $scope.app.user_id;
+                                AuthService.AccessService('SA');
                                 var delete_params = {};
                                 $scope.deletecompany = function (comp_id) {
                                 delete_params.id = comp_id;
                                 var permission = confirm("Are you sure to delete this record ?");
                                 if (permission == true) {
-                                $http.post('api/public/admin/account/delete',delete_params).success(function(result, status, headers, config) {
+                                $http.post('api/public/admin/company/delete',delete_params).success(function(result, status, headers, config) {
                                               
                                               if(result.data.success=='1')
                                               {
-                                                $state.go('account.list');
+                                                $state.go('company.list');
                                                 $("#comp_"+comp_id).remove();
                                                 return false;
                                               }  
@@ -20,17 +19,17 @@ app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthSe
                                   } // DELETE COMPANY FINISH
                             var account = {};
                             
-                            $http.get('api/public/admin/account/list/'+$scope.parent_id).success(function(result) {
+                            $http.get('api/public/admin/company/list').success(function(result) {
                                  $scope.account  = result.data; 
                              });
                       
                        
 
 }]);
-app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
+app.controller('companyAddCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
                           
-                          AuthService.AccessService('CA');
-                         $scope.parent_id = $scope.app.user_id;
+                          AuthService.AccessService('SA');
+                         $scope.parent_id = '0';
                           $scope.CurrentController=$state.current.controller;
                           // GET ADMIN ROLE LIST
                           $http.get('api/public/common/getAdminRoles').success(function(Listdata) {
@@ -41,12 +40,13 @@ app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthSer
                        
                           // COMPANY ADD TIME CALL
                          $scope.addcompany = function () {
+                         	$scope.account.role_id = $scope.app.company_roleid;
                             $scope.account.parent_id = $scope.parent_id;
-                            $http.post('api/public/admin/account/add',$scope.account).success(function(result, status, headers, config) {
+                            $http.post('api/public/admin/company/add',$scope.account).success(function(result, status, headers, config) {
         
                                           if(result.data.success=='1')
                                           {
-                                            $state.go('account.list');
+                                            $state.go('company.list');
                                            }
                                      });
                                    } 
@@ -69,26 +69,28 @@ app.controller('accountAddCtrl', ['$scope','$http','$location','$state','AuthSer
                               }      
 
 }]);
-app.controller('accountEditCtrl', ['$scope','$http','$stateParams','$location','$state','AuthService','sessionService', function($scope,$http,$stateParams,$location,$state,AuthService,sessionService) {
+app.controller('companyEditCtrl', ['$scope','$http','$stateParams','$location','$state','notifyService','AuthService','sessionService', function($scope,$http,$stateParams,$location,$state,notifyService,AuthService,sessionService) {
                           
-                            AuthService.checksession();
-                            AuthService.AccessService('CA');
+                            AuthService.AccessService('SA');
                             $scope.parent_id = $scope.app.user_id;
                             $scope.CurrentController=$state.current.controller;
 
-                            // GET ADMIN ROLE LIST
-                            $http.get('api/public/common/getAdminRoles').success(function(Listdata) {
-
-                                    $scope.rolelist = Listdata.data
-                                   // console.log(Listdata); 
-                              });
-                              
                               // GET ADMIN ROLE LIST
-                              $http.get('api/public/admin/account/edit/'+$stateParams.id+'/'+$scope.parent_id).success(function(Listdata) {
+                              $http.get('api/public/admin/company/edit/'+$stateParams.id+'/'+$scope.app.company_roleid).success(function(Listdata) {
 
+                              		if(Listdata.data.success==1)
+                              		{
                                       $scope.account = Listdata.data.records[0];
                                       $scope.account.password = 'testcodal';
                                       $scope.confirm_password = 'testcodal';
+                                  	}
+                                  	else
+                                  	{
+                                  		var data = {"status": "error", "message": "Something Wrong, Please try again !"}
+                    				    notifyService.notify(data.status, data.message);
+                                  		$state.go('company.list');
+                                  		return false;
+                                  	}
                                       
                                      // console.log(Listdata); 
                               });
@@ -98,11 +100,12 @@ app.controller('accountEditCtrl', ['$scope','$http','$stateParams','$location','
 
                             $scope.account.id= $stateParams.id;
                             $scope.account.parent_id=$scope.parent_id;
-                            $http.post('api/public/admin/account/save',$scope.account).success(function(result, status, headers, config) {
+                            $scope.account.role_id = $scope.company_roleid;
+                            $http.post('api/public/admin/company/save',$scope.account).success(function(result, status, headers, config) {
         
                                           if(result.data.success=='1')
                                           {
-                                            $state.go('account.list');
+                                            $state.go('company.list');
                                             return false;
                                           }
                                      });

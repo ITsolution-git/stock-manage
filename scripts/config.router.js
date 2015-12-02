@@ -719,6 +719,61 @@ angular.module('app')
                             },
                        }
             })
+        /*==========================================
+          COMPANY MODULE CODE START
+        ==========================================*/
+              .state('company', {
+              url: '/company',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+
+            .state('company.list', {
+              url: '/list',
+              templateUrl: 'views/company/list.html',
+              controller: 'companyListCtrl',
+              data : { title: 'company listing' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+
+             .state('company.add', {
+              url: '/add',
+              templateUrl: 'views/company/add.html',
+               controller: 'companyAddCtrl',
+              data : { title: 'company Add' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+              .state('company.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/company/add.html',
+               controller: 'companyEditCtrl',
+              data : { title: 'company Add' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+    /*==========================================
+          COMPANY MODULE CODE END
+    ==========================================*/        
     /*==========================================
           ART MODULE CODE START
     ==========================================*/
