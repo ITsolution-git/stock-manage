@@ -48,7 +48,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sess
                                    notifyService.notify(data.status, data.message);
                                    //$location.url('/app/dashboard');
                                    $state.go('app.dashboard');
-                                   setTimeout(function(){ window.location.reload(); }, 200);
+                                   setTimeout(function(){ window.location.reload(); }, 400);
                                    //window.location.href="#/app/dashboard";
                                    return false;
 
