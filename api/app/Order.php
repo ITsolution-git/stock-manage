@@ -251,6 +251,7 @@ public function updateOrderLineData($post)
 
 public function savePO($post)
    {
+    
 
               $result = DB::table('purchase_order')->insert(['order_id'=>$post['order_id'],
                     'po_type'=>$post['textdata'],

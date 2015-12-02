@@ -598,7 +598,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                     get_order_details(order_id,client_id);
 
                                      if(textdata != 'savealldata') {
-                                      savePoAllData(textdata);
+                                      savePoAllData(postArray,textdata);
                                     }
         
                                 }, 1000);
@@ -646,11 +646,13 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     }
 
 
-    function savePoAllData(textdata)
+    function savePoAllData(postArray,textdata)
     {
+      
          var po_data  = {};
             po_data.order_id = order_id;
             po_data.textdata =textdata
+            po_data.vendor_id =postArray.vendor_id
 
             $http.post('api/public/order/savePO',po_data).success(function(result) {
 
@@ -862,11 +864,11 @@ $scope.position_id = id;
 
 
 
-    $scope.saveButtonData=function(newVal,ddd)
+    $scope.saveButtonData=function(textdata)
     {
         
             var buttonData = {};
-            buttonData.data = newVal;
+            buttonData.data = textdata;
             buttonData.order_id = $stateParams.id;
 
             $http.post('api/public/order/saveButtonData',buttonData).success(function(Listdata) {
