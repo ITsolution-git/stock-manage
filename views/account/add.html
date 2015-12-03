@@ -7,7 +7,8 @@
 
         <div class="panel panel-default">
           <div class="panel-heading bg-white">
-            <span class="font-bold">Create Account</span>
+            <span class="font-bold" ng-if="CurrentController=='accountAddCtrl'">Create Account for Company User</span>
+            <span class="font-bold" ng-if="CurrentController=='accountEditCtrl'">Update Account for Company User</span>
              <button class="btn btn-default m-b-lg pull-right" ui-sref="account.list">Cancel</button>
           </div>
           <div class="panel-body">

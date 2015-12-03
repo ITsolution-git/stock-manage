@@ -1,10 +1,16 @@
 
 <div class="row">
-    <div class="col-sm-12 m-b">
+    <div class="col-sm-6 m-b">
           <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info">Company PO</button>
           <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info">Supplied Garments</button>
           <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info">Contract Prints</button>
           <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info">Contract Embrodiery</button>    
+    </div>
+    <div class="col-sm-2 m-b">
+    <b>PO# {{po_id}}</b>
+    </div>
+    <div class="col-sm-2 m-b">
+    <b>JOB# </b>
     </div>
     <div class="form-group col-sm-12 m-b">
         <ul class="nav nav-tabs input-group col-sm-12">
@@ -137,7 +143,7 @@
               </div>
               <div class=" col-md-1 nopad-left smallPad ">
                 <!--label><em class="text-muted"></em></label-->
-                <i class="mdi-navigation-arrow-forward text-lg m-t-sm" title="Unassign" ng-click="ChangeOrderStatus(poline.id,0,0)"></i>
+                <i class="mdi-navigation-arrow-forward text-lg m-t-sm" title="Unassign" ng-click="ChangeOrderStatus(poline.id,0,po_id)"></i>
               </div>
 
               <!-- <div class="input-group col-sm-5 m-b"> <br>
