@@ -650,7 +650,7 @@
                                                     <label>Tax Rate</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.tax_rate" class="form-control" />
+                                                    <input type="text" ng-model="order.tax_rate" class="form-control" ng-blur="calulate_tax(order.tax_rate)"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">

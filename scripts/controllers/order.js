@@ -1476,7 +1476,7 @@ $scope.position_id = id;
                 var sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
                 $scope.order.sales_order_total = sales_order_total.toFixed(2);
                 
-                var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total);
+                var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.tax);
                 $scope.order.grand_total = grand_total.toFixed(2);
 
                 var order_data = {};
@@ -1491,6 +1491,32 @@ $scope.position_id = id;
 
         }, 500);
         $("#ajax_loader").hide();
+    }
+
+    $scope.calulate_tax = function(tax_rate)
+    {
+        if(tax_rate != '' && tax_rate != '0')
+        {
+            var cal = parseFloat($scope.order.grand_total) * parseFloat(tax_rate) / parseInt(100);
+            $scope.order.tax = cal.toFixed(2);
+            var grand_total = parseFloat($scope.order.grand_total) + parseFloat($scope.order.tax);
+            $scope.order.grand_total = grand_total.toFixed(2);
+            $scope.order.tax_rate = parseFloat(tax_rate); 
+        }
+        else
+        {
+            var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.tax);
+            $scope.order.grand_total = grand_total.toFixed(2);
+            $scope.order.tax_rate = '0';
+            $scope.order.tax = '0';
+        }
+        var order_data = {};
+        order_data.data = {'grand_total':$scope.order.grand_total,'tax_rate':$scope.order.tax_rate,'tax':$scope.order.tax};
+        order_data.cond = {id: $scope.order_id};
+        order_data['table'] ='orders'
+        $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+
+        });
     }
 
   // **************** NOTES TAB CODE END  ****************
