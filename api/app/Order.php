@@ -280,6 +280,9 @@ public function updateOrderLineData($post)
     public function saveButtonData($post)
     {
 
+
+       if($post['textdata'] == 'po' || $post['textdata'] == 'sg') {
+
       $whereConditions = ['order_id' => $post['order_id'],'status' => '1','is_delete' => '1'];
       $orderLineData = DB::table('order_orderlines')->where($whereConditions)->get();
       
@@ -299,35 +302,75 @@ public function updateOrderLineData($post)
                  }
 
                 
-        $whereConditions = ['po.order_id' => $post['order_id'],'ood.order_id' => $post['order_id']];
-        $listArray = ['po.po_id','pd.size','pd.qnty','pd.id','ood.vendor_id','po.vendor_id as po_vendorid'];
-        $orderData = DB::table('purchase_detail as pd')
-                         ->Join('purchase_order as po', 'pd.order_id', '=', 'po.order_id')
-                         ->Join('order_orderlines as ood', 'ood.id', '=', 'pd.orderline_id')
+       
 
-                         ->select($listArray)
-                         ->where($whereConditions)
-                         ->where('pd.size', '<>','')
-                         ->where('pd.qnty', '<>','0')
-                         ->get();
-                        
-          $vendor_data_array = array();
-                         
-          foreach ($orderData as $key=>$alldata){
+            $whereConditions = ['po.order_id' => $post['order_id'],'ood.order_id' => $post['order_id']];
+            $listArray = ['po.po_id','pd.size','pd.qnty','pd.id','ood.vendor_id','po.vendor_id as po_vendorid'];
+            $orderData = DB::table('purchase_detail as pd')
+                             ->Join('purchase_order as po', 'pd.order_id', '=', 'po.order_id')
+                             ->Join('order_orderlines as ood', 'ood.id', '=', 'pd.orderline_id')
 
-          if($alldata->vendor_id == $alldata->po_vendorid){
-            $vendor_data_array[$alldata->vendor_id][] = $alldata;
-          }
-                
-          }
+                             ->select($listArray)
+                             ->where($whereConditions)
+                             ->where('pd.size', '<>','')
+                             ->where('pd.qnty', '<>','0')
+                             ->get();
+                            
+              $vendor_data_array = array();
+                             
+              foreach ($orderData as $key=>$alldata){
 
-          foreach ($vendor_data_array as $key=>$alldataNew){
-            foreach ($alldataNew as $key=>$alldataSaveNew){
-             $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$alldataSaveNew->po_id,
-            'line_id'=>$alldataSaveNew->id,
-            'date'=>$post['created_date']]);
-           }
-         }
+              if($alldata->vendor_id == $alldata->po_vendorid){
+                $vendor_data_array[$alldata->vendor_id][] = $alldata;
+              }
+                    
+              }
+
+              foreach ($vendor_data_array as $key=>$alldataNew){
+                foreach ($alldataNew as $key=>$alldataSaveNew){
+                 $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$alldataSaveNew->po_id,
+                'line_id'=>$alldataSaveNew->id,
+                'date'=>$post['created_date']]);
+               }
+             }
+
+       } elseif ($post['textdata'] == 'cp') {
+         
+           $result = DB::table('purchase_order')->insert(['order_id'=>$post['order_id'],
+                    'po_type'=>$post['textdata'],
+                    'date'=>$post['created_date']]);
+               $insertedpoid = DB::getPdo()->lastInsertId();
+              
+               $whereConditions = ['order_id' => $post['order_id'],'status' => '1'];
+               $orderData = DB::table('order_positions')->where($whereConditions)->get();
+
+                 foreach ($orderData as $key=>$alldata){
+                    
+                    
+                      if($alldata->placement_type == 43) {
+                     $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
+                    'line_id'=>$alldata->id,
+                    'date'=>$post['created_date']]);
+                   }
+                 }
+       } elseif ($post['textdata'] == 'ce') {
+         
+           $result = DB::table('purchase_order')->insert(['order_id'=>$post['order_id'],
+                    'po_type'=>$post['textdata'],
+                    'date'=>$post['created_date']]);
+               $insertedpoid = DB::getPdo()->lastInsertId();
+              
+               $whereConditions = ['order_id' => $post['order_id'],'status' => '1'];
+               $orderData = DB::table('order_positions')->where($whereConditions)->get();
+
+                 foreach ($orderData as $key=>$alldata){
+                     if($alldata->placement_type == 45) {
+                     $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
+                    'line_id'=>$alldata->id,
+                    'date'=>$post['created_date']]);
+                   }
+                 }
+       }
 
     }
 

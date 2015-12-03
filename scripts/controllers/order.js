@@ -847,8 +847,39 @@ $scope.position_id = id;
 
     $scope.saveButtonData=function(textdata)
     {
-        
-           var po_data  = {};
+       
+
+        if(textdata == 'cp') {
+            
+
+            var log = [];
+                angular.forEach($scope.orderPositionAll, function(value, key) {
+                   
+                  this.push(value.placement_type);
+                }, log);
+
+                if(log.indexOf('43') <= -1 ) {
+                     alert("Please select Screen Print in Placement Type to generate Contract Screen");
+                     return false;
+                                   
+                }
+        } else if(textdata == 'ce') {
+            
+
+            var log = [];
+                angular.forEach($scope.orderPositionAll, function(value, key) {
+                   
+                  this.push(value.placement_type);
+                }, log);
+
+                if(log.indexOf('45') <= -1 ) {
+                     alert("Please select Embroidery in Placement Type to generate Contract Embroidery");
+                     return false;
+                                   
+                }
+        }
+
+            var po_data  = {};
             po_data.order_id = order_id;
             po_data.textdata =textdata
 
