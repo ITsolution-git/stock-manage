@@ -17,15 +17,18 @@ class PurchaseController extends Controller {
  	{
         $this->purchase = $purchase;
     }
-    public function ListPurchase($id)
+    public function ListPurchase()
     {
-    	if(empty($id))
+    	$post = Input::all();
+    	
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die;
+    	if(empty($post))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- Po_type");
     		return  response()->json(["data" => $response]);
     		die();
     	}
-    	$result = $this->purchase->ListPurchase($id);
+    	$result = $this->purchase->ListPurchase($post['type']);
     	if (count($result) > 0) 
         {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
@@ -83,7 +86,7 @@ class PurchaseController extends Controller {
     	}
     }
 
-    public function ChangeOrderStatus($id,$val,$po_id=0)
+    public function ChangeOrderStatus($id,$val,$po_id)
     {
     	if(empty($id))
     	{
