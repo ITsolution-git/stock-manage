@@ -2165,7 +2165,7 @@
 <script type="text/javascript">
 	$('document').ready(function() {
 
-		// Tab Code for Home page only
+		// When Select 
 		$('.selectNavTabs').change(function(){
 			var thisItem = $(this).find(':selected').data('target');			
 			var cont_Container = $(this).next('.tab-content');
@@ -2178,8 +2178,8 @@
 			listingTabs.removeClass('active');
 
 			var listingNavs = listingTabs.find('a');
-			listingNavs.each(function(e){
-				if(e.data('target') == navId) {
+			listingNavs.each(function(){
+				if($(this).data('target') == navId) {
 					$(this).parent('li').addClass('active');
 				}
 			})
