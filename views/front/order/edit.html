@@ -846,7 +846,7 @@
                                             <div class="col-md-1 nopad-left smallPad">
                                                 <div class="sgpDetails btnCircle">
                                                   <a title="Go To" role="button" tabindex="0" class="">
-                                                    <i class="fa fa-arrow-circle-right"></i>
+                                                    <i class="fa fa-arrow-circle-right" ui-sref="purchase.{{orderPO.po_type}}({id:orderPO.po_id})"></i>
                                                   </a>
                                                 </div>
                                             </div>
@@ -854,7 +854,7 @@
                                               <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control">
+                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
                                                 <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderPO($event,orderPO.po_id)' }" >
@@ -862,7 +862,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.date | dateWithFormat">
+                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.date">
                                             </div>
                                             <div class="col-md-1 nopad-left">
                                                 <div class="sgpDetails">
@@ -872,7 +872,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-1 nopad-form">
-                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removeOrderPO($index,orderPO.po_id)">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
