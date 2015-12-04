@@ -1,12 +1,28 @@
 @media (min-width:1024px) and (max-width:1279px) {
-	nav ul.nav li {
-		width:14%;
+
+	/*----------------------------------
+		Primary Navigation
+	----------------------------------*/
+	nav ul.nav li a, 
+	nav ul.nav li.active > a {
+		font-size: 12px;
 	}
-	nav ul.nav li a > .icon, nav ul.nav li .nav-item > .icon {
-		min-width:30px;
-		margin-right:0;
-	}	
-	nav ul.nav li .nav-sub {
-		min-width:0;
+
+	nav ul.nav li a > 
+	.icon, nav ul.nav li .nav-item > .icon {
+		min-width: 20px;
+		font-size: 14px;
 	}
+
+	nav ul.nav li a, 
+	nav ul.nav li .nav-item {
+		padding: 5px;
+	}
+
+	/* Tabs Styling */
+	.nav.nav-tabs li a {
+		font-size: 12px;
+		padding: 5px 7px;
+	}
+	
 }
