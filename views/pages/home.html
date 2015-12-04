@@ -1,7 +1,7 @@
  <!--h3 class="no-margin">Welcome Home page, {{name}}</h3--> 
 <div class="panel panel-default stokkupForm client_home_page">
-	<div class="panel-body">		
-		<ul class="nav nav-tabs input-group col-md-12">
+	<div class="panel-body form-group">
+		<ul class="nav nav-tabs input-group col-md-12 selectNav-Tabs">
 		  <li class="active"> <a href data-toggle="tab" data-target="#homeTasks">Tasks</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeOrders">Orders</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeEstimates">Estimates</a> </li>
@@ -16,6 +16,22 @@
 		  <li> <a href data-toggle="tab" data-target="#homeShipPick">Shipped / Picked Up</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeOrderPaid">Order Paid in full</a> </li>
 		</ul>
+
+		<select class="selectNavTabs form-control">
+			<option data-toggle="tab" data-target="homeTasks">Tasks</option>
+			<option data-toggle="tab" data-target="homeOrders">Orders</option>
+			<option data-toggle="tab" data-target="homeEstimates">Estimates</option>
+			<option data-toggle="tab" data-target="homeEvents">Events</option>
+			<option data-toggle="tab" data-target="homePurchasing">Purchasing</option>
+			<option data-toggle="tab" data-target="homeArtDept">Art Departmentartment</option>
+			<option data-toggle="tab" data-target="homeFinishing">Finishing</option>
+			<option data-toggle="tab" data-target="homeShipping">Shipping</option>
+			<option data-toggle="tab" data-target="homereadyShip">Ready To Ship</option>
+			<option data-toggle="tab" data-target="homeCreditHold">Credit Hold</option>
+			<option data-toggle="tab" data-target="homeShipPick">Shipped / Picked Up</option>
+			<option data-toggle="tab" data-target="homeOrderPaid">Order Paid in full</option>
+		</select>	
+
 		<!-- TAB CONTAINER -->
 		<div class="tab-content p b-a no-b-t bg-white m-b-md">
 			<!-- TASKS -->
@@ -2145,3 +2161,28 @@
 	  	<!-- End TAB CONTAINER -->
   	</div>
 </div>
+
+<script type="text/javascript">
+	$('document').ready(function() {
+
+		// Tab Code for Home page only
+		$('.selectNavTabs').change(function(){
+			var thisItem = $(this).find(':selected').data('target');			
+			var cont_Container = $(this).next('.tab-content');
+			var navId = '#'+thisItem;
+
+			cont_Container.find('> .tab-pane').removeClass('active');
+			cont_Container.find(navId).addClass('active');
+
+			var listingTabs = $('.selectNav-Tabs').find('li');
+			listingTabs.removeClass('active');
+
+			var listingNavs = listingTabs.find('a');
+			listingNavs.each(function(e){
+				if(e.data('target') == navId) {
+					$(this).parent('li').addClass('active');
+				}
+			})
+		});
+	});
+</script>
