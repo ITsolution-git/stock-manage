@@ -101,6 +101,25 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     
 
     get_order_details(order_id,client_id);
+    get_po_detail(order_id,client_id);
+
+    function get_po_detail(order_id,client_id)
+    {
+        if($stateParams.id && $stateParams.client_id) {
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.client_id = $stateParams.client_id;
+
+            $http.post('api/public/order/PODetail',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                  $scope.order_po_data = result.data.order_po_data;
+                } else {
+                   
+                }
+            });
+        }
+    }
 
     function get_order_details(order_id,client_id)
     {
@@ -122,7 +141,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
                     $scope.order_items = result.data.order_item;
-                    $scope.order_po_data = result.data.order_po_data;
+                   // $scope.order_po_data = result.data.order_po_data;
 
                     $scope.orderline_id = 0;
                     $scope.total_qty = 0;
@@ -1034,7 +1053,7 @@ $scope.position_id = id;
 
                             });
 
-            get_order_details(order_id,client_id);  
+            get_po_detail(order_id,client_id);  
             
     }
 

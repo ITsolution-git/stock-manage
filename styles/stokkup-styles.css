@@ -712,10 +712,11 @@ nav ul.nav li:hover ul.nav-sub {
 .sgpDetails.disabled-sgpDetails a {
     background-color: #F00;
 }
-.artworkButton button.c-dgreen {
-	border-color:#2E7B2F; 
-	background-color: #2E7B2F;
-    color: #ffffff;
+.artworkButton button.c-dgreen, 
+.artworkButton button.c-dgreen:hover {
+	border-color:#2E7B2F !important; 
+	background-color: #2E7B2F !important;
+    color: #ffffff !important;
 }
 .artworkButton button.c-dgreen i {
 	color: #ffffff;
