@@ -588,7 +588,13 @@ nav ul.nav li:hover ul.nav-sub {
 .client_order_form .panel-body {
 	padding-bottom: 0;
 }
-
+a.btnEditOrder {
+	font-size: 50px;
+	color: #9c9c9e;
+}
+a.btnEditOrder:hover {	
+	color: #636363;
+}
 /*------------------------
 		LIST PAGE
 ------------------------*/
