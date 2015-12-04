@@ -60,7 +60,8 @@ class PurchaseController extends Controller {
 	    		$received_line = $this->purchase->GetPoReceived($po_id);
     		if(count($po)>0)
     		{
-	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line );
+    			$order_id = $po[0]->order_id;
+	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id );
 	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     		}
     		else
