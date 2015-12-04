@@ -832,6 +832,7 @@ nav ul.nav li:hover ul.nav-sub {
 }
 .cred {
 	background-color: #ff0000;
+	color: #fff;
 }
 input[readonly].cred {
 	background-color: #ff0000;
@@ -875,6 +876,19 @@ input[readonly].cgreen {
 	margin-bottom: 15px;	
 }
 
+button.topNavButtons {
+	background-color: #807c7d;
+	border-color: #807c7d;
+	color: #e5e5e5;
+	opacity: 0.9;
+}
+button.topNavButtons:hover,
+button.topNavButtons.active {
+	background-color: #625e5f;
+	border-color: #625e5f;
+	color: #ffffff;
+	opacity: 1;
+}
 /*---------- END ----------*/
 
 
