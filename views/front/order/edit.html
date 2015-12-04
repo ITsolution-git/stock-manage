@@ -815,6 +815,49 @@
                                 </div>
                             </div>
                             <!-- Notes TAB END -->
+
+                            <!-- Purchase Order TAB START -->
+                            <div role="tabpanel" class="tab-pane  animated fadeIn orderPOTab" id="tab5">
+                                <div class="col-md-12 nopad-form">
+                                      <div class="form-group">
+                                        <div class="col-md-2 nopad-left smallPad ">
+                                          <label>PO ID <em class="text-muted"></em></label>                  
+                                        </div>
+                                        
+                                        <div class="col-md-1 nopad-left smallPad ">
+                                          <label>Vendor<em class="text-muted"></em></label>
+                                        </div>
+                                        <div class="col-md-1 nopad-left smallPad ">
+                                          <label>Created<em class="text-muted"></em></label>
+                                        </div>
+                                        <div class=" col-md-1 nopad-form"></div>
+                                      </div>
+                                </div>
+
+                                 <div class="col-sm-12 nopad-form" ng-repeat="(key,orderPO) in order_po_data">
+                                      <div class="col-md-2 nopad-left smallPad ">
+                                        <div class="form-group">
+                                          <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
+                                        </div>
+                                      </div>
+                                     
+                                     
+
+                                      <div class="col-md-1 nopad-left smallPad">
+                                        <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderPO($event,orderPO.po_id)' }" >
+                                            <option ng-selected="orderPO.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
+                                        </select>
+                                    </div>
+
+
+                                      <div class="col-md-1 nopad-left smallPad ">
+                                        <div class="form-group">
+                                          <input type="text" disabled="" class="form-control" ng-model="orderPO.date">
+                                        </div>
+                                      </div>
+                               </div>
+                            </div>
+                            <!-- Purchase Order TAB END -->
                         </div>
                     </div>
                 </div>

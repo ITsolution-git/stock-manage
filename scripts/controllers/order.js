@@ -101,6 +101,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     
 
     get_order_details(order_id,client_id);
+
     function get_order_details(order_id,client_id)
     {
         if($stateParams.id && $stateParams.client_id) {
@@ -114,13 +115,14 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.data.success == '1') {
-
+               
                     $scope.order = result.data.records[0];
                     $scope.client_data = result.data.client_data;
                     $scope.client_main_data = result.data.client_main_data;
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
                     $scope.order_items = result.data.order_item;
+                    $scope.order_po_data = result.data.order_po_data;
 
                     $scope.orderline_id = 0;
                     $scope.total_qty = 0;
@@ -745,6 +747,23 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                 $('.form-control').removeClass('ng-dirty');
                                 $("#ajax_loader").hide();
         }, 500);
+    }
+
+    $scope.updateOrderPO = function($event,po_id)
+    {
+        
+          var order_po_data = {};
+          order_po_data.table ='purchase_order';
+          $scope.name_filed = $event.target.name;
+          var obj = {};
+          obj[$scope.name_filed] =  $event.target.value;
+          order_po_data.data = angular.copy(obj);
+          
+          order_po_data.cond ={ po_id :po_id}
+
+            $http.post('api/public/common/UpdateTableRecords',order_po_data).success(function(result) {
+            });
+      
     }
                             
     $scope.openOrderPopup = function (page) {

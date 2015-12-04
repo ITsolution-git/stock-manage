@@ -145,7 +145,7 @@ Route::post('client/SaveDistAddress', 'ClientController@SaveDistAddress');
 Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail');
 
 //PURCHASE CONTROLLER
-Route::get('purchase/ListPurchase/{id}', 'PurchaseController@ListPurchase');
+Route::post('purchase/ListPurchase', 'PurchaseController@ListPurchase');
 Route::get('purchase/GetPodata/{id}', 'PurchaseController@GetPodata');
 Route::get('purchase/GetSgData/{id}', 'PurchaseController@GetSgData');
 Route::get('purchase/ChangeOrderStatus/{id}/{value}/{po_id}', 'PurchaseController@ChangeOrderStatus');
