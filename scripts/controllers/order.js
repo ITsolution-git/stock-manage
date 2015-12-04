@@ -766,7 +766,28 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             });
       
     }
-                            
+
+
+    $scope.removeOrderPO = function(index,id) {
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
+  
+                var order_data = {};
+                order_data.table ='purchase_order'
+                order_data.cond ={po_id:id}
+                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                    
+                    var data = {"status": "success", "message": "Purchase Order has been deleted"}
+                    notifyService.notify(data.status, data.message);
+                });
+
+                $scope.order_po_data.splice(index,1);
+           
+        }
+    }
+
+                  
     $scope.openOrderPopup = function (page) {
 
         $scope.edit='add';
