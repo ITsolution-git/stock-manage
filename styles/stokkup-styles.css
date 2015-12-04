@@ -43,6 +43,9 @@
 .form-group .form-control {
 	padding: 3px;
 }
+select.form-control {
+	border-radius: 4px;
+}
 .labelMiddle {
 	padding-top: 8px;
 	box-sizing:border-box;
@@ -701,6 +704,11 @@ nav ul.nav li:hover ul.nav-sub {
     border-radius: 5px;
     width: 40px;
 }
+.sgpDetails.btnCircle a {
+    padding: 1px 0 0 0;
+    border-radius: 25px;
+    width: 28px;
+}
 .sgpDetails.disabled-sgpDetails a {
     background-color: #F00;
 }
@@ -717,6 +725,7 @@ nav ul.nav li:hover ul.nav-sub {
 	font-weight: bold;
 	margin-left: 5px;
 }
+
 /*---------------------------
 		ORDER LINE TAB
 ---------------------------*/
