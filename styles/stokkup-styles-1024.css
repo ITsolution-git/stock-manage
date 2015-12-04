@@ -1,4 +1,5 @@
 @media (min-width:1024px) and (max-width:1279px) {
+
 	/*----------------------------------
 		Primary Navigation
 	----------------------------------*/
@@ -11,6 +12,7 @@
 	.icon, nav ul.nav li .nav-item > .icon {
 		min-width: 20px;
 		font-size: 14px;
+
 	}
 
 	nav ul.nav li a, 
@@ -26,7 +28,6 @@
 	nav ul.nav li li a {
 		line-height: 17px;
 	}
-
 
 	/*----- CLIENT HOME PAGE -----*/
 	.selectNavTabs {
@@ -45,4 +46,7 @@
 	.selectNav-Tabs {
 		display: block;
 	}
+
+
+	
 }
