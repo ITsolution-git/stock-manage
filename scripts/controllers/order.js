@@ -762,6 +762,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
           order_po_data.cond ={ po_id :po_id}
 
             $http.post('api/public/common/UpdateTableRecords',order_po_data).success(function(result) {
+
             });
       
     }
@@ -1011,6 +1012,8 @@ $scope.position_id = id;
             $http.post('api/public/order/saveButtonData',po_data).success(function(result) {
 
                             });
+
+            get_order_details(order_id,client_id);  
             
     }
 
