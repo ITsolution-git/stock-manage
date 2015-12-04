@@ -42,6 +42,11 @@ class Order extends Model {
         $whereOrderPositionConditions = ['order_id' => $data['id']];
         $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
 
+
+        $wherePoConditions = ['order_id' => $data['id']];
+        $orderPOData = DB::table('purchase_order')->where($wherePoConditions)->get();
+        
+
         $whereOrderLineConditions = ['order_id' => $data['id']];
         $orderLineData = DB::table('order_orderlines')->where($whereOrderLineConditions)->get();
 
@@ -70,12 +75,13 @@ class Order extends Model {
         }
 
 
-        
+        $combine_array['order_po_data'] = $orderPOData;
         $combine_array['order_position'] = $orderPositionData;
         $combine_array['client_data'] = $clientData;
         $combine_array['client_main_data'] = $clientMainData;
         $combine_array['order_line_data'] = $orderLineData;
        
+      
 
         return $combine_array;
     }
