@@ -7,14 +7,14 @@
                     <div class="col-sm-12 m-b nopad-form">
                         <div class="col-sm-12 m-b"></div>
                         <div class="col-md-10 nopad-form">
-                            <div class="form-group col-md-10 m-b nopad-form">
-                                <div class="col-sm-3 m-b nopad-left">
+                            <div class="form-group col-md-12 m-b nopad-form">
+                                <div class="col-md-2 m-b nopad-left">
                                     <label>Job Name <em class="text-muted"></em></label>
                                     <input type="text" class="form-control" ng-maxlength="255" name="cs_job_name"  ng-model="order.job_name"  required>
                                     <br>
                                     <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
                                 </div>
-                                <div class="col-md-3 m-b">
+                                <div class="col-md-2 m-b">
                                     <label>Company <em class="text-muted"></em></label>
                                     <i class="mdi-image-control-point" target="_blank" ng-click="addCompany()" title="Add Company" role="button" tabindex="0"></i>
                                     <i class="mdi-content-send pull-right" target="_blank" ng-click="openCompany(order.client_id)" title="Company" role="button" tabindex="0"></i>
@@ -43,14 +43,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-sm-10 m-b nopad-form">
-                                <div class="col-sm-3 m-b nopad-left">
+                            <div class="form-group col-md-12 m-b nopad-form">
+                                <div class="col-md-2 m-b nopad-left">
                                     <label>Sales <em class="text-muted"></em></label>
                                     <select  class="form-control" ng-model="order.sales_id">
                                         <option ng-repeat="staff in staffList" ng-selected="{{order.sales_id==staff.id}}" value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 m-b">
+                                <div class="col-md-2 m-b">
                                     <label>Account Manager<em class="text-muted"></em></label>
                                     <select  class="form-control" ng-model="order.brand_id">
                                         <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
@@ -73,6 +73,14 @@
                                     <select  class="form-control" ng-model="order.contact_main_id">
                                         <option ng-repeat="user in client_main_data" ng-selected="{{order.contact_main_id==user.id}}" value="{{user.id}}">{{user.first_name}}&nbsp;{{user.last_name}}</option>
                                     </select>
+                                </div>
+                                <div class="col-md-2 pull-right m-t text-right">
+                                    <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
+                                    <!--
+                                    <button type="button" class="btn btn-default addButton" tabindex="0">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    -->
                                 </div>
                             </div>
                         </div>
