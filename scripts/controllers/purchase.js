@@ -19,7 +19,6 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 							    return new Array(num);   
 							}
 
-                           //$scope.order_id = $stateParams.id;
                            $scope.po_id = $stateParams.id;
                            if($scope.po_id=='' || $scope.po_id==0)
                            {
@@ -44,7 +43,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                           $scope.received = PoData.data.records.received_total[0].received;
                                           $scope.received_line = PoData.data.records.received_line;
                                           $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
-                                          //$scope.po_id = PoData.data.records.po_id;
+                                          $scope.order_id = PoData.data.records.order_id;
                                           getNotesDetail(po_id);
                                           AJloader.hide();
                                         // console.log($scope.ordered);

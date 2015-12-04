@@ -4,12 +4,19 @@
     <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
       <div class="panel panel-default">
         <div class="panel-body">
-<div class="col-sm-12 m-b">
-    <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info topNavButtons">Company PO</button>
-    <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info topNavButtons">Supplied Garments</button>
-    <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info topNavButtons">Contract Prints</button>
-    <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info topNavButtons active">Contract Embrodiery</button>    
+    <div class="col-sm-6 m-b">
+      <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info topNavButtons">Company PO</button>
+      <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info topNavButtons">Supplied Garments</button>
+      <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info topNavButtons">Contract Prints</button>
+      <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info topNavButtons active">Contract Embrodiery</button>    
     </div>
+    <div class="col-sm-2 m-b">
+      <button class="btn m-v-xs btn-sm btn-dark">PO#  <b class="badge m-l-xs">{{po_id}}</b></button>
+    </div>
+    <div class="col-sm-2 m-b">
+      <button class="btn m-v-xs btn-sm btn-dark">JOB#  <b class="badge m-l-xs">{{order_id}}</b></button>    
+    </div>
+
             <div class="col-sm-12 m-b">
               <div class="col-sm-2 m-b">
                     <label>Purchase OrderId <em class="text-muted"></em></label>
