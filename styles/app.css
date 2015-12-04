@@ -425,7 +425,7 @@ sup {
 }
 
 .btn-info {
-  color: #ffffff !important;
+  color: #ffffff;
   background-color: #2196f3;
   border-color: #2196f3;
 }
@@ -439,9 +439,9 @@ sup {
 .btn-info.btn-stroke:active,
 .btn-info.btn-stroke.active,
 .open .dropdown-toggle.btn-info {
-  color: #ffffff !important;
-  background-color: #0d8aee !important;
-  border-color: #0c82df !important;
+  color: #ffffff;
+  background-color: #0d8aee;
+  border-color: #0c82df;
 }
 
 .btn-info.btn-addon > i {

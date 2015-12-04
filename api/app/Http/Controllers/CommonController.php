@@ -229,6 +229,7 @@ class CommonController extends Controller {
      public function DeleteTableRecords()
      {
         $post = Input::all();
+        
 
         if(!empty($post['table'])   && !empty($post['cond']))
         {
@@ -237,6 +238,12 @@ class CommonController extends Controller {
           {
             $this->common->DeleteTableRecords('purchase_detail',array('orderline_id' => $post['cond']['id']));
           }
+
+          if($post['table'] == 'purchase_order')
+          {
+            $this->common->DeleteTableRecords('purchase_order_line',array('po_id' => $post['cond']['po_id']));
+          }
+
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
         else

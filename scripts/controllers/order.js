@@ -101,6 +101,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     
 
     get_order_details(order_id,client_id);
+
     function get_order_details(order_id,client_id)
     {
         if($stateParams.id && $stateParams.client_id) {
@@ -114,13 +115,14 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.data.success == '1') {
-
+               
                     $scope.order = result.data.records[0];
                     $scope.client_data = result.data.client_data;
                     $scope.client_main_data = result.data.client_main_data;
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
                     $scope.order_items = result.data.order_item;
+                    $scope.order_po_data = result.data.order_po_data;
 
                     $scope.orderline_id = 0;
                     $scope.total_qty = 0;
@@ -294,6 +296,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         $scope.orderPositionAll.push({ position_id:'' ,description:'', placement_type:'', color_stitch_count:'', qnty:'',discharge_qnty:''
                                                     ,speciality_qnty:'', foil_qnty:'', ink_charge_qnty:'', number_on_light_qnty:'',number_on_dark_qnty:''
                                                   ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
+
+        $scope.addPosition($scope.orderPositionAll);
     }
 
     $scope.assign_item = function(order_id,order_item_id,item_name,item_charge) {
@@ -392,7 +396,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
 
 
-        $scope.calulate_all(id);
+        $scope.calculate_all(id);
     }
 
     $scope.update_override = function(override_value,orderline_id) {
@@ -428,7 +432,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         }
         else
         {
-            $scope.calulate_all(orderline_id);
+            $scope.calculate_all(orderline_id);
         }
         
     }
@@ -583,6 +587,40 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         });
     }
 
+    $scope.addPosition = function(postArray)
+    {
+        order_id = $stateParams.id;
+        client_id = $stateParams.client_id;
+
+        angular.forEach(postArray, function(value, key) {
+
+            var order_data_insert  = {};
+            value.order_id = order_id;
+            order_data_insert.data = value;
+            order_data_insert.table ='order_positions'
+
+            $http.post('api/public/order/insertPositions',order_data_insert).success(function(result) {
+
+            });
+        });
+
+        get_order_details(order_id,client_id);
+    }
+    $scope.updatePosition = function(postArray)
+    {
+        angular.forEach($scope.orderPositionAll, function(value) {
+            
+            var order_data = {};
+            order_data.table ='order_positions'
+            order_data.data =value
+            order_data.cond ={id:value.id}
+            $http.post('api/public/order/updatePositions',order_data).success(function(result) {
+
+            });
+        });
+
+        $scope.calculate_charge();
+    }
     $scope.savePositionData=function(postArray)
     {
         $scope.position_qty = 0;
@@ -688,6 +726,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         setTimeout(function () {
                                 $('.form-control').removeClass('ng-dirty');
                                 $("#ajax_loader").hide();
+                                get_order_details(order_id,client_id);
         }, 500);
     }
     $scope.updateOrderLine = function(postArray)
@@ -709,7 +748,46 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                 $("#ajax_loader").hide();
         }, 500);
     }
-                            
+
+    $scope.updateOrderPO = function($event,po_id)
+    {
+        
+          var order_po_data = {};
+          order_po_data.table ='purchase_order';
+          $scope.name_filed = $event.target.name;
+          var obj = {};
+          obj[$scope.name_filed] =  $event.target.value;
+          order_po_data.data = angular.copy(obj);
+          
+          order_po_data.cond ={ po_id :po_id}
+
+            $http.post('api/public/common/UpdateTableRecords',order_po_data).success(function(result) {
+
+            });
+      
+    }
+
+
+    $scope.removeOrderPO = function(index,id) {
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
+  
+                var order_data = {};
+                order_data.table ='purchase_order'
+                order_data.cond ={po_id:id}
+                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                    
+                    var data = {"status": "success", "message": "Purchase Order has been deleted"}
+                    notifyService.notify(data.status, data.message);
+                });
+
+                $scope.order_po_data.splice(index,1);
+           
+        }
+    }
+
+                  
     $scope.openOrderPopup = function (page) {
 
         $scope.edit='add';
@@ -955,6 +1033,8 @@ $scope.position_id = id;
             $http.post('api/public/order/saveButtonData',po_data).success(function(result) {
 
                             });
+
+            get_order_details(order_id,client_id);  
             
     }
 
@@ -1173,9 +1253,11 @@ $scope.position_id = id;
         $http.post('api/public/common/UpdateTableRecords',$scope.order_data).success(function(result) {
 
         });
+
+        $scope.calculate_charge();
     }
 
-    $scope.calulate_all = function(orderline_id)
+    $scope.calculate_all = function(orderline_id)
     {
         $("#ajax_loader").show();
         angular.forEach($scope.orderLineAll, function(value) {
@@ -1548,6 +1630,73 @@ $scope.position_id = id;
         $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
 
         });
+    }
+
+    $scope.calculate_charge = function()
+    {
+        if($scope.orderPositionAll.length > 0)
+        {
+            $scope.oversize_screens_qnty = 0;
+            $scope.screen_fees_qnty = 0;
+            $scope.press_setup_qnty = 0;
+
+            angular.forEach($scope.orderPositionAll, function(value) {
+                
+                if(value.press_setup_qnty == '') {
+                    value.press_setup_qnty = 0;
+                }
+                if(value.screen_fees_qnty == '') {
+                    value.screen_fees_qnty = 0;
+                }
+                if(value.qnty == '') {
+                    value.qnty = 0;
+                }
+
+                $scope.oversize_screens_qnty += parseInt(value.oversize_screens_qnty);
+                $scope.press_setup_qnty += parseInt(value.press_setup_qnty);
+                $scope.screen_fees_qnty += parseInt(value.screen_fees_qnty);
+                $scope.position_qty += parseInt(value.qnty);
+            });
+
+            $scope.oversize_screens_charge = 0;
+            $scope.order.screen_charge = 0;
+            $scope.order.press_setup_charge = 0;
+
+            if($scope.oversize_screens_qnty > 0)
+            {
+                $scope.oversize_screens_charge = parseFloat($scope.price_grid.over_size_screens) * parseInt($scope.oversize_screens_qnty);
+            }
+            if($scope.screen_fees_qnty > 0)
+            {
+                $scope.order.screen_charge = parseFloat($scope.price_grid.screen_fees) * parseInt($scope.screen_fees_qnty);
+            }
+            if($scope.press_setup_qnty > 0)
+            {
+                $scope.order.press_setup_charge = parseFloat($scope.price_grid.press_setup) * parseInt($scope.press_setup_qnty);
+            }
+
+            var order_charges_total = parseFloat($scope.oversize_screens_charge) + parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge);
+            $scope.order.order_charges_total = parseFloat($scope.order.separations_charge) + parseFloat($scope.order.rush_charge) + parseFloat($scope.order.shipping_charge) + parseFloat($scope.order.setup_charge) + parseFloat($scope.order.distribution_charge) + parseFloat($scope.order.artwork_charge) + parseFloat($scope.order.discount) + parseFloat($scope.order.digitize_charge) + parseFloat(order_charges_total.toFixed(2));
+
+            var sales_order_total = parseFloat($scope.order.order_charges_total) + parseFloat($scope.order.order_line_total);
+            $scope.order.sales_order_total = sales_order_total.toFixed(2);
+
+            $scope.order.grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_total);
+
+            var order_data = {};
+            order_data.table ='orders'
+            order_data.data ={
+                                'screen_charge':$scope.order.screen_charge,
+                                'press_setup_charge':$scope.order.press_setup_charge,
+                                'grand_total':$scope.order.grand_total,
+                                'order_charges_total':$scope.order.order_charges_total,
+                                'sales_order_total':$scope.order.sales_order_total
+                            }
+            order_data.cond ={id:$scope.order_id}
+            
+            $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+            });
+        }
     }
 
   // **************** NOTES TAB CODE END  ****************

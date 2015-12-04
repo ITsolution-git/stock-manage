@@ -196,12 +196,12 @@
                                       
                                         <div class="col-md-3 nopad-left">                                        
                                             <div class="form-group col-md-3 nopad-left">
-                                                <select  ng-model="order_position.position_id" class="form-control">
+                                                <select  ng-model="order_position.position_id" class="form-control" ng-change="updatePosition(orderPositionAll)">
                                                     <option ng-selected="order_position.position_id==misc_pos.id" ng-repeat="misc_pos in miscData.position" value={{misc_pos.id}}>{{misc_pos.value}}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4 nopad-left">
-                                                <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" />
+                                                <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-2 nopad-left sgpDetails">
                                               <a ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0">
@@ -209,7 +209,7 @@
                                               </a>
                                             </div>
                                             <div class="form-group col-md-3 nopad-left">
-                                                <select  ng-model="order_position.placement_type" class="form-control">
+                                                <select  ng-model="order_position.placement_type" class="form-control" ng-change="updatePosition(orderPositionAll)">
                                                     <option ng-selected="order_position.placement_type==misc_placement.id" ng-repeat="misc_placement in miscData.placement_type" value={{misc_placement.id}}>{{misc_placement.value}}</option>
                                                 </select>
                                             </div>
@@ -217,49 +217,49 @@
 
                                         <div class="col-md-6 nopad-left">
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" />
+                                                <input type="text" class="form-control"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control" ng-class="{ cred: order_position.qnty != total_qty }"  ng-model="order_position.qnty"/>
+                                                <input type="text" class="form-control" ng-class="{ cred: order_position.qnty != total_qty }"  ng-model="order_position.qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.speciality_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.speciality_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.foil_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.foil_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.ink_charge_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.ink_charge_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.number_on_dark_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.number_on_dark_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.number_on_light_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.number_on_light_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form"></div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.oversize_screens_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.oversize_screens_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.press_setup_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.press_setup_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.screen_fees_qnty"/>
+                                                <input type="text" class="form-control"  ng-model="order_position.screen_fees_qnty" ng-blur="updatePosition(orderPositionAll)"/>
                                             </div>
                                         </div>
 
                                         <div class="col-md-3 nopad-left">
                                             <div class="form-group col-md-3 nopad-left">
-                                                <select  ng-model="order_position.dtg_size" class="form-control">
+                                                <select  ng-model="order_position.dtg_size" class="form-control" ng-change="updatePosition(orderPositionAll)">
                                                     <option ng-selected="order_position.dtg_size==misc_dtgsize.id" ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value={{misc_dtgsize.id}}>{{misc_dtgsize.value}}</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3 nopad-left">
-                                                <select  ng-model="order_position.dtg_on"  class="form-control">
+                                                <select  ng-model="order_position.dtg_on"  class="form-control" ng-change="updatePosition(orderPositionAll)">
                                                     <option ng-selected="order_position.dtg_on==misc_dtg_on.id" ng-repeat="misc_dtg_on in miscData.direct_to_garment" value={{misc_dtg_on.id}}>{{misc_dtg_on.value}}</option>
                                                 </select>
                                             </div>
@@ -285,9 +285,9 @@
                                     <div class="col-md-1">
                                         <button  type="submit" class="btn btn-info" ng-click="saveButtonData('ce')" >Create Contract Embroidery</button>
                                     </div>
-                                    <div class="form-group pull-right">
+                                    <!-- <div class="form-group pull-right">
                                         <button  type="submit" class="btn btn-info" ng-click="savePositionData(orderPositionAll)" >Save</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <!-- POSITION TAB END -->
@@ -815,6 +815,140 @@
                                 </div>
                             </div>
                             <!-- Notes TAB END -->
+
+                            <!-- Purchase Order TAB START -->
+                            <div role="tabpanel" class="tab-pane  animated fadeIn orderPOTab" id="tab5">
+                                <!-- LEFT SIDE -->
+                                <div class="col-md-6 nopad-form">
+                                    <div class="form-group panel panel-default col-md-12 smallPad">
+                                        <div class="col-md-12  m-t nopad-form">
+                                            <div class="col-md-1 nopad-left smallPad"></div>
+                                            <div class="col-md-3 nopad-left smallPad">
+                                                <label>PO ID</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>PO Number</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Vendor</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Created</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-left">
+                                                <label>Duplicate</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-form"></div>
+                                        </div>
+
+                                        <!-- Form Fields -->
+                                        <div class="col-md-12 nopad-form form-group purchasing_order" ng-repeat="(key,orderPO) in order_po_data">
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <div class="sgpDetails btnCircle">
+                                                  <a title="Go To" role="button" tabindex="0" class="">
+                                                    <i class="fa fa-arrow-circle-right" ui-sref="purchase.{{orderPO.po_type}}({id:orderPO.po_id})"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 nopad-left smallPad">
+                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderPO($event,orderPO.po_id)' }" >
+                                                    <option ng-selected="orderPO.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.date">
+                                            </div>
+                                            <div class="col-md-1 nopad-left">
+                                                <div class="sgpDetails">
+                                                  <a title="Go To" role="button" tabindex="0" class="">
+                                                    <i class="fa fa-copy"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 nopad-form">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removeOrderPO($index,orderPO.po_id)">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- / -->
+                                   </div>
+                                </div>
+
+                                <!-- RIGHT SIDE -->
+                                <div class="col-md-6 nopad-right">
+                                    <div class="form-group panel panel-default col-md-12">
+                                        <div class="col-md-12 m-t nopad-form">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                               <label>Product</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Size Group</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Product color</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                                <label>Size</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                                <label>Qnty</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-left">
+                                                <label>Qnty Ordered</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left">
+                                                <label>Qnty Rec'd</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-form"></div>
+                                        </div>
+
+                                        <!-- Form Fields -->
+                                        <div class="col-md-12 nopad-form form-group purchasing_order">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                               <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <select class="form-control">
+                                                    <option value="0">Women's</option>
+                                                    <option value="1">Men's</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <select class="form-control">
+                                                    <option value="0">Color 1</option>
+                                                    <option value="1">Color 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                                <input type="text" class="form-control" placeholder="M" />
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                                <input type="text" class="form-control" placeholder="10" />
+                                            </div>
+                                            <div class=" col-md-1 nopad-left">
+                                                <input type="text" class="form-control" placeholder="10" />
+                                            </div>
+                                            <div class="col-md-1 nopad-left">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-1 nopad-form">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- / -->
+                                   </div>
+                                </div>
+                            </div>
+                            <!-- Purchase Order TAB END -->
                         </div>
                     </div>
                 </div>
