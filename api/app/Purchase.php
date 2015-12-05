@@ -179,12 +179,12 @@ class Purchase extends Model {
 				  ->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
 				  ->leftJoin('products as p','p.id','=','oo.product_id')
 				  ->leftJoin('vendors as v','v.id','=','po.vendor_id')
-				  ->join('purchase_received as pr','pr.poline_id','=','pd.id')
+				  ->join('purchase_received as pr','pr.poline_id','=','pol.id')
 				  ->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pr.id as pr_id','pr.poline_id','pr.qnty_received','pd.size','pd.qnty','pol.*')
 				  ->where('pr.po_id','=',$po_id)
 				  ->get();
 
-				  //echo "<pre>"; print_r($result); die;
+				 // echo "<pre>"; print_r($result); die;
 		return $result;
 	}
 
