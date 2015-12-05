@@ -50,6 +50,25 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                         // console.log($scope.ordered);
                                   });
                        		}
+                       		function GetScreenData(po_id)
+                           {
+                           		AJloader.show();
+                           		$http.get('api/public/purchase/GetPodata/'+po_id ).success(function(PoData) 
+                          		  {
+                          		  		  if(PoData.data.success==0)
+                          		  		  {
+                          		  		  	$state.go('purchase.list',{"id":1});
+                           					return false;
+                          		  		  }
+                                          $scope.ArrPoLine = PoData.data.records.poline;
+                                          $scope.ArrUnassign = PoData.data.records.unassign_order;
+                                          $scope.ordered = PoData.data.records.order_total[0];
+                                          $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
+                                          $scope.order_id = PoData.data.records.order_id;
+                                          AJloader.hide();
+                                        // console.log($scope.ordered);
+                                  });
+                       		}
 
                        	  function short_over(poline_id)
                           {

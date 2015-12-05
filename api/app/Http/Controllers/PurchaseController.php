@@ -139,4 +139,38 @@ class PurchaseController extends Controller {
     		return  response()->json(["data" => $response]);
     	}
 	}
+	public function GetScreendata($po_id)
+	{
+    	if(empty($po_id))
+    	{
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id");
+    		return  response()->json(["data" => $response]);
+    		die();
+    	}
+    	else
+    	{
+    		$this->purchase->Update_Ordertotal($po_id);
+    		$order_total=''; $received_total='';$received_line='';
+    		$po = $this->purchase->GetPodata($po_id);
+    		$poline = $this->purchase->GetPoLinedata($po_id,'1');
+    		$unassign_order = $this->purchase->GetPoLinedata();
+
+	    		$order_total = $this->purchase->getOrdarTotal($po_id);
+	    		$received_total = $this->purchase->getreceivedTotal($po_id);
+	    		$received_line = $this->purchase->GetPoReceived($po_id);
+    		if(count($po)>0)
+    		{
+    			$order_id = $po[0]->order_id;
+	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id );
+	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+	    		return  response()->json(["data" => $response]);
+	    		die();
+    		}
+    	}
+    	return  response()->json(["data" => $response]);
+	}
 }
