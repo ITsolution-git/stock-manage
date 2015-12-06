@@ -15,17 +15,17 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                            AuthService.AccessService('BC');
                            var modalInstance='';
                            var AJloader = $("#ajax_loader");
-                           
-							$scope.getNumber = function(num) {
-							    return new Array(num);   
-							}
-
                            $scope.po_id = $stateParams.id;
                            if($scope.po_id=='' || $scope.po_id==0)
                            {
                            		$state.go('purchase.list',{"id":1});
                            		return false;
                            }
+							$scope.getNumber = function(num) {
+							    return new Array(num);   
+							}
+
+                           
                            GetPodata($scope.po_id);
                            function GetPodata(po_id)
                            {
@@ -50,25 +50,7 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                         // console.log($scope.ordered);
                                   });
                        		}
-                       		function GetScreenData(po_id)
-                           {
-                           		AJloader.show();
-                           		$http.get('api/public/purchase/GetPodata/'+po_id ).success(function(PoData) 
-                          		  {
-                          		  		  if(PoData.data.success==0)
-                          		  		  {
-                          		  		  	$state.go('purchase.list',{"id":1});
-                           					return false;
-                          		  		  }
-                                          $scope.ArrPoLine = PoData.data.records.poline;
-                                          $scope.ArrUnassign = PoData.data.records.unassign_order;
-                                          $scope.ordered = PoData.data.records.order_total[0];
-                                          $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
-                                          $scope.order_id = PoData.data.records.order_id;
-                                          AJloader.hide();
-                                        // console.log($scope.ordered);
-                                  });
-                       		}
+                       		
 
                        	  function short_over(poline_id)
                           {
@@ -256,9 +238,84 @@ app.controller('PurchaseSGCtrl', ['$scope',  '$http','$state','$stateParams', 'A
                            $scope.order_id = $stateParams.id;
 
 }]);
-app.controller('PurchaseCPCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {
-                          AuthService.AccessService('BC');
-                           $scope.order_id = $stateParams.id;
+app.controller('PurchaseCPCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
+
+						   AuthService.AccessService('BC');
+                           var modalInstance='';
+                           var AJloader = $("#ajax_loader");
+                           $scope.po_id = $stateParams.id;
+                           if($scope.po_id=='' || $scope.po_id==0)
+                           {
+                           		$state.go('purchase.list',{"id":1});
+                           		return false;
+                           }
+                          GetScreenData($scope.po_id);
+						  function GetScreenData(po_id)
+                           {
+                           		//AJloader.show();
+                           		$http.get('api/public/purchase/GetScreendata/'+po_id ).success(function(PoData) 
+                          		  {
+                          		  		  if(PoData.data.success==0)
+                          		  		  {
+                          		  		  	$state.go('purchase.list',{"id":'cp'});
+                           					return false;
+                          		  		  }
+                                          $scope.ArrPo = PoData.data.records.screen_data[0];
+                                          $scope.ArrPoLine = PoData.data.records.screen_line;
+                                          $scope.ordered = PoData.data.records.order_total[0];
+                                          $scope.order_id = PoData.data.records.order_id;
+                                          AJloader.hide();
+                                  });
+                       		}
+						  $scope.UpdateField_detail = function($event,id){
+                          		  var Receive_data = {};
+                          		  Receive_data.table ='order_positions';
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                });
+                          }
+                          $scope.UpdateField_order = function($event){
+                          		  var Receive_data = {};
+                          		 // Receive_data.data = [];
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.table ='purchase_order';
+	                              Receive_data.data = angular.copy(obj);
+	                              Receive_data.cond ={ po_id :$scope.po_id}
+	                              //console.log(Receive_data);
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message);
+                                });
+                          }
+                       $scope.EditOrderLine = function(Poline_data){
+                          			
+                            	  $http.post('api/public/purchase/EditOrderLine',Poline_data ).success(function(PoData) 
+                          		  {
+                                       GetScreenData($scope.po_id );
+                                       var data = {"status": "success", "message": "Data Updated successfully"}
+                    				   notifyService.notify(data.status, data.message); 
+                                  });
+                          }
+                        $scope.vendorshipcharte = function($event){
+                          		  var Receive_data = {};
+	                              Receive_data.table ='purchase_order';
+	                              Receive_data.data ={vendor_charge:$event.target.value}
+	                              Receive_data.cond ={ po_id :$scope.po_id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		GetScreenData($scope.po_id);
+                                  		//getNotesDetail(po_id);
+                                });
+                          }
+
 
 }]);
 app.controller('PurchaseCECtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {

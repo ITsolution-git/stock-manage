@@ -153,6 +153,7 @@ Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
 Route::post('purchase/Receive_order', 'PurchaseController@Receive_order');
 Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
 Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
+Route::get('purchase/GetScreendata/{id}', 'PurchaseController@GetScreendata');
 
 
 // ORDER CONTROLLER 

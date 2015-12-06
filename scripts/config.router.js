@@ -635,7 +635,7 @@ angular.module('app')
               url: '/cp/:id',
               templateUrl: 'views/front/purchase/cp.html',
               data : { title: 'Contract Printing' },
-             controller: 'PurchasePOCtrl',
+             controller: 'PurchaseCPCtrl',
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
