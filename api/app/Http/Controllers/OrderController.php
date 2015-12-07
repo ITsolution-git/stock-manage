@@ -172,7 +172,8 @@ class OrderController extends Controller {
                                 'order_line' => $result['order_line'],
                                 'order_item' => $result['order_item'],
                                 'order_po_data' => $result['order_po_data']);
-        }
+
+        } 
         
         return response()->json(["data" => $response]);
 
@@ -384,6 +385,31 @@ class OrderController extends Controller {
         
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
+    }
+
+
+
+    /**
+    * Order Detail controller      
+    * @access public detail
+    * @param  array $data
+    * @return json data
+    */
+    public function PODetail() {
+ 
+        $data = Input::all();
+
+        $result = $this->order->POorderDetail($data);
+
+       
+        if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'order_po_data' => $result['order_po_data']);
+        } else {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'order_po_data' => $result['order_po_data']);
+        }
+        
+        return response()->json(["data" => $response]);
+
     }
 
 

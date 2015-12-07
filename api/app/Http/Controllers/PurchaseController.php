@@ -17,6 +17,11 @@ class PurchaseController extends Controller {
  	{
         $this->purchase = $purchase;
     }
+
+    /*=====================================
+	TO GET PO AND SG SCREEN FIELDS VALUES 
+	=====================================*/
+
     public function ListPurchase()
     {
     	$post = Input::all();
@@ -39,6 +44,12 @@ class PurchaseController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+
+    /*=====================================
+	/ TO GET PO AND SG SCREEN DATA
+	/ ITS MAIN QUERY FOR WHOLE SCREEN DATA
+	=====================================*/
+
     public function GetPodata($po_id)
     {
     	if(empty($po_id))
@@ -50,17 +61,22 @@ class PurchaseController extends Controller {
     	else
     	{
     		$this->purchase->Update_Ordertotal($po_id);
+    		
     		$order_total=''; $received_total='';$received_line='';
     		$po = $this->purchase->GetPodata($po_id);
+    		
     		$poline = $this->purchase->GetPoLinedata($po_id,'1');
     		$unassign_order = $this->purchase->GetPoLinedata();
 
-	    		$order_total = $this->purchase->getOrdarTotal($po_id);
-	    		$received_total = $this->purchase->getreceivedTotal($po_id);
-	    		$received_line = $this->purchase->GetPoReceived($po_id);
+	    	$order_total = $this->purchase->getOrdarTotal($po_id);
+	    	
+	    	$received_total = $this->purchase->getreceivedTotal($po_id);
+	    	$received_line = $this->purchase->GetPoReceived($po_id);
+    		
     		if(count($po)>0)
     		{
-	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line );
+    			$order_id = $po[0]->order_id;
+	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id );
 	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     		}
     		else
@@ -72,19 +88,10 @@ class PurchaseController extends Controller {
     	}
     	return  response()->json(["data" => $response]);
     }
-    public function GetSgdata($id)
-    {
-    	if(empty($id))
-    	{
-    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
-    		return  response()->json(["data" => $response]);
-    		die();
-    	}
-    	else
-    	{
-    		$result = $this->purchase->GetSgdata($id);
-    	}
-    }
+
+	/*=====================================
+	TO UNASSIGN AND ASSIGN ORDER LINE ITEMS, CHANGE FLAG AND UPDATE PO
+	=====================================*/
 
     public function ChangeOrderStatus($id,$val,$po_id)
     {
@@ -101,6 +108,11 @@ class PurchaseController extends Controller {
     	}
     	return  response()->json(["data" => $response]);
     }
+
+	/*=====================================
+	TO CALCULATION ONE PO AND SG SCREEN TOTAL AMOUNT
+	=====================================*/
+
     public function EditOrderLine()
     {
     	 $post = Input::all();
@@ -108,6 +120,22 @@ class PurchaseController extends Controller {
     	 $response = array('success' => 1, 'message' => GET_RECORDS);
     	 return  response()->json(["data" => $response]);
     }
+    /*=====================================
+	TO CALCULATION ONE CP AND CE SCREEN TOTAL AMOUNT
+	=====================================*/
+
+    public function EditScreenLine()
+    {
+    	 $post = Input::all();
+    	 $result = $this->purchase->EditScreenLine($post);
+    	 $response = array('success' => 1, 'message' => GET_RECORDS);
+    	 return  response()->json(["data" => $response]);
+    }
+
+	/*=====================================
+	TO GET RECEIVED ORDER FOR PO AND SG TAB
+	=====================================*/
+
     public function Receive_order()
     {
     	$post = Input::all();
@@ -116,6 +144,10 @@ class PurchaseController extends Controller {
     	return  response()->json(["data" => $response]);
     }
 
+	/*=====================================
+	UPDATE SHIFTLOCK FIELD
+	=====================================*/
+
 	public function Update_shiftlock()
 	{
 		$post = Input::all();
@@ -123,6 +155,11 @@ class PurchaseController extends Controller {
     	$response = array('success' => 1, 'message' => UPDATE_RECORD);
     	return  response()->json(["data" => $response]);
 	}
+
+	/*=====================================
+	TO MAINTAIN SHORT AND OVER COUNT, MATCH RECEIVED QNTY WITH ORDER QNTY
+	=====================================*/
+
 	public function short_over($id)
 	{	
 		if(empty($id))
@@ -137,5 +174,41 @@ class PurchaseController extends Controller {
 			$response = array('success' => 1, 'message' => UPDATE_RECORD);
     		return  response()->json(["data" => $response]);
     	}
+	}
+
+	/*=====================================
+	TO GET SCREEN PRINT AND EMBRODIERY DATA
+	=====================================*/
+
+	public function GetScreendata($po_id)
+	{
+    	if(empty($po_id))
+    	{
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id");
+    		return  response()->json(["data" => $response]);
+    		die();
+    	}
+    	else
+    	{
+    		$this->purchase->Update_Ordertotal($po_id);
+    		$screen_data = $this->purchase->GetPodata($po_id);
+    		$screen_line = $this->purchase->GetScreendata($po_id);
+    		$order_total = $this->purchase->getOrdarTotal($po_id);
+
+    		//echo "<pre>"; print_r($screen_data); echo "</pre>"; die;
+    		if(count($screen_data)>0)
+    		{
+    			$order_id = $screen_data[0]->order_id;
+	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id );
+	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+	    		return  response()->json(["data" => $response]);
+	    		die();
+    		}
+    	}
+    	return  response()->json(["data" => $response]);
 	}
 }

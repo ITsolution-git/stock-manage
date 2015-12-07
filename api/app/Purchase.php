@@ -25,13 +25,15 @@ class Purchase extends Model {
 	}
 	function GetPodata($id)
 	{
-		$result = DB::select("SELECT po.*,v.name_company,ord.id,ord.job_name,ord.client_id,pg.name, cc.first_name,cc.last_name,oo.*,v.url
+		$result = DB::select("SELECT po.*,v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,pg.name, vc.first_name,vc.last_name,oo.*,v.url
 		FROM purchase_order po
 		Inner join orders ord on po.order_id = ord.id
-		Inner join order_orderlines oo on oo.order_id = ord.id
-		left join price_grid pg on pg.id = price_id
+		left join client cl on ord.client_id = cl.client_id
+		left join order_orderlines oo on oo.order_id = ord.id
+		left join order_positions op on op.order_id = ord.id
+		left join price_grid pg on pg.id = ord.price_id
 		Left join vendors v on v.id = po.vendor_id 
-		left join client_contact cc on cc.client_id = ord.client_id AND contact_main='1'
+		left join vendor_contacts vc on vc.vendor_id = v.id
 		where ord.status='1' AND ord.is_delete='1' 
 		AND po.po_id='".$id."'
 		GROUP BY po.po_id ");
@@ -144,6 +146,7 @@ class Purchase extends Model {
    		$this->Update_Ordertotal($post['po_id']);
     	return $result;
 	}
+	
 	function Receive_order($post)
 	{
 		 $result = DB::table('purchase_received')->insert(array('poline_id'=>$post['id'],'qnty_received'=>$post['qnty_ordered'],'po_id'=>$post['po_id']));
@@ -179,12 +182,12 @@ class Purchase extends Model {
 				  ->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
 				  ->leftJoin('products as p','p.id','=','oo.product_id')
 				  ->leftJoin('vendors as v','v.id','=','po.vendor_id')
-				  ->join('purchase_received as pr','pr.poline_id','=','pd.id')
+				  ->join('purchase_received as pr','pr.poline_id','=','pol.id')
 				  ->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pr.id as pr_id','pr.poline_id','pr.qnty_received','pd.size','pd.qnty','pol.*')
 				  ->where('pr.po_id','=',$po_id)
 				  ->get();
 
-				  //echo "<pre>"; print_r($result); die;
+				 // echo "<pre>"; print_r($result); die;
 		return $result;
 	}
 
@@ -193,6 +196,34 @@ class Purchase extends Model {
 		$result = DB::table('purchase_order')
    						->where('order_id','=',$post['po_id'])
    						->update(array('shipt_block'=>$post['data']));
+    	return $result;
+	}
+	function GetScreendata($po_id)
+	{
+		$result =  DB::table('purchase_order as po')
+				  ->leftJoin('orders as ord','po.order_id','=','ord.id')
+				  ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+				  ->leftJoin('order_positions as op','op.id','=','pol.line_id')
+				  ->leftJoin('vendors as v','v.id','=','po.vendor_id')
+				  ->select('v.name_company','ord.job_name','po.po_id','ord.id as order_id','op.qnty','op.color_stitch_count','op.id as position_id','pol.*')
+				  ->where('po.po_id','=',$po_id)
+				  ->get();
+				 // echo "<pre>"; print_r($result); die;
+		return $result;
+	}
+	function EditScreenLine ($post)
+	{
+		//echo "<pre>"; print_r($post['po_id']) ; die;
+		$post['line_total'] = $post['qnty'] * $post['unit_price'];
+
+		$result = DB::table('order_positions')
+   						->where('id','=',$post['position_id'])
+   						->update(array('qnty'=>$post['qnty']));
+
+		$result = DB::table('purchase_order_line')
+   						->where('id','=',$post['id'])
+   						->update(array('qnty_ordered'=>$post['qnty'],'unit_price'=>$post['unit_price'],'line_total'=>$post['line_total']));
+   		$this->Update_Ordertotal($post['po_id']);
     	return $result;
 	}
 

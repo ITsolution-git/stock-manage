@@ -101,6 +101,25 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     
 
     get_order_details(order_id,client_id);
+    get_po_detail(order_id,client_id);
+
+    function get_po_detail(order_id,client_id)
+    {
+        if($stateParams.id && $stateParams.client_id) {
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.client_id = $stateParams.client_id;
+
+            $http.post('api/public/order/PODetail',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                  $scope.order_po_data = result.data.order_po_data;
+                } else {
+                   
+                }
+            });
+        }
+    }
 
     function get_order_details(order_id,client_id)
     {
@@ -122,7 +141,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
                     $scope.order_items = result.data.order_item;
-                    $scope.order_po_data = result.data.order_po_data;
+                   // $scope.order_po_data = result.data.order_po_data;
 
                     $scope.price_grid =result.data.price_grid[0];
                     $scope.price_grid_markup =result.data.price_garment_mackup;
@@ -692,10 +711,32 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
           order_po_data.cond ={ po_id :po_id}
 
             $http.post('api/public/common/UpdateTableRecords',order_po_data).success(function(result) {
+
             });
       
     }
-                            
+
+
+    $scope.removeOrderPO = function(index,id) {
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
+  
+                var order_data = {};
+                order_data.table ='purchase_order'
+                order_data.cond ={po_id:id}
+                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                    
+                    var data = {"status": "success", "message": "Purchase Order has been deleted"}
+                    notifyService.notify(data.status, data.message);
+                });
+
+                $scope.order_po_data.splice(index,1);
+           
+        }
+    }
+
+                  
     $scope.openOrderPopup = function (page) {
 
         $scope.edit='add';
@@ -941,6 +982,8 @@ $scope.position_id = id;
             $http.post('api/public/order/saveButtonData',po_data).success(function(result) {
 
                             });
+
+            get_po_detail(order_id,client_id);  
             
     }
 
