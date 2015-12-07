@@ -249,6 +249,10 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                            		$state.go('purchase.list',{"id":1});
                            		return false;
                            }
+                           $scope.getNumber = function(num) {
+							    return new Array(num);   
+							}
+
                           GetScreenData($scope.po_id);
 						  function GetScreenData(po_id)
                            {
@@ -269,7 +273,7 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                        		}
 						  $scope.UpdateField_detail = function($event,id){
                           		  var Receive_data = {};
-                          		  Receive_data.table ='order_positions';
+                          		  Receive_data.table ='purchase_order_line';
                           		  $scope.name_filed = $event.target.name;
                           		  var obj = {};
                           		  obj[$scope.name_filed] =  $event.target.value;
@@ -296,16 +300,16 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                                         notifyService.notify(data.status, data.message);
                                 });
                           }
-                       $scope.EditOrderLine = function(Poline_data){
+                       $scope.EditScreenLine = function(Poline_data){
                           			
-                            	  $http.post('api/public/purchase/EditOrderLine',Poline_data ).success(function(PoData) 
+                            	  $http.post('api/public/purchase/EditScreenLine',Poline_data ).success(function(PoData) 
                           		  {
                                        GetScreenData($scope.po_id );
                                        var data = {"status": "success", "message": "Data Updated successfully"}
                     				   notifyService.notify(data.status, data.message); 
                                   });
                           }
-                        $scope.vendorshipcharte = function($event){
+                        $scope.vendorshipcharge = function($event){
                           		  var Receive_data = {};
 	                              Receive_data.table ='purchase_order';
 	                              Receive_data.data ={vendor_charge:$event.target.value}

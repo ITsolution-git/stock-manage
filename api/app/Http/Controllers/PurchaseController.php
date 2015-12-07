@@ -120,6 +120,17 @@ class PurchaseController extends Controller {
     	 $response = array('success' => 1, 'message' => GET_RECORDS);
     	 return  response()->json(["data" => $response]);
     }
+    /*=====================================
+	TO CALCULATION ONE CP AND CE SCREEN TOTAL AMOUNT
+	=====================================*/
+
+    public function EditScreenLine()
+    {
+    	 $post = Input::all();
+    	 $result = $this->purchase->EditScreenLine($post);
+    	 $response = array('success' => 1, 'message' => GET_RECORDS);
+    	 return  response()->json(["data" => $response]);
+    }
 
 	/*=====================================
 	TO GET RECEIVED ORDER FOR PO AND SG TAB
@@ -179,6 +190,7 @@ class PurchaseController extends Controller {
     	}
     	else
     	{
+    		$this->purchase->Update_Ordertotal($po_id);
     		$screen_data = $this->purchase->GetPodata($po_id);
     		$screen_line = $this->purchase->GetScreendata($po_id);
     		$order_total = $this->purchase->getOrdarTotal($po_id);
