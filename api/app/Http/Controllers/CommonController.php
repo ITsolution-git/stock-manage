@@ -253,18 +253,44 @@ class CommonController extends Controller {
         return response()->json(['data'=>$data]);
      }
 
-      public function getAllPlacementData()
+    public function getAllPlacementData()
     {
         $result = $this->common->getAllPlacementData();
         return $this->return_response($result);
     }
 
-     public function getMiscData()
+    public function getMiscData()
     {
         $result = $this->common->getMiscData();
         return $result;
     }
-
+    /**
+    * Get user id after login.
+    * @return json data
+    */
+    public function CompanyService()
+    {
+        $post = Input::all();
+        if(!empty($post['user_id']))
+        {
+            $result = $this->common->CompanyService($post['user_id']);
+            //echo "<pre>"; print_r($result); die;
+            if(!empty($result[0]->company_name))
+            {
+                $response = array('success' => 1, 'message' => GET_RECORDS,'records' =>$result[0]);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+            }
+            
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => NO_RECORDS);        
+        }
+        return response()->json(['data'=>$response]);
+    }
     /**
     * Get Array
     * @return json data
@@ -277,7 +303,7 @@ class CommonController extends Controller {
         } 
         else 
         {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+            $response = array('success' => 0, 'message' => NO_RECORDS);
         }
         return  response()->json(["data" => $response]);
     }
