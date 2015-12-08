@@ -8,15 +8,39 @@
  * Controller of the app
  */
 angular.module('app')  
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$document', '$location', '$rootScope', '$timeout', '$mdSidenav', '$mdColorPalette', '$anchorScroll','AuthService','sessionService','notifyService',
-    function (             $scope,   $translate,   $localStorage,   $window,   $document,   $location,   $rootScope,   $timeout,   $mdSidenav,   $mdColorPalette,   $anchorScroll,AuthService,sessionService,notifyService ) {
+  .controller('AppCtrl', ['$http','$scope','$state', '$translate', '$localStorage', '$window', '$document', '$location', '$rootScope', '$timeout', '$mdSidenav', '$mdColorPalette', '$anchorScroll','AuthService','sessionService','notifyService','$q',
+    function ( $http, $scope, $state,  $translate,   $localStorage,   $window,   $document,   $location,   $rootScope,   $timeout,   $mdSidenav,   $mdColorPalette,   $anchorScroll,AuthService,sessionService,notifyService,$q ) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i) || !!navigator.userAgent.match(/Trident.*rv:11\./);
       isIE && angular.element($window.document.body).addClass('ie');
       isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
-      //console.log(sessionService.get('role_slug'));
       // config
-      $scope.app = {
+
+      /*==================================
+      GET COMPANY DETAIL WHEN PAGE LOAD
+      ==================================*/
+      var user_data = {};
+      user_data.user_id=sessionService.get('user_id');
+      $http.post('api/public/auth/company',user_data).then(function successCallback(Response) {
+       // console.log(Response.data.data.success);
+          if(Response.data.data.success=='1')
+          {
+              $rootScope.company_profile = Response.data.data.records;
+          }
+          else
+          {
+              var data = {"status": "error", "message": "Company not assigned for this User!"}
+              notifyService.notify(data.status, data.message);
+              $state.go('access.lockme');
+              return false;
+          }
+        }, function errorCallback(user_data) {
+             console.log('error');
+        });
+      /*==============================*/
+
+
+        $scope.app = {
         sitename: 'Stockk Up',
         version: '1.0.2',
         useremail : sessionService.get('useremail'),
@@ -24,7 +48,7 @@ angular.module('app')
         role_title : sessionService.get('role_title'),
         role : sessionService.get('role_slug'),
         user_id : sessionService.get('user_id'),
-        company_roleid :'17',
+        company_roleid :'17', // role id in roles table
         // for chart colors
         color: {
           primary: '#3f51b5',
@@ -50,7 +74,6 @@ angular.module('app')
           show: false
         }
       }
-
       $scope.setTheme = function(theme){
         $scope.app.setting.theme = theme;
       }

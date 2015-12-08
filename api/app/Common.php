@@ -255,4 +255,28 @@ class Common extends Model {
         return $miscData;
     }
 
+    /**
+    * Get userId
+    * @access All user 
+    * @return array $result with user and company detail
+    */
+
+    public function CompanyService($userId)
+    {
+        $result = DB::table('users as us')
+                ->leftJoin('users as usr','usr.id','=','us.parent_id')
+                ->leftJoin('roles as r','r.id','=','us.role_id')
+                ->select('r.title',DB::raw('case 
+                           when r.slug = "CA" then us.user_name else usr.user_name
+                            end as company_name
+                        '),DB::raw('case 
+                           when r.slug = "CA" then us.id else usr.id
+                            end as company_id
+                        '))
+                ->where('us.id','=',$userId)
+                ->get();
+       
+        return $result;
+    }
+
 }

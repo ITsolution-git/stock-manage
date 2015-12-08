@@ -101,6 +101,7 @@ Route::get('common/staffRole', 'CommonController@getStaffRoles');
 Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
+Route::post('auth/company', 'CommonController@CompanyService');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
 Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
