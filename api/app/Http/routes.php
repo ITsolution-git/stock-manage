@@ -174,6 +174,7 @@ Route::post('order/saveButtonData', 'OrderController@saveButtonData');
 Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/PODetail', 'OrderController@PODetail');
+Route::post('order/distributionDetail', 'OrderController@distributionDetail');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

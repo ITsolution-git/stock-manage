@@ -135,6 +135,7 @@ class OrderController extends Controller {
         }
 
         $price_id = $result['order'][0]->price_id;
+        $client_id = $result['order'][0]->client_id;
 
         $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id),array());
         $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
@@ -142,6 +143,13 @@ class OrderController extends Controller {
         $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
+
+        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1'),array());
+        $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
+
+        $vendors = $this->common->getAllVendors();
+        $staff = $this->common->getStaffList();
+        $brandCo = $this->common->getBrandCordinator();
 
         if (count($result) > 0) {
             $response = array(
@@ -153,13 +161,17 @@ class OrderController extends Controller {
                                 'order_position' => $result['order_position'],
                                 'order_line' => $result['order_line'],
                                 'order_item' => $result['order_item'],
-                                'order_po_data' => $result['order_po_data'],
                                 'price_grid' => $price_grid,
                                 'price_garment_mackup' => $price_garment_mackup,
                                 'price_screen_primary' => $price_screen_primary,
                                 'price_screen_secondary' => $price_screen_secondary,
                                 'price_direct_garment' => $price_direct_garment,
-                                'embroidery_switch_count' => $embroidery_switch_count
+                                'embroidery_switch_count' => $embroidery_switch_count,
+                                'vendors' => $vendors,
+                                'client' => $client,
+                                'products' => $products,
+                                'staff' => $staff,
+                                'brandCo' => $brandCo
                                 );
         } else {
             $response = array(
@@ -412,9 +424,6 @@ class OrderController extends Controller {
 
     }
 
-
-
-
 	/**
     * Get Array
     * @return json data
@@ -430,5 +439,62 @@ class OrderController extends Controller {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
         return  response()->json(["data" => $response]);
+    }
+
+    /**
+    * Order Detail controller
+    * @access public detail
+    * @param  array $data
+    * @return json data
+    */
+    public function distributionDetail()
+    {
+        $data = Input::all();
+        $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $data['client_id']),array());
+
+        foreach ($dist_addr as $addr) {
+            $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
+            $client_distaddress[] = $addr;
+        }
+
+        $array = array('order.id' => $data['order_id'],'is_distribute' => '0');
+        $order_items = $this->order->getDistributionItems($array);
+
+        if(isset($data['address_id']) && !empty($data['address_id']))
+        {
+            $array2 = array('order.id' => $data['order_id'],'is_distribute' => '1','ia.address_id' => $data['address_id']);
+            $distributed_items = $this->order->getDistributedItems($array2);
+        }
+        else
+        {
+            $distributed_items = array();
+        }
+
+        $array3 = array('ia.order_id' => $data['order_id']);
+        $distributed_address = $this->order->getDistributedAddress($array3);
+
+        foreach ($distributed_address as $addr) {
+            $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
+            $distributed_address2[] = $addr;
+        }
+
+
+        if (count($client_distaddress) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'dist_addr' => $client_distaddress,
+                                'order_items' => $order_items,
+                                'distributed_items' => $distributed_items,
+                                'distributed_address' => $distributed_address2
+                            );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                );
+        } 
+        
+        return response()->json(["data" => $response]);
     }
 }

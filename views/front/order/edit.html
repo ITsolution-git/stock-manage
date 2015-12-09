@@ -379,7 +379,7 @@
                                                     <div class="cols col-1">
                                                         <div class="form-group">
                                                             <select  ng-model="order_line.color_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
-                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in colors" value={{color.id}}>{{color.value}}</option>
+                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in miscData.color_group" value={{color.id}}>{{color.value}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
@@ -747,7 +747,138 @@
 
                             <!-- DISTRIBUTION TAB -->
                             <div role="tabpanel" class="tab-pane animated fadeIn tab2Ol" id="tab3">
-
+                                <div class="col-md-3 nopad-form">
+                                    <div class="form-group panel panel-default col-md-12 smallPad">
+                                        <div class="col-md-12  m-t nopad-form">
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <label>Discription</label>                  
+                                            </div>
+                                            <div class="col-md-6 nopad-left smallPad ">
+                                                <label>Address</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-form"></div>
+                                        </div>
+                                        <div class="col-md-12  m-t nopad-form" ng-repeat="addr in dist_addr">
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <input type="text" ng-model="addr.description">
+                                            </div>
+                                            <div class="col-md-6 nopad-left smallPad ">
+                                                <input type="test" ng-model="addr.full_address">
+                                            </div>
+                                            <div class=" col-md-1 nopad-form"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 nopad-form">
+                                    <div class="form-group panel panel-default col-md-12 smallPad">
+                                        <div class="col-md-12  m-t nopad-form">
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <label>Discription</label>                  
+                                            </div>
+                                            <div class="col-md-6 nopad-left smallPad ">
+                                                <label>Address</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-form"></div>
+                                        </div>
+                                        <div class="col-md-12  m-t nopad-form" ng-repeat="dist in distributed_address">
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <input type="text" ng-model="dist.description">
+                                            </div>
+                                            <div class="col-md-6 nopad-left smallPad ">
+                                                <input type="test" ng-model="dist.full_address">
+                                            </div>
+                                            <div class=" col-md-1 nopad-form"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 nopad-form">
+                                    <div class="form-group panel panel-default col-md-12 smallPad">
+                                        <div class="col-md-12  m-t nopad-form">
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Item</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Size Grp</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Color</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Size</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Qnty</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Vendor</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12  m-t nopad-form" ng-repeat="oitem in distributed_items">
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" ng-model="oitem.name">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <input type="text" ng-model="oitem.size_group_name">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" ng-model="oitem.color_name">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <input type="text" ng-model="oitem.size">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" ng-model="oitem.qnty">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <input type="text" ng-model="oitem.main_contact_person">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 nopad-form">
+                                    <div class="form-group panel panel-default col-md-12 smallPad">
+                                        <div class="col-md-12  m-t nopad-form">
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Item</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Size Grp</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Color</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Size</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Qnty</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Vendor</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12  m-t nopad-form" ng-repeat="oitem in items">
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" ng-model="oitem.name">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <input type="text" ng-model="oitem.size_group_name">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" ng-model="oitem.color_name">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <input type="text" ng-model="oitem.size">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" ng-model="oitem.qnty">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <input type="text" ng-model="oitem.main_contact_person">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- DISTRIBUTION TAB -->
 
