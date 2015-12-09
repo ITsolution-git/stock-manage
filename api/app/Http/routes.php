@@ -101,6 +101,7 @@ Route::get('common/staffRole', 'CommonController@getStaffRoles');
 Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
+Route::post('auth/company', 'CommonController@CompanyService');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
 Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
@@ -153,6 +154,8 @@ Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
 Route::post('purchase/Receive_order', 'PurchaseController@Receive_order');
 Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
 Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
+Route::get('purchase/GetScreendata/{id}', 'PurchaseController@GetScreendata');
+Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
 
 
 // ORDER CONTROLLER 
@@ -171,6 +174,8 @@ Route::post('order/orderLineUpdate', 'OrderController@orderLineUpdate');
 Route::post('order/saveButtonData', 'OrderController@saveButtonData');
 Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
+Route::post('order/PODetail', 'OrderController@PODetail');
+Route::post('order/distributionDetail', 'OrderController@distributionDetail');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

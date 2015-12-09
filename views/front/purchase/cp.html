@@ -1,14 +1,16 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
+    <form name="staffForm" class="form-validation stokkupForm client-form" >
       <div class="panel panel-default">
         <div class="panel-body">
     <div class="col-sm-6 m-b">
-      <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info topNavButtons">Company PO</button>
+
+    <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info topNavButtons active">Contract Prints</button>
+      <!-- <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info topNavButtons">Company PO</button>
       <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info topNavButtons">Supplied Garments</button>
-      <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info topNavButtons active">Contract Prints</button>
-      <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info topNavButtons">Contract Embrodiery</button>    
+      
+      <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info topNavButtons">Contract Embrodiery</button>    --> 
     </div>
     <div class="col-sm-2 m-b">
       <button class="btn m-v-xs btn-sm btn-dark">PO#  <b class="badge m-l-xs">{{po_id}}</b></button>
@@ -24,7 +26,7 @@
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Client<em class="text-muted"></em></label>
-                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.arrival_date"  >
+                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.client_company"  >
                   </div>
                   <div class="col-sm-2 m-b">
                     <label>Job<em class="text-muted"></em></label>
@@ -90,17 +92,17 @@
               </div>
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control" ng-model="poline.color"  >
+                <input type="text" class="form-control" ng-model="poline.color_stitch_count"  >
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control"  ui-event="{ blur : 'EditOrderLine(poline)' }"  ng-model="poline.qnty" >
+                <input type="text" class="form-control"  ui-event="{ blur : 'EditScreenLine(poline)' }"  ng-model="poline.qnty" >
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control" ui-event="{ blur : 'EditOrderLine(poline)' }" ng-model="poline.unit_price" >
+                <input type="text" class="form-control" ui-event="{ blur : 'EditScreenLine(poline)' }" ng-model="poline.unit_price" >
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
@@ -349,7 +351,7 @@
                     <div class="col-md-2 nopad-left">                
                       <div class="form-group">
                         <label>Vendor ship charge<em class="text-muted"></em></label>
-                        <input type="text" class="form-control" ui-event="{ blur : 'vendorshipcharte($event)' }"  ng-model="ArrPo.vendor_charge"  >
+                        <input type="text" class="form-control" ui-event="{ blur : 'vendorshipcharge($event)' }"  ng-model="ArrPo.vendor_charge"  >
                       </div>
                     </div>
                     <div class="col-md-1 nopad-left f-r">                

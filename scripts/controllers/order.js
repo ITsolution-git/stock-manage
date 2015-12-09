@@ -101,6 +101,45 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     
 
     get_order_details(order_id,client_id);
+    get_po_detail(order_id,client_id);
+    get_distribution_list(client_id);
+
+    function get_po_detail(order_id,client_id)
+    {
+        if($stateParams.id && $stateParams.client_id) {
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.client_id = $stateParams.client_id;
+
+            $http.post('api/public/order/PODetail',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                  $scope.order_po_data = result.data.order_po_data;
+                } else {
+                   
+                }
+            });
+        }
+    }
+
+    function get_distribution_list(order_id,client_id)
+    {
+        if($stateParams.id && $stateParams.client_id) {
+            var combine_array_id = {};
+            combine_array_id.client_id = $stateParams.client_id;
+            combine_array_id.order_id = $stateParams.id;
+
+            $http.post('api/public/order/distributionDetail',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                    $scope.dist_addr =result.data.dist_addr;
+                    $scope.items =result.data.order_items;
+                    $scope.distributed_items =result.data.distributed_items;
+                    $scope.distributed_address =result.data.distributed_address;
+                }
+            });
+        }
+    }
 
     function get_order_details(order_id,client_id)
     {
@@ -122,7 +161,21 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
                     $scope.order_items = result.data.order_item;
-                    $scope.order_po_data = result.data.order_po_data;
+                   // $scope.order_po_data = result.data.order_po_data;
+
+                    $scope.price_grid =result.data.price_grid[0];
+                    $scope.allGrid =result.data.price_grid;
+                    $scope.price_grid_markup =result.data.price_garment_mackup;
+                    $scope.price_screen_primary =result.data.price_screen_primary;
+                    $scope.price_screen_secondary =result.data.price_screen_secondary;
+                    $scope.price_direct_garment =result.data.price_direct_garment;
+                    $scope.embroidery_switch_count =result.data.embroidery_switch_count;
+
+                    $scope.vendors = result.data.vendors;
+                    $scope.allCompany =result.data.client;
+                    $scope.allProduct =result.data.products;
+                    $scope.staffList =result.data.staff;
+                    $scope.brandCoList =result.data.brandCo;
 
                     $scope.orderline_id = 0;
                     $scope.total_qty = 0;
@@ -142,102 +195,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                         $scope.position_total_qty += parseInt(value.qnty);
                     });
 
-                    var price_grid_data = {};
-                    price_grid_data.table ='price_grid'
-                    price_grid_data.cond ={id:$scope.order.price_id}
-                    
-                    $http.post('api/public/common/GetTableRecords',price_grid_data).success(function(result) {
-                        
-                        if(result.data.success == '1') 
-                        {
-                            $scope.price_grid =result.data.records[0];
-                        } 
-                        else
-                        {
-                            $scope.price_grid=[];
-                        }
-                    });
-
-                    var price_markup_data = {};
-                    price_markup_data.table ='price_garment_mackup'
-                    price_markup_data.cond ={price_id:$scope.order.price_id}
-                    
-                    $http.post('api/public/common/GetTableRecords',price_markup_data).success(function(result) {
-                        
-                        if(result.data.success == '1') 
-                        {
-                            $scope.price_grid_markup =result.data.records;
-                        } 
-                        else
-                        {
-                            $scope.price_grid_markup=[];
-                        }
-                    });
-
-                    var screen_primary = {};
-                    screen_primary.table ='price_screen_primary';
-                    screen_primary.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
-                    
-                    $http.post('api/public/common/GetTableRecords',screen_primary).success(function(result) {
-                        
-                        if(result.data.success == '1') 
-                        {
-                            $scope.price_screen_primary =result.data.records;
-                        } 
-                        else
-                        {
-                            $scope.price_screen_primary=[];
-                        }
-                    });
-
-                    var screen_secondary = {};
-                    screen_secondary.table ='price_screen_secondary';
-                    screen_secondary.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
-                    
-                    $http.post('api/public/common/GetTableRecords',screen_secondary).success(function(result) {
-                        
-                        if(result.data.success == '1')
-                        {
-                            $scope.price_screen_secondary =result.data.records;
-                        } 
-                        else
-                        {
-                            $scope.price_screen_secondary=[];
-                        }
-                    });
-
-                    var direct_garment = {};
-                    direct_garment.table ='price_direct_garment';
-                    direct_garment.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
-                    
-                    $http.post('api/public/common/GetTableRecords',direct_garment).success(function(result) {
-                        
-                        if(result.data.success == '1')
-                        {
-                            $scope.price_direct_garment =result.data.records;
-                        } 
-                        else
-                        {
-                            $scope.price_direct_garment=[];
-                        }
-                    });
-
-                    var switch_count = {};
-                    switch_count.table ='embroidery_switch_count';
-                    switch_count.cond ={price_id:$scope.order.price_id,is_delete:1,status:1}
-                    
-                    $http.post('api/public/common/GetTableRecords',switch_count).success(function(result) {
-                        
-                        if(result.data.success == '1')
-                        {
-                            $scope.embroidery_switch_count =result.data.records;
-                        } 
-                        else
-                        {
-                            $scope.embroidery_switch_count=[];
-                        }
-                    });
-
                     $("#ajax_loader").hide();
                 }
                 else {
@@ -246,27 +203,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             });
         }
     }
-
-    $http.get('api/public/common/getAllVendors').success(function(result, status, headers, config) {
-            $scope.vendors = result.data.records;
-    });
-
-    var color_data = {};
-    color_data.table ='misc_type'
-    color_data.cond ={type:'color_group',is_delete:1,status:1}
-    color_data.notcond ={value:""}
-    
-    $http.post('api/public/common/GetTableRecords',color_data).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.colors =result.data.records;
-        } 
-        else
-        {
-            $scope.colors=[];
-        }
-    });
 
     $scope.notesave = function($event,id) {
 
@@ -293,11 +229,13 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     });
 
     $scope.addOrder = function(){
-        $scope.orderPositionAll.push({ position_id:'' ,description:'', placement_type:'', color_stitch_count:'', qnty:'',discharge_qnty:''
+        
+        var single_position = { position_id:'' ,description:'', placement_type:'', color_stitch_count:'', qnty:'',discharge_qnty:''
                                                     ,speciality_qnty:'', foil_qnty:'', ink_charge_qnty:'', number_on_light_qnty:'',number_on_dark_qnty:''
-                                                  ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''});
+                                                  ,oversize_screens_qnty:'', press_setup_qnty:'', screen_fees_qnty:'', dtg_size:'',dtg_on:''};
+        $scope.orderPositionAll.push(single_position);
 
-        $scope.addPosition($scope.orderPositionAll);
+        $scope.addPosition(single_position);
     }
 
     $scope.assign_item = function(order_id,order_item_id,item_name,item_charge) {
@@ -455,6 +393,11 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
                 $scope.orderPositionAll.splice(index,1);
             }
+            setTimeout(function () {
+                angular.forEach($scope.orderLineAll, function(value) {
+                    $scope.calculate_all(value.id);
+                });                    
+            }, 300);
         }
     }
 
@@ -462,7 +405,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         
         $scope.orderline_id = parseInt($scope.orderline_id + 1);
 
-        $scope.orderLineAll.push({ size_group_id:'' ,
+        var single_line = { size_group_id:'' ,
                                     product_id:'',
                                     vendor_id:'',
                                     color_id:'',
@@ -482,9 +425,11 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                     override:'0',
                                     peritem:'0',
                                     per_line_total:'0'
-                                });
+                                }
+
+        $scope.orderLineAll.push(single_line);
         
-        $scope.insertOrderLine($scope.orderLineAll);
+        $scope.insertOrderLine(single_line);
     }
 
     $scope.removeOrderLine = function(index,id) {
@@ -508,72 +453,13 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
                 $scope.orderLineAll.splice(index,1);
             }
+            setTimeout(function () {
+                angular.forEach($scope.orderLineAll, function(value) {
+                    $scope.calculate_all(value.id);
+                });                    
+            }, 300);
         }
     }
-
-    var companyData = {};
-    companyData.table ='client'
-    companyData.cond ={status:1,is_delete:1}
-
-    $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.allCompany =result.data.records;
-        } 
-        else
-        {
-            $scope.allCompany=[];
-        }
-    });
-
-    var priceGridData = {};
-    priceGridData.table ='price_grid'
-    priceGridData.cond ={status:1,is_delete:1}
-
-    $http.post('api/public/common/GetTableRecords',priceGridData).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.allGrid =result.data.records;
-        } 
-        else
-        {
-            $scope.allGrid=[];
-        }
-    });
-
-    var productData = {};
-    productData.table ='products'
-    productData.cond ={status:1,is_delete:1}
-
-    $http.post('api/public/common/GetTableRecords',productData).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.allProduct =result.data.records;
-        } 
-        else
-        {
-            $scope.allProduct=[];
-        }
-    });
-
-    $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) 
-    {
-        if(result.data.success == '1') 
-        {
-            $scope.staffList =result.data.records;
-        }
-    });
-
-    $http.get('api/public/common/getBrandCo').success(function(result, status, headers, config) 
-    {
-        if(result.data.success == '1') 
-        {
-            $scope.brandCoList =result.data.records;
-        } 
-    });
 
     $scope.saveOrderDetails=function(postArray,id)
     {
@@ -592,31 +478,34 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         order_id = $stateParams.id;
         client_id = $stateParams.client_id;
 
-        angular.forEach(postArray, function(value, key) {
+        var order_data_insert  = {};
+        postArray.order_id = order_id;
+        order_data_insert.data = postArray;
+        order_data_insert.table ='order_positions'
 
-            var order_data_insert  = {};
-            value.order_id = order_id;
-            order_data_insert.data = value;
-            order_data_insert.table ='order_positions'
+        $http.post('api/public/order/insertPositions',order_data_insert).success(function(result) {
 
-            $http.post('api/public/order/insertPositions',order_data_insert).success(function(result) {
-
-            });
         });
 
         get_order_details(order_id,client_id);
     }
-    $scope.updatePosition = function(postArray)
+    $scope.updatePosition = function(postArray,position_id)
     {
         angular.forEach($scope.orderPositionAll, function(value) {
-            
-            var order_data = {};
-            order_data.table ='order_positions'
-            order_data.data =value
-            order_data.cond ={id:value.id}
-            $http.post('api/public/order/updatePositions',order_data).success(function(result) {
 
-            });
+            if(value.id == position_id)
+            {
+                var order_data = {};
+                order_data.table ='order_positions'
+                order_data.data =value
+                order_data.cond ={id:value.id}
+                $http.post('api/public/order/updatePositions',order_data).success(function(result) {
+
+                });
+                angular.forEach($scope.orderLineAll, function(value) {
+                    $scope.calculate_all(value.id);
+                });
+            }
         });
 
         $scope.calculate_charge();
@@ -712,15 +601,13 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     $scope.insertOrderLine = function(postArray)
     {
         $("#ajax_loader").show();
-        angular.forEach(postArray, function(value, key) {
 
-            var order_data_insert  = {};
-            value.order_id = order_id;
-            order_data_insert.data = value;
-            order_data_insert.table ='order_orderlines';
+        var order_data_insert  = {};
+        postArray.order_id = order_id;
+        order_data_insert.data = postArray;
+        order_data_insert.table ='order_orderlines';
 
-            $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
-            });
+        $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
         });
 
         setTimeout(function () {
@@ -729,18 +616,22 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                 get_order_details(order_id,client_id);
         }, 500);
     }
-    $scope.updateOrderLine = function(postArray)
+    $scope.updateOrderLine = function(postArray,orderline_id)
     {
         $("#ajax_loader").show();
+        
         angular.forEach(postArray, function(value, key) {
 
-            var order_data = {};
-            order_data.table ='order_orderlines'
-            order_data.data =value
-            order_data.cond ={id:value.id}
-            
-            $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
-            });
+            if(value.id == orderline_id)
+            {
+                var order_data = {};
+                order_data.table ='order_orderlines'
+                order_data.data =value
+                order_data.cond ={id:value.id}
+                
+                $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
+                });
+            }
         });
 
         setTimeout(function () {
@@ -1034,7 +925,7 @@ $scope.position_id = id;
 
                             });
 
-            get_order_details(order_id,client_id);  
+            get_po_detail(order_id,client_id);  
             
     }
 
@@ -1072,11 +963,6 @@ $scope.position_id = id;
             }
         });
     }
-
-
-    
-
-
 
     $scope.removeordernotes = function(index,id) {
         
@@ -1599,7 +1485,7 @@ $scope.position_id = id;
                 $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
 
                 });
-                $scope.updateOrderLine($scope.orderLineAll);
+                $scope.updateOrderLine($scope.orderLineAll,orderline_id);
             }
 
         }, 500);
@@ -1698,7 +1584,6 @@ $scope.position_id = id;
             });
         }
     }
-
   // **************** NOTES TAB CODE END  ****************
 }]);
 
