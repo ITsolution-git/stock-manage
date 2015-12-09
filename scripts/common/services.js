@@ -1,7 +1,7 @@
 (function () {
     angular.module('app.services', [])
 
-.factory('AuthService', function ($rootScope,$location, $http,$state, $q,flash,sessionService,notifyService) {
+.factory('AuthService', function ($rootScope,$http,$state,sessionService,notifyService) {
                     var currentUser = {}
                     
 
@@ -39,6 +39,17 @@
                     return false;
                 }
              },
+            CompanyService: function (user_id) {
+             var user_data = {};
+             user_data.user_id=user_id;
+             $http.post('api/public/auth/company',user_data).then(function(result, status, headers, config) 
+              {
+                   
+                 });
+            }, 
+
+  
+                
         }
     })
     /**
@@ -79,7 +90,8 @@
                             $rootScope.showLogged = false;
                             $state.go('access.lockme');
                             return false;
-                        }
+                        },
+  
                     };
                 }
             ])

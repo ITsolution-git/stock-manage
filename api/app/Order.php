@@ -12,7 +12,7 @@ class Order extends Model {
 	public function getOrderdata()
 	{
 
-	$whereConditions = ['order.is_delete' => '1'];
+	   $whereConditions = ['order.is_delete' => '1'];
         $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_date','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
@@ -470,5 +470,51 @@ public function updateOrderLineData($post)
         $result=$result->update($data);
         return $result;
     }
+
+    public function getDistributionItems($data)
+    {
+        $listArray = ['ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.main_contact_person'];
+
+        $orderData = DB::table('orders as order')
+                        ->select($listArray)
+                        ->leftJoin('order_orderlines as ol', 'order.id', '=', 'ol.order_id')
+                        ->leftJoin('purchase_detail as pd', 'ol.id', '=', 'pd.orderline_id')
+                        ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
+                        ->leftJoin('products as p','p.id','=','ol.product_id')
+                        ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
+                        ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
+                        ->where($data)
+                        ->where('pd.qnty','!=','')
+                        ->get();
+        return $orderData;  
+    }
+
+    public function getDistributedAddress($data)
+    {
+        $orderData = DB::table('client_distaddress as cd')
+                        ->leftJoin('item_address_mapping as ia', 'cd.id', '=', 'ia.address_id')
+                        ->where($data)
+                        ->get();
+        return $orderData;  
+    }
+
+    public function getDistributedItems($data)
+    {
+        $listArray = ['ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.main_contact_person'];
+
+        $orderData = DB::table('orders as order')
+                        ->select($listArray)
+                        ->leftJoin('order_orderlines as ol', 'order.id', '=', 'ol.order_id')
+                        ->leftJoin('purchase_detail as pd', 'ol.id', '=', 'pd.orderline_id')
+                        ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
+                        ->leftJoin('products as p','p.id','=','ol.product_id')
+                        ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
+                        ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
+                        ->leftJoin('item_address_mapping as ia', 'pd.id', '=', 'ia.item_id')
+                        ->where($data)
+                        ->where('pd.qnty','!=','')
+                        ->get();
+        return $orderData;
+    }    
 	
 }

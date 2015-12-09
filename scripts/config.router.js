@@ -583,7 +583,7 @@ angular.module('app')
                 },
                  resolve: {
                             checklogin: function (AuthService) {
-                               //return AuthService.checksession();
+                               return AuthService.checksession();
                             },
                        }
               })
@@ -594,7 +594,7 @@ angular.module('app')
              controller: 'PurchaseListCtrl',
               resolve: {
                             checklogin: function (AuthService) {
-                               return AuthService.checksession();
+                               //return AuthService.checksession();
                             },
                        }
             })
@@ -605,7 +605,7 @@ angular.module('app')
              controller: 'PurchasePOCtrl',
               resolve: {
                             checklogin: function (AuthService) {
-                               return AuthService.checksession();
+                               //return AuthService.checksession();
                             },
                        }
             })
@@ -616,7 +616,7 @@ angular.module('app')
              controller: 'PurchasePOCtrl',
               resolve: {
                             checklogin: function (AuthService) {
-                               return AuthService.checksession();
+                               //return AuthService.checksession();
                             },
                        }
             })
@@ -624,10 +624,10 @@ angular.module('app')
               url: '/ce/:id',
               templateUrl: 'views/front/purchase/ce.html',
               data : { title: 'Contract Embrodiery' },
-             controller: 'PurchasePOCtrl',
+             controller: 'PurchaseCPCtrl',
               resolve: {
                             checklogin: function (AuthService) {
-                               return AuthService.checksession();
+                               //return AuthService.checksession();
                             },
                        }
             })
@@ -635,10 +635,10 @@ angular.module('app')
               url: '/cp/:id',
               templateUrl: 'views/front/purchase/cp.html',
               data : { title: 'Contract Printing' },
-             controller: 'PurchasePOCtrl',
+             controller: 'PurchaseCPCtrl',
               resolve: {
                             checklogin: function (AuthService) {
-                               return AuthService.checksession();
+                               //return AuthService.checksession();
                             },
                        }
             })
