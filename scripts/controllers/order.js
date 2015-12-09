@@ -102,6 +102,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
     get_order_details(order_id,client_id);
     get_po_detail(order_id,client_id);
+    get_distribution_list(client_id);
 
     function get_po_detail(order_id,client_id)
     {
@@ -116,6 +117,25 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                   $scope.order_po_data = result.data.order_po_data;
                 } else {
                    
+                }
+            });
+        }
+    }
+
+    function get_distribution_list(order_id,client_id)
+    {
+        if($stateParams.id && $stateParams.client_id) {
+            var combine_array_id = {};
+            combine_array_id.client_id = $stateParams.client_id;
+            combine_array_id.order_id = $stateParams.id;
+
+            $http.post('api/public/order/distributionDetail',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                    $scope.dist_addr =result.data.dist_addr;
+                    $scope.items =result.data.order_items;
+                    $scope.distributed_items =result.data.distributed_items;
+                    $scope.distributed_address =result.data.distributed_address;
                 }
             });
         }
@@ -144,11 +164,18 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                    // $scope.order_po_data = result.data.order_po_data;
 
                     $scope.price_grid =result.data.price_grid[0];
+                    $scope.allGrid =result.data.price_grid;
                     $scope.price_grid_markup =result.data.price_garment_mackup;
                     $scope.price_screen_primary =result.data.price_screen_primary;
                     $scope.price_screen_secondary =result.data.price_screen_secondary;
                     $scope.price_direct_garment =result.data.price_direct_garment;
                     $scope.embroidery_switch_count =result.data.embroidery_switch_count;
+
+                    $scope.vendors = result.data.vendors;
+                    $scope.allCompany =result.data.client;
+                    $scope.allProduct =result.data.products;
+                    $scope.staffList =result.data.staff;
+                    $scope.brandCoList =result.data.brandCo;
 
                     $scope.orderline_id = 0;
                     $scope.total_qty = 0;
@@ -176,27 +203,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             });
         }
     }
-
-    $http.get('api/public/common/getAllVendors').success(function(result, status, headers, config) {
-            $scope.vendors = result.data.records;
-    });
-
-    var color_data = {};
-    color_data.table ='misc_type'
-    color_data.cond ={type:'color_group',is_delete:1,status:1}
-    color_data.notcond ={value:""}
-    
-    $http.post('api/public/common/GetTableRecords',color_data).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.colors =result.data.records;
-        } 
-        else
-        {
-            $scope.colors=[];
-        }
-    });
 
     $scope.notesave = function($event,id) {
 
@@ -454,70 +460,6 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             }, 300);
         }
     }
-
-    var companyData = {};
-    companyData.table ='client'
-    companyData.cond ={status:1,is_delete:1}
-
-    $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.allCompany =result.data.records;
-        } 
-        else
-        {
-            $scope.allCompany=[];
-        }
-    });
-
-    var priceGridData = {};
-    priceGridData.table ='price_grid'
-    priceGridData.cond ={status:1,is_delete:1}
-
-    $http.post('api/public/common/GetTableRecords',priceGridData).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.allGrid =result.data.records;
-        } 
-        else
-        {
-            $scope.allGrid=[];
-        }
-    });
-
-    var productData = {};
-    productData.table ='products'
-    productData.cond ={status:1,is_delete:1}
-
-    $http.post('api/public/common/GetTableRecords',productData).success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.allProduct =result.data.records;
-        } 
-        else
-        {
-            $scope.allProduct=[];
-        }
-    });
-
-    $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) 
-    {
-        if(result.data.success == '1') 
-        {
-            $scope.staffList =result.data.records;
-        }
-    });
-
-    $http.get('api/public/common/getBrandCo').success(function(result, status, headers, config) 
-    {
-        if(result.data.success == '1') 
-        {
-            $scope.brandCoList =result.data.records;
-        } 
-    });
 
     $scope.saveOrderDetails=function(postArray,id)
     {
@@ -1021,11 +963,6 @@ $scope.position_id = id;
             }
         });
     }
-
-
-    
-
-
 
     $scope.removeordernotes = function(index,id) {
         
