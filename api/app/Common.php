@@ -268,10 +268,13 @@ class Common extends Model {
                 ->leftJoin('roles as r','r.id','=','us.role_id')
                 ->select('r.title',DB::raw('case 
                            when r.slug = "CA" then us.user_name else usr.user_name
-                            end as company_name
+                            end as company
                         '),DB::raw('case 
                            when r.slug = "CA" then us.id else usr.id
                             end as company_id
+                        '),DB::raw('case 
+                           when r.slug = "CA" then us.name else usr.name
+                            end as company_name
                         '))
                 ->where('us.id','=',$userId)
                 ->get();
