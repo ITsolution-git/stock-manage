@@ -98,6 +98,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     var order_id = $stateParams.id
     $scope.order_id = $stateParams.id
     var client_id = $stateParams.client_id
+    $scope.address_id = '1';
     
 
     get_order_details(order_id,client_id);
@@ -128,6 +129,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             var combine_array_id = {};
             combine_array_id.client_id = $stateParams.client_id;
             combine_array_id.order_id = $stateParams.id;
+            combine_array_id.address_id = $scope.address_id;
 
             $http.post('api/public/order/distributionDetail',combine_array_id).success(function(result, status, headers, config) {
             

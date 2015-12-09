@@ -864,6 +864,29 @@ input[readonly].cgreen {
 	height: 34px;
 	background: url(../images/icon-t-shirt.jpg) no-repeat center center;
 }
+
+
+/*----- DISTRIBUSTION TAB -----*/
+.orderDistributionContainer {
+	height: 500px;
+	max-height: 500px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+.orderDistributionContainer .col-md-12 {
+	padding-top: 15px;
+}
+.orderDistributionContainer .col-md-12:nth-child(2n) {
+	background: #e5e5e5;	
+}
+.orderDistributionContainer .col-md-12:hover,
+.orderDistributionContainer .col-md-12.active {
+	background: #999;
+}
+.blockTitle label {
+	width: 100%;
+}
+
 /*---------- END ----------*/
 
 

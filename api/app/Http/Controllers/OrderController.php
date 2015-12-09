@@ -462,7 +462,7 @@ class OrderController extends Controller {
 
         if(isset($data['address_id']) && !empty($data['address_id']))
         {
-            $array2 = array('order.id' => $data['order_id'],'is_distribute' => '1','ia.address_id' => $data['address_id']);
+            $array2 = array('order.id' => $data['order_id'],'is_distribute' => '0','ia.address_id' => $data['address_id']);
             $distributed_items = $this->order->getDistributedItems($array2);
         }
         else

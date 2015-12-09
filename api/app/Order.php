@@ -512,7 +512,6 @@ public function updateOrderLineData($post)
                         ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
                         ->leftJoin('item_address_mapping as ia', 'pd.id', '=', 'ia.item_id')
                         ->where($data)
-                        ->where('pd.qnty','!=','')
                         ->get();
         return $orderData;
     }    
