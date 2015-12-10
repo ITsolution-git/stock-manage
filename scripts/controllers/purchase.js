@@ -1,6 +1,7 @@
 app.controller('PurchaseListCtrl', ['$scope', '$rootScope', '$http','$state','$stateParams', 'AuthService',function($scope,$rootScope,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
-                		  //console.log($rootScope.company_profile.company_name);
+                		  var comp = $rootScope.company_profile.company_name;
+                		  console.log(comp);
                           $scope.Maintype = $stateParams.id;
                           $("#ajax_loader").show();
                            var type = {};
@@ -12,7 +13,7 @@ app.controller('PurchaseListCtrl', ['$scope', '$rootScope', '$http','$state','$s
                                           $("#ajax_loader").hide();
                                   });
 }]);
-app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
+app.controller('PurchasePOCtrl', ['$scope','$rootScope','$sce',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$rootScope,$sce,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
                            AuthService.AccessService('BC');
 
                            var modalInstance='';

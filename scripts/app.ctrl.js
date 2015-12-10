@@ -19,30 +19,11 @@ angular.module('app')
       /*==================================
       GET COMPANY DETAIL WHEN PAGE LOAD
       ==================================*/
-     // console.log(sessionService.get('role_slug'));
       if(sessionService.get('role_slug')!='SA' && sessionService.get('role_slug')!='' && sessionService.get('role_slug')!=null)
       {
-          var user_data = {};
-          user_data.user_id=sessionService.get('user_id');
-          $http.post('api/public/auth/company',user_data).then(function successCallback(Response) {
-              // console.log(Response.data.data.success);
-              if(Response.data.data.success=='1')
-              {
-                  $rootScope.company_profile = Response.data.data.records;
-              }
-              else
-              {
-                  var data = {"status": "error", "message": "Company not assigned!"}
-                  notifyService.notify(data.status, data.message);
-                  $state.go('access.lockme');
-                  return false;
-              }
-          }, function errorCallback(user_data) {
-             console.log('error');
-          });
+          //AuthService.CompanyService();
       }
       /*==============================*/
-
 
         $scope.app = {
         sitename: 'Stockk Up',
