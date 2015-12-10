@@ -98,12 +98,13 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     var order_id = $stateParams.id
     $scope.order_id = $stateParams.id
     var client_id = $stateParams.client_id
-    $scope.address_id = '1';
+    $scope.client_id = $stateParams.client_id
+    $scope.address_id = '0';
     
 
     get_order_details(order_id,client_id);
     get_po_detail(order_id,client_id);
-    get_distribution_list(client_id);
+    get_distribution_list(order_id,client_id);
 
     function get_po_detail(order_id,client_id)
     {
@@ -1585,6 +1586,72 @@ $scope.position_id = id;
             $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
             });
         }
+    }
+    $scope.add_address_to_distribute = function(address_id)
+    {
+        $("#ajax_loader").show();
+        var address_data = {};
+        address_data.order_id = $scope.order_id;
+        address_data.address_id = address_id;
+
+        $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
+            get_distribution_list($scope.order_id,$scope.client_id);
+        });
+        $("#ajax_loader").hide();
+    }
+    $scope.remove_address_from_distribute = function(address_id)
+    {
+        $("#ajax_loader").show();
+        var address_data = {};
+        address_data.order_id = $scope.order_id;
+        address_data.address_id = address_id;
+
+        $http.post('api/public/order/removeFromDistribute',address_data).success(function(result, status, headers, config) {
+            get_distribution_list($scope.order_id,$scope.client_id);
+        });
+        $("#ajax_loader").hide();
+    }
+
+    $scope.select_address = function(id)
+    {
+        $("#ajax_loader").show();
+        $scope.address_id = id;
+        get_distribution_list($scope.order_id,$scope.client_id);
+        $("#ajax_loader").hide();
+    }
+    $scope.add_item_to_distribute = function(item_id)
+    {
+        $("#ajax_loader").show();
+        if($scope.address_id > 0)
+        {
+            var address_data = {};
+            address_data.order_id = $scope.order_id;
+            address_data.address_id = $scope.address_id;
+            address_data.item_id = item_id;
+
+           $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
+                get_distribution_list($scope.order_id,$scope.client_id);
+            });
+        }
+        else
+        {
+            var data = {"status": "error", "message": "Please select your distribution address"}
+            notifyService.notify(data.status, data.message);
+        }
+        $("#ajax_loader").hide();
+    }
+    $scope.remove_item_from_distribute = function(item_id)
+    {
+        $("#ajax_loader").show();
+        var item_data = {};
+        item_data.order_id = $scope.order_id;
+        item_data.address_id = $scope.address_id;
+        item_data.item_id = item_id;
+
+        $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
+            get_distribution_list($scope.order_id,$scope.client_id);
+        });
+        $("#ajax_loader").hide();
     }
   // **************** NOTES TAB CODE END  ****************
 }]);

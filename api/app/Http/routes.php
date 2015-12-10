@@ -176,6 +176,8 @@ Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSE
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/PODetail', 'OrderController@PODetail');
 Route::post('order/distributionDetail', 'OrderController@distributionDetail');
+Route::post('order/addToDistribute', 'OrderController@addToDistribute');
+Route::post('order/removeFromDistribute', 'OrderController@removeFromDistribute');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

@@ -462,7 +462,7 @@ class OrderController extends Controller {
 
         if(isset($data['address_id']) && !empty($data['address_id']))
         {
-            $array2 = array('order.id' => $data['order_id'],'is_distribute' => '0','ia.address_id' => $data['address_id']);
+            $array2 = array('order.id' => $data['order_id'],'is_distribute' => '1','ia.address_id' => $data['address_id']);
             $distributed_items = $this->order->getDistributedItems($array2);
         }
         else
@@ -472,6 +472,8 @@ class OrderController extends Controller {
 
         $array3 = array('ia.order_id' => $data['order_id']);
         $distributed_address = $this->order->getDistributedAddress($array3);
+
+        $distributed_address2 = array();
 
         foreach ($distributed_address as $addr) {
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
@@ -496,5 +498,70 @@ class OrderController extends Controller {
         } 
         
         return response()->json(["data" => $response]);
+    }
+
+    public function addToDistribute()
+    {
+        $post = Input::all();
+
+        if(!isset($post['item_id']))
+        {
+            $post['data'] = $post;
+
+            $post['cond'] = array('order_id' => $post['order_id'],'address_id' => $post['address_id']);
+            $post['notcond'] = array();
+
+            $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
+            if(empty($result))
+            {
+                $result = $this->common->InsertRecords('item_address_mapping',$post['data']);
+                $id = $result;
+            }
+            $message = INSERT_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $result = $this->common->InsertRecords('item_address_mapping',$post);
+            $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
+            
+            $success=1;
+            $message=UPDATE_RECORD;
+        }
+
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+    public function removeFromDistribute()
+    {
+        $post = Input::all();
+
+        if(!isset($post['item_id']))
+        {
+            $item_data = $this->common->GetTableRecords('item_address_mapping',array('address_id' => $post['address_id']),array());
+
+            foreach ($item_data as $item) {
+                if($item->item_id > 0)
+                {
+                    $this->common->UpdateTableRecords('purchase_detail',array('id' => $item->item_id),array('is_distribute' => '0'));
+                }
+            }
+
+            $post['cond'] = array('order_id' => $post['order_id'],'address_id' => $post['address_id']);
+
+            $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
+
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        else
+        {
+            $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['item_id']),array('is_distribute' => '0'));
+            
+            $post['cond'] = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
+            $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
+
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        return response()->json(['data'=>$data]);
     }
 }

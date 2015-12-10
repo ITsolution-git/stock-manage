@@ -876,15 +876,18 @@ input[readonly].cgreen {
 .orderDistributionContainer .col-md-12 {
 	padding-top: 15px;
 }
-.orderDistributionContainer .col-md-12:nth-child(2n) {
+/*.orderDistributionContainer .col-md-12:nth-child(2n) {
 	background: #e5e5e5;	
-}
+}*/
 .orderDistributionContainer .col-md-12:hover,
 .orderDistributionContainer .col-md-12.active {
 	background: #999;
 }
 .blockTitle label {
 	width: 100%;
+}
+.distribution_active{
+	background: #999;
 }
 
 /*---------- END ----------*/
