@@ -9,10 +9,11 @@
  */
 angular.module('app')
   .run(
-    [           '$rootScope', '$state', '$stateParams','$location','$http',
-      function ( $rootScope,   $state,  $stateParams ,$location,$http) {
+    [           '$rootScope', '$state', '$stateParams','$location','$http','AuthService',
+      function ( $rootScope,   $state,  $stateParams ,$location,$http,AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+        AuthService.CompanyService();
       }
     ]
   )
@@ -50,6 +51,11 @@ angular.module('app')
                                return AuthService.checksession();
                             },
                        },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
+                      
+
             })
 
 
@@ -147,7 +153,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
           .state('account', {
               url: '/account',
@@ -166,7 +180,15 @@ angular.module('app')
                 checklogin: function (AuthService) {
                    return AuthService.checksession();
                 },
-              }
+              },
+              resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('vendor', {
@@ -181,7 +203,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('product', {
@@ -196,7 +226,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('setting', {
@@ -211,7 +249,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('misc', {
@@ -226,7 +272,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+              resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
             .state('staff.list', {
@@ -463,7 +517,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
             .state('client.list', {
@@ -471,33 +533,21 @@ angular.module('app')
               templateUrl: 'views/front/client/list.html',
               controller: 'clientListCtrl',
               data : { title: 'Client listing' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('client.add', {
               url: '/add',
               templateUrl: 'views/front/client/add.html',
                controller: 'clientAddCtrl',
               data : { title: 'Client listing' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('client.edit', {
               url: '/edit/:id',
               templateUrl: 'views/front/client/edit.html',
                controller: 'clientEditCtrl',
               data : { title: 'Client Edit' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('setting.price', {
               url: '/price',
@@ -585,6 +635,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                             checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
               })
             .state('purchase.list', {
@@ -657,7 +710,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
             .state('order.list', {
@@ -665,11 +726,7 @@ angular.module('app')
               templateUrl: 'views/front/order/list.html',
               controller: 'orderListCtrl',
               data : { title: 'Order listing' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
 
              .state('order.add', {
@@ -677,22 +734,14 @@ angular.module('app')
               templateUrl: 'views/front/order/add.html',
                controller: 'orderAddCtrl',
               data : { title: 'Order Add' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('order.edit', {
               url: '/:id/edit/:client_id',
               templateUrl: 'views/front/order/edit.html',
                controller: 'orderEditCtrl',
               data : { title: 'Order Edit' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('finishing', {
               url: '/front/finishing',

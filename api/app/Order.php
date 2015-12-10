@@ -9,10 +9,10 @@ use DateTime;
 class Order extends Model {
 
 	
-	public function getOrderdata()
+	public function getOrderdata($company_id)
 	{
 
-	   $whereConditions = ['order.is_delete' => '1'];
+	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $company_id];
         $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_date','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
@@ -36,7 +36,8 @@ class Order extends Model {
 
     public function orderDetail($data) {
 
-        $whereOrderConditions = ['id' => $data['id']];
+
+        $whereOrderConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
         $orderData = DB::table('orders')->where($whereOrderConditions)->get();
 
         $whereOrderPositionConditions = ['order_id' => $data['id']];

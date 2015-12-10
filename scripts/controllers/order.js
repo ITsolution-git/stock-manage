@@ -1,8 +1,13 @@
-app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
-          
+app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
+
+
           $("#ajax_loader").show();
+
+            var company_id = $rootScope.company_profile.company_id;
+            var login_id = $scope.app.user_id;
+   
                 
-    $http.get('api/public/order/listOrder').success(function(Listdata) {
+    $http.post('api/public/order/listOrder',company_id).success(function(Listdata) {
         $scope.listOrder = Listdata.data;
         $("#ajax_loader").hide();
 
@@ -58,16 +63,12 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
 
         $scope.ok = function (orderData) {
 
-            /*$http.post('api/public/order/orderAdd',data).success(function(result, status, headers, config) {
-                
-                                           $state.go('order.list');
-                                            return false;
-                                 
-                                  });*/
-
             var order_data = {};
+            orderData.company_id =company_id;
+            orderData.login_id =login_id;
+            
             order_data.data = orderData;
-            // Address_data.data.client_id = $stateParams.id;
+
             order_data.table ='orders'
 
             $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
@@ -93,7 +94,7 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
 
 }]);
 
-app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$location','$state','$stateParams','$modal','getPDataByPosService','AuthService','$log','sessionService','AllConstant', function($scope,$http,logger,notifyService,$location,$state,$stateParams,$modal,getPDataByPosService,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
+app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$stateParams','$modal','getPDataByPosService','AuthService','$log','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$stateParams,$modal,getPDataByPosService,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
 
     var order_id = $stateParams.id
     $scope.order_id = $stateParams.id
@@ -101,8 +102,9 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
     $scope.client_id = $stateParams.client_id
     $scope.address_id = '0';
     
+    var company_id = $rootScope.company_profile.company_id;
 
-    get_order_details(order_id,client_id);
+    get_order_details(order_id,client_id,company_id);
     get_po_detail(order_id,client_id);
     get_distribution_list(order_id,client_id);
 
@@ -144,13 +146,15 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         }
     }
 
-    function get_order_details(order_id,client_id)
+    function get_order_details(order_id,client_id,company_id)
     {
-        if($stateParams.id && $stateParams.client_id) {
+       
+        if($stateParams.id && $stateParams.client_id && company_id != 0 && company_id) {
 
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.client_id = $stateParams.client_id;
+            combine_array_id.company_id = company_id;
             
             $("#ajax_loader").show();
 
@@ -489,7 +493,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
         });
 
-        get_order_details(order_id,client_id);
+        get_order_details(order_id,client_id,company_id);
     }
     $scope.updatePosition = function(postArray,position_id)
     {
@@ -595,7 +599,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                     $('.form-control').removeClass('ng-dirty');
                                     var data = {"status": "success", "message": "Order position details has been updated"}
                                     notifyService.notify(data.status, data.message);
-                                    get_order_details(order_id,client_id);
+                                    get_order_details(order_id,client_id,company_id);
                                 }, 1000);
         }
     }
@@ -615,7 +619,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         setTimeout(function () {
                                 $('.form-control').removeClass('ng-dirty');
                                 $("#ajax_loader").hide();
-                                get_order_details(order_id,client_id);
+                                get_order_details(order_id,client_id,company_id);
         }, 500);
     }
     $scope.updateOrderLine = function(postArray,orderline_id)
@@ -869,7 +873,7 @@ $scope.position_id = id;
                                             order_data.cond ={id:order_id}
                                             
                                             $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-                                                 get_order_details(order_id,client_id_new);
+                                                 get_order_details(order_id,client_id_new,company_id);
                                             });
 
 
