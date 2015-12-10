@@ -446,9 +446,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             else {
 
                 var order_data = {};
-                order_data.table ='order_orderlines'
-                order_data.cond ={id:id}
-                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                order_data = {id:id}
+                $http.post('api/public/order/deleteOrderLine',order_data).success(function(result) {
                     
                     var data = {"status": "success", "message": "Orderline has been deleted"}
                     notifyService.notify(data.status, data.message);

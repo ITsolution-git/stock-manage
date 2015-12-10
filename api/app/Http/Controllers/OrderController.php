@@ -308,6 +308,26 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
+     /**
+   * delete order line.
+   * @return json data
+    */
+    public function deleteOrderLine()
+    {
+        $post = Input::all();
+       
+        $this->common->DeleteTableRecords('order_orderlines',array('id' => $post['id']));
+
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('orderline_id' => $post['id']),array());
+
+        foreach ($purchase_detail as $row) {
+            $this->common->DeleteTableRecords('item_address_mapping',array('item_id' => $row->id));
+        }
+                
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }    
+
 
    /**
    * Save Button Data.
@@ -452,6 +472,7 @@ class OrderController extends Controller {
         $data = Input::all();
         $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $data['client_id']),array());
 
+        $client_distaddress = array();
         foreach ($dist_addr as $addr) {
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
             $client_distaddress[] = $addr;
