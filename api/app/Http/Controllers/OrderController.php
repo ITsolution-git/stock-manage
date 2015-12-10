@@ -26,7 +26,8 @@ class OrderController extends Controller {
     */
     public function listOrder()
     {
-    	$result = $this->order->getOrderdata();
+        $post = Input::all();
+    	$result = $this->order->getOrderdata($post[0]);
     	return $this->return_response($result);
     }
     /**

@@ -159,7 +159,7 @@ Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
 
 
 // ORDER CONTROLLER 
-Route::get('order/listOrder', 'OrderController@listOrder');
+Route::post('order/listOrder', 'OrderController@listOrder');
 Route::post('order/deleteOrder', 'OrderController@deleteOrder');
 Route::post('order/orderAdd', 'OrderController@add');
 Route::post('order/orderEdit', 'OrderController@edit');
