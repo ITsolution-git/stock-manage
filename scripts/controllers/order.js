@@ -32,7 +32,7 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
 
     var companyData = {};
     companyData.table ='client'
-    companyData.cond ={status:1,is_delete:1}
+    companyData.cond ={status:1,is_delete:1,company_id:company_id}
     
     $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
         
