@@ -865,6 +865,13 @@ input[readonly].cgreen {
 	background: url(../images/icon-t-shirt.jpg) no-repeat center center;
 }
 
+<<<<<<< HEAD
+=======
+.po-link-class{
+	cursor: pointer;
+}
+
+>>>>>>> php
 
 /*----- DISTRIBUSTION TAB -----*/
 .orderDistributionContainer {
@@ -876,9 +883,15 @@ input[readonly].cgreen {
 .orderDistributionContainer .col-md-12 {
 	padding-top: 15px;
 }
+<<<<<<< HEAD
 .orderDistributionContainer .col-md-12:nth-child(2n) {
 	background: #e5e5e5;	
 }
+=======
+/*.orderDistributionContainer .col-md-12:nth-child(2n) {
+	background: #e5e5e5;	
+}*/
+>>>>>>> php
 .orderDistributionContainer .col-md-12:hover,
 .orderDistributionContainer .col-md-12.active {
 	background: #999;
@@ -886,6 +899,12 @@ input[readonly].cgreen {
 .blockTitle label {
 	width: 100%;
 }
+<<<<<<< HEAD
+=======
+.distribution_active{
+	background: #999;
+}
+>>>>>>> php
 
 /*---------- END ----------*/
 

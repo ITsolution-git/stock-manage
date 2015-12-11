@@ -8,15 +8,17 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Order;
 use App\Common;
+use App\Purchase;
 use DB;
 
 use Request;
 
 class OrderController extends Controller { 
 
-	public function __construct(Order $order,Common $common) 
+	public function __construct(Order $order,Common $common,Purchase $purchase) 
  	{
         $this->order = $order;
+        $this->purchase = $purchase;
         $this->common = $common;
     }
 
@@ -26,7 +28,8 @@ class OrderController extends Controller {
     */
     public function listOrder()
     {
-    	$result = $this->order->getOrderdata();
+        $post = Input::all();
+    	$result = $this->order->getOrderdata($post[0]);
     	return $this->return_response($result);
     }
     /**
@@ -144,7 +147,7 @@ class OrderController extends Controller {
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1'),array());
+        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
         $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
         $vendors = $this->common->getAllVendors();
@@ -308,6 +311,26 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
+     /**
+   * delete order line.
+   * @return json data
+    */
+    public function deleteOrderLine()
+    {
+        $post = Input::all();
+       
+        $this->common->DeleteTableRecords('order_orderlines',array('id' => $post['id']));
+
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('orderline_id' => $post['id']),array());
+
+        foreach ($purchase_detail as $row) {
+            $this->common->DeleteTableRecords('item_address_mapping',array('item_id' => $row->id));
+        }
+                
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }    
+
 
    /**
    * Save Button Data.
@@ -452,6 +475,7 @@ class OrderController extends Controller {
         $data = Input::all();
         $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $data['client_id']),array());
 
+        $client_distaddress = array();
         foreach ($dist_addr as $addr) {
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
             $client_distaddress[] = $addr;
@@ -472,6 +496,8 @@ class OrderController extends Controller {
 
         $array3 = array('ia.order_id' => $data['order_id']);
         $distributed_address = $this->order->getDistributedAddress($array3);
+
+        $distributed_address2 = array();
 
         foreach ($distributed_address as $addr) {
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
@@ -496,5 +522,86 @@ class OrderController extends Controller {
         } 
         
         return response()->json(["data" => $response]);
+    }
+
+    public function addToDistribute()
+    {
+        $post = Input::all();
+
+        if(!isset($post['item_id']))
+        {
+            $post['data'] = $post;
+
+            $post['cond'] = array('order_id' => $post['order_id'],'address_id' => $post['address_id']);
+            $post['notcond'] = array();
+
+            $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
+            if(empty($result))
+            {
+                $result = $this->common->InsertRecords('item_address_mapping',$post['data']);
+                $id = $result;
+            }
+            $message = INSERT_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $result = $this->common->InsertRecords('item_address_mapping',$post);
+            $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
+            
+            $success=1;
+            $message=UPDATE_RECORD;
+        }
+
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+    public function removeFromDistribute()
+    {
+        $post = Input::all();
+
+        if(!isset($post['item_id']))
+        {
+            $item_data = $this->common->GetTableRecords('item_address_mapping',array('address_id' => $post['address_id']),array());
+
+            foreach ($item_data as $item) {
+                if($item->item_id > 0)
+                {
+                    $this->common->UpdateTableRecords('purchase_detail',array('id' => $item->item_id),array('is_distribute' => '0'));
+                }
+            }
+
+            $post['cond'] = array('order_id' => $post['order_id'],'address_id' => $post['address_id']);
+
+            $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
+
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        else
+        {
+            $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['item_id']),array('is_distribute' => '0'));
+            
+            $post['cond'] = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
+            $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
+
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        return response()->json(['data'=>$data]);
+    }
+
+
+
+    /*=====================================
+    / TO GET PO AND SG SCREEN DATA
+    =====================================*/
+
+    public function GetPodataAll($po_id)
+    {
+       
+        $poline = $this->purchase->GetPoLinedata($po_id,'1');
+              
+        $result = array('poline'=>$poline);
+        $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        return  response()->json(["data" => $response]);
     }
 }

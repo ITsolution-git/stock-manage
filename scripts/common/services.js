@@ -1,7 +1,7 @@
 (function () {
     angular.module('app.services', [])
 
-.factory('AuthService', function ($rootScope,$http,$state,sessionService,notifyService) {
+.factory('AuthService', function ($rootScope,$http,$state,sessionService,notifyService,$q) {
                     var currentUser = {}
                     
 
@@ -39,15 +39,40 @@
                     return false;
                 }
              },
-            CompanyService: function (user_id) {
+            CompanyService: function () {
+             $rootScope.company_profile={};
+             var deferred = $q.defer();
              var user_data = {};
-             user_data.user_id=user_id;
-             $http.post('api/public/auth/company',user_data).then(function(result, status, headers, config) 
-              {
-                   
-                 });
+             user_data.user_id=sessionService.get('user_id');
+             if(sessionService.get('role_slug')!='SA' && sessionService.get('role_slug')!='' && sessionService.get('role_slug')!=null)
+             {
+                 $http.post('api/public/auth/company',user_data).then(function(Response) 
+                  {
+                          deferred.resolve(Response.data);
+                          
+                          if(Response.data.data.success=='1')
+                          {
+                              $rootScope.company_profile =  Response.data.data.records;
+                              console.log('Ajax Call');
+                              //$scope.$broadcast('company_event',{});
+                              
+                          }
+                          else
+                          {
+                              var data = {"status": "error", "message": "Company not assigned!"}
+                              notifyService.notify(data.status, data.message);
+                              $state.go('access.lockme');
+                              return false;
+                          }
+                       
+                     });
+                 return deferred.promise;
+             }
             }, 
-
+            abcService: function(){
+                console.log('abc');
+                return true;
+            }
   
                 
         }

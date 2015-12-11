@@ -1,5 +1,7 @@
-app.controller('clientAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log', function($scope,$http,$location,$state,$modal,AuthService,$log) {
+app.controller('clientAddCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log) {
                           AuthService.AccessService('BC');
+                          var company_id = $rootScope.company_profile.company_name;
+                          console.log(company_id);
                           $scope.CurrentController=$state.current.controller;
 
                           $http.get('api/public/common/type/client').success(function(Listdata) {
@@ -22,8 +24,10 @@ app.controller('clientAddCtrl', ['$scope','$http','$location','$state','$modal',
                           }
 
 }]);
-app.controller('clientListCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log', function($scope,$http,$location,$state,$modal,AuthService,$log) {
+app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log) {
                           AuthService.AccessService('BC');
+                         var company_id = $rootScope.company_profile.company_name;
+                          console.log(company_id);
                           $scope.CurrentController=$state.current.controller;
                           var delete_params = {};
                           $scope.deleteclient = function (comp_id) {
@@ -53,7 +57,11 @@ app.controller('clientListCtrl', ['$scope','$http','$location','$state','$modal'
 
 
 }]);
-app.controller('clientEditCtrl', ['$scope','$sce','$http','$location','$state','$modal','$stateParams','AuthService','$log','sessionService','$filter', function($scope,$sce,$http,$location,$state,$modal,$stateParams,AuthService,$log,sessionService,dateWithFormat,$filter) {
+app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$location','$state','$modal','$stateParams','AuthService','$log','sessionService','$filter', function($scope,$rootScope,$sce,$http,$location,$state,$modal,$stateParams,AuthService,$log,sessionService,dateWithFormat,$filter) {
+
+                           $("#ajax_loader").show();
+                          var company_id = $rootScope.company_profile.company_name;
+                          console.log(company_id);
                           var client_contacts=[];
                           var AddrTypeData={};
                           var PriceGrid={};

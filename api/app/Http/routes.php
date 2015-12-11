@@ -159,7 +159,7 @@ Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
 
 
 // ORDER CONTROLLER 
-Route::get('order/listOrder', 'OrderController@listOrder');
+Route::post('order/listOrder', 'OrderController@listOrder');
 Route::post('order/deleteOrder', 'OrderController@deleteOrder');
 Route::post('order/orderAdd', 'OrderController@add');
 Route::post('order/orderEdit', 'OrderController@edit');
@@ -171,11 +171,15 @@ Route::post('order/saveOrderNotes', 'OrderController@saveOrderNotes');
 Route::get('order/deleteOrderNotes/{id}', 'OrderController@deleteOrderNotes');
 Route::post('order/orderLineAdd', 'OrderController@orderLineadd');
 Route::post('order/orderLineUpdate', 'OrderController@orderLineUpdate');
+Route::post('order/deleteOrderLine', 'OrderController@deleteOrderLine');
 Route::post('order/saveButtonData', 'OrderController@saveButtonData');
 Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/PODetail', 'OrderController@PODetail');
 Route::post('order/distributionDetail', 'OrderController@distributionDetail');
+Route::post('order/addToDistribute', 'OrderController@addToDistribute');
+Route::post('order/removeFromDistribute', 'OrderController@removeFromDistribute');
+Route::get('order/GetPoAlldata/{id}', 'OrderController@GetPodataAll');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

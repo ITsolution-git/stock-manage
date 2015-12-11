@@ -9,10 +9,10 @@ use DateTime;
 class Order extends Model {
 
 	
-	public function getOrderdata()
+	public function getOrderdata($company_id)
 	{
 
-	   $whereConditions = ['order.is_delete' => '1'];
+	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $company_id];
         $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_date','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
@@ -36,7 +36,8 @@ class Order extends Model {
 
     public function orderDetail($data) {
 
-        $whereOrderConditions = ['id' => $data['id']];
+
+        $whereOrderConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
         $orderData = DB::table('orders')->where($whereOrderConditions)->get();
 
         $whereOrderPositionConditions = ['order_id' => $data['id']];
@@ -473,7 +474,7 @@ public function updateOrderLineData($post)
 
     public function getDistributionItems($data)
     {
-        $listArray = ['ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.main_contact_person'];
+        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.main_contact_person'];
 
         $orderData = DB::table('orders as order')
                         ->select($listArray)
@@ -494,13 +495,14 @@ public function updateOrderLineData($post)
         $orderData = DB::table('client_distaddress as cd')
                         ->leftJoin('item_address_mapping as ia', 'cd.id', '=', 'ia.address_id')
                         ->where($data)
+                        ->GroupBy('ia.address_id')
                         ->get();
         return $orderData;  
     }
 
     public function getDistributedItems($data)
     {
-        $listArray = ['ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.main_contact_person'];
+        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.main_contact_person'];
 
         $orderData = DB::table('orders as order')
                         ->select($listArray)
@@ -512,9 +514,11 @@ public function updateOrderLineData($post)
                         ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
                         ->leftJoin('item_address_mapping as ia', 'pd.id', '=', 'ia.item_id')
                         ->where($data)
-                        ->where('pd.qnty','!=','')
                         ->get();
         return $orderData;
     }    
+
+
+   
 	
 }

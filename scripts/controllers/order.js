@@ -1,8 +1,13 @@
-app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
-          
+app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
+
+
           $("#ajax_loader").show();
+
+            var company_id = $rootScope.company_profile.company_id;
+            var login_id = $scope.app.user_id;
+   
                 
-    $http.get('api/public/order/listOrder').success(function(Listdata) {
+    $http.post('api/public/order/listOrder',company_id).success(function(Listdata) {
         $scope.listOrder = Listdata.data;
         $("#ajax_loader").hide();
 
@@ -27,7 +32,7 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
 
     var companyData = {};
     companyData.table ='client'
-    companyData.cond ={status:1,is_delete:1}
+    companyData.cond ={status:1,is_delete:1,company_id:company_id}
     
     $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
         
@@ -58,16 +63,12 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
 
         $scope.ok = function (orderData) {
 
-            /*$http.post('api/public/order/orderAdd',data).success(function(result, status, headers, config) {
-                
-                                           $state.go('order.list');
-                                            return false;
-                                 
-                                  });*/
-
             var order_data = {};
+            orderData.company_id =company_id;
+            orderData.login_id =login_id;
+            
             order_data.data = orderData;
-            // Address_data.data.client_id = $stateParams.id;
+
             order_data.table ='orders'
 
             $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
@@ -93,16 +94,20 @@ app.controller('orderListCtrl', ['$scope','$http','$location','$state','$modal',
 
 }]);
 
-app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$location','$state','$stateParams','$modal','getPDataByPosService','AuthService','$log','sessionService','AllConstant', function($scope,$http,logger,notifyService,$location,$state,$stateParams,$modal,getPDataByPosService,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
+app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$stateParams','$modal','getPDataByPosService','AuthService','$log','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$stateParams,$modal,getPDataByPosService,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
 
     var order_id = $stateParams.id
     $scope.order_id = $stateParams.id
     var client_id = $stateParams.client_id
+    $scope.client_id = $stateParams.client_id
+    $scope.address_id = '0';
     
+    var company_id = $rootScope.company_profile.company_id;
+     var AJloader = $("#ajax_loader");
 
-    get_order_details(order_id,client_id);
+    get_order_details(order_id,client_id,company_id);
     get_po_detail(order_id,client_id);
-    get_distribution_list(client_id);
+    get_distribution_list(order_id,client_id);
 
     function get_po_detail(order_id,client_id)
     {
@@ -128,6 +133,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             var combine_array_id = {};
             combine_array_id.client_id = $stateParams.client_id;
             combine_array_id.order_id = $stateParams.id;
+            combine_array_id.address_id = $scope.address_id;
 
             $http.post('api/public/order/distributionDetail',combine_array_id).success(function(result, status, headers, config) {
             
@@ -141,13 +147,15 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         }
     }
 
-    function get_order_details(order_id,client_id)
+    function get_order_details(order_id,client_id,company_id)
     {
-        if($stateParams.id && $stateParams.client_id) {
+       
+        if($stateParams.id && $stateParams.client_id && company_id != 0 && company_id) {
 
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.client_id = $stateParams.client_id;
+            combine_array_id.company_id = company_id;
             
             $("#ajax_loader").show();
 
@@ -443,9 +451,8 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
             else {
 
                 var order_data = {};
-                order_data.table ='order_orderlines'
-                order_data.cond ={id:id}
-                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                order_data = {id:id}
+                $http.post('api/public/order/deleteOrderLine',order_data).success(function(result) {
                     
                     var data = {"status": "success", "message": "Orderline has been deleted"}
                     notifyService.notify(data.status, data.message);
@@ -487,7 +494,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
 
         });
 
-        get_order_details(order_id,client_id);
+        get_order_details(order_id,client_id,company_id);
     }
     $scope.updatePosition = function(postArray,position_id)
     {
@@ -593,7 +600,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                                     $('.form-control').removeClass('ng-dirty');
                                     var data = {"status": "success", "message": "Order position details has been updated"}
                                     notifyService.notify(data.status, data.message);
-                                    get_order_details(order_id,client_id);
+                                    get_order_details(order_id,client_id,company_id);
                                 }, 1000);
         }
     }
@@ -613,7 +620,7 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
         setTimeout(function () {
                                 $('.form-control').removeClass('ng-dirty');
                                 $("#ajax_loader").hide();
-                                get_order_details(order_id,client_id);
+                                get_order_details(order_id,client_id,company_id);
         }, 500);
     }
     $scope.updateOrderLine = function(postArray,orderline_id)
@@ -674,6 +681,26 @@ app.controller('orderEditCtrl', ['$scope','$http','logger','notifyService','$loc
                 });
 
                 $scope.order_po_data.splice(index,1);
+           
+        }
+    }
+
+
+    $scope.removePOLine = function(index,id) {
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
+  
+                var order_data = {};
+                order_data.table ='purchase_order_line'
+                order_data.cond ={id:id}
+                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                    
+                    var data = {"status": "success", "message": "Purchase Order Line has been deleted"}
+                    notifyService.notify(data.status, data.message);
+                });
+
+                $scope.ArrPoLine.splice(index,1);
            
         }
     }
@@ -867,7 +894,7 @@ $scope.position_id = id;
                                             order_data.cond ={id:order_id}
                                             
                                             $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-                                                 get_order_details(order_id,client_id_new);
+                                                 get_order_details(order_id,client_id_new,company_id);
                                             });
 
 
@@ -1584,7 +1611,92 @@ $scope.position_id = id;
             });
         }
     }
+    $scope.add_address_to_distribute = function(address_id)
+    {
+        $("#ajax_loader").show();
+        var address_data = {};
+        address_data.order_id = $scope.order_id;
+        address_data.address_id = address_id;
+
+        $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
+            get_distribution_list($scope.order_id,$scope.client_id);
+        });
+        $("#ajax_loader").hide();
+    }
+    $scope.remove_address_from_distribute = function(address_id)
+    {
+        $("#ajax_loader").show();
+        var address_data = {};
+        address_data.order_id = $scope.order_id;
+        address_data.address_id = address_id;
+
+        $http.post('api/public/order/removeFromDistribute',address_data).success(function(result, status, headers, config) {
+            get_distribution_list($scope.order_id,$scope.client_id);
+        });
+        $("#ajax_loader").hide();
+    }
+
+    $scope.select_address = function(id)
+    {
+        $("#ajax_loader").show();
+        $scope.address_id = id;
+        get_distribution_list($scope.order_id,$scope.client_id);
+        $("#ajax_loader").hide();
+    }
+    $scope.add_item_to_distribute = function(item_id)
+    {
+        $("#ajax_loader").show();
+        if($scope.address_id > 0)
+        {
+            var address_data = {};
+            address_data.order_id = $scope.order_id;
+            address_data.address_id = $scope.address_id;
+            address_data.item_id = item_id;
+
+           $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
+                get_distribution_list($scope.order_id,$scope.client_id);
+            });
+        }
+        else
+        {
+            var data = {"status": "error", "message": "Please select your distribution address"}
+            notifyService.notify(data.status, data.message);
+        }
+        $("#ajax_loader").hide();
+    }
+    $scope.remove_item_from_distribute = function(item_id)
+    {
+        $("#ajax_loader").show();
+        var item_data = {};
+        item_data.order_id = $scope.order_id;
+        item_data.address_id = $scope.address_id;
+        item_data.item_id = item_id;
+
+        $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
+            get_distribution_list($scope.order_id,$scope.client_id);
+        });
+        $("#ajax_loader").hide();
+    }
   // **************** NOTES TAB CODE END  ****************
+
+
+  $scope.getPoAllData = function(poline_id){
+                          
+                    GetPoAll(poline_id);
+                }
+
+                function GetPoAll(po_id)
+                           {
+                                AJloader.show();
+                                $http.get('api/public/order/GetPoAlldata/'+po_id ).success(function(PoData) 
+                                  {
+                                          
+                                          $scope.ArrPoLine = PoData.data.records.poline;
+                                          AJloader.hide();
+                                  });
+                            }
+
+                                       
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
