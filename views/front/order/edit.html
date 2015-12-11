@@ -1035,10 +1035,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3 nopad-left smallPad">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_id" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_type">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_type" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
                                                 <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderPO($event,orderPO.po_id)' }" >
@@ -1046,7 +1046,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.date">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.date" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-1 nopad-left">
                                                 <div class="sgpDetails">
@@ -1061,9 +1061,7 @@
                                                 </button>
                                             </div>
 
-                                            <div class=" col-md-1 nopad-left smallPad ">
-                                              <i class="mdi-navigation-arrow-forward text-lg m-t-sm" ng-click="getPoAllData(orderPO.po_id)"title="Unassign" role="button" tabindex="0"></i>
-                                            </div>
+                                           
 
 
                                         </div>
@@ -1123,9 +1121,11 @@
                                                  <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.total_qnty"/>
                                             </div>
                                             <div class="col-md-1 nopad-form">
-                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removePOLine($index,poline.id)">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
+
+
                                             </div>
                                         </div>
                                         <!-- / -->
