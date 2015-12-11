@@ -103,6 +103,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     $scope.address_id = '0';
     
     var company_id = $rootScope.company_profile.company_id;
+     var AJloader = $("#ajax_loader");
 
     get_order_details(order_id,client_id,company_id);
     get_po_detail(order_id,client_id);
@@ -1657,6 +1658,25 @@ $scope.position_id = id;
         $("#ajax_loader").hide();
     }
   // **************** NOTES TAB CODE END  ****************
+
+
+  $scope.getPoAllData = function(poline_id){
+                          
+                    GetPoAll(poline_id);
+                }
+
+                function GetPoAll(po_id)
+                           {
+                                AJloader.show();
+                                $http.get('api/public/order/GetPoAlldata/'+po_id ).success(function(PoData) 
+                                  {
+                                          
+                                          $scope.ArrPoLine = PoData.data.records.poline;
+                                          AJloader.hide();
+                                  });
+                            }
+
+                                       
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {

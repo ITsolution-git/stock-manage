@@ -8,15 +8,17 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Order;
 use App\Common;
+use App\Purchase;
 use DB;
 
 use Request;
 
 class OrderController extends Controller { 
 
-	public function __construct(Order $order,Common $common) 
+	public function __construct(Order $order,Common $common,Purchase $purchase) 
  	{
         $this->order = $order;
+        $this->purchase = $purchase;
         $this->common = $common;
     }
 
@@ -585,5 +587,21 @@ class OrderController extends Controller {
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
         return response()->json(['data'=>$data]);
+    }
+
+
+
+    /*=====================================
+    / TO GET PO AND SG SCREEN DATA
+    =====================================*/
+
+    public function GetPodataAll($po_id)
+    {
+       
+        $poline = $this->purchase->GetPoLinedata($po_id,'1');
+              
+        $result = array('poline'=>$poline);
+        $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        return  response()->json(["data" => $response]);
     }
 }

@@ -1060,6 +1060,12 @@
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
+
+                                            <div class=" col-md-1 nopad-left smallPad ">
+                                              <i class="mdi-navigation-arrow-forward text-lg m-t-sm" ng-click="getPoAllData(orderPO.po_id)"title="Unassign" role="button" tabindex="0"></i>
+                                            </div>
+
+
                                         </div>
                                         <!-- / -->
                                    </div>
@@ -1094,33 +1100,27 @@
                                         </div>
 
                                         <!-- Form Fields -->
-                                        <div class="col-md-12 nopad-form form-group purchasing_order">
+                                        <div class="col-md-12 nopad-form form-group purchasing_order" ng-repeat="(key,poline) in ArrPoLine">
                                             <div class="col-md-3 nopad-left smallPad">
-                                               <input type="text" class="form-control" />
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.product_name"/>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad">
-                                                <select class="form-control">
-                                                    <option value="0">Women's</option>
-                                                    <option value="1">Men's</option>
-                                                </select>
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.size_group"/>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                                <select class="form-control">
-                                                    <option value="0">Color 1</option>
-                                                    <option value="1">Color 2</option>
-                                                </select>
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.product_color"/>
                                             </div>
                                             <div class="col-md-1 nopad-left smallPad ">
-                                                <input type="text" class="form-control" placeholder="M" />
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.size"/>
                                             </div>
                                             <div class="col-md-1 nopad-left smallPad ">
-                                                <input type="text" class="form-control" placeholder="10" />
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.qnty"/>
                                             </div>
                                             <div class=" col-md-1 nopad-left">
-                                                <input type="text" class="form-control" placeholder="10" />
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.qnty_ordered"/>
                                             </div>
                                             <div class="col-md-1 nopad-left">
-                                                <input type="text" class="form-control" />
+                                                 <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.total_qnty"/>
                                             </div>
                                             <div class="col-md-1 nopad-form">
                                                 <button type="button" class="btn btn-default addButton" tabindex="0">
