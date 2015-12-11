@@ -147,7 +147,7 @@ class OrderController extends Controller {
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1'),array());
+        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
         $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
         $vendors = $this->common->getAllVendors();
