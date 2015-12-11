@@ -16,15 +16,6 @@ angular.module('app')
       isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
       // config
 
-      /*==================================
-      GET COMPANY DETAIL WHEN PAGE LOAD
-      ==================================*/
-      if(sessionService.get('role_slug')!='SA' && sessionService.get('role_slug')!='' && sessionService.get('role_slug')!=null)
-      {
-          //AuthService.CompanyService();
-      }
-      /*==============================*/
-
         $scope.app = {
         sitename: 'Stockk Up',
         version: '1.0.2',
