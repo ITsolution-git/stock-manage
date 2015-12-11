@@ -1,10 +1,14 @@
-app.controller('finishingListCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
+app.controller('finishingListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
                           
+    var company_id = $rootScope.company_profile.company_id;
+    var login_id = $scope.app.user_id;
+    
     getFinishingData();
     function getFinishingData()
     {
-        $http.get('api/public/finishing/listFinishing').success(function(Listdata) {
-            $scope.listFinishing = Listdata.data;
+        $http.post('api/public/finishing/listFinishing',company_id).success(function(result)
+        {
+            $scope.listFinishing = result.data;
         });
     }
 

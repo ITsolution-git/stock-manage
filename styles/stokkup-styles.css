@@ -149,7 +149,6 @@ video {
 .nav-tabs li.active:first-child a {
 	border-left: 1px solid #e5e5e5;
 }
-
 .tab-content {
 	border:1px solid #ddd;
 	margin-top: -1px;
@@ -588,7 +587,13 @@ nav ul.nav li:hover ul.nav-sub {
 .client_order_form .panel-body {
 	padding-bottom: 0;
 }
-
+a.btnEditOrder {
+	font-size: 50px;
+	color: #9c9c9e;
+}
+a.btnEditOrder:hover {	
+	color: #636363;
+}
 /*------------------------
 		LIST PAGE
 ------------------------*/
@@ -859,6 +864,36 @@ input[readonly].cgreen {
 	height: 34px;
 	background: url(../images/icon-t-shirt.jpg) no-repeat center center;
 }
+
+.po-link-class{
+	cursor: pointer;
+}
+
+
+/*----- DISTRIBUSTION TAB -----*/
+.orderDistributionContainer {
+	height: 500px;
+	max-height: 500px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+.orderDistributionContainer .col-md-12 {
+	padding-top: 15px;
+}
+/*.orderDistributionContainer .col-md-12:nth-child(2n) {
+	background: #e5e5e5;	
+}*/
+.orderDistributionContainer .col-md-12:hover,
+.orderDistributionContainer .col-md-12.active {
+	background: #999;
+}
+.blockTitle label {
+	width: 100%;
+}
+.distribution_active{
+	background: #999;
+}
+
 /*---------- END ----------*/
 
 

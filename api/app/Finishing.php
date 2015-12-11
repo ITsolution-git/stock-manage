@@ -9,7 +9,7 @@ use DateTime;
 class Finishing extends Model {
 
 	
-	public function getFinishingdata()
+	public function getFinishingdata($company_id)
 	{
         $listArray = ['o.id as order_id','f.id','f.qty','fc.category_name', DB::raw('CONCAT(c.pl_firstname," ",c.pl_lastname) as client_name'),'o.job_name',
                       'f.status','f.note','f.category_id','c.client_id','f.time','f.start_time','f.end_time','f.est'];
@@ -19,7 +19,8 @@ class Finishing extends Model {
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                         ->leftJoin('finishing_category as fc', 'f.category_id', '=', 'fc.id')
                         ->select($listArray)
-                        ->where('f.is_delete', '!=', '1');
+                        ->where('f.is_delete', '!=', '1')
+                        ->where('o.company_id', '=', $company_id);
         
         $finishingData = $query->get();
 
