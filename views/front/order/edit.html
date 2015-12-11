@@ -7,14 +7,14 @@
                     <div class="col-sm-12 m-b nopad-form">
                         <div class="col-sm-12 m-b"></div>
                         <div class="col-md-10 nopad-form">
-                            <div class="form-group col-md-10 m-b nopad-form">
-                                <div class="col-sm-3 m-b nopad-left">
+                            <div class="form-group col-md-12 m-b nopad-form">
+                                <div class="col-md-2 m-b nopad-left">
                                     <label>Job Name <em class="text-muted"></em></label>
                                     <input type="text" class="form-control" ng-maxlength="255" name="cs_job_name"  ng-model="order.job_name"  required>
                                     <br>
                                     <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
                                 </div>
-                                <div class="col-md-3 m-b">
+                                <div class="col-md-2 m-b">
                                     <label>Company <em class="text-muted"></em></label>
                                     <i class="mdi-image-control-point" target="_blank" ng-click="addCompany()" title="Add Company" role="button" tabindex="0"></i>
                                     <i class="mdi-content-send pull-right" target="_blank" ng-click="openCompany(order.client_id)" title="Company" role="button" tabindex="0"></i>
@@ -43,14 +43,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-sm-10 m-b nopad-form">
-                                <div class="col-sm-3 m-b nopad-left">
+                            <div class="form-group col-md-12 m-b nopad-form">
+                                <div class="col-md-2 m-b nopad-left">
                                     <label>Sales <em class="text-muted"></em></label>
                                     <select  class="form-control" ng-model="order.sales_id">
                                         <option ng-repeat="staff in staffList" ng-selected="{{order.sales_id==staff.id}}" value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 m-b">
+                                <div class="col-md-2 m-b">
                                     <label>Account Manager<em class="text-muted"></em></label>
                                     <select  class="form-control" ng-model="order.brand_id">
                                         <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
@@ -73,6 +73,14 @@
                                     <select  class="form-control" ng-model="order.contact_main_id">
                                         <option ng-repeat="user in client_main_data" ng-selected="{{order.contact_main_id==user.id}}" value="{{user.id}}">{{user.first_name}}&nbsp;{{user.last_name}}</option>
                                     </select>
+                                </div>
+                                <div class="col-md-2 pull-right m-t text-right">
+                                    <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
+                                    <!--
+                                    <button type="button" class="btn btn-default addButton" tabindex="0">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                    -->
                                 </div>
                             </div>
                         </div>
@@ -379,7 +387,7 @@
                                                     <div class="cols col-1">
                                                         <div class="form-group">
                                                             <select  ng-model="order_line.color_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
-                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in colors" value={{color.id}}>{{color.value}}</option>
+                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in miscData.color_group" value={{color.id}}>{{color.value}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
@@ -747,7 +755,177 @@
 
                             <!-- DISTRIBUTION TAB -->
                             <div role="tabpanel" class="tab-pane animated fadeIn tab2Ol" id="tab3">
+                                <div class="col-md-12 form-group">                                    
+                                    <!-- LEFT COLUMN -->
+                                    <div class="col-md-3 nopad-left">
+                                        <div class="blockTitle">
+                                            <label>
+                                                CLIENT DISTRIBUTION LOCATION LIST
+                                            </label>
+                                            <label>
+                                                <span class="pull-left text-left">Discription</span>
+                                                <span class="pull-right text-right">Address</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12 orderDistributionContainer">
+                                        <div class="col-md-12" ng-repeat="addr in dist_addr">
+                                            <div class="col-md-2 nopad-left m-b">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-10 nopad-right m-b">
+                                                <input type="text" class="form-control" ng-model="addr.description">
+                                            </div>
 
+                                            <div class="col-md-10 nopad-left m-b">
+                                                <input type="test" class="form-control" ng-model="addr.full_address">
+                                            </div>
+                                            <div class="col-md-2 nopad-right m-b">
+                                                <div class="sgpDetails btnCircle">
+                                                  <a title="Move" role="button" tabindex="0" class="" ng-click="add_address_to_distribute(addr.id)">
+                                                    <i class="fa fa-arrow-circle-right"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <!-- / -->
+
+                                    <!-- MIDDLE COLUMN -->                                    
+                                    <div class="col-md-6">
+                                        <div class="col-md-12 panel panel-default"> 
+                                            <!-- MIDDLE COL LEFT -->
+                                            <div class="col-md-6 m-t m-b nopad-left">
+                                                <div class="blockTitle">
+                                                    <label>
+                                                        DISTRIBUTION LOCATION
+                                                    </label>
+                                                    <label>
+                                                        <span class="pull-left text-left">Discription</span>
+                                                        <span class="pull-right text-right">Address</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-12 nopad-left orderDistributionContainer">
+                                                    <div id="row_{{dist.id}}" class="col-md-12" ng-repeat="dist in distributed_address" ng-class="{distribution_active: dist.id==address_id}">
+                                                        <div ng-click="select_address(dist.id)">
+                                                            <div class="col-md-2 nopad-left m-b">
+                                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-10 nopad-right m-b">
+                                                                <input type="text" class="form-control" ng-model="dist.description">
+                                                            </div>
+
+                                                            <div class="col-md-10 nopad-left m-b">
+                                                                <input type="test" class="form-control" ng-model="dist.full_address">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 nopad-right m-b">
+                                                            <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="remove_address_from_distribute(dist.id)">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- MIDDLE COL RIGHT -->
+                                            <div class="col-md-6 m-t m-b nopad-right">
+                                                <div class="blockTitle">
+                                                    <label>
+                                                        DISTRIBUTION LOCATION ITEMS
+                                                    </label>
+                                                    <label>
+                                                        <span class="pull-left text-left">Size Group</span>
+                                                        <span class="pull-right text-right">Applied</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="col-md-12 nopad-left orderDistributionContainer">
+                                                <div class="col-md-12" ng-repeat="oitem in distributed_items">
+                                                    <!-- First Row -->
+                                                    <div class="col-md-3 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.name">
+                                                    </div>
+                                                    <div class="col-md-9 smallPad m-b nopad-right">
+                                                        <input type="text" class="form-control" ng-model="oitem.size_group_name">
+                                                    </div>
+
+                                                    <!-- Second Row -->
+                                                    <div class="col-md-3 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.color_name">
+                                                    </div>
+                                                    <div class="col-md-2 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.size">
+                                                    </div>
+                                                    <div class="col-md-2 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.qnty">
+                                                    </div>
+                                                    <div class="col-md-3 m-b nopad-form">
+                                                        <input type="text" class="form-control" ng-model="oitem.main_contact_person">
+                                                    </div>
+                                                    <div class="col-md-2 smallPad m-b nopad-right">
+                                                        <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="remove_item_from_distribute(oitem.id)">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- END Fields -->
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / -->
+
+                                    <!-- RIGHT COLUMN -->
+                                    <div class="col-md-3 nopad-right">
+                                        <div class="blockTitle">
+                                            <label>
+                                                ORDER ITEMS
+                                            </label>
+                                            <label>
+                                                <span class="pull-left text-left">Size Group</span>
+                                                <span class="pull-right text-right">Remaining</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-12 nopad-left orderDistributionContainer">
+                                        <div class="col-md-12" ng-repeat="oitem in items">
+                                            <!-- First Row -->
+                                            <div class="col-md-3 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.name">
+                                            </div>
+                                            <div class="col-md-9 smallPad m-b nopad-right">
+                                                <input type="text" class="form-control" ng-model="oitem.size_group_name">
+                                            </div>
+
+                                            <!-- Second Row -->
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="add_item_to_distribute(oitem.id)">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-3 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.color_name">
+                                            </div>
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.size">
+                                            </div>
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.qnty">
+                                            </div>
+                                            <div class="col-md-3 m-b nopad-form">
+                                                <input type="text" class="form-control" ng-model="oitem.main_contact_person">
+                                            </div>
+                                            <!-- END Fields -->
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <!-- / -->
+                                </div>
                             </div>
                             <!-- DISTRIBUTION TAB -->
 
@@ -857,10 +1035,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3 nopad-left smallPad">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_id" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_type">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_type" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
                                                 <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderPO($event,orderPO.po_id)' }" >
@@ -868,7 +1046,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.date">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.date" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-1 nopad-left">
                                                 <div class="sgpDetails">
@@ -882,6 +1060,10 @@
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>
+
+                                           
+
+
                                         </div>
                                         <!-- / -->
                                    </div>
@@ -916,38 +1098,34 @@
                                         </div>
 
                                         <!-- Form Fields -->
-                                        <div class="col-md-12 nopad-form form-group purchasing_order">
+                                        <div class="col-md-12 nopad-form form-group purchasing_order" ng-repeat="(key,poline) in ArrPoLine">
                                             <div class="col-md-3 nopad-left smallPad">
-                                               <input type="text" class="form-control" />
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.product_name"/>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad">
-                                                <select class="form-control">
-                                                    <option value="0">Women's</option>
-                                                    <option value="1">Men's</option>
-                                                </select>
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.size_group"/>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                                <select class="form-control">
-                                                    <option value="0">Color 1</option>
-                                                    <option value="1">Color 2</option>
-                                                </select>
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.product_color"/>
                                             </div>
                                             <div class="col-md-1 nopad-left smallPad ">
-                                                <input type="text" class="form-control" placeholder="M" />
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.size"/>
                                             </div>
                                             <div class="col-md-1 nopad-left smallPad ">
-                                                <input type="text" class="form-control" placeholder="10" />
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.qnty"/>
                                             </div>
                                             <div class=" col-md-1 nopad-left">
-                                                <input type="text" class="form-control" placeholder="10" />
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.qnty_ordered"/>
                                             </div>
                                             <div class="col-md-1 nopad-left">
-                                                <input type="text" class="form-control" />
+                                                 <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.total_qnty"/>
                                             </div>
                                             <div class="col-md-1 nopad-form">
-                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removePOLine($index,poline.id)">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
+
+
                                             </div>
                                         </div>
                                         <!-- / -->

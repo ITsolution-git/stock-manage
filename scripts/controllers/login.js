@@ -1,7 +1,7 @@
 app.controller('loginCtrl', ['$scope','$http','$location','$state','flash','sessionService','notifyService', function($scope,$http,$location,$state,flash,sessionService,notifyService) {
 
     var role = sessionService.get('role_slug');
-
+    $("#ajax_loader").hide();
 
 
   var vid = document.getElementById("bgvid");

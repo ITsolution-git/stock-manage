@@ -1,20 +1,21 @@
 app.controller('PurchaseListCtrl', ['$scope', '$rootScope', '$http','$state','$stateParams', 'AuthService',function($scope,$rootScope,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
-                		  //console.log($rootScope.company_profile.company_name);
+
                           $scope.Maintype = $stateParams.id;
                           $("#ajax_loader").show();
                            var type = {};
                           $scope.CurrentController=$state.current.controller;
                           type.type = $stateParams.id;
+                          type.company_id = $rootScope.company_profile.company_id;
                           $http.post('api/public/purchase/ListPurchase',type ).success(function(Listdata) 
                           		  {
-                                          $scope.ListPurchase = Listdata.data;
-                                          $("#ajax_loader").hide();
+                                    	$scope.ListPurchase = Listdata.data;
+                                        $("#ajax_loader").hide();
                                   });
 }]);
-app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
+app.controller('PurchasePOCtrl', ['$scope','$rootScope','$sce',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$rootScope,$sce,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
                            AuthService.AccessService('BC');
-
+                           $scope.company_id = $rootScope.company_profile.company_id;
                            var modalInstance='';
                            var AJloader = $("#ajax_loader");
                            $scope.po_id = $stateParams.id;
@@ -32,11 +33,11 @@ app.controller('PurchasePOCtrl', ['$scope','$sce',  '$http','$modal','$state','$
                            function GetPodata(po_id)
                            {
                            		AJloader.show();
-                           		$http.get('api/public/purchase/GetPodata/'+po_id ).success(function(PoData) 
+                           		$http.get('api/public/purchase/GetPodata/'+po_id+'/'+$scope.company_id ).success(function(PoData) 
                           		  {
                           		  		  if(PoData.data.success==0)
                           		  		  {
-                          		  		  	$state.go('purchase.list',{"id":1});
+                          		  		  	$state.go('purchase.list',{"id":$scope.po_id});
                            					return false;
                           		  		  }
                                           $scope.ArrPo = PoData.data.records.po[0];
@@ -240,9 +241,11 @@ app.controller('PurchaseSGCtrl', ['$scope',  '$http','$state','$stateParams', 'A
                            $scope.order_id = $stateParams.id;
 
 }]);
-app.controller('PurchaseCPCtrl', ['$scope','$sce',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$sce,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
+app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal','$state','$stateParams','$filter','notifyService', 'AuthService',function($scope,$sce, 
+	$rootScope ,$http,$modal,$state,$stateParams,$filter,notifyService,AuthService) {
 
 						   AuthService.AccessService('BC');
+						   $scope.company_id = $rootScope.company_profile.company_id;
                            var modalInstance='';
                            var AJloader = $("#ajax_loader");
                            $scope.po_id = $stateParams.id;
@@ -259,7 +262,7 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce',  '$http','$modal','$state','$
 						  function GetScreenData(po_id)
                            {
                            		//AJloader.show();
-                           		$http.get('api/public/purchase/GetScreendata/'+po_id ).success(function(PoData) 
+                           		$http.get('api/public/purchase/GetScreendata/'+po_id+'/'+$scope.company_id ).success(function(PoData) 
                           		  {
                           		  		  if(PoData.data.success==0)
                           		  		  {

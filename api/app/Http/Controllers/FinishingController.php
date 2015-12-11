@@ -40,7 +40,7 @@ class FinishingController extends Controller {
     public function listFinishing()
     {
         $post = Input::all();
-        $data = $this->finishing->getFinishingdata();
+        $data = $this->finishing->getFinishingdata($post[0]);
 
         if(!empty($data))
         {
