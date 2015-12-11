@@ -755,6 +755,14 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
             }
           })
             .state('finishing.list', {
