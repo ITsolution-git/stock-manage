@@ -8,7 +8,7 @@ use DateTime;
 
 class Purchase extends Model {
 	
-	function ListPurchase($type)
+	function ListPurchase($type,$company_id)
 	{
 		$result = DB::table('purchase_order as po')
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
@@ -18,12 +18,13 @@ class Purchase extends Model {
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('po.po_type','=',strtolower($type))
+					->where('ord.company_id','=',$company_id)
 					->GroupBy('po.po_id')
 					->get();
 		//echo "<pre>"; print_r($result); die();
 		return $result;
 	}
-	function GetPodata($id)
+	function GetPodata($id,$company_id)
 	{
 		$result = DB::select("SELECT po.*,v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,pg.name, vc.first_name,vc.last_name,oo.*,v.url
 		FROM purchase_order po
@@ -34,7 +35,7 @@ class Purchase extends Model {
 		left join price_grid pg on pg.id = ord.price_id
 		Left join vendors v on v.id = po.vendor_id 
 		left join vendor_contacts vc on vc.vendor_id = v.id
-		where ord.status='1' AND ord.is_delete='1' 
+		where ord.status='1' AND ord.is_delete='1' AND ord.company_id = '".$company_id."'
 		AND po.po_id='".$id."'
 		GROUP BY po.po_id ");
 		
@@ -173,7 +174,7 @@ class Purchase extends Model {
    						->update(array('short'=>$short,'over'=>$over));
     	 return $result;
 	}
-	function GetPoReceived($po_id)
+	function GetPoReceived($po_id,$company_id)
 	{
 		$result =  DB::table('purchase_order as po')
 				  ->leftJoin('orders as ord','po.order_id','=','ord.id')
@@ -199,7 +200,7 @@ class Purchase extends Model {
    						->update(array('shipt_block'=>$post['data']));
     	return $result;
 	}
-	function GetScreendata($po_id)
+	function GetScreendata($po_id,$company_id)
 	{
 		$result =  DB::table('purchase_order as po')
 				  ->leftJoin('orders as ord','po.order_id','=','ord.id')
