@@ -865,6 +865,10 @@ input[readonly].cgreen {
 	background: url(../images/icon-t-shirt.jpg) no-repeat center center;
 }
 
+.po-link-class{
+	cursor: pointer;
+}
+
 
 /*----- DISTRIBUSTION TAB -----*/
 .orderDistributionContainer {
