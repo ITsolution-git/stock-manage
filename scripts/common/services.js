@@ -40,6 +40,7 @@
                 }
              },
             CompanyService: function () {
+             $rootScope.company_profile={};
              var deferred = $q.defer();
              var user_data = {};
              user_data.user_id=sessionService.get('user_id');
