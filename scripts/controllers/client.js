@@ -1,13 +1,14 @@
 app.controller('clientAddCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log) {
                           AuthService.AccessService('BC');
-                          var company_id = $rootScope.company_profile.company_name;
-                          console.log(company_id);
+                          var company_id = $rootScope.company_profile.company_id;
                           $scope.CurrentController=$state.current.controller;
 
                           $http.get('api/public/common/type/client').success(function(Listdata) {
                                   $scope.Typelist = Listdata.data
                             });
+                          $scope.SaveClient = function () {
 
+                           }
                           $scope.SaveClient = function () {
                             var company_post = $scope.client;
                             if($scope.client.client_company!='')
@@ -26,8 +27,7 @@ app.controller('clientAddCtrl', ['$scope','$rootScope','$http','$location','$sta
 }]);
 app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log) {
                           AuthService.AccessService('BC');
-                         var company_id = $rootScope.company_profile.company_name;
-                          console.log(company_id);
+                         var company_id = $rootScope.company_profile.company_id;
                           $scope.CurrentController=$state.current.controller;
                           var delete_params = {};
                           $scope.deleteclient = function (comp_id) {
@@ -57,11 +57,11 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
 
 
 }]);
-app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$location','$state','$modal','$stateParams','AuthService','$log','sessionService','$filter', function($scope,$rootScope,$sce,$http,$location,$state,$modal,$stateParams,AuthService,$log,sessionService,dateWithFormat,$filter) {
+app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$location','$state','$modal','$stateParams','AuthService','$log','$filter', function($scope,$rootScope,$sce,$http,$location,$state,$modal,$stateParams,AuthService,$log,dateWithFormat,$filter) {
 
                            $("#ajax_loader").show();
-                          var company_id = $rootScope.company_profile.company_name;
-                          console.log(company_id);
+                          var company_id = $rootScope.company_profile.company_id;
+                         // console.log(company_id);
                           var client_contacts=[];
                           var AddrTypeData={};
                           var PriceGrid={};
@@ -70,13 +70,13 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                           $scope.modalInstanceEdit  ='';
 
                           AuthService.AccessService('BC');
-                          $scope.CurrentUserId =  sessionService.get('user_id');
+                          $scope.CurrentUserId =  $scope.app.user_id;
 
                           $scope.CurrentController=$state.current.controller;
                           var getclient_id = $stateParams.id;
                          // address_type = Common_Misc.GetMicType('art_type');
 
-                          $http.get('api/public/common/GetMicType/address_type').success(function(result, status, headers, config) 
+                        /*  $http.get('api/public/common/GetMicType/address_type').success(function(result, status, headers, config) 
                           {
                               if(result.data.success == '1') 
                               {
@@ -92,7 +92,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                   $scope.Arrdisposition =result.data.records;
                               } 
                               
-                          });
+                          });*/
                            $http.get('api/public/admin/price').success(function(result, status, headers, config) 
                           {
                               if(result.data.success == '1') 
@@ -102,39 +102,46 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               
                           });
 
-                          $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) 
+                          /*$http.get('api/public/common/getStaffList').success(function(result, status, headers, config) 
                           {
                               if(result.data.success == '1') 
                               {
-                                  $scope.StaffList =result.data.records;
+                                 // $scope.StaffList =result.data.records;
                               } 
                               
-                          });
+                          });*/
 
-                          $http.get('api/public/common/type/company').success(function(result, status, headers, config) 
+                         /* $http.get('api/public/common/type/company').success(function(result, status, headers, config) 
                           {
                               if(result.data.success == '1') 
                               {
                                   $scope.ArrCleintType =result.data.records;
                               } 
                               
-                          });  
+                          });  */
                            getClientDetail(getclient_id );
                            function getClientDetail(getclient_id)
                            {
                                 $("#ajax_loader").show();
-                                $http.get('api/public/client/GetclientDetail/'+getclient_id).success(function(result, status, headers, config) 
+                                $http.get('api/public/client/GetclientDetail/'+getclient_id).success(function(result) 
                                 {
                                     if(result.data.success == '1') 
                                     {
-                                        $scope.mainaddress =result.data.records.address;
-                                        $scope.salesDetails =result.data.records.sales;
-                                        $scope.maincompcontact =result.data.records.contact;
-                                        $scope.main =result.data.records.main;
-                                        $scope.client_tax =result.data.records.tax;
-                                        $scope.pl_imp =result.data.records.pl_imp;
+                                        $scope.Response = result.data.records;
+                                        $scope.mainaddress = $scope.Response.clientDetail.address;
+                                        $scope.salesDetails =$scope.Response.clientDetail.sales;
+                                        $scope.maincompcontact =$scope.Response.clientDetail.contact;
+                                        $scope.main =$scope.Response.clientDetail.main;
+                                        $scope.client_tax =$scope.Response.clientDetail.tax;
+                                        $scope.pl_imp =$scope.Response.clientDetail.pl_imp;
+                                        
+                                        $scope.StaffList =$scope.Response.StaffList;
+                                        $scope.ArrCleintType =$scope.Response.ArrCleintType;
+                                        $scope.PriceGrid = $scope.Response.PriceGrid
+                                        $scope.allContacts = $scope.Response.allContacts
+                                        $scope.allclientnotes = $scope.Response.allclientnotes
 
-                                        $scope.currentProjectUrl = $sce.trustAsResourceUrl(result.data.records.main.salesweb);
+                                        $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.main.salesweb);
                                         $("#ajax_loader").hide();
                                     } 
                                     
@@ -146,7 +153,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
 
 
     //****************  CONTACTS TAB CODE START  ****************                          
-                          getContacts($stateParams.id );
+                          //getContacts($stateParams.id );
                           $scope.currentActivity = 1;
                           function getContacts(getclient_id)
                            {
@@ -206,7 +213,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
      // **************** ADDRESS TAB CODE END  ****************
 
      // **************** NOTES TAB CODE END  ****************
-                          getNotesDetail(getclient_id );
+                          //getNotesDetail(getclient_id );
                            function getNotesDetail(getclient_id)
                            {
                                 $http.get('api/public/client/GetNoteDetails/'+getclient_id).success(function(result, status, headers, config) 
