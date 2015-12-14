@@ -233,22 +233,10 @@
 
  <!-- Code Start for Orders tab -->
     <li ng-show="app.role=='BC'">
-      <a md-ink-ripple>
-        <span class="pull-right text-muted">
-          <i class="fa fa-caret-down"></i>
-        </span>
+      <a md-ink-ripple ui-sref="order.list">
         <i class="icon fa fa-reorder i-20"></i>
         <span class="font-normal">Orders</span>
       </a>
-      <ul class="nav nav-sub">
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="order.list"> List</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="order.add">Add</a>
-        </li>
-       
-      </ul>
     </li>
   <!-- Code end for Orders tab --> 
 
