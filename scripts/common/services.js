@@ -91,7 +91,7 @@
                 }
             };
         }
-    ])
+    ]) 
     .factory('sessionService', [
                 '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
 
