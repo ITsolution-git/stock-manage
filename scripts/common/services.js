@@ -53,6 +53,7 @@
                           if(Response.data.data.success=='1')
                           {
                               $rootScope.company_profile =  Response.data.data.records;
+                             
                           }
                           else
                           {
@@ -65,9 +66,7 @@
                      });
                  return deferred.promise;
              }
-            }, 
-
-  
+            }
                 
         }
     })
@@ -134,7 +133,11 @@
           return _date;
 
          };
-    }).call(this);
+    })
+    
+
+
+}).call(this);
 
 
 
