@@ -212,11 +212,18 @@
                                             <div class="form-group col-md-4 nopad-left">
                                                 <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
-                                            <div class="form-group col-md-2 nopad-left sgpDetails">
+                                            
+
+
+                                            <div ng-class="order_position.placementvalue.length == 0 ? 'sgpDetails disabled-sgpDetails' : 'sgpDetails'"  class="form-group col-md-2 nopad-left">
                                               <a ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0">
                                                 <i class="mdi-maps-navigation"></i>
                                               </a>
                                             </div>
+
+
+
+
                                             <div class="form-group col-md-3 nopad-left">
                                                 <select  ng-model="order_position.placement_type" class="form-control" ng-change="updatePosition(orderPositionAll,order_position.id)">
                                                     <option ng-selected="order_position.placement_type==misc_placement.id" ng-repeat="misc_placement in miscData.placement_type" value={{misc_placement.id}}>{{misc_placement.value}}</option>

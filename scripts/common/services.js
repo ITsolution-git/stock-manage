@@ -53,7 +53,7 @@
                           if(Response.data.data.success=='1')
                           {
                               $rootScope.company_profile =  Response.data.data.records;
-                             
+   
                           }
                           else
                           {
@@ -90,7 +90,7 @@
                 }
             };
         }
-    ]) 
+    ])
     .factory('sessionService', [
                 '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
 
@@ -120,7 +120,7 @@
          {
           if(input == null){ return ""; } 
      
-          if(input !=  "0000-00-00 00:00:00")
+          if(input !=  "0000-00-00 00:00:00" && input !="0000-00-00" )
           {
             var d1 = Date.parse(input);
            

@@ -78,6 +78,18 @@ class OrderController extends Controller {
 
         $result = $this->order->orderDetail($data);
 
+        if(empty($result['order']))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+           
+
+        }
+
         if(!empty($result['order_line_data']))
         {
             $sum = 0;

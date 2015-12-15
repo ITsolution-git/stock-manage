@@ -231,14 +231,25 @@ class Client extends Model {
    }
    public function UpdateCleintNotes($post)
    {
-   			$result = DB::table('client_notes')
-   						->where('note_id','=',$post['note_id'])
-   						->update(array('client_notes'=>$post['client_notes']));
+   		$result = DB::table('client_notes')
+   					->where('note_id','=',$post['note_id'])
+   					->update(array('client_notes'=>$post['client_notes']));
    		return $result;
    }
    public function SaveDistAddress($post)
    {
    	
+   }
+   public function ListClientOrder($id)
+   {
+   		$result = DB::table('orders as ord')
+   					->leftJoin('misc_type as mt','mt.id','=','ord.f_approval')
+   					->select('mt.value','ord.id','ord.client_id','ord.job_name','ord.f_approval',DB::raw('DATE_FORMAT(ord.created_date, "%Y-%m-%d") as created_date'))
+   					->where('ord.client_id','=',$id)
+   					->where('ord.is_delete','=','1')
+   					->get();
+
+   		return $result;
    }
  
 }

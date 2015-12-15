@@ -1,6 +1,6 @@
 app.controller('PurchaseListCtrl', ['$scope', '$rootScope', '$http','$state','$stateParams', 'AuthService',function($scope,$rootScope,$http,$state,$stateParams,AuthService) {
                           AuthService.AccessService('BC');
-
+                         // console.log($rootScope.company_profile.company_id);
                           $scope.Maintype = $stateParams.id;
                           $("#ajax_loader").show();
                            var type = {};
