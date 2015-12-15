@@ -13,7 +13,8 @@ angular.module('app')
       function ( $rootScope,   $state,  $stateParams ,$location,$http,AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-        AuthService.CompanyService();
+          AuthService.CompanyService();
+          //return false;
       }
     ]
   )
@@ -176,11 +177,7 @@ angular.module('app')
                 templateUrl: 'views/content.html'
               }
               },
-              resolve: {
-                checklogin: function (AuthService) {
-                   return AuthService.checksession();
-                },
-              },
+
               resolve: {
               checklogin: function (AuthService) {
                  return AuthService.checksession();
@@ -645,55 +642,35 @@ angular.module('app')
               templateUrl: 'views/front/purchase/index.html',
               data : { title: 'Purchase Listing' },
              controller: 'PurchaseListCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               //return AuthService.checksession();
-                            },
-                       }
+                  
             })
             .state('purchase.po', {
               url: '/po/:id',
               templateUrl: 'views/front/purchase/po.html',
               data : { title: 'Purchase Orders' },
              controller: 'PurchasePOCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               //return AuthService.checksession();
-                            },
-                       }
+                 
             })
             .state('purchase.sg', {
               url: '/sg/:id',
               templateUrl: 'views/front/purchase/sg.html',
               data : { title: 'Supplied Garments' },
              controller: 'PurchasePOCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               //return AuthService.checksession();
-                            },
-                       }
+                
             })
             .state('purchase.ce', {
               url: '/ce/:id',
               templateUrl: 'views/front/purchase/ce.html',
               data : { title: 'Contract Embrodiery' },
              controller: 'PurchaseCPCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               //return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('purchase.cp', {
               url: '/cp/:id',
               templateUrl: 'views/front/purchase/cp.html',
               data : { title: 'Contract Printing' },
              controller: 'PurchaseCPCtrl',
-              resolve: {
-                            checklogin: function (AuthService) {
-                               //return AuthService.checksession();
-                            },
-                       }
+
             })
     /*==========================================
           PURCHASE MODULE CODE END
