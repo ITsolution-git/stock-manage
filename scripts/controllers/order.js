@@ -745,8 +745,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     $scope.openOrderPlacement = function (page,id,position_index) {
 
-
-if (id) {
+if (id != 0) {
 
 
 $scope.position_id = id;   
