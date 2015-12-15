@@ -141,7 +141,9 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                         $scope.allContacts = $scope.Response.allContacts;
                                         $scope.allclientnotes = $scope.Response.allclientnotes;
                                         $scope.Arrdisposition = $scope.Response.Arrdisposition;
-                                        
+                                        $scope.Client_orders = $scope.Response.Client_orders;
+
+   
                                         $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.main.salesweb);
                                         $("#ajax_loader").hide();
                                     } 
