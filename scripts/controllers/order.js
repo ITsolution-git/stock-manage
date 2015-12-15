@@ -1,4 +1,4 @@
-app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
+app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$state','$filter','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$filter,$modal,AuthService,$log,AllConstant) {
 
 
           $("#ajax_loader").show();
@@ -66,8 +66,11 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
             var order_data = {};
             orderData.company_id =company_id;
             orderData.login_id =login_id;
+
             
             order_data.data = orderData;
+           
+            order_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
 
             order_data.table ='orders'
 
@@ -206,7 +209,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $("#ajax_loader").hide();
                 }
                 else {
-                    $state.go('app.dashboard');
+                    $state.go('order.list');
+                    $("#ajax_loader").hide();
                 }
             });
         }
@@ -742,8 +746,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     $scope.openOrderPlacement = function (page,id,position_index) {
 
-
-if (id) {
+if (id != 0) {
 
 
 $scope.position_id = id;   

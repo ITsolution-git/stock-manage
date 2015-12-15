@@ -147,14 +147,13 @@ Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail'
 
 //PURCHASE CONTROLLER
 Route::post('purchase/ListPurchase', 'PurchaseController@ListPurchase');
-Route::get('purchase/GetPodata/{id}', 'PurchaseController@GetPodata');
-Route::get('purchase/GetSgData/{id}', 'PurchaseController@GetSgData');
+Route::get('purchase/GetPodata/{id}/{company_id}', 'PurchaseController@GetPodata');
 Route::get('purchase/ChangeOrderStatus/{id}/{value}/{po_id}', 'PurchaseController@ChangeOrderStatus');
 Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
 Route::post('purchase/Receive_order', 'PurchaseController@Receive_order');
 Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
 Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
-Route::get('purchase/GetScreendata/{id}', 'PurchaseController@GetScreendata');
+Route::get('purchase/GetScreendata/{id}/{company_id}', 'PurchaseController@GetScreendata');
 Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
 
 

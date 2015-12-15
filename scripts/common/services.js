@@ -53,9 +53,8 @@
                           if(Response.data.data.success=='1')
                           {
                               $rootScope.company_profile =  Response.data.data.records;
-                              console.log('Ajax Call');
-                              //$scope.$broadcast('company_event',{});
-                              
+                              //console.log('ajax call');
+                             
                           }
                           else
                           {
@@ -68,12 +67,7 @@
                      });
                  return deferred.promise;
              }
-            }, 
-            abcService: function(){
-                console.log('abc');
-                return true;
             }
-  
                 
         }
     })
@@ -127,7 +121,7 @@
          {
           if(input == null){ return ""; } 
      
-          if(input !=  "0000-00-00 00:00:00")
+          if(input !=  "0000-00-00 00:00:00" && input !="0000-00-00" )
           {
             var d1 = Date.parse(input);
            
@@ -141,28 +135,7 @@
 
          };
     })
-      .factory('Common_Misc', [
-                '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
-    return {
-
-        GetMicType: function (art_type) {
-                      
-                $http.get('api/public/common/GetMicType/'+art_type).success(function(result, status, headers, config) 
-                {
-                    var totalData = {};
-                    console.log(result.data);
-                    if(result.data.success == '0') 
-                    {
-                        totalData =result.data;
-                    } 
-                    
-                });
-                return sharedService = {thing:totalData};
-               
-            }
-        }
-        }
-       ])
+    
 
 
 }).call(this);
