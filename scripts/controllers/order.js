@@ -209,7 +209,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $("#ajax_loader").hide();
                 }
                 else {
-                    $state.go('app.dashboard');
+                    $state.go('order.list');
+                    $("#ajax_loader").hide();
                 }
             });
         }
