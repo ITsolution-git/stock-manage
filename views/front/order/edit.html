@@ -6,6 +6,7 @@
                 <div class="panel-body">
                     <div class="col-sm-12 m-b nopad-form">
                         <div class="col-sm-12 m-b"></div>
+                        
                         <div class="col-md-10 nopad-form">
                             <div class="form-group col-md-12 m-b nopad-form">
                                 <div class="col-md-2 m-b nopad-left">
@@ -79,15 +80,17 @@
                         </div>
                         <div class="form-group col-md-2 m-b nopad-form smallPad orderLineCal">
 
-                             <div class="input-group col-md-12 nopad-right t-r m-b">              
-                            <!-- <button  type="submit" class="btn btn-info" ng-click="saveOrderDetails(order,order.id)" ng-disabled="mainForm.$invalid">Submit</button>&nbsp; -->
-                            <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
-                             <button ui-sref="order.list" type="button"  class="btn btn-info">Print</button>
-                                   
-
-                            <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
-                        </div>
-
+                            <div class="input-group col-md-12 pull-right nopad-right t-r m-b">
+                                <div class="col-md-3 pull-left nopad-right smallPad">
+                                    <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
+                                </div>                    
+                                <div class="col-md-3 pull-right nopad-right smallPad">
+                                    <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
+                                </div> 
+                                <div class="col-md-3 pull-right nopad-right smallPad">
+                                    <button ui-sref="order.list" type="button"  class="btn btn-info">Print</button>
+                                </div>                                 
+                            </div>
                             <div class="col-md-12 nopad-form">
                                 <div class="form-group col-md-6 text-right nopad-left smallPad">
                                     <label>Order Line Total</label>
