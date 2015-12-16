@@ -627,4 +627,44 @@ class OrderController extends Controller {
         $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
         return  response()->json(["data" => $response]);
     }
+
+    public function updateOrderTask()
+    {
+        $post = Input::all();
+
+        if(isset($post['data']['task_name']) && $post['data']['task_name'] != '')
+        {
+            $task_arr = $this->common->GetTableRecords('task',array('task_name' => $post['data']['task_name']),array());
+
+            if(empty($task_arr))
+            {
+                $task_id = $this->common->InsertRecords('task',array('task_name' => $post['data']['task_name']));
+            }
+            else
+            {
+                $task_id = $task_arr[0]->id;
+            }
+            $post['data']['task_id'] = $task_id;
+            unset($post['data']['task_name']);
+        }
+
+        if(isset($post['data']['result_name']) && $post['data']['result_name'] != '')
+        {
+            $result_arr = $this->common->GetTableRecords('result',array('result_name' => $post['data']['result_name']),array());
+
+            if(empty($task_arr))
+            {
+                $result_id = $this->common->InsertRecords('result',array('result_name' => $post['data']['result_name']));
+            }
+            else
+            {
+                $result_id = $result_arr[0]->id;
+            }
+            $post['data']['result_id'] = $result_id;
+            unset($post['data']['result_name']);
+        }
+        $this->common->UpdateTableRecords('order_tasks',$post['cond'],$post['data']);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
 }
