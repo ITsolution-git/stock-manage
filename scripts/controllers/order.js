@@ -475,18 +475,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
-    $scope.saveOrderDetails=function(postArray,id)
-    {
-        var order_data = {};
-        order_data.table ='orders'
-        order_data.data =postArray
-        order_data.cond ={id:id}
-        
-        $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-            $state.go('order.list');
-        });
-    }
-
     $scope.addPosition = function(postArray)
     {
         order_id = $stateParams.id;
@@ -654,19 +642,22 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }, 500);
     }
 
-    $scope.updateOrderPO = function($event,po_id)
+     $scope.updateOrderAll = function($event,id,table_name,match_condition)
     {
-        
-          var order_po_data = {};
-          order_po_data.table ='purchase_order';
+          var order_main_data = {};
+          order_main_data.table =table_name;
           $scope.name_filed = $event.target.name;
           var obj = {};
           obj[$scope.name_filed] =  $event.target.value;
-          order_po_data.data = angular.copy(obj);
-          
-          order_po_data.cond ={ po_id :po_id}
+          order_main_data.data = angular.copy(obj);
 
-            $http.post('api/public/common/UpdateTableRecords',order_po_data).success(function(result) {
+
+          var condition_obj = {};
+          condition_obj[match_condition] =  id;
+          order_main_data.cond = angular.copy(condition_obj);
+          
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
 
             });
       
