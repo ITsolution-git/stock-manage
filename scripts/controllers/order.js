@@ -202,8 +202,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.order.order_line_total = order_line_total.toFixed(2);
 
                     $scope.position_total_qty = 0;
+                    $scope.pos_total_qty = 0;
                     angular.forEach($scope.orderPositionAll, function(value) {
                         $scope.position_total_qty += parseInt(value.qnty);
+                        $scope.pos_total_qty = parseInt(value.qnty);
                     });
 
                     $("#ajax_loader").hide();
@@ -1496,8 +1498,10 @@ $scope.position_id = id;
 
 
                 $scope.position_total_qty = 0;
+                $scope.pos_total_qty = 0;
                 angular.forEach($scope.orderPositionAll, function(value) {
                     $scope.position_total_qty += parseInt(value.qnty);
+                    $scope.pos_total_qty = parseInt(value.qnty);
                 });
 
                 $scope.order.order_line_total = order_line_total.toFixed(2);
