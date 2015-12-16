@@ -7,15 +7,17 @@ use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Purchase;
+use App\Common;
 use DB;
 
 use Request;
 
 class PurchaseController extends Controller { 
 
-	public function __construct(Purchase $purchase) 
+	public function __construct(Purchase $purchase,Common $common) 
  	{
         $this->purchase = $purchase;
+        $this->common = $common;
     }
 
     /*=====================================
@@ -74,8 +76,10 @@ class PurchaseController extends Controller {
 		    	$received_total = $this->purchase->getreceivedTotal($po_id);
 		    	$received_line = $this->purchase->GetPoReceived($po_id,$company_id);
 
+                $list_vendors = $this->common->getAllVendors();
+
     			$order_id = $po[0]->order_id;
-	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id );
+	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
 	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     		}
     		else
@@ -197,9 +201,10 @@ class PurchaseController extends Controller {
     		//echo "<pre>"; print_r($screen_data); echo "</pre>"; die;
     		if(count($screen_data)>0)
     		{
+                $list_vendors = $this->common->getAllVendors();
     			$order_id = $screen_data[0]->order_id;
-	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id );
-	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors );
+	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result );
     		}
     		else
     		{

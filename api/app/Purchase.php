@@ -26,7 +26,7 @@ class Purchase extends Model {
 	}
 	function GetPodata($id,$company_id)
 	{
-		$result = DB::select("SELECT po.*,v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,pg.name, vc.first_name,vc.last_name,oo.*,v.url
+		$result = DB::select("SELECT v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,pg.name,vc.id as contact_id, vc.first_name,vc.last_name,v.url,po.*
 		FROM purchase_order po
 		Inner join orders ord on po.order_id = ord.id
 		left join client cl on ord.client_id = cl.client_id

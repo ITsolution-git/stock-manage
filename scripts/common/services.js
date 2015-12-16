@@ -8,8 +8,10 @@
     return {
         checksession: function (option) {
 
+                var deferred = $q.defer();
                 $http.get('api/public/auth/session').success(function(result, status, headers, config) 
                 {
+                    deferred.resolve(result.data);
                     if(result.data.success == '0') 
                     {
                         var data = {"status": "error", "message": "Please signin first."}
@@ -25,6 +27,7 @@
                         return true;
                     }
                 });
+                return deferred.promise;
             },
             AccessService: function (ret) {
                 var role = sessionService.get('role_slug');
