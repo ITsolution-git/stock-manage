@@ -6,11 +6,12 @@
                 <div class="panel-body">
                     <div class="col-sm-12 m-b nopad-form">
                         <div class="col-sm-12 m-b"></div>
+                        
                         <div class="col-md-10 nopad-form">
                             <div class="form-group col-md-12 m-b nopad-form">
                                 <div class="col-md-2 m-b nopad-left">
                                     <label>Job Name <em class="text-muted"></em></label>
-                                    <input type="text" class="form-control" ng-maxlength="255" name="cs_job_name"  ng-model="order.job_name"  required>
+                                    <input type="text" class="form-control" ng-maxlength="255" name="job_name"  ng-model="order.job_name"  required name="job_name" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                     <br>
                                     <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
                                 </div>
@@ -18,26 +19,26 @@
                                     <label>Company <em class="text-muted"></em></label>
                                     <i class="mdi-image-control-point" target="_blank" ng-click="addCompany()" title="Add Company" role="button" tabindex="0"></i>
                                     <i class="mdi-content-send pull-right" target="_blank" ng-click="openCompany(order.client_id)" title="Company" role="button" tabindex="0"></i>
-                                    <select  ng-model="order.client_id"  class="form-control" required>
+                                    <select  ng-model="order.client_id"  class="form-control" required name="client_id" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                         <option ng-selected="order.client_id==data.client_id" ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2 m-b">
                                     <label>Price Grid<em class="text-muted"></em></label>
                                     <i class="mdi-content-send pull-right" target="_blank" ng-click="openPriceGrid(order.price_id)" title="Price Grid" role="button" tabindex="0"></i>
-                                    <select  ng-model="order.price_id"  class="form-control">
+                                    <select  ng-model="order.price_id"  class="form-control" name="price_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }" >
                                         <option ng-selected="order.price_id==data.id" ng-repeat="data in allGrid" value={{data.id}}>{{data.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2 m-b">
                                     <label>Approval<em class="text-muted"></em></label>
-                                    <select  ng-model="order.f_approval"  class="form-control">
+                                    <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                         <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                                     </select>
                                 </div>
                                 <div class=" col-md-2 m-b nopad-right">
                                     <label>Blind<em class="text-muted"></em></label>
-                                    <select class="form-control" ng-model="order.is_blind">
+                                    <select class="form-control" ng-model="order.is_blind" name="is_blind" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                         <option value="0">No</option>
                                         <option value="1">Yes</option>
                                     </select>
@@ -46,45 +47,50 @@
                             <div class="form-group col-md-12 m-b nopad-form">
                                 <div class="col-md-2 m-b nopad-left">
                                     <label>Sales <em class="text-muted"></em></label>
-                                    <select  class="form-control" ng-model="order.sales_id">
+                                    <select  class="form-control" ng-model="order.sales_id" name="sales_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                         <option ng-repeat="staff in staffList" ng-selected="{{order.sales_id==staff.id}}" value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2 m-b">
                                     <label>Account Manager<em class="text-muted"></em></label>
-                                    <select  class="form-control" ng-model="order.brand_id">
+                                    <select  class="form-control" ng-model="order.brand_id" name="brand_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                         <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-2 m-b">
                                     <label>Expediter<em class="text-muted"></em></label>
-                                    <input type="text" class="form-control" ng-maxlength="255" name="cs_expediter"  ng-model="order.expediter">
+                                    <input type="text" class="form-control" ng-maxlength="255" name="expediter"  ng-model="order.expediter" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                     <br>
                                     <span style="color:#f44336" ng-show="orderAddForm.cs_expediter.$error.maxlength">Please enter Name less then 255 characters.</span>
                                 </div>
                                 <div class="col-md-2 m-b">
                                     <label>Customer PO<em class="text-muted"></em></label>
-                                    <input type="text" class="form-control" ng-maxlength="255" name="cs_customer_po"  ng-model="order.customer_po_id">
+                                    <input type="text" class="form-control" ng-maxlength="255"  ng-model="order.customer_po_id" name="customer_po_id" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                     <br>
                                     <span style="color:#f44336" ng-show="orderAddForm.cs_customer_po.$error.maxlength">Please enter Name less then 255 characters.</span>
                                 </div>
                                 <div class=" col-md-2 m-b nopad-right">
                                     <label>Order Main Contact<em class="text-muted"></em></label>
-                                    <select  class="form-control" ng-model="order.contact_main_id">
+                                    <select  class="form-control" ng-model="order.contact_main_id" name="contact_main_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                         <option ng-repeat="user in client_main_data" ng-selected="{{order.contact_main_id==user.id}}" value="{{user.id}}">{{user.first_name}}&nbsp;{{user.last_name}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-2 pull-right m-t text-right">
-                                    <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
-                                    <!--
-                                    <button type="button" class="btn btn-default addButton" tabindex="0">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    -->
-                                </div>
+                               
                             </div>
                         </div>
                         <div class="form-group col-md-2 m-b nopad-form smallPad orderLineCal">
+
+                            <div class="input-group col-md-12 pull-right nopad-right t-r m-b">
+                                <div class="col-md-3 pull-left nopad-right smallPad">
+                                    <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
+                                </div>                    
+                                <div class="col-md-3 pull-right nopad-right smallPad">
+                                    <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
+                                </div> 
+                                <div class="col-md-3 pull-right nopad-right smallPad">
+                                    <button ui-sref="order.list" type="button"  class="btn btn-info">Print</button>
+                                </div>                                 
+                            </div>
                             <div class="col-md-12 nopad-form">
                                 <div class="form-group col-md-6 text-right nopad-left smallPad">
                                     <label>Order Line Total</label>
@@ -110,10 +116,7 @@
                                 </div>
                             </div>
 
-                             <div class="input-group col-md-12 nopad-right t-r m-b">              
-                            <button  type="submit" class="btn btn-info" ng-click="saveOrderDetails(order,order.id)" ng-disabled="mainForm.$invalid">Submit</button>&nbsp;
-                            <button ui-sref="order.list" type="button"  class="btn btn-info">Cancel</button>
-                        </div>
+                            
 
 
                         </div>
@@ -464,7 +467,7 @@
                                                     <label> Total Units </label>
                                                 </div>                                                
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" class="form-control" ng-class="{ cred: total_qty != position_total_qty}" ng-model="total_qty" readonly="" /> 
+                                                    <input type="text" class="form-control" ng-class="{ cred: total_qty != pos_total_qty}" ng-model="total_qty" readonly="" /> 
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad"></div>
                                             </div>
@@ -963,13 +966,13 @@
                                                         <input type="text" class="form-control" disabled="" ng-model="order_note.created_date">
                                                     </div>
                                                     <div class="col-md-8 nopad-left">
-                                                        <input type="text" class="form-control" ng-model="order_note.order_notes">
+                                                        <input type="text" class="form-control" name="order_notes" ng-model="order_note.order_notes" ui-event="{ blur : 'updateOrderAll($event,order_note.note_id,\'order_notes\',\'note_id\')' }">
                                                     </div>
-                                                    <div class="col-md-1">
+                                                    <!-- <div class="col-md-1">
                                                         <button type="button" ng-click="editOrderPopup(order_note.note_id)" class="btn btn-default addButton">
                                                             <i class="fa fa-edit"></i>
                                                         </button>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="col-md-1">
                                                         <button type="button" ng-click="removeordernotes($index,order_note.note_id)" class="btn btn-default addButton">
                                                             <i class="fa fa-minus"></i>
@@ -986,13 +989,13 @@
                                                 <div class="col-md-12 nopad-form">
                                                     <div class="form-group">
                                                         <label class="col-md-12 nopad-form">Invoice Note<em class="text-muted"></em></label>
-                                                        <textarea cols="40" name="invoice_note" ui-event="{ blur : 'notesave($event,order_id)' }" ng-model="order.invoice_note" rows="4" class="col-md-12 nopad-form"></textarea>
+                                                        <textarea cols="40" name="invoice_note" ui-event="{ blur : 'updateOrderAll($event,order_id,\'orders\',\'id\')' }"  ng-model="order.invoice_note" rows="4" class="col-md-12 nopad-form"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 nopad-form">
                                                     <div class="form-group">
                                                         <label class="col-md-12 nopad-form">Garment Link<em class="text-muted"></em></label>
-                                                        <textarea cols="40" name="garment_link" ui-event="{ blur : 'notesave($event,order_id)' }" ng-model="order.garment_link" rows="4" class="col-md-12 nopad-form"></textarea>
+                                                        <textarea cols="40" name="garment_link" ui-event="{ blur : 'updateOrderAll($event,order_id,\'orders\',\'id\')' }" ng-model="order.garment_link" rows="4" class="col-md-12 nopad-form"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1001,7 +1004,7 @@
                                     <!-- End Notes -->
                                     <!-- Note Tasks -->
                                     <div role="tabpanel" class="tab-pane animated fadeIn col-md-12" id="tab_tasks">
-                                        NOTE TASKS
+                                        
                                     </div>
                                     <!-- End Note Tasks -->
                                 </div>
@@ -1051,7 +1054,7 @@
 
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                                <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderPO($event,orderPO.po_id)' }" >
+                                                <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderAll($event,orderPO.po_id,\'purchase_order\',\'po_id\')' }" >
                                                     <option ng-selected="orderPO.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
                                                 </select>
                                             </div>
