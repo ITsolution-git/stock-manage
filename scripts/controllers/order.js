@@ -643,6 +643,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
 
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
             });
       
     }
