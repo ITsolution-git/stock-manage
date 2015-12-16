@@ -179,6 +179,7 @@ Route::post('order/distributionDetail', 'OrderController@distributionDetail');
 Route::post('order/addToDistribute', 'OrderController@addToDistribute');
 Route::post('order/removeFromDistribute', 'OrderController@removeFromDistribute');
 Route::get('order/GetPoAlldata/{id}', 'OrderController@GetPodataAll');
+Route::post('order/updateOrderTask', 'OrderController@updateOrderTask');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
