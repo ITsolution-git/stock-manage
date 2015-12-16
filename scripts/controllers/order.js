@@ -932,10 +932,10 @@ $scope.position_id = id;
             po_data.textdata =textdata
 
             $http.post('api/public/order/saveButtonData',po_data).success(function(result) {
-
+                                get_po_detail(order_id,client_id);  
                             });
 
-            get_po_detail(order_id,client_id);  
+            
             
     }
 
