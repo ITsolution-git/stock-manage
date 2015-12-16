@@ -1,4 +1,4 @@
-app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
+app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$state','$filter','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$filter,$modal,AuthService,$log,AllConstant) {
 
 
           $("#ajax_loader").show();
@@ -66,8 +66,11 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
             var order_data = {};
             orderData.company_id =company_id;
             orderData.login_id =login_id;
+
             
             order_data.data = orderData;
+           
+            order_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
 
             order_data.table ='orders'
 
@@ -206,7 +209,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $("#ajax_loader").hide();
                 }
                 else {
-                    $state.go('app.dashboard');
+                    $state.go('order.list');
+                    $("#ajax_loader").hide();
                 }
             });
         }
@@ -685,6 +689,26 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
+
+    $scope.removePOLine = function(index,id) {
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
+  
+                var order_data = {};
+                order_data.table ='purchase_order_line'
+                order_data.cond ={id:id}
+                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                    
+                    var data = {"status": "success", "message": "Purchase Order Line has been deleted"}
+                    notifyService.notify(data.status, data.message);
+                });
+
+                $scope.ArrPoLine.splice(index,1);
+           
+        }
+    }
+
                   
     $scope.openOrderPopup = function (page) {
 
@@ -722,8 +746,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     $scope.openOrderPlacement = function (page,id,position_index) {
 
-
-if (id) {
+if (id != 0) {
 
 
 $scope.position_id = id;   

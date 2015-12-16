@@ -78,6 +78,18 @@ class OrderController extends Controller {
 
         $result = $this->order->orderDetail($data);
 
+        if(empty($result['order']))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+           
+
+        }
+
         if(!empty($result['order_line_data']))
         {
             $sum = 0;
@@ -147,7 +159,7 @@ class OrderController extends Controller {
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1'),array());
+        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
         $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
         $vendors = $this->common->getAllVendors();

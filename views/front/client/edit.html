@@ -403,7 +403,43 @@
                 </div>
               </div>
               <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11">Depends Order Module</div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">Depends Order Module</div>
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12">
+
+                <div class="form-group col-md-12 tabTitle nopad-form">
+                  <div class="col-md-2 nopad-left">OrderId</div>
+                  <div class="col-md-3 nopad-left">Job Name</div>
+                  <div class="col-md-2 nopad-left">Creted Date</div>
+                  <div class="col-md-4 nopad-left">Approval Status</div>
+                  <div class="col-md-1 nopad-left"></div>
+                </div>
+                <div class="form-group col-md-12 nopad-form">
+                  <div ng-repeat="(key,data_orders) in Client_orders" class="clientDetails">
+
+                    <div class="col-md-2 nopad-left">
+                      <input type="text" class="form-control" ng-model="data_orders.id" />
+                    </div>
+                    <div class="col-md-3 nopad-left">
+                      <input type="text" class="form-control" ng-model="data_orders.job_name"  />
+                    </div>
+                    <div class="col-md-2 nopad-left">
+                      <input type="text" class="form-control" ng-model="data_orders.created_date" />
+                    
+                    </div>
+                    <div class="col-md-4 nopad-left">
+                      <input type="text" class="form-control" ng-model="data_orders.value" />
+                    </div>
+                    <div class="col-md-1 nopad-form">
+                      <div class="sgpDetails btnCircle">
+                          <a class="" tabindex="0" role="button" title="Go To Order">
+                              <i ui-sref="order.edit({ id: data_orders.id,client_id: data_orders.client_id })" class="fa fa-arrow-circle-right"></i>
+                          </a>
+                       </div>
+                    </div>
+                  </div>
+
+                </div>
+              
+              </div>
               <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13">
                 <div class="form-group col-md-12 nopad-form tabTitle m-b">
                   <div class="col-md-4 nopad-left">Description</div>

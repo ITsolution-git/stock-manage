@@ -123,6 +123,7 @@
                             <li> <a href data-toggle="tab" data-target="#tab2">Order Lines</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab3">Distribution</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab4">Notes</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#schedule_tab">Schedule</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab5">Purchase Orders</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab6">Screen Sets</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab7">Art Work</a> </li>
@@ -211,11 +212,18 @@
                                             <div class="form-group col-md-4 nopad-left">
                                                 <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
-                                            <div class="form-group col-md-2 nopad-left sgpDetails">
+                                            
+
+
+                                            <div ng-class="order_position.placementvalue.length == 0 ? 'sgpDetails disabled-sgpDetails' : 'sgpDetails'"  class="form-group col-md-2 nopad-left">
                                               <a ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0">
                                                 <i class="mdi-maps-navigation"></i>
                                               </a>
                                             </div>
+
+
+
+
                                             <div class="form-group col-md-3 nopad-left">
                                                 <select  ng-model="order_position.placement_type" class="form-control" ng-change="updatePosition(orderPositionAll,order_position.id)">
                                                     <option ng-selected="order_position.placement_type==misc_placement.id" ng-repeat="misc_placement in miscData.placement_type" value={{misc_placement.id}}>{{misc_placement.value}}</option>
@@ -1035,10 +1043,10 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-3 nopad-left smallPad">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_id">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_id" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.po_type">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_type" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
                                                 <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderPO($event,orderPO.po_id)' }" >
@@ -1046,7 +1054,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
-                                              <input type="text" disabled="" class="form-control" ng-model="orderPO.date">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.date" ng-click="getPoAllData(orderPO.po_id)">
                                             </div>
                                             <div class="col-md-1 nopad-left">
                                                 <div class="sgpDetails">
@@ -1061,9 +1069,7 @@
                                                 </button>
                                             </div>
 
-                                            <div class=" col-md-1 nopad-left smallPad ">
-                                              <i class="mdi-navigation-arrow-forward text-lg m-t-sm" ng-click="getPoAllData(orderPO.po_id)"title="Unassign" role="button" tabindex="0"></i>
-                                            </div>
+                                           
 
 
                                         </div>
@@ -1123,9 +1129,11 @@
                                                  <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.total_qnty"/>
                                             </div>
                                             <div class="col-md-1 nopad-form">
-                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removePOLine($index,poline.id)">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
+
+
                                             </div>
                                         </div>
                                         <!-- / -->
