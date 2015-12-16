@@ -202,8 +202,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.order.order_line_total = order_line_total.toFixed(2);
 
                     $scope.position_total_qty = 0;
+                    $scope.pos_total_qty = 0;
                     angular.forEach($scope.orderPositionAll, function(value) {
                         $scope.position_total_qty += parseInt(value.qnty);
+                        $scope.pos_total_qty = parseInt(value.qnty);
                     });
 
                     $("#ajax_loader").hide();
@@ -216,22 +218,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
-    $scope.notesave = function($event,id) {
-
-        $scope.modalInstanceEdit  ='';
-
-        var event_column_name =  $event.target.name;
-
-        $scope.order_data_note = {};
-        $scope.order_data_note.data = {};
-        $scope.order_data_note.cond = {};
-        $scope.order_data_note['table'] ='orders'
-        $scope.order_data_note.data[event_column_name] = $event.target.value;
-        $scope.order_data_note.cond['id'] = $stateParams.id;
-        $http.post('api/public/common/UpdateTableRecords',$scope.order_data_note).success(function(result) {
-
-        });
-    }
+    
     $scope.modalInstanceEdit  ='';
     $scope.CurrentUserId =  sessionService.get('user_id');
     $scope.CurrentController=$state.current.controller;
@@ -472,18 +459,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
-    $scope.saveOrderDetails=function(postArray,id)
-    {
-        var order_data = {};
-        order_data.table ='orders'
-        order_data.data =postArray
-        order_data.cond ={id:id}
-        
-        $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-            $state.go('order.list');
-        });
-    }
-
     $scope.addPosition = function(postArray)
     {
         order_id = $stateParams.id;
@@ -651,20 +626,25 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }, 500);
     }
 
-    $scope.updateOrderPO = function($event,po_id)
+     $scope.updateOrderAll = function($event,id,table_name,match_condition)
     {
-        
-          var order_po_data = {};
-          order_po_data.table ='purchase_order';
+          var order_main_data = {};
+          order_main_data.table =table_name;
           $scope.name_filed = $event.target.name;
           var obj = {};
           obj[$scope.name_filed] =  $event.target.value;
-          order_po_data.data = angular.copy(obj);
+          order_main_data.data = angular.copy(obj);
+
+
+          var condition_obj = {};
+          condition_obj[match_condition] =  id;
+          order_main_data.cond = angular.copy(condition_obj);
           
-          order_po_data.cond ={ po_id :po_id}
 
-            $http.post('api/public/common/UpdateTableRecords',order_po_data).success(function(result) {
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
 
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
             });
       
     }
@@ -1496,8 +1476,10 @@ $scope.position_id = id;
 
 
                 $scope.position_total_qty = 0;
+                $scope.pos_total_qty = 0;
                 angular.forEach($scope.orderPositionAll, function(value) {
                     $scope.position_total_qty += parseInt(value.qnty);
+                    $scope.pos_total_qty = parseInt(value.qnty);
                 });
 
                 $scope.order.order_line_total = order_line_total.toFixed(2);

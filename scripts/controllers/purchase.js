@@ -48,13 +48,23 @@ app.controller('PurchasePOCtrl', ['$scope','$rootScope','$sce',  '$http','$modal
                                           $scope.received_line = PoData.data.records.received_line;
                                           $scope.currentPOUrl = $sce.trustAsResourceUrl(PoData.data.records.po[0].url);
                                           $scope.order_id = PoData.data.records.order_id;
+                                          $scope.list_vendors = PoData.data.records.list_vendors
                                           getNotesDetail(po_id);
+                                          get_contacts_vendors($scope.ArrPo.vendor_id);
                                           AJloader.hide();
                                         // console.log($scope.ordered);
                                   });
                        		}
                        		
-
+                          function get_contacts_vendors(vendor_id)
+                          {
+                              var ArrNotes = {};
+                              ArrNotes.table ='vendor_contacts'
+                              ArrNotes.cond ={vendor_id: vendor_id}
+                              $http.post('api/public/common/GetTableRecords',ArrNotes).success(function(result) {
+                                     $scope.AllContacts =result.data.records;
+                               });
+                          }
                        	  function short_over(poline_id)
                           {
                           		$http.get('api/public/purchase/short_over/'+poline_id).success(function(result) {
@@ -221,6 +231,13 @@ app.controller('PurchasePOCtrl', ['$scope','$rootScope','$sce',  '$http','$modal
                           $scope.UpdateField_order = function($event){
                           		  var Receive_data = {};
                           		 // Receive_data.data = [];
+                              // / console.log($event.target.name);
+                                if($event.target.name=='vendor_id')
+                                {
+                                  get_contacts_vendors($event.target.value);
+                                  $("#vendor_contact_id").focus();
+                                }
+
                           		  $scope.name_filed = $event.target.name;
                           		  var obj = {};
                           		  obj[$scope.name_filed] =  $event.target.value;
@@ -266,16 +283,30 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                           		  {
                           		  		  if(PoData.data.success==0)
                           		  		  {
-                          		  		  	$state.go('purchase.list',{"id":'cp'});
-                           					return false;
+                          		  		  	  $state.go('purchase.list',{"id":'cp'});
+                           					      return false;
                           		  		  }
                                           $scope.ArrPo = PoData.data.records.screen_data[0];
                                           $scope.ArrPoLine = PoData.data.records.screen_line;
                                           $scope.ordered = PoData.data.records.order_total[0];
                                           $scope.order_id = PoData.data.records.order_id;
+                                          $scope.list_vendors = PoData.data.records.list_vendors;
+                                          //console.log($scope.list_vendors);
+                                          get_contacts_vendors($scope.ArrPo.vendor_id);
                                           AJloader.hide();
                                   });
                        		}
+
+                           function get_contacts_vendors(vendor_id)
+                          {
+                              var ArrNotes = {};
+                              ArrNotes.table ='vendor_contacts'
+                              ArrNotes.cond ={vendor_id: vendor_id}
+                              $http.post('api/public/common/GetTableRecords',ArrNotes).success(function(result) {
+                                     $scope.AllContacts =result.data.records;
+                               });
+                          }
+
 						  $scope.UpdateField_detail = function($event,id){
                           		  var Receive_data = {};
                           		  Receive_data.table ='purchase_order_line';
@@ -293,6 +324,11 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                           $scope.UpdateField_order = function($event){
                           		  var Receive_data = {};
                           		 // Receive_data.data = [];
+                               if($event.target.name=='vendor_id')
+                                {
+                                  get_contacts_vendors($event.target.value);
+                                  $("#vendor_contact_id").focus();
+                                }
                           		  $scope.name_filed = $event.target.name;
                           		  var obj = {};
                           		  obj[$scope.name_filed] =  $event.target.value;
