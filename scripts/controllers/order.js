@@ -172,6 +172,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
                     $scope.order_items = result.data.order_item;
+                    $scope.orderTaskAll = result.data.order_task;
                    // $scope.order_po_data = result.data.order_po_data;
 
                     $scope.price_grid =result.data.price_grid[0];

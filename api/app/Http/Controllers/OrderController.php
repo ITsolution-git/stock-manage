@@ -152,13 +152,23 @@ class OrderController extends Controller {
         $price_id = $result['order'][0]->price_id;
         $client_id = $result['order'][0]->client_id;
 
-        $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id),array());
-        $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
-        $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
-        $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
-        $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
-        $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
+        $price_grid = array();
+        $price_garment_mackup = array();
+        $price_screen_primary = array();
+        $price_screen_secondary = array();
+        $price_direct_garment = array();
+        $embroidery_switch_count = array();
 
+        if($price_id > 0)
+        {
+            $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id),array());
+            $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
+            $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
+            $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
+            $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
+            $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
+        }
+        
         $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
         $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
@@ -176,6 +186,7 @@ class OrderController extends Controller {
                                 'order_position' => $result['order_position'],
                                 'order_line' => $result['order_line'],
                                 'order_item' => $result['order_item'],
+                                'order_task' => $result['order_task_data'],
                                 'price_grid' => $price_grid,
                                 'price_garment_mackup' => $price_garment_mackup,
                                 'price_screen_primary' => $price_screen_primary,

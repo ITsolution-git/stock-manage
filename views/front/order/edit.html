@@ -1001,7 +1001,70 @@
                                     <!-- End Notes -->
                                     <!-- Note Tasks -->
                                     <div role="tabpanel" class="tab-pane animated fadeIn col-md-12" id="tab_tasks">
-                                        
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-1"></div>
+                                            <div class="form-group col-md-1">
+                                                <label>Created</label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label>Due Date</label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Time</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Task</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Result</span></label>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label class="rotateText"><span>Note</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Status</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Type</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1"></div>
+                                        </div>
+                                        <div class="col-md-12" ng-repeat="task in orderTaskAll">
+                                            <div class="col-md-1 m-b">
+                                                <div class="sgpDetails btnCircle">
+                                                  <a title="Move" role="button" tabindex="0" class="" ng-click="openTaskPopup('edit_task.html',task.id,$index)">
+                                                    <i class="fa fa-arrow-circle-right"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.date_added"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.due_date"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.created_date"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.task_name"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.result_name"/>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" class="form-control" ng-model="task.note"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.status"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.type"/>
+                                            </div>
+                                            <div class="form-group lastItem">
+                                                <button type="button" ng-click="removeOrderText($index,task.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!-- End Note Tasks -->
                                 </div>
