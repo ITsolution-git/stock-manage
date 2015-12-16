@@ -32,25 +32,45 @@
                     <label>Job<em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="ArrPo.job_name"  >
                   </div>
-                  <div class="col-sm-2 m-b">
+                  <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>Created for date<em class="text-muted"></em></label>
-                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" name="created_for_date" class="form-control" ng-model="ArrPo.created_for_date"  >
+                      <p class="input-group">
+                        <input name="created_for_date" type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.created_for_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
                   </div>
-                  <div class="col-sm-2 m-b">
+                  <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>Product to vendor Arrival<em class="text-muted"></em></label>
-                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_arrival_date" class="form-control" ng-model="ArrPo.vendor_arrival_date"  >
+                     <p class="input-group">
+                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_arrival_date"  type="text" class="form-control"   datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.vendor_arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
                   </div>
-                  <div class="col-sm-2 m-b">
+                  <div class="col-sm-2 m-b"  ng-controller="DatepickerDemoCtrl">
                     <label>Vendor deadline<em class="text-muted"></em></label>
-                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_deadline" class="form-control" ng-model="ArrPo.vendor_deadline"  >
+                    <p class="input-group">
+                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_deadline"  type="text" class="form-control"   datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.vendor_deadline"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
                   </div>
                   <div class="col-sm-2 m-b">
-                    <label>Vendor<em class="text-muted"></em></label>
-                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.name_company"  >
+                     <label>Vendor<em class="text-muted"></em></label>
+                     <select class="form-control" ng-model="ArrPo.vendor_id" name="vendor_id" ui-event="{ change : 'UpdateField_order($event)' }">
+                     <option ng-repeat="item in list_vendors" value="{{item.id}}"   ng-selected="{{ArrPo.vendor_id==item.id}}">{{item.name_company}}</option>
+                    </select>
                   </div>
                   <div class="col-sm-2 m-b">
-                    <label>Contact<em class="text-muted"></em></label>
-                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.first_name"  >
+                      <label>Contact<em class="text-muted"></em></label>
+                      <select class="form-control" id="vendor_contact_id" ng-model="ArrPo.vendor_contact_id" name="vendor_contact_id" ui-event="{ change : 'UpdateField_order($event)' }">
+                      <option value="">Select Type</option>
+                      <option ng-repeat="item in AllContacts" value="{{item.id}}"   ng-selected="{{ArrPo.vendor_contact_id==item.id}}">{{item.first_name}}{{item.last_name}}</option>
+                    </select>
                   </div>
             </div>
 
