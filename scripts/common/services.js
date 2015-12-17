@@ -96,11 +96,13 @@
         }
     ])
     .factory('sessionService', [
-                '$rootScope', '$state', '$http', function ($rootScope, $state, $http) {
-
+                '$rootScope', '$state', '$http','$q', function ($rootScope, $state, $http,$q) {
+                    var deferred = $q.defer();
                     return {
                         set: function (key, value) {
-                            return sessionStorage.setItem(key, value);
+                            deferred.resolve(Response.data);
+                            sessionStorage.setItem(key, value);
+                            return deferred.promise;
                         },
                         get: function (key) {
                             return sessionStorage.getItem(key);
