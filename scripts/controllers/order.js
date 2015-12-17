@@ -1391,25 +1391,25 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             {
                 angular.forEach($scope.price_grid_markup, function(value) {
 
-                    $scope.shipping_charge = value.percentage;
-                    var garment_mackup = parseInt(value.percentage)/100;
-                    var avg_garment_price = parseFloat($scope.price_grid.shipping_charge) * parseFloat(garment_mackup) + parseFloat($scope.price_grid.shipping_charge);
-                    $scope.avg_garment_price = avg_garment_price.toFixed(2);
-                    $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
-
-                    $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges);
-                    var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
-                    $scope.per_line_total = line_total.toFixed(2);
-
                     if(parseInt($scope.position_qty) >= parseInt(value.range_low) && parseInt($scope.position_qty) <= parseInt(value.range_high))
                     {
+                        $scope.shipping_charge = value.percentage;
+                        var garment_mackup = parseInt(value.percentage)/100;
+                        var avg_garment_price = parseFloat($scope.price_grid.shipping_charge) * parseFloat(garment_mackup) + parseFloat($scope.price_grid.shipping_charge);
+                        $scope.avg_garment_price = avg_garment_price.toFixed(2);
+                        $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
+
+                        $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges);
+                        var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
+                        $scope.per_line_total = line_total.toFixed(2);
+
                         var orderline_data = {};
                         orderline_data.data = {'avg_garment_cost' : $scope.avg_garment_cost,
                                                 'avg_garment_price' : $scope.avg_garment_price,
                                                 'print_charges' : $scope.print_charges,
                                                 'peritem' : $scope.per_item,
                                                 'per_line_total' : $scope.per_line_total,
-                                                'markup' : $scope.shipping_charge,
+                                                'markup' : $scope.shipping_charge
                                             };
                         orderline_data.cond = {};
                         orderline_data['table'] ='order_orderlines'
@@ -1684,7 +1684,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
-    $scope.openTaskPopup = function (page,id,position_index) {
+    $scope.openTaskPopup = function (page,id) {
 
         if (id != 0) {
 

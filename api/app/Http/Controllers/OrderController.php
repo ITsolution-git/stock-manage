@@ -162,14 +162,13 @@ class OrderController extends Controller {
         $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id),array());
         if($price_id > 0)
         {
-            
             $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
             $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
             $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
             $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
             $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
         }
-        
+
         $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
         $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
