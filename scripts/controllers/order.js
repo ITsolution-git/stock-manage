@@ -1745,21 +1745,31 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
   // **************** NOTES TAB CODE END  ****************
 
 
-  $scope.getPoAllData = function(poline_id){
-                          
-                    GetPoAll(poline_id);
-                }
+    $scope.getPoAllData = function(poline_id){
+        GetPoAll(poline_id);
+    }
+    function GetPoAll(po_id)
+    {
+        AJloader.show();
+        $http.get('api/public/order/GetPoAlldata/'+po_id ).success(function(PoData) 
+        {
+            $scope.ArrPoLine = PoData.data.records.poline;
+            AJloader.hide();
+        });
+    }
 
-                function GetPoAll(po_id)
-                           {
-                                AJloader.show();
-                                $http.get('api/public/order/GetPoAlldata/'+po_id ).success(function(PoData) 
-                                  {
-                                          
-                                          $scope.ArrPoLine = PoData.data.records.poline;
-                                          AJloader.hide();
-                                  });
-                            }
+    $scope.updateDistributedQty = function(id,qty)
+    {
+        $("#ajax_loader").show();
+        var task = {};
+        task.id = id;
+        task.qty = qty;
+
+        $http.post('api/public/order/updateDistributedQty',task).success(function(result, status, headers, config) {
+            get_distribution_list($scope.order_id,$scope.client_id);
+        });
+        $("#ajax_loader").hide();
+    }
 
                                        
 }]);
