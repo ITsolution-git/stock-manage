@@ -595,13 +595,9 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         order_data_insert.table ='order_orderlines';
 
         $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
+            get_order_details(order_id,client_id,company_id);
+            $("#ajax_loader").hide();
         });
-
-        setTimeout(function () {
-                                $('.form-control').removeClass('ng-dirty');
-                                $("#ajax_loader").hide();
-                                get_order_details(order_id,client_id,company_id);
-        }, 500);
     }
     $scope.updateOrderLine = function(postArray,orderline_id)
     {
