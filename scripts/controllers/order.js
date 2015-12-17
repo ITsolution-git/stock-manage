@@ -477,6 +477,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     }
     $scope.updatePosition = function(postArray,position_id)
     {
+        $("#ajax_loader").show();
         angular.forEach($scope.orderPositionAll, function(value) {
 
             if(value.id == position_id)
@@ -486,15 +487,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 order_data.data =value
                 order_data.cond ={id:value.id}
                 $http.post('api/public/order/updatePositions',order_data).success(function(result) {
-
-                });
-                angular.forEach($scope.orderLineAll, function(value) {
-                    $scope.calculate_all(value.id);
+                    $scope.calculate_charge();
+                    $("#ajax_loader").hide();
                 });
             }
         });
-
-        $scope.calculate_charge();
     }
     $scope.savePositionData=function(postArray)
     {
@@ -1739,7 +1736,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
-
+       } else if((tab_name == 'orderline')){
+            angular.forEach($scope.orderLineAll, function(value) {
+                    $scope.calculate_all(value.id);
+            });
        }
     }
   // **************** NOTES TAB CODE END  ****************
