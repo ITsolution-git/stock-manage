@@ -872,7 +872,7 @@
                                                         <input type="text" class="form-control" ng-model="oitem.size" onfocus="this.blur()">
                                                     </div>
                                                     <div class="col-md-2 smallPad m-b nopad-left">
-                                                        <input type="text" class="form-control" ng-model="oitem.qnty" onfocus="this.blur()">
+                                                        <input type="text" class="form-control" ng-model="oitem.qnty" ng-blur="updateDistributedQty(oitem.id,oitem.qnty)">
                                                     </div>
                                                     <div class="col-md-3 m-b nopad-form">
                                                         <input type="text" class="form-control" ng-model="oitem.main_contact_person" onfocus="this.blur()">

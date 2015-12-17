@@ -570,7 +570,7 @@ class OrderController extends Controller {
         else
         {
             $result = $this->common->InsertRecords('item_address_mapping',$post);
-            $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
+            $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
             
             $success=1;
             $message=UPDATE_RECORD;
@@ -590,7 +590,7 @@ class OrderController extends Controller {
             foreach ($item_data as $item) {
                 if($item->item_id > 0)
                 {
-                    $this->common->UpdateTableRecords('purchase_detail',array('id' => $item->item_id),array('is_distribute' => '0'));
+                    $this->common->UpdateTableRecords('distribution_detail',array('id' => $item->item_id),array('is_distribute' => '0'));
                 }
             }
 
@@ -602,7 +602,7 @@ class OrderController extends Controller {
         }
         else
         {
-            $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['item_id']),array('is_distribute' => '0'));
+            $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '0'));
             
             $post['cond'] = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
             $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
@@ -664,6 +664,32 @@ class OrderController extends Controller {
             unset($post['data']['result_name']);
         }
         $this->common->UpdateTableRecords('order_tasks',$post['cond'],$post['data']);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+    public function updateDistributedQty()
+    {
+        $post = Input::all();
+        $dist_addr = $this->common->GetTableRecords('distribution_detail',array('id' => $post['id']),array());
+        $qty = $dist_addr[0]->qnty - $post['qty'];
+
+        $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['id']),array('qnty' => $post['qty']));
+
+        if($qty > 0)
+        {
+            $insert_data = array(
+                                'orderline_id' => $dist_addr[0]->orderline_id,
+                                'order_id' => $dist_addr[0]->order_id,
+                                'size' => $dist_addr[0]->size,
+                                'qnty' => $qty,
+                                'status' => '1',
+                                'date' => $dist_addr[0]->date,
+                                'is_distribute' => '0'
+                                );
+
+            $this->common->InsertRecords('distribution_detail',$insert_data);
+        }
         $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
     }
