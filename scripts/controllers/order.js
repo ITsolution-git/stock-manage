@@ -30,23 +30,29 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
         }
     } // DELETE ORDER FINISH
 
-    var companyData = {};
-    companyData.table ='client'
-    companyData.cond ={status:1,is_delete:1,company_id:company_id}
-    
-    $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
+
+    function get_company_data()
+    {
+        var companyData = {};
+        companyData.table ='client'
+        companyData.cond ={status:1,is_delete:1,company_id:company_id}
         
-        if(result.data.success == '1') 
-        {
-            $scope.allCompany =result.data.records;
-        } 
-        else
-        {
-            $scope.allCompany=[];
-        }
-    });
+        $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.allCompany =result.data.records;
+            } 
+            else
+            {
+                $scope.allCompany=[];
+            }
+        });
+     }
 
     $scope.openpopup = function () {
+
+        get_company_data();
 
         var modalInstance = $modal.open({
                                         animation: $scope.animationsEnabled,
@@ -804,7 +810,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         modalInstance.result.then(function (selectedItem) {
             $scope.selected = selectedItem;
         }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
+          //  $log.info('Modal dismissed at: ' + new Date());
         });
 
         $scope.ok = function (orderData) {
