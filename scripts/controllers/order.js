@@ -879,8 +879,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     $scope.saveButtonData=function(textdata)
     {
-       
-
+         
         if(textdata == 'cp') {
             
 
@@ -916,7 +915,9 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             po_data.textdata =textdata
 
             $http.post('api/public/order/saveButtonData',po_data).success(function(result) {
-                                get_po_detail(order_id,client_id);  
+                                get_po_detail(order_id,client_id);
+                                $('.tab5').tab('show');
+
                             });
 
             
