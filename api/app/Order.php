@@ -204,7 +204,11 @@ public function saveOrderNotes($post)
 
            $insertednewid = DB::getPdo()->lastInsertId();
 
-         
+            $distribution_detail = DB::table('distribution_detail')->insert(['orderline_id'=>$insertedid,
+                'size'=>$row['size'],
+                'order_id'=>$post['order_id'],
+                'qnty'=>$row['qnty'],
+                'date'=>$post['created_date']]);
 
         } 
 
@@ -243,8 +247,12 @@ public function updateOrderLineData($post)
                                     'date'=>$post['created_date'])
                             );
 
-      
-         
+      $distribution_detail = DB::table('distribution_detail')
+                    ->where('id','=',$row['id'])
+                    ->update(array( 'size'=>$row['size'],
+                                    'qnty'=>$row['qnty'],
+                                    'date'=>$post['created_date'])
+                            );
 
     } 
 
@@ -486,7 +494,7 @@ public function updateOrderLineData($post)
         $orderData = DB::table('orders as order')
                         ->select($listArray)
                         ->leftJoin('order_orderlines as ol', 'order.id', '=', 'ol.order_id')
-                        ->leftJoin('purchase_detail as pd', 'ol.id', '=', 'pd.orderline_id')
+                        ->leftJoin('distribution_detail as pd', 'ol.id', '=', 'pd.orderline_id')
                         ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
                         ->leftJoin('products as p','p.id','=','ol.product_id')
                         ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
@@ -514,7 +522,7 @@ public function updateOrderLineData($post)
         $orderData = DB::table('orders as order')
                         ->select($listArray)
                         ->leftJoin('order_orderlines as ol', 'order.id', '=', 'ol.order_id')
-                        ->leftJoin('purchase_detail as pd', 'ol.id', '=', 'pd.orderline_id')
+                        ->leftJoin('distribution_detail as pd', 'ol.id', '=', 'pd.orderline_id')
                         ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
                         ->leftJoin('products as p','p.id','=','ol.product_id')
                         ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
