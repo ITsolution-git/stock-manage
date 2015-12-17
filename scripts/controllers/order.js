@@ -109,8 +109,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
      var AJloader = $("#ajax_loader");
 
     get_order_details(order_id,client_id,company_id);
-    get_po_detail(order_id,client_id);
-    get_distribution_list(order_id,client_id);
+    
 
     function get_po_detail(order_id,client_id)
     {
@@ -926,8 +925,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     
     // **************** NOTES TAB CODE END  ****************
-
-    getNotesDetail(order_id);
     
     function getNotesDetail(order_id)
     {
@@ -1737,8 +1734,17 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     };
 
-    $scope.openTab = function(){
+    $scope.openTab = function(tab_name){
+       if(tab_name == 'distribution'){
         get_distribution_list($scope.order_id,$scope.client_id);
+
+       } else if(tab_name == 'purchaseorder') {
+        get_po_detail($scope.order_id,$scope.client_id);
+
+       } else if(tab_name == 'notes') {
+        getNotesDetail($scope.order_id);
+
+       }
     }
   // **************** NOTES TAB CODE END  ****************
 
