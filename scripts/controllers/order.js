@@ -1691,33 +1691,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
         if (id != 0) {
 
-            $scope.position_id = id;   
-        
-            getPDataByPosService.getPlacementDataBySizeGroup().then(function(result){
-           
-                if(result.data.data.success == '1') 
-                {
-                    $scope.size_group =result.data.data.records;
-                    $scope.position_index =position_index;
-                } 
-                else
-                {
-                    $scope.size_group=[];
-                }
-            });
-
-            getPDataByPosService.getPlacementDataByPosition(id).then(function(result){
-
-                if(result.data.data.success == '1') 
-                {
-                    $scope.positiondata =result.data.data.records;
-                } 
-                else
-                {
-                    $scope.positiondata=[];
-                }
-            });
-
             var modalInstance = $modal.open({
                                 templateUrl: 'views/front/order/'+page,
                                 scope : $scope,
@@ -1740,7 +1713,26 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             };
         }
         else {
-            alert("Please select position.");return false;
+            var modalInstance = $modal.open({
+                                templateUrl: 'views/front/order/'+page,
+                                scope : $scope,
+                            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                //$log.info('Modal dismissed at: ' + new Date());
+            });
+
+            $scope.closePopup = function (cancel)
+            {
+                modalInstance.dismiss('cancel');
+            };
+
+            $scope.saveSizeGroup=function(savePositionDataAll)
+            {
+                modalInstance.dismiss('cancel');
+            };
         }
     };
 
