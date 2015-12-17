@@ -627,7 +627,9 @@ a.btnEditOrder:hover {
 	font-size: 1em;
 	font-weight: bold;
 }
-
+.orderNoteTab .btnAddTask button i.fa {
+	margin-right: 5px;
+} 
 /*---------------------------
 		POSITION TAB
 ---------------------------*/
@@ -864,11 +866,9 @@ input[readonly].cgreen {
 	height: 34px;
 	background: url(../images/icon-t-shirt.jpg) no-repeat center center;
 }
-
 .po-link-class{
 	cursor: pointer;
 }
-
 
 /*----- DISTRIBUSTION TAB -----*/
 .orderDistributionContainer {
@@ -880,9 +880,15 @@ input[readonly].cgreen {
 .orderDistributionContainer .col-md-12 {
 	padding-top: 15px;
 }
+
+.orderDistributionContainer .col-md-12:nth-child(2n) {
+	background: #e5e5e5;	
+}
+
 /*.orderDistributionContainer .col-md-12:nth-child(2n) {
 	background: #e5e5e5;	
 }*/
+
 .orderDistributionContainer .col-md-12:hover,
 .orderDistributionContainer .col-md-12.active {
 	background: #999;
@@ -894,6 +900,29 @@ input[readonly].cgreen {
 	background: #999;
 }
 
+/*----- NOTES TAB -----*/
+
+/* Task Edit Popup */
+.order_notes_tasks {
+	padding: 20px 15px;
+}
+.order_notes_tasks .modal-body {
+	padding: 15px 0;
+	overflow: hidden;
+}
+
+.order_notes_tasks h3.modal-title {
+	line-height: 26px;
+	font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+.order_notes_tasks textarea.form-control.task_desc {
+	height: 83px;
+}
+.order_notes_tasks textarea.form-control.task_notes {
+	height: 180px;
+}
 /*---------- END ----------*/
 
 
