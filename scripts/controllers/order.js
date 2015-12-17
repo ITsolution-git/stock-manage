@@ -172,6 +172,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
                     $scope.order_items = result.data.order_item;
+                    $scope.orderTaskAll = result.data.order_task;
                    // $scope.order_po_data = result.data.order_po_data;
 
                     $scope.price_grid =result.data.price_grid[0];
@@ -202,8 +203,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.order.order_line_total = order_line_total.toFixed(2);
 
                     $scope.position_total_qty = 0;
+                    $scope.pos_total_qty = 0;
                     angular.forEach($scope.orderPositionAll, function(value) {
                         $scope.position_total_qty += parseInt(value.qnty);
+                        $scope.pos_total_qty = parseInt(value.qnty);
                     });
 
                     $("#ajax_loader").hide();
@@ -216,22 +219,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
-    $scope.notesave = function($event,id) {
-
-        $scope.modalInstanceEdit  ='';
-
-        var event_column_name =  $event.target.name;
-
-        $scope.order_data_note = {};
-        $scope.order_data_note.data = {};
-        $scope.order_data_note.cond = {};
-        $scope.order_data_note['table'] ='orders'
-        $scope.order_data_note.data[event_column_name] = $event.target.value;
-        $scope.order_data_note.cond['id'] = $stateParams.id;
-        $http.post('api/public/common/UpdateTableRecords',$scope.order_data_note).success(function(result) {
-
-        });
-    }
+    
     $scope.modalInstanceEdit  ='';
     $scope.CurrentUserId =  sessionService.get('user_id');
     $scope.CurrentController=$state.current.controller;
@@ -472,18 +460,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
-    $scope.saveOrderDetails=function(postArray,id)
-    {
-        var order_data = {};
-        order_data.table ='orders'
-        order_data.data =postArray
-        order_data.cond ={id:id}
-        
-        $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-            $state.go('order.list');
-        });
-    }
-
     $scope.addPosition = function(postArray)
     {
         order_id = $stateParams.id;
@@ -651,20 +627,25 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }, 500);
     }
 
-    $scope.updateOrderPO = function($event,po_id)
+     $scope.updateOrderAll = function($event,id,table_name,match_condition)
     {
-        
-          var order_po_data = {};
-          order_po_data.table ='purchase_order';
+          var order_main_data = {};
+          order_main_data.table =table_name;
           $scope.name_filed = $event.target.name;
           var obj = {};
           obj[$scope.name_filed] =  $event.target.value;
-          order_po_data.data = angular.copy(obj);
+          order_main_data.data = angular.copy(obj);
+
+
+          var condition_obj = {};
+          condition_obj[match_condition] =  id;
+          order_main_data.cond = angular.copy(condition_obj);
           
-          order_po_data.cond ={ po_id :po_id}
 
-            $http.post('api/public/common/UpdateTableRecords',order_po_data).success(function(result) {
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
 
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
             });
       
     }
@@ -746,88 +727,71 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     $scope.openOrderPlacement = function (page,id,position_index) {
 
-if (id != 0) {
+        if (id != 0) {
 
-
-$scope.position_id = id;   
+            $scope.position_id = id;   
         
-        getPDataByPosService.getPlacementDataBySizeGroup().then(function(result){
+            getPDataByPosService.getPlacementDataBySizeGroup().then(function(result){
            
-            if(result.data.data.success == '1') 
-              {
-                  $scope.size_group =result.data.data.records;
-                  $scope.position_index =position_index;
+                if(result.data.data.success == '1') 
+                {
+                    $scope.size_group =result.data.data.records;
+                    $scope.position_index =position_index;
+                } 
+                else
+                {
+                    $scope.size_group=[];
+                }
+            });
 
-              } 
-              else
-              {
-                  $scope.size_group=[];
-              }
-        });
+            getPDataByPosService.getPlacementDataByPosition(id).then(function(result){
 
+                if(result.data.data.success == '1') 
+                {
+                    $scope.positiondata =result.data.data.records;
+                } 
+                else
+                {
+                    $scope.positiondata=[];
+                }
+            });
 
-        getPDataByPosService.getPlacementDataByPosition(id).then(function(result){
-           
-
-            if(result.data.data.success == '1') 
-              {
-                  $scope.positiondata =result.data.data.records;
-
-              } 
-              else
-              {
-                  $scope.positiondata=[];
-              }
-        });
-
-        var modalInstance = $modal.open({
+            var modalInstance = $modal.open({
                                 templateUrl: 'views/front/order/'+page,
                                 scope : $scope,
                             });
 
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            //$log.info('Modal dismissed at: ' + new Date());
-        });
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                //$log.info('Modal dismissed at: ' + new Date());
+            });
 
-        $scope.closePopup = function (cancel)
-        {
-            modalInstance.dismiss('cancel');
-        };
-        
+            $scope.closePopup = function (cancel)
+            {
+                modalInstance.dismiss('cancel');
+            };
 
-         $scope.saveSizeGroup=function(savePositionDataAll)
-        {
-           
-           modalInstance.dismiss('cancel');
-           
-        };
-
-
-
-    } else {
-     alert("Please select position.");return false;
-    }
+            $scope.saveSizeGroup=function(savePositionDataAll)
+            {
+                modalInstance.dismiss('cancel');
+            };
+        }
+        else {
+            alert("Please select position.");return false;
+        }
     };
-
-
 
     $scope.openPriceGrid=function(gridid)
     {
-       
         var url = $state.href('setting.priceedit', {id: gridid});
         window.open(url,'_blank');
-
     }
 
-
-     $scope.openCompany=function(companyid)
+    $scope.openCompany=function(companyid)
     {
-       
         var url = $state.href('client.edit', {id: companyid});
         window.open(url,'_blank');
-
     }
 
     $scope.addCompany=function()
@@ -952,10 +916,10 @@ $scope.position_id = id;
             po_data.textdata =textdata
 
             $http.post('api/public/order/saveButtonData',po_data).success(function(result) {
-
+                                get_po_detail(order_id,client_id);  
                             });
 
-            get_po_detail(order_id,client_id);  
+            
             
     }
 
@@ -1496,8 +1460,10 @@ $scope.position_id = id;
 
 
                 $scope.position_total_qty = 0;
+                $scope.pos_total_qty = 0;
                 angular.forEach($scope.orderPositionAll, function(value) {
                     $scope.position_total_qty += parseInt(value.qnty);
+                    $scope.pos_total_qty = parseInt(value.qnty);
                 });
 
                 $scope.order.order_line_total = order_line_total.toFixed(2);
@@ -1679,6 +1645,99 @@ $scope.position_id = id;
             get_distribution_list($scope.order_id,$scope.client_id);
         });
         $("#ajax_loader").hide();
+    }
+    
+    $scope.updateOrderTask = function($event,id,table_name,match_condition)
+    {
+        var order_main_data = {};
+        order_main_data.table =table_name;
+        $scope.name_filed = $event.target.name;
+        var obj = {};
+        obj[$scope.name_filed] =  $event.target.value;
+        order_main_data.data = angular.copy(obj);
+
+
+        var condition_obj = {};
+        condition_obj[match_condition] =  id;
+        order_main_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/order/updateOrderTask',order_main_data).success(function(result) {
+            var data = {"status": "success", "message": "Order Task has been updated"}
+                    notifyService.notify(data.status, data.message);
+        });
+      
+    }
+
+    $scope.removeOrderText = function(index,id) {
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
+  
+                var order_data = {};
+                order_data.table ='order_tasks'
+                order_data.cond ={id:id}
+                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                    
+                    var data = {"status": "success", "message": "Order Task has been deleted"}
+                    notifyService.notify(data.status, data.message);
+                });
+
+                $scope.orderTaskAll.splice(index,1);
+           
+        }
+    }
+
+    $scope.openTaskPopup = function (page,id,position_index) {
+
+        if (id != 0) {
+
+            var modalInstance = $modal.open({
+                                templateUrl: 'views/front/order/'+page,
+                                scope : $scope,
+                            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                //$log.info('Modal dismissed at: ' + new Date());
+            });
+
+            $scope.closePopup = function (cancel)
+            {
+                modalInstance.dismiss('cancel');
+            };
+
+            $scope.saveSizeGroup=function(savePositionDataAll)
+            {
+                modalInstance.dismiss('cancel');
+            };
+        }
+        else {
+            var modalInstance = $modal.open({
+                                templateUrl: 'views/front/order/'+page,
+                                scope : $scope,
+                            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                //$log.info('Modal dismissed at: ' + new Date());
+            });
+
+            $scope.closePopup = function (cancel)
+            {
+                modalInstance.dismiss('cancel');
+            };
+
+            $scope.saveSizeGroup=function(savePositionDataAll)
+            {
+                modalInstance.dismiss('cancel');
+            };
+        }
+    };
+
+    $scope.openTab = function(){
+        get_distribution_list($scope.order_id,$scope.client_id);
     }
   // **************** NOTES TAB CODE END  ****************
 

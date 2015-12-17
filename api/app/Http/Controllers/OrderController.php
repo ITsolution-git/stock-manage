@@ -152,13 +152,23 @@ class OrderController extends Controller {
         $price_id = $result['order'][0]->price_id;
         $client_id = $result['order'][0]->client_id;
 
-        $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id),array());
-        $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
-        $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
-        $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
-        $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
-        $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
+        $price_grid = array();
+        $price_garment_mackup = array();
+        $price_screen_primary = array();
+        $price_screen_secondary = array();
+        $price_direct_garment = array();
+        $embroidery_switch_count = array();
 
+        if($price_id > 0)
+        {
+            $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id),array());
+            $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
+            $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
+            $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
+            $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
+            $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
+        }
+        
         $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
         $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
@@ -176,6 +186,7 @@ class OrderController extends Controller {
                                 'order_position' => $result['order_position'],
                                 'order_line' => $result['order_line'],
                                 'order_item' => $result['order_item'],
+                                'order_task' => $result['order_task_data'],
                                 'price_grid' => $price_grid,
                                 'price_garment_mackup' => $price_garment_mackup,
                                 'price_screen_primary' => $price_screen_primary,
@@ -615,5 +626,45 @@ class OrderController extends Controller {
         $result = array('poline'=>$poline);
         $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
         return  response()->json(["data" => $response]);
+    }
+
+    public function updateOrderTask()
+    {
+        $post = Input::all();
+
+        if(isset($post['data']['task_name']) && $post['data']['task_name'] != '')
+        {
+            $task_arr = $this->common->GetTableRecords('task',array('task_name' => $post['data']['task_name']),array());
+
+            if(empty($task_arr))
+            {
+                $task_id = $this->common->InsertRecords('task',array('task_name' => $post['data']['task_name']));
+            }
+            else
+            {
+                $task_id = $task_arr[0]->id;
+            }
+            $post['data']['task_id'] = $task_id;
+            unset($post['data']['task_name']);
+        }
+
+        if(isset($post['data']['result_name']) && $post['data']['result_name'] != '')
+        {
+            $result_arr = $this->common->GetTableRecords('result',array('result_name' => $post['data']['result_name']),array());
+
+            if(empty($task_arr))
+            {
+                $result_id = $this->common->InsertRecords('result',array('result_name' => $post['data']['result_name']));
+            }
+            else
+            {
+                $result_id = $result_arr[0]->id;
+            }
+            $post['data']['result_id'] = $result_id;
+            unset($post['data']['result_name']);
+        }
+        $this->common->UpdateTableRecords('order_tasks',$post['cond'],$post['data']);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
     }
 }
