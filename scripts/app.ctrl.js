@@ -43,7 +43,7 @@ angular.module('app')
             accent: 'purple',
             warn: 'amber'
           },
-          asideFolded: false
+          //asideFolded: false
         },
         search: {
           content: '',
@@ -101,7 +101,7 @@ angular.module('app')
       function openPage() {
         $scope.app.search.content = '';
         $scope.app.search.show = false;
-        $scope.closeAside();
+       // $scope.closeAside();
         // goto top
         $location.hash('view');
         $anchorScroll();
@@ -113,10 +113,10 @@ angular.module('app')
       }
 
       $scope.openAside = function () {
-        $timeout(function() { $mdSidenav('aside').open(); });
+        //$timeout(function() { $mdSidenav('aside').open(); });
       }
       $scope.closeAside = function () {
-        $timeout(function() { $document.find('#aside').length && $mdSidenav('aside').close(); });
+        //$timeout(function() { $document.find('#aside').length && $mdSidenav('aside').close(); });
       }
 
     }
