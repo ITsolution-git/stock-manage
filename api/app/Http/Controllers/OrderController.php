@@ -721,6 +721,7 @@ class OrderController extends Controller {
         $data = array("success"=>1,"message"=>INSERT_RECORD);
         
         return response()->json(["data" => $data]);
+    }
 
     public function getTaskList()
     {
