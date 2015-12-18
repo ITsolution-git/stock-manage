@@ -693,4 +693,26 @@ class OrderController extends Controller {
         $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
     }
+
+
+    /**
+* Duplicate PO       
+* @access public duplicatePoData
+* @param  array $data
+* @return json data
+*/
+    public function duplicatePoData() {
+
+       $post = Input::all();
+        $post['data']['created_date']=date('Y-m-d');
+        $post['data']['po_id']=$post[0];
+       
+       
+        $result = $this->order->poDuplicate($post['data']);
+          
+        $data = array("success"=>1,"message"=>INSERT_RECORD);
+        
+        return response()->json(["data" => $data]);
+
+    }
 }
