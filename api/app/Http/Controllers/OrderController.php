@@ -186,7 +186,6 @@ class OrderController extends Controller {
                                 'order_position' => $result['order_position'],
                                 'order_line' => $result['order_line'],
                                 'order_item' => $result['order_item'],
-                                'order_task' => $result['order_task_data'],
                                 'price_grid' => $price_grid,
                                 'price_garment_mackup' => $price_garment_mackup,
                                 'price_screen_primary' => $price_screen_primary,
@@ -652,7 +651,7 @@ class OrderController extends Controller {
         {
             $result_arr = $this->common->GetTableRecords('result',array('result_name' => $post['data']['result_name']),array());
 
-            if(empty($task_arr))
+            if(empty($result_arr))
             {
                 $result_id = $this->common->InsertRecords('result',array('result_name' => $post['data']['result_name']));
             }
@@ -663,8 +662,18 @@ class OrderController extends Controller {
             $post['data']['result_id'] = $result_id;
             unset($post['data']['result_name']);
         }
-        $this->common->UpdateTableRecords('order_tasks',$post['cond'],$post['data']);
-        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+
+        if($post['action'] == 'update')
+        {
+            $this->common->UpdateTableRecords('order_tasks',$post['cond'],$post['data']);
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        else
+        {
+            $post['data']['date_added'] = date('Y-m-d');
+            $this->common->InsertRecords('order_tasks',$post['data']);
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
         return response()->json(['data'=>$data]);
     }
 
@@ -694,7 +703,6 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
-
     /**
 * Duplicate PO       
 * @access public duplicatePoData
@@ -714,5 +722,45 @@ class OrderController extends Controller {
         
         return response()->json(["data" => $data]);
 
+    public function getTaskList()
+    {
+        $post = Input::all();
+        $task_detail = $this->order->getTaskList($post['order_id']);
+
+        if (count($task_detail) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'task_detail' => $task_detail
+                            );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'task_detail' => array()
+                                );
+        } 
+        
+        return response()->json(["data" => $response]);
+    }
+
+    public function getTaskDetails()
+    {
+        $post = Input::all();
+        $users = $this->common->GetTableRecords('users',array(),array('role_id' => '7'));
+
+        $task_detail = array();
+
+        if(!empty($post['id']) > 0)
+        {
+            $task_detail = $this->order->getTaskDetail($post['id']);
+        }
+        $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'users' => $users,
+                                'task_detail' => $task_detail
+                            );
+        return response()->json(["data" => $response]);
     }
 }
