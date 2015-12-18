@@ -46,14 +46,6 @@ class Order extends Model {
         $whereOrderLineConditions = ['order_id' => $data['id']];
         $orderLineData = DB::table('order_orderlines')->where($whereOrderLineConditions)->get();
 
-        $listArray = ['ot.id','ot.order_name','ot.due_date','ot.time','ot.status','ot.type','ot.note','ot.date_added','t.task_name','r.result_name'];
-        $whereOrderTaskConditions = ['order_id' => $data['id']];
-        $orderTaskData = DB::table('order_tasks as ot')
-                        ->Join('task as t', 't.id','=','ot.task_id')
-                        ->Join('result as r', 'r.id','=','ot.result_id')
-                        ->select()
-                        ->where($whereOrderTaskConditions)->get();
-
         $whereClientConditions = ['status' => '1','is_delete' => '1','client_id' => $data['client_id']];
         $clientData = DB::table('client')->where($whereClientConditions)->get();
 
@@ -82,8 +74,6 @@ class Order extends Model {
         $combine_array['client_data'] = $clientData;
         $combine_array['client_main_data'] = $clientMainData;
         $combine_array['order_line_data'] = $orderLineData;
-        $combine_array['order_task_data'] = $orderTaskData;
-      
 
         return $combine_array;
     }
@@ -531,9 +521,20 @@ public function updateOrderLineData($post)
                         ->where($data)
                         ->get();
         return $orderData;
-    }    
+    }
 
+    public function getTaskList($order_id)
+    {
+        $listArray = ['ot.id','ot.order_name','ot.due_date','ot.time','ot.status','ot.type','ot.note','ot.date_added','t.task_name','r.result_name'];
+        $whereOrderTaskConditions = ['ot.order_id' => $order_id];
+        $orderTaskData = DB::table('order_tasks as ot')
+                        ->Join('task as t', 't.id','=','ot.task_id')
+                        ->Join('result as r', 'r.id','=','ot.result_id')
+                        ->select($listArray)
+                        ->where($whereOrderTaskConditions)->get();
 
+        return $orderTaskData;
+    }
 
     /**
     * Save button data          
@@ -591,4 +592,15 @@ public function updateOrderLineData($post)
                  }
     }
 
+    public function getTaskDetail($id)
+    {
+        $listArray = ['ot.*','t.task_name','r.result_name'];
+        $whereOrderTaskConditions = ['ot.id' => $id];
+        $orderTaskData = DB::table('order_tasks as ot')
+                        ->Join('task as t', 't.id','=','ot.task_id')
+                        ->Join('result as r', 'r.id','=','ot.result_id')
+                        ->select($listArray)
+                        ->where($whereOrderTaskConditions)->get();
+        return $orderTaskData;
+    }
 }

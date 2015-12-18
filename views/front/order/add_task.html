@@ -1,6 +1,6 @@
 <div class="order_notes_tasks">
     <div class="modal-header">
-        <h3 class="modal-title">Edit Task</h3>
+        <h3 class="modal-title">Add Task</h3>
     </div>
     <div class="modal-body">
         <div class="col-md-12 nopad-form">
@@ -11,7 +11,9 @@
                         <lable for="for">For:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <input type="text" id="for" class="form-control" />
+                        <select  ng-model="task_detail.user_id" class="form-control" required name="user_id">
+                            <option ng-repeat="data in users" value={{data.id}}>{{data.name}}</option>
+                        </select>
                     </div>
                 </div>
 
@@ -20,7 +22,9 @@
                         <lable for="client">Client:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <input type="text" id="client" class="form-control" />
+                        <select  ng-model="task_detail.company_id" class="form-control" required name="company_id">
+                            <option ng-repeat="data in allCompany" value={{data.company_id}}>{{data.client_company}}</option>
+                        </select>
                     </div>
                 </div>
 
@@ -29,7 +33,7 @@
                         <lable for="order">Order:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <input type="text" id="order" class="form-control" />
+                        <input ng-model="task_detail.order_name" type="text" id="order" class="form-control"/>
                     </div>
                 </div>
 
@@ -38,7 +42,16 @@
                         <lable for="dueDate">Due Date:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <input type="text" id="dueDate" class="form-control" />
+                        <input ng-model="task_detail.due_date" type="text" id="dueDate" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="task">Task:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input type="text" id="task" class="form-control" ng-model="task_detail.task_name"/>
                     </div>
                 </div>
             </div>
@@ -47,45 +60,19 @@
             <div class="col-md-6 nopad-form">
                 <div class="form-group col-md-12 nopad-form">
                     <div class="col-md-3 nopad-left text-right">
-                        <lable for="desc">Desc:</lable>
+                        <lable for="desc">Note:</lable>
                     </div>
                     <div class="col-md-9 nopad-left">
-                        <textarea class="form-control task_desc" rows="4" id="desc"></textarea>
+                        <textarea class="form-control task_desc" rows="4" id="desc" ng-model="task_detail.note">{{task_detail.note}}</textarea>
                     </div>
                 </div>
-                <div class="form-group col-md-12 nopad-form">
-                    <div class="col-md-3 nopad-left text-right">
-                        <lable for="task">Task:</lable>
-                    </div>
-                    <div class="col-md-9 nopad-left">
-                        <input type="text" id="task" class="form-control" />
-                    </div>
-                </div>
-
                 <div class="form-group col-md-12 nopad-form">
                     <div class="col-md-3 nopad-left text-right">
                         <lable for="result">Result:</lable>
                     </div>
                     <div class="col-md-9 nopad-left">
-                        <input type="text" id="result" class="form-control" />
+                        <input type="text" id="result" class="form-control" ng-model="task_detail.result_name"/>
                     </div>
-                </div>
-            </div>
-
-            <div class="form-group col-md-12 nopad-form">
-                <div class="col-md-2 nopad-left text-right">
-                    <lable for="comments">Comment:</lable>
-                </div>
-                <div class="col-md-10 nopad-left">
-                    <input type="text" id="comments" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group col-md-12 nopad-form">
-                <div class="col-md-2 nopad-left text-right">
-                    <lable for="logs">Log:</lable>
-                </div>
-                <div class="col-md-10 nopad-left">
-                    <textarea class="form-control" rows="5" id="logs"></textarea>
                 </div>
             </div>
         </div>
@@ -94,7 +81,7 @@
     <div class="modal-footer">
         <div class="col-md-12 nopad-form">                 
             <button class="btn btn-warning pull-left" type="button" ng-click="closePopup('cancel')">Cancel</button>
-           <button class="btn btn-primary pull-right" ng-click="saveSizeGroup(orderPositionAll)">Save</button>
+           <button class="btn btn-primary pull-right" ng-click="insertTask(task_detail)">Save</button>
         </div>
     </div>
 </div>
