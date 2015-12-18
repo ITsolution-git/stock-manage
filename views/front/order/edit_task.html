@@ -11,8 +11,8 @@
                         <lable for="for">For:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <select  ng-model="taks_detail.user_id" class="form-control" required name="user_id">
-                            <option ng-selected="taks_detail.user_id==data.id" ng-repeat="data in users" value={{data.id}}>{{data.name}}</option>
+                        <select  ng-model="task_detail.user_id" class="form-control" required name="user_id">
+                            <option ng-selected="task_detail.user_id==data.id" ng-repeat="data in users" value={{data.id}}>{{data.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -22,8 +22,8 @@
                         <lable for="client">Client:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <select  ng-model="taks_detail.company_id" class="form-control" required name="company_id">
-                            <option ng-selected="taks_detail.company_id==data.client_id" ng-repeat="data in allCompany" value={{data.company_id}}>{{data.client_company}}</option>
+                        <select  ng-model="task_detail.company_id" class="form-control" required name="company_id">
+                            <option ng-selected="task_detail.company_id==data.client_id" ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
                         </select>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                         <lable for="order">Order:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <input type="text" id="order" class="form-control" ng-model="taks_detail.order_name"/>
+                        <input type="text" id="order" class="form-control" ng-model="task_detail.order_name"/>
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
                         <lable for="dueDate">Due Date:</lable>
                     </div>
                     <div class="col-md-8 nopad-left">
-                        <input type="text" id="dueDate" class="form-control" ng-model="taks_detail.due_date"/>
+                        <input type="text" id="dueDate" class="form-control" ng-model="task_detail.due_date"/>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                         <lable for="desc">Desc:</lable>
                     </div>
                     <div class="col-md-9 nopad-left">
-                        <textarea class="form-control task_desc" rows="4" id="desc" ng-model="taks_detail.note"></textarea>
+                        <textarea class="form-control task_desc" rows="4" id="desc" ng-model="task_detail.note"></textarea>
                     </div>
                 </div>
                 <div class="form-group col-md-12 nopad-form">
@@ -62,7 +62,7 @@
                         <lable for="task">Task:</lable>
                     </div>
                     <div class="col-md-9 nopad-left">
-                        <input type="text" id="task" class="form-control" ng-model="taks_detail.task_name"/>
+                        <input type="text" id="task" class="form-control" ng-model="task_detail.task_name"/>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                         <lable for="result">Result:</lable>
                     </div>
                     <div class="col-md-9 nopad-left">
-                        <input type="text" id="result" class="form-control" ng-model="taks_detail.result_name"/>
+                        <input type="text" id="result" class="form-control" ng-model="task_detail.result_name"/>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     <lable for="comments">Comment:</lable>
                 </div>
                 <div class="col-md-10 nopad-left">
-                    <input type="text" id="comments" class="form-control" ng-model="taks_detail.comment"/>
+                    <input type="text" id="comments" class="form-control" ng-model="task_detail.comment"/>
                 </div>
             </div>
             <div class="form-group col-md-12 nopad-form">
@@ -89,7 +89,7 @@
                     <lable for="logs">Log:</lable>
                 </div>
                 <div class="col-md-10 nopad-left">
-                    <textarea class="form-control" rows="5" id="logs" ng-model="taks_detail.log">{{taks_detail.log}}</textarea>
+                    <textarea class="form-control" rows="5" id="logs" ng-model="task_detail.log">{{task_detail.log}}</textarea>
                 </div>
             </div>
         </div>

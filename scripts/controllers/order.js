@@ -1717,7 +1717,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         
             if (id != 0) {
 
-                $scope.taks_detail = result.data.task_detail[0];
+                $scope.task_detail = result.data.task_detail[0];
                 var modalInstance = $modal.open({
                                     templateUrl: 'views/front/order/'+page,
                                     scope : $scope,
@@ -1738,7 +1738,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     modalInstance.dismiss('cancel');
 
                     var order_main_data = {};
-                    order_main_data.data = $scope.taks_detail;
+                    order_main_data.data = $scope.task_detail;
                     order_main_data.cond = {id:id};
                     order_main_data.action = 'update';
 
