@@ -483,6 +483,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     }
     $scope.updatePosition = function(postArray,position_id)
     {
+        $("#ajax_loader").show();
         angular.forEach($scope.orderPositionAll, function(value) {
 
             if(value.id == position_id)
@@ -492,15 +493,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 order_data.data =value
                 order_data.cond ={id:value.id}
                 $http.post('api/public/order/updatePositions',order_data).success(function(result) {
-
-                });
-                angular.forEach($scope.orderLineAll, function(value) {
-                    $scope.calculate_all(value.id);
+                    $scope.calculate_charge();
+                    $("#ajax_loader").hide();
                 });
             }
         });
-
-        $scope.calculate_charge();
     }
     $scope.savePositionData=function(postArray)
     {
@@ -924,6 +921,20 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             
             
     }
+
+
+
+    $scope.duplicatePurchaseOrder=function(po_id)
+    {
+        
+            $http.post('api/public/order/duplicatePoData',po_id).success(function(result) {
+                                get_po_detail(order_id,client_id);
+                                 var data = {"status": "success", "message": "PO has been successfully Duplicated."}
+                                notifyService.notify(data.status, data.message);
+                                
+                            });
+    }
+
 
     
     // **************** NOTES TAB CODE END  ****************
@@ -1394,25 +1405,25 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             {
                 angular.forEach($scope.price_grid_markup, function(value) {
 
-                    $scope.shipping_charge = value.percentage;
-                    var garment_mackup = parseInt(value.percentage)/100;
-                    var avg_garment_price = parseFloat($scope.price_grid.shipping_charge) * parseFloat(garment_mackup) + parseFloat($scope.price_grid.shipping_charge);
-                    $scope.avg_garment_price = avg_garment_price.toFixed(2);
-                    $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
-
-                    $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges);
-                    var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
-                    $scope.per_line_total = line_total.toFixed(2);
-
                     if(parseInt($scope.position_qty) >= parseInt(value.range_low) && parseInt($scope.position_qty) <= parseInt(value.range_high))
                     {
+                        $scope.shipping_charge = value.percentage;
+                        var garment_mackup = parseInt(value.percentage)/100;
+                        var avg_garment_price = parseFloat($scope.price_grid.shipping_charge) * parseFloat(garment_mackup) + parseFloat($scope.price_grid.shipping_charge);
+                        $scope.avg_garment_price = avg_garment_price.toFixed(2);
+                        $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
+
+                        $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges);
+                        var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
+                        $scope.per_line_total = line_total.toFixed(2);
+
                         var orderline_data = {};
                         orderline_data.data = {'avg_garment_cost' : $scope.avg_garment_cost,
                                                 'avg_garment_price' : $scope.avg_garment_price,
                                                 'print_charges' : $scope.print_charges,
                                                 'peritem' : $scope.per_item,
                                                 'per_line_total' : $scope.per_line_total,
-                                                'markup' : $scope.shipping_charge,
+                                                'markup' : $scope.shipping_charge
                                             };
                         orderline_data.cond = {};
                         orderline_data['table'] ='order_orderlines'
@@ -1687,7 +1698,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
-    $scope.openTaskPopup = function (page,id,position_index) {
+    $scope.openTaskPopup = function (page,id) {
 
         if (id != 0) {
 
@@ -1745,7 +1756,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
-
+       } else if((tab_name == 'orderline')){
+            angular.forEach($scope.orderLineAll, function(value) {
+                    $scope.calculate_all(value.id);
+            });
        }
     }
   // **************** NOTES TAB CODE END  ****************
