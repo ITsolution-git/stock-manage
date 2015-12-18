@@ -251,5 +251,17 @@ class Client extends Model {
 
    		return $result;
    }
- 
+  public function checkCompName($post)
+  {
+    $result = DB::table('client')
+              ->where ('company_id',"=",$post['company_id'])
+              ->where ('client_company',"=",trim($post['value']));
+
+    if(!empty($post['client_id']))
+    {
+      $result = $result->where('client_id','<>',$post['client_id']);
+    }
+      $result = $result->get();
+      return count($result);
+  }
 }

@@ -13,9 +13,10 @@
               </div>
               <div class="input-group col-sm-12 m-b">
                   <label>Name <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-maxlength="255" name="client_company"  ng-model="client.client_company"  required>
+                  <input type="text" class="form-control" ng-maxlength="255" name="client_company"  ui-event="{ blur : 'CheckClient($event)' }" ng-model="client.client_company"  required>
                   <br>
                   <span style="color:#f44336" ng-show="clientAddForm.client_company.$error.maxlength">Please enter Name less then 255 characters.</span>
+                  <span style="color:#f44336; display:none;" id="client_namecheck">Sorry this name Exist, Please choose different name.</span>
               </div>
               <div class="input-group col-sm-12 m-b">
                   <label>Type <em class="text-muted"></em></label>
