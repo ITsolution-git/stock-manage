@@ -3,11 +3,12 @@
 
 app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
+  $("#ajax_loader").show();
   $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
 
                                   $scope.staffs = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
-                         
+                                  $("#ajax_loader").hide();
                           });
 
                          $scope.delete = function (staff_id,user_id) {
@@ -167,6 +168,8 @@ $http.get('api/public/common/type/timeoff').success(function(result, status, hea
 
                     if($stateParams.id) {
 
+                      $("#ajax_loader").show();
+
                            $http.post('api/public/admin/staffDetail',$stateParams.id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
@@ -196,7 +199,8 @@ $http.get('api/public/common/type/timeoff').success(function(result, status, hea
 
                                      $scope.allnotes = result.data.allnotes;
                                      $scope.allTimeOff = result.data.allTimeOff;
-                                     
+                                     $("#ajax_loader").hide();
+
 
                              }  else {
                              $state.go('app.dashboard');

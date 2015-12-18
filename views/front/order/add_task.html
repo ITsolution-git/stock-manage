@@ -1,0 +1,100 @@
+<div class="order_notes_tasks">
+    <div class="modal-header">
+        <h3 class="modal-title">Edit Task</h3>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-12 nopad-form">
+            <!-- Left column -->
+            <div class="col-md-6 nopad-form">
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="for">For:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input type="text" id="for" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="client">Client:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input type="text" id="client" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="order">Order:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input type="text" id="order" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="dueDate">Due Date:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input type="text" id="dueDate" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right column -->
+            <div class="col-md-6 nopad-form">
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-3 nopad-left text-right">
+                        <lable for="desc">Desc:</lable>
+                    </div>
+                    <div class="col-md-9 nopad-left">
+                        <textarea class="form-control task_desc" rows="4" id="desc"></textarea>
+                    </div>
+                </div>
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-3 nopad-left text-right">
+                        <lable for="task">Task:</lable>
+                    </div>
+                    <div class="col-md-9 nopad-left">
+                        <input type="text" id="task" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-3 nopad-left text-right">
+                        <lable for="result">Result:</lable>
+                    </div>
+                    <div class="col-md-9 nopad-left">
+                        <input type="text" id="result" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12 nopad-form">
+                <div class="col-md-2 nopad-left text-right">
+                    <lable for="comments">Comment:</lable>
+                </div>
+                <div class="col-md-10 nopad-left">
+                    <input type="text" id="comments" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group col-md-12 nopad-form">
+                <div class="col-md-2 nopad-left text-right">
+                    <lable for="logs">Log:</lable>
+                </div>
+                <div class="col-md-10 nopad-left">
+                    <textarea class="form-control" rows="5" id="logs"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="col-md-12 nopad-form">                 
+            <button class="btn btn-warning pull-left" type="button" ng-click="closePopup('cancel')">Cancel</button>
+           <button class="btn btn-primary pull-right" ng-click="saveSizeGroup(orderPositionAll)">Save</button>
+        </div>
+    </div>
+</div>

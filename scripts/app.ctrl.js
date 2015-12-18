@@ -8,21 +8,23 @@
  * Controller of the app
  */
 angular.module('app')  
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$document', '$location', '$rootScope', '$timeout', '$mdSidenav', '$mdColorPalette', '$anchorScroll','AuthService','sessionService',
-    function (             $scope,   $translate,   $localStorage,   $window,   $document,   $location,   $rootScope,   $timeout,   $mdSidenav,   $mdColorPalette,   $anchorScroll,AuthService,sessionService ) {
+  .controller('AppCtrl', ['$http','$scope','$state', '$translate', '$localStorage', '$window', '$document', '$location', '$rootScope', '$timeout', '$mdSidenav', '$mdColorPalette', '$anchorScroll','AuthService','sessionService','notifyService','$q',
+    function ( $http, $scope, $state,  $translate,   $localStorage,   $window,   $document,   $location,   $rootScope,   $timeout,   $mdSidenav,   $mdColorPalette,   $anchorScroll,AuthService,sessionService,notifyService,$q ) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i) || !!navigator.userAgent.match(/Trident.*rv:11\./);
       isIE && angular.element($window.document.body).addClass('ie');
       isSmartDevice( $window ) && angular.element($window.document.body).addClass('smart');
-      //console.log(sessionService.get('role_slug'));
       // config
-      $scope.app = {
+
+        $scope.app = {
         sitename: 'Stockk Up',
         version: '1.0.2',
         useremail : sessionService.get('useremail'),
         name : sessionService.get('name'),
         role_title : sessionService.get('role_title'),
         role : sessionService.get('role_slug'),
+        user_id : sessionService.get('user_id'),
+        company_roleid :'17', // role id in roles table
         // for chart colors
         color: {
           primary: '#3f51b5',
@@ -41,14 +43,13 @@ angular.module('app')
             accent: 'purple',
             warn: 'amber'
           },
-          asideFolded: false
+          //asideFolded: false
         },
         search: {
           content: '',
           show: false
         }
       }
-
       $scope.setTheme = function(theme){
         $scope.app.setting.theme = theme;
       }
@@ -100,7 +101,7 @@ angular.module('app')
       function openPage() {
         $scope.app.search.content = '';
         $scope.app.search.show = false;
-        $scope.closeAside();
+       // $scope.closeAside();
         // goto top
         $location.hash('view');
         $anchorScroll();
@@ -112,10 +113,10 @@ angular.module('app')
       }
 
       $scope.openAside = function () {
-        $timeout(function() { $mdSidenav('aside').open(); });
+        //$timeout(function() { $mdSidenav('aside').open(); });
       }
       $scope.closeAside = function () {
-        $timeout(function() { $document.find('#aside').length && $mdSidenav('aside').close(); });
+        //$timeout(function() { $document.find('#aside').length && $mdSidenav('aside').close(); });
       }
 
     }

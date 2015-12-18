@@ -8,7 +8,7 @@
         <span class="font-normal">Dashboard</span>
       </a>
     </li>
-    <li ng-class="{active:$state.includes('account')}" ng-show="app.role=='SA'">
+    <li ng-class="{active:$state.includes('company')}" ng-show="app.role=='SA'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -18,10 +18,10 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="account.list">List</a>
+          <a md-ink-ripple ui-sref="company.list">List</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="account.add">Add</a>
+          <a md-ink-ripple ui-sref="company.add">Add</a>
         </li>
        
       </ul>
@@ -176,6 +176,27 @@
     </li>
 <!-- Code end for Misc tab -->
 
+ <!-- Code Start for Company tab -->
+    <li ng-class="{active:$state.includes('account')}" ng-show="app.role=='CA'">
+      <a md-ink-ripple>
+        <span class="pull-right text-muted">
+          <i class="fa fa-caret-down"></i>
+        </span>
+       <i class="icon mdi-editor-insert-drive-file i-20"></i>
+        <span class="font-normal">Company Users</span>
+      </a>
+      <ul class="nav nav-sub">
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="account.list">List</a>
+        </li>
+        <li ui-sref-active="active">
+          <a md-ink-ripple ui-sref="account.add">Add</a>
+        </li>
+       
+      </ul>
+    </li>
+  <!-- Code end for Company tab --> 
+
 <!-- Code Start for Home tab -->
     <li ng-show="app.role=='BC'">
       <a md-ink-ripple ui-sref="app.home">
@@ -212,22 +233,10 @@
 
  <!-- Code Start for Orders tab -->
     <li ng-show="app.role=='BC'">
-      <a md-ink-ripple>
-        <span class="pull-right text-muted">
-          <i class="fa fa-caret-down"></i>
-        </span>
+      <a md-ink-ripple ui-sref="order.list">
         <i class="icon fa fa-reorder i-20"></i>
         <span class="font-normal">Orders</span>
       </a>
-      <ul class="nav nav-sub">
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="order.list"> List</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="order.add">Add</a>
-        </li>
-       
-      </ul>
     </li>
   <!-- Code end for Orders tab --> 
 
@@ -242,16 +251,16 @@
       </a>
       <ul class="nav nav-sub">
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="purchase.list({ id:1 })"> Culture PO</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:'PO' })"> Company PO</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="purchase.list({ id:2 })">Supplied Garments</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:'SG' })">Supplied Garments</a>
         </li>
        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="purchase.list({ id:3 })">Contact Print</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:'CP' })">Contract Print</a>
         </li>
         <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="purchase.list({ id:4 })" >Contact Embrodiery</a>
+          <a md-ink-ripple ui-sref="purchase.list({ id:'CE' })" >Contract Embrodiery</a>
         </li>
       </ul>
     </li>
@@ -260,22 +269,10 @@
 
  <!-- Code Start for Art tab -->
     <li ng-show="app.role=='BC'">
-      <a md-ink-ripple>
-        <span class="pull-right text-muted">
-          <i class="fa fa-caret-down"></i>
-        </span>
+      <a md-ink-ripple  ui-sref="art.list">
         <i class="icon fa fa-pie-chart i-20"></i>
         <span class="font-normal">Art</span>
       </a>
-      <ul class="nav nav-sub">
-        <li ui-sref-active="active">
-          <a md-ink-ripple>Screen List</a>
-        </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple >Add</a>
-        </li>
-       
-      </ul>
     </li>
   <!-- Code end for Art tab --> 
 

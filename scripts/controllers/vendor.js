@@ -1,11 +1,12 @@
 
 app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
   
-
+                         $("#ajax_loader").show();
                          $http.get('api/public/admin/vendor').success(function(result, status, headers, config) {
 
                                   $scope.vendors = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
+                                  $("#ajax_loader").hide();
                          
                           });
 
@@ -126,7 +127,7 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
                          
 
                           if($stateParams.id) {
-
+                            $("#ajax_loader").show();
                            $http.post('api/public/admin/vendorDetail',$stateParams.id).success(function(result, status, headers, config) {
         
                             if(result.data.success == '1') {
@@ -134,7 +135,8 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
 
                                      $scope.vendor = result.data.records[0];
                                      $scope.allContacts = result.data.allContacts;
-                                     
+                                     $("#ajax_loader").hide();
+
                                      
 
                              }  else {

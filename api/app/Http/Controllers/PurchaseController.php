@@ -7,99 +7,115 @@ use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Purchase;
+use App\Common;
 use DB;
 
 use Request;
 
 class PurchaseController extends Controller { 
 
-	public function __construct(Purchase $purchase) 
+	public function __construct(Purchase $purchase,Common $common) 
  	{
         $this->purchase = $purchase;
+        $this->common = $common;
     }
-    public function ListPurchase($id)
+
+    /*=====================================
+	TO GET PO AND SG SCREEN FIELDS VALUES 
+	=====================================*/
+
+    public function ListPurchase()
     {
-    	if(empty($id))
+    	$post = Input::all();
+    	
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die;
+    	if(empty($post))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
-    		return  response()->json(["data" => $response]);
-    		die();
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- Po_type");
     	}
-    	$result = $this->purchase->ListPurchase($id);
-    	if (count($result) > 0) 
-        {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
-        } 
-        else 
-        {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
-        }
+    	else
+    	{
+	    	$result = $this->purchase->ListPurchase($post['type'],$post['company_id']);
+	    	if (count($result) > 0) 
+	        {
+	            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+	        } 
+	        else 
+	        {
+	            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+	        }
+    	}
         return  response()->json(["data" => $response]);
     }
-    public function GetPodata($id)
+
+    /*=====================================
+	/ TO GET PO AND SG SCREEN DATA
+	/ ITS MAIN QUERY FOR WHOLE SCREEN DATA
+	=====================================*/
+
+    public function GetPodata($po_id,$company_id)
     {
-    	if(empty($id))
+    	if(empty($po_id) || empty($company_id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS);
     		return  response()->json(["data" => $response]);
     		die();
     	}
     	else
     	{
-    		$po_id=0;
-    		$order_total=''; $received_total='';$received_line='';
-    		$po = $this->purchase->GetPodata($id);
-    		$poline = $this->purchase->GetPoLinedata($id,'1');
-    		$unassign_order = $this->purchase->GetPoLinedata();
-
-    		if(count($poline)>0)
+    		$this->purchase->Update_Ordertotal($po_id);
+    		$po = $this->purchase->GetPodata($po_id,$company_id);
+    		
+    		if(count($po)>0)
     		{
-    			$po_id = $poline[0]->po_id;
-    			
+    			$poline = $this->purchase->GetPoLinedata($po_id,'1',$company_id);
+	    		$unassign_order = $this->purchase->GetPoLinedata();
+
+		    	$order_total = $this->purchase->getOrdarTotal($po_id);
+		    	
+		    	$received_total = $this->purchase->getreceivedTotal($po_id);
+		    	$received_line = $this->purchase->GetPoReceived($po_id,$company_id);
+
+                $list_vendors = $this->common->getAllVendors();
+
+    			$order_id = $po[0]->order_id;
+	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
+	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     		}
     		else
     		{
-				$po_id = $unassign_order[0]->po_id;
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+	    		return  response()->json(["data" => $response]);
+	    		die();
     		}
-	    		
-	    		$order_total = $this->purchase->getOrdarTotal($po_id);
-	    		$received_total = $this->purchase->getreceivedTotal($po_id);
-	    		$received_line = $this->purchase->GetPoReceived($po_id);
-    		
-    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'po_id'=>$po_id );
-    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
     	}
     	return  response()->json(["data" => $response]);
     }
-    public function GetSgdata($id)
-    {
-    	if(empty($id))
-    	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
-    		return  response()->json(["data" => $response]);
-    		die();
-    	}
-    	else
-    	{
-    		$result = $this->purchase->GetSgdata($id);
-    	}
-    }
 
-    public function ChangeOrderStatus($id,$val)
+	/*=====================================
+	TO UNASSIGN AND ASSIGN ORDER LINE ITEMS, CHANGE FLAG AND UPDATE PO
+	=====================================*/
+
+    public function ChangeOrderStatus($id,$val,$po_id)
     {
     	if(empty($id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARMS."- id",'records' => $result);
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- id");
     		return  response()->json(["data" => $response]);
     		die();
     	}
     	else
     	{
-    		$result = $this->purchase->ChangeOrderStatus($id,$val);
+    		$result = $this->purchase->ChangeOrderStatus($id,$val,$po_id);
     		$response = array('success' => 1, 'message' => GET_RECORDS);
     	}
     	return  response()->json(["data" => $response]);
     }
+
+	/*=====================================
+	TO CALCULATION ONE PO AND SG SCREEN TOTAL AMOUNT
+	=====================================*/
+
     public function EditOrderLine()
     {
     	 $post = Input::all();
@@ -107,6 +123,22 @@ class PurchaseController extends Controller {
     	 $response = array('success' => 1, 'message' => GET_RECORDS);
     	 return  response()->json(["data" => $response]);
     }
+    /*=====================================
+	TO CALCULATION ONE CP AND CE SCREEN TOTAL AMOUNT
+	=====================================*/
+
+    public function EditScreenLine()
+    {
+    	 $post = Input::all();
+    	 $result = $this->purchase->EditScreenLine($post);
+    	 $response = array('success' => 1, 'message' => GET_RECORDS);
+    	 return  response()->json(["data" => $response]);
+    }
+
+	/*=====================================
+	TO GET RECEIVED ORDER FOR PO AND SG TAB
+	=====================================*/
+
     public function Receive_order()
     {
     	$post = Input::all();
@@ -114,17 +146,73 @@ class PurchaseController extends Controller {
     	$response = array('success' => 1, 'message' => GET_RECORDS);
     	return  response()->json(["data" => $response]);
     }
-    public function RemoveReceiveLine($id)
-	{
-		$result = $this->purchase->RemoveReceiveLine($id);
-    	$response = array('success' => 1, 'message' => DELETE_RECORD);
-    	return  response()->json(["data" => $response]);
-	}
+
+	/*=====================================
+	UPDATE SHIFTLOCK FIELD
+	=====================================*/
+
 	public function Update_shiftlock()
 	{
 		$post = Input::all();
 		$result = $this->purchase->Update_shiftlock($post);
     	$response = array('success' => 1, 'message' => UPDATE_RECORD);
+    	return  response()->json(["data" => $response]);
+	}
+
+	/*=====================================
+	TO MAINTAIN SHORT AND OVER COUNT, MATCH RECEIVED QNTY WITH ORDER QNTY
+	=====================================*/
+
+	public function short_over($id)
+	{	
+		if(empty($id))
+		{
+			$response = array('success' => 0, 'message' => MISSING_PARAMS."- PoLine ID");
+    		return  response()->json(["data" => $response]);
+    		die();
+		}
+    	else
+    	{
+    		$short_over = $this->purchase->short_over($id);
+			$response = array('success' => 1, 'message' => UPDATE_RECORD);
+    		return  response()->json(["data" => $response]);
+    	}
+	}
+
+	/*=====================================
+	TO GET SCREEN PRINT AND EMBRODIERY DATA
+	=====================================*/
+
+	public function GetScreendata($po_id,$company_id)
+	{
+    	if(empty($po_id))
+    	{
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id");
+    		return  response()->json(["data" => $response]);
+    		die();
+    	}
+    	else
+    	{
+    		$this->purchase->Update_Ordertotal($po_id);
+    		$screen_data = $this->purchase->GetPodata($po_id,$company_id);
+    		$screen_line = $this->purchase->GetScreendata($po_id,$company_id);
+    		$order_total = $this->purchase->getOrdarTotal($po_id);
+
+    		//echo "<pre>"; print_r($screen_data); echo "</pre>"; die;
+    		if(count($screen_data)>0)
+    		{
+                $list_vendors = $this->common->getAllVendors();
+    			$order_id = $screen_data[0]->order_id;
+	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors );
+	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result );
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+	    		return  response()->json(["data" => $response]);
+	    		die();
+    		}
+    	}
     	return  response()->json(["data" => $response]);
 	}
 }

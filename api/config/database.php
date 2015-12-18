@@ -52,19 +52,19 @@ return [
 			'prefix'   => '',
 		],
 
-/*		'mysql' => [
+		'mysql' => [
 			'driver'    => 'mysql',
-			'host'      => env('DB_HOST', '192.168.0.13'),
-			'database'  => env('DB_DATABASE', 'cs'),
-			'username'  => env('DB_USERNAME', 'csuser'),
-			'password'  => env('DB_PASSWORD', 'codal123'),
+			'host'      => env('DB_HOST', 'localhost'),
+			'database'  => env('DB_DATABASE', 'stokkup'),
+			'username'  => env('DB_USERNAME', 'root'),
+			'password'  => env('DB_PASSWORD', 'stokkdb@1357'), 
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
-		],*/
+		],
 
-		'mysql' => [
+		/*'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => env('DB_HOST', 'localhost'),
 			'database'  => env('DB_DATABASE', 'cs'),
@@ -74,7 +74,7 @@ return [
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 			'strict'    => false,
-		],
+		],*/
 
 		'pgsql' => [
 			'driver'   => 'pgsql',

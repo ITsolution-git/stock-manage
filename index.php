@@ -18,15 +18,16 @@
   <link rel="stylesheet" href="styles/font.css" type="text/css" />
   <link rel="stylesheet" href="styles/app.css" type="text/css" />
   <link rel="stylesheet" href="libs/custom-scroll/scroller.css" type="text/css" />  
-  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" />  
+  <link rel="stylesheet" href="styles/stokkup-styles.css" type="text/css" /> 
   <link rel="stylesheet" href="styles/stokkup-styles-1024.css" type="text/css" />
+  <link rel="stylesheet" href="styles/_toastr.scss" type="text/css" />
 </head>
 <body ng-app="app">
   <div class="app app-login" ui-view ng-controller="AppCtrl"></div>
 <!-- jQuery -->
   <script src="libs/jquery/jquery/dist/jquery.js"></script>
   <script src="libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
-<!-- Angular -->
+  <!-- Angular -->
   <script src="libs/angular/angular/angular.js"></script>
   <script src="libs/angular/angular-animate/angular-animate.js"></script>
   <script src="libs/angular/angular-aria/angular-aria.js"></script>
@@ -63,6 +64,7 @@
   <script src="scripts/app.ctrl.js"></script>
 
   <script src="scripts/directives/lazyload.js"></script>
+  <script src="scripts/directives/ui.js"></script>
   <script src="scripts/directives/ui-jp.js"></script>
   <script src="scripts/directives/ui-nav.js"></script>
   <script src="scripts/directives/ui-fullscreen.js"></script>
@@ -70,12 +72,16 @@
   <script src="scripts/directives/ui-toggle.js"></script>
   <script src="scripts/directives/filemodel.js"></script>
   <script src="scripts/directives/validation.js"></script>
+  <script src="scripts/directives/checklist-model.js"></script>
 
   <script src="scripts/filters/fromnow.js"></script>
   <script src="scripts/services/ngstore.js"></script>
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/ui-load.js"></script>
   <script src="scripts/services/fileupload.js"></script>
+  <script src="scripts/services/UICtrl.js"></script>
+  <script src="scripts/services/UIDirective.js"></script>
+  <script src="scripts/services/UIService.js"></script>
   <script src="scripts/controllers/material.js"></script>
   <script src="scripts/controllers/xeditable.js"></script>
     <!-- COMMON LOGIN FUNCTION AND CHECK -->
@@ -102,12 +108,20 @@
   <script src="scripts/controllers/purchase.js"></script>
   <script src="scripts/controllers/order.js"></script>
   <script src="scripts/controllers/finishing.js"></script>
+  <script src="scripts/controllers/art.js"></script>
+  <script src="scripts/controllers/company.js"></script>
   <!-- CUSTOM SCROLL -->
   <script src="libs/custom-scroll/scroller.js"></script>
   <script src="libs/custom-scroll/mwheelIntent.js"></script>
   <script src="libs/custom-scroll/mouseWheel.js"></script>
-  
+
   <!-- CUSTOM SCRIPTS -->
-  <script src="libs/custom-scripts.js"></script>
+  <script type="text/javascript" charset="utf-8" src="libs/custom-scripts.js"></script>
+
+  <div id="ajax_loader" class="overlay-loader">
+    <div class="loader-background"></div>
+    <img class="loader-icon spinning-cog" src="images/loader/loder.png">
+  </div>
+  
 </body>
 </html>

@@ -1,355 +1,1216 @@
-
-  <div class="row">
+<div class="row">
     <div class="col-sm-12">
-
-      <form name="mainForm" class="form-validation">
-        
-        <div class="panel panel-default">
-         <input type="hidden" ng-model="order.id">
-          <div class="panel-body">
-           
-            <div class="col-sm-12 m-b  panel panel-default">
-              <div class="col-sm-12 m-b"></div>
-              <div class="form-group col-sm-12 m-b">
-                
-                <div class="col-sm-3 m-b">
-                <label>CS Job Name <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-maxlength="255" name="cs_job_name"  ng-model="order.job_name"  required>
-                  <br>
-                  <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
-                </div>
-
-
-                <div class="col-md-3 m-b">
-               <label>Company <em class="text-muted"></em></label>
-
-                  <select  ng-model="order.client_id"  class="form-control" required>
-                  <option ng-selected="order.client_id==data.client_id" ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
-                </select>
-                </div>
-                
-                <div class="col-md-2 m-b">
-                <label>Price Grid<em class="text-muted"></em></label>
-
-                 <select  ng-model="order.price_id"  class="form-control">
-                  <option ng-selected="order.price_id==data.id" ng-repeat="data in allGrid" value={{data.id}}>{{data.name}}</option>
-                </select>
-                </div>
-
-                <div class="col-md-2 m-b">
-                <label>Approval<em class="text-muted"></em></label>
-
-                  
-
-                 <select  ng-model="order.f_approval"  class="form-control">
-                           <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
-                         </select>
-
-                </div>
-                
-
-                <div class=" col-md-2 m-b">
-               <label>Blind<em class="text-muted"></em></label>
-                  <select class="form-control" ng-model="order.is_blind">
-                    <option value="0">No</option>
-                    <option value="1">Yes</option>
-                    
-                  </select>
-                </div>
-
-                </div>
-
-
-
-
-
-
-
-
-
-
-                <div class="form-group col-sm-12 m-b">
-                
-                <div class="col-sm-3 m-b">
-                <label>Sales <em class="text-muted"></em></label>
-
-                     <select  class="form-control" ng-model="order.sales_id">
-                      <option ng-repeat="staff in staffList" ng-selected="{{order.sales_id==staff.id}}" value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
-                    </select>
-                
-                </div>
-
-
-                <div class="col-md-3 m-b">
-               <label>Brand Coordinator <em class="text-muted"></em></label>
-
-                  <select  class="form-control" ng-model="order.brand_id">
-                      <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
-                    </select>
-
-                </div>
-                
-                <div class="col-md-2 m-b">
-                <label>Expediter<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-maxlength="255" name="cs_expediter"  ng-model="order.expediter">
-                  <br>
-                  <span style="color:#f44336" ng-show="orderAddForm.cs_expediter.$error.maxlength">Please enter Name less then 255 characters.</span>
-                </div>
-
-                <div class="col-md-2 m-b">
-               <label>Customer PO<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-maxlength="255" name="cs_customer_po"  ng-model="order.customer_po_id">
-                  <br>
-                  <span style="color:#f44336" ng-show="orderAddForm.cs_customer_po.$error.maxlength">Please enter Name less then 255 characters.</span>
-                </div>
-                
-
-                <div class=" col-md-2 m-b">
-               <label>Order Main Contact<em class="text-muted"></em></label>
-                   <select  class="form-control" ng-model="order.contact_main_id">
-                      <option ng-repeat="user in client_main_data" ng-selected="{{order.contact_main_id==user.id}}" value="{{user.id}}">{{user.first_name}}&nbsp;{{user.last_name}}</option>
-                    </select>
-                </div>
-
-                </div>
-
-               
-              <div class="input-group col-sm-5 m-b">
-              <br>
-                    <button  type="submit" class="btn btn-info" ng-click="saveOrderDetails(order,order.id)" ng-disabled="mainForm.$invalid">Submit</button>&nbsp;
-                    <button ui-sref="order.list" type="button"  class="btn btn-info">Cancel</button>&nbsp;
-              </div>
-            
-           
-
-              <ul class="nav nav-tabs input-group col-sm-12">
-                <li class="active"><a href data-toggle="tab" data-target="#tab1">position</a></li>
-                <li> <a href data-toggle="tab" data-target="#tab2">Order Lines</a> </li>
-                <li> <a href data-toggle="tab" data-target="#tab3">Distribution</a> </li>
-                <li> <a href data-toggle="tab" data-target="#tab4">Notes</a> </li>
-                <li> <a href data-toggle="tab" data-target="#tab5">Purchase Orders</a> </li>
-                <li> <a href data-toggle="tab" data-target="#tab6">Screen Sets</a> </li>
-                <li> <a href data-toggle="tab" data-target="#tab7">Art Work</a> </li>
-                <li> <a href data-toggle="tab" data-target="#tab8">Payments</a> </li>
-              </ul>
-
-               
-                <div class="tab-content p b-a no-b-t bg-white m-b-md">
-              
- <!-- POSITION TAB START -->
-                <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab1">
-                <div class="form-group col-md-12">
-                  <b style="margin: 0 5px 0 0 !important;"  class="col-md-1">Position</b> 
-                  <b class="col-md-1">Description</b>
-                  <b class="col-md-1">Placement Type</b>
-                  <b class="col-md-1">Stitch/Color Count</b>
-                  <b class="col-md-1">Qnty</b>
-                  <b class="col-md-1">Discharge</b>
-                  <b class="col-md-1">Speciality</b>
-                  <b class="col-md-1">Foil</b>
-                  <b class="col-md-1">Ink Charge</b>
-                  <b class="col-md-1">Number on Dark</b>
-                  <b class="col-md-1">Number on Light</b>
-                  <b class="col-md-1">Oversize Screen(s)</b>
-                  <b class="col-md-1">Press Setup</b>
-                  <b class="col-md-1">Screen Fee(s)</b>
-                  <b class="col-md-1">DtG Size</b>
-                  <b class="col-md-1">DtG On</b>
-                 
-                </div><br>
-                  <div class="form-group">
-
-                     <div ng-repeat="(key,order_position) in orderPositionAll"> 
-
-
-                       <input type="hidden" class="col-md-1"  ng-model="order_position.order_id" ng-value="order_position.order_id"/>
-                         
-
-                         <numeric_tag input-value="123" input-name="wks.name"/>
-
-                         <select  ng-model="order_position.position_id"  class="col-md-2">
-                           <option ng-selected="order_position.position_id==misc_pos.id" ng-repeat="misc_pos in miscData.position" value={{misc_pos.id}}>{{misc_pos.value}}</option>
-                         </select>
-
-                        <input type="text" class="col-md-2"  ng-model="order_position.description" placeholder="Description" />
-
-
-                        <select  ng-model="order_position.placement_type"  class="col-md-2">
-                           <option ng-selected="order_position.placement_type==misc_placement.id" ng-repeat="misc_placement in miscData.placement_type" value={{misc_placement.id}}>{{misc_placement.value}}</option>
-                         </select>
-
-
-                        <input type="text" class="col-md-1"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" />
-
+        <form name="mainForm" class="form-validation client_order_form">
+            <div class="panel panel-default">
+                <input type="hidden" ng-model="order.id">
+                <div class="panel-body">
+                    <div class="col-sm-12 m-b nopad-form">
+                        <div class="col-sm-12 m-b"></div>
                         
-                        <input type="text" class="col-md-1"  ng-model="order_position.qnty"/>
+                        <div class="col-md-10 nopad-form">
+                            <div class="form-group col-md-12 m-b nopad-form">
+                                <div class="col-md-2 m-b nopad-left">
+                                    <label>Job Name <em class="text-muted"></em></label>
+                                    <input type="text" class="form-control" ng-maxlength="255" name="job_name"  ng-model="order.job_name"  required name="job_name" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                    <br>
+                                    <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
+                                </div>
+                                <div class="col-md-2 m-b">
+                                    <label>Company <em class="text-muted"></em></label>
+                                    <i class="mdi-image-control-point" target="_blank" ng-click="addCompany()" title="Add Company" role="button" tabindex="0"></i>
+                                    <i class="mdi-content-send pull-right" target="_blank" ng-click="openCompany(order.client_id)" title="Company" role="button" tabindex="0"></i>
+                                    <select  ng-model="order.client_id"  class="form-control" required name="client_id" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                        <option ng-selected="order.client_id==data.client_id" ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 m-b">
+                                    <label>Price Grid<em class="text-muted"></em></label>
+                                    <i class="mdi-content-send pull-right" target="_blank" ng-click="openPriceGrid(order.price_id)" title="Price Grid" role="button" tabindex="0"></i>
+                                    <select  ng-model="order.price_id"  class="form-control" name="price_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }" >
+                                        <option ng-selected="order.price_id==data.id" ng-repeat="data in allGrid" value={{data.id}}>{{data.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 m-b">
+                                    <label>Approval<em class="text-muted"></em></label>
+                                    <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                        <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
+                                    </select>
+                                </div>
+                                <div class=" col-md-2 m-b nopad-right">
+                                    <label>Blind<em class="text-muted"></em></label>
+                                    <select class="form-control" ng-model="order.is_blind" name="is_blind" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 m-b nopad-form">
+                                <div class="col-md-2 m-b nopad-left">
+                                    <label>Sales <em class="text-muted"></em></label>
+                                    <select  class="form-control" ng-model="order.sales_id" name="sales_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                        <option ng-repeat="staff in staffList" ng-selected="{{order.sales_id==staff.id}}" value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 m-b">
+                                    <label>Account Manager<em class="text-muted"></em></label>
+                                    <select  class="form-control" ng-model="order.brand_id" name="brand_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                        <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 m-b">
+                                    <label>Expediter<em class="text-muted"></em></label>
+                                    <input type="text" class="form-control" ng-maxlength="255" name="expediter"  ng-model="order.expediter" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                    <br>
+                                    <span style="color:#f44336" ng-show="orderAddForm.cs_expediter.$error.maxlength">Please enter Name less then 255 characters.</span>
+                                </div>
+                                <div class="col-md-2 m-b">
+                                    <label>Customer PO<em class="text-muted"></em></label>
+                                    <input type="text" class="form-control" ng-maxlength="255"  ng-model="order.customer_po_id" name="customer_po_id" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                    <br>
+                                    <span style="color:#f44336" ng-show="orderAddForm.cs_customer_po.$error.maxlength">Please enter Name less then 255 characters.</span>
+                                </div>
+                                <div class=" col-md-2 m-b nopad-right">
+                                    <label>Order Main Contact<em class="text-muted"></em></label>
+                                    <select  class="form-control" ng-model="order.contact_main_id" name="contact_main_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                        <option ng-repeat="user in client_main_data" ng-selected="{{order.contact_main_id==user.id}}" value="{{user.id}}">{{user.first_name}}&nbsp;{{user.last_name}}</option>
+                                    </select>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2 m-b nopad-form smallPad orderLineCal">
 
-                        <input type="text" class="col-md-1"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)"/>
-
-                        <input type="text" class="col-md-1"  ng-model="order_position.speciality_qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.foil_qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.ink_charge_qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.number_on_light_qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.number_on_dark_qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.oversize_screens_qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.press_setup_qnty"/>
-                        <input type="text" class="col-md-1"  ng-model="order_position.screen_fees_qnty"/>
-
-
-                         <select  ng-model="order_position.dtg_size"  class="col-md-2">
-                           <option ng-selected="order_position.dtg_size==misc_dtgsize.id" ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value={{misc_dtgsize.id}}>{{misc_dtgsize.value}}</option>
-                         </select>
-
-                         <select  ng-model="order_position.dtg_on"  class="col-md-2">
-                           <option ng-selected="order_position.dtg_on==misc_dtg_on.id" ng-repeat="misc_dtg_on in miscData.direct_to_garment" value={{misc_dtg_on.id}}>{{misc_dtg_on.value}}</option>
-                         </select>
-
-
-                         
-                        <button type="button" ng-click="removeOrder($index,order_position.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
-                     </div>
-                    <button type="button" ng-click="addOrder()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
-                    <button  type="submit" class="btn btn-info" ng-click="savePositionData(orderPositionAll)" >Save</button>
-                </div>
-                </div>
- <!-- POSITION TAB END -->
-
-
-
-
-
-
-
- <!-- ORDER LINES TAB START -->
-                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
-                <div class="form-group col-md-12">
-                  <b style="margin: 0 5px 0 0 !important;"  class="col-md-1">Size Group / Product Color</b> 
-                  <b class="col-md-1">Product / Product Vendor</b>
-                  <b class="col-md-1">Qnty / Client Supplied</b>
-                  <b class="col-md-5">-------------------------------------------------------Size / Qnty------------------------------------------------------------</b>
-                  <b class="col-md-1">Markup %</b>
-                  <b class="col-md-1">Over Ride</b>
-                  <b class="col-md-1">Per Item / Sales Total</b>
-                 
-                 
-                </div><br>
-                  <div class="form-group">
-                     <div ng-repeat="(key,order_line) in orderLineAll"> 
-
+                            <div class="input-group col-md-12 pull-right nopad-right t-r m-b">
+                                <div class="col-md-3 pull-left nopad-right smallPad">
+                                    <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
+                                </div>                    
+                                <div class="col-md-3 pull-right nopad-right smallPad">
+                                    <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
+                                </div> 
+                                <div class="col-md-3 pull-right nopad-right smallPad">
+                                    <button ui-sref="order.list" type="button"  class="btn btn-info">Print</button>
+                                </div>                                 
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <div class="form-group col-md-6 text-right nopad-left smallPad">
+                                    <label>Order Line Total</label>
+                                </div>
+                                <div class="form-group col-md-6 nopad-form smallPad">
+                                    <input type="text" class="form-control"  ng-model="order.order_line_total" readonly="" onfocus="this.blur()"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <div class="form-group col-md-6 text-right nopad-left smallPad">
+                                    <label>Order Charges Total</label>
+                                </div>
+                                <div class="form-group col-md-6 nopad-form smallPad">
+                                    <input type="text" class="form-control"  ng-model="order.order_charges_total" readonly="" onfocus="this.blur()"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <div class="form-group col-md-6 text-right nopad-left smallPad">
+                                    <label>Sales Order Total</label>
+                                </div>
+                                <div class="form-group col-md-6 nopad-form smallPad">
+                                    <input type="text" class="form-control"  ng-model="order.sales_order_total" readonly="" onfocus="this.blur()"/>
+                                </div>
+                            </div>
+                        </div>
                        
-                         <select  ng-model="order_line.size_group_id"  class="col-md-1">
-                           <option ng-selected="order_line.size_group_id==misc_size_group.id" ng-repeat="misc_size_group in miscData.size_group" value={{misc_size_group.id}}>{{misc_size_group.value}}</option>
-                         </select>
+                        <ul class="nav nav-tabs input-group col-sm-12">
+                            <li class="active"><a href data-toggle="tab" data-target="#tab1">Position</a></li>
+                            <li> <a href data-toggle="tab" data-target="#tab2" class="tab2" ui-event="{ click : 'openTab(\'orderline\')' }">Order Lines</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab3" ui-event="{ click : 'openTab(\'distribution\')' }">Distribution</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab4" ui-event="{ click : 'openTab(\'notes\')' }">Notes</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab5" class="tab5" ui-event="{ click : 'openTab(\'purchaseorder\')' }">Purchase Orders</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab6">Screen Sets</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab7">Art Work</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab8">Payments</a> </li>
+                        </ul>
+                        <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                        <!-- POSITION TAB START -->
+                            <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab1">
+                                <div class="orderTab_scroll" class="col-md-12 nopad-form">
+                                <!-- POSITION TAB TITLE -->
+                                    <div class="positionTab_content">                    
+                                        <div class="col-md-3 nopad-left">                                        
+                                            <div class="form-group col-md-3 nopad-left">
+                                                <label>Position</label>
+                                            </div>
+                                            <div class="form-group col-md-4 nopad-left">
+                                                <label>Description</label>
+                                            </div>
+                                            <div class="form-group col-md-2 nopad-left">
+                                                <label>Size Group Placement</label>
+                                            </div>
+                                            <div class="form-group col-md-3 nopad-left">
+                                                <label>Placement Type</label>                          
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 nopad-left">
+                                            <div class="form-group col-md-1">
+                                                <label>Stitch/ Color Count</label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label>Qnty</label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Discharge</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Speciality</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Foil</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Ink Charge</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Number on Dark</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Number on Light</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1"></div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Oversize Screen(s)</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Press Setup</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Screen Fee(s)</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 nopad-left">
+                                            <div class="form-group col-md-3 nopad-left">
+                                                <label>DtG Size</label>
+                                            </div>
+                                            <div class="form-group col-md-3 nopad-left">
+                                              <label>DtG On</label>
+                                            </div>
+
+                                            <div class="form-group col-md-4 nopad-left"></div>
+                                            <div class="col-md-2 nopad-form"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- POSITION TAB FIELDS -->
+                                    <div class="positionTab_content" ng-repeat="(key,order_position) in orderPositionAll">
+                                        <input type="hidden" class="col-md-1"  ng-model="order_position.order_id" ng-value="order_position.order_id"/>
+                                        <numeric_tag input-value="123" input-name="wks.name"/>
+                                      
+                                        <div class="col-md-3 nopad-left">                                        
+                                            <div class="form-group col-md-3 nopad-left">
+                                                <select  ng-model="order_position.position_id" class="form-control" ng-change="updatePosition(orderPositionAll,order_position.id)">
+                                                    <option ng-selected="order_position.position_id==misc_pos.id" ng-repeat="misc_pos in miscData.position" value={{misc_pos.id}}>{{misc_pos.value}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4 nopad-left">
+                                                <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            
 
 
-                          <select  ng-model="order_line.product_id"  class="col-md-1">
-                           <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
-                         </select>
-
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty"/>
-
-
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_1"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_1"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_2"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_2"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_3"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_3"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_4"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_4"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_5"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_5"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_6"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_6"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.size_7"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.qnty_7"/>
+                                            <div ng-class="order_position.placementvalue.length == 0 ? 'sgpDetails disabled-sgpDetails' : 'sgpDetails'"  class="form-group col-md-2 nopad-left">
+                                              <a ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0">
+                                                <i class="mdi-maps-navigation"></i>
+                                              </a>
+                                            </div>
 
 
 
-                         <input type="text" class="col-md-1"  ng-model="order_line.markup"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.override"/>
-                         <input type="text" class="col-md-1"  ng-model="order_line.peritem"/>
 
-                        
+                                            <div class="form-group col-md-3 nopad-left">
+                                                <select  ng-model="order_position.placement_type" class="form-control" ng-change="updatePosition(orderPositionAll,order_position.id)">
+                                                    <option ng-selected="order_position.placement_type==misc_placement.id" ng-repeat="misc_placement in miscData.placement_type" value={{misc_placement.id}}>{{misc_placement.value}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                         
-                        <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
-                     </div>
-                    <button type="button" ng-click="addOrderLine()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
-                    <button  type="submit" class="btn btn-info" ng-click="saveOrderLineData(orderLineAll)" >Save</button>
-                </div>
-                </div>
- <!-- ORDER LINES TAB END -->
+                                        <div class="col-md-6 nopad-left">
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control" ng-class="{ cred: order_position.qnty != total_qty }"  ng-model="order_position.qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.speciality_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.foil_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.ink_charge_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.number_on_dark_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.number_on_light_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form"></div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.oversize_screens_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.press_setup_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control"  ng-model="order_position.screen_fees_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 nopad-left">
+                                            <div class="form-group col-md-3 nopad-left">
+                                                <select  ng-model="order_position.dtg_size" class="form-control" ng-change="updatePosition(orderPositionAll,order_position.id)">
+                                                    <option ng-selected="order_position.dtg_size==misc_dtgsize.id" ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value={{misc_dtgsize.id}}>{{misc_dtgsize.value}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3 nopad-left">
+                                                <select  ng-model="order_position.dtg_on"  class="form-control" ng-change="updatePosition(orderPositionAll,order_position.id)">
+                                                    <option ng-selected="order_position.dtg_on==misc_dtg_on.id" ng-repeat="misc_dtg_on in miscData.direct_to_garment" value={{misc_dtg_on.id}}>{{misc_dtg_on.value}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4 nopad-left artworkButton">
+                                                <button type="button" class="btn btn-default addButton c-dgreen">
+                                                  <i class="fa fa-plus"></i> 
+                                                </button>
+                                                <span>Artwork</span>
+                                            </div>
+                                            <div class="col-md-2 nopad-form">
+                                                <button type="button" ng-click="removeOrder($index,order_position.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" ng-click="addOrder()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <button  type="submit" class="btn btn-info" ng-click="saveButtonData('cp')" >Create Contract Screen PO</button>
+                                    </div>
+
+                                    <div class="col-md-1">
+                                        <button  type="submit" class="btn btn-info" ng-click="saveButtonData('ce')" >Create Contract Embroidery</button>
+                                    </div>
+                                    <!-- <div class="form-group pull-right">
+                                        <button  type="submit" class="btn btn-info" ng-click="savePositionData(orderPositionAll)" >Save</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <!-- POSITION TAB END -->
+
+                            <!-- ORDER LINES TAB START -->
+                            <div role="tabpanel" class="tab-pane animated fadeIn tab2Ol" id="tab2">
+                                <div class="col-md-12 nopad-form">
+                                    <div class="col-md-9 nopad-left">
+                                        <div class="form-group orderLineLeft">
+                                        <!-- Orderline Tab Title -->
+                                            <div class="orderLineTabScroll">                      
+                                                <div class="cols col-1">
+                                                    <div class="form-group">
+                                                        <label>Size Group / <br />Product Color</label>
+                                                    </div>
+                                                    <div class="form-group secondContainer">
+                                                        <label>Product / <br />Product Vendor</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Qnty / <br />Client Supplied</label>
+                                                    </div>
+                                                </div>
+                                                <div class="cols col-2">
+                                                    <div class="form-group">
+                                                        <label>----------------------------------------------------------------Size / Qnty----------------------------------------------------------------</label>
+                                                    </div>
+                                                </div>
+                                                <div class="cols col-3">
+                                                    <div class="form-group">
+                                                        <label>Markup %</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Over Ride</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Per Item / <br />Sales Total</label>
+                                                    </div>
+                                                    <div class="form-group lastItem">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Orderline Tab Fields -->
+                                            <div class="orderLineTabScroll formFields" ng-repeat="(key,order_line) in orderLineAll">
+                                                <!-- First ROW OrderLine -->
+                                                <div class="col-md-12 nopad-form">
+                                                    <div class="cols col-1">
+                                                        <div class="form-group">
+                                                            <select  ng-model="order_line.size_group_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                                <option ng-selected="order_line.size_group_id==misc_size_group.id" ng-repeat="misc_size_group in miscData.size_group" value={{misc_size_group.id}}>{{misc_size_group.value}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group secondContainer">
+                                                            <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input id="qnty_{{order_line.orderline_id}}" type="text" class="form-control"  ng-model="order_line.qnty" readonly="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="cols col-2">
+                                                        <span ng-repeat="size_qty in order_line.items">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control c-green"  ng-model="size_qty.size"/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="update_qnty(size_qty.qnty,order_line.orderline_id)"/>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                    <div class="cols col-3">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"  ng-model="order_line.markup" value="{{order_line.markup}}%" readonly="" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"  ng-model="order_line.override" ng-blur="update_override(order_line.override,order_line.id)"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control"  ng-model="order_line.peritem"/ readonly="">
+                                                        </div>
+                                                        <div class="form-group lastItem">
+                                                            <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Second ROW -->
+                                                <div class="col-md-12 nopad-form">
+                                                    <div class="cols col-1">
+                                                        <div class="form-group">
+                                                            <select  ng-model="order_line.color_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in miscData.color_group" value={{color.id}}>{{color.value}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                                <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select  ng-model="order_line.client_supplied"  class="form-control">
+                                                                <option ng-selected="order_line.client_supplied==1" value="1">Yes</option>
+                                                                <option ng-selected="order_line.client_supplied==0" value="0">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cols col-2 orderLinesecondRow">
+                                                        <div class="col-md-12 nopad-form">
+                                                            <div class="col-md-1 smallPad nopad-left">
+                                                                <input type="text" class="form-control"/>
+                                                            </div>
+                                                            <div class="col-md-3 smallPad nopad-left">
+                                                                <button type="button" class="btn btn-default addButton">
+                                                                    <i class="fa fa-plus"></i> Artwork Proof
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-5 smallPad nopad-left">
+                                                                <input type="text" class="form-control"/>
+                                                            </div>
+                                                            <div class="col-md-2 smallPad nopad-left">
+                                                                <input type="text" class="form-control"/>
+                                                            </div>
+                                                            <div class="col-md-1 smallPad nopad-left text-right OL_id_{{order_line.id}}">
+                                                                <a class="iconCST addButton" ng-click="showOlDiv(order_line.id)"></a> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cols col-3">
+                                                        <div class="col-md-12 nopad-form smallPad">
+                                                            <div class="col-md-4 nopad-left smallPad">
+                                                                <input ng-if="order_line.override_diff == 0" type="text" class="form-control" ng-model="order_line.override_diff" readonly=""/>
+                                                                <input ng-if="order_line.override_diff > 0" type="text" class="form-control" ng-model="order_line.override_diff" ng-class="{cgreen: order_line.override_diff > 0}" readonly=""/>
+                                                                <input ng-if="order_line.override_diff < 0" type="text" class="form-control cred" ng-model="order_line.override_diff" ng-class="{cred: order_line.override_diff < 0}" readonly=""/>
+                                                            </div>
+                                                            <div class="col-md-7 nopad-right smallPad">
+                                                                <input type="text" class="form-control"  ng-model="order_line.per_line_total" readonly="" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- / -->
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button type="button" ng-click="addOrderLine()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                                            </div>          
+                                        </div>
+
+                                        <!-- OrderLine Bottom Part -->
+
+                                        <!-- CREATE PURCHASE ORDER -->
+                                        <div class="col-md-12 nopad-form">
+                                            <div class="col-md-4 nopad-left smallPad">
+                                                <div class="form-group col-md-6 nopad-left smallPad">
+                                                    <button  type="submit" class="btn btn-block btn-info" ng-click="saveButtonData('po')" >Create Purchase Order</button>        
+                                                </div>
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Total Units </label>
+                                                </div>                                                
+                                                <div class="form-group col-md-2 nopad-form smallPad">
+                                                    <input type="text" class="form-control" ng-class="{ cred: total_qty != pos_total_qty}" ng-model="total_qty" readonly="" /> 
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-form smallPad"></div>
+                                            </div>
+
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Separations </label>
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-left smallPad">
+                                                    <input type="text" ng-model="order.separations_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'separations_charge')"/> 
+                                                </div>
+
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Rush </label>
+                                                </div>
+                                                <div class="form-group col-md-2 text-right nopad-left smallPad">
+                                                    <input type="text" ng-model="order.rush_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'rush_charge')"/> 
+                                                </div>
+
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Shipping </label>
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.shipping_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'shipping_charge')"/> 
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 nopad-form">
+                                                <div class="form-group col-md-2 nopad-right smallPad"></div>
+                                                <div class="form-group labelMiddle col-md-3 text-right nopad-right smallPad">
+                                                    <label> Set Up </label>
+                                                </div>
+                                                <div class="form-group col-md-7 nopad-right smallPad">
+                                                    <input type="text" ng-model="order.setup_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'setup_charge')"/> 
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <!-- / -->
+
+                                        <!-- CREATE SUPPLIED GARMENTS -->
+                                        <div class="col-md-12 nopad-form">
+                                            <div class="col-md-4 nopad-left smallPad">
+                                                <div class="form-group col-md-6 nopad-left smallPad">
+                                                    <button  type="submit" class="btn btn-block btn-info" ng-click="saveButtonData('sg')" >Create Supplied Garm.</button>
+                                                </div>
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad"></div>
+                                                <div class="form-group col-md-2 nopad-form smallPad"></div>
+                                                <div class="form-group col-md-2 nopad-form smallPad"></div>
+                                            </div>
+
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Distribution </label>
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-left smallPad">
+                                                    <input type="text" ng-model="order.distribution_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'distribution_charge')"/> 
+                                                </div>
+
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Digitize </label>
+                                                </div>
+                                                <div class="form-group col-md-2 text-right nopad-left smallPad">
+                                                    <input type="text" ng-model="order.digitize_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'digitize_charge')"/> 
+                                                </div>
+
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Artwork </label>
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.artwork_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'artwork_charge')"/> 
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 nopad-form">
+                                                <div class="form-group col-md-2 nopad-right smallPad"></div>
+                                                <div class="form-group labelMiddle col-md-3 text-right nopad-right smallPad">
+                                                    <label> Discount </label>
+                                                </div>
+                                                <div class="form-group col-md-7 nopad-right smallPad">
+                                                    <input type="text" ng-model="order.discount" class="form-control c-blue" ng-blur="update_order_charge(order.id,'discount')"/> 
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <!-- / -->
+
+                                        <!-- CONFIRM PRICING -->
+                                        <div class="col-md-12 nopad-form">
+                                            <div class="col-md-4 nopad-left smallPad">
+                                                <div class="form-group col-md-6 nopad-left smallPad">
+                                                    <button  type="submit" class="btn btn-block btn-info">Confirm Pricing</button>
+                                                </div>                                                
+                                                <div class="form-group col-md-1 nopad-form smallPad"></div>
+                                                <div class="form-group col-md-5 nopad-form smallPad">
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                                <div class="form-group col-md-5 pull-right nopad-form smallPad">
+                                                    <label>QB Txn ID</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <div class="form-group col-md-4 nopad-left smallPad">
+                                                    <div class="form-group col-md-3 nopad-left smallPad">
+                                                        <button type="button" class="btn btn-default addButton">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="form-group col-md-9 nopad-form">
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group col-md-9 pull-right nopad-form smallPad">
+                                                        <label>QB Edit Sequence</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Terms</label>
+                                                </div>
+                                                <div class="form-group col-md-2 text-right nopad-left smallPad">
+                                                    <input type="text" class="form-control" /> 
+                                                </div>
+
+                                                <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
+                                                    <label> Ship Via </label>
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-form smallPad">
+                                                    <input type="text" class="form-control" /> 
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2 nopad-form">
+                                                <div class="form-group col-md-11 pull-right nopad-right smallPad">
+                                                    <button  type="submit" class="btn btn-block btn-info">Distribute to Order: OFF</button>
+                                                </div>                                                
+                                            </div>                                            
+                                        </div>
+                                        <!-- / -->
+
+                                        <!-- SAVE Record -->
+                                        <!-- <div class="form-group pull-right">
+                                            <button  type="submit" class="btn btn-info" ng-click="saveOrderLineData(orderLineAll)" >Save</button>
+                                        </div>  -->                                       
+                                    </div>
+                                    <div class="form-group col-md-3 nopad-right">
+
+                                        <div class="chargesApply col-md-12 nopad-form">
+                                            <!-- CHARGES APPLY FORM -->
+                                            <div id="item_{{order_item.id}}" class="col-md-12" ng-repeat="order_item in order_items" ng-click="assign_item(order_id,order_item.id,order_item.item,order_item.charge)" ng-class="{chargesApplyActive: order_item.selected==1}">
+                                                <div class="col-md-8 nopad-form">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control"  ng-model="order_item.item" readonly="" onfocus="this.blur()" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 nopad-form">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control"  ng-model="order_item.charge" readonly="" onfocus="this.blur()"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- / -->
+                                        </div>
+
+                                        <!-- Order Line Price Calculations -->
+                                        <div class="form-group col-md-12 nopaad-form orderTotalPrice">
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Screens</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.screen_charge" class="form-control c-blue" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Press Setup</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.press_setup_charge" class="form-control c-blue" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Lines Total</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.order_line_total" class="form-control" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Order Total</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.order_total" class="form-control" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Tax Rate</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.tax_rate" class="form-control" ng-blur="calulate_tax(order.tax_rate)"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad" >
+                                                    <label>Tax</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.tax" class="form-control" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Grand Total</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.grand_total" class="form-control highlightBox" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Total Payments</label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.total_payments" class="form-control highlightBox" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 nopad-form">
+                                                <div class="labelMiddle col-md-6 text-right nopad-left smallPad">
+                                                    <label>Balance Due </label>
+                                                </div>
+                                                <div class="col-md-6 nopad-form smallPad">
+                                                    <input type="text" ng-model="order.balance_due" class="form-control highlightBox" readonly="" onfocus="this.blur()"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- / -->
+                                    </div>
+                                </div>  
+                                <!-- POP UP on Orderline Tab Page -->
+                                <div id="orderLinepopup">
+                                    
+                                    <div class="orderLineEditBox">
+                                        <div class="col-md-12">
+                                            <div class="form-group">                                            
+                                                <label>Average Garment Cost</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" ng-model="avg_garment_cost" class="form-control  c-blue" readonly="readonly" />
+                                            </div>
+                                        </div>                                        
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Markup % Default</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" ng-model="markup_default" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Average Garment Price</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" ng-model="avg_garment_price" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>+</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Print Charges</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" ng-model="print_charges" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>=</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Total Line Charge</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" ng-model="order_line_charge" class="form-control c-blue" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <button class="closeButtonOL" ng-click="closeOLDiv()">x</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ORDER LINES TAB END -->
+
+                            <!-- DISTRIBUTION TAB -->
+                            <div role="tabpanel" class="tab-pane animated fadeIn tab2Ol" id="tab3">
+                                <div class="col-md-12 form-group">                                    
+                                    <!-- LEFT COLUMN -->
+                                    <div class="col-md-3 nopad-left">
+                                        <div class="blockTitle">
+                                            <label>
+                                                CLIENT DISTRIBUTION LOCATION LIST
+                                            </label>
+                                            <label>
+                                                <span class="pull-left text-left">Discription</span>
+                                                <span class="pull-right text-right">Address</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-12 orderDistributionContainer">
+                                        <div class="col-md-12" ng-repeat="addr in dist_addr">
+                                            <div class="col-md-2 nopad-left m-b">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-10 nopad-right m-b">
+                                                <input type="text" class="form-control" ng-model="addr.description">
+                                            </div>
+
+                                            <div class="col-md-10 nopad-left m-b">
+                                                <input type="test" class="form-control" ng-model="addr.full_address">
+                                            </div>
+                                            <div class="col-md-2 nopad-right m-b">
+                                                <div class="sgpDetails btnCircle">
+                                                  <a title="Move" role="button" tabindex="0" class="" ng-click="add_address_to_distribute(addr.id)">
+                                                    <i class="fa fa-arrow-circle-right"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <!-- / -->
+
+                                    <!-- MIDDLE COLUMN -->                                    
+                                    <div class="col-md-6">
+                                        <div class="col-md-12 panel panel-default"> 
+                                            <!-- MIDDLE COL LEFT -->
+                                            <div class="col-md-6 m-t m-b nopad-left">
+                                                <div class="blockTitle">
+                                                    <label>
+                                                        DISTRIBUTION LOCATION
+                                                    </label>
+                                                    <label>
+                                                        <span class="pull-left text-left">Discription</span>
+                                                        <span class="pull-right text-right">Address</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-12 nopad-left orderDistributionContainer">
+                                                    <div id="row_{{dist.id}}" class="col-md-12" ng-repeat="dist in distributed_address" ng-class="{distribution_active: dist.id==address_id}">
+                                                        <div ng-click="select_address(dist.id)">
+                                                            <div class="col-md-2 nopad-left m-b">
+                                                                <button type="button" class="btn btn-default addButton" tabindex="0">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-10 nopad-right m-b">
+                                                                <input type="text" class="form-control" ng-model="dist.description" onfocus="this.blur()">
+                                                            </div>
+
+                                                            <div class="col-md-10 nopad-left m-b">
+                                                                <input type="test" class="form-control" ng-model="dist.full_address" onfocus="this.blur()">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 nopad-right m-b">
+                                                            <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="remove_address_from_distribute(dist.id)">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- MIDDLE COL RIGHT -->
+                                            <div class="col-md-6 m-t m-b nopad-right">
+                                                <div class="blockTitle">
+                                                    <label>
+                                                        DISTRIBUTION LOCATION ITEMS
+                                                    </label>
+                                                    <label>
+                                                        <span class="pull-left text-left">Size Group</span>
+                                                        <span class="pull-right text-right">Applied</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="col-md-12 nopad-left orderDistributionContainer">
+                                                <div class="col-md-12" ng-repeat="oitem in distributed_items">
+                                                    <!-- First Row -->
+                                                    <div class="col-md-3 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.name" onfocus="this.blur()">
+                                                    </div>
+                                                    <div class="col-md-9 smallPad m-b nopad-right">
+                                                        <input type="text" class="form-control" ng-model="oitem.size_group_name" onfocus="this.blur()">
+                                                    </div>
+
+                                                    <!-- Second Row -->
+                                                    <div class="col-md-3 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.color_name" onfocus="this.blur()">
+                                                    </div>
+                                                    <div class="col-md-2 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.size" onfocus="this.blur()">
+                                                    </div>
+                                                    <div class="col-md-2 smallPad m-b nopad-left">
+                                                        <input type="text" class="form-control" ng-model="oitem.qnty" ng-blur="updateDistributedQty(oitem.id,oitem.qnty)">
+                                                    </div>
+                                                    <div class="col-md-3 m-b nopad-form">
+                                                        <input type="text" class="form-control" ng-model="oitem.main_contact_person" onfocus="this.blur()">
+                                                    </div>
+                                                    <div class="col-md-2 smallPad m-b nopad-right">
+                                                        <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="remove_item_from_distribute(oitem.id)">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <!-- END Fields -->
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / -->
+
+                                    <!-- RIGHT COLUMN -->
+                                    <div class="col-md-3 nopad-right">
+                                        <div class="blockTitle">
+                                            <label>
+                                                ORDER ITEMS
+                                            </label>
+                                            <label>
+                                                <span class="pull-left text-left">Size Group</span>
+                                                <span class="pull-right text-right">Remaining</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-12 nopad-left orderDistributionContainer">
+                                        <div class="col-md-12" ng-repeat="oitem in items">
+                                            <!-- First Row -->
+                                            <div class="col-md-3 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.name" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-9 smallPad m-b nopad-right">
+                                                <input type="text" class="form-control" ng-model="oitem.size_group_name" onfocus="this.blur()">
+                                            </div>
+
+                                            <!-- Second Row -->
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="add_item_to_distribute(oitem.id)">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-3 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.color_name" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.size" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.qnty" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-3 m-b nopad-form">
+                                                <input type="text" class="form-control" ng-model="oitem.main_contact_person" onfocus="this.blur()">
+                                            </div>
+                                            <!-- END Fields -->
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <!-- / -->
+                                </div>
+                            </div>
+                            <!-- DISTRIBUTION TAB -->
+
+                            <!-- Notes TAB START -->
+                            <div role="tabpanel" class="tab-pane  animated fadeIn orderNoteTab" id="tab4">
+                                <ul class="nav nav-tabs input-group col-sm-12">
+                                    <li class="active"> <a href data-toggle="tab" data-target="#tab_notes">Notes</a> </li>
+                                    <li> <a href data-toggle="tab" data-target="#tab_tasks">Tasks</a> </li>
+                                </ul>
+                                <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                                <!-- Notes -->
+                                    <div role="tabpanel" class="tab-pane animated fadeIn active col-md-12" id="tab_notes">
+                                        <div class="col-md-12 nopad-form order_notes">
+                                            <div class="col-md-8 nopad-left tabTitle m-b">                          
+                                                <div class="col-md-2 nopad-left"><label>Created</label></div>
+                                                <div class="col-md-8 nopad-left"><label>Note</label></div>
+                                                <div class="col-md-1"></div>
+                                                <div class="col-md-1"></div>
+                                            </div>
+                                            <div class="col-md-4"></div>
+                                        </div>
+
+                                        <div class="col-md-12 nopad-form">
+                                            <div class="col-md-8 nopad-left m-b order_notes">                          
+                                                <div ng-repeat="order_note in allordernotes" class="col-md-12 nopad-form form-group">
+                                                    <div class="col-md-2 nopad-left">
+                                                        <input type="text" class="form-control" disabled="" ng-model="order_note.created_date">
+                                                    </div>
+                                                    <div class="col-md-8 nopad-left">
+                                                        <input type="text" class="form-control" name="order_notes" ng-model="order_note.order_notes" ui-event="{ blur : 'updateOrderAll($event,order_note.note_id,\'order_notes\',\'note_id\')' }">
+                                                    </div>
+                                                    <!-- <div class="col-md-1">
+                                                        <button type="button" ng-click="editOrderPopup(order_note.note_id)" class="btn btn-default addButton">
+                                                            <i class="fa fa-edit"></i>
+                                                        </button>
+                                                    </div> -->
+                                                    <div class="col-md-1">
+                                                        <button type="button" ng-click="removeordernotes($index,order_note.note_id)" class="btn btn-default addButton">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 nopad-form m-b">
+                                                    <button type="button" ng-click="openOrderPopup('order_note.html')" class="btn btn-default addButton">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 nopad-right order_notes">
+                                                <div class="col-md-12 nopad-form">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 nopad-form">Invoice Note<em class="text-muted"></em></label>
+                                                        <textarea cols="40" name="invoice_note" ui-event="{ blur : 'updateOrderAll($event,order_id,\'orders\',\'id\')' }"  ng-model="order.invoice_note" rows="4" class="col-md-12 nopad-form"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 nopad-form">
+                                                    <div class="form-group">
+                                                        <label class="col-md-12 nopad-form">Garment Link<em class="text-muted"></em></label>
+                                                        <textarea cols="40" name="garment_link" ui-event="{ blur : 'updateOrderAll($event,order_id,\'orders\',\'id\')' }" ng-model="order.garment_link" rows="4" class="col-md-12 nopad-form"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Notes -->
+                                    <!-- Note Tasks -->
+                                    <div role="tabpanel" class="tab-pane animated fadeIn col-md-12" id="tab_tasks">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-1"></div>
+                                            <div class="form-group col-md-1">
+                                                <label>Created</label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label>Due Date</label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Time</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Task</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Result</span></label>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label class="rotateText"><span>Note</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Status</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <label class="rotateText"><span>Type</span></label>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-left btnAddTask">
+                                                <button class="btn btn-info btn-block" ng-click="openTaskPopup('add_task.html','0')">
+                                                    <i class="fa fa-plus-circle"></i>ADD TASK
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" ng-repeat="task in orderTaskAll">
+                                            <div class="col-md-1 m-b">
+                                                <div class="sgpDetails btnCircle">
+                                                  <a title="Move" role="button" tabindex="0" class="" ng-click="openTaskPopup('edit_task.html',task.id)">
+                                                    <i class="fa fa-arrow-circle-right"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.date_added" readonly />
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.due_date" readonly/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.time" readonly/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.task_name" name="task_name" ui-event="{ blur : 'updateOrderTask($event,task.id,\'order_tasks\',\'id\')' }"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.result_name" name="result_name" ui-event="{ blur : 'updateOrderTask($event,task.id,\'order_tasks\',\'id\')' }"/>
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" class="form-control" ng-model="task.note" name="note" ui-event="{ blur : 'updateOrderAll($event,task.id,\'order_tasks\',\'id\')' }"/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.status" readonly/>
+                                            </div>
+                                            <div class="form-group col-md-1">
+                                                <input type="text" class="form-control" ng-model="task.type" readonly/>
+                                            </div>
+                                            <div class="form-group lastItem">
+                                                <button type="button" ng-click="removeOrderText($index,task.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Note Tasks -->
+                                </div>
+                            </div>
+                            <!-- Notes TAB END -->
+
+                            <!-- Purchase Order TAB START -->
+                            <div role="tabpanel" class="tab-pane  animated fadeIn orderPOTab" id="tab5">
+                                <!-- LEFT SIDE -->
+                                <div class="col-md-6 nopad-form">
+                                    <div class="form-group panel panel-default col-md-12 smallPad">
+                                        <div class="col-md-12  m-t nopad-form">
+                                            <div class="col-md-1 nopad-left smallPad"></div>
+                                            <div class="col-md-3 nopad-left smallPad">
+                                                <label>PO ID</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>PO Number</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Vendor</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Created</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-left">
+                                                <label>Duplicate</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-form"></div>
+                                        </div>
+
+                                        <!-- Form Fields -->
+                                        <div class="col-md-12 nopad-form form-group purchasing_order" ng-repeat="(key,orderPO) in order_po_data">
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <div class="sgpDetails btnCircle">
+                                                  <a title="Go To" role="button" tabindex="0" class="">
+                                                    <i class="fa fa-arrow-circle-right" ui-sref="purchase.{{orderPO.po_type}}({id:orderPO.po_id})"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 nopad-left smallPad">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_id" ng-click="getPoAllData(orderPO.po_id)">
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_type" ng-click="getPoAllData(orderPO.po_id)">
+
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateOrderAll($event,orderPO.po_id,\'purchase_order\',\'po_id\')' }" >
+                                                    <option ng-selected="orderPO.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                              <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.date" ng-click="getPoAllData(orderPO.po_id)">
+                                            </div>
+                                            <div class="col-md-1 nopad-left">
+                                                <div class="sgpDetails">
+                                                  <a title="Go To" role="button" tabindex="0" class="">
+                                                    <i class="fa fa-copy" ng-click="duplicatePurchaseOrder(orderPO.po_id)"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1 nopad-form">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removeOrderPO($index,orderPO.po_id)">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+
+                                           
 
 
+                                        </div>
+                                        <!-- / -->
+                                   </div>
+                                </div>
 
- <!-- Notes TAB START -->
-                <div role="tabpanel" class="tab-pane  animated fadeIn" id="tab4">
-                
-                  <ul class="nav nav-tabs input-group col-sm-12">
-                  <li class="active"> <a href data-toggle="tab" data-target="#tab_notes">Notes</a> </li>
-                  <li> <a href data-toggle="tab" data-target="#tab_tasks">Tasks</a> </li>
-                  
-                </ul>
-                <div class="tab-content p b-a no-b-t bg-white m-b-md">
-                  <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab_notes">
-                    <div class="form-group col-md-12 nopad-form tabTitle m-b">
-                     
-                      <div class="col-md-2 nopad-left">Created</div>
-                      <div class="col-md-6 nopad-left">Note</div>
-                      <div class="col-md-1"></div>
-                      <div class="col-md-1"></div>
+                                <!-- RIGHT SIDE -->
+                                <div class="col-md-6 nopad-right">
+                                    <div class="form-group panel panel-default col-md-12">
+                                        <div class="col-md-12 m-t nopad-form">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                               <label>Product</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Size Group</label>                  
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <label>Product color</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                                <label>Size</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                                <label>Qnty</label>
+                                            </div>
+                                            <div class=" col-md-1 nopad-left">
+                                                <label>Qnty Ordered</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left">
+                                                <label>Qnty Rec'd</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-form"></div>
+                                        </div>
+
+                                        <!-- Form Fields -->
+                                        <div class="col-md-12 nopad-form form-group purchasing_order" ng-repeat="(key,poline) in ArrPoLine">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.product_name"/>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.size_group"/>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad ">
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.product_color"/>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                               <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.size"/>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad ">
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.qnty"/>
+                                            </div>
+                                            <div class=" col-md-1 nopad-left">
+                                                <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.qnty_ordered"/>
+                                            </div>
+                                            <div class="col-md-1 nopad-left">
+                                                 <input type="text" class="form-control" disabled="" class="form-control" ng-model="poline.total_qnty"/>
+                                            </div>
+                                            <div class="col-md-1 nopad-form">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removePOLine($index,poline.id)">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+
+
+                                            </div>
+                                        </div>
+                                        <!-- / -->
+                                   </div>
+                                </div>
+                            </div>
+                            <!-- Purchase Order TAB END -->
+                        </div>
                     </div>
-                    <div ng-repeat="order_note in allordernotes" class="col-md-12 nopad-form">                      
-                      <div class="form-group col-md-12 nopad-form m-b">
-                        
-                        <div class="col-md-2 nopad-left">
-                          <input type="text" class="form-control" disabled="" ng-model="order_note.created_date">
-                        </div>
-                        <div class="col-md-6 nopad-left">
-                          <input type="text" class="form-control" ng-model="order_note.order_notes">
-                        </div>
-                        <div class="col-md-1 nopad-left">
-                          <button type="button" ng-click="editOrderPopup(order_note.note_id)" class="btn btn-default addButton">
-                          <i class="fa fa-edit"></i>
-                          </button>
-                        </div>
-                        <div class="col-md-1 nopad-form">
-                          <button type="button" ng-click="removeordernotes($index,order_note.note_id)" class="btn btn-default addButton">
-                          <i class="fa fa-minus"></i>
-                          </button>
-                        </div>
-                      </div>                      
-                    </div>  
-                    <div class="col-md-12 nopad-form m-b">
-                        <button type="button" ng-click="openOrderPopup('order_note.html')" class="btn btn-default addButton">
-                          <i class="fa fa-plus"></i>
-                        </button>
-                      </div>                 
-                    &nbsp; 
-                    </div>
-                  
-                </div>
-
-                </div>
- <!-- Notes TAB END -->
-
- 
-
                 </div>
             </div>
-
-           
-
-       
-            <div>&nbsp;</div>
-
-            <div class="form-group col-sm-12 m-b"></div>
-            
-          </div>
-        </div>
-      </form>
+        </form>
     </div>
-    
-  </div>
- 

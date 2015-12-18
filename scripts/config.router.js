@@ -9,10 +9,12 @@
  */
 angular.module('app')
   .run(
-    [           '$rootScope', '$state', '$stateParams','$location','$http',
-      function ( $rootScope,   $state,  $stateParams ,$location,$http) {
+    [           '$rootScope', '$state', '$stateParams','$location','$http','AuthService',
+      function ( $rootScope,   $state,  $stateParams ,$location,$http,AuthService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+          AuthService.CompanyService();
+          //return false;
       }
     ]
   )
@@ -50,6 +52,11 @@ angular.module('app')
                                return AuthService.checksession();
                             },
                        },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
+                      
+
             })
 
 
@@ -147,7 +154,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
           .state('account', {
               url: '/account',
@@ -162,11 +177,15 @@ angular.module('app')
                 templateUrl: 'views/content.html'
               }
               },
+
               resolve: {
-                checklogin: function (AuthService) {
-                   return AuthService.checksession();
-                },
-              }
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('vendor', {
@@ -181,7 +200,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('product', {
@@ -196,7 +223,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('setting', {
@@ -211,7 +246,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
           .state('misc', {
@@ -226,7 +269,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+              resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
             .state('staff.list', {
@@ -463,7 +514,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
             .state('client.list', {
@@ -471,33 +530,21 @@ angular.module('app')
               templateUrl: 'views/front/client/list.html',
               controller: 'clientListCtrl',
               data : { title: 'Client listing' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('client.add', {
               url: '/add',
               templateUrl: 'views/front/client/add.html',
                controller: 'clientAddCtrl',
               data : { title: 'Client listing' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('client.edit', {
               url: '/edit/:id',
               templateUrl: 'views/front/client/edit.html',
                controller: 'clientEditCtrl',
               data : { title: 'Client Edit' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('setting.price', {
               url: '/price',
@@ -526,7 +573,7 @@ angular.module('app')
             .state('setting.placement', {
               url: '/placement',
               templateUrl: 'views/setting/placement.html',
-              data : { title: 'Misc' },
+              data : { title: 'Placement' },
               controller: 'XeditableCtrl',
               resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
@@ -565,6 +612,9 @@ angular.module('app')
              controller: 'XeditableCtrl',
               resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
+    /*==========================================
+          PURCHASE MODULE CODE START
+    ==========================================*/
             .state('purchase', {
                   url: '/front/purchase',
                 views: {
@@ -577,44 +627,54 @@ angular.module('app')
                   'content': {
                     templateUrl: 'views/content.html'
                   }
-                }
+                },
+                 resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                             checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
+                       }
               })
             .state('purchase.list', {
               url: '/list/:id',
               templateUrl: 'views/front/purchase/index.html',
               data : { title: 'Purchase Listing' },
              controller: 'PurchaseListCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+                  
             })
             .state('purchase.po', {
               url: '/po/:id',
               templateUrl: 'views/front/purchase/po.html',
               data : { title: 'Purchase Orders' },
              controller: 'PurchasePOCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+                 
             })
             .state('purchase.sg', {
               url: '/sg/:id',
               templateUrl: 'views/front/purchase/sg.html',
               data : { title: 'Supplied Garments' },
-             controller: 'PurchaseSGCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+             controller: 'PurchasePOCtrl',
+                
             })
             .state('purchase.ce', {
               url: '/ce/:id',
               templateUrl: 'views/front/purchase/ce.html',
               data : { title: 'Contract Embrodiery' },
-             controller: 'PurchaseCECtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
+             controller: 'PurchaseCPCtrl',
+
             })
             .state('purchase.cp', {
               url: '/cp/:id',
               templateUrl: 'views/front/purchase/cp.html',
               data : { title: 'Contract Printing' },
              controller: 'PurchaseCPCtrl',
-              resolve: load(['xeditable','scripts/controllers/purchase.js'])
-            })
 
+            })
+    /*==========================================
+          PURCHASE MODULE CODE END
+    ==========================================*/
               .state('order', {
               url: '/front/order',
             views: {
@@ -627,7 +687,15 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
-            }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
+         }
           })
 
             .state('order.list', {
@@ -635,11 +703,7 @@ angular.module('app')
               templateUrl: 'views/front/order/list.html',
               controller: 'orderListCtrl',
               data : { title: 'Order listing' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
 
              .state('order.add', {
@@ -647,22 +711,14 @@ angular.module('app')
               templateUrl: 'views/front/order/add.html',
                controller: 'orderAddCtrl',
               data : { title: 'Order Add' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('order.edit', {
               url: '/:id/edit/:client_id',
               templateUrl: 'views/front/order/edit.html',
                controller: 'orderEditCtrl',
               data : { title: 'Order Edit' },
-              resolve: {
-                            checklogin: function (AuthService) {
-                               return AuthService.checksession();
-                            },
-                       }
+
             })
             .state('finishing', {
               url: '/front/finishing',
@@ -676,6 +732,14 @@ angular.module('app')
               'content': {
                 templateUrl: 'views/content.html'
               }
+            },
+            resolve: {
+              checklogin: function (AuthService) {
+                 return AuthService.checksession();
+              },
+              checkcompany: function (AuthService) {
+                 return AuthService.CompanyService();
+              },
             }
           })
             .state('finishing.list', {
@@ -689,7 +753,92 @@ angular.module('app')
                             },
                        }
             })
+        /*==========================================
+          COMPANY MODULE CODE START
+        ==========================================*/
+              .state('company', {
+              url: '/company',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
 
+            .state('company.list', {
+              url: '/list',
+              templateUrl: 'views/company/list.html',
+              controller: 'companyListCtrl',
+              data : { title: 'company listing' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+
+             .state('company.add', {
+              url: '/add',
+              templateUrl: 'views/company/add.html',
+               controller: 'companyAddCtrl',
+              data : { title: 'company Add' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+              .state('company.edit', {
+              url: '/edit/:id',
+              templateUrl: 'views/company/add.html',
+               controller: 'companyEditCtrl',
+              data : { title: 'company Add' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+    /*==========================================
+          COMPANY MODULE CODE END
+    ==========================================*/        
+    /*==========================================
+          ART MODULE CODE START
+    ==========================================*/
+    .state('art', {
+              url: '/front/art',
+            views: {
+              '': {
+                templateUrl: 'views/layout.html'
+              },
+              'aside': {
+                templateUrl: 'views/aside.html'
+              },
+              'content': {
+                templateUrl: 'views/content.html'
+              }
+            }
+          })
+    .state('art.list', {
+                url: '/list',
+                templateUrl: 'views/front/art/list.html',
+                controller: 'ArtListCtrl',
+                data : { title: 'Art' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+    /*==========================================
+          ART MODULE CODE END
+    ==========================================*/
 
 ;
 

@@ -24,6 +24,24 @@
             </ul>
             <div class="tab-content p b-a no-b-t bg-white m-b-md">
               <div role="tabpanel" class="tab-pane animated fadeIn active col-md-12 nopad-form" id="tab1">
+
+              <div class="col-md-6 panel panel-default brdr-panel">
+                 <div class="form-group col-md-3 nopad-left text-center">
+                  <label>Price increase by %<em class="text-muted"></em></label>
+                </div>
+                <div class="form-group col-md-3 nopad-left">
+                  <input type="text" class="form-control" ui-event="{ blur : 'percentagecalc($event)' }">
+                </div>
+
+                <div class="form-group col-md-3 nopad-left text-center">
+                  <label>Price increase by amount<em class="text-muted"></em></label>
+                </div>
+                <div class="form-group col-md-3 nopad-left">
+                 <input type="text" class="form-control" ui-event="{ blur : 'amtcalc($event)' }">
+                </div>
+               </div> 
+
+               <div class="col-md-12 nopad-form"> 
                 <div class="form-group col-md-3">
                   <label>Discharge<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.discharge">
@@ -92,6 +110,8 @@
                   <label>Shipping Charge<em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="price.shipping_charge">
                 </div>
+               </div>
+                
               </div>
               <div role="tabpanel" class="tab-pane animated fadeIn" id="tab2">
                 <div class="form-group col-md-12 nopad-form">
@@ -104,8 +124,8 @@
                   <div ng-repeat="price_grid in allPriceGrid" ng-controller="MDCheckboxCtrl">
                   	<ul class="form-fields col-md-6">
                     	<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.item" /></li>
-                   		<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.time" /></li>
-                    	<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.charge" /></li>
+                   		<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.charge" /></li>
+                    	<li class="col-md-4 nopad-left"><input type="text" class="form-control" ng-model="price_grid.time" /></li>
                     </ul>
                     <ul class="form-fields col-md-6 nopad-left chkBoxes">
                     	<li><md-checkbox ng-model="price_grid.is_gps_distrib" >GPS Distrib</md-checkbox></li>

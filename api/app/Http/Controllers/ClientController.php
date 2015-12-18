@@ -7,15 +7,17 @@ use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Client;
+use App\Common;
 use DB;
 
 use Request;
 
 class ClientController extends Controller { 
 
-	public function __construct(Client $client) 
+	public function __construct(Client $client,Common $common) 
  	{
         $this->client = $client;
+        $this->common = $common;
     }
 
     /**
@@ -45,13 +47,15 @@ class ClientController extends Controller {
 			{
 				$message = INSERT_RECORD;
 				$success = 1;
+				$data = $result;
 			}
 			else
 			{
 				$message = INSERT_ERROR;
 				$success = 0;
+				$data = '';
 			}
-		$data = array("success"=>$success,"message"=>$message);
+		$data = array("success"=>$success,"message"=>$message,"data"=>$data);
 		return response()->json(['data'=>$data]);
 		
 	}
@@ -211,9 +215,35 @@ class ClientController extends Controller {
     */
 	public function GetclientDetail($id)
 	{
+		if(!empty($id))
+		{
+			$result = $this->client->GetclientDetail($id);
+			if(count($result)>0)
+			{
+				$StaffList = $this->common->getStaffList();
+				$ArrCleintType=$this->common->TypeList('company');
+				$AddrTypeData = $this->common->GetMicType('address_type');
+				$Arrdisposition = $this->common->GetMicType('disposition');
+				$allContacts=$this->client->getContacts($id);
+				$allclientnotes = $this->client->GetNoteDetails($id);
+				$Client_orders = $this->client->ListClientOrder($id);
 
-		$result = $this->client->GetclientDetail($id);
-    	return $this->return_response($result);
+				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders);
+	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
+    		}
+    		else
+    		{
+    			$data = array("success"=>0,"message"=>NO_RECORDS);
+    		}
+    	}
+    	else
+    	{
+    		$data = array("success"=>0,"message"=>MISSING_PARAMS);
+    	}
+    	
+		return response()->json(['data'=>$data]);
+    	
 	}
 	/**
     * Sales tabe in client edit form data seve, refrence of client ID.
