@@ -224,6 +224,15 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
+    function get_task_list(order_id)
+    {
+        var task_arr = {order_id:order_id};
+
+        $http.post('api/public/order/getTaskList',task_arr).success(function(result) {
+            $scope.orderTaskAll = result.data.task_detail;
+        });
+    }
+
     
     $scope.modalInstanceEdit  ='';
     $scope.CurrentUserId =  sessionService.get('user_id');
@@ -1686,51 +1695,91 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     $scope.openTaskPopup = function (page,id) {
 
-        if (id != 0) {
+        var task = {id:id};
 
-            var modalInstance = $modal.open({
-                                templateUrl: 'views/front/order/'+page,
-                                scope : $scope,
-                            });
+        $http.post('api/public/order/getTaskDetails',task).success(function(result) {
+        
+            $scope.users = result.data.users;
+        
+            if (id != 0) {
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-                //$log.info('Modal dismissed at: ' + new Date());
-            });
+                $scope.taks_detail = result.data.task_detail[0];
+                var modalInstance = $modal.open({
+                                    templateUrl: 'views/front/order/'+page,
+                                    scope : $scope,
+                                });
 
-            $scope.closePopup = function (cancel)
-            {
-                modalInstance.dismiss('cancel');
-            };
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+                }, function () {
+                });
 
-            $scope.saveSizeGroup=function(savePositionDataAll)
-            {
-                modalInstance.dismiss('cancel');
-            };
-        }
-        else {
-            var modalInstance = $modal.open({
-                                templateUrl: 'views/front/order/'+page,
-                                scope : $scope,
-                            });
+                $scope.closePopup = function (cancel)
+                {
+                    modalInstance.dismiss('cancel');
+                };
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-                //$log.info('Modal dismissed at: ' + new Date());
-            });
+                $scope.updateTask=function()
+                {
+                    modalInstance.dismiss('cancel');
 
-            $scope.closePopup = function (cancel)
-            {
-                modalInstance.dismiss('cancel');
-            };
+                    var order_main_data = {};
+                    order_main_data.data = $scope.taks_detail;
+                    order_main_data.cond = {id:id};
+                    order_main_data.action = 'update';
 
-            $scope.saveSizeGroup=function(savePositionDataAll)
-            {
-                modalInstance.dismiss('cancel');
-            };
-        }
+                    $http.post('api/public/order/updateOrderTask',order_main_data).success(function(result) {
+                        var data = {"status": "success", "message": "Order Task has been updated"}
+                        notifyService.notify(data.status, data.message);
+                        get_task_list($scope.order_id);
+                    });
+                };
+            }
+            else {
+                $scope.task_detail = {};
+                
+                $scope.task_detail.user_id = '';
+                $scope.task_detail.company_id = '';
+                $scope.task_detail.order_name = '';
+                $scope.task_detail.due_date = '';
+                $scope.task_detail.task_name = '';
+                $scope.task_detail.note = '';
+                $scope.task_detail.result_name = '';
+                $scope.task_detail.order_id = $scope.order_id;
+
+
+                var modalInstance = $modal.open({
+                                    templateUrl: 'views/front/order/'+page,
+                                    scope : $scope,
+                                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    $scope.selected = selectedItem;
+                }, function () {
+                });
+
+                $scope.closePopup = function (cancel)
+                {
+                    modalInstance.dismiss('cancel');
+                };
+
+                $scope.insertTask=function(task_detail)
+                {
+                    modalInstance.dismiss('cancel');
+
+                    var order_main_data = {};
+                    order_main_data.data = $scope.task_detail;
+                    order_main_data.action = 'insert';
+
+                    $http.post('api/public/order/updateOrderTask',order_main_data).success(function(result) {
+                        var data = {"status": "success", "message": "Order Task created"}
+                        notifyService.notify(data.status, data.message);
+                        get_task_list($scope.order_id);
+                    });
+                };
+            }
+        });
+        
     };
 
     $scope.openTab = function(tab_name){
@@ -1746,6 +1795,9 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             angular.forEach($scope.orderLineAll, function(value) {
                     $scope.calculate_all(value.id);
             });
+       }
+       else if(tab_name == 'tasks') {
+            get_task_list($scope.order_id);
        }
     }
   // **************** NOTES TAB CODE END  ****************
