@@ -382,4 +382,28 @@ class ClientController extends Controller {
     	$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
 	}
+	/**
+    * Check Unique name of client for Company
+    * @params Form array with client name and company_id
+    * @return json data
+    */
+	public function checkCompName()
+	{
+		$post = Input::all();
+		if(!empty($post['data']['value']) && !empty($post['data']['company_id']))
+		{
+			$result = $this->client->checkCompName($post['data']);
+			$message = 'success';
+			$success = 1;
+		}
+		else
+		{
+			$result=1;
+			$message = MISSING_PARAMS;
+			$success = 0;
+		}
+		
+    	$data = array("success"=>$success,"message"=>$message,'result'=>$result);
+		return response()->json(['data'=>$data]);
+	}
  } 

@@ -1,15 +1,33 @@
 app.controller('clientAddCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log) {
                           AuthService.AccessService('BC');
-                          var company_id = $rootScope.company_profile.company_id;
+                          $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.CurrentController=$state.current.controller;
 
                           $http.get('api/public/common/type/client').success(function(Listdata) {
                                   $scope.Typelist = Listdata.data
                             });
-                          $scope.SaveClient = function () {
-
+                         
+                         $scope.CheckClient = function ($event) {
+                              $("#client_namecheck").hide();
+                              var params = {};
+                              params.data = {value:$event.target.value,company_id:$scope.company_id};
+                              var client_name = $event.target.value;
+                              if(client_name.trim()!='')
+                              {
+                                $http.post('api/public/client/checkCompName',params).success(function(response) {
+                                       if(response.data.success=='1')
+                                       {
+                                          if(response.data.result!='0')
+                                          {
+                                              $("#client_namecheck").show();
+                                          }
+                                       }
+                                });
+                              }
                            }
+
                           $scope.SaveClient = function () {
+                            $scope.client.company_id = $scope.company_id;
                             var company_post = $scope.client;
                             if($scope.client.client_company!='')
                             {
@@ -60,7 +78,7 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
 app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$location','$state','$modal','$stateParams','AuthService','$log','$filter', function($scope,$rootScope,$sce,$http,$location,$state,$modal,$stateParams,AuthService,$log,dateWithFormat,$filter) {
 
                            $("#ajax_loader").show();
-                          var company_id = $rootScope.company_profile.company_id;
+                          $scope.company_id = $rootScope.company_profile.company_id;
                          // console.log(company_id);
                           var client_contacts=[];
                           var AddrTypeData={};
@@ -119,6 +137,25 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               } 
                               
                           });  */
+                           $scope.CheckClient = function ($event) {
+                              $("#client_namecheck").hide();
+                              var params = {};
+                              params.data = {value:$event.target.value,company_id:$scope.company_id,client_id:$stateParams.id};
+                              var client_name = $event.target.value;
+                              if(client_name.trim()!='')
+                              {
+                                $http.post('api/public/client/checkCompName',params).success(function(response) {
+                                       if(response.data.success=='1')
+                                       {
+                                          if(response.data.result!='0')
+                                          {
+                                              $("#client_namecheck").show();
+                                          }
+                                       }
+                                });
+                              }
+                           }
+
                            getClientDetail(getclient_id );
                            function getClientDetail(getclient_id)
                            {

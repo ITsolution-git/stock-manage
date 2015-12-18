@@ -66,7 +66,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','$timeout','s
 
                                     var data = {"status": "success", "message": "Login Successfull, Please wait..."}
                                     notifyService.notify(data.status, data.message);
-                                    $("#ajax_loader").hide();
+                                    //$("#ajax_loader").hide();
 
                                  
                                    

@@ -135,6 +135,9 @@ Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
 Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
+Route::post('client/checkCompName', 'ClientController@checkCompName');
+
+
 
 Route::get('client/GetNoteDetails/{id}', 'ClientController@GetNoteDetails');
 Route::post('client/SaveCleintNotes', 'ClientController@SaveCleintNotes');
