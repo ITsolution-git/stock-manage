@@ -534,6 +534,61 @@ public function updateOrderLineData($post)
     }    
 
 
-   
-	
+
+    /**
+    * Save button data          
+    * @access public getOrderDetailById
+    * @param  int $po_id
+    * @return array $result
+    */
+
+    public function poDuplicate($post)
+    {
+
+      $whereConditions = ['po_id' => $post['po_id']];
+      $orderPoData = DB::table('purchase_order')->where($whereConditions)->get();
+
+
+      $result = DB::table('purchase_order')->insert(['order_id'=>$orderPoData[0]->order_id,'vendor_id'=>$orderPoData[0]->vendor_id,
+      'po_type'=>$orderPoData[0]->po_type,
+      'vendor_contact_id'=>$orderPoData[0]->vendor_contact_id,
+      'shipt_block'=>$orderPoData[0]->shipt_block,
+      'vendor_charge'=>$orderPoData[0]->vendor_charge,
+      'order_total'=>$orderPoData[0]->order_total,
+      'ship_date'=>$orderPoData[0]->ship_date,
+      'hand_date'=>$orderPoData[0]->hand_date,
+      'arrival_date'=>$orderPoData[0]->arrival_date,
+      'expected_date'=>$orderPoData[0]->expected_date,
+      'created_for_date'=>$orderPoData[0]->created_for_date,
+      'vendor_arrival_date'=>$orderPoData[0]->vendor_arrival_date,
+      'vendor_deadline'=>$orderPoData[0]->vendor_deadline,
+      'vendor_party_bill'=>$orderPoData[0]->vendor_party_bill,
+      'ship_to'=>$orderPoData[0]->ship_to,
+      'vendor_instruction'=>$orderPoData[0]->vendor_instruction,
+      'complete'=>$orderPoData[0]->complete,
+      'date'=>$post['created_date']]);
+      
+       $insertedpoid = DB::getPdo()->lastInsertId();
+
+
+               $whereConditionsline = ['po_id' => $post['po_id']];
+               $orderLineData = DB::table('purchase_order_line')->where($whereConditionsline)->get();
+
+                 foreach ($orderLineData as $key=>$alldata){
+                    
+                     $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
+                    'line_id'=>$alldata->line_id,
+                    'qnty_ordered'=>$alldata->qnty_ordered,
+                    'unit_price'=>$alldata->unit_price,
+                    'line_total'=>$alldata->line_total,
+                    'short'=>$alldata->short,
+                    'over'=>$alldata->over,
+                    'total_qnty'=>$alldata->total_qnty,
+                    'location'=>$alldata->location,
+                    'instruction'=>$alldata->instruction,
+                    'date'=>$post['created_date']]);
+                  
+                 }
+    }
+
 }

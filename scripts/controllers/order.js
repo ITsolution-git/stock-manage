@@ -925,6 +925,20 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             
     }
 
+
+
+    $scope.duplicatePurchaseOrder=function(po_id)
+    {
+        
+            $http.post('api/public/order/duplicatePoData',po_id).success(function(result) {
+                                get_po_detail(order_id,client_id);
+                                 var data = {"status": "success", "message": "PO has been successfully Duplicated."}
+                                notifyService.notify(data.status, data.message);
+                                
+                            });
+    }
+
+
     
     // **************** NOTES TAB CODE END  ****************
     
