@@ -908,7 +908,7 @@ input[readonly].cgreen {
 }
 .order_notes_tasks .modal-body {
 	padding: 15px 0;
-	overflow: hidden;
+	/* overflow: hidden; */
 }
 
 .order_notes_tasks h3.modal-title {

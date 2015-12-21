@@ -110,9 +110,12 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     var client_id = $stateParams.client_id
     $scope.client_id = $stateParams.client_id
     $scope.address_id = '0';
+
+    $scope.task_show = 0;
+    $scope.result_show = 0;
     
     var company_id = $rootScope.company_profile.company_id;
-     var AJloader = $("#ajax_loader");
+    var AJloader = $("#ajax_loader");
 
     get_order_details(order_id,client_id,company_id);
     
@@ -1714,6 +1717,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         $http.post('api/public/order/getTaskDetails',task).success(function(result) {
         
             $scope.users = result.data.users;
+            $scope.tasks = result.data.tasks;
+            $scope.result = result.data.result;
         
             if (id != 0) {
 
@@ -1843,6 +1848,21 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         $("#ajax_loader").hide();
     }
 
+    $scope.showTaskInput = function(){
+        if($scope.task_detail.task_name == 1)
+        {
+            $scope.task_detail.task_name = '';
+            $scope.task_show = 1;
+        }
+    }
+
+    $scope.showResultInput = function(){
+        if($scope.task_detail.result_name == 1)
+        {
+            $scope.task_detail.result_name = '';
+            $scope.result_show = 1;
+        }
+    }
                                        
 }]);
 
