@@ -110,9 +110,12 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     var client_id = $stateParams.client_id
     $scope.client_id = $stateParams.client_id
     $scope.address_id = '0';
+
+    $scope.task_show = 0;
+    $scope.result_show = 0;
     
     var company_id = $rootScope.company_profile.company_id;
-     var AJloader = $("#ajax_loader");
+    var AJloader = $("#ajax_loader");
 
     get_order_details(order_id,client_id,company_id);
     
@@ -226,10 +229,12 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     function get_task_list(order_id)
     {
+        $("#ajax_loader").show();
         var task_arr = {order_id:order_id};
 
         $http.post('api/public/order/getTaskList',task_arr).success(function(result) {
             $scope.orderTaskAll = result.data.task_detail;
+            $("#ajax_loader").hide();
         });
     }
 
@@ -950,6 +955,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     
     function getNotesDetail(order_id)
     {
+        $("#ajax_loader").show();
         $http.get('api/public/order/getOrderNoteDetails/'+order_id).success(function(result, status, headers, config) 
         {
             if(result.data.success == '1') 
@@ -960,6 +966,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             {
                 $scope.allordernotes=[];
             }
+            $("#ajax_loader").hide();
         });
     }
 
@@ -1512,9 +1519,9 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     {
         if(tax_rate != '' && tax_rate != '0')
         {
-            var cal = parseFloat($scope.order.grand_total) * parseFloat(tax_rate) / parseInt(100);
+            var cal = parseFloat($scope.order.sales_order_total) * parseFloat(tax_rate) / parseInt(100);
             $scope.order.tax = cal.toFixed(2);
-            var grand_total = parseFloat($scope.order.grand_total) + parseFloat($scope.order.tax);
+            var grand_total = parseFloat($scope.order.sales_order_total) + parseFloat($scope.order.tax);
             $scope.order.grand_total = grand_total.toFixed(2);
             $scope.order.tax_rate = parseFloat(tax_rate); 
         }
@@ -1714,6 +1721,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         $http.post('api/public/order/getTaskDetails',task).success(function(result) {
         
             $scope.users = result.data.users;
+            $scope.tasks = result.data.tasks;
+            $scope.result = result.data.result;
         
             if (id != 0) {
 
@@ -1843,6 +1852,21 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         $("#ajax_loader").hide();
     }
 
+    $scope.showTaskInput = function(){
+        if($scope.task_detail.task_name == 1)
+        {
+            $scope.task_detail.task_name = '';
+            $scope.task_show = 1;
+        }
+    }
+
+    $scope.showResultInput = function(){
+        if($scope.task_detail.result_name == 1)
+        {
+            $scope.task_detail.result_name = '';
+            $scope.result_show = 1;
+        }
+    }
                                        
 }]);
 

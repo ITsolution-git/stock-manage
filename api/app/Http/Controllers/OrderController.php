@@ -663,6 +663,8 @@ class OrderController extends Controller {
             unset($post['data']['result_name']);
         }
 
+        $post['data']['user_id'] = implode(',', $post['data']['user_id']);
+
         if($post['action'] == 'update')
         {
             $this->common->UpdateTableRecords('order_tasks',$post['cond'],$post['data']);
@@ -749,17 +751,23 @@ class OrderController extends Controller {
     {
         $post = Input::all();
         $users = $this->common->GetTableRecords('users',array(),array('role_id' => '7'));
+        $task = $this->common->GetTableRecords('task',array(),array());
+        $result = $this->common->GetTableRecords('result',array(),array());
 
         $task_detail = array();
 
         if(!empty($post['id']) > 0)
         {
             $task_detail = $this->order->getTaskDetail($post['id']);
+            $task_detail[0]->user_id = explode(',', $task_detail[0]->user_id);
         }
+
         $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'users' => $users,
+                                'tasks' => $task,
+                                'result' => $result,
                                 'task_detail' => $task_detail
                             );
         return response()->json(["data" => $response]);

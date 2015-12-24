@@ -20,27 +20,26 @@ angular.module('app')
   )
   .config(
     [          '$stateProvider', '$urlRouterProvider', 'MODULE_CONFIG',
-      function ( $stateProvider,   $urlRouterProvider,  MODULE_CONFIG ) {
-        $urlRouterProvider
-          .otherwise('/app/dashboard');
-        $stateProvider
-          .state('app', {
-            abstract: true,
-            url: '/app',
-            controller: 'dasboardCtrl',
-            views: {
-              '': {
-                templateUrl: 'views/layout.html'
-              },
-              'aside': {
-                templateUrl: 'views/aside.html'
-              },
-              'content': {
-                templateUrl: 'views/content.html'
-              }
-            }
-          })
-
+        function ( $stateProvider,   $urlRouterProvider,  MODULE_CONFIG ) {
+            $urlRouterProvider
+                .otherwise('/app/dashboard');
+            $stateProvider
+            .state('app', {
+                abstract: true,
+                url: '/app',
+                controller: 'dasboardCtrl',
+                views: {
+                    '': {
+                            templateUrl: 'views/layout.html'
+                    },
+                    'aside': {
+                        templateUrl: 'views/aside.html'
+                    },
+                    'content': {
+                        templateUrl: 'views/content.html'
+                    }
+                }
+            })
 
             .state('app.dashboard', {
               url: '/dashboard',
@@ -55,10 +54,7 @@ angular.module('app')
                             checkcompany: function (AuthService) {
                                return AuthService.CompanyService();
                             },
-                      
-
             })
-
 
             .state('app.home', {
               url: '/home',
@@ -71,78 +67,73 @@ angular.module('app')
                             },
                        },
             })
-           
-          
-            
          
-          .state('page', {
-            url: '/page',
-            views: {
-              '': {
-                templateUrl: 'views/layout.html'
-              },
-              'aside': {
-                templateUrl: 'views/aside.html'
-              },
-              'content': {
-                templateUrl: 'views/content.html'
-              }
-            }
-          })
+            .state('page', {
+                url: '/page',
+                views: {
+                    '': {
+                        templateUrl: 'views/layout.html'
+                    },
+                    'aside': {
+                        templateUrl: 'views/aside.html'
+                    },
+                    'content': {
+                        templateUrl: 'views/content.html'
+                    }
+                }
+            })
             .state('page.profile', {
-              url: '/profile',
-              templateUrl: 'views/pages/profile.html',
-              data : { title: 'Profile', theme: { primary: 'green'} }
+                url: '/profile',
+                templateUrl: 'views/pages/profile.html',
+                data : { title: 'Profile', theme: { primary: 'green'} }
             })
             .state('page.settings', {
-              url: '/settings',
-              templateUrl: 'views/pages/settings.html',
-              data : { title: 'Settings' }
+                url: '/settings',
+                templateUrl: 'views/pages/settings.html',
+                data : { title: 'Settings' }
             })
             .state('page.blank', {
-              url: '/blank',
-              templateUrl: 'views/pages/blank.html',
-              data : { title: 'Blank' }
+                url: '/blank',
+                templateUrl: 'views/pages/blank.html',
+                data : { title: 'Blank' }
             })
             .state('page.document', {
-              url: '/document',
-              templateUrl: 'views/pages/document.html',
-              data : { title: 'Document' }
+                url: '/document',
+                templateUrl: 'views/pages/document.html',
+                data : { title: 'Document' }
             })
             .state('404', {
-              url: '/404',
-              templateUrl: 'views/pages/404.html'
+                url: '/404',
+                templateUrl: 'views/pages/404.html'
             })
             .state('505', {
-              url: '/505',
-              templateUrl: 'views/pages/505.html'
+                url: '/505',
+                templateUrl: 'views/pages/505.html'
             })
             .state('access', {
-              url: '/access',
-              template: '<div class="indigo bg-big"><div ui-view class="fade-in-down smooth"></div></div>'
+                url: '/access',
+                template: '<div class="indigo bg-big"><div ui-view class="fade-in-down smooth"></div></div>'
             })
             .state('access.signin', {
-              url: '/signin',
-              templateUrl: 'views/pages/signin.html',
-              controller: 'loginCtrl',
-
+                url: '/signin',
+                templateUrl: 'views/pages/signin.html',
+                controller: 'loginCtrl',
             })
             .state('access.signup', {
-              url: '/signup',
-              templateUrl: 'views/pages/signup.html'
+                url: '/signup',
+                templateUrl: 'views/pages/signup.html'
             })
             .state('access.forgot-password', {
-              url: '/forgot-password',
-              templateUrl: 'views/pages/forgot-password.html'
+                url: '/forgot-password',
+                templateUrl: 'views/pages/forgot-password.html'
             })
             .state('access.lockme', {
              url: '/signin',
-              templateUrl: 'views/pages/signin.html',
-              controller: 'logoutCtrl',
-
+                templateUrl: 'views/pages/signin.html',
+                controller: 'logoutCtrl',
             })
 
-        .state('staff', {
+            .state('staff', {
               url: '/staff',
             views: {
               '': {
@@ -839,6 +830,43 @@ angular.module('app')
     /*==========================================
           ART MODULE CODE END
     ==========================================*/
+            .state('shipping', {
+                url: '/shipping',
+                views: {
+                    '': {
+                        templateUrl: 'views/layout.html'
+                    },
+                    'aside': {
+                        templateUrl: 'views/aside.html'
+                    },
+                    'content': {
+                        templateUrl: 'views/content.html'
+                    }
+                }
+            })
+
+            .state('shipping.list', {
+              url: '/list',
+              templateUrl: 'views/front/shipping/list.html',
+              controller: 'shippingListCtrl',
+              data : { title: 'shipping listing' },
+              resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+            .state('shipping.edit', {
+                url: '/edit/:id',
+                templateUrl: 'views/front/shipping/edit.html',
+                controller: 'shippingEditCtrl',
+                data : { title: 'shipping Add' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
 
 ;
 

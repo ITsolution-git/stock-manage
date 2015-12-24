@@ -290,23 +290,14 @@
 
  <!-- Code Start for Shipping tab -->
     <li ng-show="app.role=='BC'">
-      <a md-ink-ripple>
+      <a md-ink-ripple ui-sref="shipping.list">
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
         </span>
         <i class="icon fa fa-truck i-20"></i>
         <span class="font-normal">Shipping</span>
       </a>
-      <ul class="nav nav-sub">
-        <li ui-sref-active="active">
-          <a md-ink-ripple>List</a>
         </li>
-        <li ui-sref-active="active">
-          <a md-ink-ripple >Add</a>
-        </li>
-       
-      </ul>
-    </li>
     <li ng-show="app.role=='BC'">
       <a md-ink-ripple ui-sref="finishing.list">
         <i class="icon fa fa-check-square i-20"></i>

@@ -110,6 +110,7 @@
   <script src="scripts/controllers/finishing.js"></script>
   <script src="scripts/controllers/art.js"></script>
   <script src="scripts/controllers/company.js"></script>
+  <script src="scripts/controllers/shipping.js"></script>
   <!-- CUSTOM SCROLL -->
   <script src="libs/custom-scroll/scroller.js"></script>
   <script src="libs/custom-scroll/mwheelIntent.js"></script>
