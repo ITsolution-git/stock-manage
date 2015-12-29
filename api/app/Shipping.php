@@ -12,18 +12,15 @@ class Shipping extends Model {
 	public function getShippingdata($company_id)
 	{
 
-	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $company_id];
-        $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_date','order.approved_date','order.needs_garment',
-                      'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
-                      'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
+        $listArray = ['o.client_id','o.id as order_id','o.job_name','st.name','s.boxing_type','o.status','s.id as shipping_id','s.shipping_by','s.in_hands_by','s.date_shipped','s.fully_shipped','mt.value as job_status'];
 
-        $orderData = DB::table('orders as order')
-                         ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('misc_type as misc_type', 'order.f_approval', '=', 'misc_type.id')
+        $shippingData = DB::table('orders as o')
+                         ->Join('shipping as s', 'o.id', '=', 's.order_id')
+                         ->leftJoin('shipping_type as st', 's.shipping_type_id', '=', 'st.id')
+                         ->leftJoin('misc_type as mt','mt.id','=','o.type_id')
                          ->select($listArray)
-                         ->where($whereConditions)
                          ->get();
-        return $orderData;	
+        return $shippingData;
 	}
 
 

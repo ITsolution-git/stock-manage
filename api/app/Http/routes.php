@@ -197,3 +197,13 @@ Route::post('finishing/removeFinishingItem', 'FinishingController@removeFinishin
 Route::post('finishing/addFinishingItem', 'FinishingController@addFinishingItem');
 Route::post('finishing/orderAdd', 'FinishingController@add');
 Route::post('finishing/orderEdit', 'FinishingController@edit');
+
+// SHIPPING CONTROLLER
+Route::get('shipping/listShipping', 'ShippingController@listShipping');
+Route::post('shipping/listShipping', 'ShippingController@listShipping');
+Route::post('shipping/deleteShipping', 'ShippingController@deleteShipping');
+Route::post('shipping/updateShipping', 'ShippingController@updateShipping');
+Route::post('shipping/removeShippingItem', 'ShippingController@removeShippingItem');
+Route::post('shipping/addShippingItem', 'ShippingController@addShippingItem');
+Route::post('shipping/orderAdd', 'ShippingController@add');
+Route::post('shipping/orderEdit', 'ShippingController@edit');

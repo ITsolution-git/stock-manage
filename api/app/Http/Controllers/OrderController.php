@@ -560,6 +560,11 @@ class OrderController extends Controller {
             $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
             if(empty($result))
             {
+                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d'),'in_hands_by' => date('Y-m-d'));
+                $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
+
+                $post['data']['shipping_id'] = $shipping_id;
+
                 $result = $this->common->InsertRecords('item_address_mapping',$post['data']);
                 $id = $result;
             }
@@ -568,6 +573,8 @@ class OrderController extends Controller {
         }
         else
         {
+            $arr = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+            $post['shipping_id'] = $arr[0]->shipping_id;
             $result = $this->common->InsertRecords('item_address_mapping',$post);
             $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
             
@@ -584,7 +591,7 @@ class OrderController extends Controller {
 
         if(!isset($post['item_id']))
         {
-            $item_data = $this->common->GetTableRecords('item_address_mapping',array('address_id' => $post['address_id']),array());
+            $item_data = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
             foreach ($item_data as $item) {
                 if($item->item_id > 0)
@@ -596,6 +603,7 @@ class OrderController extends Controller {
             $post['cond'] = array('order_id' => $post['order_id'],'address_id' => $post['address_id']);
 
             $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
+            $this->common->DeleteTableRecords('shipping',$post['cond']);
 
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
