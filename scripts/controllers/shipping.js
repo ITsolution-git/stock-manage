@@ -6,7 +6,7 @@ app.controller('shippingListCtrl', ['$scope','$rootScope','$http','$location','$
     var login_id = $scope.app.user_id;
    
                 
-    $http.post('api/public/order/listOrder',company_id).success(function(Listdata) {
+    $http.post('api/public/shipping/listShipping',company_id).success(function(Listdata) {
         $scope.listOrder = Listdata.data;
         $("#ajax_loader").hide();
 

@@ -15,9 +15,9 @@ use Request;
 
 class ShippingController extends Controller { 
 
-	public function __construct(Shipping $order,Common $common,Purchase $purchase) 
+	public function __construct(Shipping $shipping,Common $common,Purchase $purchase) 
  	{
-        $this->order = $order;
+        $this->shipping = $shipping;
         $this->purchase = $purchase;
         $this->common = $common;
     }
@@ -29,7 +29,7 @@ class ShippingController extends Controller {
     public function listShipping()
     {
         $post = Input::all();
-    	$result = $this->order->getShippingdata($post[0]);
+    	$result = $this->shipping->getShippingdata($post[0]);
     	return $this->return_response($result);
     }
     /**

@@ -66,6 +66,9 @@ input {
 	margin: 6px 0 0 0;
 	font-size: 1.1em;
 }
+.btn.btn-default .fa {
+	margin: 3px 0;
+}
 
 /*=========================
 	Background Video
@@ -712,9 +715,17 @@ a.btnEditOrder:hover {
     width: 40px;
 }
 .sgpDetails.btnCircle a {
-    padding: 1px 0 0 0;
     border-radius: 25px;
+    display: block;
+    height: 28px;
+    padding: 2px 0 0 0;
     width: 28px;
+
+}
+.sgpDetails a i {
+	padding: 3px 0 0 0;
+	display: inline-block;
+	font-size: 18px;
 }
 .sgpDetails.disabled-sgpDetails a {
     background-color: #F00;
@@ -851,6 +862,9 @@ a.btnEditOrder:hover {
 	background-color: #ff0000;
 	color: #fff;
 }
+.c-yellow {
+	background: #fff978;
+}
 input[readonly].cred {
 	background-color: #ff0000;
 }
@@ -974,6 +988,62 @@ button.topNavButtons.active {
 }
 /*---------- END ----------*/
 
+
+/*=====================================
+		CLIENT - Shipping
+=====================================*/
+.shippingDetails #shippingOrders {
+	clear: both;
+}
+#shippingOrders .salesOrders {
+	padding: 15px 0;
+}
+
+#shippingOrders .salesOrders,
+#shippingOrders .salesOrderItems,
+#shippingOrders .relatedShipments,
+#shippingOrders .selectedShipment {
+	height: 700px;
+	overflow: hidden;
+	overflow-y: scroll;
+}
+#shippingOrders label.mainTitle {
+	font-size: 16px;
+}
+#shippingOrders label {
+	margin-bottom: 0;
+}
+#shippingOrders .form-group {
+	margin-bottom: 5px;
+}
+
+#shippingOrders .salesOrderItems,
+#shippingOrders .relatedShipments,
+#shippingOrders .selectedShipment {
+	padding: 15px;
+}
+#shippingOrders .salesItemsContent {
+	overflow: hidden;
+    clear: both;
+    padding: 10px 5px 5px 5px;
+}
+#shippingOrders .salesItemsContent:nth-child(2n) {
+	background: #e5e5e5;
+}
+#shippingOrders .salesItemsContent:hover,
+#shippingOrders .salesItemsContent.selected,
+#shippingOrders .salesItemsContent:hover input,
+#shippingOrders .salesItemsContent.selected input,
+#shippingOrders .salesItemsContent:hover select,
+#shippingOrders .salesItemsContent.selected select {
+	background: #d4e7c3;
+}
+
+#shippingOrders .salesItemsContent:hover input.c-yellow,
+#shippingOrders .salesItemsContent.selected input.c-yellow {
+	background: #fff978;
+}
+/*---------- END ----------*/
 
 /*=====================================
 		Ajax Loader Image CSS
