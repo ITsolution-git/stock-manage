@@ -255,6 +255,22 @@ class Common extends Model {
         return $miscData;
     }
 
+
+/**
+* Get All Color Data
+* @access public getAllColorData
+* @return array $colorData
+*/
+
+    public function getAllColorData() {
+        
+        $whereColorConditions = ['status' => '1','is_delete' => '1'];
+        $colorData = DB::table('color')->select('id','name')->where($whereColorConditions)->where('name','!=','')->get();       
+        return $colorData;
+    }
+
+
+
     /**
     * Get userId
     * @access All user 

@@ -569,6 +569,14 @@ angular.module('app')
               resolve: load(['xeditable','scripts/controllers/xeditable.js'])
             })
 
+            .state('setting.color', {
+              url: '/color',
+              templateUrl: 'views/setting/color.html',
+              data : { title: 'Color' },
+              controller: 'XeditableCtrl',
+              resolve: load(['xeditable','scripts/controllers/xeditable.js'])
+            })
+
             /*.state('setting.priceadd', {
               url: '/add',
                templateUrl: 'views/setting/price-add.html',

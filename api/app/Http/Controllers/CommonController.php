@@ -264,6 +264,14 @@ class CommonController extends Controller {
         $result = $this->common->getMiscData();
         return $result;
     }
+
+     public function getAllColorData()
+    {
+        $result = $this->common->getAllColorData();
+        return $this->return_response($result);
+    }
+
+
     /**
     * Get user id after login.
     * @return json data

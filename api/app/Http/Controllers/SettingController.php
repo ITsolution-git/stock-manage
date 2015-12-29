@@ -256,6 +256,49 @@ class SettingController extends Controller {
     }
 
 
+
+    /**
+* Color Update data       
+* @access public colorSave
+* @param  array $data
+* @return json data
+*/
+
+    public function colorSave() {
+
+          $data = Input::all();
+          $result = $this->price->colorSave($data);
+         
+          if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+
+/**
+* color Insert data       
+* @access public colorInsert
+* @param  array $data
+* @return json data
+*/
+
+    public function colorInsert() {
+
+          $data = Input::all();
+          $result = $this->price->colorInsert($data);
+         
+          if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+
 /**
 * Price Secondary controller      
 * @access public priceSecondary

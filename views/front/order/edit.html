@@ -81,9 +81,9 @@
                         <div class="form-group col-md-2 m-b nopad-form smallPad orderLineCal">
 
                             <div class="input-group col-md-12 pull-right nopad-right t-r m-b">
-                                <div class="col-md-3 pull-left nopad-right smallPad">
+                                <!-- <div class="col-md-3 pull-left nopad-right smallPad">
                                     <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
-                                </div>                    
+                                </div>  -->                   
                                 <div class="col-md-3 pull-right nopad-right smallPad">
                                     <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
                                 </div> 
@@ -355,6 +355,7 @@
                                                         </div>
                                                         <div class="form-group secondContainer">
                                                             <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                                <option value="addproduct">Add Product</option>
                                                                 <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
                                                             </select>
                                                         </div>
@@ -551,9 +552,9 @@
                                         <!-- CONFIRM PRICING -->
                                         <div class="col-md-12 nopad-form">
                                             <div class="col-md-4 nopad-left smallPad">
-                                                <div class="form-group col-md-6 nopad-left smallPad">
+                                               <!--  <div class="form-group col-md-6 nopad-left smallPad">
                                                     <button  type="submit" class="btn btn-block btn-info">Confirm Pricing</button>
-                                                </div>                                                
+                                                </div>  -->                                               
                                                 <div class="form-group col-md-1 nopad-form smallPad"></div>
                                                 <div class="form-group col-md-5 nopad-form smallPad">
                                                     <input type="text" class="form-control" />

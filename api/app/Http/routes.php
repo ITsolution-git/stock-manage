@@ -91,6 +91,8 @@ Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 Route::post('admin/miscSave', 'MiscController@miscSave');
 Route::post('admin/placementSave', 'SettingController@placementSave');
 Route::post('admin/placementInsert', 'SettingController@placementInsert');
+Route::post('admin/colorSave', 'SettingController@colorSave');
+Route::post('admin/colorInsert', 'SettingController@colorInsert');
 
 
 
@@ -109,7 +111,7 @@ Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
 Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
 Route::get('common/getMiscData', 'CommonController@getMiscData');
-
+Route::get('common/getAllColorData', 'CommonController@getAllColorData');
 
 
 Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');

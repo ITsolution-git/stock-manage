@@ -618,15 +618,70 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     $scope.updateOrderLine = function(postArray,orderline_id)
     {
         $("#ajax_loader").show();
+
         
         angular.forEach(postArray, function(value, key) {
 
             if(value.id == orderline_id)
             {
+
+                if(value.product_id == 'addproduct'){
+
+                   
+
+                    var modalInstance = $modal.open({
+                                                    animation: $scope.animationsEnabled,
+                                                    templateUrl: 'views/front/order/add.html',
+                                                    scope: $scope,
+                                                    size: 'sm'
+                                        });
+
+                            modalInstance.result.then(function (selectedItem) {
+                                $scope.selected = selectedItem;
+                            }, function () {
+                                $log.info('Modal dismissed at: ' + new Date());
+                            });
+
+                            $scope.ok = function (orderData) {
+
+                                var order_data = {};
+                                orderData.company_id =company_id;
+                                orderData.login_id =login_id;
+
+                                
+                                order_data.data = orderData;
+                               
+                                order_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
+
+                                order_data.table ='orders'
+
+                                $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
+                                    
+                                    if(result.data.success == '1') 
+                                    {
+                                        modalInstance.close($scope);
+                                        $state.go('order.edit',{id: result.data.id,client_id:order_data.data.client_id});
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        console.log(result.data.message);
+                                    }
+                                });
+                                // modalInstance.close($scope.selected.item);
+                            };
+
+                            $scope.cancel = function () {
+                                modalInstance.dismiss('cancel');
+                            };
+                  return false;
+
+                }
                 var order_data = {};
                 order_data.table ='order_orderlines'
                 order_data.data =value
                 order_data.cond ={id:value.id}
+
                 
                 $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
                 });
