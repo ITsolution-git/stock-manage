@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Redirect;
 use App\Shipping;
 use App\Common;
 use App\Purchase;
+use App\Order;
 use DB;
 
 use Request;
 
 class ShippingController extends Controller { 
 
-	public function __construct(Shipping $shipping,Common $common,Purchase $purchase) 
+	public function __construct(Shipping $shipping,Common $common,Purchase $purchase,Order $order) 
  	{
         $this->shipping = $shipping;
         $this->purchase = $purchase;
@@ -32,6 +33,17 @@ class ShippingController extends Controller {
     	$result = $this->shipping->getShippingdata($post[0]);
     	return $this->return_response($result);
     }
+
+    /**
+    * Get Array List of All Shipping details
+    * @return json data
+    */
+    public function getShippingOrders()
+    {
+        $result = $this->shipping->getShippingOrders();
+        return $this->return_response($result);
+    }
+
     /**
      * Delete Data
      *

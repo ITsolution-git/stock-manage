@@ -6,7 +6,7 @@
                 	<a href data-toggle="tab" data-target="#shippingOrders">Orders</a>
                 </li>
                 <li>
-                	<a href data-toggle="tab" data-target="#shipOrder">Shipping Order</a>
+                	<a href data-toggle="tab" class="tab2" data-target="#shipOrder">Shipping Order</a>
                 </li>
 				<li>
 					<a href data-toggle="tab" data-target="#shippingBoxes">Boxes</a>
@@ -40,27 +40,27 @@
 	                					</div>
 	                					<div class="col-md-2 nopad-form"> </div>
 	                				</div>
-                                    <div class="salesItemsContent">
+                                    <div class="salesItemsContent" ng-repeat="order in allorders">
                                         <!-- Sales Fields -->
     	                				<div class="col-md-12 nopad-form form-group">
     	                					<div class="col-md-1 nopad-left smallPad">
     	                						<div class="sgpDetails btnCircle">
-                                                  <a class="" tabindex="0" role="button" title="Move">
+                                                  <a class="" tabindex="0" role="button" title="Move" ui-sref="shipping.edit({id:shipping_id,order_id:order.id,client_id:order.client_id})">
                                                     <i class="fa fa-check"></i>
                                                   </a>
                                                 </div>
     	                					</div>
     	                					<div class="col-md-2 nopad-left smallPad">
-    	                						<input type="text" class="form-control" />
+    	                						<input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
     	                					</div>
     	                					<div class="col-md-5 nopad-left smallPad">
-    	                						<input type="text" class="form-control" />
+    	                						<input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
     	                					</div>
     	                					<div class="col-md-2 nopad-left smallPad">
-    	                						<input type="text" class="form-control" />
+    	                						<input type="text" class="form-control" ng-model="order.ship_by" onfocus="this.blur()"/>
     	                					</div>
     	                					<div class="col-md-2 nopad-form">
-    	                						<input type="text" class="form-control" />
+    	                						<input type="text" class="form-control" ng-model="order.job_status" onfocus="this.blur()"/>
     	                					</div>
     	                				</div>
                                         <!-- / -->
@@ -89,45 +89,32 @@
                                         </div>
 
                                         <!-- Sales Order Items Records -->
-                                        <div class="salesItemsContent">
-                                            <div class="col-md-12 nopad-form form-group">
-                                                <div class="col-md-4 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>Men's</option>
-                                                        <option>Women's</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>Select</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-2 nopad-form text-center">
-                                                    <div class="sgpDetails btnCircle">
-                                                      <a class="" tabindex="0" role="button" title="Move">
+                                        <div class="salesItemsContent" ng-repeat="oitem in items">
+                                            <div class="col-md-3 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.name" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-9 smallPad m-b nopad-right">
+                                                <input type="text" class="form-control" ng-model="oitem.size_group_name" onfocus="this.blur()">
+                                            </div>
+
+                                            <!-- Second Row -->
+                                            <div class="col-md-3 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.color_name" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.size" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-2 smallPad m-b nopad-left">
+                                                <input type="text" class="form-control" ng-model="oitem.qnty" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-3 m-b nopad-form">
+                                                <input type="text" class="form-control" ng-model="oitem.main_contact_person" onfocus="this.blur()">
+                                            </div>
+                                            <div class="col-md-2 nopad-form text-center">
+                                                <div class="sgpDetails btnCircle">
+                                                      <a class="" tabindex="0" role="button" title="Move" ng-click="add_item_to_distribute(oitem.id)">
                                                         <i class="fa fa-plus"></i>
                                                       </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Second Row -->
-                                            <div class="col-md-12 nopad-form form-group">
-                                                <div class="col-md-5 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>Men's</option>
-                                                        <option>Women's</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-3 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="XS" />
-                                                </div>
-                                                <div class="col-md-2 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="2" />
-                                                </div>
-                                                <div class="col-md-2 nopad-form">
-                                                    <input type="text" class="form-control" value="0" />
                                                 </div>
                                             </div>
                                         </div>
@@ -140,32 +127,32 @@
                                             <label class="mainTitle">Related Shipments</label>
                                         </div>
                                         <div class="col-md-12 nopad-form form-group">
-                                            <div class="pull-right text-center"> 
+                                            <div class="pull-right text-center" ng-click="openAddressPopup()"> 
                                                 <button class="btn btn-default addButton">Add'I Shipment</button>
                                             </div>
                                         </div>
 
                                         <!-- Sales Order Items Records -->
-                                        <div class="salesItemsContent">
+                                        <div id="row_{{dist.id}}" class="salesItemsContent" ng-repeat="dist in distributed_address" ng-class="{distribution_active: dist.id==address_id}" ng-click="select_address(dist.id)">
                                             <div class="col-md-12 nopad-form form-group">
                                                 <div class="col-md-6 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="Chubby Weiners" />
+                                                    <input type="text" class="form-control" ng-model="dist.address" />
                                                 </div>
                                                 <div class="col-md-6 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="" />
+                                                    <input type="text" class="form-control" value="" ng-model="dist.address2"/>
                                                 </div>
                                             </div>
                                             <!-- Second Row -->
                                             <div class="col-md-12 nopad-form form-group">
                                                 <div class="col-md-6 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="" />
+                                                    <input type="text" class="form-control" value="" ng-model="dist.city"/>
                                                 </div>
                                                 <div class="col-md-3 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="" />
+                                                    <input type="text" class="form-control" value="" ng-model="dist.state"/>
                                                 </div>
                                                 <div class="col-md-3 nopad-form">
                                                     <div class="sgpDetails btnCircle">
-                                                      <a class="" tabindex="0" role="button" title="Move">
+                                                      <a class="" tabindex="0" role="button" title="Move" ui-sref="shipping.edit({id:dist.shipping_id,order_id:dist.order_id,client_id:dist.client_id})">
                                                         <i class="fa fa-arrow-right"></i>
                                                       </a>
                                                     </div>
@@ -190,24 +177,17 @@
                                         </div>
 
                                         <!-- Sales Order Items Records -->
-                                        <div class="salesItemsContent">
+                                        <div class="salesItemsContent" ng-repeat="item in distributed_items">
                                             <div class="col-md-12 nopad-form form-group">
                                                 <div class="col-md-4 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>Men's</option>
-                                                        <option>Women's</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" ng-model="item.name" onfocus="this.blur()">
                                                 </div>
                                                 <div class="col-md-6 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>Select</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" ng-model="item.size_group_name" onfocus="this.blur()">
                                                 </div>
                                                 <div class="col-md-2 nopad-form text-center">
                                                     <div class="sgpDetails disabled-sgpDetails btnCircle">
-                                                      <a class="" tabindex="0" role="button">
+                                                      <a class="" tabindex="0" role="button" ng-click="remove_item_from_distribute(item.id)">
                                                         <i class="fa fa-minus"></i>
                                                       </a>
                                                     </div>
@@ -216,19 +196,16 @@
                                             <!-- Second Row -->
                                             <div class="col-md-12 nopad-form form-group">
                                                 <div class="col-md-5 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>Men's</option>
-                                                        <option>Women's</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" ng-model="item.color_name" onfocus="this.blur()">
                                                 </div>
                                                 <div class="col-md-3 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="XS" />
+                                                    <input type="text" class="form-control" ng-model="item.size" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-2 nopad-left smallPad">
-                                                    <input type="text" class="form-control" value="2" />
+                                                    <input type="text" class="form-control" ng-model="item.qnty" ng-blur="updateDistributedQty(item.id,item.qnty)"/>
                                                 </div>
                                                 <div class="col-md-2 nopad-form">
-                                                    <input type="text" class="form-control c-yellow" value="" />
+                                                    <input type="text" class="form-control c-yellow" ng-model="item.shipped_qnty" ng-blur="updateShippedQnty(item.id,item.shipped_qnty)"/>
                                                 </div>
                                             </div>
                                         </div>

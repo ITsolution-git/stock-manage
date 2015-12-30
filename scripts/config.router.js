@@ -865,7 +865,7 @@ angular.module('app')
                        }
             })
             .state('shipping.edit', {
-                url: '/edit/:id',
+                url: '/edit/:id/:order_id/:client_id',
                 templateUrl: 'views/front/shipping/edit.html',
                 controller: 'shippingEditCtrl',
                 data : { title: 'shipping Add' },
