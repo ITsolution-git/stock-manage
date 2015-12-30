@@ -128,6 +128,10 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         }
     });
 
+    $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
+              $scope.miscData = result.data.records;
+    });
+
     function get_distribution_list()
     {
         var combine_array_id = {};

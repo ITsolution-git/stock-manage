@@ -220,10 +220,136 @@
                 <!-- Shipping Order -->
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="shipOrder">
                 	<div class="col-md-12">
-                		<div class="panel-body nopad-left nopad-right">
-                			Shipping Orders
-                		</div>
-                	</div>
+                        <div class="panel-body nopad-left nopad-right">
+                            <div class="col-md-3 panel panel-default nopad-form salesOrders">
+                                <div class="col-md-12">
+                                    <div class="col-md-12 nopad-form">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Shipping ID</label>
+                                        </div>
+                                        <div class="col-md-8 nopad-form"> </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-8 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Order ID</label>
+                                        </div>
+                                        <div class="col-md-8 nopad-form"> </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-8 nopad-left smallPad">
+                                            <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                                <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Client ID</label>
+                                        </div>
+                                        <div class="col-md-8 nopad-form"> </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-8 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Client Distribution ID</label>
+                                        </div>
+                                        <div class="col-md-8 nopad-form"> </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-8 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Boxing Type</label>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Shipping By</label>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>In-Hands by</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Shipping Type</label>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Date Shipped</label>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <label>Fully Shipped</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <textarea rows="5" cols="46"></textarea>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <label>SKUs</label>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <label>Note</label>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <textarea rows="3" cols="46"></textarea>
+                                    </div>
+                                    <div class="col-md-12 nopad-form">
+                                        <label>Cost to ship</label>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Boxes -->
