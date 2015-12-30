@@ -79,7 +79,7 @@
               <td>{{value.fully_shipped | dateWithFormat}}</td>
               <td>{{value.job_status}}</td>
               <td>
-                <button class="btn btn-xs btn-info" ui-sref="shipping.edit({ id: value.shipping_id})">Edit</button>
+                <button class="btn btn-xs btn-info" ui-sref="shipping.edit({id:value.shipping_id,order_id:value.order_id,client_id:value.client_id})">Edit</button>
               </td> 
           </tr>
           <tr ng-if="listOrder.success==0"><td>{{listOrder.message}}</td></tr>
@@ -87,7 +87,7 @@
         <tfoot class="hide-if-no-paging">
           <tr>
               <td colspan="13" class="text-center">
-                  <ul class="pagination"></ul>
+                <ul class="pagination"></ul>
               </td>
           </tr>
         </tfoot>

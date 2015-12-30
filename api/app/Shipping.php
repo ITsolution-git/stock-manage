@@ -17,11 +17,22 @@ class Shipping extends Model {
         $shippingData = DB::table('orders as o')
                          ->Join('shipping as s', 'o.id', '=', 's.order_id')
                          ->leftJoin('shipping_type as st', 's.shipping_type_id', '=', 'st.id')
-                         ->leftJoin('misc_type as mt','mt.id','=','o.type_id')
+                         ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
                          ->select($listArray)
                          ->get();
         return $shippingData;
 	}
+
+    public function getShippingOrders()
+    {
+        $shippingData = DB::table('orders as o')
+                            ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
+                            ->select('o.id','o.job_name','o.ship_by','mt.value as job_status','o.client_id')
+                            ->where('f_approval','>=','138')
+                            ->where('f_approval','<=','149')
+                            ->get();
+        return $shippingData;
+    }    
 
 
 /**

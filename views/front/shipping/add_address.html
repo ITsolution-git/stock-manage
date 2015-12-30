@@ -1,0 +1,35 @@
+<div class="col-md-8 nopad-left">
+	<div class="col-md-12 panel panel-default relatedShipments">
+        <div class="col-md-12 nopad-form form-group formlabels">
+            <label class="mainTitle">Pick ship to address</label>
+        </div>
+        <!-- Sales Order Items Records -->
+        <div id="row_{{dist.id}}" class="salesItemsContent" ng-repeat="dist in dist_addr">
+            <div class="col-md-12 nopad-form form-group">
+                <div class="col-md-6 nopad-left smallPad">
+                    <input type="text" class="form-control" ng-model="dist.address" />
+                </div>
+                <div class="col-md-6 nopad-left smallPad">
+                    <input type="text" class="form-control" value="" ng-model="dist.address2"/>
+                </div>
+            </div>
+            <!-- Second Row -->
+            <div class="col-md-12 nopad-form form-group">
+                <div class="col-md-6 nopad-left smallPad">
+                    <input type="text" class="form-control" value="" ng-model="dist.city"/>
+                </div>
+                <div class="col-md-3 nopad-left smallPad">
+                    <input type="text" class="form-control" value="" ng-model="dist.state"/>
+                </div>
+                <div class="col-md-3 nopad-form">
+                    <div class="sgpDetails btnCircle">
+                      <a class="" tabindex="0" role="button" title="Move" ng-click="add_address_to_distribute(dist.id)">
+                        <i class="fa fa-arrow-right"></i>
+                      </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / -->
+    </div>
+</div>
