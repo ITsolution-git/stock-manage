@@ -50,6 +50,8 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
         });
      }
 
+
+
     $scope.openpopup = function () {
 
         get_company_data();
@@ -103,7 +105,7 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
 
 }]);
 
-app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$stateParams','$modal','getPDataByPosService','AuthService','$log','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$stateParams,$modal,getPDataByPosService,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
+app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$filter','$stateParams','$modal','getPDataByPosService','AuthService','$log','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$filter,$stateParams,$modal,getPDataByPosService,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
 
     var order_id = $stateParams.id
     $scope.order_id = $stateParams.id
@@ -624,59 +626,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             if(value.id == orderline_id)
             {
-
                 if(value.product_id == 'addproduct'){
-
-                   
-
-                    var modalInstance = $modal.open({
-                                                    animation: $scope.animationsEnabled,
-                                                    templateUrl: 'views/front/order/add.html',
-                                                    scope: $scope,
-                                                    size: 'sm'
-                                        });
-
-                            modalInstance.result.then(function (selectedItem) {
-                                $scope.selected = selectedItem;
-                            }, function () {
-                                $log.info('Modal dismissed at: ' + new Date());
-                            });
-
-                            $scope.ok = function (orderData) {
-
-                                var order_data = {};
-                                orderData.company_id =company_id;
-                                orderData.login_id =login_id;
-
-                                
-                                order_data.data = orderData;
-                               
-                                order_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
-
-                                order_data.table ='orders'
-
-                                $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
-                                    
-                                    if(result.data.success == '1') 
-                                    {
-                                        modalInstance.close($scope);
-                                        $state.go('order.edit',{id: result.data.id,client_id:order_data.data.client_id});
-                                        return false;
-                                    }
-                                    else
-                                    {
-                                        console.log(result.data.message);
-                                    }
-                                });
-                                // modalInstance.close($scope.selected.item);
-                            };
-
-                            $scope.cancel = function () {
-                                modalInstance.dismiss('cancel');
-                            };
+                  $scope.addproductpopup(value);
                   return false;
-
                 }
+
                 var order_data = {};
                 order_data.table ='order_orderlines'
                 order_data.data =value
@@ -692,6 +646,60 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                                 $('.form-control').removeClass('ng-dirty');
                                 $("#ajax_loader").hide();
         }, 500);
+    }
+
+
+         $scope.addproductpopup = function(value)
+    {
+
+ 
+ if(value.product_id == 'addproduct'){
+
+            var product_data = {};
+            var productData = {};
+            productData.company_id =company_id;
+            
+            product_data.data = productData;
+           
+            product_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+            product_data.data.vendor_id =value.vendor_id;
+           
+
+            product_data.table ='products'
+
+            $http.post('api/public/common/InsertRecords',product_data).success(function(result) {
+                
+                var id = result.data.id;
+                 getProductDetailById(id);
+            });
+                       
+
+            } else {
+                 getProductDetailById(value.product_id);
+            }            
+
+         get_color_data();
+
+
+            var modalInstance = $modal.open({
+                                            animation: $scope.animationsEnabled,
+                                            templateUrl: 'views/front/order/productadd.html',
+                                            scope: $scope
+                                });
+
+                    modalInstance.result.then(function (selectedItem) {
+                        $scope.selected = selectedItem;
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+
+                    
+
+                    $scope.cancel = function () {
+                        modalInstance.dismiss('cancel');
+                    };
+
+          return false;
     }
 
      $scope.updateOrderAll = function($event,id,table_name,match_condition)
@@ -1039,6 +1047,48 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             }
         });
     }
+
+
+    function getProductDetailById(id)
+    {
+        var product_data = {};
+                        product_data.table ='products';
+                        product_data.cond ={id:id}
+                        
+                        $http.post('api/public/common/GetTableRecords',product_data).success(function(result) {
+                            
+                            if(result.data.success == '1')
+                            {
+                                $scope.product_data =result.data.records;
+                            } 
+                            else
+                            {
+                                $scope.product_data=[];
+                            }
+                         });
+    }
+
+
+    function get_color_data()
+    {
+        var colorData = {};
+        colorData.table ='color'
+        colorData.cond ={status:1,is_delete:1}
+        
+        $http.post('api/public/common/GetTableRecords',colorData).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.allColor =result.data.records;
+            } 
+            else
+            {
+                $scope.allColor=[];
+            }
+        });
+     }
+
+
 
     $scope.removeordernotes = function(index,id) {
         

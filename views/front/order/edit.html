@@ -356,8 +356,12 @@
                                                         <div class="form-group secondContainer">
                                                             <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
                                                                 <option value="addproduct">Add Product</option>
-                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
+                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option> 
+
+
                                                             </select>
+
+                                                            <span ng-click="addproductpopup(order_line.product_id)">Edit Product</span>
                                                         </div>
                                                         <div class="form-group">
                                                             <input id="qnty_{{order_line.orderline_id}}" type="text" class="form-control"  ng-model="order_line.qnty" readonly="" />

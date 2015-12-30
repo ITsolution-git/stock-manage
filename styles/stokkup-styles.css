@@ -795,8 +795,16 @@ a.btnEditOrder:hover {
 	width: 90px;
 }
 .cols.col-1 .secondContainer {
-	width: 90px;	
+	width: 90px;
+	margin-bottom:0;	
 }
+.cols.col-1 .secondContainer span {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: blue;
+}
+
 .cols.col-1 .form-group:first-child {
 	margin-left: 0;
 	width: 90px
