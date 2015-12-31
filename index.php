@@ -119,6 +119,13 @@
   <!-- CUSTOM SCRIPTS -->
   <script type="text/javascript" charset="utf-8" src="libs/custom-scripts.js"></script>
 
+<script type="text/javascript" src="scripts/pdf/tableExport.js"></script>
+<script type="text/javascript" src="scripts/pdf/jquery.base64.js"></script>
+<script type="text/javascript" src="scripts/pdf/sprintf.js"></script>
+<script type="text/javascript" src="scripts/pdf/jspdf.js"></script>
+<script type="text/javascript" src="scripts/pdf/base64.js"></script>
+
+
   <div id="ajax_loader" class="overlay-loader">
     <div class="loader-background"></div>
     <img class="loader-icon spinning-cog" src="images/loader/loder.png">
