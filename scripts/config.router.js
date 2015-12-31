@@ -835,6 +835,28 @@ angular.module('app')
                             },
                        }
             })
+    .state('art.screen', {
+                url: '/screen',
+                templateUrl: 'views/front/art/screen.html',
+                controller: 'ArtListCtrl',
+                data : { title: 'Art' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+    .state('art.job', {
+                url: '/job',
+                templateUrl: 'views/front/art/job.html',
+                controller: 'ArtListCtrl',
+                data : { title: 'Art' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
     /*==========================================
           ART MODULE CODE END
     ==========================================*/

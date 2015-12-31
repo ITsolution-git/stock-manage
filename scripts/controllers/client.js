@@ -45,7 +45,7 @@ app.controller('clientAddCtrl', ['$scope','$rootScope','$http','$location','$sta
 }]);
 app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log) {
                           AuthService.AccessService('BC');
-                         var company_id = $rootScope.company_profile.company_id;
+                         $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.CurrentController=$state.current.controller;
                           var delete_params = {};
                           $scope.deleteclient = function (comp_id) {
