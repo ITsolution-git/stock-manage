@@ -115,7 +115,25 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     var AJloader = $("#ajax_loader");
 
     get_distribution_list();
+    get_shipping_details();
     
+    function get_shipping_details()
+    {
+        var shipping_arr = {};
+        shipping_arr.client_id = $stateParams.client_id;
+        shipping_arr.order_id = $stateParams.order_id;
+        shipping_arr.address_id = $scope.address_id;
+        shipping_arr.shipping_id = $scope.shipping_id;
+
+        $http.post('api/public/shipping/shippingDetail',shipping_arr).success(function(result, status, headers, config) {
+        
+            if(result.data.success == '1') {
+                $scope.shipping =result.data.records[0];
+                $scope.shipping_type =result.data.shipping_type;
+            }
+        });
+    }
+
     $http.get('api/public/shipping/getShippingOrders').success(function(result) {
         
         if(result.data.success == '1') 

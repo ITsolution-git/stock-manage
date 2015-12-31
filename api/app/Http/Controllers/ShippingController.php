@@ -84,144 +84,27 @@ class ShippingController extends Controller {
     * @param  array $data
     * @return json data
     */
-    public function orderDetail() {
+    public function shippingDetail() {
  
         $data = Input::all();
 
-        $result = $this->order->orderDetail($data);
-
-        if(empty($result['order']))
-        {
-
-           $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
-           return response()->json(["data" => $response]);
-           
-
-        }
-
-        if(!empty($result['order_line_data']))
-        {
-            $sum = 0;
-            foreach($result['order_line_data'] as $row)
-            {
-                $order_line_items = $this->order->getShippingLineItemById($row->id);
-                
-                $count = 1;
-                $order_line = array();
-                foreach ($order_line_items as $line) {
-                     
-                    $line->number = $count;
-                    $order_line[] = $line;
-                    $count++;
-                }
-                $row->orderline_id = $row->id;
-                $row->items = $order_line;
-                $result['order_line'][] = $row;
-            }
-        }
-        else
-        {
-            $result['order_line'] = array();
-        }
-        
-        $order_items = $this->order->getShippingItemById($result['order'][0]->price_id);
-
-        if(!empty($order_items))
-        {
-            $items = $this->order->getItemsByShipping($data['id']);
-
-            foreach ($order_items as $order_item)
-            {
-                $i = 0;
-                foreach ($items as $item)
-                {
-                    if($item->item_id == $order_item->id)
-                    {
-                        $i = 1;
-                    }
-                }
-                
-                if($i == 1)
-                {
-                    $order_item->selected = '1';
-                    $result['order_item'][] = $order_item;
-                }
-                else
-                {
-                    $order_item->selected = '0';
-                    $result['order_item'][] = $order_item;
-                }
-            }
-        }
-        else
-        {
-            $result['order_item'] = array();
-        }
-
-        $price_id = $result['order'][0]->price_id;
-        $client_id = $result['order'][0]->client_id;
-
-        
-        $price_garment_mackup = array();
-        $price_screen_primary = array();
-        $price_screen_secondary = array();
-        $price_direct_garment = array();
-        $embroidery_switch_count = array();
-
-        $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id),array());
-        if($price_id > 0)
-        {
-            $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
-            $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
-            $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
-            $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
-            $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
-        }
-
-        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
-        $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
-
-        $vendors = $this->common->getAllVendors();
-        $staff = $this->common->getStaffList();
-        $brandCo = $this->common->getBrandCordinator();
+        $result = $this->shipping->shippingDetail($data);
+        $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if (count($result) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
-                                'records' => $result['order'],
-                                'client_data' => $result['client_data'],
-                                'client_main_data' => $result['client_main_data'],
-                                'order_position' => $result['order_position'],
-                                'order_line' => $result['order_line'],
-                                'order_item' => $result['order_item'],
-                                'price_grid' => $price_grid,
-                                'price_garment_mackup' => $price_garment_mackup,
-                                'price_screen_primary' => $price_screen_primary,
-                                'price_screen_secondary' => $price_screen_secondary,
-                                'price_direct_garment' => $price_direct_garment,
-                                'embroidery_switch_count' => $embroidery_switch_count,
-                                'vendors' => $vendors,
-                                'client' => $client,
-                                'products' => $products,
-                                'staff' => $staff,
-                                'brandCo' => $brandCo
+                                'records' => $result['shipping'],
+                                'shipping_type' => $shipping_type
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'records' => $result['order'],
-                                'client_data' => $result['client_data'],
-                                'client_main_data' => $result['client_main_data'],
-                                'order_position' => $result['order_position'],
-                                'order_line' => $result['order_line'],
-                                'order_item' => $result['order_item'],
-                                'order_po_data' => $result['order_po_data']);
-
+                                'records' => $result['shipping'],
+                                'shipping_type' => $shipping_type
+                                );
         } 
         
         return response()->json(["data" => $response]);

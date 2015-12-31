@@ -40,48 +40,26 @@ class Shipping extends Model {
 * @access public orderDetail
 * @param  int $orderId and $clientId
 * @return array $combine_array
-*/  
+*/
 
-    public function orderDetail($data) {
+    public function shippingDetail($data) {
 
 
-        $whereShippingConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
-        $orderData = DB::table('orders')->where($whereShippingConditions)->get();
+        $whereShippingConditions = ['s.id' => $data['shipping_id']];
+        $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.job_name','cd.id as client_distribution_id','o.client_id','c.client_company',
+                        's.boxing_type','s.shipping_by','s.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval'];
 
-        $whereShippingPositionConditions = ['order_id' => $data['id']];
-        $orderPositionData = DB::table('order_positions')->where($whereShippingPositionConditions)->get();
-
-        $whereShippingLineConditions = ['order_id' => $data['id']];
-        $orderLineData = DB::table('order_orderlines')->where($whereShippingLineConditions)->get();
-
-        $whereClientConditions = ['status' => '1','is_delete' => '1','client_id' => $data['client_id']];
-        $clientData = DB::table('client')->where($whereClientConditions)->get();
-
-        $whereClientMainContactConditions = ['client_id' => $data['client_id']];
-        $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
+        $shippingData = DB::table('shipping as s')
+                        ->leftJoin('orders as o','s.order_id','=','o.id')
+                        ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
+                        ->leftJoin('client as c','o.client_id','=','c.client_id')
+                        ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
+                        ->select($listArray)
+                        ->where($whereShippingConditions)->get();
 
         $combine_array = array();
 
-        $combine_array['order'] = $orderData;
-
-
-        foreach ($orderPositionData as $key=>$alldata){
-
-            if($alldata->placementvalue){
-                 $orderPositionData[$key]->placementvalue = explode(',', $alldata->placementvalue);
-            }
-
-            if($alldata->sizegroupvalue){
-                $orderPositionData[$key]->sizegroupvalue = explode(',', $alldata->sizegroupvalue);
-            }
-           
-            
-        }
-
-        $combine_array['order_position'] = $orderPositionData;
-        $combine_array['client_data'] = $clientData;
-        $combine_array['client_main_data'] = $clientMainData;
-        $combine_array['order_line_data'] = $orderLineData;
+        $combine_array['shipping'] = $shippingData;
 
         return $combine_array;
     }

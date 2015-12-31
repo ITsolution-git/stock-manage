@@ -203,6 +203,7 @@ Route::post('finishing/orderEdit', 'FinishingController@edit');
 // SHIPPING CONTROLLER
 Route::get('shipping/listShipping', 'ShippingController@listShipping');
 Route::post('shipping/listShipping', 'ShippingController@listShipping');
+Route::post('shipping/shippingDetail', 'ShippingController@shippingDetail');
 Route::get('shipping/getShippingOrders', 'ShippingController@getShippingOrders');
 Route::post('shipping/deleteShipping', 'ShippingController@deleteShipping');
 Route::post('shipping/updateShipping', 'ShippingController@updateShipping');
