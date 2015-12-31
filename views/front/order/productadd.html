@@ -1,0 +1,104 @@
+<div class="order_notes_tasks">
+    <div class="modal-header">
+        <h3 class="modal-title">Add/Edit Product</h3>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-12 nopad-form">
+            <!-- Left column -->
+            <div class="col-md-6 nopad-form">
+              
+
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="order">Product:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input ng-model="product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+            <div class="col-md-6 nopad-form">
+              
+
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="order">Brand:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input ng-model="product_data[0].brand" type="text" id="name" name="brand" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+            <div class="col-md-6 nopad-form">
+              
+
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="order">Mill #:</lable>
+                    </div>
+                    <div class="col-md-8 nopad-left">
+                        <input ng-model="product_data[0].mill" type="text" id="name" name="mill" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+             <div class="col-md-6 nopad-form">
+              
+
+
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-4 nopad-left text-right">
+                        <lable for="order">Color :</lable>
+                    </div>
+                    
+                    <div class="col-md-8 nopad-left" ng-dropdown-multiselect="" options="allColor" selected-model="example1model" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
+                    </div>
+
+                </div>
+                
+            </div>
+
+
+
+
+            <!-- Right column -->
+            <div class="col-md-6 nopad-form">
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-3 nopad-left text-right">
+                        <lable for="desc">Product Description:</lable>
+                    </div>
+                    <div class="col-md-9 nopad-left">
+                        <textarea class="form-control task_desc" rows="4" id="desc" name="description" ng-model="product_data[0].description" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <div class="col-md-12 nopad-form">
+
+    </div>
+
+    <div class="modal-footer">
+        <div class="col-md-12 nopad-form">                 
+            <button class="btn btn-warning pull-left" type="button" ng-click="cancel()">Cancel</button>
+          <!--  <button class="btn btn-primary pull-right" ng-click="insertTask(product_detail)">Save</button> -->
+        </div>
+    </div>
+</div>
