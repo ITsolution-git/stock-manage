@@ -55,7 +55,8 @@ select.form-control {
 }
 .form-group input.form-control,
 .form-group input,
-input { 
+input,
+textarea { 
 	border-radius: 5px !important;		
 }	
 .panel.panel-default.brdr-panel {
@@ -68,6 +69,11 @@ input {
 }
 .btn.btn-default .fa {
 	margin: 3px 0;
+}
+
+textarea {
+	resize:none;
+	clear: both;
 }
 
 /*=========================
@@ -1000,56 +1006,111 @@ button.topNavButtons.active {
 /*=====================================
 		CLIENT - Shipping
 =====================================*/
-.shippingDetails #shippingOrders {
+
+/* Orders Tab */
+.shippingDetails #shippingOrders,
+#shipOrder {
 	clear: both;
 }
-#shippingOrders .salesOrders {
+#shippingDetails .salesOrders {
 	padding: 15px 0;
 }
 
-#shippingOrders .salesOrders,
-#shippingOrders .salesOrderItems,
-#shippingOrders .relatedShipments,
-#shippingOrders .selectedShipment {
+#shippingDetails .salesOrders,
+#shippingDetails .salesOrderItems,
+#shippingDetails .relatedShipments,
+#shippingDetails .selectedShipment {
 	height: 700px;
 	overflow: hidden;
 	overflow-y: scroll;
 }
-#shippingOrders label.mainTitle {
+#shippingDetails label.mainTitle {
 	font-size: 16px;
 }
-#shippingOrders label {
+#shippingDetails label {
 	margin-bottom: 0;
 }
-#shippingOrders .form-group {
+#shippingDetails .form-group  {
 	margin-bottom: 5px;
 }
 
-#shippingOrders .salesOrderItems,
-#shippingOrders .relatedShipments,
-#shippingOrders .selectedShipment {
+#shippingDetails .salesOrderItems,
+#shippingDetails .relatedShipments,
+#shippingDetails .selectedShipment {
 	padding: 15px;
 }
-#shippingOrders .salesItemsContent {
+#shippingDetails .salesItemsContent {
 	overflow: hidden;
     clear: both;
     padding: 10px 5px 5px 5px;
 }
-#shippingOrders .salesItemsContent:nth-child(2n) {
+#shippingDetails .salesItemsContent:nth-child(2n) {
 	background: #e5e5e5;
 }
-#shippingOrders .salesItemsContent:hover,
-#shippingOrders .salesItemsContent.selected,
-#shippingOrders .salesItemsContent:hover input,
-#shippingOrders .salesItemsContent.selected input,
-#shippingOrders .salesItemsContent:hover select,
-#shippingOrders .salesItemsContent.selected select {
+#shippingDetails .salesItemsContent:hover,
+#shippingDetails .salesItemsContent.selected,
+#shippingDetails .salesItemsContent:hover input,
+#shippingDetails .salesItemsContent.selected input,
+#shippingDetails .salesItemsContent:hover select,
+#shippingDetails .salesItemsContent.selected select {
 	background: #d4e7c3;
 }
 
-#shippingOrders .salesItemsContent:hover input.c-yellow,
-#shippingOrders .salesItemsContent.selected input.c-yellow {
+#shippingDetails .salesItemsContent:hover input.c-yellow,
+#shippingDetails .salesItemsContent.selected input.c-yellow {
 	background: #fff978;
+}
+
+/* Shipping Order Tab */
+#shippingDetails #shipOrder .salesOrders {
+	overflow-y: hidden;
+	height: auto;
+}
+#shippingDetails #shipOrder .SOD {
+	clear: both;
+	height: 358px;
+	overflow: hidden;
+	overflow-y: scroll;
+	padding: 5px 0;
+}
+#shippingDetails #shipOrder .s-o-section {
+	padding-top: 0;
+}
+#shippingDetails #shipOrder .s-o-section .disabled-sgpDetails {
+	margin-top: 4px;
+}
+#shipOrder .shipOrderFields:nth-child(2n) {
+	background: #e5e5e5;
+	padding: 5px;
+}
+#shipOrder .shipOrderFields:nth-child(2n) input,
+#shipOrder .shipOrderFields:nth-child(2n) select {
+	background: #e5e5e5;
+	border:1px solid #bdbdbd;
+}
+#shipOrder .shipOrderFields:nth-child(2n) input.c-yellow {
+	background: #fff978;
+}
+#shipOrder .panel {
+	margin-bottom: 0;
+	box-shadow: none;
+	padding-bottom: 0;
+}
+#shipOrder .panel-body {
+	padding-bottom: 0;	
+}
+#shipOrder textarea.addressArea {
+	margin-top: 15px;
+	height: 95px;
+}
+#shipOrder textarea.notesArea {
+	height: 80px;
+}
+#shippingDetails #shipOrder .s-o-section .bottomBoxes {
+	margin-top: 30px;
+}
+#shippingDetails #shipOrder .s-o-section .bottomBoxes .SOD {
+	height: 281px;
 }
 /*---------- END ----------*/
 
