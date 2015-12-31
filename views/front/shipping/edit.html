@@ -1,4 +1,4 @@
-<div class="panel panel-default shippingDetails">
+<div class="panel panel-default shippingDetails" id="shippingDetails">
 	<div class="panel-body nopad-left nopad-right">
 		<div class="container col-md-12">	
 			<ul class="nav nav-tabs input-group col-sm-12">
@@ -219,133 +219,328 @@
 
                 <!-- Shipping Order -->
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="shipOrder">
-                	<div class="col-md-12">
+                	<div class="col-md-12 nopad-form">
                         <div class="panel-body nopad-left nopad-right">
-                            <div class="col-md-3 panel panel-default nopad-form salesOrders">
+                            <!-- Left Section -->
+                            <div class="col-md-3 panel nopad-form salesOrders">
                                 <div class="col-md-12">
-                                    <div class="col-md-12 nopad-form">
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <label>Shipping ID</label>
-                                        </div>
-                                        <div class="col-md-8 nopad-form"> </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <label>Shipping ID</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                            <input type="text" class="form-control" ng-model="shipping.shipping_id" onfocus="this.blur()"/>
                                         </div>
-                                        <div class="col-md-8 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 nopad-form">
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <label>Order ID</label>
-                                        </div>
-                                        <div class="col-md-8 nopad-form"> </div>
-                                    </div>
-                                    <div class="col-md-12 nopad-form form-group">
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
-                                        </div>
-                                        <div class="col-md-8 nopad-left smallPad">
+                                        <div class="col-md-8 nopad-form">
                                             <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
-                                                <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
+                                                <option ng-selected="shipping.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 nopad-form">
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <label>Client ID</label>
-                                        </div>
-                                        <div class="col-md-8 nopad-form"> </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <label>Order ID</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                            <input type="text" class="form-control" ng-model="shipping.order_id" onfocus="this.blur()"/>
                                         </div>
-                                        <div class="col-md-8 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        <div class="col-md-8 nopad-form">
+                                            <input type="text" class="form-control" ng-model="shipping.job_name" onfocus="this.blur()"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 nopad-form">
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <label>Client Distribution ID</label>
-                                        </div>
-                                        <div class="col-md-8 nopad-form"> </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <label>Client ID</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                            <input type="text" class="form-control" ng-model="shipping.client_id" onfocus="this.blur()"/>
                                         </div>
-                                        <div class="col-md-8 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        <div class="col-md-8 nopad-form">
+                                            <input type="text" class="form-control" ng-model="shipping.client_company" onfocus="this.blur()"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 nopad-form">
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <label>Client Distribution ID</label>   
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <input type="text" class="form-control" ng-model="shipping.client_distribution_id" onfocus="this.blur()"/>
+                                        </div>
+                                        <div class="col-md-8 nopad-form">
+                                            <input type="text" class="form-control" ng-model="shipping.description" onfocus="this.blur()"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
                                             <label>Boxing Type</label>
                                         </div>
                                         <div class="col-md-4 nopad-left smallPad">
                                             <label>Shipping By</label>
                                         </div>
-                                        <div class="col-md-4 nopad-left smallPad">
+                                        <div class="col-md-4 nopad-form">
                                             <label>In-Hands by</label>
                                         </div>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                            <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                                <option ng-selected="shipping.boxing_type==0" value="0">Retail</option>
+                                                <option ng-selected="shipping.boxing_type==1" value="0">Standard</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                            <input type="text" class="form-control" ng-model="shipping.shipping_by" onfocus="this.blur()"/>
                                         </div>
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        <div class="col-md-4 nopad-form">
+                                            <input type="text" class="form-control" ng-model="shipping.in_hands_by" onfocus="this.blur()"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 nopad-form">
+                                    <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
                                             <label>Shipping Type</label>
                                         </div>
                                         <div class="col-md-4 nopad-left smallPad">
                                             <label>Date Shipped</label>
                                         </div>
-                                        <div class="col-md-4 nopad-left smallPad">
+                                        <div class="col-md-4 nopad-form">
                                             <label>Fully Shipped</label>
                                         </div>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                            <select  ng-model="shipping_type"  class="form-control" name="shipping_type" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                                <option ng-selected="shipping.shipping_type_id==type.id" ng-repeat="type in shipping_type" value={{type.id}}>{{type.name}}</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                            <input type="text" class="form-control" ng-model="shipping.date_shipped" onfocus="this.blur()"/>
                                         </div>
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="order.job_name" onfocus="this.blur()"/>
+                                        <div class="col-md-4 nopad-form">
+                                            <input type="text" class="form-control" ng-model="shipping.fully_shipped" onfocus="this.blur()"/>
                                         </div>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
-                                        <textarea rows="5" cols="46"></textarea>
+                                        <textarea class="form-control addressArea" rows="5" cols="46" >{{shipping.address}} {{shipping.address2}} {{shipping.city}} {{shipping.state}} {{shipping.zipcode}} {{shipping.country}}</textarea>
                                     </div>
-                                    <div class="col-md-12 nopad-form">
+                                    <div class="col-md-12 nopad-form form-group">
                                         <label>SKUs</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
-                                        <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        <input type="text" class="form-control" ng-model="shipping.sku" onfocus="this.blur()"/>
                                     </div>
-                                    <div class="col-md-12 nopad-form">
+                                    <div class="col-md-12 nopad-form form-group">
                                         <label>Note</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
-                                        <textarea rows="3" cols="46"></textarea>
+                                        <textarea class="form-control notesArea" rows="3" cols="46" ng-model="shipping.note">{{shipping.note}}</textarea>
                                     </div>
-                                    <div class="col-md-12 nopad-form">
+                                    <div class="col-md-12 nopad-form form-group">
                                         <label>Cost to ship</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
-                                        <input type="text" class="form-control" ng-model="order.id" onfocus="this.blur()"/>
+                                        <input type="text" class="form-control" ng-model="shipping.cost_to_ship" onfocus="this.blur()"/>
                                     </div>
+                                </div>
+                            </div>
+                            <!-- Right Section -->
+                            <div class="col-md-9 nopad-left salesOrders s-o-section">
+                                <!-- Top Section -->
+                                <div class="col-md-12 nopad-left">
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <!-- Right Top Section -->
+                                        <div class="col-md-4 nopad-left smallPad">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                                <label>Size Group</label>
+                                            </div>
+                                            <div class="col-md-9 nopad-left smallPad">
+                                                <label>Product</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 nopad-form">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                                <label>Product Color</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <label>Size</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <label>Distribute Qnty</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Shipped Qnty</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <label>Boxed Qnty</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <label>Remaining to Box</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <label>Max Pack</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <label>Hoody?</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad"> </div>
+                                        </div>
+                                    </div>
+                                    <!-- Fields -->
+                                    <div class="panel panel-default panel-body SOD smallPad">      
+                                        <div class="col-md-12 smallPad form-group shipOrderFields">
+                                            <!-- Right Top Section -->
+                                            <div class="col-md-4 nopad-left smallPad">
+                                                <div class="col-md-3 nopad-left smallPad">
+                                                    <select class="form-control">
+                                                        <option>Men's</option>
+                                                        <option>Women's</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-9 nopad-left smallPad">
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 nopad-form">
+                                                <div class="col-md-3 nopad-left smallPad">
+                                                    <select class="form-control">
+                                                        <option>White</option>
+                                                        <option>Block</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 nopad-left smallPad">
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                                <div class="col-md-1 nopad-left smallPad">
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                                <div class="col-md-2 nopad-left smallPad">
+                                                    <input type="text" class="form-control c-yellow" />
+                                                </div>
+                                                <div class="col-md-1 nopad-left smallPad">
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                                <div class="col-md-1 nopad-left smallPad">
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                                <div class="col-md-1 nopad-left smallPad">
+                                                    <select class="form-control">
+                                                        <option>72</option>
+                                                        <option>72</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 nopad-left smallPad">
+                                                    <select class="form-control">
+                                                        <option>No</option>
+                                                        <option>Yes</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 nopad-left smallPad">
+                                                    <div class="sgpDetails disabled-sgpDetails btnCircle">
+                                                      <a class="" tabindex="0" role="button" ng-click="remove_item_from_distribute(item.id)">
+                                                        <i class="fa fa-minus"></i>
+                                                      </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                  
+                                    </div>
+                                    <!-- / -->
+                                </div>
+
+                                <!-- Bottom Section -->
+                                <div class="col-md-12 nopad-left bottomBoxes">
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <!-- Right Bottom Section -->
+                                        <div class="col-md-5 nopad-left smallPad">
+                                            <div class="col-md-2 nopad-left smallPad"></div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Box ID</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Units Packed</label>
+                                            </div>
+                                            <div class="col-md-3 text-center nopad-left smallPad">
+                                                <label>Tracking#</label>
+                                            </div>
+                                            <div class="col-md-3 pull-right nopad-form">
+                                                <button class="btn btn-default btn-block c-green">Box Shipment</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 nopad-left smallPad"> </div>
+                                        <div class="col-md-6 nopad-form">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                                <label>Box Item ID</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Size Group</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Product</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <label>Color</label>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <label>Size</label>
+                                            </div>
+                                            <div class="col-md-2 nopad-form">
+                                                <label>Boxed Qnty</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Fields -->
+                                    <div class="col-md-12 nopad-form form-group">
+                                        <!-- Right Bottom Section Fields -->
+                                        <div class="col-md-5 nopad-left smallPad">
+                                            <div class="panel panel-default panel-body SOD smallPad">
+                                                <div class="col-md-12 form-group smallPad">
+                                                    <div class="col-md-2 nopad-left smallPad">
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="col-md-2 nopad-left smallPad">
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="col-md-2 nopad-left smallPad">
+                                                       <input type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="col-md-5 pull-right nopad-form smallPad">
+                                                       <input type="text" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 nopad-left smallPad"> </div>
+                                        <div class="col-md-6 nopad-form">
+                                            <div class="panel panel-default panel-body SOD smallPad">
+                                                <div class="col-md-12 form-group smallPad">
+                                                    <div class="col-md-3 nopad-left smallPad">
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="col-md-2 nopad-left smallPad">
+                                                        <select class="form-control">
+                                                            <option>Men's</option>
+                                                            <option>Women's</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2 nopad-left smallPad">
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="col-md-2 text-center nopad-left smallPad">
+                                                        <select class="form-control">
+                                                            <option>White</option>
+                                                            <option>black</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-1 nopad-left smallPad">
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                    <div class="col-md-2 nopad-form">
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / -->
                                 </div>
                             </div>
                         </div>

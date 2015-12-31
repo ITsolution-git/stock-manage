@@ -84,7 +84,7 @@ class Client extends Model {
     	{
     		$temp['address_main']='0'; $temp['address_shipping']='0'; $temp['address_billing']='0';
     		foreach ($result as $key => $value) {
-    			   if($value->address_main=='1'){$temp['address_main']= $value->address;}
+    			  if($value->address_main=='1'){$temp['address_main']= $value->address;}
     			  if($value->address_shipping=='1'){$temp['address_shipping']= $value->address;}
     			  if($value->address_billing=='1'){$temp['address_billing']= $value->address;}
 
