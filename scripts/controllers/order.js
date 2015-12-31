@@ -652,8 +652,12 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
          $scope.addproductpopup = function(value)
     {
 
- 
- if(value.product_id == 'addproduct'){
+$scope.example1model = []; 
+$scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, scrollableHeight: '100px',scrollable: true};
+$scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
+
+
+ if(value == 'addproduct'){
 
             var product_data = {};
             var productData = {};
@@ -671,14 +675,41 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 
                 var id = result.data.id;
                  getProductDetailById(id);
+                 var product_id_new  = id;
+                 
             });
                        
 
             } else {
-                 getProductDetailById(value.product_id);
-            }            
+                 getProductDetailById(value);
+                 var product_id_new  = value;
+                 
+            }          
 
          get_color_data();
+ 
+           $scope.colorEvents = {
+                        onItemSelect: function(item) {
+                                var color_data = {};
+                                color_data.color_id = item.id;
+                                color_data.product_id = product_id_new;
+
+                                $http.post('api/public/order/saveColorSize',color_data).success(function(Listdata) {
+                                   // getNotesDetail(order_id);
+                                });
+                        },
+                        onItemDeselect: function(item) {
+
+                             var color_data = {};
+                             color_data.table ='product_color_size'
+                             color_data.cond ={color_id:item.id,product_id:product_id_new}
+                             $http.post('api/public/common/DeleteTableRecords',color_data).success(function(result) {        
+
+                                  });
+                        } 
+                        
+             };
+
 
 
             var modalInstance = $modal.open({

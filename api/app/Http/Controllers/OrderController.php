@@ -780,4 +780,33 @@ class OrderController extends Controller {
                             );
         return response()->json(["data" => $response]);
     }
+
+
+     /**
+   * Save Color size.
+   * @return json data
+    */
+    public function saveColorSize()
+    {
+
+
+        $post = Input::all();
+       
+        if(!empty($post['color_id']) && !empty($post['product_id']))
+        {
+            $result = $this->order->saveColorSize($post);
+            $message = INSERT_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS.", id";
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
+
 }

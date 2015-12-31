@@ -603,4 +603,27 @@ public function updateOrderLineData($post)
                         ->where($whereOrderTaskConditions)->get();
         return $orderTaskData;
     }
+
+
+/**
+* Insert Order Note           
+* @access public saveColorSize
+* @param  array $post
+* @return array $result
+*/
+
+
+public function saveColorSize($post)
+   {
+
+    for ($x = 1; $x <= 7; $x++) {
+        $post['size_id'] = $x;
+        $post['price'] = 0;
+        $result = DB::table('product_color_size')->insert($post);
+        
+     } 
+
+       return $result;
+   }
+
 }

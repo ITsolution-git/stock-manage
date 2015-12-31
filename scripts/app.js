@@ -34,5 +34,6 @@ angular
     'app.ui.directives',
     'app.ui.services',
     'app.services',
-    'checklist-model'
+    'checklist-model',
+    'angularjs-dropdown-multiselect'
   ]);

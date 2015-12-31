@@ -57,6 +57,7 @@
   <script src="libs/angular/angular-loading-bar/build/loading-bar.js"></script>
 
 <!-- App -->
+<script type="text/javascript" src="https://raw.githubusercontent.com/lodash/lodash/3.10.1/lodash.min.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/config.js"></script>
   <script src="scripts/config.lazyload.js"></script>
@@ -73,6 +74,7 @@
   <script src="scripts/directives/filemodel.js"></script>
   <script src="scripts/directives/validation.js"></script>
   <script src="scripts/directives/checklist-model.js"></script>
+  <script src="scripts/directives/angularjs-dropdown-multiselect.min.js"></script>
 
   <script src="scripts/filters/fromnow.js"></script>
   <script src="scripts/services/ngstore.js"></script>
@@ -88,6 +90,7 @@
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
   <script src="scripts/common/date.js"></script>
+  
   
 
   <!-- LOAD ALL CONTROLLER -->
