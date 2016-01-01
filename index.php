@@ -57,12 +57,13 @@
   <script src="libs/angular/angular-loading-bar/build/loading-bar.js"></script>
 
 <!-- App -->
-<script type="text/javascript" src="https://raw.githubusercontent.com/lodash/lodash/3.10.1/lodash.min.js"></script>
+
   <script src="scripts/app.js"></script>
   <script src="scripts/config.js"></script>
   <script src="scripts/config.lazyload.js"></script>
   <script src="scripts/config.router.js"></script>
   <script src="scripts/app.ctrl.js"></script>
+  <script src="scripts/lodash.min.js"></script>
 
   <script src="scripts/directives/lazyload.js"></script>
   <script src="scripts/directives/ui.js"></script>
