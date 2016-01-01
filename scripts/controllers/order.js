@@ -652,7 +652,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
          $scope.addproductpopup = function(value,product_updated_id)
     {
 
- 
+
 $scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, scrollableHeight: '100px',showCheckAll:false,showUncheckAll:false,scrollable: true};
 $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
@@ -687,7 +687,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                     new_order_data.cond ={id:product_updated_id}
                     
                     $http.post('api/public/common/UpdateTableRecords',new_order_data).success(function(result) {
-                       
+                        
+                         
                     });
 
                  }
@@ -700,10 +701,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                  $scope.product_id_new  = value;
                  
-            }  
-
-            
-
+            } 
 
          get_color_data();
  
@@ -741,12 +739,14 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                     modalInstance.result.then(function (selectedItem) {
                         $scope.selected = selectedItem;
                     }, function () {
+                          get_order_details($scope.order_id,$scope.client_id,company_id);
                         $log.info('Modal dismissed at: ' + new Date());
                     });
 
                     
 
                     $scope.cancel = function () {
+
                         modalInstance.dismiss('cancel');
                     };
 
@@ -1154,6 +1154,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             else
             {
                 $scope.allProductColorSize=[];
+                $scope.allProductColorSize.productColorSizeData=[];
+                $scope.allProductColorSize.ColorData=[];
             }
             $("#ajax_loader").hide();
         });
