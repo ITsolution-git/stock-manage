@@ -57,9 +57,24 @@ class Shipping extends Model {
                         ->select($listArray)
                         ->where($whereShippingConditions)->get();
 
+        $whereItemConditions = ['ia.shipping_id' => $data['shipping_id']];
+        $listItemsArray = ['d.id','d.size','d.qnty','d.shipped_qnty','d.boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','mt.value as size_group_name','mt2.value as color_name'];
+
+        $shippingItems = DB::table('item_address_mapping as ia')
+                        ->leftJoin('distribution_detail as d','ia.item_id','=','d.id')
+                        ->leftJoin('order_orderlines as ol','d.orderline_id','=','ol.id')
+                        ->leftJoin('products as p','ol.product_id','=','p.id')
+                        ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
+                        ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
+                        ->select($listItemsArray)
+                        ->where($whereItemConditions)
+                        ->where('ia.item_id','!=','0')
+                        ->get();
+
         $combine_array = array();
 
         $combine_array['shipping'] = $shippingData;
+        $combine_array['shippingItems'] = $shippingItems;
 
         return $combine_array;
     }
