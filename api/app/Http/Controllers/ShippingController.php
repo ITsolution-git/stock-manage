@@ -96,14 +96,16 @@ class ShippingController extends Controller {
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['shipping'],
-                                'shipping_type' => $shipping_type
+                                'shipping_type' => $shipping_type,
+                                'shippingItems' => $result['shippingItems']
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'records' => $result['shipping'],
-                                'shipping_type' => $shipping_type
+                                'shipping_type' => $shipping_type,
+                                'shippingItems' => $result['shippingItems']
                                 );
         } 
         

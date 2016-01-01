@@ -119,6 +119,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     
     function get_shipping_details()
     {
+        AJloader.show();
         var shipping_arr = {};
         shipping_arr.client_id = $stateParams.client_id;
         shipping_arr.order_id = $stateParams.order_id;
@@ -130,7 +131,9 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
             if(result.data.success == '1') {
                 $scope.shipping =result.data.records[0];
                 $scope.shipping_type =result.data.shipping_type;
+                $scope.shipping_items =result.data.shippingItems;
             }
+            AJloader.hide();
         });
     }
 
@@ -362,5 +365,28 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         $http.post('api/public/common/UpdateTableRecords',$scope.ship_data).success(function(result) {
             $("#ajax_loader").hide();
         });
+    }
+    $scope.updateShippingAll = function($event,id,table_name,match_condition)
+    {
+          var order_main_data = {};
+          order_main_data.table =table_name;
+          $scope.name_filed = $event.target.name;
+          var obj = {};
+          obj[$scope.name_filed] =  $event.target.value;
+          order_main_data.data = angular.copy(obj);
+
+
+          var condition_obj = {};
+          condition_obj[match_condition] =  id;
+          order_main_data.cond = angular.copy(condition_obj);
+          
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+                //get_shipping_details();
+            });
+      
     }
 }]);
