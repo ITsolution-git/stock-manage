@@ -232,7 +232,7 @@
                                             <input type="text" class="form-control" ng-model="shipping.shipping_id" onfocus="this.blur()"/>
                                         </div>
                                         <div class="col-md-8 nopad-form">
-                                            <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                            <select  ng-model="order.f_approval"  class="form-control" name="f_approval">
                                                 <option ng-selected="shipping.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                                             </select>
                                         </div>
@@ -283,9 +283,9 @@
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                            <select  ng-model="shipping.f_approval"  class="form-control" name="boxing_type" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }">
                                                 <option ng-selected="shipping.boxing_type==0" value="0">Retail</option>
-                                                <option ng-selected="shipping.boxing_type==1" value="0">Standard</option>
+                                                <option ng-selected="shipping.boxing_type==1" value="1">Standard</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4 nopad-left smallPad">
@@ -308,12 +308,12 @@
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <select  ng-model="shipping_type"  class="form-control" name="shipping_type" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
+                                            <select  ng-model="shipping.shipping_type"  class="form-control" name="shipping_type_id" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }">
                                                 <option ng-selected="shipping.shipping_type_id==type.id" ng-repeat="type in shipping_type" value={{type.id}}>{{type.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="shipping.date_shipped" onfocus="this.blur()"/>
+                                            <input type="text" class="form-control" ng-model="shipping.date_shipped" name="date_shipped" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }"/>
                                         </div>
                                         <div class="col-md-4 nopad-form">
                                             <input type="text" class="form-control" ng-model="shipping.fully_shipped" onfocus="this.blur()"/>
@@ -332,13 +332,13 @@
                                         <label>Note</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
-                                        <textarea class="form-control notesArea" rows="3" cols="46" ng-model="shipping.note">{{shipping.note}}</textarea>
+                                        <textarea class="form-control notesArea" rows="3" cols="46" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }">{{shipping.note}}</textarea>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <label>Cost to ship</label>
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
-                                        <input type="text" class="form-control" ng-model="shipping.cost_to_ship" onfocus="this.blur()"/>
+                                        <input type="text" class="form-control" ng-model="shipping.cost_to_ship" name="cost_to_ship" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }"/>
                                     </div>
                                 </div>
                             </div>
@@ -385,52 +385,43 @@
                                         </div>
                                     </div>
                                     <!-- Fields -->
-                                    <div class="panel panel-default panel-body SOD smallPad">      
-                                        <div class="col-md-12 smallPad form-group shipOrderFields">
+                                    <div class="panel panel-default panel-body SOD smallPad">
+                                        <div class="col-md-12 smallPad form-group shipOrderFields" ng-repeat="item in shipping_items">
                                             <!-- Right Top Section -->
                                             <div class="col-md-4 nopad-left smallPad">
                                                 <div class="col-md-3 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>Men's</option>
-                                                        <option>Women's</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" ng-model="item.size_group_name" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-9 nopad-left smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" ng-model="item.product_name" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-8 nopad-form">
                                                 <div class="col-md-3 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>White</option>
-                                                        <option>Block</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" ng-model="item.color_name" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-1 nopad-left smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" ng-model="item.size" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-1 nopad-left smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" ng-model="item.qnty" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-2 nopad-left smallPad">
-                                                    <input type="text" class="form-control c-yellow" />
+                                                    <input type="text" class="form-control" ng-model="item.shipped_qnty" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-1 nopad-left smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" ng-model="item.boxed_qnty" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-1 nopad-left smallPad">
-                                                    <input type="text" class="form-control" />
+                                                    <input type="text" class="form-control" ng-model="item.remaining_to_box" onfocus="this.blur()"/>
                                                 </div>
                                                 <div class="col-md-1 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>72</option>
-                                                        <option>72</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" name="max_pack" ng-model="item.max_pack" ui-event="{ change : 'updateShippingAll($event,item.id,\'distribution_detail\',\'id\')' }"/>
                                                 </div>
-                                                <div class="col-md-1 nopad-left smallPad">
-                                                    <select class="form-control">
-                                                        <option>No</option>
-                                                        <option>Yes</option>
+                                                <div class="col-md-1 nopad-left smallPad" ui-event="{ change : 'updateShippingAll($event,item.id,\'distribution_detail\',\'id\')' }">
+                                                    <select class="form-control" name="hoody" ng-model="item.hoody">
+                                                        <option ng-selected="item.hoody == 0" value="0">No</option>
+                                                        <option ng-selected="item.hoody == 1" value="1">Yes</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-1 nopad-left smallPad">
@@ -462,7 +453,7 @@
                                                 <label>Tracking#</label>
                                             </div>
                                             <div class="col-md-3 pull-right nopad-form">
-                                                <button class="btn btn-default btn-block c-green">Box Shipment</button>
+                                                <button class="btn btn-default btn-block c-green" ng-click="create_box_shipment(shipping_items)">Box Shipment</button>
                                             </div>
                                         </div>
                                         <div class="col-md-1 nopad-left smallPad"> </div>
