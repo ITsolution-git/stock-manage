@@ -1,97 +1,101 @@
-<div class="order_notes_tasks">
+<div class="order_notes_tasks order_line_productBox">
     <div class="modal-header">
         <h3 class="modal-title">Add/Edit Product</h3>
     </div>
     <div class="modal-body">
         <div class="col-md-12 nopad-form">
             <!-- Left column -->
-            <div class="col-md-6 nopad-form">
-              
-
-
+            <div class="col-md-12 nopad-form">
                 <div class="form-group col-md-12 nopad-form">
-                    <div class="col-md-4 nopad-left text-right">
+                    <div class="col-md-2 nopad-left text-right">
                         <lable for="order">Product:</lable>
                     </div>
-                    <div class="col-md-8 nopad-left">
+                    <div class="col-md-10 nopad-form">
                         <input ng-model="product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
                     </div>
                 </div>
-
-                
             </div>
 
-
-            <div class="col-md-6 nopad-form">
-              
-
-
+            <div class="col-md-12 nopad-form">
                 <div class="form-group col-md-12 nopad-form">
-                    <div class="col-md-4 nopad-left text-right">
+                    <div class="col-md-2 nopad-left text-right">
                         <lable for="order">Brand:</lable>
                     </div>
-                    <div class="col-md-8 nopad-left">
+                    <div class="col-md-10 nopad-form">
                         <input ng-model="product_data[0].brand" type="text" id="name" name="brand" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
                     </div>
                 </div>
-
-                
             </div>
 
-
-            <div class="col-md-6 nopad-form">
-              
-
-
+            <div class="col-md-12 nopad-form">
                 <div class="form-group col-md-12 nopad-form">
-                    <div class="col-md-4 nopad-left text-right">
+                    <div class="col-md-2 nopad-left text-right">
                         <lable for="order">Mill #:</lable>
                     </div>
-                    <div class="col-md-8 nopad-left">
+                    <div class="col-md-10 nopad-form">
                         <input ng-model="product_data[0].mill" type="text" id="name" name="mill" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
                     </div>
                 </div>
-
-                
             </div>
-
-
-             <div class="col-md-6 nopad-form">
-              
-
-
+            <div class="col-md-12 nopad-form">
                 <div class="form-group col-md-12 nopad-form">
-                    <div class="col-md-4 nopad-left text-right">
-                        <lable for="order">Color :</lable>
-                    </div>
-                    
-                    <div class="col-md-8 nopad-left" ng-dropdown-multiselect="" options="allColor" selected-model="example1model" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
-                    </div>
-
-                </div>
-                
-            </div>
-
-
-
-
-            <!-- Right column -->
-            <div class="col-md-6 nopad-form">
-                <div class="form-group col-md-12 nopad-form">
-                    <div class="col-md-3 nopad-left text-right">
+                    <div class="col-md-2 nopad-left text-right">
                         <lable for="desc">Product Description:</lable>
                     </div>
-                    <div class="col-md-9 nopad-left">
+                    <div class="col-md-10 nopad-form">
                         <textarea class="form-control task_desc" rows="4" id="desc" name="description" ng-model="product_data[0].description" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"></textarea>
                     </div>
                 </div>
             </div>
-
         </div>
-        
-    </div>
 
-    <div class="col-md-12 nopad-form">
+        <!-- Color -->
+        <div class="col-md-12 nopad-form">
+            <div class="form-group col-md-12 nopad-form">
+                <div class="col-md-2 nopad-left text-right">
+                    <lable for="order">Color :</lable>
+                </div>
+                <div class="col-md-10 nopad-form" ng-dropdown-multiselect="" options="allColor" selected-model="example1model" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
+                </div>
+            </div>
+        </div>
+
+        <!-- POPUP Listing -->
+        <div class="col-md-12 panel-body panel panel-default nopad-form">
+            <!-- Listing labels -->
+            <div class="col-md-12 nopad-form form-group">
+                <div class="col-md-3 nopad-right">
+                    <label>Color:</label>
+                </div>
+                <div class="col-md-3 nopad-left">
+                    <label>Size:</label>
+                </div>
+                <div class="col-md-5 nopad-left">
+                    <label>Price:</label>
+                </div>
+                <div class="col-md-1 nopad-form"> </div>
+            </div>
+
+            <!-- Listing Fields -->
+            <div class="col-md-12 nopad-form">
+                <div class="col-md-12 form-group listContent">
+                    <div class="col-md-3 nopad-left">
+                        <span>Black</span>
+                    </div>
+                    <div class="col-md-3 nopad-left">
+                        <span>XS</span>
+                    </div>
+                    <div class="col-md-5 nopad-left">
+                        <input type="text" class="form-control" value="" />
+                    </div>
+                    <div class="col-md-1 nopad-form"> 
+                        <div class="sgpDetails disabled-sgpDetails btnCircle">
+                          <a class="" tabindex="0" role="button" ng-click="remove_item_from_distribute(item.id)"><i class="fa fa-minus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 

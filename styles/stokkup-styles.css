@@ -1291,3 +1291,26 @@ button.topNavButtons.active {
 	top: 10px;
     width: 20px;
 }
+
+/* Orderline page product popup */
+.order_line_productBox .modal-body {
+	overflow: hidden;
+	padding: 15px 0;	
+}
+.order_line_productBox .modal-body .form-group {
+	margin-bottom: 10px;
+}
+.order_line_productBox .modal-body .form-group label {
+	margin-bottom: 0;
+}
+.order_line_productBox .modal-body .listContent {
+	padding: 5px 15px;
+}
+.order_line_productBox .modal-body .listContent span {
+	display: inline-block;
+	margin-top: 7px;
+}
+.order_line_productBox .modal-body .listContent:nth-child(2n),
+.order_line_productBox .modal-body .listContent:nth-child(2n) input {
+	background: #e5e5e5;
+}
