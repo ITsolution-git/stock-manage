@@ -541,9 +541,119 @@
                 <!-- Boxes -->
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="shippingBoxes">
                 	<div class="col-md-12">
-                		<div class="panel-body nopad-left nopad-right">
-                			Boxes
-                		</div>
+                        <div class="panel-body nopad-left nopad-right">
+                    		<div class="col-md-12 nopad-form form-group">
+                                <div class="col-md-3">
+                                    <label>Box ID</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="col-md-4 nopad-form smallPad">
+                                        <div class="col-md-4 nopad-left">
+                                            <label>Box Item ID</label>
+                                        </div>
+                                        <div class="col-md-3 nopad-left">
+                                            <label>Size Group</label>
+                                        </div>
+                                        <div class="col-md-5 nopad-form">
+                                            <label>Product</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 nopad-left smallPad">
+                                        <div class="col-md-3 nopad-left">
+                                            <label>Product Color</label>
+                                        </div>
+                                        <div class="col-md-1 nopad-left">
+                                            <label>Size</label>
+                                        </div>
+                                        <div class="col-md-2 nopad-form">
+                                            <label>Boxed Qnty</label>
+                                        </div>
+                                        <div class="col-md-1 nopad-left">
+                                            <label>MD</label>
+                                        </div>
+                                        <div class="col-md-1 nopad-left">
+                                            <label>Spoil</label>
+                                        </div>
+                                        <div class="col-md-2 nopad-left">
+                                            <label>Actual</label>
+                                        </div>
+                                        <div class="col-md-2 nopad-left">
+                                            <label>Re-Allocate to</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 nopad-form form-group">
+                                <div class="col-md-3 nopad-left">
+                                    <div class="panel panel-default salesOrders">
+                                        <div class="col-md-12 nopad-form salesItemsContent">
+                                            <div class="col-md-5 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-6 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-1 nopad-form">
+                                                <div class="sgpDetails disabled-sgpDetails btnCircle">
+                                                  <a class="" tabindex="0" role="button" ng-click="remove_item_from_distribute(item.id)">
+                                                    <i class="fa fa-minus"></i>
+                                                  </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-9 nopad-form panel panel-default salesOrders">
+                                    <div class="col-md-12 nopad-form salesItemsContent">
+                                        <div class="col-md-4 nopad-right smallPad">
+                                            <div class="col-md-4 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-3 nopad-left smallPad">
+                                                <select class="form-control">
+                                                    <option>Men's</option>
+                                                    <option>Women's</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5 nopad-left smallPad">
+                                                <select class="form-control">
+                                                    <option>Select</option>
+                                                    <option>Women's</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 nopad-left smallPad">
+                                            <div class="col-md-3 nopad-left smallPad">
+                                                <select class="form-control">
+                                                    <option>White</option>
+                                                    <option>Black</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-1 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-2 nopad-left smallPad">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                            <div class="col-md-2 nopad-form">
+                                                <input type="text" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 	</div>
                 </div>
 
@@ -551,7 +661,48 @@
                 <div role="tabpanel" class="tab-pane animated fadeIn" id="shipRelOrders">
                 	<div class="col-md-12">
                 		<div class="panel-body nopad-left nopad-right">
-                			Related Orders
+                			<div class="col-md-12 nopad-form form-group">
+                                <div class="col-md-6">
+                                    <div class="col-md-1 nopad-left"></div>
+                                    <div class="col-md-2 nopad-left">
+                                        <label>Shipping#</label>
+                                    </div>
+                                    <div class="col-md-5 nopad-left">
+                                        <label>Job Name</label>
+                                    </div>
+                                    <div class="col-md-2 nopad-left">
+                                        <label>Boxes</label>
+                                    </div>
+                                    <div class="col-md-2 nopad-form">
+                                        <label>Pieces</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <div class="col-md-6 nopad-form panel panel-default salesOrders">
+                                    <div class="col-md-12 nopad-form salesItemsContent">
+                                        <div class="col-md-1 nopad-left">
+                                            <div class="sgpDetails btnCircle">
+                                              <a class="" tabindex="0" role="button" title="Move">
+                                                <i class="fa fa-arrow-right"></i>
+                                              </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 nopad-left">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <div class="col-md-5 nopad-left">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <div class="col-md-2 nopad-left">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                        <div class="col-md-2 nopad-form">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                 		</div>
                 	</div>
                 </div>

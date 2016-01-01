@@ -1112,6 +1112,17 @@ button.topNavButtons.active {
 #shippingDetails #shipOrder .s-o-section .bottomBoxes .SOD {
 	height: 281px;
 }
+
+
+/* Boxes Tab */
+#shippingBoxes .salesItemsContent {
+	padding-top: 5px;
+}
+
+/* Related Orders Tab */
+#shipRelOrders .salesItemsContent {
+	padding-top: 5px;
+}
 /*---------- END ----------*/
 
 /*=====================================
