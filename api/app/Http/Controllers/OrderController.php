@@ -809,4 +809,16 @@ class OrderController extends Controller {
     }
 
 
+   /**
+   * Get Product Color Size.
+   * @return json data
+   */
+    public function getProductDetailColorSize($id)
+    {
+        $result = $this->order->getProductDetailColorSize($id);
+        return $this->return_response($result);
+        
+    }
+
+
 }

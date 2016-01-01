@@ -627,7 +627,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             if(value.id == orderline_id)
             {
                 if(value.product_id == 'addproduct'){
-                  $scope.addproductpopup(value);
+                  $scope.addproductpopup(value.product_id,value.id);
                   return false;
                 }
 
@@ -649,11 +649,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     }
 
 
-         $scope.addproductpopup = function(value)
+         $scope.addproductpopup = function(value,product_updated_id)
     {
 
-$scope.example1model = []; 
-$scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, scrollableHeight: '100px',scrollable: true};
+ 
+$scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, scrollableHeight: '100px',showCheckAll:false,showUncheckAll:false,scrollable: true};
 $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
 
@@ -675,41 +675,61 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 
                 var id = result.data.id;
                  getProductDetailById(id);
-                 var product_id_new  = id;
+                 getProductDetailColorSize(id);
+                 $scope.product_id_new  = id;
                  
+
+                 if(product_updated_id) {
+
+                    var new_order_data = {};
+                    new_order_data.table ='order_orderlines'
+                    new_order_data.data ={product_id:$scope.product_id_new}
+                    new_order_data.cond ={id:product_updated_id}
+                    
+                    $http.post('api/public/common/UpdateTableRecords',new_order_data).success(function(result) {
+                       
+                    });
+
+                 }
             });
                        
 
             } else {
                  getProductDetailById(value);
-                 var product_id_new  = value;
+                 getProductDetailColorSize(value);
+
+                 $scope.product_id_new  = value;
                  
-            }          
+            }  
+
+            
+
 
          get_color_data();
  
            $scope.colorEvents = {
                         onItemSelect: function(item) {
+                            
                                 var color_data = {};
                                 color_data.color_id = item.id;
-                                color_data.product_id = product_id_new;
+                                color_data.product_id = $scope.product_id_new;
 
                                 $http.post('api/public/order/saveColorSize',color_data).success(function(Listdata) {
-                                   // getNotesDetail(order_id);
+                                   getProductDetailColorSize($scope.product_id_new);
+
                                 });
                         },
                         onItemDeselect: function(item) {
 
                              var color_data = {};
                              color_data.table ='product_color_size'
-                             color_data.cond ={color_id:item.id,product_id:product_id_new}
+                             color_data.cond ={color_id:item.id,product_id:$scope.product_id_new}
                              $http.post('api/public/common/DeleteTableRecords',color_data).success(function(result) {        
-
+                                          getProductDetailColorSize($scope.product_id_new);
                                   });
                         } 
                         
              };
-
 
 
             var modalInstance = $modal.open({
@@ -730,8 +750,30 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         modalInstance.dismiss('cancel');
                     };
 
+
+
           return false;
     }
+
+
+    $scope.removeColorSize = function(index,id) {
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
+  
+                var order_data = {};
+                order_data.table ='product_color_size'
+                order_data.cond ={id:id}
+                $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
+                    
+                    var data = {"status": "success", "message": "Color Size has been deleted"}
+                    notifyService.notify(data.status, data.message);
+                });
+                $scope.allProductColorSize.productColorSizeData.splice(index,1);
+           
+        }
+    }
+
 
      $scope.updateOrderAll = function($event,id,table_name,match_condition)
     {
@@ -1098,6 +1140,25 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                             }
                          });
     }
+
+
+    function getProductDetailColorSize(product_id)
+    {
+        $("#ajax_loader").show();
+        $http.get('api/public/order/getProductDetailColorSize/'+product_id).success(function(result, status, headers, config) 
+        {
+            if(result.data.success == '1') 
+            {
+                $scope.allProductColorSize =result.data.records;
+            } 
+            else
+            {
+                $scope.allProductColorSize=[];
+            }
+            $("#ajax_loader").hide();
+        });
+    }
+
 
 
     function get_color_data()

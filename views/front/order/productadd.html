@@ -55,13 +55,13 @@
                 <div class="col-md-2 nopad-left text-right">
                     <lable for="order">Color :</lable>
                 </div>
-                <div class="col-md-10 nopad-form" ng-dropdown-multiselect="" options="allColor" selected-model="example1model" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
+                <div class="col-md-10 nopad-form" ng-dropdown-multiselect="" options="allColor" selected-model="allProductColorSize['ColorData']" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
                 </div>
             </div>
         </div>
 
         <!-- POPUP Listing -->
-        <div class="col-md-12 panel-body panel panel-default nopad-form">
+        <div class="col-md-12 panel-body panel panel-default nopad-form prd-clr-sz">
             <!-- Listing labels -->
             <div class="col-md-12 nopad-form form-group">
                 <div class="col-md-3 nopad-right">
@@ -77,20 +77,20 @@
             </div>
 
             <!-- Listing Fields -->
-            <div class="col-md-12 nopad-form">
+            <div class="col-md-12 nopad-form" ng-repeat="(key,allProduct) in allProductColorSize['productColorSizeData']">
                 <div class="col-md-12 form-group listContent">
                     <div class="col-md-3 nopad-left">
-                        <span>Black</span>
+                        <span>{{allProduct.color}}</span>
                     </div>
                     <div class="col-md-3 nopad-left">
-                        <span>XS</span>
+                        <span>{{allProduct.size}}</span>
                     </div>
                     <div class="col-md-5 nopad-left">
-                        <input type="text" class="form-control" value="" />
+                        <input type="text" class="form-control" value="" name="price" ng-model="allProduct.price" ui-event="{ blur : 'updateOrderAll($event,allProduct.id,\'product_color_size\',\'id\')' }"/>
                     </div>
                     <div class="col-md-1 nopad-form"> 
                         <div class="sgpDetails disabled-sgpDetails btnCircle">
-                          <a class="" tabindex="0" role="button" ng-click="remove_item_from_distribute(item.id)"><i class="fa fa-minus"></i></a>
+                          <a class="" tabindex="0" role="button" ng-click="removeColorSize($index,allProduct.id)"><i class="fa fa-minus"></i></a>
                         </div>
                     </div>
                 </div>

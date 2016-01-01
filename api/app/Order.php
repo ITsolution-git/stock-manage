@@ -626,4 +626,45 @@ public function saveColorSize($post)
        return $result;
    }
 
+
+/**
+* Product Color Size Details           
+* @access public getOrderNoteDetails
+* @param  int $productId
+* @return array $result
+*/ 
+
+     public function getProductDetailColorSize($id)
+   {
+       
+        $whereConditions = ['p.product_id' => $id,'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
+        $listArray = ['p.id','p.product_id','p.color_id','p.size_id','p.price','c.name as color','pz.name as size'];
+
+        $productColorSizeData = DB::table('product_color_size as p')
+                         ->Join('color as c', 'c.id', '=', 'p.color_id')
+                         ->Join('product_size as pz', 'pz.id', '=', 'p.size_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+
+        $whereColorData = ['product_id' => $id];
+        $productMainData = DB::table('product_color_size')->where($whereColorData)->get();
+
+        $color_array = array();
+        $colorData = array();
+        foreach ($productMainData as $key=>$alldata){
+          
+            if(!in_array($alldata->color_id,$color_array)) {
+                array_push($color_array, $alldata->color_id); 
+                 $colorData[]['id'] = $alldata->color_id;
+            }
+        }
+
+        $combine_array['productColorSizeData'] = $productColorSizeData;
+        $combine_array['ColorData'] = $colorData;
+        return $combine_array;  
+
+   }
+
 }

@@ -1297,6 +1297,11 @@ button.topNavButtons.active {
 	overflow: hidden;
 	padding: 15px 0;	
 }
+.order_line_productBox .modal-body .prd-clr-sz {
+    height: 426px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
 .order_line_productBox .modal-body .form-group {
 	margin-bottom: 10px;
 }
