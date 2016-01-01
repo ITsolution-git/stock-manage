@@ -669,4 +669,40 @@ class ShippingController extends Controller {
                             );
         return response()->json(["data" => $response]);
     }
+
+    public function CreateBoxShipment()
+    {
+        $post = Input::all();
+
+        foreach ($post as $value) {
+            if($value['qnty'] < $value['max_pack'])
+            {
+                $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['qnty']);
+                $id = $this->common->InsertRecords('shipping_box',$insert_data);
+                $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id']));
+            }
+            else
+            {
+                $remaining_qty = $value['qnty'] % $value['max_pack'];
+                $div2 = $value['qnty'] / $value['max_pack'];
+                $main_qty = ceil($div2);
+
+                for ($i=1; $i <= $main_qty; $i++) {
+                    if($i == $main_qty)
+                    {
+                        $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $remaining_qty);
+                    }
+                    else
+                    {
+                        $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
+                    }
+                    $id = $this->common->InsertRecords('shipping_box',$insert_data);
+                    $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id']));
+                }
+            }
+        }
+        $data = array("success"=>1,"message"=>INSERT_RECORD);
+        
+        return response()->json(["data" => $data]);
+    }
 }

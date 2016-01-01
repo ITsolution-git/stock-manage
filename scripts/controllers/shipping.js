@@ -387,6 +387,13 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
                 notifyService.notify(data.status, data.message);
                 //get_shipping_details();
             });
-      
+    }
+    $scope.create_box_shipment = function(shipping_items)
+    {
+        $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+        });
     }
 }]);

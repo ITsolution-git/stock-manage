@@ -58,7 +58,7 @@ class Shipping extends Model {
                         ->where($whereShippingConditions)->get();
 
         $whereItemConditions = ['ia.shipping_id' => $data['shipping_id']];
-        $listItemsArray = ['d.id','d.size','d.qnty','d.shipped_qnty','d.boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','mt.value as size_group_name','mt2.value as color_name'];
+        $listItemsArray = ['ia.shipping_id','d.id','d.size','d.qnty','d.shipped_qnty','d.boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','mt.value as size_group_name','mt2.value as color_name'];
 
         $shippingItems = DB::table('item_address_mapping as ia')
                         ->leftJoin('distribution_detail as d','ia.item_id','=','d.id')
