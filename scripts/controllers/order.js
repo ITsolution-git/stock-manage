@@ -756,6 +756,33 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     }
 
 
+    $scope.addartwork = function(position_id)
+    {
+
+            var modalInstance = $modal.open({
+                                            animation: $scope.animationsEnabled,
+                                            templateUrl: 'views/front/art/artadd.html',
+                                            scope: $scope
+                                });
+
+                    modalInstance.result.then(function (selectedItem) {
+                        $scope.selected = selectedItem;
+                    }, function () {
+                        $log.info('Modal dismissed at: ' + new Date());
+                    });
+
+
+                    $scope.cancel = function () {
+
+                        modalInstance.dismiss('cancel');
+                    };
+
+
+
+          return false;
+    }
+
+
     $scope.removeColorSize = function(index,id) {
 
         var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");

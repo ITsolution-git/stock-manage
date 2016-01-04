@@ -1,0 +1,27 @@
+<div class="order_notes_tasks order_line_productBox">
+    <div class="modal-header">
+        <h3 class="modal-title">Add/Edit Product</h3>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-12 nopad-form">
+            <!-- Left column -->
+            <div class="col-md-12 nopad-form">
+                <div class="form-group col-md-12 nopad-form">
+                    <div class="col-md-2 nopad-left text-right">
+                        <lable for="order">Product:</lable>
+                    </div>
+                    <div class="col-md-10 nopad-form">
+                        <input ng-model="product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="col-md-12 nopad-form">                 
+            <button class="btn btn-warning pull-left" type="button" ng-click="cancel()">OK</button>
+          <!--  <button class="btn btn-primary pull-right" ng-click="insertTask(product_detail)">Save</button> -->
+        </div>
+    </div>
+</div>
