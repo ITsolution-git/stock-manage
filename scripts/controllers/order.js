@@ -1428,7 +1428,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 $scope.color_stitch_count = parseInt(value.color_stitch_count);
 
                 angular.forEach($scope.orderPositionAll, function(position) {
-                    $scope.position_qty += position.qnty;
+                    $scope.position_qty += parseInt(position.qnty);
                 });
                 
                 $scope.discharge_qnty = parseInt(value.discharge_qnty);

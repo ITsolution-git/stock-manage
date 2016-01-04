@@ -91,13 +91,24 @@ class ShippingController extends Controller {
         $result = $this->shipping->shippingDetail($data);
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
+        if(!empty($result['shippingBoxes']))
+        {
+            $shippingBoxes = array();
+            $count = 1;
+            foreach ($result['shippingBoxes'] as $row) {
+                $row->count = $count.' of '.count($result['shippingBoxes']);
+                $count++;
+            }
+        }
+
         if (count($result) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['shipping'],
                                 'shipping_type' => $shipping_type,
-                                'shippingItems' => $result['shippingItems']
+                                'shippingItems' => $result['shippingItems'],
+                                'shippingBoxes' => $result['shippingBoxes']
                                 );
         } else {
             $response = array(
@@ -105,7 +116,8 @@ class ShippingController extends Controller {
                                 'message' => NO_RECORDS,
                                 'records' => $result['shipping'],
                                 'shipping_type' => $shipping_type,
-                                'shippingItems' => $result['shippingItems']
+                                'shippingItems' => $result['shippingItems'],
+                                'shippingBoxes' => $result['shippingBoxes']
                                 );
         } 
         
@@ -704,5 +716,26 @@ class ShippingController extends Controller {
         $data = array("success"=>1,"message"=>INSERT_RECORD);
         
         return response()->json(["data" => $data]);
+    }
+    public function getBoxItems()
+    {
+        $post = Input::all();
+        $result = $this->shipping->getBoxItems($post);
+
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'boxingItems' => $result
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'boxingItems' => $result['shippingItems']
+                                );
+        } 
+        
+        return response()->json(["data" => $response]);
     }
 }
