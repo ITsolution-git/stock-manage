@@ -125,7 +125,13 @@ angular.module('app')
             })
             .state('access.forgot-password', {
                 url: '/forgot-password',
-                templateUrl: 'views/pages/forgot-password.html'
+                templateUrl: 'views/pages/forgot-password.html',
+                controller: 'forgot_password'
+            })
+            .state('access.reset-password', {
+                url: '/reset-password/:string',
+                templateUrl: 'views/pages/reset-password.html',
+                controller: 'reset_password'
             })
             .state('access.lockme', {
              url: '/signin',

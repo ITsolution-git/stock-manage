@@ -21,6 +21,7 @@ Route::controllers([
 ]);
 */
 Route::post('admin/login', 'LoginController@loginverify');
+Route::post('admin/forgot_password', 'LoginController@forgot_password');
 
 // COMPANY ROUTERS
 Route::get('admin/company', 'CompanyController@listData');

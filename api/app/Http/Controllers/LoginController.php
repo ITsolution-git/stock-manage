@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
 
 use App\Login;
+use Mail;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\File;
 use DB;
 use Image;
 use Request;
+
+
 
 class LoginController extends Controller {  
     
@@ -24,7 +27,7 @@ class LoginController extends Controller {
     public function __construct(Login $login) {
 
         $this->login = $login;
-       
+      
     }
 
     /**
@@ -120,5 +123,46 @@ class LoginController extends Controller {
         }
         return response()->json(["data" => $response]);
     }
+
+    /**
+     * Forgot Password
+     *
+     * @param  $email
+     * @return Response
+     */
+    public function forgot_password()
+    {
+         $data = Input::all();
+
+         //echo "<pre>"; print_r($data); echo "</pre>"; die;
+         if(!empty($data))
+         {
+            $result = $this->login->forgot_password($data['email']);
+            if(count($result)>0)
+            {
+                $url = $this->login->ResetEmail($result[0]->email,$result[0]->id,$result[0]->password);
+                
+                Mail::send('emails.send', ['url' => $url], function($message)
+                {
+                    $message->to('kjoshi@codal.com', 'Hello, Please Click below link to change Stokkup Password.')->subject('Reset Password to Stokkup');
+                });
+
+
+                $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            }
+            else
+            {
+                $response = array('success' => 1, 'message' => NO_RECORDS);
+            }
+            //echo "<pre>"; print_r($result); echo "</pre>"; die;
+         }
+         else
+         {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+         }
+         return response()->json(["data" => $response]);
+    }
+
+
 
 }
