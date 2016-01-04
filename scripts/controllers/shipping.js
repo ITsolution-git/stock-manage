@@ -415,8 +415,14 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     {
         $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
 
+            if(result.data.success == '1') {
                 var data = {"status": "success", "message": "Data Updated Successfully."}
-                notifyService.notify(data.status, data.message);
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Delete all boxes in the boxes tab to rebox shipment."}
+            }
+            notifyService.notify(data.status, data.message);
         });
     }
 }]);
