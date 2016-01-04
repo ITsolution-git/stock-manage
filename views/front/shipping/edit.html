@@ -483,18 +483,18 @@
                                         <!-- Right Bottom Section Fields -->
                                         <div class="col-md-5 nopad-left smallPad">
                                             <div class="panel panel-default panel-body SOD smallPad">
-                                                <div class="col-md-12 form-group smallPad">
+                                                <div class="salesItemsContent col-md-12 form-group smallPad" ng-repeat="box in shipping_boxes" ng-class="{distribution_active: box.box_id==box_id}" ng-click="select_box(box.box_id)">
                                                     <div class="col-md-2 nopad-left smallPad">
-                                                        <input type="text" class="form-control" />
+                                                        <input type="text" class="form-control" ng-model="box.count" onfocus="this.blur()"/>
                                                     </div>
                                                     <div class="col-md-2 nopad-left smallPad">
-                                                        <input type="text" class="form-control" />
+                                                        <input type="text" class="form-control" ng-model="box.box_id" onfocus="this.blur()"/>
                                                     </div>
                                                     <div class="col-md-2 nopad-left smallPad">
-                                                       <input type="text" class="form-control" />
+                                                       <input type="text" class="form-control" ng-model="box.box_qnty" onfocus="this.blur()"/>
                                                     </div>
                                                     <div class="col-md-5 pull-right nopad-form smallPad">
-                                                       <input type="text" class="form-control" />
+                                                       <input type="text" class="form-control" name="tracking_number" ng-model="box.tracking_number" ui-event="{ change : 'updateShippingAll($event,box.box_id,\'shipping_box\',\'id\')' }"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -502,30 +502,24 @@
                                         <div class="col-md-1 nopad-left smallPad"> </div>
                                         <div class="col-md-6 nopad-form">
                                             <div class="panel panel-default panel-body SOD smallPad">
-                                                <div class="col-md-12 form-group smallPad">
+                                                <div class="col-md-12 form-group smallPad" ng-repeat="bitem in boxing_items">
                                                     <div class="col-md-3 nopad-left smallPad">
-                                                        <input type="text" class="form-control" />
+                                                        <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.box_item_id"/>
                                                     </div>
                                                     <div class="col-md-2 nopad-left smallPad">
-                                                        <select class="form-control">
-                                                            <option>Men's</option>
-                                                            <option>Women's</option>
-                                                        </select>
+                                                        <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.size_group_name"/>
                                                     </div>
                                                     <div class="col-md-2 nopad-left smallPad">
-                                                        <input type="text" class="form-control" />
+                                                        <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.product_name"/>
                                                     </div>
                                                     <div class="col-md-2 text-center nopad-left smallPad">
-                                                        <select class="form-control">
-                                                            <option>White</option>
-                                                            <option>black</option>
-                                                        </select>
+                                                        <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.color_name"/>
                                                     </div>
                                                     <div class="col-md-1 nopad-left smallPad">
-                                                        <input type="text" class="form-control" />
+                                                        <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.size"/>
                                                     </div>
                                                     <div class="col-md-2 nopad-form">
-                                                        <input type="text" class="form-control" />
+                                                        <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.boxed_qnty"/>
                                                     </div>
                                                 </div>
                                             </div>

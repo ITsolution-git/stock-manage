@@ -110,6 +110,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     $scope.client_id = $stateParams.client_id;
 
     $scope.address_id = '0';
+    $scope.box_id = '0';
     
     var company_id = $rootScope.company_profile.company_id;
     var AJloader = $("#ajax_loader");
@@ -132,6 +133,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
                 $scope.shipping =result.data.records[0];
                 $scope.shipping_type =result.data.shipping_type;
                 $scope.shipping_items =result.data.shippingItems;
+                $scope.shipping_boxes =result.data.shippingBoxes;
             }
             AJloader.hide();
         });
@@ -148,6 +150,20 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
             $scope.allorders=[];
         }
     });
+
+    function get_box_items(id)
+    {
+        AJloader.show();
+        var box_arr = {};
+        box_arr.box_id = id;
+        $http.post('api/public/shipping/getBoxItems',box_arr).success(function(result, status, headers, config) {
+        
+            if(result.data.success == '1') {
+                $scope.boxing_items =result.data.boxingItems;
+            }
+            AJloader.hide();
+        });
+    }
 
     $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
               $scope.miscData = result.data.records;
@@ -253,6 +269,13 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         $("#ajax_loader").show();
         $scope.address_id = id;
         get_distribution_list($scope.order_id,$scope.client_id);
+        $("#ajax_loader").hide();
+    }
+    $scope.select_box = function(id)
+    {
+        $("#ajax_loader").show();
+        $scope.box_id = id;
+        get_box_items(id);
         $("#ajax_loader").hide();
     }
     $scope.add_item_to_distribute = function(item_id)

@@ -210,3 +210,4 @@ Route::post('shipping/CreateBoxShipment', 'ShippingController@CreateBoxShipment'
 Route::post('shipping/updateShipping', 'ShippingController@updateShipping');
 Route::post('shipping/removeShippingItem', 'ShippingController@removeShippingItem');
 Route::post('shipping/addShippingItem', 'ShippingController@addShippingItem');
+Route::post('shipping/getBoxItems', 'ShippingController@getBoxItems');
