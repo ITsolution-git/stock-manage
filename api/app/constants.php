@@ -27,6 +27,7 @@ define ('SOMETHING_WRONG','Something Wrong Please Try agin.');
 define ('LOGIN_SUCCESS','Login Successfull');
 define ('LOGIN_WRONG','Wrong Credential');
 define('FILL_PARAMS','Please fill all required Parameters.');
+define('ALREADY_BOX','Delete all boxes in the boxes tab to rebox shipment.');
 
 define ('CURRENT_DATE',date('Y-m-d'));
 define ('CURRENT_DATETIME',date('Y-m-d H:i:s'));
