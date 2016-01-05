@@ -776,9 +776,6 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                         modalInstance.dismiss('cancel');
                     };
-
-
-
           return false;
     }
 
