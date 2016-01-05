@@ -91,9 +91,10 @@ class Shipping extends Model {
     public function getBoxItems($data)
     {
         $whereItemConditions = ['bi.box_id' => $data['box_id']];
-        $listItemsArray = ['bi.id as box_item_id','d.id','d.size','d.qnty','d.shipped_qnty','d.boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','mt.value as size_group_name','mt2.value as color_name'];
+        $listItemsArray = ['sb.md','sb.id as box_id','sb.spoil','sb.actual','sb.re_allocate_to','bi.id as box_item_id','bi.item_id','d.id','d.size','d.qnty','d.shipped_qnty','sb.box_qnty as boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','mt.value as size_group_name','mt2.value as color_name'];
 
         $shippingBoxItems = DB::table('box_item_mapping as bi')
+                        ->leftJoin('shipping_box as sb','bi.box_id','=','sb.id')
                         ->leftJoin('distribution_detail as d','bi.item_id','=','d.id')
                         ->leftJoin('order_orderlines as ol','d.orderline_id','=','ol.id')
                         ->leftJoin('products as p','ol.product_id','=','p.id')
@@ -105,5 +106,19 @@ class Shipping extends Model {
                         ->get();
 
         return $shippingBoxItems;
+    }
+
+    public function deleteBox($id)
+    {
+        if(!empty($id))
+        {
+                $result = DB::table('shipping_box')->where('id', $id)->delete();
+                $result = DB::table('box_item_mapping')->where('box_id', $id)->delete();
+                return $result;
+        }
+        else
+        {
+                return false;
+        }
     }
 }

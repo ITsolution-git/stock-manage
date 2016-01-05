@@ -1,4 +1,4 @@
-<div class="order_notes_tasks order_line_productBox">
+<div class="order_notes_tasks order_line_productBox" id="orderLineArtWork">
     <div class="modal-header">
         <h3 class="modal-title">Add/Edit Product</h3>
     </div>
@@ -6,12 +6,181 @@
         <div class="col-md-12 nopad-form">
             <!-- Left column -->
             <div class="col-md-12 nopad-form">
-                <div class="form-group col-md-12 nopad-form">
-                    <div class="col-md-2 nopad-left text-right">
-                        <lable for="order">Product:</lable>
+                <!-- Left Side Fields -->
+                <div class="col-md-6 nopad-left">
+                    <!-- Art work ID -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="col-md-12 nopad-form">
+                            <label>Art Work ID</label>
+                        </div>
+                        <div class="col-md-12 nopad-form">
+                            <input type="text" class="form-control" />
+                        </div>
                     </div>
-                    <div class="col-md-10 nopad-form">
-                        <input ng-model="product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+
+                    <!-- Client -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="col-md-12 nopad-form">
+                            <label>Client</label>
+                        </div>
+                        <div class="col-md-12 nopad-form">
+                            <input type="text" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!-- Order / Order Line -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="col-md-6 nopad-left">
+                            <div class="col-md-12 nopad-form">
+                                <label>Order</label>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 nopad-right">
+                            <div class="col-md-12 nopad-form">
+                                <label>Order Line</label>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Size Group / Product -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="col-md-6 nopad-left">
+                            <div class="col-md-12 nopad-form">
+                                <label>Size Group</label>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <select class="form-control">
+                                    <option>Size 1</option>
+                                    <option>Size 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 nopad-right">
+                            <div class="col-md-12 nopad-form">
+                                <label>Product</label>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <select class="form-control">
+                                    <option>Product 1</option>
+                                    <option>Size 2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Garment / Position -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="col-md-6 nopad-left">
+                            <div class="col-md-12 nopad-form">
+                                <label>Garment Color</label>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <select class="form-control">
+                                    <option>White</option>
+                                    <option>Black</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 nopad-right">
+                            <div class="col-md-12 nopad-form">
+                                <label>Position</label>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <select class="form-control">
+                                    <option>Front</option>
+                                    <option>Back</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Screen Set -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="col-md-6 nopad-left"> </div>
+                        <div class="col-md-6 nopad-right">
+                            <div class="col-md-12 nopad-form">
+                                <label>Screen Set</label>
+                            </div>
+                            <div class="col-md-12 nopad-form">
+                                <select class="form-control">
+                                    <option>Set 1</option>
+                                    <option>Set 2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Placement -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="col-md-12 nopad-left"> 
+                            <label for="prod_placement">
+                                <input type="checkbox" id="prod_placement" />
+                                No Values Defined 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Right Side Fields -->
+                <div class="col-md-6 nopad-right panel panel-default addArtWorkPopup">
+                    <!-- Image -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="form-group col-md-12 nopad-form">
+                            <label>Image</label>
+                        </div>
+                        <div class="col-md-12 nopad-left">
+                            <div class="artImgBox">
+                                <img src="#" alt="" class="artImg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order / Order Line -->
+                    <div class="form-group col-md-12 nopad-form">
+                        <div class="form-group col-md-12 nopad-form">
+                            <label>Image Type</label>
+                        </div>
+                        <div class="col-md-6 nopad-form">
+                            <label>
+                                <input type="radio" name="radioImgType" value="">
+                                Art Work Client
+                            </label>
+                        </div>
+                        <div class="col-md-6 nopad-form">
+                            <label>
+                                <input type="radio" name="radioImgType" value="">
+                                Art Work Proof
+                            </label>
+                        </div>
+                        <div class="col-md-6 nopad-form">
+                            <label>
+                                <input type="radio" name="radioImgType" value="">
+                                Art Work CS
+                            </label>
+                        </div>
+                        <div class="col-md-6 nopad-form">
+                            <label>
+                                <input type="radio" name="radioImgType" value="">
+                                Art Work Screen
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Image Description -->
+                    <div class="col-md-12 nopad-form">
+                        <div class="form-group col-md-12 nopad-left">
+                            <label>Image Description</label>
+                        </div>
+                        <div class="col-md-12 nopad-left">
+                            <textarea class="form-control imgDesc"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
