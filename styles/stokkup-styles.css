@@ -1331,7 +1331,18 @@ button.topNavButtons.active {
 	background: #e5e5e5;
 }
 
-.addArtWorkPopup {
+
+/* OrderLin - Artwork Popup */
+#orderLineArtWork .addArtWorkPopup {
 	padding-top: 15px;
 	padding-bottom: 15px;
+}
+#orderLineArtWork .artImgBox {
+	background: #f8f8f8;
+	border-radius: 4px;
+	height: 250px;
+	width: 100%;
+}
+#orderLineArtWork textarea.imgDesc {
+	height: 100px;
 }
