@@ -3,16 +3,16 @@
 		<div class="container col-md-12">	
 			<ul class="nav nav-tabs input-group col-sm-12">
                 <li class="active">
-                	<a href data-toggle="tab" data-target="#shippingOrders">Orders</a>
+                	<a href data-toggle="tab" data-target="#shippingOrders" ui-event="{ click : 'openTab(\'orders\')' }">Orders</a>
                 </li>
                 <li>
-                	<a href data-toggle="tab" class="tab2" data-target="#shipOrder">Shipping Order</a>
+                	<a href data-toggle="tab" class="tab2" data-target="#shipOrder" ui-event="{ click : 'openTab(\'shipping_orders\')' }">Shipping Order</a>
                 </li>
 				<li>
-					<a href data-toggle="tab" data-target="#shippingBoxes">Boxes</a>
+					<a href data-toggle="tab" data-target="#shippingBoxes" ui-event="{ click : 'openTab(\'shipping_orders\')' }">Boxes</a>
 				</li>
 			  	<li>
-			  		<a href data-toggle="tab" data-target="#shipRelOrders">Related Orders</a>
+			  		<a href data-toggle="tab" data-target="#shipRelOrders" ui-event="{ click : 'openTab(\'orders\')' }">Related Orders</a>
 			  	</li>
             </ul>
             <!-- Tab Container -->
@@ -667,25 +667,25 @@
                             </div>
                             <div class="col-md-12 nopad-form">
                                 <div class="col-md-6 nopad-form panel panel-default salesOrders">
-                                    <div class="col-md-12 nopad-form salesItemsContent">
+                                    <div class="col-md-12 nopad-form salesItemsContent" ng-repeat="dist in distributed_address">
                                         <div class="col-md-1 nopad-left">
                                             <div class="sgpDetails btnCircle">
-                                              <a class="" tabindex="0" role="button" title="Move">
+                                              <a class="" tabindex="0" role="button" title="Move" ui-sref="shipping.edit({id:dist.shipping_id,order_id:order_id,client_id:client_id})">
                                                 <i class="fa fa-arrow-right"></i>
                                               </a>
                                             </div>
                                         </div>
                                         <div class="col-md-2 nopad-left">
-                                            <input type="text" class="form-control" />
+                                            <input type="text" class="form-control" onfocus="this.blur()" ng-model="dist.shipping_id"/>
                                         </div>
                                         <div class="col-md-5 nopad-left">
-                                            <input type="text" class="form-control" />
+                                            <input type="text" class="form-control" onfocus="this.blur()" ng-model="dist.job_name"/>
                                         </div>
                                         <div class="col-md-2 nopad-left">
-                                            <input type="text" class="form-control" />
+                                            <input type="text" class="form-control" onfocus="this.blur()" ng-model="dist.total_box"/>
                                         </div>
                                         <div class="col-md-2 nopad-form">
-                                            <input type="text" class="form-control" />
+                                            <input type="text" class="form-control" onfocus="this.blur()" ng-model="dist.actual_total"/>
                                         </div>
                                     </div>
                                 </div>

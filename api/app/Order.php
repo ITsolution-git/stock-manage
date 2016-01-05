@@ -497,8 +497,12 @@ public function updateOrderLineData($post)
 
     public function getDistributedAddress($data)
     {
+        $listArray = ['cd.*','ia.*','o.job_name'];
+
         $orderData = DB::table('client_distaddress as cd')
+                        ->select($listArray)
                         ->leftJoin('item_address_mapping as ia', 'cd.id', '=', 'ia.address_id')
+                        ->leftJoin('orders as o', 'ia.order_id', '=', 'o.id')
                         ->where($data)
                         ->GroupBy('ia.address_id')
                         ->get();

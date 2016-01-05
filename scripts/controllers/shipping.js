@@ -193,57 +193,6 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
             }
         });
     }
-
-    $scope.assign_item = function(order_id,order_item_id,item_name,item_charge) {
-
-        var Selected = $('#item_'+order_item_id);
-
-        if(Selected.hasClass('chargesApplyActive'))
-        {
-            $("#ajax_loader").show();
-            Selected.removeClass('chargesApplyActive')
-
-            angular.forEach($scope.orderLineAll, function(value) {
-                var subtract = parseFloat(value.peritem) - parseFloat(item_charge);
-                value.peritem = subtract.toFixed(2);
-            });
-
-            var order_data = {};
-            order_data.table ='order_item_mapping'
-            order_data.cond ={order_id:order_id,item_id:order_item_id}
-            $http.post('api/public/common/DeleteTableRecords',order_data).success(function(result) {
-            
-            });
-
-            var item_data = {item_name:item_name,order_id:order_id}
-            $http.post('api/public/finishing/removeFinishingItem',item_data).success(function(result) {
-            
-                $("#ajax_loader").hide();
-            });
-        }
-        else
-        {
-            $("#ajax_loader").show();
-            $scope.total_qty = 0;
-            angular.forEach($scope.orderLineAll, function(value) {
-                $scope.total_qty += parseInt(value.qnty);
-                var sum = parseFloat(value.peritem) + parseFloat(item_charge);
-                value.peritem = sum.toFixed(2);
-            });
-            Selected.addClass('chargesApplyActive')
-            var order_data = {};
-            order_data.table ='order_item_mapping'
-            order_data.data ={order_id:order_id,item_id:order_item_id}
-            $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
-            
-            });
-
-            var item_data = {item_name:item_name,order_id:order_id,total_qty:$scope.total_qty}
-            $http.post('api/public/finishing/addFinishingItem',item_data).success(function(result) {
-                $("#ajax_loader").hide();
-            });
-        }
-    }
     
     $scope.add_address_to_distribute = function(address_id)
     {
@@ -321,21 +270,11 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     }
 
     $scope.openTab = function(tab_name){
-       if(tab_name == 'distribution'){
-        get_distribution_list($scope.order_id,$scope.client_id);
+       if(tab_name == 'orders'){
+        get_distribution_list();
 
-       } else if(tab_name == 'purchaseorder') {
-        get_po_detail($scope.order_id,$scope.client_id);
-
-       } else if(tab_name == 'notes') {
-        getNotesDetail($scope.order_id);
-       } else if((tab_name == 'orderline')){
-            angular.forEach($scope.orderLineAll, function(value) {
-                    $scope.calculate_all(value.id);
-            });
-       }
-       else if(tab_name == 'tasks') {
-            get_task_list($scope.order_id);
+       } else if(tab_name == 'shipping_orders') {
+        get_shipping_details();
        }
     }
 
