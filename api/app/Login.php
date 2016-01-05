@@ -73,7 +73,9 @@ class Login extends Model {
     public function ResetEmail($email,$user_id,$password)
     {
         $string = $this->getString(16);
-       //DB::table('reset_password')->insert(['user_id'=>$user_id,'string'=>$string,'date_time'=>date('Y-m-d H:i:s'),'date_expire'=>date(),'password'=>$password]);
+        
+
+        DB::table('reset_password')->insert(['user_id'=>$user_id,'string'=>$string,'date_time'=>date('Y-m-d H:i:s'),'date_expire'=>date('Y-m-d H:i:s',strtotime('+6 hour')),'password'=>$password]);
         $link = $string."&".base64_encode($email);
         $url = Config::get('app.url')."/stockkup/#/access/reset-password/".$link;
         return $url;
@@ -95,5 +97,15 @@ class Login extends Model {
         $encode_string = base64_encode($randomString);
 
         return $encode_string;
+    }
+
+    public function check_user_password($string)
+    {
+        $result =  DB::table('reset_password')
+                    ->select('id','status','string')
+                    ->where('string','=',$string)
+                    ->where('date_expire','>',date('Y-m-d H:i:s'))
+                    ->get();
+        return $result;
     }
 }

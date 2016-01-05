@@ -91,11 +91,23 @@ app.controller('forgot_password', ['$scope','$http','$location','$state','$timeo
 
   }]);
 
-app.controller('reset_password', ['$scope','$http','$location','$state','$timeout','notifyService', function($scope,$http,$location,$state,$timeout,notifyService) {
+app.controller('reset_password', ['$scope','$http','$location','$state','$stateParams','$timeout','notifyService', function($scope,$http,$location,$state,$stateParams,$timeout,notifyService) {
 
     $("#ajax_loader").hide();
+    $scope.string = {};
 
-    
+    $scope.string.string = $stateParams.string;
+    $http.post('api/public/admin/check_user_password',$scope.string).success(function(result,event, status, headers, config) {
+          if(result.data.success==0)
+          {
+              var data = {"status": "error", "message": result.data.message}
+              notifyService.notify(data.status, data.message);
+              $state.go('access.signin');
+              return false;
+          }
+    });
+
+
     $scope.reset_password = function()
     {
          var user_data = $scope.user;
