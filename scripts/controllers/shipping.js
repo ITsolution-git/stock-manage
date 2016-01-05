@@ -111,6 +111,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
     $scope.address_id = '0';
     $scope.box_id = '0';
+    $scope.box_item_id = '0';
     
     var company_id = $rootScope.company_profile.company_id;
     var AJloader = $("#ajax_loader");
@@ -134,6 +135,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
                 $scope.shipping_type =result.data.shipping_type;
                 $scope.shipping_items =result.data.shippingItems;
                 $scope.shipping_boxes =result.data.shippingBoxes;
+                $scope.boxing_items = [];
             }
             AJloader.hide();
         });
@@ -156,10 +158,15 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         AJloader.show();
         var box_arr = {};
         box_arr.box_id = id;
+        box_arr.shipping_id = $scope.shipping_id;
         $http.post('api/public/shipping/getBoxItems',box_arr).success(function(result, status, headers, config) {
         
             if(result.data.success == '1') {
                 $scope.boxing_items =result.data.boxingItems;
+                $scope.boxing_all_items =result.data.boxingAllItems;
+            }
+            else {
+                $scope.boxing_items = [];
             }
             AJloader.hide();
         });
@@ -343,7 +350,6 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
             get_distribution_list($scope.order_id,$scope.client_id);
             $("#ajax_loader").hide();
         });
-        
     }
 
     $scope.openAddressPopup = function () {
@@ -408,7 +414,6 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
-                //get_shipping_details();
             });
     }
     $scope.create_box_shipment = function(shipping_items)
@@ -422,6 +427,53 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
             {
                 var data = {"status": "error", "message": "Delete all boxes in the boxes tab to rebox shipment."}
             }
+            notifyService.notify(data.status, data.message);
+            get_shipping_details();
+        });
+    }
+    $scope.reallocate = function()
+    {
+        $("#ajax_loader").show();
+        $scope.ship_data = {};
+        $scope.ship_data['table'] ='box_item_mapping';
+        $scope.ship_data.data = {'item_id': $scope.box_item_id};
+        $scope.ship_data.cond = {'box_id' : $scope.box_id};
+        $http.post('api/public/common/UpdateTableRecords',$scope.ship_data).success(function(result) {
+            get_shipping_details();
+            $("#ajax_loader").hide();
+        });
+    }
+    $scope.update_box_qty = function(box)
+    {
+        $("#ajax_loader").show();
+        
+        if(box.md == '' || box.md == undefined)
+        {
+            box.md = 0;            
+        }
+        if(box.spoil == '' || box.spoil == undefined)
+        {
+            box.spoil = 0;       
+        }
+
+        var combine = parseInt(box.md) + parseInt(box.spoil);
+        box.actual =  parseInt(box.boxed_qnty) - parseInt(combine);
+
+        var ship_data = {};
+        ship_data['table'] ='shipping_box';
+        ship_data.data = {'actual':box.actual, 'md':box.md, 'spoil':box.spoil};
+        ship_data.cond = {'id' : box.id};
+        $http.post('api/public/common/UpdateTableRecords',ship_data).success(function(result) {
+            get_shipping_details();
+            $("#ajax_loader").hide();
+        });
+    }
+    $scope.delete_box = function(id)
+    {
+        $("#ajax_loader").show();
+        $http.post('api/public/shipping/DeleteBox',id).success(function(result) {
+            get_shipping_details();
+            var data = {"status": "success", "message": "Data Deleted Successfully."}
             notifyService.notify(data.status, data.message);
         });
     }
