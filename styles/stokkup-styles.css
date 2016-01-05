@@ -1330,3 +1330,8 @@ button.topNavButtons.active {
 .order_line_productBox .modal-body .listContent:nth-child(2n) input {
 	background: #e5e5e5;
 }
+
+.addArtWorkPopup {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
