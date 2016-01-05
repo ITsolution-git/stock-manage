@@ -523,6 +523,15 @@ class OrderController extends Controller {
 
         foreach ($distributed_address as $addr) {
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
+            $box_arr = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $addr->shipping_id),array());
+
+            $actual_total = 0;
+            foreach ($box_arr as $row) {
+                $actual_total += $row->actual;
+            }
+            
+            $addr->total_box = count($box_arr);
+            $addr->actual_total = $actual_total;
             $distributed_address2[] = $addr;
         }
 
