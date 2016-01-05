@@ -152,7 +152,6 @@ class ShippingController extends Controller {
     public function CreateBoxShipment()
     {
         $post = Input::all();
-
         $box_arr = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $post[0]['shipping_id']),array());
 
         if(empty($box_arr))
@@ -160,9 +159,9 @@ class ShippingController extends Controller {
             foreach ($post as $value) {
                 if($value['qnty'] < $value['max_pack'])
                 {
-                    $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['qnty']);
+                    $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['qnty'], 'actual' => $value['qnty'], 'md' => '0', 'spoil' => '0');
                     $id = $this->common->InsertRecords('shipping_box',$insert_data);
-                    $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id']));
+                    $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id'],'shipping_id' => $value['shipping_id']));
                 }
                 else
                 {
@@ -183,6 +182,7 @@ class ShippingController extends Controller {
                         $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
                 }
+                $this->common->UpdateTableRecords('distribution_detail',array('id' => $value['id']),array('boxed_qnty' => $value['qnty']));
             }
             $data = array("success"=>1,"message"=>INSERT_RECORD);
         }
@@ -194,20 +194,24 @@ class ShippingController extends Controller {
     }
     public function getBoxItems()
     {
+        $result = array();
         $post = Input::all();
         $result = $this->shipping->getBoxItems($post);
+        $box_item_arr = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $post['shipping_id']),array());
 
         if (count($result) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
-                                'boxingItems' => $result
+                                'boxingItems' => $result,
+                                'boxingAllItems' => $box_item_arr
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'boxingItems' => $result['shippingItems']
+                                'boxingItems' => $result,
+                                'boxingAllItems' => $box_item_arr
                                 );
         } 
         
@@ -228,5 +232,39 @@ class ShippingController extends Controller {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
         return  response()->json(["data" => $response]);
+    }
+
+    /**
+     * Delete Data
+     *
+     * @param  post.
+     * @return success message.
+     */
+    public function DeleteBox()
+    {
+        $post = Input::all();
+
+
+        if(!empty($post[0]))
+        {
+            $getData = $this->shipping->deleteBox($post[0]);
+            if($getData)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
     }
 }

@@ -581,16 +581,16 @@
                             <div class="col-md-12 nopad-form form-group">
                                 <div class="col-md-3 nopad-left">
                                     <div class="panel panel-default salesOrders">
-                                        <div class="col-md-12 nopad-form salesItemsContent">
+                                        <div class="col-md-12 nopad-form salesItemsContent" ng-repeat="box in shipping_boxes" ng-class="{distribution_active: box.box_id==box_id}" ng-click="select_box(box.box_id)">
                                             <div class="col-md-5 nopad-left smallPad">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="box.box_id"/>
                                             </div>
                                             <div class="col-md-6 nopad-left smallPad">
                                                 <input type="text" class="form-control" />
                                             </div>
                                             <div class="col-md-1 nopad-form">
                                                 <div class="sgpDetails disabled-sgpDetails btnCircle">
-                                                  <a class="" tabindex="0" role="button" ng-click="remove_item_from_distribute(item.id)">
+                                                  <a class="" tabindex="0" role="button" ng-click="delete_box(box.box_id)">
                                                     <i class="fa fa-minus"></i>
                                                   </a>
                                                 </div>
@@ -600,48 +600,41 @@
                                     
                                 </div>
                                 <div class="col-md-9 nopad-form panel panel-default salesOrders">
-                                    <div class="col-md-12 nopad-form salesItemsContent">
+                                    <div class="col-md-12 nopad-form salesItemsContent" ng-repeat="bitem in boxing_items">
                                         <div class="col-md-4 nopad-right smallPad">
                                             <div class="col-md-4 nopad-left smallPad">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.box_item_id"/>
                                             </div>
                                             <div class="col-md-3 nopad-left smallPad">
-                                                <select class="form-control">
-                                                    <option>Men's</option>
-                                                    <option>Women's</option>
-                                                </select>
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.size_group_name"/>
                                             </div>
                                             <div class="col-md-5 nopad-left smallPad">
-                                                <select class="form-control">
-                                                    <option>Select</option>
-                                                    <option>Women's</option>
-                                                </select>
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.product_name"/>
                                             </div>
                                         </div>
                                         <div class="col-md-8 nopad-left smallPad">
                                             <div class="col-md-3 nopad-left smallPad">
-                                                <select class="form-control">
-                                                    <option>White</option>
-                                                    <option>Black</option>
-                                                </select>
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.color_name"/>
                                             </div>
                                             <div class="col-md-1 nopad-left smallPad">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.size"/>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.boxed_qnty"/>
                                             </div>
                                             <div class="col-md-1 nopad-left smallPad">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" ng-model="bitem.md" ng-blur="update_box_qty(bitem)"/>
                                             </div>
                                             <div class="col-md-1 nopad-left smallPad">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" ng-model="bitem.spoil" ng-blur="update_box_qty(bitem)"/>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad">
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="bitem.actual"/>
                                             </div>
                                             <div class="col-md-2 nopad-form">
-                                                <input type="text" class="form-control" />
+                                                <select  ng-model="bitem.box_id"  class="form-control" name="box_id" ui-event="{ change : 'updateShippingAll($event,bitem.box_item_id,\'box_item_mapping\',\'id\')' }">>
+                                                    <option ng-selected="bitem.box_id==allitem.id" ng-repeat="allitem in boxing_all_items" value={{allitem.id}}>{{allitem.id}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
