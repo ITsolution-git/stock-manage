@@ -195,7 +195,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
                     $scope.vendors = result.data.vendors;
                     $scope.allCompany =result.data.client;
-                    $scope.allProduct =result.data.products;
+                    $scope.allProduct =[];
                     $scope.staffList =result.data.staff;
                     $scope.brandCoList =result.data.brandCo;
 
@@ -427,8 +427,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         $scope.orderline_id = parseInt($scope.orderline_id + 1);
 
         var single_line = { size_group_id:'' ,
-                                    product_id:'',
-                                    vendor_id:'',
+                                    product_id:'0',
+                                    vendor_id:'0',
                                     color_id:'',
                                     client_supplied:'0',
                                     orderline_id:$scope.orderline_id,

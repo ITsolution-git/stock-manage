@@ -96,7 +96,6 @@ class OrderController extends Controller {
             foreach($result['order_line_data'] as $row)
             {
                 $order_line_items = $this->order->getOrderLineItemById($row->id);
-                
                 $count = 1;
                 $order_line = array();
                 foreach ($order_line_items as $line) {
@@ -107,6 +106,8 @@ class OrderController extends Controller {
                 }
                 $row->orderline_id = $row->id;
                 $row->items = $order_line;
+                $row->products = $this->common->GetTableRecords('products',array('vendor_id' => $row->vendor_id),array());
+                $row->colors = $this->order->GetProductColor($row->product_id);
                 $result['order_line'][] = $row;
             }
         }
@@ -114,7 +115,6 @@ class OrderController extends Controller {
         {
             $result['order_line'] = array();
         }
-        
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
 
         if(!empty($order_items))
