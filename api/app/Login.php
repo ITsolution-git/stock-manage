@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use Config;
 
 class Login extends Model {
 
@@ -43,10 +44,68 @@ class Login extends Model {
     /**
     * Update login record Update logout timeStamp           
     * @access public loginRecordUpdate
-    * @param  string $loginid
+    * @param  $loginid
     */
     public function loginRecordUpdate($loginid)
     {
         $result = DB::table('login_record')->where('login_id','=',$loginid)->update(array('logout_time'=>date('Y-m-d H:i:s')));
+    }
+     /**
+    * Forgot password          
+    * @access public check user's email
+    * @param  $email
+    */
+    public function forgot_password($email)
+    {
+        $result =  DB::table('users as usr')
+                    ->select('usr.*')
+                    ->where('usr.email','=',$email)
+                    ->get();
+        return $result;
+    }
+
+    /**
+     * Send Password reset link and email
+     *
+     * @param  $email, $user_id, password
+     * @return Response
+     */
+    public function ResetEmail($email,$user_id,$password)
+    {
+        $string = $this->getString(16);
+        
+
+        DB::table('reset_password')->insert(['user_id'=>$user_id,'string'=>$string,'date_time'=>date('Y-m-d H:i:s'),'date_expire'=>date('Y-m-d H:i:s',strtotime('+6 hour')),'password'=>$password]);
+        $link = $string."&".base64_encode($email);
+        $url = Config::get('app.url')."/stockkup/#/access/reset-password/".$link;
+        return $url;
+    }
+     /**
+     * Create random string to reset password
+     *
+     * @param  $string length
+     * @return Response
+     */
+    public function getString($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        $encode_string = base64_encode($randomString);
+
+        return $encode_string;
+    }
+
+    public function check_user_password($string)
+    {
+        $result =  DB::table('reset_password')
+                    ->select('id','status','string')
+                    ->where('string','=',$string)
+                    ->where('date_expire','>',date('Y-m-d H:i:s'))
+                    ->get();
+        return $result;
     }
 }

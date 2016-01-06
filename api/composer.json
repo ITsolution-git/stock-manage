@@ -34,5 +34,6 @@
 			"tests/TestCase.php"
 		]
 	},
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "guzzlehttp/guzzle": "~5.0"
 }

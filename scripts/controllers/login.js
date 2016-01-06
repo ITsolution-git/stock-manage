@@ -23,7 +23,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','$timeout','s
 
 
    $scope.dosignin = function () {
-                        var user_data = $scope.user;
+                         var user_data = $scope.user;
                          sessionService.remove('role_slug');
                          $http.post('api/public/admin/login',user_data).success(function(result,event, status, headers, config) {
         
@@ -66,17 +66,56 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','$timeout','s
 
                                     var data = {"status": "success", "message": "Login Successfull, Please wait..."}
                                     notifyService.notify(data.status, data.message);
-                                    //$("#ajax_loader").hide();
 
-                                 
-                                   
-                                   //$location.url('/app/dashboard');
-                                   //setTimeout(function(){ window.location.reload(); }, 200);
-                                   //window.location.href="#/app/dashboard";
                                    return false;
 
                                 }
                          
-                    });
+                          });
                     }
 }]);
+
+
+app.controller('forgot_password', ['$scope','$http','$location','$state','$timeout','notifyService', function($scope,$http,$location,$state,$timeout,notifyService) {
+
+    $("#ajax_loader").hide();
+
+    $scope.forgot_password = function()
+    {
+         var user_data = $scope.user;
+         $http.post('api/public/admin/forgot_password',user_data).success(function(result,event, status, headers, config) {
+
+          });
+    }
+
+
+  }]);
+
+app.controller('reset_password', ['$scope','$http','$location','$state','$stateParams','$timeout','notifyService', function($scope,$http,$location,$state,$stateParams,$timeout,notifyService) {
+
+    $("#ajax_loader").hide();
+    $scope.string = {};
+
+    $scope.string.string = $stateParams.string;
+    $http.post('api/public/admin/check_user_password',$scope.string).success(function(result,event, status, headers, config) {
+          if(result.data.success==0)
+          {
+              var data = {"status": "error", "message": result.data.message}
+              notifyService.notify(data.status, data.message);
+              $state.go('access.signin');
+              return false;
+          }
+    });
+
+
+    $scope.reset_password = function()
+    {
+         var user_data = $scope.user;
+         $http.post('api/public/admin/forgot_password',user_data).success(function(result,event, status, headers, config) {
+
+          });
+    }
+
+
+  }]);
+
