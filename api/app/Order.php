@@ -14,7 +14,7 @@ class Order extends Model {
 
 	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $company_id];
         $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_date','order.approved_date','order.needs_garment',
-                      'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
+                      'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
 
         $orderData = DB::table('orders as order')

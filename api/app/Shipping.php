@@ -27,7 +27,7 @@ class Shipping extends Model {
     {
         $shippingData = DB::table('orders as o')
                             ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
-                            ->select('o.id','o.job_name','o.ship_by','mt.value as job_status','o.client_id')
+                            ->select('o.id','o.job_name','o.shipping_by','mt.value as job_status','o.client_id')
                             ->where('f_approval','>=','138')
                             ->where('f_approval','<=','149')
                             ->get();
@@ -47,7 +47,7 @@ class Shipping extends Model {
 
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
         $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.job_name','cd.id as client_distribution_id','o.client_id','c.client_company',
-                        's.boxing_type','s.shipping_by','s.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval'];
+                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval'];
 
         $shippingData = DB::table('shipping as s')
                         ->leftJoin('orders as o','s.order_id','=','o.id')
