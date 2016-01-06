@@ -506,6 +506,15 @@ class OrderController extends Controller {
         $array = array('order.id' => $data['order_id'],'is_distribute' => '0');
         $order_items = $this->order->getDistributionItems($array);
 
+        if(empty($order_items))
+        {
+            $this->common->UpdateTableRecords('orders',array('id' => $data['order_id']),array('fully_shipped' => date('Y-m-d')));
+        }
+        else
+        {
+            $this->common->UpdateTableRecords('orders',array('id' => $data['order_id']),array('fully_shipped' => ''));        
+        }
+
         if(isset($data['address_id']) && !empty($data['address_id']))
         {
             $array2 = array('order.id' => $data['order_id'],'is_distribute' => '1','ia.address_id' => $data['address_id']);
@@ -569,7 +578,7 @@ class OrderController extends Controller {
             $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
             if(empty($result))
             {
-                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d'),'in_hands_by' => date('Y-m-d'));
+                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
                 $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
 
                 $post['data']['shipping_id'] = $shipping_id;
@@ -590,7 +599,7 @@ class OrderController extends Controller {
             $success=1;
             $message=UPDATE_RECORD;
         }
-
+        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days"))));
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
     }
