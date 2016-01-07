@@ -11,6 +11,7 @@ return [
 	| as Stripe, Mailgun, Mandrill, and others. This file provides a sane
 	| default location for this type of information, allowing packages
 	| to have a conventional place to find your various credentials.
+		'secret' => 'c-n-hvI6dE5Jf02sAlh1BQ',
 	|
 	*/
 
@@ -20,7 +21,7 @@ return [
 	],
 
 	'mandrill' => [
-		'secret' => '',
+		'secret' => 'bsYqLGJY9PUIT-P5OOLqbA',
 	],
 
 	'ses' => [

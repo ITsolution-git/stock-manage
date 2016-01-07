@@ -13,8 +13,8 @@ class Order extends Model {
 	{
 
 	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $company_id];
-        $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_date','order.approved_date','order.needs_garment',
-                      'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.ship_by',
+        $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_by','order.approved_date','order.needs_garment',
+                      'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
 
         $orderData = DB::table('orders as order')
@@ -228,7 +228,7 @@ public function updateOrderLineData($post)
 
    
 
-    foreach($post['items'] as $row) {
+    /*foreach($post['items'] as $row) {
          
         $result123 = DB::table('purchase_detail')
                     ->where('id','=',$row['id'])
@@ -244,7 +244,7 @@ public function updateOrderLineData($post)
                                     'date'=>$post['created_date'])
                             );
 
-    } 
+    }*/ 
 
 }
 
@@ -270,10 +270,18 @@ public function updateOrderLineData($post)
     * @return array $result
     */
 
-    public function getOrderLineItemById($id)
+    public function getOrderLineItemById($product_id,$color_id)
     {
-        $result = DB::table('purchase_detail')->where('orderline_id','=',$id)->get();
-        return $result;
+        $listArray = ['pc.*','p.name as size'];
+
+        $productColorSizeData = DB::table('product_size as p')
+                         ->leftJoin('product_color_size as pc', 'p.id', '=', 'pc.size_id')
+                         ->select($listArray)
+                         ->where('pc.product_id','=',$product_id)
+                         ->where('pc.color_id','=',$color_id)
+                         ->get();
+
+        return $productColorSizeData;
     }
 
     /**
@@ -639,7 +647,7 @@ public function saveColorSize($post)
 */ 
 
      public function getProductDetailColorSize($id)
-   {
+    {
        
         $whereConditions = ['p.product_id' => $id,'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
         $listArray = ['p.id','p.product_id','p.color_id','p.size_id','p.price','c.name as color','pz.name as size'];
@@ -667,8 +675,21 @@ public function saveColorSize($post)
 
         $combine_array['productColorSizeData'] = $productColorSizeData;
         $combine_array['ColorData'] = $colorData;
-        return $combine_array;  
+        return $combine_array;
+    }
 
-   }
+    public function GetProductColor($product_id)
+    {
+        $listArray = ['c.id','c.name'];
+
+        $productColorSizeData = DB::table('product_color_size as p')
+                         ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
+                         ->select($listArray)
+                         ->where('p.product_id','=',$product_id)
+                         ->GroupBy('c.id')
+                         ->get();
+
+        return $productColorSizeData;
+    }
 
 }

@@ -181,6 +181,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.client_main_data = result.data.client_main_data;
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
+                    //console.log($scope.orderLineAll[0].products);
                     $scope.order_items = result.data.order_item;
                     $scope.orderTaskAll = result.data.order_task;
                    // $scope.order_po_data = result.data.order_po_data;
@@ -195,7 +196,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
                     $scope.vendors = result.data.vendors;
                     $scope.allCompany =result.data.client;
-                    $scope.allProduct =result.data.products;
+                    $scope.allProduct =[];
                     $scope.staffList =result.data.staff;
                     $scope.brandCoList =result.data.brandCo;
 
@@ -427,8 +428,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         $scope.orderline_id = parseInt($scope.orderline_id + 1);
 
         var single_line = { size_group_id:'' ,
-                                    product_id:'',
-                                    vendor_id:'',
+                                    product_id:'0',
+                                    vendor_id:'0',
                                     color_id:'',
                                     client_supplied:'0',
                                     orderline_id:$scope.orderline_id,
@@ -776,6 +777,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                         modalInstance.dismiss('cancel');
                     };
+
+
+
           return false;
     }
 
@@ -2038,9 +2042,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            angular.forEach($scope.orderLineAll, function(value) {
+            /*angular.forEach($scope.orderLineAll, function(value) {
                     $scope.calculate_all(value.id);
-            });
+            });*/
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);
@@ -2090,6 +2094,30 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             $scope.result_show = 1;
         }
     }
+
+
+     $scope.printPdf=function()
+        {
+
+                        data = [];
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/order/savePDF';
+                        form.method = 'post';
+                        form.target = target || "_self";
+                        form.style.display = 'none';
+
+                        var input = document.createElement('input');
+                        input.name = 'invoices';
+                        input.setAttribute('value',data);
+                        form.appendChild(input);
+
+                        document.body.appendChild(form);
+                        form.submit();
+            
+        };
+
+
                                        
 }]);
 

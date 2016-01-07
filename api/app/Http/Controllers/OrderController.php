@@ -10,8 +10,10 @@ use App\Order;
 use App\Common;
 use App\Purchase;
 use DB;
-
+use App;
 use Request;
+use Barryvdh\DomPDF\PDF;
+
 
 class OrderController extends Controller { 
 
@@ -95,8 +97,7 @@ class OrderController extends Controller {
             $sum = 0;
             foreach($result['order_line_data'] as $row)
             {
-                $order_line_items = $this->order->getOrderLineItemById($row->id);
-                
+                /*$order_line_items = $this->order->getOrderLineItemById($row->id);
                 $count = 1;
                 $order_line = array();
                 foreach ($order_line_items as $line) {
@@ -104,9 +105,12 @@ class OrderController extends Controller {
                     $line->number = $count;
                     $order_line[] = $line;
                     $count++;
-                }
+                }*/
                 $row->orderline_id = $row->id;
-                $row->items = $order_line;
+                //$row->items = $order_line;
+                $row->products = $this->common->GetTableRecords('products',array('vendor_id' => $row->vendor_id),array());
+                $row->colors = $this->order->GetProductColor($row->product_id);
+                $row->items = $this->order->getOrderLineItemById($row->product_id,$row->color_id);
                 $result['order_line'][] = $row;
             }
         }
@@ -114,7 +118,6 @@ class OrderController extends Controller {
         {
             $result['order_line'] = array();
         }
-        
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
 
         if(!empty($order_items))
@@ -506,6 +509,15 @@ class OrderController extends Controller {
         $array = array('order.id' => $data['order_id'],'is_distribute' => '0');
         $order_items = $this->order->getDistributionItems($array);
 
+        if(empty($order_items))
+        {
+            $this->common->UpdateTableRecords('orders',array('id' => $data['order_id']),array('fully_shipped' => date('Y-m-d')));
+        }
+        else
+        {
+            $this->common->UpdateTableRecords('orders',array('id' => $data['order_id']),array('fully_shipped' => ''));        
+        }
+
         if(isset($data['address_id']) && !empty($data['address_id']))
         {
             $array2 = array('order.id' => $data['order_id'],'is_distribute' => '1','ia.address_id' => $data['address_id']);
@@ -569,7 +581,7 @@ class OrderController extends Controller {
             $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
             if(empty($result))
             {
-                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d'),'in_hands_by' => date('Y-m-d'));
+                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
                 $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
 
                 $post['data']['shipping_id'] = $shipping_id;
@@ -590,7 +602,7 @@ class OrderController extends Controller {
             $success=1;
             $message=UPDATE_RECORD;
         }
-
+        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days"))));
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
     }
@@ -827,6 +839,19 @@ class OrderController extends Controller {
         $result = $this->order->getProductDetailColorSize($id);
         return $this->return_response($result);
         
+    }
+
+
+     /**
+   * Save Color size.
+   * @return json data
+    */
+    public function savePDF()
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+
     }
 
 

@@ -142,17 +142,17 @@ class LoginController extends Controller {
             {
                 $url = $this->login->ResetEmail($result[0]->email,$result[0]->id,$result[0]->password);
                
-                Mail::send('emails.send', ['url' => $url], function($message)
+                Mail::send('emails.send', ['url' => $url,'user'=>$result[0]->name], function($message)
                 {
                     $message->to('kjoshi@codal.com', 'Hello, Please Click below link to change Stokkup Password.')->subject('Reset Password to Stokkup');
                 });
 
 
-                $response = array('success' => 0, 'message' => MISSING_PARAMS);
+                $response = array('success' => 1, 'message' => MAIL_SEND);
             }
             else
             {
-                $response = array('success' => 1, 'message' => NO_RECORDS);
+                $response = array('success' => 0, 'message' => NO_RECORDS);
             }
             //echo "<pre>"; print_r($result); echo "</pre>"; die;
          }

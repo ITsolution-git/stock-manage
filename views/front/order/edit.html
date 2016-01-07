@@ -88,7 +88,7 @@
                                     <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
                                 </div> 
                                 <div class="col-md-3 pull-right nopad-right smallPad">
-                                    <button ui-sref="order.list" type="button"  class="btn btn-info">Print</button>
+                                    <button ng-click="printPdf()" type="button"  class="btn btn-info">Print</button>
                                 </div>                                 
                             </div>
                             <div class="col-md-12 nopad-form">
@@ -123,9 +123,9 @@
                             <li> <a href data-toggle="tab" data-target="#tab3" ui-event="{ click : 'openTab(\'distribution\')' }">Distribution</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab4" ui-event="{ click : 'openTab(\'notes\')' }">Notes</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab5" class="tab5" ui-event="{ click : 'openTab(\'purchaseorder\')' }">Purchase Orders</a> </li>
-                            <li> <a href data-toggle="tab" data-target="#tab6">Screen Sets</a> </li>
+                            <!-- <li> <a href data-toggle="tab" data-target="#tab6">Screen Sets</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab7">Art Work</a> </li>
-                            <li> <a href data-toggle="tab" data-target="#tab8">Payments</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab8">Payments</a> </li> -->
                         </ul>
                         <div class="tab-content p b-a no-b-t bg-white m-b-md">
                         <!-- POSITION TAB START -->
@@ -277,12 +277,12 @@
                                                     <option ng-selected="order_position.dtg_on==misc_dtg_on.id" ng-repeat="misc_dtg_on in miscData.direct_to_garment" value={{misc_dtg_on.id}}>{{misc_dtg_on.value}}</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-4 nopad-left artworkButton">
+                                            <!-- <div class="form-group col-md-4 nopad-left artworkButton">
                                                 <button type="button" class="btn btn-default addButton c-dgreen"  ng-click="addartwork(order_position.id)">
                                                   <i class="fa fa-plus"></i> 
                                                 </button>
                                                 <span>Artwork</span>
-                                            </div>
+                                            </div> -->
                                             <div class="col-md-2 nopad-form">
                                                 <button type="button" ng-click="removeOrder($index,order_position.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
                                         </div>
@@ -318,7 +318,7 @@
                                                         <label>Size Group / <br />Product Color</label>
                                                     </div>
                                                     <div class="form-group secondContainer">
-                                                        <label>Product / <br />Product Vendor</label>
+                                                        <label>Vendor / <br />Product</label>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Qnty / <br />Client Supplied</label>
@@ -354,14 +354,10 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group secondContainer">
-                                                            <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" id="product_select">
-                                                                <option value="addproduct">Add Product</option>
-                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option> 
-
-
+                                                            <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" ng-change="getVendorProduct(order_line.vendor_id)">
+                                                                <option value="0">Select</option>
+                                                                <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
                                                             </select>
-
-                                                            <span ng-click="addproductpopup(order_line.product_id,'')">Edit Product</span>
                                                         </div>
                                                         <div class="form-group">
                                                             <input id="qnty_{{order_line.orderline_id}}" type="text" class="form-control"  ng-model="order_line.qnty" readonly="" />
@@ -370,7 +366,7 @@
                                                     <div class="cols col-2">
                                                         <span ng-repeat="size_qty in order_line.items">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control c-green"  ng-model="size_qty.size"/>
+                                                                <input type="text" class="form-control c-green"  ng-model="size_qty.size" onfocus="this.blur()" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <input id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="update_qnty(size_qty.qnty,order_line.orderline_id)"/>
@@ -397,14 +393,18 @@
                                                 <div class="col-md-12 nopad-form">
                                                     <div class="cols col-1">
                                                         <div class="form-group">
-                                                            <select  ng-model="order_line.color_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
-                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in miscData.color_group" value={{color.id}}>{{color.value}}</option>
+                                                            <select  ng-model="order_line.color_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line.product_id,order_line.color_id)">
+                                                                <option value="0">Select</option>
+                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in order_line.colors" value={{color.id}}>{{color.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
-                                                                <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
+                                                            <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" id="product_select" ng-disabled="order_line.vendor_id == 0" ng-change="getProductColor(order_line.product_id)">
+                                                                <option value="0">Select</option>
+                                                                <option value="addproduct">Add Product</option>
+                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in order_line.products" value={{product_data.id}}>{{product_data.name}}</option>
                                                             </select>
+                                                            <span ng-click="addproductpopup(order_line.product_id,'')" ng-hide="order_line.product_id <= 0">Edit Product</span>
                                                         </div>
                                                         <div class="form-group">
                                                             <select  ng-model="order_line.client_supplied"  class="form-control">
@@ -418,11 +418,11 @@
                                                             <div class="col-md-1 smallPad nopad-left">
                                                                 <input type="text" class="form-control"/>
                                                             </div>
-                                                            <div class="col-md-3 smallPad nopad-left">
+                                                          <!--   <div class="col-md-3 smallPad nopad-left">
                                                                 <button type="button" class="btn btn-default addButton">
                                                                     <i class="fa fa-plus"></i> Artwork Proof
                                                                 </button>
-                                                            </div>
+                                                            </div> -->
                                                             <div class="col-md-5 smallPad nopad-left">
                                                                 <input type="text" class="form-control"/>
                                                             </div>
