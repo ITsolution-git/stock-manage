@@ -24,7 +24,6 @@
         "Illuminate\\View\\ViewServiceProvider",
         "Illuminate\\Html\\HtmlServiceProvider",
         "Intervention\\Image\\ImageServiceProvider",
-        "Latrell\\Swagger\\SwaggerServiceProvider",
         "App\\Providers\\AppServiceProvider",
         "App\\Providers\\BusServiceProvider",
         "App\\Providers\\ConfigServiceProvider",

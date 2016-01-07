@@ -395,14 +395,14 @@
                                                         <div class="form-group">
                                                             <select  ng-model="order_line.color_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line.product_id,order_line.color_id)">
                                                                 <option value="0">Select</option>
-                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in miscData.color_group" value={{color.id}}>{{color.value}}</option>
+                                                                <option ng-selected="order_line.color_id==color.id" ng-repeat="color in order_line.colors" value={{color.id}}>{{color.name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
                                                             <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" id="product_select" ng-disabled="order_line.vendor_id == 0" ng-change="getProductColor(order_line.product_id)">
                                                                 <option value="0">Select</option>
                                                                 <option value="addproduct">Add Product</option>
-                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in allProduct" value={{product_data.id}}>{{product_data.name}}</option>
+                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in order_line.products" value={{product_data.id}}>{{product_data.name}}</option>
                                                             </select>
                                                             <span ng-click="addproductpopup(order_line.product_id,'')" ng-hide="order_line.product_id <= 0">Edit Product</span>
                                                         </div>
