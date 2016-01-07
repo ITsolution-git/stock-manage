@@ -1346,3 +1346,9 @@ button.topNavButtons.active {
 #orderLineArtWork textarea.imgDesc {
 	height: 100px;
 }
+.md-btn[disabled], 
+.md-btn.md-raised[disabled], 
+.md-btn.md-fab[disabled] {   
+    color: #000;
+    background-color: #828282;
+}

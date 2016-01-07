@@ -152,7 +152,7 @@ class LoginController extends Controller {
             }
             else
             {
-                $response = array('success' => 0, 'message' => NO_RECORDS);
+                $response = array('success' => 0, 'message' => NO_RECORDS.", Please check Email");
             }
             //echo "<pre>"; print_r($result); echo "</pre>"; die;
          }
@@ -163,12 +163,18 @@ class LoginController extends Controller {
          return response()->json(["data" => $response]);
     }
 
+    /**
+     * checnk user details from forget password email link
+     *
+     * @param  $url details
+     * @return Response
+     */
     public function check_user_password()
     {
         $data = Input::all();
         
         
-         if(!empty($data))
+         if(!empty($data)) 
          {
             $pos = strpos($data['string'],'&');
             if ($pos !== false) 
@@ -201,7 +207,56 @@ class LoginController extends Controller {
          }
          return response()->json(["data" => $response]);
     }
+    /**
+     * checnk user details from forget password email link
+     *
+     * @param  $url details
+     * @return Response
+     */
+    public function change_password()
+    {
+        $data = Input::all();
+        if(!empty($data) && !empty($data['form_data']) && !empty($data['string'])) 
+        {
+            if($data['form_data']['password']!=$data['form_data']['confirm_password'])
+            {
+                $response = array('success' => 0, 'message' => "Password does not match !");
+                return response()->json(["data" => $response]);
+            }
 
+            $pos = strpos($data['string'],'&');
+            if ($pos !== false) 
+            {
+                list($string, $email) = explode('&', trim($data['string'])); 
+              
+                $email = base64_decode($email);
+                //echo $string;
+                $result = $this->login->check_user_password(trim($string));
+
+                //echo "<pre>"; print_r($result); echo "</pre>"; die;
+                if(count($result)>0)
+                {
+                    ///echo $data['form_data']['password']; die;
+                    $this->login->change_password(trim($string),trim($email),$data['form_data']['password']);
+                    $response = array('success' => 1, 'message' => 'Password change Successfully, Please Login !', 'result'=>$result);
+                }
+                else
+                {
+                    $response = array('success' => 0, 'message' =>  "Sorry, Link has been expired. Please Try again");
+                }
+               
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+         return response()->json(["data" => $response]);
+    }
 
 
 }
