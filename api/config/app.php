@@ -138,7 +138,6 @@ return [
 		'Illuminate\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
         'Barryvdh\DomPDF\ServiceProvider',
-		
 		/*
 		 * Application Service Providers...
 		 */

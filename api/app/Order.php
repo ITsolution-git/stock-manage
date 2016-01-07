@@ -228,7 +228,7 @@ public function updateOrderLineData($post)
 
    
 
-    foreach($post['items'] as $row) {
+    /*foreach($post['items'] as $row) {
          
         $result123 = DB::table('purchase_detail')
                     ->where('id','=',$row['id'])
@@ -244,7 +244,7 @@ public function updateOrderLineData($post)
                                     'date'=>$post['created_date'])
                             );
 
-    } 
+    }*/ 
 
 }
 
@@ -270,10 +270,18 @@ public function updateOrderLineData($post)
     * @return array $result
     */
 
-    public function getOrderLineItemById($id)
+    public function getOrderLineItemById($product_id,$color_id)
     {
-        $result = DB::table('purchase_detail')->where('orderline_id','=',$id)->get();
-        return $result;
+        $listArray = ['pc.*','p.name as size'];
+
+        $productColorSizeData = DB::table('product_size as p')
+                         ->leftJoin('product_color_size as pc', 'p.id', '=', 'pc.size_id')
+                         ->select($listArray)
+                         ->where('pc.product_id','=',$product_id)
+                         ->where('pc.color_id','=',$color_id)
+                         ->get();
+
+        return $productColorSizeData;
     }
 
     /**
@@ -675,10 +683,13 @@ public function saveColorSize($post)
         $listArray = ['c.id','c.name'];
 
         $productColorSizeData = DB::table('product_color_size as p')
-                         ->Join('color as c', 'c.id', '=', 'p.color_id')
+                         ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
                          ->select($listArray)
                          ->where('p.product_id','=',$product_id)
+                         ->GroupBy('c.id')
                          ->get();
+
+        return $productColorSizeData;
     }
 
 }

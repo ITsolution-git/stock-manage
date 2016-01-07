@@ -181,6 +181,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.client_main_data = result.data.client_main_data;
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
+                    //console.log($scope.orderLineAll[0].products);
                     $scope.order_items = result.data.order_item;
                     $scope.orderTaskAll = result.data.order_task;
                    // $scope.order_po_data = result.data.order_po_data;
@@ -2041,9 +2042,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            angular.forEach($scope.orderLineAll, function(value) {
+            /*angular.forEach($scope.orderLineAll, function(value) {
                     $scope.calculate_all(value.id);
-            });
+            });*/
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);

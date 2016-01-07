@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Finishing;
 use DB;
-use Swagger\Annotations as SWG;
 
 use Request;
 
