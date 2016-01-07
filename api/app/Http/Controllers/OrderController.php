@@ -10,8 +10,10 @@ use App\Order;
 use App\Common;
 use App\Purchase;
 use DB;
-
+use App;
 use Request;
+use Barryvdh\DomPDF\PDF;
+
 
 class OrderController extends Controller { 
 
@@ -836,6 +838,19 @@ class OrderController extends Controller {
         $result = $this->order->getProductDetailColorSize($id);
         return $this->return_response($result);
         
+    }
+
+
+     /**
+   * Save Color size.
+   * @return json data
+    */
+    public function savePDF()
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+
     }
 
 

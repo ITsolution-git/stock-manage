@@ -137,7 +137,8 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
-		'Latrell\Swagger\SwaggerServiceProvider',
+        'Barryvdh\DomPDF\ServiceProvider',
+		
 		/*
 		 * Application Service Providers...
 		 */
@@ -196,7 +197,8 @@ return [
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Form' => 'Illuminate\Html\FormFacade',
         'HTML' => 'Illuminate\Html\HtmlFacade',
-        'Image' => 'Intervention\Image\Facades\Image'
+        'Image' => 'Intervention\Image\Facades\Image',
+        'PDF' => 'Barryvdh\DomPDF\Facade',
 
 	],
 
