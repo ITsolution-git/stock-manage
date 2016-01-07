@@ -87,7 +87,7 @@ class Login extends Model {
      * @param  $string length
      * @return Response
      */
-    public function getString($length)
+    public function getString($length) 
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
