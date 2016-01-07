@@ -82,9 +82,23 @@ app.controller('forgot_password', ['$scope','$http','$location','$state','$timeo
 
     $scope.forgot_password = function()
     {
+         $("#ajax_loader").show();
          var user_data = $scope.user;
          $http.post('api/public/admin/forgot_password',user_data).success(function(result,event, status, headers, config) {
-
+              if(result.data.success==0)
+              {
+                  var data = {"status": "error", "message": result.data.message}
+                  notifyService.notify(data.status, data.message);
+                  $("#ajax_loader").hide();
+                  return false;
+              }
+              else
+              {
+                  var data = {"status": "success", "message": result.data.message}
+                  notifyService.notify(data.status, data.message);
+                  $("#ajax_loader").hide();
+                  return false;
+            }
           });
     }
 
@@ -108,10 +122,30 @@ app.controller('reset_password', ['$scope','$http','$location','$state','$stateP
     });
 
 
-    $scope.reset_password = function()
+    $scope.change_password = function($user)
     {
-         var user_data = $scope.user;
-         $http.post('api/public/admin/forgot_password',user_data).success(function(result,event, status, headers, config) {
+          $("#ajax_loader").show();
+         $scope.data = {};
+         $scope.data.form_data = $user;
+         $scope.data.string = $scope.string.string;
+        // console.log($scope.data); return false;
+         $http.post('api/public/admin/change_password', $scope.data).success(function(result,event, status, headers, config) {
+
+            if(result.data.success==0)
+            {
+                var data = {"status": "error", "message": result.data.message}
+                notifyService.notify(data.status, data.message);
+                $("#ajax_loader").hide();
+                return false;
+            }
+            else
+            {
+                var data = {"status": "success", "message": result.data.message}
+                notifyService.notify(data.status, data.message);
+                $state.go('access.signin');
+                $("#ajax_loader").hide();
+                return false;
+            }
 
           });
     }

@@ -77,7 +77,8 @@ class Login extends Model {
 
         DB::table('reset_password')->insert(['user_id'=>$user_id,'string'=>$string,'date_time'=>date('Y-m-d H:i:s'),'date_expire'=>date('Y-m-d H:i:s',strtotime('+6 hour')),'password'=>$password]);
         $link = $string."&".base64_encode($email);
-        $url = Config::get('app.url')."/stokkup/#/access/reset-password/".$link;
+        $url = Config::get('app.url')."/#/access/reset-password/".$link; // LIVE
+        $url = Config::get('app.url')."/stokkup/#/access/reset-password/".$link; // LOCAL
         return $url;
     }
      /**
@@ -105,7 +106,14 @@ class Login extends Model {
                     ->select('id','status','string')
                     ->where('string','=',$string)
                     ->where('date_expire','>',date('Y-m-d H:i:s'))
+                    ->where('status','=','0')
                     ->get();
         return $result;
+    }
+    public function change_password($string,$email,$password)
+    {
+        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s')));
+        $reset_password = DB::table('reset_password')->where('string','=',$string)->update(array('status'=>1));
+        return 1;
     }
 }
