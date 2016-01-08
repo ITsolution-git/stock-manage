@@ -23,6 +23,7 @@ Route::controllers([
 Route::post('admin/login', 'LoginController@loginverify');
 Route::post('admin/forgot_password', 'LoginController@forgot_password');
 Route::post('admin/check_user_password', 'LoginController@check_user_password');
+Route::post('admin/change_password', 'LoginController@change_password');
 
 
 // COMPANY ROUTERS
@@ -195,6 +196,7 @@ Route::post('order/getTaskList', 'OrderController@getTaskList');
 Route::post('order/saveColorSize', 'OrderController@saveColorSize');
 Route::get('order/getProductDetailColorSize/{id}','OrderController@getProductDetailColorSize');
 Route::post('order/savePDF', 'OrderController@savePDF');
+Route::post('order/AssignSize', 'OrderController@AssignSize');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

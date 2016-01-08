@@ -646,6 +646,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         setTimeout(function () {
                                 $('.form-control').removeClass('ng-dirty');
                                 $("#ajax_loader").hide();
+                                get_order_details(order_id,client_id,company_id);
         }, 500);
     }
 
@@ -1416,6 +1417,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         $scope.screen_fees_qnty_total = 0;
 
         $scope.print_charges = 0;
+        $scope.os = 0;
 
         if($scope.orderPositionAll.length > 0)
         {
@@ -1651,12 +1653,56 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                     if(parseInt($scope.position_qty) >= parseInt(value.range_low) && parseInt($scope.position_qty) <= parseInt(value.range_high))
                     {
                         $scope.shipping_charge = value.percentage;
-                        var garment_mackup = parseInt(value.percentage)/100;
-                        var avg_garment_price = parseFloat($scope.price_grid.shipping_charge) * parseFloat(garment_mackup) + parseFloat($scope.price_grid.shipping_charge);
-                        $scope.avg_garment_price = avg_garment_price.toFixed(2);
-                        $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
 
-                        $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges);
+                        $scope.avg_garment_cost = 0;
+
+                        angular.forEach($scope.orderLineAll, function(oline) {
+                    
+                            if(oline.orderline_id == orderline_id)
+                            {
+                                var item_price = 0;
+                                angular.forEach(oline.items, function(item) {
+                                    
+                                    if(item.qnty > 0)
+                                    {
+                                        var sum = parseFloat(item.price) + parseFloat($scope.price_grid.shipping_charge);
+                                        $scope.avg_garment_cost += parseFloat(sum);
+                                    }
+                                });
+
+                                if(oline.os == '1')
+                                {
+                                    $scope.os = parseFloat(0.50);
+                                }
+                                else if(oline.os == '2')
+                                {
+                                    $scope.os = parseInt(1);
+                                }
+                                else if(oline.os == '3')
+                                {
+                                    $scope.os = parseFloat(1.50);
+                                }
+                                else if(oline.os == '4')
+                                {
+                                    $scope.os = parseInt(2);
+                                }
+                                else
+                                {
+                                    $scope.os = parseInt(0);
+                                }
+                            }
+                        });
+
+                        if($scope.avg_garment_cost == 0)
+                        {
+                            $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
+                        }
+
+                        var garment_mackup = parseInt(value.percentage)/100;
+                        var avg_garment_price = parseFloat($scope.avg_garment_cost) * parseFloat(garment_mackup) + parseFloat($scope.avg_garment_cost);
+                        $scope.avg_garment_price = avg_garment_price.toFixed(2);
+
+                        $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges) + parseFloat($scope.os);
                         var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
                         $scope.per_line_total = line_total.toFixed(2);
 
@@ -2042,9 +2088,10 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            /*angular.forEach($scope.orderLineAll, function(value) {
+            angular.forEach($scope.orderLineAll, function(value) {
                     $scope.calculate_all(value.id);
-            });*/
+                    get_order_details(order_id,client_id,company_id)
+            });
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);
@@ -2095,7 +2142,26 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
     }
 
+    $scope.printPdf=function()
+    {
+        data = [];
+        var target;
+        var form = document.createElement("form");
+        form.action = 'api/public/order/savePDF';
+        form.method = 'post';
+        form.target = target || "_self";
+        form.style.display = 'none';
 
+        var input = document.createElement('input');
+        input.name = 'invoices';
+        input.setAttribute('value',data);
+        form.appendChild(input);
+
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+<<<<<<< HEAD
      $scope.printPdf=function()
         {
              
@@ -2119,6 +2185,16 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         document.body.appendChild(form);
                         form.submit();  
         };                                       
+=======
+    $scope.getSize = function(orderline)
+    {
+        var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id};
+        $http.post('api/public/order/AssignSize',lineData).success(function(result) {
+            get_order_details(order_id,client_id,company_id);
+        });
+    }
+                                       
+>>>>>>> php
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {

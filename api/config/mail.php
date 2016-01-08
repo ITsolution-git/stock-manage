@@ -54,7 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'admin@stokkup.com', 'name' => null],
+	'from' => ['address' => 'no-reply@stokkup.com', 'name' => 'Stokkup'],
 
 	/*
 	|--------------------------------------------------------------------------

@@ -77,7 +77,9 @@ class Login extends Model {
 
         DB::table('reset_password')->insert(['user_id'=>$user_id,'string'=>$string,'date_time'=>date('Y-m-d H:i:s'),'date_expire'=>date('Y-m-d H:i:s',strtotime('+6 hour')),'password'=>$password]);
         $link = $string."&".base64_encode($email);
-        $url = Config::get('app.url')."/stokkup/#/access/reset-password/".$link;
+        $url = "http://".$_SERVER['HTTP_HOST']."/#/access/reset-password/".$link; // LIVE
+
+        //$url = Config::get('app.url')."/stokkup/#/access/reset-password/".$link; // LOCAL
         return $url;
     }
      /**
@@ -99,13 +101,22 @@ class Login extends Model {
         return $encode_string;
     }
 
-    public function check_user_password($string)
+    public function check_user_password($string,$email)
     {
-        $result =  DB::table('reset_password')
-                    ->select('id','status','string')
-                    ->where('string','=',$string)
-                    ->where('date_expire','>',date('Y-m-d H:i:s'))
+        $result =  DB::table('reset_password as rp')
+                    ->select('rp.id','rp.status','rp.string','u.email')
+                    ->join('users as u','u.id','=','rp.user_id')
+                    ->where('rp.string','=',$string)
+                    ->where('rp.date_expire','>',date('Y-m-d H:i:s'))
+                    ->where('rp.status','=','0')
+                    ->where('u.email','=',$email)
                     ->get();
         return $result;
+    }
+    public function change_password($string,$email,$password)
+    {
+        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s')));
+        $reset_password = DB::table('reset_password')->where('string','=',$string)->update(array('status'=>1));
+        return 1;
     }
 }
