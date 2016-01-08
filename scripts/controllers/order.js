@@ -2098,27 +2098,27 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
      $scope.printPdf=function()
         {
-
-                        data = [];
+             
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/order/savePDF';
                         form.method = 'post';
-                        form.target = target || "_self";
+                        form.target = target || "_blank";
                         form.style.display = 'none';
 
-                        var input = document.createElement('input');
-                        input.name = 'invoices';
-                        input.setAttribute('value',data);
-                        form.appendChild(input);
+                        var input_position = document.createElement('input');
+                        input_position.name = 'order_position';
+                        input_position.setAttribute('value', JSON.stringify($scope.orderPositionAll));
+                        form.appendChild(input_position);
+
+                        var input_orderline = document.createElement('input');
+                        input_orderline.name = 'order_line';
+                        input_orderline.setAttribute('value', JSON.stringify($scope.orderLineAll));
+                        form.appendChild(input_orderline);
 
                         document.body.appendChild(form);
-                        form.submit();
-            
-        };
-
-
-                                       
+                        form.submit();  
+        };                                       
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {

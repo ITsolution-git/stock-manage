@@ -12,7 +12,7 @@ use App\Purchase;
 use DB;
 use App;
 use Request;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 class OrderController extends Controller { 
@@ -848,10 +848,12 @@ class OrderController extends Controller {
     */
     public function savePDF()
     {
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
-
+        $order_position['order_position'] = json_decode($_POST['order_position']);
+        $order_line['order_line'] = json_decode($_POST['order_line']);
+        $combine_array = array_merge($order_position,$order_line);
+        $pdf = App::make('dompdf');
+        $pdf = PDF::loadView('pdf.order', $combine_array);
+        return $pdf->download('order.pdf');
     }
 
 
