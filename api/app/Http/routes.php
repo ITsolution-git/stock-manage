@@ -195,6 +195,7 @@ Route::post('order/getTaskList', 'OrderController@getTaskList');
 Route::post('order/saveColorSize', 'OrderController@saveColorSize');
 Route::get('order/getProductDetailColorSize/{id}','OrderController@getProductDetailColorSize');
 Route::post('order/savePDF', 'OrderController@savePDF');
+Route::post('order/AssignSize', 'OrderController@AssignSize');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

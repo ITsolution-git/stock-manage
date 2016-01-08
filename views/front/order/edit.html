@@ -393,7 +393,7 @@
                                                 <div class="col-md-12 nopad-form">
                                                     <div class="cols col-1">
                                                         <div class="form-group">
-                                                            <select  ng-model="order_line.color_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line.product_id,order_line.color_id)">
+                                                            <select  ng-model="order_line.color_id"  class="form-control" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line)">
                                                                 <option value="0">Select</option>
                                                                 <option ng-selected="order_line.color_id==color.id" ng-repeat="color in order_line.colors" value={{color.id}}>{{color.name}}</option>
                                                             </select>
@@ -424,10 +424,16 @@
                                                                 </button>
                                                             </div> -->
                                                             <div class="col-md-5 smallPad nopad-left">
-                                                                <input type="text" class="form-control"/>
+                                                                <input type="text" class="form-control" ng-model="order_line.product_description"/>
                                                             </div>
                                                             <div class="col-md-2 smallPad nopad-left">
-                                                                <input type="text" class="form-control"/>
+                                                                <select  ng-model="order_line.os"  class="form-control" ng-change="calculate_all(order_line.id)">
+                                                                    <option value="0">0</option>
+                                                                    <option ng-selected="order_line.os == 1" value="1">1</option>
+                                                                    <option ng-selected="order_line.os == 2" value="2">2</option>
+                                                                    <option ng-selected="order_line.os == 3" value="3">3</option>
+                                                                    <option ng-selected="order_line.os == 4" value="4">4</option>
+                                                                </select>
                                                             </div>
                                                             <div class="col-md-1 smallPad nopad-left text-right OL_id_{{order_line.id}}">
                                                                 <a class="iconCST addButton" ng-click="showOlDiv(order_line.id)"></a> 
