@@ -43,8 +43,12 @@ class Order extends Model {
         $whereOrderPositionConditions = ['order_id' => $data['id']];
         $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
 
+        $listArray = ['o.*','p.description as product_description'];
         $whereOrderLineConditions = ['order_id' => $data['id']];
-        $orderLineData = DB::table('order_orderlines')->where($whereOrderLineConditions)->get();
+        $orderLineData = DB::table('order_orderlines as o')
+                        ->leftJoin('products as p','o.product_id','=','p.id')
+                        ->select($listArray)
+                        ->where($whereOrderLineConditions)->get();
 
         $whereClientConditions = ['status' => '1','is_delete' => '1','client_id' => $data['client_id']];
         $clientData = DB::table('client')->where($whereClientConditions)->get();
@@ -220,7 +224,8 @@ public function updateOrderLineData($post)
                                     'markup'=>$post['markup'],
                                     'override'=>$post['override'],
                                     'per_line_total'=>$post['per_line_total'],
-                                    'peritem'=>$post['peritem'])
+                                    'peritem'=>$post['peritem'],
+                                    'os'=>$post['os'])
                             );
 
 
@@ -228,7 +233,7 @@ public function updateOrderLineData($post)
 
    
 
-    /*foreach($post['items'] as $row) {
+    foreach($post['items'] as $row) {
          
         $result123 = DB::table('purchase_detail')
                     ->where('id','=',$row['id'])
@@ -244,7 +249,7 @@ public function updateOrderLineData($post)
                                     'date'=>$post['created_date'])
                             );
 
-    }*/ 
+    } 
 
 }
 
@@ -270,7 +275,7 @@ public function updateOrderLineData($post)
     * @return array $result
     */
 
-    public function getOrderLineItemById($product_id,$color_id)
+    public function getOrderLineItemByColor($product_id,$color_id)
     {
         $listArray = ['pc.*','p.name as size'];
 
@@ -282,6 +287,12 @@ public function updateOrderLineData($post)
                          ->get();
 
         return $productColorSizeData;
+    }
+
+    public function getOrderLineItemById($id)
+    {
+        $result = DB::table('purchase_detail')->where('orderline_id','=',$id)->get();
+        return $result;
     }
 
     /**
