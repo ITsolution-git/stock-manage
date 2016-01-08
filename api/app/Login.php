@@ -101,13 +101,15 @@ class Login extends Model {
         return $encode_string;
     }
 
-    public function check_user_password($string)
+    public function check_user_password($string,$email)
     {
-        $result =  DB::table('reset_password')
-                    ->select('id','status','string')
-                    ->where('string','=',$string)
-                    ->where('date_expire','>',date('Y-m-d H:i:s'))
-                    ->where('status','=','0')
+        $result =  DB::table('reset_password as rp')
+                    ->select('rp.id','rp.status','rp.string','u.email')
+                    ->join('users as u','u.id','=','rp.user_id')
+                    ->where('rp.string','=',$string)
+                    ->where('rp.date_expire','>',date('Y-m-d H:i:s'))
+                    ->where('rp.status','=','0')
+                    ->where('u.email','=',$email)
                     ->get();
         return $result;
     }
