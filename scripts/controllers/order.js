@@ -2184,7 +2184,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         document.body.appendChild(form);
                         form.submit();  
         };                                       
-=======
+
     $scope.getSize = function(orderline)
     {
         var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id};
@@ -2193,7 +2193,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         });
     }
                                        
->>>>>>> php
+
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
