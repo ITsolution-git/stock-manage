@@ -97,20 +97,21 @@ class OrderController extends Controller {
             $sum = 0;
             foreach($result['order_line_data'] as $row)
             {
-                /*$order_line_items = $this->order->getOrderLineItemById($row->id);
+                $row->orderline_id = $row->id;
+                $row->products = $this->common->GetTableRecords('products',array('vendor_id' => $row->vendor_id),array());
+                $row->colors = $this->order->GetProductColor($row->product_id);
+
+                $order_line_items = $this->order->getOrderLineItemById($row->id);
                 $count = 1;
                 $order_line = array();
                 foreach ($order_line_items as $line) {
-                     
+                 
                     $line->number = $count;
                     $order_line[] = $line;
                     $count++;
-                }*/
-                $row->orderline_id = $row->id;
-                //$row->items = $order_line;
-                $row->products = $this->common->GetTableRecords('products',array('vendor_id' => $row->vendor_id),array());
-                $row->colors = $this->order->GetProductColor($row->product_id);
-                $row->items = $this->order->getOrderLineItemById($row->product_id,$row->color_id);
+                }
+                $row->items = $order_line;
+
                 $result['order_line'][] = $row;
             }
         }
@@ -809,8 +810,6 @@ class OrderController extends Controller {
     */
     public function saveColorSize()
     {
-
-
         $post = Input::all();
        
         if(!empty($post['color_id']) && !empty($post['product_id']))
@@ -829,7 +828,6 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
-
    /**
    * Get Product Color Size.
    * @return json data
@@ -838,9 +836,7 @@ class OrderController extends Controller {
     {
         $result = $this->order->getProductDetailColorSize($id);
         return $this->return_response($result);
-        
     }
-
 
      /**
    * Save Color size.
@@ -851,8 +847,24 @@ class OrderController extends Controller {
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML('<h1>Test</h1>');
         return $pdf->stream();
-
     }
 
+    public function AssignSize()
+    {
+        $post = Input::all();
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array());
+        $sizeData = $this->order->getOrderLineItemByColor($post['product_id'],$post['color_id']);
 
+        foreach ($purchase_detail as $key => $value) {
+            
+            $update_data = array('size' => $sizeData[$key]->size,
+                                'price' => $sizeData[$key]->price
+                                );
+
+            $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
+            $this->common->UpdateTableRecords('distribution_detail',array('id' => $value->id),$update_data);
+        }
+        $data = array("success"=>1,"message"=>INSERT_RECORD);
+        return response()->json(['data'=>$data]);
+    }
 }
