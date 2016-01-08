@@ -3,7 +3,7 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams', 'Auth
                           $scope.CurrentController=$state.current.controller;
                           
                           $scope.pdf = function (){ 
-                          				$('#kavi').tableExport({type:'pdf',escape:'false'}); 
+                          				
                           			}
 
 }]);

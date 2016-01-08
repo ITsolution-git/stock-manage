@@ -141,10 +141,10 @@ class LoginController extends Controller {
             if(count($result)>0)
             {
                 $url = $this->login->ResetEmail($result[0]->email,$result[0]->id,$result[0]->password);
-               
-                Mail::send('emails.send', ['url' => $url,'user'=>$result[0]->name], function($message)
+                $email = trim($result[0]->email);
+                Mail::send('emails.send', ['url' => $url,'user'=>$result[0]->name,'email'=>trim($result[0]->email)], function($message) use ($email)
                 {
-                    $message->to('kjoshi@codal.com', 'Hello, Please Click below link to change Stokkup Password.')->subject('Reset Password to Stokkup');
+                    $message->to($email, 'Hello, Please Click below link to change Stokkup Password.')->subject('Reset Password for Stokkup');
                 });
 
 
@@ -182,8 +182,8 @@ class LoginController extends Controller {
                 list($string, $email) = explode('&', trim($data['string'])); 
               
                 $email = base64_decode($email);
-                //echo $string;
-                $result = $this->login->check_user_password(trim($string));
+               // echo $email;
+                $result = $this->login->check_user_password(trim($string),trim($email));
 
                 //echo "<pre>"; print_r($result); echo "</pre>"; die;
                 if(count($result)>0)
@@ -192,7 +192,7 @@ class LoginController extends Controller {
                 }
                 else
                 {
-                    $response = array('success' => 0, 'message' =>  "Sorry, Link has been expired. Please Try again");
+                    $response = array('success' => 0, 'message' =>  MAIL_LINK_EXPIRE);
                 }
                
             }
@@ -220,7 +220,7 @@ class LoginController extends Controller {
         {
             if($data['form_data']['password']!=$data['form_data']['confirm_password'])
             {
-                $response = array('success' => 0, 'message' => "Password does not match !");
+                $response = array('success' => 0, 'message' => PASSWORD_NOT_MATCH);
                 return response()->json(["data" => $response]);
             }
 
@@ -231,18 +231,18 @@ class LoginController extends Controller {
               
                 $email = base64_decode($email);
                 //echo $string;
-                $result = $this->login->check_user_password(trim($string));
+                $result = $this->login->check_user_password(trim($string),trim($email));
 
                 //echo "<pre>"; print_r($result); echo "</pre>"; die;
                 if(count($result)>0)
                 {
                     ///echo $data['form_data']['password']; die;
                     $this->login->change_password(trim($string),trim($email),$data['form_data']['password']);
-                    $response = array('success' => 1, 'message' => 'Password change Successfully, Please Login !', 'result'=>$result);
+                    $response = array('success' => 1, 'message' => PASSWORD_CHANGE, 'result'=>$result);
                 }
                 else
                 {
-                    $response = array('success' => 0, 'message' =>  "Sorry, Link has been expired. Please Try again");
+                    $response = array('success' => 0, 'message' =>  MAIL_LINK_EXPIRE);
                 }
                
             }
