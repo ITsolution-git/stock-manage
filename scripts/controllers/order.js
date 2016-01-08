@@ -2160,8 +2160,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         document.body.appendChild(form);
         form.submit();
     };
-
-<<<<<<< HEAD
+    
      $scope.printPdf=function()
         {
              
