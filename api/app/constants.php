@@ -28,7 +28,13 @@ define ('LOGIN_SUCCESS','Login Successfull');
 define ('LOGIN_WRONG','Wrong Credential');
 define('FILL_PARAMS','Please fill all required Parameters.');
 define('ALREADY_BOX','Delete all boxes in the boxes tab to rebox shipment.');
+
+define ('PASSWORD_NOT_MATCH','Password does not match!');
+define ('PASSWORD_CHANGE','Password change Successfully, Please Login');
+
 define ('MAIL_SEND','Email has been send Successfull.');
+define ('MAIL_NOT_SEND','Email has not been send!');
+define ('MAIL_LINK_EXPIRE','Sorry, Link has been expired. Please Try again!');
 
 define ('CURRENT_DATE',date('Y-m-d'));
 define ('CURRENT_DATETIME',date('Y-m-d H:i:s'));
