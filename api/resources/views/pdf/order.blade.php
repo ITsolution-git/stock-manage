@@ -25,7 +25,7 @@
   </thead>
   <tbody>
     <tr>
-      <td>Chinna</td>
+      <td>{{$data['order']->job_name}}</td>
       <td>1,363,480,000</td>
       <td>March 24, 2014</td>
       <td>19.1</td>

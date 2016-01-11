@@ -2181,6 +2181,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         input_orderline.setAttribute('value', JSON.stringify($scope.orderLineAll));
                         form.appendChild(input_orderline);
 
+                        var input_order = document.createElement('input');
+                        input_order.name = 'order';
+                        input_order.setAttribute('value', JSON.stringify($scope.order));
+                        form.appendChild(input_order);
+
                         document.body.appendChild(form);
                         form.submit();  
         };                                       
