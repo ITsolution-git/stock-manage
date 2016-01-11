@@ -6,8 +6,13 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
             var company_id = $rootScope.company_profile.company_id;
             var login_id = $scope.app.user_id;
    
+    var order_list_data = {};
+    var condition_obj = {};
+    condition_obj['company_id'] =  company_id;
+     order_list_data.cond = angular.copy(condition_obj);
+
                 
-    $http.post('api/public/order/listOrder',company_id).success(function(Listdata) {
+    $http.post('api/public/order/listOrder',order_list_data).success(function(Listdata) {
         $scope.listOrder = Listdata.data;
         $("#ajax_loader").hide();
 

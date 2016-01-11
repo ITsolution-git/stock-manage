@@ -58,7 +58,7 @@ angular.module('app')
 
             .state('app.home', {
               url: '/home',
-              controller: 'dasboardCtrl',
+              controller: 'homeCtrl',
               templateUrl: 'views/pages/home.html',
               data : { title: 'Home', folded: true }, 
               resolve: { 
