@@ -55,6 +55,11 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
                 $scope.allCompany=[];
             }
         });
+
+
+        $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) {
+              $scope.staffList = result.data.records;
+        });
      
 
 }]);

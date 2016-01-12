@@ -2147,25 +2147,6 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
     }
 
-    $scope.printPdf=function()
-    {
-        data = [];
-        var target;
-        var form = document.createElement("form");
-        form.action = 'api/public/order/savePDF';
-        form.method = 'post';
-        form.target = target || "_self";
-        form.style.display = 'none';
-
-        var input = document.createElement('input');
-        input.name = 'invoices';
-        input.setAttribute('value',data);
-        form.appendChild(input);
-
-        document.body.appendChild(form);
-        form.submit();
-    };
-    
      $scope.printPdf=function()
         {
              

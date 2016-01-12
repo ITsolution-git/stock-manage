@@ -610,41 +610,28 @@
 					<!-- Top Panel -->
 					<div class="form-group col-md-8 nopad-form">
 						<div class="col-md-3 nopad-left">
-							<select  ng-model="order.f_approval"  class="form-control" name="f_approval" name="f_approval"  ui-event="{ change : 'orderListAll($event,\'f_approval\')' }">
-                                        <option ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
+							<select    class="form-control" name="f_approval" name="f_approval"  ui-event="{ change : 'orderListAll($event,\'f_approval\')' }">
+								 <option  value='0'>Select Approval</option>
+                                 <option ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                              </select>
 						</div>
-						<div class="col-md-1 nopad-left">
-							<input type="text" class="form-control" value="144" />
-						</div>
+						
 						<div class="col-md-2 nopad-left">
-							<select  ng-model="order.client_id"  class="form-control"  name="client_id" Ui-event="{ change : 'orderListAll($event,\'client_id\')' }">
-                                        <option  ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
+							<select   class="form-control"  name="client_id" Ui-event="{ change : 'orderListAll($event,\'client_id\')' }">
+								  <option  value='0'>Select Company</option>
+                                  <option  ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
                                     </select>
 						</div>
-						<div class="col-md-1 nopad-left">
-							<button type="button" class="btn btn-default addButton">
-			                	<i class="fa fa-minus"></i>
-			                </button>
-						</div>
-						<div class="col-md-1 nopad-left">
-							<input type="text" class="form-control" value="" />
-						</div>
+						
+						
 						<div class="col-md-2 nopad-left">
-							<select class="form-control">
-								<option></option>
-								<option>1</option>
-								<option>2</option>
-							</select>
+							<select  class="form-control"  name="sales_id" Ui-event="{ change : 'orderListAll($event,\'sales_id\')' }">
+								<option  value='0'>Select User</option>
+                                <option ng-repeat="staff in staffList"  value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
+                                    </select>
 						</div>
-						<div class="col-md-1 nopad-left">
-							<button type="button" class="btn btn-default addButton">
-			                	<i class="fa fa-minus"></i>
-			                </button>
-						</div>
-						<div class="col-md-1 nopad-left">
-							<input type="text" class="form-control" value="" />
-						</div>
+						
+						
 					</div>
 					<!-- / -->
 					<!-- Order Paid in Full Fields -->
