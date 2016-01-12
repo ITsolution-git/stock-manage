@@ -155,7 +155,7 @@
                 <th align="left" valign="top" width="10%">Color</th>
                 <th align="left" valign="top" width="30%">Sizes / Quantities</th>
                 <th align="left" valign="top" width="5%">OS</th>
-                <th align="left" valign="top" width="10%">Qty</th>
+                <th align="left" valign="top" width="10%">Qnty</th>
                 <th align="left" valign="top" width="10%">Unit Price</th>                
               </tr>
               <tr>
