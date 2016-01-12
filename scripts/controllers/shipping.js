@@ -178,6 +178,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
     function get_distribution_list()
     {
+        AJloader.show();
         var combine_array_id = {};
         combine_array_id.client_id = $stateParams.client_id;
         combine_array_id.order_id = $stateParams.order_id;
@@ -191,6 +192,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
                 $scope.distributed_items =result.data.distributed_items;
                 $scope.distributed_address =result.data.distributed_address;
             }
+            AJloader.hide();
         });
     }
     
@@ -204,8 +206,8 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
             $scope.closePopup('cancel')
             get_distribution_list();
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
     }
     $scope.remove_address_from_distribute = function(address_id)
     {
@@ -216,8 +218,8 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
         $http.post('api/public/order/removeFromDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
     }
 
     $scope.select_address = function(id)
@@ -246,14 +248,16 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
            $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
                 get_distribution_list($scope.order_id,$scope.client_id);
+                $("#ajax_loader").hide();
             });
         }
         else
         {
             var data = {"status": "error", "message": "Please select your distribution address"}
             notifyService.notify(data.status, data.message);
+            $("#ajax_loader").hide();
         }
-        $("#ajax_loader").hide();
+        
     }
     $scope.remove_item_from_distribute = function(item_id)
     {
@@ -265,8 +269,8 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
         $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
     }
 
     $scope.openTab = function(tab_name){
@@ -357,13 +361,16 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     }
     $scope.create_box_shipment = function(shipping_items)
     {
+        $("#ajax_loader").show();
         $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
 
             if(result.data.success == '1') {
+                $("#ajax_loader").hide();
                 var data = {"status": "success", "message": "Data Updated Successfully."}
             }
             else
             {
+                $("#ajax_loader").hide();
                 var data = {"status": "error", "message": "Delete all boxes in the boxes tab to rebox shipment."}
             }
             notifyService.notify(data.status, data.message);
@@ -414,6 +421,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
             get_shipping_details();
             var data = {"status": "success", "message": "Data Deleted Successfully."}
             notifyService.notify(data.status, data.message);
+            $("#ajax_loader").hide();
         });
     }
     $scope.print_pdf = function(method)
