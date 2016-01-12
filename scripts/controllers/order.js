@@ -421,11 +421,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
                 $scope.orderPositionAll.splice(index,1);
             }
-            setTimeout(function () {
-                angular.forEach($scope.orderLineAll, function(value) {
-                    $scope.calculate_all(value.id);
-                });                    
-            }, 300);
         }
     }
 
@@ -648,7 +643,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
                     $('.form-control').removeClass('ng-dirty');
                     $("#ajax_loader").hide();
-                    get_order_details(order_id,client_id,company_id);
                 });
             }
         });
@@ -1642,6 +1636,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             {
                 angular.forEach($scope.price_grid_markup, function(value) {
 
+                    $scope.shipping_charge = 0;
                     if(parseInt($scope.position_qty) >= parseInt(value.range_low) && parseInt($scope.position_qty) <= parseInt(value.range_high))
                     {
                         $scope.shipping_charge = value.percentage;
@@ -1771,9 +1766,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 order_data.cond = {id: $scope.order_id};
                 order_data['table'] ='orders'
                 $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-
+                    $scope.updateOrderLine($scope.orderLineAll,orderline_id);
                 });
-                $scope.updateOrderLine($scope.orderLineAll,orderline_id);
+                
             }
             $("#ajax_loader").hide();
         }, 500);
@@ -2172,7 +2167,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     {
         var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id};
         $http.post('api/public/order/AssignSize',lineData).success(function(result) {
-            get_order_details(order_id,client_id,company_id);
+            $scope.calculate_all(orderline.id);
+//            get_order_details(order_id,client_id,company_id);
         });
     }
                                        
