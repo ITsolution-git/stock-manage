@@ -9,11 +9,31 @@ use DateTime;
 class Order extends Model {
 
 	
-	public function getOrderdata($company_id)
+	public function getOrderdata($post)
 	{
 
-	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $company_id];
-        $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_by','order.approved_date','order.needs_garment',
+
+      $whereConditions_fapproval = [];
+      $whereConditions_clientid = [];
+      $whereConditions_salesid = [];
+      
+        if (array_key_exists("data",$post)) {
+           
+            if(isset($post['data']['f_approval']) && $post['data']['f_approval'] != '0') {
+              $whereConditions_fapproval = ['order.f_approval' => $post['data']['f_approval']];
+            }
+
+            if(isset($post['data']['client_id']) && $post['data']['client_id'] != '0') {
+              $whereConditions_clientid = ['order.client_id' => $post['data']['client_id']];
+            }
+
+            if(isset($post['data']['sales_id']) && $post['data']['sales_id'] != '0') {
+              $whereConditions_salesid = ['order.sales_id' => $post['data']['sales_id']];
+            }
+        }
+
+	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['cond']['company_id']];
+       $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_by','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
 
@@ -22,6 +42,9 @@ class Order extends Model {
                          ->leftJoin('misc_type as misc_type', 'order.f_approval', '=', 'misc_type.id')
                          ->select($listArray)
                          ->where($whereConditions)
+                         ->where($whereConditions_fapproval)
+                         ->where($whereConditions_clientid)
+                         ->where($whereConditions_salesid)
                          ->get();
         return $orderData;	
 	}

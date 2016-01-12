@@ -116,6 +116,7 @@
   <script src="scripts/controllers/company.js"></script>
   <script src="scripts/controllers/shipping.js"></script>
   <script src="scripts/controllers/color.js"></script>
+  <script src="scripts/controllers/home.js"></script>
   <!-- CUSTOM SCROLL -->
   <script src="libs/custom-scroll/scroller.js"></script>
   <script src="libs/custom-scroll/mwheelIntent.js"></script>
