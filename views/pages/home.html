@@ -610,164 +610,114 @@
 					<!-- Top Panel -->
 					<div class="form-group col-md-8 nopad-form">
 						<div class="col-md-3 nopad-left">
-							<select class="form-control">
-								<option>Order - Acknowledgement</option>
-								<option>Order - Acknowledgement</option>
-								<option>Order - Acknowledgement</option>
-							</select>
+							<select    class="form-control" name="f_approval" name="f_approval"  ui-event="{ change : 'orderListAll($event,\'f_approval\')' }">
+								 <option  value='0'>Select Approval</option>
+                                 <option ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
+                             </select>
 						</div>
-						<div class="col-md-1 nopad-left">
-							<input type="text" class="form-control" value="144" />
-						</div>
+						
 						<div class="col-md-2 nopad-left">
-							<select class="form-control">
-								<option></option>
-								<option>1</option>
-								<option>2</option>
-							</select>
+							<select   class="form-control"  name="client_id" Ui-event="{ change : 'orderListAll($event,\'client_id\')' }">
+								  <option  value='0'>Select Company</option>
+                                  <option  ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
+                                    </select>
 						</div>
-						<div class="col-md-1 nopad-left">
-							<button type="button" class="btn btn-default addButton">
-			                	<i class="fa fa-minus"></i>
-			                </button>
-						</div>
-						<div class="col-md-1 nopad-left">
-							<input type="text" class="form-control" value="" />
-						</div>
+						
+						
 						<div class="col-md-2 nopad-left">
-							<select class="form-control">
-								<option></option>
-								<option>1</option>
-								<option>2</option>
-							</select>
+							<select  class="form-control"  name="sales_id" Ui-event="{ change : 'orderListAll($event,\'sales_id\')' }">
+								<option  value='0'>Select User</option>
+                                <option ng-repeat="staff in staffList"  value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
+                                    </select>
 						</div>
-						<div class="col-md-1 nopad-left">
-							<button type="button" class="btn btn-default addButton">
-			                	<i class="fa fa-minus"></i>
-			                </button>
-						</div>
-						<div class="col-md-1 nopad-left">
-							<input type="text" class="form-control" value="" />
-						</div>
+						
+						
 					</div>
 					<!-- / -->
 					<!-- Order Paid in Full Fields -->
-					<div class="form-group col-md-12 nopad-form">
-						<div class="col-md-5 nopad-form">						
-							<div class="col-md-4 nopad-left"><span class="tab_title">Sale Order</span></div>
-							<div class="col-md-4 nopad-left"><span class="tab_title">Client</span></div>
-							<div class="col-md-4 nopad-left"><span class="tab_title">Approval</span></div>
-						</div>
+					
+					<div id="table_list">
+						<table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
+							<thead>
+								<tr>
 
-						<div class="col-md-7 nopad-form">
-							<div class="col-md-6 nopad-left">
-								<div class="col-md-3 nopad-left"><span class="tab_title">Approved By</span></div>
-								<div class="col-md-3 nopad-left"><span class="tab_title">Garments Received By</span></div>
-								<div class="col-md-3 nopad-left"><span class="tab_title">Art Dept. Done By</span></div>
-								<div class="col-md-3 nopad-form"><span class="tab_title">Third Party Done By</span></div>
-							</div>
-							<div class="col-md-6 nopad-left">
-								<div class="col-md-3 nopad-left"><span class="tab_title">Production Done By</span></div>
-								<div class="col-md-3 nopad-left"><span class="tab_title">Finishing Done By</span></div>
-								<div class="col-md-3 nopad-left"><span class="tab_title">Shipped By</span></div>
-								<div class="col-md-3 nopad-form"><span class="tab_title">In Hand By</span></div>
-							</div>
-						</div>
+									<th data-toggle="true">
+									Client
+									</th>
+
+
+									<th data-toggle="true">
+									Job Name
+									</th>
+
+									<th data-toggle="true">
+									Approval
+									</th>
+
+									<th data-toggle="true">
+									Approve by
+									</th>
+
+									<th data-toggle="true">
+									Garment Received by
+									</th>
+
+
+									<th data-toggle="true">
+									Art Dept. Done by
+									</th>
+
+									<th data-toggle="true">
+									Third Party Done by
+									</th>
+
+									<th data-toggle="true">
+									Production Done by
+									</th>
+
+									<th data-toggle="true">
+									Finishing Done by
+									</th>
+
+									<th data-toggle="true">
+									Shipped by
+									</th>
+
+									<th data-toggle="true">
+									In Hand by
+									</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="value in listOrder.records" ng-if="listOrder.success>0" id="order_{{value.id}}">
+
+                                    <td>{{value.client_company}}</td>
+									<td>{{value.job_name}}</td>
+									
+									<td>{{value.approval}}</td>
+									<td>{{value.approved_date | dateWithFormat}}</td>
+									<td>{{value.needs_garment | dateWithFormat}}</td>
+									<td>{{value.in_art_done | dateWithFormat}}</td>
+									<td>{{value.third_party_from | dateWithFormat}}</td>
+									<td>{{value.in_production | dateWithFormat}}</td>
+									<td>{{value.in_finish_done | dateWithFormat}}</td>
+									<td>{{value.ship_by | dateWithFormat}}</td>
+									<td>{{value.in_hands_date | dateWithFormat}}</td>
+									
+								</tr>
+								<tr ng-if="listOrder.success==0"><td>{{listOrder.message}}</td></tr>
+							</tbody>
+							<tfoot class="hide-if-no-paging">
+								<tr>
+									<td colspan="13" class="text-center">
+									<ul class="pagination"></ul>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
 					</div>
-
-					<!-- INPUT Details -->
-					<div class="form-group col-md-12 nopad-form">
-						<div class="col-md-5 nopad-form">							
-							<div class="col-md-3 nopad-left">
-								<input type="text" class="form-control" />
-							</div>
-							<div class="col-md-1 nopad-left">
-								<button type="button" class="btn btn-default addButton">
-			                		<i class="fa fa-edit"></i>
-			                	</button>
-							</div>
-							<div class="col-md-4 nopad-left">
-								<input type="text" class="form-control" />
-							</div>
-							<div class="col-md-4 nopad-left">
-								<input type="text" class="form-control" />
-							</div>
-						</div>
-
-						<div class="col-md-7 nopad-form">
-							<div class="col-md-6 nopad-left">
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-form">
-									<input type="text" class="form-control" />
-								</div>
-							</div>
-							<div class="col-md-6 nopad-left">
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-form">
-									<input type="text" class="form-control" />
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Calendar Boxes ROW -->
-					<div class="form-group col-md-12 nopad-form">
-						<div class="col-md-5 nopad-form">
-							<div class="col-md-1 nopad-left">
-								<button type="button" class="btn btn-default addButton">
-				                	<i class="fa fa-edit"></i>
-				                </button>
-							</div>
-							<div class="col-md-11 nopad-left">
-								<input type="text" class="form-control" value="" />
-							</div>
-						</div>
-
-						<div class="col-md-7 nopad-form">
-							<div class="col-md-6 nopad-left">
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-form">
-									<input type="text" class="form-control" />
-								</div>
-							</div>
-							<div class="col-md-6 nopad-left">
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-left">
-									<input type="text" class="form-control" />
-								</div>
-								<div class="col-md-3 nopad-form"></div>
-							</div>
-						</div>
-					</div>
+					
 					<!-- End Fields -->
 				</div>
 			</div>    

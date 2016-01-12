@@ -12,7 +12,7 @@ use App\Purchase;
 use DB;
 use App;
 use Request;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 class OrderController extends Controller { 
@@ -31,7 +31,7 @@ class OrderController extends Controller {
     public function listOrder()
     {
         $post = Input::all();
-    	$result = $this->order->getOrderdata($post[0]);
+    	$result = $this->order->getOrderdata($post);
     	return $this->return_response($result);
     }
     /**
@@ -844,9 +844,16 @@ class OrderController extends Controller {
     */
     public function savePDF()
     {
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
-        return $pdf->stream();
+
+        $order_position['order_position'] = json_decode($_POST['order_position']);
+        $order_line['order_line'] = json_decode($_POST['order_line']);
+        $order['order'] = json_decode($_POST['order']);
+        $combine_array = array_merge($order_position,$order_line,$order);
+       
+        $pdf = App::make('dompdf');
+        $pdf = PDF::loadView('pdf.order',array('data'=>$combine_array));
+        return $pdf->download('order.pdf');
+
     }
 
     public function AssignSize()

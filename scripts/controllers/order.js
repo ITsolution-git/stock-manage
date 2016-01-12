@@ -6,8 +6,13 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
             var company_id = $rootScope.company_profile.company_id;
             var login_id = $scope.app.user_id;
    
+    var order_list_data = {};
+    var condition_obj = {};
+    condition_obj['company_id'] =  company_id;
+     order_list_data.cond = angular.copy(condition_obj);
+
                 
-    $http.post('api/public/order/listOrder',company_id).success(function(Listdata) {
+    $http.post('api/public/order/listOrder',order_list_data).success(function(Listdata) {
         $scope.listOrder = Listdata.data;
         $("#ajax_loader").hide();
 
@@ -142,6 +147,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     function get_distribution_list(order_id,client_id)
     {
+        $("#ajax_loader").show();
         if($stateParams.id && $stateParams.client_id) {
             var combine_array_id = {};
             combine_array_id.client_id = $stateParams.client_id;
@@ -155,6 +161,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.items =result.data.order_items;
                     $scope.distributed_items =result.data.distributed_items;
                     $scope.distributed_address =result.data.distributed_address;
+                    $("#ajax_loader").hide();
                 }
             });
         }
@@ -1889,8 +1896,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
     }
     $scope.remove_address_from_distribute = function(address_id)
     {
@@ -1901,8 +1908,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         $http.post('api/public/order/removeFromDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
+        
     }
 
     $scope.select_address = function(id)
@@ -1924,6 +1932,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
            $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
                 get_distribution_list($scope.order_id,$scope.client_id);
+                $("#ajax_loader").hide();
             });
         }
         else
@@ -1931,7 +1940,6 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             var data = {"status": "error", "message": "Please select your distribution address"}
             notifyService.notify(data.status, data.message);
         }
-        $("#ajax_loader").hide();
     }
     $scope.remove_item_from_distribute = function(item_id)
     {
@@ -1943,8 +1951,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
     }
     
     $scope.updateOrderTask = function($event,id,table_name,match_condition)
@@ -2142,24 +2150,34 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
     }
 
-    $scope.printPdf=function()
-    {
-        data = [];
-        var target;
-        var form = document.createElement("form");
-        form.action = 'api/public/order/savePDF';
-        form.method = 'post';
-        form.target = target || "_self";
-        form.style.display = 'none';
+     $scope.printPdf=function()
+        {
+             
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/order/savePDF';
+                        form.method = 'post';
+                        form.target = target || "_blank";
+                        form.style.display = 'none';
 
-        var input = document.createElement('input');
-        input.name = 'invoices';
-        input.setAttribute('value',data);
-        form.appendChild(input);
+                        var input_position = document.createElement('input');
+                        input_position.name = 'order_position';
+                        input_position.setAttribute('value', JSON.stringify($scope.orderPositionAll));
+                        form.appendChild(input_position);
 
-        document.body.appendChild(form);
-        form.submit();
-    };
+                        var input_orderline = document.createElement('input');
+                        input_orderline.name = 'order_line';
+                        input_orderline.setAttribute('value', JSON.stringify($scope.orderLineAll));
+                        form.appendChild(input_orderline);
+
+                        var input_order = document.createElement('input');
+                        input_order.name = 'order';
+                        input_order.setAttribute('value', JSON.stringify($scope.order));
+                        form.appendChild(input_order);
+
+                        document.body.appendChild(form);
+                        form.submit();  
+        };                                       
 
     $scope.getSize = function(orderline)
     {
@@ -2169,6 +2187,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         });
     }
                                        
+
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
