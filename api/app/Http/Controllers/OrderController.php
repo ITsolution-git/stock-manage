@@ -871,6 +871,7 @@ class OrderController extends Controller {
             $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
             $this->common->UpdateTableRecords('distribution_detail',array('id' => $value->id),$update_data);
         }
+        $this->common->UpdateTableRecords('order_orderlines',array('id' => $post['orderline_id']),array('color_id' => $post['color_id']));
         $data = array("success"=>1,"message"=>INSERT_RECORD);
         return response()->json(['data'=>$data]);
     }
