@@ -19,6 +19,12 @@
       padding-bottom:15px;
       text-align: left;    
     }
+
+    div.prntBrdrBox {
+      border:1px solid #000000;      
+      height: 30px; 
+      width: 45px;
+    }
     .brdrBox {
       border:1px solid #000000;
       height: 18px;
@@ -195,10 +201,16 @@
             <tr>
               <td align="left" valign="top" width="25%">
                 <div class="payDetails">                  
+                  <p>Some Other Text</p>
+                  <p>&nbsp;</p>
+                </div>
+
+                <div class="payDetails">                  
                   <p>Position: Front <strong>Color:5</strong></p>
                   <p>Screen Print @ 33</p>
                   <p>Screen Print @ 33</p>
                   <p>Screen Print @ 33</p>
+                  <p>&nbsp;</p>
                 </div>
               </td>
               <td align="left" valign="top" width="50%">
@@ -319,40 +331,125 @@
       </tr>
 
       <tr>
-      <td align="left" valign="top" width="100%">        
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">          
-            <tr>
-              <th align="left" valign="top" width="30%">Garment Link</th>
-              <th align="left" valign="top" width="70%">NOTES</th>
-            </tr>
+        <td align="left" valign="top" width="100%">        
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">          
+              <tr>
+                <th align="left" valign="top" width="30%">Garment Link</th>
+                <th align="left" valign="top" width="70%">NOTES</th>
+              </tr>
 
-            <tr>
-              <td align="left" valign="top" width="30%">
-                <a href="#">Garment Link</a>
-              </td>
-              <td align="left" valign="top" width="70%">
-                <textarea class="brdrBox" rows="10">Inovice Note</textarea>
-              </td>
-            </tr>          
-        </table>
-      </td>
-    </tr>
+              <tr>
+                <td align="left" valign="top" width="30%">
+                  <a href="#">Garment Link</a>
+                </td>
+                <td align="left" valign="top" width="70%">
+                  <textarea class="brdrBox" rows="10">Inovice Note</textarea>
+                </td>
+              </tr>          
+          </table>
+        </td>
+      </tr>
 
-    <tr>
-      <td align="center" valign="top" width="100%">        
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-              <td align="center" valign="top">&nbsp;</td>
-            </tr>                     
-            <tr>
-              <td align="center" valign="top">
-                <p class="txtUpCash">Please respond with "Approved, Name and Date",  for order to be placed into production</p>
-                <p class="txtSmall">Unless document states final invoice the amount listed may not be the total due. Shipping, tax and any additions during the art or press stages may result in a change of price.</p>
-              </td>
-            </tr>
-        </table>
-      </td>
-    </tr>
+      <tr>
+        <td align="left" valign="top" width="100%">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td align="left" valign="top" width="100%">        
+          <table border="0" cellpadding="0" cellspacing="0" width="35%" align="center">
+            <thead>
+              <tr>
+                <th align="center" valign="top" width="23%">Production QC</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+                <th align="center" valign="top" width="23%">QC</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+                <th align="center" valign="top" width="23%">Pack</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+                <th align="center" valign="top" width="23%">Ship</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+                <td align="center" valign="top">&nbsp;</td>
+              </tr>
+            </tbody>    
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="left" valign="top" width="100%">&nbsp;</td>
+      </tr>
+
+      <tr>
+        <td align="left" valign="top" width="100%">        
+          <table border="0" cellpadding="0" cellspacing="0" width="35%" align="center">
+            <thead>
+              <tr>
+                <th align="center" valign="top" width="23%">Production QC</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+                <th align="center" valign="top" width="23%">QC</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+                <th align="center" valign="top" width="23%">Pack</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+                <th align="center" valign="top" width="23%">Ship</th>
+                <th align="center" valign="top" width="2%">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+                <td align="center" valign="top">&nbsp;</td>
+                <td align="center" valign="top">
+                  <div class="prntBrdrBox"></div>
+                </td>
+              </tr>
+            </tbody>    
+          </table>
+        </td>
+      </tr>
+
+      <tr>
+        <td align="center" valign="top" width="100%">        
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="center" valign="top">&nbsp;</td>
+              </tr>                     
+              <tr>
+                <td align="center" valign="top">
+                  <p class="txtUpCash">Please respond with "Approved, Name and Date",  for order to be placed into production</p>
+                  <p class="txtSmall">Unless document states final invoice the amount listed may not be the total due. Shipping, tax and any additions during the art or press stages may result in a change of price.</p>
+                </td>
+              </tr>
+          </table>
+        </td>
+      </tr>
 
 </table>
 </body>
