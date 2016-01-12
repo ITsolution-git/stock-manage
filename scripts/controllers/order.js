@@ -142,6 +142,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     function get_distribution_list(order_id,client_id)
     {
+        $("#ajax_loader").show();
         if($stateParams.id && $stateParams.client_id) {
             var combine_array_id = {};
             combine_array_id.client_id = $stateParams.client_id;
@@ -155,6 +156,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.items =result.data.order_items;
                     $scope.distributed_items =result.data.distributed_items;
                     $scope.distributed_address =result.data.distributed_address;
+                    $("#ajax_loader").hide();
                 }
             });
         }
@@ -1889,8 +1891,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
     }
     $scope.remove_address_from_distribute = function(address_id)
     {
@@ -1901,8 +1903,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         $http.post('api/public/order/removeFromDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
+        
     }
 
     $scope.select_address = function(id)
@@ -1924,6 +1927,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
            $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
                 get_distribution_list($scope.order_id,$scope.client_id);
+                $("#ajax_loader").hide();
             });
         }
         else
@@ -1931,7 +1935,6 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             var data = {"status": "error", "message": "Please select your distribution address"}
             notifyService.notify(data.status, data.message);
         }
-        $("#ajax_loader").hide();
     }
     $scope.remove_item_from_distribute = function(item_id)
     {
@@ -1943,8 +1946,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            $("#ajax_loader").hide();
         });
-        $("#ajax_loader").hide();
     }
     
     $scope.updateOrderTask = function($event,id,table_name,match_condition)
