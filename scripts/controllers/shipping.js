@@ -416,4 +416,8 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
             notifyService.notify(data.status, data.message);
         });
     }
+    $scope.print_pdf = function(method)
+    {
+
+    }
 }]);
