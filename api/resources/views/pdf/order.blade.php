@@ -76,9 +76,9 @@
               <p>www.url.com</p>
             </td>
             <td align="right" valign="top" width="50%">
-              <p><strong>Estimate #33674</strong></p>
-              <p><strong>Created On: 01/01/2016</strong></p>
-              <p><strong>Job Name: QA Test</strong></p>
+              <p><strong>Estimate #{{$data['order']->id}}</strong></p>
+              <p><strong>Created On: {{$data['order']->created_date}}</strong></p>
+              <p><strong>Job Name:  {{$data['order']->job_name}}</strong></p>
             </td>
           </tr>
           <tr>
@@ -205,13 +205,15 @@
                   <p>&nbsp;</p>
                 </div>
 
-                <div class="payDetails">                  
-                  <p>Position: Front <strong>Color:5</strong></p>
-                  <p>Screen Print @ 33</p>
-                  <p>Screen Print @ 33</p>
+                @foreach ($data['order_position'] as $position)
+                <div class="payDetails">  
+                <?php $pos_id = $position->position_id;?>                
+                  <p>Position: {{$data['order_misc']->position->$pos_id->value}} &nbsp;<strong>Color:{{$position->color_stitch_count}}</strong></p>
                   <p>Screen Print @ 33</p>
                   <p>&nbsp;</p>
                 </div>
+                @endforeach
+
               </td>
               <td align="left" valign="top" width="50%">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -340,10 +342,10 @@
 
               <tr>
                 <td align="left" valign="top" width="30%">
-                  <a href="#">Garment Link</a>
+                  <a href="#">{{$data['order']->garment_link}}</a>
                 </td>
                 <td align="left" valign="top" width="70%">
-                  <textarea class="brdrBox" rows="10">Inovice Note</textarea>
+                  <textarea class="brdrBox" rows="10">{{$data['order']->invoice_note}}</textarea>
                 </td>
               </tr>          
           </table>

@@ -107,7 +107,7 @@ class Common extends Model {
         foreach($MiscData as $data) {
            
            if($data->value != ''){
-            $allData[$data->type][] = $data;
+            $allData[$data->type][$data->id] = $data;
            }
 
 

@@ -848,8 +848,8 @@ class OrderController extends Controller {
         $order_position['order_position'] = json_decode($_POST['order_position']);
         $order_line['order_line'] = json_decode($_POST['order_line']);
         $order['order'] = json_decode($_POST['order']);
-        $combine_array = array_merge($order_position,$order_line,$order);
-       
+        $order_misc['order_misc'] = json_decode($_POST['order_misc']);
+        $combine_array = array_merge($order_position,$order_line,$order,$order_misc);
         $pdf = App::make('dompdf');
         $pdf = PDF::loadView('pdf.order',array('data'=>$combine_array));
         return $pdf->download('order.pdf');
