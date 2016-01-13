@@ -643,6 +643,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
                     $('.form-control').removeClass('ng-dirty');
                     $("#ajax_loader").hide();
+                     get_order_details(order_id,client_id,company_id);
                 });
             }
         });
@@ -2159,13 +2160,6 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         input_order.setAttribute('value', JSON.stringify($scope.order));
                         form.appendChild(input_order);
 
-
-                        var input_misc = document.createElement('input');
-                        input_misc.name = 'order_misc';
-                        input_misc.setAttribute('value', JSON.stringify($scope.miscData));
-                        form.appendChild(input_misc);
-
-
                         document.body.appendChild(form);
                         form.submit();  
         };                                       
@@ -2174,8 +2168,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     {
         var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id};
         $http.post('api/public/order/AssignSize',lineData).success(function(result) {
-            $scope.calculate_all(orderline.id);
-//            get_order_details(order_id,client_id,company_id);
+// /            $scope.calculate_all(orderline.id);
+            get_order_details(order_id,client_id,company_id);
         });
     }
                                        

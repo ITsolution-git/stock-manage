@@ -426,6 +426,19 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     }
     $scope.print_pdf = function(method)
     {
+         var target;
+        var form = document.createElement("form");
+        form.action = 'api/public/shipping/createPDF';
+        form.method = 'post';
+        form.target = target || "_blank";
+        form.style.display = 'none';
 
+        var input_position = document.createElement('input');
+        input_position.name = 'shipping';
+        input_position.setAttribute('value', method);
+        form.appendChild(input_position);
+
+        document.body.appendChild(form);
+        form.submit();
     }
 }]);

@@ -11,6 +11,8 @@ use App\Common;
 use App\Purchase;
 use App\Order;
 use DB;
+use App;
+use Barryvdh\DomPDF\Facade as PDF;
 
 use Request;
 
@@ -266,5 +268,28 @@ class ShippingController extends Controller {
         }
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
+    }
+
+    public function createPDF()
+    {
+        $post = Input::all();
+
+        $pdf = App::make('dompdf');
+
+        if($post['shipping'] == 'manifest')
+        {
+            $pdf = PDF::loadView('pdf.shipping_manifest',$post);
+            return $pdf->download('Print Manifest');
+        }
+        else if($post['shipping'] == 'report')
+        {
+            $pdf = PDF::loadView('pdf.shipping_report',array());
+            return $pdf->download('Shipping Report');
+        }
+        else if($post['shipping'] == 'label')
+        {
+            $pdf = PDF::loadView('pdf.shipping_label',array());
+            return $pdf->download('Shipping Label');
+        }
     }
 }
