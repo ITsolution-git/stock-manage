@@ -80,7 +80,7 @@
               <p>www.url.com</p>
             </td>
             <td align="right" valign="top" width="50%">
-              <p><strong>Job # 322071</strong></p>
+              <p><strong>Job # {{$shipping->order_id}}</strong></p>
             </td>
           </tr>
           <tr>
@@ -97,23 +97,25 @@
             <td align="left" valign="top" width="38%">
               <p>SHIP TO</p>
               <div class="prntBrdr">
-                <p>Divinity Seven</p>
-                <p>Scott Witherspoon</p>
+                <p>{{$shipping->description}}</p>
+                <p>{{$shipping->address}} {{$shipping->address2}}</p>
+                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
+                <p>{{$shipping->country}}</p>
               </div>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
             <td align="left" valign="top" width="30%">    
                 <p>&nbsp;</p>          
-                <p>PO Number : #12345</p>
-                <p>Crafted for consciouness</p>
-                <p>Shipped On : 01/01/2016</p>
+                <p>PO Number : #</p>
+                <p>&nbsp;</p>
+                <p>Shipped On : {{$shipping->shipping_by}}</p>
               </div>
             </td>
             <td align="left" valign="top" width="30%">   
                 <p>Tracking Number(s)</p>
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
-                <p>SKU : #SKU</p>
+                <p>SKU : </p>
               </div>
             </td>
           </tr>
@@ -134,52 +136,27 @@
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <thead class="title">
                 <tr>
-                  <th align="left" valign="top" width="5%">No.</th>
+                  <th align="left" valign="top" width="15%">No.</th>
                   <th align="center" valign="top" width="10%">Size</th>
                   <th align="left" valign="top" width="10%">Group</th>
-                  <th align="left" valign="top" width="10%">Color</th>
-                  <th align="left" valign="top" width="35%">Description</th>
-                  <th align="left" valign="top" width="20%">Defect Spoil</th>
+                  <th align="left" valign="top" width="15%">Color</th>
+                  <th align="left" valign="top" width="30%">Description</th>
+                  <th align="left" valign="top" width="10%">Defect Spoil</th>
                   <th align="center" valign="top" width="10%">Qnty</th>
                 </tr>
               </thead>
               <tbody class="color-grey">
+              @foreach ($shipping_boxes as $box)
                 <tr>
-                  <td align="left" valign="top" class="brdrBox" width="5%">1</td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">M</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Adult</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Grey</td>
-                  <td align="left" valign="top" class="brdrBox" width="35%">Crewneck sweatshirts</td>
-                  <td align="left" valign="top" class="brdrBox" width="20%"></td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">3</td>
+                  <td align="left" valign="top" class="brdrBox" width="15%">{{$box->count}}</td>
+                  <td align="center" valign="top" class="brdrBox" width="10%">{{$box->size}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="10%">{{$box->size_group_name}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="15%">{{$box->color_name}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="30%">{{$box->product_name}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="10%">{{$box->spoil}}</td>
+                  <td align="center" valign="top" class="brdrBox" width="10%">{{$box->boxed_qnty}}</td>
                 </tr>
-                <tr>
-                  <td align="left" valign="top" class="brdrBox" width="5%">2</td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">L</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Adult</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Red</td>
-                  <td align="left" valign="top" class="brdrBox" width="35%">sweatshirts</td>
-                  <td align="left" valign="top" class="brdrBox" width="20%"></td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">5</td>
-                </tr>
-                <tr>
-                  <td align="left" valign="top" class="brdrBox" width="5%">3</td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">XL</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Adult</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">White</td>
-                  <td align="left" valign="top" class="brdrBox" width="35%">Tshirts</td>
-                  <td align="left" valign="top" class="brdrBox" width="20%"></td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">15</td>
-                </tr>
-                <tr>
-                  <td align="left" valign="top" class="brdrBox" width="5%">4</td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">2XL</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Adult</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Black</td>
-                  <td align="left" valign="top" class="brdrBox" width="35%">Crewneck sweatshirts</td>
-                  <td align="left" valign="top" class="brdrBox" width="20%"></td>
-                  <td align="center" valign="top" class="brdrBox" width="10%">10</td>
-                </tr>
+              @endforeach
               </tbody>
           </table>
         </td>

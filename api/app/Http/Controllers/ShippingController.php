@@ -273,16 +273,15 @@ class ShippingController extends Controller {
     public function createPDF()
     {
         $post = Input::all();
-        $shipping = json_decode($post['shipping']);
-        $shipping_type = json_decode($post['shipping_type']);
-        $shipping_items = json_decode($post['shipping_items']);
-        $shipping_boxes = json_decode($post['shipping_boxes']);
+        $shipping['shipping'] = json_decode($post['shipping']);
+        $shipping['shipping_type'] = json_decode($post['shipping_type']);
+        $shipping['shipping_items'] = json_decode($post['shipping_items']);
+        $shipping['shipping_boxes'] = json_decode($post['shipping_boxes']);
 
         $pdf = App::make('dompdf');
-
         if($post['print_type'] == 'manifest')
         {
-            $pdf = PDF::loadView('pdf.shipping_manifest',$post);
+            $pdf = PDF::loadView('pdf.shipping_manifest',$shipping);
             return $pdf->stream('Print Manifest');
         }
         else if($post['print_type'] == 'report')
