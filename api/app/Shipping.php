@@ -72,11 +72,19 @@ class Shipping extends Model {
                         ->get();
 
         $whereBoxConditions = ['sb.shipping_id' => $data['shipping_id']];
-        $listItemsArray = ['sb.id as box_id','sb.box_qnty','sb.tracking_number'];
 
-        $shippingBoxes = DB::table('shipping_box as sb')
+        $listItemsArray = ['sb.md','sb.id as box_id','sb.spoil','sb.actual','sb.re_allocate_to','sb.box_qnty','sb.tracking_number','bi.id as box_item_id','bi.item_id','d.id','d.size','d.qnty','d.shipped_qnty','sb.box_qnty as boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','mt.value as size_group_name','mt2.value as color_name'];
+
+        $shippingBoxes = DB::table('box_item_mapping as bi')
+                        ->leftJoin('shipping_box as sb','bi.box_id','=','sb.id')
+                        ->leftJoin('distribution_detail as d','bi.item_id','=','d.id')
+                        ->leftJoin('order_orderlines as ol','d.orderline_id','=','ol.id')
+                        ->leftJoin('products as p','ol.product_id','=','p.id')
+                        ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
+                        ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
                         ->select($listItemsArray)
                         ->where($whereBoxConditions)
+                        ->where('bi.item_id','!=','0')
                         ->get();
 
         $combine_array = array();
