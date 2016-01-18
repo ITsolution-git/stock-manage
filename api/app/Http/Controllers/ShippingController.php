@@ -283,17 +283,17 @@ class ShippingController extends Controller {
         if($post['print_type'] == 'manifest')
         {
             $pdf = PDF::loadView('pdf.shipping_manifest',$post);
-            return $pdf->download('Print Manifest');
+            return $pdf->stream('Print Manifest');
         }
         else if($post['print_type'] == 'report')
         {
             $pdf = PDF::loadView('pdf.shipping_report',array());
-            return $pdf->download('Shipping Report');
+            return $pdf->stream('Shipping Report');
         }
         else if($post['print_type'] == 'label')
         {
             $pdf = PDF::loadView('pdf.shipping_label',array());
-            return $pdf->download('Shipping Label');
+            return $pdf->stream('Shipping Label');
         }
     }
 }
