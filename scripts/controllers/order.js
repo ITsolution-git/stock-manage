@@ -2160,6 +2160,39 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         input_order.setAttribute('value', JSON.stringify($scope.order));
                         form.appendChild(input_order);
 
+                        var input_misc = document.createElement('input');
+                        input_misc.name = 'order_misc';
+                        input_misc.setAttribute('value', JSON.stringify($scope.miscData));
+                        form.appendChild(input_misc);
+
+                        var input_order_items = document.createElement('input');
+                        input_order_items.name = 'order_item';
+                        input_order_items.setAttribute('value', JSON.stringify($scope.order_items));
+                        form.appendChild(input_order_items);
+
+
+                        var input_total_qty = document.createElement('input');
+                        input_total_qty.name = 'total_qty';
+                        input_total_qty.setAttribute('value', JSON.stringify($scope.total_qty));
+                        form.appendChild(input_total_qty);
+
+
+                        var input_price_grid = document.createElement('input');
+                        input_price_grid.name = 'price_grid';
+                        input_price_grid.setAttribute('value', JSON.stringify($scope.price_grid));
+                        form.appendChild(input_price_grid);
+
+                        var input_price_screen_primary = document.createElement('input');
+                        input_price_screen_primary.name = 'price_screen_primary';
+                        input_price_screen_primary.setAttribute('value', JSON.stringify($scope.price_screen_primary));
+                        form.appendChild(input_price_screen_primary);
+
+
+                        var input_embroidery_switch_count = document.createElement('input');
+                        input_embroidery_switch_count.name = 'embroidery_switch_count';
+                        input_embroidery_switch_count.setAttribute('value', JSON.stringify($scope.embroidery_switch_count));
+                        form.appendChild(input_embroidery_switch_count);
+
                         document.body.appendChild(form);
                         form.submit();  
         };                                       

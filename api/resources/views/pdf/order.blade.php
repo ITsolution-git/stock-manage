@@ -169,23 +169,24 @@
               </tr>
             </thead>
             <tbody>
+              @foreach ($data['order_line'] as $key => $orderline)
               <tr>
-                <td align="left" valign="top" class="brdrBox" width="35%">&nbsp;Garments 1</td>
-                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;Black</td>
-                <td align="left" valign="top" class="brdrBox" width="30%">&nbsp;S:(50) L:(50)</td>
-                <td align="left" valign="top" class="brdrBox" width="5%">&nbsp;2</td>
-                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;100</td>
-                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;10.00</td>
-              </tr>
+                <td align="left" valign="top" class="brdrBox" width="35%">{{$orderline->product_name}} / {{$orderline->product_description}}</td>
+                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;{{$orderline->color_name}}</td>
+                <td align="left" valign="top" class="brdrBox" width="30%">
 
-              <tr class="evenRow">
-                <td align="left" valign="top" class="brdrBox" width="35%">&nbsp;Garments 1</td>
-                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;Black</td>
-                <td align="left" valign="top" class="brdrBox" width="30%">&nbsp;S:(50) L:(50)</td>
-                <td align="left" valign="top" class="brdrBox" width="5%">&nbsp;2</td>
-                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;100</td>
-                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;10.00</td>
+                  @foreach ($orderline->items as $key => $order_size_array)
+                    <?php if($order_size_array->qnty > 0){?>
+                    &nbsp;{{$order_size_array->size}} : {{($order_size_array->qnty)}}&nbsp;
+                    <?php }?>
+                  @endforeach
+
+                </td>
+                <td align="left" valign="top" class="brdrBox" width="5%">&nbsp;{{$orderline->os}}</td>
+                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;{{$orderline->qnty}}</td>
+                <td align="left" valign="top" class="brdrBox" width="10%">&nbsp;{{$orderline->peritem}}</td>
               </tr>
+              @endforeach
             </tbody>
           </table>
         </td>
@@ -200,18 +201,127 @@
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
               <td align="left" valign="top" width="25%">
-                <div class="payDetails">                  
-                  <p>Some Other Text</p>
-                  <p>&nbsp;</p>
-                </div>
 
+                @foreach ($data['order_item'] as $orderitem)
+                <?php if($orderitem->selected == '1'){?>
+                  <div class="payDetails">                  
+                    <p>{{$orderitem->item}} @ {{$orderitem->charge}} </p>
+                    
+                  </div>
+                <?php }?>
+                @endforeach
+
+                <div>&nbsp;</div>
+                <?php $count = 1; ?>
                 @foreach ($data['order_position'] as $position)
+                 
+                <?php if($count <= '6'){?>
                 <div class="payDetails">  
-                <?php $pos_id = $position->position_id;?>                
-                  <p>Position: {{$data['order_misc']->position->$pos_id->value}} &nbsp;<strong>Color:{{$position->color_stitch_count}}</strong></p>
-                  <p>Screen Print @ 33</p>
-                  <p>&nbsp;</p>
+
+                  <?php $pos_id = $position->position_id; 
+                  $placement_id = $position->placement_type;
+                  $display_label = '';
+
+                    if($data['order_misc']->placement_type->$placement_id->id == '43'){
+                       $display_label = 'Colors:';
+                       }elseif ($data['order_misc']->placement_type->$placement_id->id == '45') {
+                         $display_label = 'Stiches:';
+                     } 
+
+                ?>
+                  <p>Position: {{$data['order_misc']->position->$pos_id->value}} &nbsp;<strong><?php echo $display_label?>{{$position->color_stitch_count}}</strong></p>
+                  
+                  <?php if($position->discharge_qnty >= '0'){
+                  $discharge_price = $position->discharge_qnty * $data['price_grid']->discharge; ?>
+                   <p>Discharge Ink @ <?php echo $discharge_price;?></p>
+                 
+                  <?php }?>
+
+
+                   <?php if($position->speciality_qnty >= '0'){
+                  $speciality_price = $position->speciality_qnty * $data['price_grid']->specialty; ?>
+                   <p>Speciality Ink @ <?php echo $speciality_price;?></p>
+                  
+                  <?php }?>
+
+
+                  <?php if($position->foil_qnty >= '0'){
+                  $foil_price = $position->foil_qnty * $data['price_grid']->foil; ?>
+                   <p>Foil @ <?php echo $foil_price;?></p>
+                  
+                  <?php }?>
+
+
+                  <?php if($position->ink_charge_qnty >= '0'){
+                  $ink_price = $position->ink_charge_qnty * $data['price_grid']->ink_changes; ?>
+                   <p>Ink Charge @ <?php echo $ink_price;?></p>
+                  
+                  <?php }?>
+
+
+                  <?php if($position->number_on_dark_qnty >= '0'){
+                  $dark_price = $position->number_on_dark_qnty * $data['price_grid']->number_on_dark; ?>
+                   <p># on Dark @ <?php echo $dark_price;?></p>
+                 
+                  <?php }?>
+
+                   <?php if($position->number_on_light_qnty >= '0'){
+                  $light_price = $position->number_on_light_qnty * $data['price_grid']->number_on_light; ?>
+                   <p># on Light @ <?php echo $light_price;?></p>
+                 
+                  <?php }?>
+
+
+                  <?php if($position->oversize_screens_qnty >= '0'){
+                  $oversize_price = $position->oversize_screens_qnty * $data['price_grid']->over_size_screens; ?>
+                   <p>Oversize Screen @ <?php echo $oversize_price;?></p>
+                 
+                  <?php }?>
+
+
+                  <?php if($position->press_setup_qnty >= '0'){
+                  $press_setup_price = $position->press_setup_qnty * $data['price_grid']->press_setup; ?>
+                   <p>Press Setup @ <?php echo $press_setup_price;?></p>
+                  
+                  <?php }?>
+
+
+                  <?php if($position->screen_fees_qnty >= '0'){
+                  $screen_fees_price = $position->screen_fees_qnty * $data['price_grid']->screen_fees; ?>
+                   <p>Screen Fee @ <?php echo $screen_fees_price;?></p>
+                  
+                  <?php }?>
+
+                  <?php
+
+                  if($position->color_stitch_count > '0'){
+
+
+                    if($data['order_misc']->placement_type->$placement_id->id == '43'){
+                        
+                        foreach ($data['price_screen_primary'] as $price_screen_primary) {
+                   
+                        if($data['total_qty'] >= $price_screen_primary->range_low && $data['total_qty'] <= $price_screen_primary->range_high)
+                              {
+                                  $price_field = 'pricing_'.$position->color_stitch_count.'c';
+                                  $screen_price_calc =  $price_screen_primary->$price_field; ?>
+                                  <p>Screen Print @ <?php echo $screen_price_calc;?></p>
+                              <?php }
+                         }
+                       } 
+
+
+
+                   }
+                   ?>
+                 
+
+
+
+
                 </div>
+                 <?php }
+                $count++; ?>
                 @endforeach
 
               </td>
@@ -233,97 +343,97 @@
                   <tr>
                     <td align="right" valign="top" width="45%">Total Qnty</td>
                     <td align="left" valign="top" width="5%">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox" width="50%">308&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox" width="50%">{{$data['total_qty']}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Screens</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">2,775.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->screen_charge}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Press Setup</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">0.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->press_setup_charge}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Digitize</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">6.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->digitize_charge}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Art Work</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">8.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->artwork_charge}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Separations</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">6.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->separations_charge}}&nbsp;</td>
                   </tr>
 
-                  <tr>
+                  <!-- <tr>
                     <td align="right" valign="top">Rush</td>
                     <td align="left" valign="top">&nbsp;</td>
                     <td align="right" valign="top" class="brdrBox">2.00&nbsp;</td>
-                  </tr>
+                  </tr> -->
 
                   <tr>
                     <td align="right" valign="top">Distribution</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">4.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->distribution_charge}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Shipping</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">3.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->shipping_charge}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">new lab</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">6.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->setup_charge}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Discount</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">10.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->discount}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Order Total</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">5,859.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->sales_order_total}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Tax</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">542.31&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->tax}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Grand Total</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">6,401.95&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->grand_total}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Payments/Deposit</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">6.00&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->total_payments}}&nbsp;</td>
                   </tr>
 
                   <tr>
                     <td align="right" valign="top">Balance Due</td>
                     <td align="left" valign="top">&nbsp;</td>
-                    <td align="right" valign="top" class="brdrBox">6,401.95&nbsp;</td>
+                    <td align="right" valign="top" class="brdrBox">{{$data['order']->balance_due}}&nbsp;</td>
                   </tr>
                 </table>
               </td>
