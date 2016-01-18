@@ -857,7 +857,8 @@ class OrderController extends Controller {
       
         $pdf = App::make('dompdf');
         $pdf = PDF::loadView('pdf.order',array('data'=>$combine_array));
-        return $pdf->download('order.pdf');
+        //return $pdf->download('order.pdf');
+        return $pdf->stream('order.pdf');
 
     }
 
