@@ -84,7 +84,7 @@
               <p>www.url.com</p>
             </td>
             <td align="right" valign="top" width="50%">
-              <p><strong>Job # 322071</strong></p>
+              <p><strong>Job # {{$shipping->order_id}}</strong></p>
             </td>
           </tr>
           <tr>
@@ -101,16 +101,18 @@
             <td align="left" valign="top" width="38%">
               <p>Client</p>
               <div class="prntBrdr">
-                <p>Divinity Seven</p>
-                <p>Scott Witherspoon</p>
+                <p>{{$shipping->description}}</p>
+                <p>{{$shipping->address}} {{$shipping->address2}}</p>
+                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
+                <p>{{$shipping->country}}</p>
               </div>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
             <td align="left" valign="top" width="40%">    
                 <p>&nbsp;</p>          
-                <p><strong>PO Number : #12345</strong></p>
-                <p><strong>Crafted for consciouness</strong></p>
-                <p>Shipped On : 01/01/2016</p>
+                <p><strong>PO Number : #</strong></p>
+                <p><strong>{{$shipping->job_name}}</strong></p>
+                <p>Shipped On : {{$shipping->shipping_by}}</p>
               </div>
             </td>
           </tr>
@@ -123,7 +125,7 @@
     </tr>
 
     <tr>
-      <td align="left" valign="top" width="100%" style="font-size:18px;">  Garments For Job:Crafted for consciouness</td>
+      <td align="left" valign="top" width="100%" style="font-size:18px;">  Garments For Job:{{$shipping->job_name}}</td>
     </tr>
 
     <tr>
@@ -132,7 +134,7 @@
 
     <tr>
       <td align="left" valign="top" width="100%" class="boxItem">
-      SKU: crewneck sweatshirts: COLOR: Grey: [XS]:3[M]:3[L]:3[XL]:3[2X]:TOTAL QNTY:12
+      SKU: : COLOR: {{$shipping_items[0]->color_name}}: [XS]:{{$other_data['xs_qnty']}}[M]:{{$other_data['m_qnty']}}[L]:{{$other_data['l_qnty']}}[XL]:{{$other_data['xl_qnty']}}[2X]:{{$other_data['2xl_qnty']}}[3X]:{{$other_data['3xl_qnty']}}:TOTAL QNTY:{{$other_data['total_qnty']}}
       </td>
     </tr>
 
@@ -152,8 +154,10 @@
           <tr>
             <td width="10%">&nbsp;</td>
             <td width="45%">
-              <p>Divinity Seven</p>
-              <p>Scott Witherspoon</p>
+              <p>{{$shipping->description}}</p>
+                <p>{{$shipping->address}} {{$shipping->address2}}</p>
+                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
+                <p>{{$shipping->country}}</p>
             </td>
             <td width="45%" style="font-size:24px;">
               Tracking Number
@@ -171,35 +175,23 @@
               </tr>
               <thead class="title">
                 <tr>
-                  <th align="center" valign="top" width="10%">Size</th>
-                  <th align="left" valign="top" width="10%">Group</th>
-                  <th align="left" valign="top" width="10%">Color</th>
-                  <th align="left" valign="top" width="60%">Description</th>
+                  <th align="center" valign="top" width="15%">Size</th>
+                  <th align="left" valign="top" width="15%">Group</th>
+                  <th align="left" valign="top" width="20%">Color</th>
+                  <th align="left" valign="top" width="40%">Description</th>
                   <th align="right" valign="top" width="10%">Qnty&nbsp;</th>
                 </tr>
               </thead>
               <tbody class="color-grey">
+                @foreach ($shipping_boxes as $box)
                 <tr>
-                  <td align="center" valign="top" class="brdrBox" width="10%">M</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Adult</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Grey</td>
-                  <td align="left" valign="top" class="brdrBox" width="60%">Crewneck sweatshirts</td>
-                  <td align="right" valign="top" class="brdrBox" width="10%">3&nbsp;&nbsp;&nbsp;</td>
+                  <td align="center" valign="top" class="brdrBox" width="10%">{{$box->size}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="10%">{{$box->size_group_name}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="10%">{{$box->color_name}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="60%">{{$box->product_name}}</td>
+                  <td align="right" valign="top" class="brdrBox" width="10%">{{$box->boxed_qnty}}&nbsp;&nbsp;&nbsp;</td>
                 </tr>
-                <tr>
-                  <td align="center" valign="top" class="brdrBox" width="10%">XL</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Adult</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Black</td>
-                  <td align="left" valign="top" class="brdrBox" width="60%">Crewneck sweatshirts</td>
-                  <td align="right" valign="top" class="brdrBox" width="10%">7&nbsp;&nbsp;&nbsp;</td>
-                </tr>
-                <tr>
-                  <td align="center" valign="top" class="brdrBox" width="10%">2XL</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">Adult</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%">White</td>
-                  <td align="left" valign="top" class="brdrBox" width="60%">Crewneck sweatshirts</td>
-                  <td align="right" valign="top" class="brdrBox" width="10%">10&nbsp;&nbsp;&nbsp;</td>
-                </tr>
+                @endforeach
               </tbody>
           </table>
         </td>
@@ -212,10 +204,10 @@
                 <tr>
                   <td align="center" valign="top" class="brdrBox" width="4%">&nbsp;</td>
                   <td align="left" valign="top" class="brdrBox" width="50%" style="font-size:16px;">
-                    <strong>TOTAL BOXES 8</strong>
+                    <strong>TOTAL BOXES {{$other_data['total_box']}}</strong>
                   </td>
                   <td align="right" valign="top" class="brdrBox" width="45%" style="font-size:16px;">
-                    <strong>Totoal Pieces  20&nbsp;&nbsp;</strong>
+                    <strong>Totoal Pieces  {{$other_data['total_pieces']}}&nbsp;&nbsp;</strong>
                   </td>
                 </tr> 
               </tbody>
@@ -231,8 +223,8 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td width="45%">
-              <p>Total Spoilage: 0</p>
-              <p>Total Manufacturer Defect: 0</p>
+              <p>Total Spoilage: {{$other_data['total_spoil']}}</p>
+              <p>Total Manufacturer Defect: {{$other_data['total_md']}}</p>
             </td>
           </tr>
         </table>
