@@ -75,8 +75,10 @@
               <p>www.url.com</p>
             </td>
             <td align="right" valign="top" width="50%">
-              <p><strong>Divinity Seven</strong></p>
-              <p><strong>Scott Witherspoon</strong></p>
+              <p>{{$shipping->description}}</p>
+                <p>{{$shipping->address}} {{$shipping->address2}}</p>
+                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
+                <p>{{$shipping->country}}</p>
             </td>
           </tr>
           <tr>
@@ -87,34 +89,68 @@
     </tr>
 
     <tr>
-      <td align="left" valign="top" width="100%">PO : Crafted for conscioun</td>
+      <td align="left" valign="top" width="100%">PO : </td>
     </tr>
     
     <tr>
-      <td align="left" valign="top" width="100%">        
+      <?php if($shipping->boxing_type == '0')
+      { ?>
+        <td align="left" valign="top" width="100%">        
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <thead class="title">
+                <tr>
+                  <th align="left" valign="top" width="49%">Description</th>
+                  <th align="left" valign="top" width="2%">&nbsp;</th>
+                  <th align="right" valign="top" width="49%">Color</th>
+                </tr>
+              </thead>
+              <tbody class="color-grey">
+                @foreach ($shipping_boxes as $box)
+                <tr>
+                  <td align="left" valign="top" width="49%" height="10">
+                    {{$box->product_name}}
+                    <div class="boxbrdr">3</div>
+                  </td>
+                  <td align="left" valign="top" width="2%">&nbsp;</td>
+                  <td align="right" valign="top" width="49%" height="10">
+                    {{$box->color_name}}
+                    <div class="boxbrdr" style="float:right;">{{$box->size}}</div>
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+          </table>
+        </td>
+      <?php
+      }
+      else
+      {
+      ?>
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
-            <thead class="title">
-              <tr>
-                <th align="left" valign="top" width="49%">Description</th>
-                <th align="left" valign="top" width="2%">&nbsp;</th>
-                <th align="right" valign="top" width="49%">Color</th>
-              </tr>
-            </thead>
-            <tbody class="color-grey">
-              <tr>
-                <td align="left" valign="top" width="49%" height="10">
-                  crewneck sweatshirts
-                  <div class="boxbrdr">3</div>
-                </td>
-                <td align="left" valign="top" width="2%">&nbsp;</td>
-                <td align="right" valign="top" width="49%" height="10">
-                  Grey
-                  <div class="boxbrdr" style="float:right;">M</div>
-                </td>
-              </tr>
-            </tbody>
+          <thead class="title">
+            <tr>
+              <th align="left" valign="top" width="10%">Qty.</th>
+              <th align="center" valign="top" width="20%">Type</th>
+              <th align="left" valign="top" width="20%">Size</th>
+              <th align="left" valign="top" width="20%">Color</th>
+              <th align="left" valign="top" width="30%">Description</th>
+            </tr>
+          </thead>
+          <tbody class="color-grey">
+          @foreach ($shipping_boxes as $box)
+            <tr>
+              <td align="left" valign="top" class="brdrBox" width="10%">{{$box->qnty}}</td>
+              <td align="center" valign="top" class="brdrBox" width="20%">{{$box->size_group_name}}</td>
+              <td align="left" valign="top" class="brdrBox" width="20%">{{$box->size_group_name}}</td>
+              <td align="left" valign="top" class="brdrBox" width="20%">{{$box->color_name}}</td>
+              <td align="left" valign="top" class="brdrBox" width="30%">{{$box->product_name}}</td>
+            </tr>
+          @endforeach
+          </tbody>
         </table>
-      </td>
+      <?php
+      }
+      ?>
     </tr>
 </table>
 </body>
