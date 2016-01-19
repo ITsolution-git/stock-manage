@@ -298,4 +298,18 @@ class Common extends Model {
         return $result;
     }
 
+
+    public function getCompanyDetail($company_id)
+    {
+        $admindata = DB::table('users as usr')
+                         ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
+                         ->leftJoin('company_detail as com', 'usr.id', '=', 'com.company_id')
+                         ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','com.address','com.city','com.state','com.country','com.zip','com.url','com.company_logo')
+                         ->where('usr.id','=',$company_id)
+                         ->where('usr.is_delete','=','1')
+                         ->where('com.is_delete','=','1')
+                         ->get();
+        return $admindata;
+    }
+
 }

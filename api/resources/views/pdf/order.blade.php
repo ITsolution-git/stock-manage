@@ -68,12 +68,16 @@
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
           <td align="left" valign="top" width="25%">
-            <img src="../../../../images/logo-stokkup-login.png" alt="Logo" />
+            <img src="<?php echo url().'/images/logo-stokkup.png';?>" alt="Logo" />
           </td>
           <td align="center" valign="top" width="25%">
-            <h1>Stokkup</h1>
-            <p>Address</p>
-            <p>www.url.com</p>
+            <h1>{{$data['company_detail'][0]->name}}</h1>
+            <p>{{$data['company_detail'][0]->address}}</p>
+            <p>{{$data['company_detail'][0]->city}}</p>
+            <p>{{$data['company_detail'][0]->state}}</p>
+            <p>{{$data['company_detail'][0]->country}}</p>
+            <p>{{$data['company_detail'][0]->zip}}</p>
+            <p>{{$data['company_detail'][0]->url}}</p>
           </td>
           <td align="right" valign="top" width="50%">
             <p><strong>Estimate #{{$data['order']->id}}</strong></p>

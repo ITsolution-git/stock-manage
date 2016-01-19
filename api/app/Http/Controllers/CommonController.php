@@ -299,6 +299,16 @@ class CommonController extends Controller {
         }
         return response()->json(['data'=>$response]);
     }
+
+    public function getCompanyDetail()
+    {
+        $post = Input::all();
+        
+        $listData = $this->common->getCompanyDetail($post[0]);
+        return $this->return_response($listData);
+    }
+
+
     /**
     * Get Array
     * @return json data

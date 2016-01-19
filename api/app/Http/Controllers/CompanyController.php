@@ -32,6 +32,7 @@ class CompanyController extends Controller {
 	{
 
 			$getData = $this->company->GetCompanyData();
+			
 			$count = count($getData);
 			$success = 1;
 			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
@@ -157,9 +158,11 @@ class CompanyController extends Controller {
 	{
 		$post = Input::all();
 
+
 		if(!empty($post['id']))
 		{
 			$getData = $this->company->DeleteCompanyData($post['id']);
+
 			if($getData)
 			{
 				$message = DELETE_RECORD;

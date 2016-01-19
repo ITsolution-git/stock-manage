@@ -22,6 +22,7 @@ class OrderController extends Controller {
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
+        ini_set('xdebug.max_nesting_level', 256);
     }
 
     /**
@@ -844,6 +845,7 @@ class OrderController extends Controller {
     */
     public function savePDF()
     {
+        $company_detail['company_detail'] = json_decode($_POST['company_detail']);
         $embroidery_switch_count['embroidery_switch_count'] = json_decode($_POST['embroidery_switch_count']);
         $price_screen_primary['price_screen_primary'] = json_decode($_POST['price_screen_primary']);
         $price_grid['price_grid'] = json_decode($_POST['price_grid']);
@@ -853,8 +855,8 @@ class OrderController extends Controller {
         $order_line['order_line'] = json_decode($_POST['order_line']);
         $order['order'] = json_decode($_POST['order']);
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
-        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count);
-      
+        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail);
+        
         $pdf = App::make('dompdf');
         $pdf = PDF::loadView('pdf.order',array('data'=>$combine_array));
         //return $pdf->download('order.pdf');

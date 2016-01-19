@@ -33,7 +33,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="value in account.records" ng-if="account.success>0" id="comp_{{value.id}}">
+          <tr ng-repeat="value in company.records" ng-if="company.success>0" id="comp_{{value.id}}">
               <td>{{value.name}}</td>
               <td>{{value.user_name}}</td>
               <td>{{value.email}}</td>
@@ -45,7 +45,7 @@
                 <button class="btn btn-xs btn-danger" ng-click="deletecompany(value.id)">Delete</button>
               </td>
           </tr>
-          <tr ng-if="account.success==0"><td>{{account.message}}</td></tr>
+          <tr ng-if="company.success==0"><td>{{company.message}}</td></tr>
         </tbody>
         <tfoot class="hide-if-no-paging">
           <tr>

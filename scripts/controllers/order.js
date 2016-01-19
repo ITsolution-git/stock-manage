@@ -145,6 +145,20 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
     }
 
+    $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+                    
+                    if(result.data.success == '1') 
+                    {
+                        $scope.allCompanyDetail =result.data.records;
+                    } 
+                    else
+                    {
+                        $scope.allCompanyDetail=[];
+                    }
+                });
+
+
+
     function get_distribution_list(order_id,client_id)
     {
         $("#ajax_loader").show();
@@ -2132,7 +2146,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
      $scope.printPdf=function()
         {
-             
+
+                
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/order/savePDF';
@@ -2187,6 +2202,12 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         input_embroidery_switch_count.name = 'embroidery_switch_count';
                         input_embroidery_switch_count.setAttribute('value', JSON.stringify($scope.embroidery_switch_count));
                         form.appendChild(input_embroidery_switch_count);
+
+
+                        var input_company_detail = document.createElement('input');
+                        input_company_detail.name = 'company_detail';
+                        input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
+                        form.appendChild(input_company_detail);
 
                         document.body.appendChild(form);
                         form.submit();  
