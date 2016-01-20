@@ -29,6 +29,18 @@
             </div>
 
 
+
+            <div class="form-group">
+              <label>Photo</label>
+
+               <img  ng-if="company.company_logo" ng-src="{{company.company_url_photo}}" alt="" height="100" width="100" class="img-responsive"/> 
+            
+                <input type='file' data-ng-model="company.company_logo" base-sixty-four-input>
+            </div>
+
+
+           
+
              <div class="form-group">
               <label>URL</label>
               <input type="text" class="form-control col-md-6 m-b" data-ng-model="company.url" placeholder="URL">

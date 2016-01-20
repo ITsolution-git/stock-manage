@@ -68,6 +68,7 @@ class Company extends Model {
     public function SaveCompanyData($post)
     {
 
+
         $new_post = array('address'=>$post['address'],'city'=>$post['city'],'state'=>$post['state'],'country'=>$post['country'],'zip'=>$post['zip'],'url'=>$post['url'],'company_logo'=>$post['company_logo']);
     	
         unset($post['address']);
@@ -77,6 +78,10 @@ class Company extends Model {
         unset($post['zip']);
         unset($post['url']);
         unset($post['company_logo']);
+        
+        if(isset($post['company_url_photo'])){
+         unset($post['company_url_photo']);
+        }
 
          
         if(!empty($post['id']))
