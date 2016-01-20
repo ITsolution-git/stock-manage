@@ -35,5 +35,6 @@ angular
     'app.ui.services',
     'app.services',
     'checklist-model',
-    'angularjs-dropdown-multiselect'
+    'angularjs-dropdown-multiselect',
+    'naif.base64'
   ]);

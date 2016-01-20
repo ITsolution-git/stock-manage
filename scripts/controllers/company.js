@@ -98,7 +98,6 @@ app.controller('companyEditCtrl', ['$scope','$http','$stateParams','$location','
                           // COMPANY EDIT TIME CALL
                           $scope.editcompany = function () {
 
-                          
                             $scope.company.id= $stateParams.id;
                             $scope.company.parent_id=$scope.parent_id;
                             $scope.company.role_id = $scope.company_roleid;

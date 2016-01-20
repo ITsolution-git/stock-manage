@@ -91,6 +91,7 @@
   <script src="scripts/common/services.js"></script>
   <script src="scripts/common/angular-flash.js"></script>
   <script src="scripts/common/date.js"></script>
+  <script src="scripts/services/angular-base64-upload.js"></script>
   
   
 
