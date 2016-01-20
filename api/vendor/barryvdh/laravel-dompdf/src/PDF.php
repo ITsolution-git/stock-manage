@@ -141,6 +141,7 @@ class PDF{
      */
     public function loadView($view, $data = array(), $mergeData = array(), $encoding = null){
         $html = $this->view->make($view, $data, $mergeData)->render();
+        //echo $html;exit;
         return $this->loadHTML($html, $encoding);
     }
 
