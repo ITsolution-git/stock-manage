@@ -7,22 +7,54 @@
 
         <div class="panel panel-default">
           <div class="panel-heading bg-white">
-            <span class="font-bold">Create Account</span>
-             <button class="btn btn-default m-b-lg pull-right" ui-sref="account.list">Cancel</button>
+            <span class="font-bold">Create Company</span>
+             <button class="btn btn-default m-b-lg pull-right" ui-sref="company.list">Cancel</button>
           </div>
           <div class="panel-body">
           <div class="form-group">
               <label>Full Name</label>
 
-              <input type="text" class="form-control" data-ng-model="account.name"  required >
+              <input type="text" class="form-control" data-ng-model="company.name"  required >
             </div>
+
+
+            <div class="form-group">
+              <label>Address</label>
+
+              <input type="text" class="form-control col-md-6 m-b" data-ng-model="company.address" placeholder="Address">
+              <input type="text" class="form-control col-md-6 m-b" data-ng-model="company.city" placeholder="City">
+              <input type="text" class="form-control col-md-6 m-b" data-ng-model="company.state" placeholder="State">
+              <input type="text" class="form-control col-md-6 m-b" data-ng-model="company.country" placeholder="Country">
+              <input type="text" class="form-control col-md-6 m-b" data-ng-model="company.zip" placeholder="Zip Code">
+            </div>
+
+
+
+            <div class="form-group">
+              <label>Photo</label>
+
+               <img  ng-if="company.company_logo" ng-src="{{company.company_url_photo}}" alt="" height="100" width="100" class="img-responsive"/> 
+            
+                <input type='file' data-ng-model="company.company_logo" base-sixty-four-input>
+            </div>
+
+
+           
+
+             <div class="form-group">
+              <label>URL</label>
+              <input type="text" class="form-control col-md-6 m-b" data-ng-model="company.url" placeholder="URL">
+            </div>
+
+
+
             <div class="form-group">
               <label>Username <em class="text-muted">(allow 'a-z,A-Z,0-9', 4-20 length)</em></label>
                       <input 
                           type="text" 
                           class="form-control" 
                           name="user_name"
-                          data-ng-model="account.user_name" 
+                          data-ng-model="company.user_name" 
                           ng-pattern="/^[a-zA-Z0-9]{4,20}$/" 
                           required >
 
@@ -36,7 +68,7 @@
                   name="comp_email"
                   id="comp_email"
                   class="form-control" 
-                  data-ng-model="account.email" 
+                  data-ng-model="company.email" 
                   
                   required >
 
@@ -48,11 +80,11 @@
               <div class="row">
               <div class="col-sm-6 m-b">
                 <label>Enter password</label>
-                <input type="password" class="form-control" name="account.password" ng-model="account.password" required >   
+                <input type="password" class="form-control" name="company.password" ng-model="company.password" required >   
               </div>
               <div class="col-sm-6 m-b">
                 <label>Confirm password</label>
-                <input type="password" class="form-control" name="confirm_password" required ng-model="confirm_password" ui-validate=" '$value==account.password' " ui-validate-watch=" 'password' ">
+                <input type="password" class="form-control" name="confirm_password" required ng-model="confirm_password" ui-validate=" '$value==company.password' " ui-validate-watch=" 'password' ">
                 <span ng-show='form.confirm_password.$error.validator'>Passwords do not match!</span>
               </div>
             </div>
@@ -61,7 +93,7 @@
               <div class="col-sm-12 m-b">
                <label>Status</label>
                   <label class="ui-switch ui-switch-md bg-info m-t-xs">
-                    <input type="checkbox" ng-model="account.status" ng-true-value="'1'" ng-false-value="'0'" name="status">
+                    <input type="checkbox" ng-model="company.status" ng-true-value="'1'" ng-false-value="'0'" name="status">
                     <i></i>
                   </label>
                 </div>
@@ -69,8 +101,8 @@
           </div>
            <footer class="panel-footer text-right">
           
-            <button type="submit"  ng-if="CurrentController=='companyAddCtrl'"  ng-click="addcompany(account)"  class="btn btn-info">Add</button>
-            <button type="submit"  ng-if="CurrentController=='companyEditCtrl'" ng-click="editcompany(account)" class="btn btn-info">Save</button>
+            <button type="submit"  ng-if="CurrentController=='companyAddCtrl'"  ng-click="addcompany(company)"  class="btn btn-info">Add</button>
+            <button type="submit"  ng-if="CurrentController=='companyEditCtrl'" ng-click="editcompany(company)" class="btn btn-info">Save</button>
           </footer>
         </div>
       </form>

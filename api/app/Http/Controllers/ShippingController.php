@@ -11,6 +11,8 @@ use App\Common;
 use App\Purchase;
 use App\Order;
 use DB;
+use App;
+use Barryvdh\DomPDF\Facade as PDF;
 
 use Request;
 
@@ -266,5 +268,91 @@ class ShippingController extends Controller {
         }
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
+    }
+
+    public function createPDF()
+    {
+        $post = Input::all();
+        $shipping['shipping'] = json_decode($post['shipping']);
+        $shipping['shipping_type'] = json_decode($post['shipping_type']);
+        $shipping['shipping_items'] = json_decode($post['shipping_items']);
+        $shipping_boxes = json_decode($post['shipping_boxes']);
+
+        $actual_total = 0;
+        $xs_qnty = 0;
+        $s_qnty = 0;
+        $m_qnty = 0;
+        $l_qnty = 0;
+        $xl_qnty = 0;
+        $xxl_qnty = 0;
+        $xxxl_qnty = 0;
+        $total_qnty = 0;
+        $total_md = 0;
+        $total_spoil = 0;
+
+        foreach ($shipping_boxes as $row) {
+
+            if($row->size == 'XS') {
+                $xs_qnty += $row->qnty;
+            }
+            else if($row->size == 'S') {
+                $s_qnty += $row->qnty;
+            }
+            else if($row->size == 'M') {
+                $m_qnty += $row->qnty;
+            }
+            else if($row->size == 'L') {
+                $l_qnty += $row->qnty;
+            }
+            else if($row->size == 'XL') {
+                $xl_qnty += $row->qnty;
+            }
+            else if($row->size == '2XL') {
+                $xxl_qnty += $row->qnty;
+            }
+            else if($row->size == '3XL') {
+                $xxxl_qnty += $row->qnty;
+            }
+
+            $total_qnty += $row->qnty;
+            $actual_total += $row->actual;
+            $total_md += $row->md;
+            $total_spoil += $row->spoil;
+        }
+
+        $other_data['total_box'] = count($shipping_boxes);
+        $other_data['total_pieces'] = $actual_total;
+
+        $other_data['xs_qnty'] = $xs_qnty;
+        $other_data['s_qnty'] = $s_qnty;
+        $other_data['m_qnty'] = $m_qnty;
+        $other_data['l_qnty'] = $l_qnty;
+        $other_data['xl_qnty'] = $xl_qnty;
+        $other_data['2xl_qnty'] = $xxl_qnty;
+        $other_data['3xl_qnty'] = $xxxl_qnty;
+
+        $other_data['total_qnty'] = $total_qnty;
+        $other_data['total_md'] = $total_md;
+        $other_data['total_spoil'] = $total_spoil;
+
+        $shipping['shipping_boxes'] = $shipping_boxes;
+        $shipping['other_data'] = $other_data;
+
+        $pdf = App::make('dompdf');
+        if($post['print_type'] == 'manifest')
+        {
+            $pdf = PDF::loadView('pdf.shipping_manifest',$shipping);
+            return $pdf->stream('Print Manifest');
+        }
+        else if($post['print_type'] == 'report')
+        {
+            $pdf = PDF::loadView('pdf.shipping_report',$shipping);
+            return $pdf->stream('Shipping Report');
+        }
+        else if($post['print_type'] == 'label')
+        {
+            $pdf = PDF::loadView('pdf.shipping_label',$shipping);
+            return $pdf->stream('Shipping Label');
+        }
     }
 }

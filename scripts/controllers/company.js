@@ -17,10 +17,10 @@ app.controller('companyListCtrl', ['$scope','$http','$location','$state','AuthSe
                                          });
                                       }
                                   } // DELETE COMPANY FINISH
-                            var account = {};
+                            var company = {};
                             
                             $http.get('api/public/admin/company/list').success(function(result) {
-                                 $scope.account  = result.data; 
+                                 $scope.company  = result.data; 
                              });
                       
                        
@@ -40,9 +40,9 @@ app.controller('companyAddCtrl', ['$scope','$http','$location','$state','AuthSer
                        
                           // COMPANY ADD TIME CALL
                          $scope.addcompany = function () {
-                         	$scope.account.role_id = $scope.app.company_roleid;
-                            $scope.account.parent_id = $scope.parent_id;
-                            $http.post('api/public/admin/company/add',$scope.account).success(function(result, status, headers, config) {
+                         	$scope.company.role_id = $scope.app.company_roleid;
+                            $scope.company.parent_id = $scope.parent_id;
+                            $http.post('api/public/admin/company/add',$scope.company).success(function(result, status, headers, config) {
         
                                           if(result.data.success=='1')
                                           {
@@ -80,8 +80,8 @@ app.controller('companyEditCtrl', ['$scope','$http','$stateParams','$location','
 
                               		if(Listdata.data.success==1)
                               		{
-                                      $scope.account = Listdata.data.records[0];
-                                      $scope.account.password = 'testcodal';
+                                      $scope.company = Listdata.data.records[0];
+                                      $scope.company.password = 'testcodal';
                                       $scope.confirm_password = 'testcodal';
                                   	}
                                   	else
@@ -98,10 +98,10 @@ app.controller('companyEditCtrl', ['$scope','$http','$stateParams','$location','
                           // COMPANY EDIT TIME CALL
                           $scope.editcompany = function () {
 
-                            $scope.account.id= $stateParams.id;
-                            $scope.account.parent_id=$scope.parent_id;
-                            $scope.account.role_id = $scope.company_roleid;
-                            $http.post('api/public/admin/company/save',$scope.account).success(function(result, status, headers, config) {
+                            $scope.company.id= $stateParams.id;
+                            $scope.company.parent_id=$scope.parent_id;
+                            $scope.company.role_id = $scope.company_roleid;
+                            $http.post('api/public/admin/company/save',$scope.company).success(function(result, status, headers, config) {
         
                                           if(result.data.success=='1')
                                           {

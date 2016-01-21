@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Company;
 use DB;
+use Image;
 
 use Request;
 // CREATE COMPANY AND SET RIGHTS, MANAGE BY SUPER ADMIN ONLY
@@ -32,6 +33,7 @@ class CompanyController extends Controller {
 	{
 
 			$getData = $this->company->GetCompanyData();
+			
 			$count = count($getData);
 			$success = 1;
 			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
@@ -55,6 +57,23 @@ class CompanyController extends Controller {
 		{
 			$post['password'] = md5($post['password']);
 			$post['created_date'] = date('Y-m-d H:i:s');
+
+
+			if(isset($post['company_logo']['base64'])){
+
+                $split = explode( '/', $post['company_logo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url = "company-".time().".".$type;
+				$path = base_path() . "/public/uploads/company/" . $png_url;
+				$img = $post['company_logo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				$post['company_logo'] = $png_url;
+			   }
+
+
 			$getData = $this->company->InsertCompanyData($post);
 			
 			if($getData)
@@ -89,6 +108,10 @@ class CompanyController extends Controller {
 		if(!empty($id) && !empty($company_id))
 		{
 			$getData = $this->company->GetCompanybyId($id,$company_id);
+			
+
+			$getData[0]->company_url_photo = UPLOAD_PATH.'company/'.$getData[0]->company_logo;
+
 			$count = count($getData);
 			if($count>0)
 				{
@@ -131,6 +154,26 @@ class CompanyController extends Controller {
 					$post['password']=md5($post['password']);
 				}
 			$post['updated_date'] = date('Y-m-d H:i:s');
+
+
+                if(isset($post['company_logo']['base64'])){
+
+            	$split = explode( '/', $post['company_logo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url = "company-".time().".".$type;
+				$path = base_path() . "/public/uploads/company/" . $png_url;
+				$img = $post['company_logo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['company_logo'] = $png_url;
+			   }
+
+
+
 			$getData = $this->company->SaveCompanyData($post);
 			$message = UPDATE_RECORD;
 			$success = 1;
@@ -157,9 +200,11 @@ class CompanyController extends Controller {
 	{
 		$post = Input::all();
 
+
 		if(!empty($post['id']))
 		{
 			$getData = $this->company->DeleteCompanyData($post['id']);
+
 			if($getData)
 			{
 				$message = DELETE_RECORD;

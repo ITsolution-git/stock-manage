@@ -66,10 +66,11 @@ class Order extends Model {
         $whereOrderPositionConditions = ['order_id' => $data['id']];
         $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
 
-        $listArray = ['o.*','p.description as product_description'];
+        $listArray = ['o.*','p.description as product_description','p.name as product_name','c.name as color_name'];
         $whereOrderLineConditions = ['order_id' => $data['id']];
         $orderLineData = DB::table('order_orderlines as o')
                         ->leftJoin('products as p','o.product_id','=','p.id')
+                        ->leftJoin('color as c','o.color_id','=','c.id')
                         ->select($listArray)
                         ->where($whereOrderLineConditions)->get();
 

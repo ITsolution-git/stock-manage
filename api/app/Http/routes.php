@@ -116,6 +116,7 @@ Route::get('common/getStaffList', 'CommonController@getStaffList');
 Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
 Route::get('common/getMiscData', 'CommonController@getMiscData');
 Route::get('common/getAllColorData', 'CommonController@getAllColorData');
+Route::post('common/getCompanyDetail', 'CommonController@getCompanyDetail');
 
 
 Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
@@ -218,3 +219,4 @@ Route::post('shipping/updateShipping', 'ShippingController@updateShipping');
 Route::post('shipping/DeleteBox', 'ShippingController@DeleteBox');
 Route::post('shipping/addShippingItem', 'ShippingController@addShippingItem');
 Route::post('shipping/getBoxItems', 'ShippingController@getBoxItems');
+Route::post('shipping/createPDF', 'ShippingController@createPDF');

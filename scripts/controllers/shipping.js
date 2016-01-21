@@ -357,6 +357,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
+                get_shipping_details();
             });
     }
     $scope.create_box_shipment = function(shipping_items)
@@ -426,6 +427,39 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     }
     $scope.print_pdf = function(method)
     {
+        var target;
+        var form = document.createElement("form");
+        form.action = 'api/public/shipping/createPDF';
+        form.method = 'post';
+        form.target = target || "_blank";
+        form.style.display = 'none';
 
+        var print_type = document.createElement('input');
+        print_type.name = 'print_type';
+        print_type.setAttribute('value', method);
+        form.appendChild(print_type);
+
+        var shipping = document.createElement('input');
+        shipping.name = 'shipping';
+        shipping.setAttribute('value', JSON.stringify($scope.shipping));
+        form.appendChild(shipping);
+
+        var shipping_type = document.createElement('input');
+        shipping_type.name = 'shipping_type';
+        shipping_type.setAttribute('value', JSON.stringify($scope.shipping_type));
+        form.appendChild(shipping_type);
+
+        var shipping_items = document.createElement('input');
+        shipping_items.name = 'shipping_items';
+        shipping_items.setAttribute('value', JSON.stringify($scope.shipping_items));
+        form.appendChild(shipping_items);
+
+        var shipping_boxes = document.createElement('input');
+        shipping_boxes.name = 'shipping_boxes';
+        shipping_boxes.setAttribute('value', JSON.stringify($scope.shipping_boxes));
+        form.appendChild(shipping_boxes);
+
+        document.body.appendChild(form);
+        form.submit();
     }
 }]);
