@@ -2147,7 +2147,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
      $scope.printPdf=function()
         {
 
-                
+
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/order/savePDF';
@@ -2208,6 +2208,25 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         input_company_detail.name = 'company_detail';
                         input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
                         form.appendChild(input_company_detail);
+
+
+                        var input_staff_list = document.createElement('input');
+                        input_staff_list.name = 'staff_list';
+                        input_staff_list.setAttribute('value', JSON.stringify($scope.staffList));
+                        form.appendChild(input_staff_list);
+
+
+                        var input_all_company = document.createElement('input');
+                        input_all_company.name = 'all_company';
+                        input_all_company.setAttribute('value', JSON.stringify($scope.allCompany));
+                        form.appendChild(input_all_company);
+
+
+                        var input_all_client_main_data = document.createElement('input');
+                        input_all_client_main_data.name = 'client_main_data';
+                        input_all_client_main_data.setAttribute('value', JSON.stringify($scope.client_main_data));
+                        form.appendChild(input_all_client_main_data);
+
 
                         document.body.appendChild(form);
                         form.submit();  

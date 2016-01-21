@@ -20,8 +20,8 @@
     line-height: 24px;
   }
   p {
-    font-size: 14px;
-    line-height: 19px;
+    font-size: 13px;
+    line-height: 16px;
     width: 100%;
   }
   div {
@@ -133,17 +133,37 @@
         <tr>
           <td align="left" valign="top" width="48%">
             <div class="prntBrdr">
+
+              <?php $company_name='';;?>
+             @foreach ($data['all_company'] as $key => $companydata)
+             <?php 
+             if($companydata->client_id == $data['order']->client_id){
+                 $company_name = $companydata->client_company;
+             }?>
+             @endforeach
+
+
+             <?php $main_contact_name='';?>
+             @foreach ($data['client_main_data'] as $key => $maindata)
+             <?php 
+             if($maindata->contact_main == '1'){
+                 $main_contact_name = $maindata->first_name.' '.$maindata->last_name;
+             }?>
+             @endforeach
+
+
+
               <h2>BILL TO</h2>
-              <p><strong>Misano Salon</strong></p>
-              <p>justina kowalzyk</p>
+              <p><strong>{{$company_name}}</strong></p>
+              <p>{{$main_contact_name}}</p>
             </div>
           </td>
           <td align="left" valign="top" width="4%">&nbsp;</td>
           <td align="right" valign="top" width="48%">
             <div class="prntBrdr">
               <h2>SHIP TO</h2>
-              <p><strong>Misano Salon</strong></p>
-              <p>justina kowalzyk</p>
+              <p><strong>{{$company_name}}</strong></p>
+              <p>{{$main_contact_name}}</p>
             </div>
           </td>
         </tr>
@@ -171,12 +191,19 @@
         </thead>
         <tbody>
           <tr>
+             <?php $staff_name='';;?>
+             @foreach ($data['staff_list'] as $key => $staffdata)
+             <?php 
+             if($staffdata->id == $data['order']->sales_id){
+                 $staff_name = $staffdata->first_name.' '.$staffdata->last_name;
+             }?>
+             @endforeach
             <td align="left" valign="top" class="brdrBox" width="20%"></td>
-            <td align="left" valign="top" class="brdrBox" width="20%">&nbsp;Dark Room</td>
+            <td align="left" valign="top" class="brdrBox" width="20%"><?php echo $staff_name;?></td>
             <td align="left" valign="top" class="brdrBox" width="10%"></td>
             <td align="left" valign="top" class="brdrBox" width="10%"></td>
-            <td align="left" valign="top" class="brdrBox" width="10%"></td>
-            <td align="left" valign="top" class="brdrBox" width="20%"></td>
+            <td align="left" valign="top" class="brdrBox" width="10%">{{$data['order']->shipping_by}}</td>
+            <td align="left" valign="top" class="brdrBox" width="20%">{{$data['order']->in_hands_by}}</td>
             <td align="left" valign="top" class="brdrBox" width="20%"></td>
           </tr>
         </tbody>
@@ -204,9 +231,9 @@
         <tbody>
           @foreach ($data['order_line'] as $key => $orderline)
           <tr>
-            <td align="left" valign="top" class="brdrBox" width="35%">{{$orderline->product_name}} / <br/> {{$orderline->product_description}}</td>
-            <td align="center" valign="top" class="brdrBox" width="10%">{{$orderline->color_name}}</td>
-            <td align="left" valign="top" class="brdrBox" width="30%">
+            <td align="left" valign="top" class="brdrBox" width="35%" style="font-size:12px;">{{$orderline->product_name}} / {{$orderline->product_description}}</td>
+            <td align="center" valign="top" class="brdrBox" width="10%" style="font-size:12px;">{{$orderline->color_name}}</td>
+            <td align="left" valign="top" class="brdrBox" width="30%" style="font-size:12px;">
 
               @foreach ($orderline->items as $key => $order_size_array)
               <?php if($order_size_array->qnty > 0){?>
@@ -215,9 +242,9 @@
               @endforeach
 
             </td>
-            <td align="center" valign="top" class="brdrBox" width="5%">{{$orderline->os}}</td>
-            <td align="center" valign="top" class="brdrBox" width="10%">{{$orderline->qnty}}</td>
-            <td align="right" valign="top" class="brdrBox" width="10%">{{$orderline->peritem}}</td>
+            <td align="center" valign="top" class="brdrBox" width="5%" style="font-size:12px;">{{$orderline->os}}</td>
+            <td align="center" valign="top" class="brdrBox" width="10%" style="font-size:12px;">{{$orderline->qnty}}</td>
+            <td align="right" valign="top" class="brdrBox" width="10%" style="font-size:12px;">{{$orderline->peritem}}</td>
           </tr>
           @endforeach
         </tbody>
@@ -353,10 +380,10 @@
         $count++; ?>
         @endforeach
       </div>
-    </div>
+    
       
     <div class="width100" style="position:relative; clear:both; padding-top:20px; padding-bottom:20px;">
-      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
         <tr>
           <td align="center" valign="top" width="49%">
             <img src="<?php echo url().'/images/c1.jpg';?>" alt="Logo" style="display:block; width:150px; height:150px;" width="150" height="150" />
@@ -371,7 +398,7 @@
 
     <div class="width100" style="position:relative; clear:both;">
       <div class="width60" style="float:left">
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
           <tr>
             <td colspan="2">&nbsp;</td>
           </tr>        
@@ -392,7 +419,7 @@
       </div>
 
       <div class="width40" style="float:right">
-          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
             <tr>
               <td align="right" valign="top" width="45%">Total Qnty</td>
               <td align="left" valign="top" width="5%">&nbsp;</td>
