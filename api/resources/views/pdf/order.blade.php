@@ -22,6 +22,7 @@
   p {
     font-size: 14px;
     line-height: 19px;
+    width: 100%;
   }
   div {
     display: inline-block;
@@ -65,10 +66,10 @@
   div.prntBrdr {
     border:1px solid #000000;
     border-radius: 4px;
-    padding-top:15px;
-    padding-right:15px;
-    padding-left:15px;
-    padding-bottom:15px;
+    padding-top:8px;
+    padding-right:8px;
+    padding-left:8px;
+    padding-bottom:8px;
     text-align: left;  
     width: 100%;  
   }
@@ -96,15 +97,19 @@
     font-size: 10px;
   }
   div.prntBrdrBox {
-      border:1px solid #000000;      
-      height: 30px; 
-      width: 45px;
-    }
+    border:1px solid #000000;      
+    height: 40px; 
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  p.chkboxes {
+    height: 40px;
+  }
   </style>
 </head>
 <body>
   <div class="mainContainer">
-
     <div class="width100">
       <div class="width15">
         <img src="<?php echo url().'/uploads/company/'.$data["company_detail"][0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" />
@@ -219,21 +224,21 @@
       </table>
     </div>
 
-    <div class="width100" style="overflow:hidden; position:relative; clear:both;">
-                
+    <div class="width100" style="overflow:hidden; position:relative; clear:both; margin-top:15px;">
+         
+        <p style="padding-top:10px; padding-bottom:10px;">       
         @foreach ($data['order_item'] as $orderitem)
         <?php if($orderitem->selected == '1'){?>        
-          <p>{{$orderitem->item}} @ {{$orderitem->charge}} </p>        
+          <p>{{$orderitem->item}} @ {{$orderitem->charge}}</p>
         <?php }?>
         @endforeach
-        
-        <p style="padding-top:10px; padding-bottom:10px;">Order Item @ 500</p>
+        </p>
 
         <?php $count = 1; ?>
         @foreach ($data['order_position'] as $position)
         
         <?php if($count <= '6'){?>          
-        <div style="float:left; width:16%; margin-left:1px;">
+        <div style="float:left; width:16%; margin-left:1px; background:#cccccc;">
         <?php $pos_id = $position->position_id; 
         $placement_id = $position->placement_type;
         $display_label = '';
@@ -245,89 +250,104 @@
         } 
 
         ?>
-        <p>Position: {{$data['order_misc']->position->$pos_id->value}} &nbsp;<strong><?php echo $display_label?>{{$position->color_stitch_count}}</strong></p>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Position:</strong><br/>
+          {{$data['order_misc']->position->$pos_id->value}}<br/>
+        </p>
 
-        <?php if($position->discharge_qnty > '0'){
-        $discharge_price = $position->discharge_qnty * $data['price_grid']->discharge; ?>
-        <p>Discharge Ink @ <?php echo $discharge_price;?></p>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong><?php echo $display_label?>&nbsp;</strong>
+          {{$position->color_stitch_count}}
+        </p>
 
-        <?php }?>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Discharge Ink:</strong><br/>
+          <?php if($position->discharge_qnty > '0'){
+          $discharge_price = $position->discharge_qnty * $data['price_grid']->discharge; ?>
+           <?php echo $discharge_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Speciality Ink:</strong><br/>
+          <?php if($position->speciality_qnty > '0'){
+          $speciality_price = $position->speciality_qnty * $data['price_grid']->specialty; ?>
+          <?php echo $speciality_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
-        <?php if($position->speciality_qnty > '0'){
-        $speciality_price = $position->speciality_qnty * $data['price_grid']->specialty; ?>
-        <p>Speciality Ink @ <?php echo $speciality_price;?></p>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Foil:&nbsp;</strong>
+          <?php if($position->foil_qnty > '0'){
+          $foil_price = $position->foil_qnty * $data['price_grid']->foil; ?>
+          <?php echo $foil_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
-        <?php }?>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Ink Charge:&nbsp;</strong>
+          <?php if($position->ink_charge_qnty > '0'){
+          $ink_price = $position->ink_charge_qnty * $data['price_grid']->ink_changes; ?>
+          <?php echo $ink_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong># on Dark:&nbsp;</strong>
+          <?php if($position->number_on_dark_qnty > '0'){
+          $dark_price = $position->number_on_dark_qnty * $data['price_grid']->number_on_dark; ?>
+          <?php echo $dark_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
-        <?php if($position->foil_qnty > '0'){
-        $foil_price = $position->foil_qnty * $data['price_grid']->foil; ?>
-        <p>Foil @ <?php echo $foil_price;?></p>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong># on Light:&nbsp;</strong>
+          <?php if($position->number_on_light_qnty > '0'){
+          $light_price = $position->number_on_light_qnty * $data['price_grid']->number_on_light; ?>
+          <?php echo $light_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
-        <?php }?>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Oversize Screen:</strong><br/>
+          <?php if($position->oversize_screens_qnty > '0'){
+          $oversize_price = $position->oversize_screens_qnty * $data['price_grid']->over_size_screens; ?>
+          <?php echo $oversize_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Press Setup:&nbsp;</strong>
+          <?php if($position->press_setup_qnty > '0'){
+          $press_setup_price = $position->press_setup_qnty * $data['price_grid']->press_setup; ?>
+          <?php echo $press_setup_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
-        <?php if($position->ink_charge_qnty > '0'){
-        $ink_price = $position->ink_charge_qnty * $data['price_grid']->ink_changes; ?>
-        <p>Ink Charge @ <?php echo $ink_price;?></p>
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+          <strong>Screen Fee:&nbsp;</strong>
+          <?php if($position->screen_fees_qnty > '0'){
+          $screen_fees_price = $position->screen_fees_qnty * $data['price_grid']->screen_fees; ?>
+          <?php echo $screen_fees_price;?>
+          <?php } else { echo "NA";  }?>
+        </p>
 
-        <?php }?>
-
-
-        <?php if($position->number_on_dark_qnty > '0'){
-        $dark_price = $position->number_on_dark_qnty * $data['price_grid']->number_on_dark; ?>
-        <p># on Dark @ <?php echo $dark_price;?></p>
-
-        <?php }?>
-
-        <?php if($position->number_on_light_qnty > '0'){
-        $light_price = $position->number_on_light_qnty * $data['price_grid']->number_on_light; ?>
-        <p># on Light @ <?php echo $light_price;?></p>
-
-        <?php }?>
-
-
-        <?php if($position->oversize_screens_qnty > '0'){
-        $oversize_price = $position->oversize_screens_qnty * $data['price_grid']->over_size_screens; ?>
-        <p>Oversize Screen @ <?php echo $oversize_price;?></p>
-
-        <?php }?>
-
-
-        <?php if($position->press_setup_qnty > '0'){
-        $press_setup_price = $position->press_setup_qnty * $data['price_grid']->press_setup; ?>
-        <p>Press Setup @ <?php echo $press_setup_price;?></p>
-
-        <?php }?>
-
-
-        <?php if($position->screen_fees_qnty > '0'){
-        $screen_fees_price = $position->screen_fees_qnty * $data['price_grid']->screen_fees; ?>
-        <p>Screen Fee @ <?php echo $screen_fees_price;?></p>
-
-        <?php }?>
-
+        <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
+        <strong>Screen Print:</strong><br/>
         <?php
-
-        if($position->color_stitch_count > '0'){
-
-
-        if($data['order_misc']->placement_type->$placement_id->id == '43'){
-
-        foreach ($data['price_screen_primary'] as $price_screen_primary) {
-
-        if($data['total_qty'] >= $price_screen_primary->range_low && $data['total_qty'] <= $price_screen_primary->range_high)
-        {
-        $price_field = 'pricing_'.$position->color_stitch_count.'c';
-        $screen_price_calc =  $price_screen_primary->$price_field; ?>
-        <p>Screen Print @ <?php echo $screen_price_calc;?></p>
-        <?php }
-        }
-        }
-        }
+        if($position->color_stitch_count > '0') {
+          if($data['order_misc']->placement_type->$placement_id->id == '43') {
+            foreach ($data['price_screen_primary'] as $price_screen_primary) {
+            if($data['total_qty'] >= $price_screen_primary->range_low && $data['total_qty'] <= $price_screen_primary->range_high) {
+              $price_field = 'pricing_'.$position->color_stitch_count.'c';
+              $screen_price_calc =  $price_screen_primary->$price_field;
+              echo $screen_price_calc;
+              }
+            }
+          } else { echo "NA"; }
+        }      
         ?>
-        <p>&nbsp;</p>
+        </p>
         </div>
         <?php }
         $count++; ?>
@@ -335,15 +355,15 @@
       </div>
     </div>
       
-    <div class="width100" style="position:relative; clear:both; padding-top:20px; padding-bottom:20px; border:2px solid #ccc;">
+    <div class="width100" style="position:relative; clear:both; padding-top:20px; padding-bottom:20px;">
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
           <td align="center" valign="top" width="49%">
-            <img src="<?php echo url().'/images/c1.jpg';?>" alt="Logo" style="display:block;" width="150" />
+            <img src="<?php echo url().'/images/c1.jpg';?>" alt="Logo" style="display:block; width:150px; height:150px;" width="150" height="150" />
           </td>
           <td align="left" valign="top" width="2%">&nbsp;</td>
           <td align="center" valign="top" width="49%">
-            <img src="<?php echo url().'/images/c2.jpg';?>" alt="Logo" style="display:block;" width="150" />
+            <img src="<?php echo url().'/images/c2.jpg';?>" alt="Logo" style="display:block; width:150px; height:150px;" width="150" height="150" />
           </td>
         </tr>
       </table>
@@ -463,6 +483,64 @@
             </tr>
           </table>
       </div>      
+    </div>
+
+    <div class="width100" style="position:relative; clear:both; text-align:center;">
+      <div class="width60" style="margin-left:0; margin-right:auto;">
+        <div style="float:left; width:23%; text-align:center;"><p class="chkboxes">Production QC</p></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+        <div style="float:left; width:23%; text-align:center;"><p class="chkboxes">QC</p></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+        <div style="float:left; width:23%; text-align:center;"><p class="chkboxes">Pack</p></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+        <div style="float:left; width:23%; text-align:center;"><p class="chkboxes">Ship</p></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+      </div>
+    </div>
+    <div class="width100" style="position:relative; clear:both; text-align:center;">
+      <div class="width60" style="margin-left:0; margin-right:auto;">
+        <div style="float:left; width:23%; text-align:center;"><div class="prntBrdrBox" style="margin-bottom:10px;"></div></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+        <div style="float:left; width:23%; text-align:center;"><div class="prntBrdrBox" style="margin-bottom:10px;"></div></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+        <div style="float:left; width:23%; text-align:center;"><div class="prntBrdrBox" style="margin-bottom:10px;"></div></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+        <div style="float:left; width:23%; text-align:center;"><div class="prntBrdrBox" style="margin-bottom:10px;"></div></div>
+        <div style="float:left; width:2%;">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="width100" style="position:relative; clear:both; text-align:center;">
+      <div class="width60" style="margin-left:0; margin-right:auto;">
+        @foreach ($data['order_item'] as $orderitem)
+        <?php if($orderitem->selected == '1'){?>
+          <div style="float:left; width:23%; text-align:center;">
+            <p class="chkboxes">{{$orderitem->item}}</p>
+            <div class="prntBrdrBox"></div>
+          </div>
+          <div style="float:left; width:2%;">&nbsp;</div>
+        <?php }?>
+        @endforeach
+
+        <?php $count = 1; 
+          $position_array = array();
+        ?>
+        @foreach ($data['order_position'] as $position)
+          <?php if($count <= '6'){?>
+          <?php $pos_id = $position->position_id; 
+          $placement_id = $position->placement_type;
+          if(!in_array($data['order_misc']->position->$pos_id->value,$position_array)) {
+          array_push($position_array, $data['order_misc']->position->$pos_id->value); 
+          ?>
+          <div style="float:left; width:23%; text-align:center;">
+            <p class="chkboxes">Print {{$data['order_misc']->position->$pos_id->value}}</p>
+            <div class="prntBrdrBox" style="margin-bottom:10px;"></div>
+          </div>
+          <div style="float:left; width:2%;">&nbsp;</div>
+          <?php }}
+          $count++; ?>
+        @endforeach
+      </div>
     </div>
 
     <div class="width100" style="position:relative; clear:both; text-align:center;">
