@@ -903,6 +903,48 @@ angular.module('app')
                             },
                        }
             })
+    /*==========================================
+          API MODULE CODE START
+    ==========================================*/        
+           .state('api', {
+                url: '/api',
+                views: {
+                    '': {
+                        templateUrl: 'views/layout.html'
+                    },
+                    'aside': {
+                        templateUrl: 'views/aside.html'
+                    },
+                    'content': {
+                        templateUrl: 'views/content.html'
+                    }
+                }
+            })
+           .state('api.list', {
+                url: '/list',
+                templateUrl: 'views/front/api/list.html',
+                controller: 'ApiController',
+                data : { title: 'API Listing' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+            .state('api.sns', {
+                url: '/sns/:id',
+                templateUrl: 'views/front/api/sns.html',
+                controller: 'SnsController',
+                data : { title: 'API Listing' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                       }
+            })
+    /*==========================================
+          API MODULE CODE END
+    ==========================================*/     
 
 ;
 
