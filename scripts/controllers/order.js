@@ -2091,10 +2091,10 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            angular.forEach($scope.orderLineAll, function(value) {
+            /*angular.forEach($scope.orderLineAll, function(value) {
                     $scope.calculate_all(value.id);
                     get_order_details(order_id,client_id,company_id)
-            });
+            });*/
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);
