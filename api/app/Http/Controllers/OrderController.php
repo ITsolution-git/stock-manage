@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Order;
 use App\Common;
 use App\Purchase;
+use App\Product;
 use DB;
 use App;
 use Request;
@@ -17,12 +18,12 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 class OrderController extends Controller { 
 
-	public function __construct(Order $order,Common $common,Purchase $purchase) 
+	public function __construct(Order $order,Common $common,Purchase $purchase,Product $product) 
  	{
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
-        ini_set('xdebug.max_nesting_level', 256);
+        $this->product = $product;
     }
 
     /**
@@ -99,8 +100,23 @@ class OrderController extends Controller {
             foreach($result['order_line_data'] as $row)
             {
                 $row->orderline_id = $row->id;
-                $row->products = $this->common->GetTableRecords('products',array('vendor_id' => $row->vendor_id),array());
-                $row->colors = $this->order->GetProductColor($row->product_id);
+                $row->products = array();
+                $row->colors = array();
+
+                if($row->vendor_id > 0)
+                {
+                    $row->products = $this->product->getVendorProducts(array('vendor_id' => $row->vendor_id));
+                }
+                if($row->product_id > 0)
+                {
+                    $colors = $this->product->GetProductColor(array('id'=>$row->product_id));
+                    $colors = unserialize($colors[0]->color_size_data);
+
+                    foreach($colors as $key=>$color) {
+                        $color_data = $this->product->GetColorDeail(array('id'=>$key));
+                        $row->colors[] = $color_data[0];
+                    }
+                }
 
                 $order_line_items = $this->order->getOrderLineItemById($row->id);
                 $count = 1;
@@ -175,7 +191,7 @@ class OrderController extends Controller {
         }
 
         $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
-        $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
+        //$products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
         $vendors = $this->common->getAllVendors();
         $staff = $this->common->getStaffList();
@@ -199,7 +215,6 @@ class OrderController extends Controller {
                                 'embroidery_switch_count' => $embroidery_switch_count,
                                 'vendors' => $vendors,
                                 'client' => $client,
-                                'products' => $products,
                                 'staff' => $staff,
                                 'brandCo' => $brandCo
                                 );
@@ -871,16 +886,27 @@ class OrderController extends Controller {
     {
         $post = Input::all();
         $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array());
-        $sizeData = $this->order->getOrderLineItemByColor($post['product_id'],$post['color_id']);
+        $sizeData = $this->product->GetProductColor(array('id'=>$post['product_id']));
+        $sizeData = unserialize($sizeData[0]->color_size_data);
+        $sizeData = $sizeData[$post['color_id']];
+
+        $count = count($sizeData);
+        $inner_count = 1;
+
+        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0'));
 
         foreach ($purchase_detail as $key => $value) {
             
-            $update_data = array('size' => $sizeData[$key]->size,
-                                'price' => $sizeData[$key]->price
-                                );
+            if($inner_count <= $count)
+            {
+                $update_data = array('size' => $sizeData[$key]['name'],
+                                    'price' => $sizeData[$key]['piece_price']
+                                    );
 
-            $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
-            $this->common->UpdateTableRecords('distribution_detail',array('id' => $value->id),$update_data);
+                $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
+                $this->common->UpdateTableRecords('distribution_detail',array('id' => $value->id),$update_data);
+                $inner_count++;
+            }
         }
         $this->common->UpdateTableRecords('order_orderlines',array('id' => $post['orderline_id']),array('color_id' => $post['color_id']));
         $data = array("success"=>1,"message"=>INSERT_RECORD);

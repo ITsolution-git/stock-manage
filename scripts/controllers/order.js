@@ -202,10 +202,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.client_main_data = result.data.client_main_data;
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
-                    //console.log($scope.orderLineAll[0].products);
                     $scope.order_items = result.data.order_item;
                     $scope.orderTaskAll = result.data.order_task;
-                   // $scope.order_po_data = result.data.order_po_data;
 
                     $scope.price_grid =result.data.price_grid[0];
                     $scope.allGrid =result.data.price_grid;
@@ -522,6 +520,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             if(value.id == position_id)
             {
+                if(value.placement_type == 43 || value.placement_type == 44)
+                {
+                    value.screen_fees_qnty = value.color_stitch_count;
+                }
                 var order_data = {};
                 order_data.table ='order_positions'
                 order_data.data =value
@@ -1782,7 +1784,6 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             }
             $("#ajax_loader").hide();
         }, 500);
-        
     }
 
     $scope.calulate_tax = function(tax_rate)
