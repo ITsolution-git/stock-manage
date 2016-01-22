@@ -28,7 +28,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','$timeout','s
                          $http.post('api/public/admin/login',user_data).success(function(result,event, status, headers, config) {
         
                           if(result.data.success == '0') {
-                                  var data = {"status": "error", "message": "Please check uername and Password"}
+                                  var data = {"status": "error", "message": "Please check Username and Password"}
                                   notifyService.notify(data.status, data.message);
                                   $state.go('access.signin');
                                   return false;
