@@ -726,5 +726,4 @@ public function saveColorSize($post)
 
         return $productColorSizeData;
     }
-
 }

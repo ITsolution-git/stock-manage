@@ -94,5 +94,32 @@ class Product extends Model {
         return $result;
     }
 
+    public function getVendorProducts($data)
+    {
+        $orderData = DB::table('products')
+                        ->where($data)
+                        ->skip(0)
+                        ->take(1000)
+                        ->get();
+        return $orderData;  
+    }
+
+    public function GetProductColor($data)
+    {
+        $listArray = ['color_size_data'];
+        $orderData = DB::table('products')
+                        ->select($listArray)
+                        ->where($data)
+                        ->get();
+        return $orderData;
+    }
+
+    public function GetColorDeail($data)
+    {
+        $orderData = DB::table('color')
+                        ->where($data)
+                        ->get();
+        return $orderData;
+    }
 
 }
