@@ -717,7 +717,7 @@ public function saveColorSize($post)
     {
         $listArray = ['c.id','c.name'];
 
-        $productColorSizeData = DB::table('product_color_size as p')
+        $productColorSizeData = DB::table('products as p')
                          ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
                          ->select($listArray)
                          ->where('p.product_id','=',$product_id)
