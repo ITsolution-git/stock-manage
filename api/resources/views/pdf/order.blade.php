@@ -62,7 +62,6 @@
   div.width15 {
     width: 15%;
   }
-
   div.prntBrdr {
     border:1px solid #000000;
     border-radius: 4px;
@@ -73,7 +72,6 @@
     text-align: left;  
     width: 100%;  
   }
-
   table, tr, td, th {
     margin: 0;
     padding: 0;
@@ -269,13 +267,11 @@
         <?php $pos_id = $position->position_id; 
         $placement_id = $position->placement_type;
         $display_label = '';
-
         if($data['order_misc']->placement_type->$placement_id->id == '43'){
         $display_label = 'Colors:';
         }elseif ($data['order_misc']->placement_type->$placement_id->id == '45') {
         $display_label = 'Stiches:';
         } 
-
         ?>
         <p style="border-bottom:1px solid #e5e5e5; padding:1px 3px 3px 3px;">
           <strong>Position:</strong><br/>
