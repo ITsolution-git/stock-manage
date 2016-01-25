@@ -893,8 +893,7 @@ class OrderController extends Controller {
         $count = count($sizeData);
         $inner_count = 1;
 
-        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0','qnty' => '0'));
-        $this->common->UpdateTableRecords('distribution_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0','qnty' => '0'));
+        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0'));
 
         foreach ($purchase_detail as $key => $value) {
             

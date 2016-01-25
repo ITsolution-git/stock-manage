@@ -4,9 +4,9 @@
 		<ul class="nav nav-tabs input-group col-md-12 selectNav-Tabs">
 		  <li class="active"> <a href data-toggle="tab" data-target="#homeTasks">Tasks</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeOrders">Orders</a> </li>
-		  <li> <a href data-toggle="tab" data-target="#homeEstimates">Estimates</a> </li>
+		  <!-- <li> <a href data-toggle="tab" data-target="#homeEstimates">Estimates</a> </li> -->
 		  <li> <a href data-toggle="tab" data-target="#homeEvents">Events</a> </li>
-		  <li> <a href data-toggle="tab" data-target="#homePurchasing">Purchasing</a> </li>
+		  <!-- <li> <a href data-toggle="tab" data-target="#homePurchasing">Purchasing</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeArtDept">Art Department</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeProduction">Production</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeFinishing">Finishing</a> </li>
@@ -14,7 +14,7 @@
 		  <li> <a href data-toggle="tab" data-target="#homereadyShip">Ready To Ship</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeCreditHold">Credit Hold</a> </li>
 		  <li> <a href data-toggle="tab" data-target="#homeShipPick">Shipped / Picked Up</a> </li>
-		  <li> <a href data-toggle="tab" data-target="#homeOrderPaid">Order Paid in full</a> </li>
+		  <li> <a href data-toggle="tab" data-target="#homeOrderPaid">Order Paid in full</a> </li> -->
 		</ul>
 
 		<select class="selectNavTabs form-control">
@@ -702,8 +702,8 @@
 									<td>{{value.third_party_from | dateWithFormat}}</td>
 									<td>{{value.in_production | dateWithFormat}}</td>
 									<td>{{value.in_finish_done | dateWithFormat}}</td>
-									<td>{{value.ship_by | dateWithFormat}}</td>
-									<td>{{value.in_hands_date | dateWithFormat}}</td>
+									<td>{{value.shipping_by | dateWithFormat}}</td>
+									<td>{{value.in_hands_by | dateWithFormat}}</td>
 									
 								</tr>
 								<tr ng-if="listOrder.success==0"><td>{{listOrder.message}}</td></tr>
