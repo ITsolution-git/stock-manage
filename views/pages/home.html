@@ -610,14 +610,14 @@
 					<!-- Top Panel -->
 					<div class="form-group col-md-8 nopad-form">
 						<div class="col-md-3 nopad-left">
-							<select    class="form-control" name="f_approval" name="f_approval"  ui-event="{ change : 'orderListAll($event,\'f_approval\')' }">
+							<select  multiple  class="form-control" name="f_approval" ng-model="f_approval"  ng-change="new_data_fun()">
 								 <option  value='0'>Select Approval</option>
                                  <option ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                              </select>
 						</div>
 						
 						<div class="col-md-2 nopad-left">
-							<select   class="form-control"  name="client_id" Ui-event="{ change : 'orderListAll($event,\'client_id\')' }">
+							<select   class="form-control"  name="client_id" ng-model="client_id"  ng-change="new_data_fun()">
 								  <option  value='0'>Select Company</option>
                                   <option  ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
                                     </select>
@@ -625,7 +625,7 @@
 						
 						
 						<div class="col-md-2 nopad-left">
-							<select  class="form-control"  name="sales_id" Ui-event="{ change : 'orderListAll($event,\'sales_id\')' }">
+							<select  class="form-control"  name="sales_id" ng-model="sales_id"  ng-change="new_data_fun()">
 								<option  value='0'>Select User</option>
                                 <option ng-repeat="staff in staffList"  value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
                                     </select>
