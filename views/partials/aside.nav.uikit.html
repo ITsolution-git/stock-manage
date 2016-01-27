@@ -309,7 +309,15 @@
       </a>
     </li>
   <!-- Code end for Shipping tab --> 
-
+   <!-- Code Start for Production tab -->
+    <li ng-show="app.role=='CA'">
+      <a md-ink-ripple ui-sref="api.list">
+       
+        <i class="icon fa fa-tags i-20"></i>
+        <span class="font-normal">API</span>
+      </a>
+    </li>
+  <!-- Code end for Production tab --> 
 <!--     <li class="b-b b m-v-sm"></li>
     <li>
       <a md-ink-ripple ui-toggle-class="hide, show" target="#nav, #account">
