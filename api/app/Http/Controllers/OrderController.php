@@ -105,7 +105,10 @@ class OrderController extends Controller {
 
                 if($row->vendor_id > 0)
                 {
-                    $row->products = $this->product->getVendorProducts(array('vendor_id' => $row->vendor_id));
+                    $oldata = array();
+                    $oldata['where'] = array('vendor_id' => $row->vendor_id);
+                    $oldata['fields'] = array();
+                    //$row->products = $this->product->getVendorProducts($oldata);
                 }
                 if($row->product_id > 0)
                 {
@@ -342,6 +345,12 @@ class OrderController extends Controller {
     public function orderLineupdate()
     {
         $post = Input::all();
+
+        if($post['data']['product_name'] != '')
+        {
+            $product_data = $this->common->GetTableRecords('products',array('name' => $post['data']['product_name']),array());
+            $post['data']['product_id'] = $product_data[0]->id;
+        }
 
         $post['data']['created_date']=date('Y-m-d');
        
