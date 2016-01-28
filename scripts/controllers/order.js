@@ -2313,8 +2313,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
       return function filterFn(state) {
         return (state.value.indexOf(lowercaseQuery) === 0);
       };
-    }
 
+    }
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {

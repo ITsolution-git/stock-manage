@@ -106,6 +106,7 @@ class OrderController extends Controller {
 
                 if($row->vendor_id > 0)
                 {
+
                     $oldata = array();
                     $oldata['where'] = array('vendor_id' => $row->vendor_id);
                     $oldata['fields'] = array();

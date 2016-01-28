@@ -228,4 +228,3 @@ Route::post('product/getProductByVendor', 'ProductController@getProductByVendor'
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
 Route::get('api/GetSNSData/{id}/{company_id}', 'ApiController@GetSNSData');
 Route::post('api/save_SnsApi', 'ApiController@save_api');
-
