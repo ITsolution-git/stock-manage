@@ -131,7 +131,7 @@ Route::get('common/getBrandCo', 'CommonController@getBrandCo');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
-Route::get('client/ListClient', 'ClientController@ListClient');
+Route::post('client/ListClient', 'ClientController@ListClient');
 Route::post('client/DeleteClient', 'ClientController@DeleteClient');
 Route::post('client/ClientContacts', 'ClientController@ClientContacts');
 Route::post('client/getContacts', 'ClientController@getContacts');

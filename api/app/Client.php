@@ -10,6 +10,7 @@ class Client extends Model {
 
 	public function addclient($client,$address,$contact)
 	{
+
 		$result = DB::table('client')->insert($client);
 
 		$client_id = DB::getPdo()->lastInsertId();
@@ -23,14 +24,14 @@ class Client extends Model {
 		}
     	return $client_id;	
 	}
-	public function getClientdata()
+	public function getClientdata($post)
 	{
-
+    
+        $whereConditions = ['c.status' => '1','c.company_id' => $post['cond']['company_id'],'c.is_delete' =>'1'];
 				$result =	DB::table('client as c')
         				 ->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
         				 ->select('c.client_id','c.client_company','cc.email','cc.first_name','cc.phone','cc.last_name','c.status')
-        				 ->where('c.status','=','1')
-        				 ->where('c.is_delete','=','1')
+        				 ->where($whereConditions)
         				 ->get();
 				return $result;	
 	}
