@@ -13,16 +13,13 @@ class Order extends Model {
 	{
 
 
-      $whereConditions_fapproval = [];
+     
       $whereConditions_clientid = [];
       $whereConditions_salesid = [];
       
+       //print_r($post);exit;
         if (array_key_exists("data",$post)) {
-           
-            if(isset($post['data']['f_approval']) && $post['data']['f_approval'] != '0') {
-              $whereConditions_fapproval = ['order.f_approval' => $post['data']['f_approval']];
-            }
-
+          
             if(isset($post['data']['client_id']) && $post['data']['client_id'] != '0') {
               $whereConditions_clientid = ['order.client_id' => $post['data']['client_id']];
             }
@@ -32,7 +29,9 @@ class Order extends Model {
             }
         }
 
-	   $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['cond']['company_id']];
+    //print_r($whereConditions_fapproval);exit;
+  //DB::enableQueryLog();
+     $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['cond']['company_id']];
        $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_by','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
@@ -41,12 +40,25 @@ class Order extends Model {
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('misc_type as misc_type', 'order.f_approval', '=', 'misc_type.id')
                          ->select($listArray)
-                         ->where($whereConditions)
-                         ->where($whereConditions_fapproval)
-                         ->where($whereConditions_clientid)
+                         ->where($whereConditions);
+
+                         if (array_key_exists("data",$post)) {
+                                  
+                                  
+                                    if(isset($post['data']['f_approval']) && $post['data']['f_approval'] != '0' && (count($post['data']['f_approval']) > 1 || $post['data']['f_approval'][0] != 0)) {
+
+                                     $orderData = $orderData->whereIn('order.f_approval',$post['data']['f_approval']);
+
+                                    }
+                          }          
+
+                         
+                          $orderData = $orderData->where($whereConditions_clientid)
                          ->where($whereConditions_salesid)
                          ->get();
-        return $orderData;	
+
+     // echo "<pre>"; print_r(DB::getQueryLog()); echo "</pre>";        
+        return $orderData;  
 	}
 
 

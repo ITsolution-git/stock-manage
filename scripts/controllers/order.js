@@ -2148,7 +2148,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
      $scope.printPdf=function()
         {
 
-
+               
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/order/savePDF';

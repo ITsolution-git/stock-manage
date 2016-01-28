@@ -131,7 +131,7 @@ Route::get('common/getBrandCo', 'CommonController@getBrandCo');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
-Route::get('client/ListClient', 'ClientController@ListClient');
+Route::post('client/ListClient', 'ClientController@ListClient');
 Route::post('client/DeleteClient', 'ClientController@DeleteClient');
 Route::post('client/ClientContacts', 'ClientController@ClientContacts');
 Route::post('client/getContacts', 'ClientController@getContacts');
@@ -223,3 +223,9 @@ Route::post('shipping/createPDF', 'ShippingController@createPDF');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
+
+// API CONTROLLER
+Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
+Route::get('api/GetSNSData/{id}/{company_id}', 'ApiController@GetSNSData');
+Route::post('api/save_SnsApi', 'ApiController@save_api');
+

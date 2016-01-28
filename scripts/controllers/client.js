@@ -65,7 +65,15 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
                                   } // DELETE COMPANY FINISH
 
                                   $("#ajax_loader").show();
-                          $http.get('api/public/client/ListClient').success(function(Listdata) {
+
+
+                                   var company_list_data = {};
+                                    var condition_obj = {};
+                                    condition_obj['company_id'] =  $scope.company_id;
+                                     company_list_data.cond = angular.copy(condition_obj);
+
+
+                          $http.post('api/public/client/ListClient',company_list_data).success(function(Listdata) {
                                        if(Listdata.data.success=='1')
                                        {
                                           $scope.ListClient = Listdata.data;
