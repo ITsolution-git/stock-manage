@@ -13,7 +13,8 @@ use App\Product;
 use DB;
 use App;
 use Request;
-use Barryvdh\DomPDF\Facade as PDF;
+//use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 
 
 class OrderController extends Controller { 
@@ -860,6 +861,8 @@ class OrderController extends Controller {
     */
     public function savePDF()
     {
+
+
         $all_company['all_company'] = json_decode($_POST['all_company']);
         $client_main_data['client_main_data'] = json_decode($_POST['client_main_data']);
         $staff_list['staff_list'] = json_decode($_POST['staff_list']);
@@ -874,11 +877,10 @@ class OrderController extends Controller {
         $order['order'] = json_decode($_POST['order']);
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
         $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data);
-        
-        $pdf = App::make('dompdf');
-        $pdf = PDF::loadView('pdf.order',array('data'=>$combine_array));
-        //return $pdf->download('order.pdf');
-        return $pdf->stream('order.pdf');
+     
+        PDF::AddPage('P','A4');
+        PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());
+        PDF::Output('order.pdf');
 
     }
 
