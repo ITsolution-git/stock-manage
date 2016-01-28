@@ -220,3 +220,8 @@ Route::post('shipping/DeleteBox', 'ShippingController@DeleteBox');
 Route::post('shipping/addShippingItem', 'ShippingController@addShippingItem');
 Route::post('shipping/getBoxItems', 'ShippingController@getBoxItems');
 Route::post('shipping/createPDF', 'ShippingController@createPDF');
+
+// API CONTROLLER
+Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
+Route::get('api/GetSNSData/{id}/{company_id}', 'ApiController@GetSNSData');
+Route::post('api/save_SnsApi', 'ApiController@save_api');
