@@ -106,7 +106,7 @@ class OrderController extends Controller {
 
                 if($row->vendor_id > 0)
                 {
-                    $row->products = $this->product->getVendorProducts(array('vendor_id' => $row->vendor_id));
+                    //$row->products = $this->product->getVendorProducts(array('vendor_id' => $row->vendor_id));
                 }
                 if($row->product_id > 0)
                 {

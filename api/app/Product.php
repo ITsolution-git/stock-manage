@@ -96,11 +96,23 @@ class Product extends Model {
 
     public function getVendorProducts($data)
     {
+        if(empty($data['fields']))
+        {
+            $listArray = ['*'];
+        }
+        else
+        {
+            $listArray = [DB::raw('GROUP_CONCAT(name) as product_name')];
+        }
+        
+
         $orderData = DB::table('products')
-                        ->where($data)
+                        ->select($listArray)
+                        ->where($data['where'])
                         ->skip(0)
-                        ->take(1000)
+                        ->take(10)
                         ->get();
+
         return $orderData;  
     }
 
