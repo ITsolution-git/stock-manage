@@ -1,7 +1,7 @@
 (function () {
     angular.module('app.services', [])
 
-.factory('AuthService', function ($rootScope,$http,$state,sessionService,notifyService,$q) {
+.factory('AuthService', function ($rootScope,$http,$state,sessionService,notifyService,$q,$location) {
                     var currentUser = {}
                     
 
@@ -37,7 +37,7 @@
                     //console.log('error');
                     var data = {"status": "error", "message": "You are Not authorized, Please wait"}
                     notifyService.notify(data.status, data.message);
-                    $state.go('app.dashboard');
+                    $location.url('/app/dashboard');
                     setTimeout(function(){ window.location.reload(); }, 200);
                     return false;
                 }
