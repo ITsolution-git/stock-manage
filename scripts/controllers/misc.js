@@ -1,7 +1,7 @@
 
 app.controller('miscListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService) {
-  
-AuthService.checksession();
+  AuthService.AccessService('FM');
+
 $("#ajax_loader").show();
  $http.get('api/public/common/getAllMiscData').success(function(result, status, headers, config) {
 
@@ -31,10 +31,6 @@ $scope.updateUser = function(value,id) {
                $http.post('api/public/admin/miscSave',combine_array_data).success(function(result, status, headers, config) {
                          
                           });
-                          
-
   };
-
-
 }]);
 

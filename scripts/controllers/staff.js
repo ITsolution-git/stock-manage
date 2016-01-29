@@ -1,8 +1,8 @@
 
 
 
-app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
-  
+app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+  AuthService.AccessService('FM');
   $("#ajax_loader").show();
   $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
 
@@ -35,9 +35,9 @@ app.controller('staffListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,$filter) {
+app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
    
-    
+     AuthService.AccessService('FM');
 
 $http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
 

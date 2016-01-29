@@ -64,7 +64,7 @@ app.controller('loginCtrl', ['$scope','$http','$location','$state','$timeout','s
                                     setTimeout(function(){ window.location.reload(); }, 100);
                                    });
 
-                                    var data = {"status": "success", "message": "Login Successfull, Please wait..."}
+                                    var data = {"status": "success", "message": "Login Successful, Please wait..."}
                                     notifyService.notify(data.status, data.message);
 
                                    return false;
