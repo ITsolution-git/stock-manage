@@ -287,6 +287,7 @@ nav ul.nav li:hover ul.nav-sub {
 }
 #content .tab-content p.input-group {
 	z-index:1;
+	position: initial;
 }
 /*---------- END ----------*/
 
@@ -898,6 +899,27 @@ input[readonly].cgreen {
 	cursor: pointer;
 }
 
+/* Multiple Search */
+md-autocomplete input:not(.md-input) {
+	height: 34px;
+	padding:0 5px;
+	line-height: 19px;
+}
+md-autocomplete button {
+	width: 20px;
+	height: 15px;
+}
+.md-whiteframe-z1 {
+	border:1px solid #cfd1d4;
+	border-radius: 5px;
+	box-shadow: none;
+	height: 34px;
+    margin-bottom: 15px;
+}
+.md-autocomplete-suggestions {
+	height: 150px;
+	max-height: 150px;
+}
 /*----- DISTRIBUSTION TAB -----*/
 .orderDistributionContainer {
 	height: 500px;
