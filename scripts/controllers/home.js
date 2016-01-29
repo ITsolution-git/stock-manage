@@ -60,6 +60,29 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
         $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) {
               $scope.staffList = result.data.records;
         });
+
+
+        $scope.new_data_fun = function(){
+        
+        var combine_array = {};
+         combine_array.data = {};
+          combine_array.cond = {};
+
+
+        combine_array.data.f_approval = $scope.f_approval;
+       combine_array.data.client_id = $scope.client_id;
+       combine_array.data.sales_id = $scope.sales_id;
+        combine_array.cond.company_id = company_id;
+
+
+
+        $http.post('api/public/order/listOrder',combine_array).success(function(Listdata) {
+            $scope.listOrder = Listdata.data;
+            $("#ajax_loader").hide();
+
+        });
+
+       }
      
 
 }]);

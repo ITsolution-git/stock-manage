@@ -250,4 +250,21 @@ public function create_dir($dir_path) {
         }
     }
 
+    public function getProductByVendor()
+    {
+        $post = Input::all();
+        $data['where'] = $post;
+        $data['fields'] = array('product_name');
+        $result = $this->product->getVendorProducts($data);
+        
+        if (count($result) > 0) {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        } else {
+           
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        
+        return response()->json(["data" => $response]);
+    }
+
 }
