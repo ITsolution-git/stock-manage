@@ -13,7 +13,8 @@ use App\Product;
 use DB;
 use App;
 use Request;
-use Barryvdh\DomPDF\Facade as PDF;
+//use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 
 
 class OrderController extends Controller { 
@@ -105,7 +106,11 @@ class OrderController extends Controller {
 
                 if($row->vendor_id > 0)
                 {
-                    $row->products = $this->product->getVendorProducts(array('vendor_id' => $row->vendor_id));
+
+                    $oldata = array();
+                    $oldata['where'] = array('vendor_id' => $row->vendor_id);
+                    $oldata['fields'] = array();
+                    //$row->products = $this->product->getVendorProducts($oldata);
                 }
                 if($row->product_id > 0)
                 {
@@ -342,6 +347,12 @@ class OrderController extends Controller {
     public function orderLineupdate()
     {
         $post = Input::all();
+
+        if($post['data']['product_name'] != '')
+        {
+            $product_data = $this->common->GetTableRecords('products',array('name' => $post['data']['product_name']),array());
+            $post['data']['product_id'] = $product_data[0]->id;
+        }
 
         $post['data']['created_date']=date('Y-m-d');
        
@@ -860,6 +871,8 @@ class OrderController extends Controller {
     */
     public function savePDF()
     {
+
+
         $all_company['all_company'] = json_decode($_POST['all_company']);
         $client_main_data['client_main_data'] = json_decode($_POST['client_main_data']);
         $staff_list['staff_list'] = json_decode($_POST['staff_list']);
@@ -874,11 +887,10 @@ class OrderController extends Controller {
         $order['order'] = json_decode($_POST['order']);
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
         $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data);
-        
-        $pdf = App::make('dompdf');
-        $pdf = PDF::loadView('pdf.order',array('data'=>$combine_array));
-        //return $pdf->download('order.pdf');
-        return $pdf->stream('order.pdf');
+     
+        PDF::AddPage('P','A4');
+        PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());
+        PDF::Output('order.pdf');
 
     }
 
@@ -893,8 +905,7 @@ class OrderController extends Controller {
         $count = count($sizeData);
         $inner_count = 1;
 
-        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0','qnty' => '0'));
-        $this->common->UpdateTableRecords('distribution_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0','qnty' => '0'));
+        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0'));
 
         foreach ($purchase_detail as $key => $value) {
             

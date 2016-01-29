@@ -2649,7 +2649,7 @@ select, button, textarea, input {
 
 md-autocomplete {
   border-radius: 2px;
-  display: block;
+  /*display: block;*/
   height: 40px;
   position: relative;
   overflow: visible;
