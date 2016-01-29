@@ -71,39 +71,37 @@ app.controller('ApiController', ['$scope','$http','$location','$state','$timeout
                               });
                           }
 
-
   }]);
 
 app.controller('SnsController', ['$scope','$http','$location','$state','$timeout','$modal','notifyService','$rootScope','$stateParams', function($scope,$http,$location,$state,$timeout,$modal,notifyService,$rootScope,$stateParams) {
 
-						$("#ajax_loader").hide();
-						$scope.company_id = $rootScope.company_profile.company_id;
-                        GetSnsData($stateParams.id);
-                        function GetSnsData(SnsId)
-                          {
-                            $http.get('api/public/api/GetSNSData/'+SnsId+'/'+$scope.company_id).success(function(result) {
-                                if(result.data.success == '1') 
-                                {
-                                    $scope.api_records =result.data.records[0];
-                                } 
-                                else
-                                {
-                                    $scope.api_records=result.data;
-                                }
-                              });
-                          }
-                          $scope.save_SnsApi=function(params)
-                          {
-                          	$("#ajax_loader").show();
-                          	params.company_id=  $scope.company_id;
-                          		$http.post('api/public/api/save_SnsApi',params).success(function(response) {
-                                       $("#ajax_loader").hide();
-                                       var data = {"status": "error", "message": result.data.message}
-						               notifyService.notify(data.status, data.message);
-						               $state.go('api.list');
-						               return false;
-                                });
-                          }
-
+					$("#ajax_loader").hide();
+					$scope.company_id = $rootScope.company_profile.company_id;
+                    GetSnsData($stateParams.id);
+                    function GetSnsData(SnsId)
+                    {
+                       $http.get('api/public/api/GetSNSData/'+SnsId+'/'+$scope.company_id).success(function(result) {
+                            if(result.data.success == '1') 
+                            {
+                                $scope.api_records =result.data.records[0];
+                            } 
+                            else
+                            {
+                                $scope.api_records=result.data;
+                            }
+                          });
+                    }
+                    $scope.save_SnsApi=function(params)
+                    {
+                    	$("#ajax_loader").show();
+                    	params.company_id=  $scope.company_id;
+                    	$http.post('api/public/api/save_SnsApi',params).success(function(response) {
+                                $("#ajax_loader").hide();
+                                var data = {"status": "error", "message": result.data.message}
+					            notifyService.notify(data.status, data.message);
+					            $state.go('api.list');
+					            return false;
+                        });
+                    }
 
 	  }]);
