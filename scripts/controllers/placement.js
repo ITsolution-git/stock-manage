@@ -1,7 +1,7 @@
 
-app.controller('placementListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService,$filter) {
-  
-AuthService.checksession();
+app.controller('placementListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+   AuthService.AccessService('FM');
+
 
  $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
 
@@ -35,11 +35,6 @@ AuthService.checksession();
       });
   
 
-
-
-
-
-   
 
   $scope.groups = [];
 
