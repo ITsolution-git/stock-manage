@@ -422,7 +422,7 @@
                                                                 md-items="item in querySearch(order_line.product_name,order_line.vendor_id)"
                                                                 md-item-text="item.display"
                                                                 md-min-length="4"
-                                                                ng-click="getProducts(order_line.vendor_id)"
+                                                                ng-click="getProducts(order_line)"
                                                                 ng-blur="updateOrderLine(orderLineAll,order_line.id)"
                                                                 <md-item-template>
                                                                     <span md-highlight-text="order_line.product_name" md-highlight-flags="^i">{{item.display}}</span>

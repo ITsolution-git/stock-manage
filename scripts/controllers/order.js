@@ -2243,10 +2243,12 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     }
 
     $scope.allStates        = '';
+    $scope.current_line        = '';
 
-    $scope.getProducts = function(vendor_id)
+    $scope.getProducts = function(orderline)
     {
-        var vendor_arr = {'vendor_id' : vendor_id};
+        $scope.current_line = orderline;
+        var vendor_arr = {'vendor_id' : orderline.vendor_id};
 
         $http.post('api/public/product/getProductByVendor',vendor_arr).success(function(result, status, headers, config) {
             $scope.allStates = result.data.records[0].product_name
@@ -2282,12 +2284,31 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
       {
         return results;
       }
+
     }
     function searchTextChange(text) {
       $log.info('Text changed to ' + text);
     }
     function selectedItemChange(item) {
-      $log.info('Item changed to ' + JSON.stringify(item));
+      angular.forEach($scope.orderLineAll, function(row, key) {
+
+            if(row.id == $scope.current_line.id)
+            {
+                var pname = item.display;
+                row.product_name = angular.copy(pname);
+                var order_data = {};
+                order_data.table ='order_orderlines'
+                order_data.data =row
+                order_data.cond ={id:row.id}
+
+                
+                $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
+                    $('.form-control').removeClass('ng-dirty');
+                    $("#ajax_loader").hide();
+                     get_order_details(order_id,client_id,company_id);
+                });
+            }
+        });
     }
     function loadAll() {
 
@@ -2301,10 +2322,12 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         var allStates = $scope.allStates;
 
+
+
           return allStates.split(",").map( function (state) {
             return {
               value: state.toLowerCase(),
-              display: state
+              display: state,
             };
           });
     }
