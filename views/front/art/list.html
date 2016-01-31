@@ -67,7 +67,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="value in Art_array.records"  id="order_{{value.id}}">
+          <tr ng-repeat="value in Art_array.records"  id="order_{{value.art_id}}">
               
               <td>{{value.job_name}}</td>
               <td>{{value.client_company}}</td>
@@ -83,8 +83,8 @@
               <td>{{value.in_hands_by | dateWithFormat}}</td>
               <td>
 
-                <button class="btn btn-xs btn-info" ui-sref="order.edit({ id: value.id,client_id: value.client_id })">Edit</button>
-                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.id)">Delete</button>
+                <button class="btn btn-xs btn-info" ui-sref="art.job({ id: value.art_id })">Edit</button>
+                <button class="btn btn-xs btn-danger" ng-click="deleteorder(value.art_id)">Delete</button>
               </td> 
           </tr>
           <tr ng-if="Art_array.success==0"><td>{{Art_array.message}}</td></tr>

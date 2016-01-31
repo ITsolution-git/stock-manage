@@ -853,9 +853,9 @@ angular.module('app')
                        }
             })
     .state('art.job', {
-                url: '/job',
+                url: '/job/:id',
                 templateUrl: 'views/front/art/job.html',
-                controller: 'ArtListCtrl',
+                controller: 'ArtJobCtrl',
                 data : { title: 'Art' },
                 resolve: {
                             checklogin: function (AuthService) {

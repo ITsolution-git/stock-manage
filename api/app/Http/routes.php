@@ -231,3 +231,4 @@ Route::post('api/save_SnsApi', 'ApiController@save_api');
 
 // ART CONTROLLER
 Route::get('art/listing/{company_id}', 'ArtController@listing');
+Route::get('art/Art_detail/{art_id}/{company_id}', 'ArtController@Art_detail');
