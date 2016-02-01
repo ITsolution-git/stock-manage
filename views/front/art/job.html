@@ -11,35 +11,15 @@
                             
                             <div class="form-group col-md-12 m-b nopad-form">
                                 <div class="col-md-2 m-b nopad-left">
-                                    <label>Sales <em class="text-muted"></em></label>
-                                    <select  class="form-control" ng-model="order.sales_id" name="sales_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
-                                        <option ng-repeat="staff in staffList" ng-selected="{{order.sales_id==staff.id}}" value="{{staff.id}}">{{staff.first_name}}&nbsp;{{staff.last_name}}</option>
-                                    </select>
+                                    <label>Job Name <em class="text-muted"></em></label>
+                                    <input  class="form-control" ng-model="Artjob_position.records[0].job_name" name="job_name" >
+                                        
                                 </div>
                                 <div class="col-md-2 m-b">
-                                    <label>Account Manager<em class="text-muted"></em></label>
-                                    <select  class="form-control" ng-model="order.brand_id" name="brand_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
-                                        <option ng-repeat="user in brandCoList" ng-selected="{{order.brand_id==user.id}}" value="{{user.id}}">{{user.name}}</option>
-                                    </select>
+                                    <label>Sales Total<em class="text-muted"></em></label>
+                                    <input  class="form-control" ng-model="Artjob_position.records[0].grand_total" name="sales_total" >
                                 </div>
-                                <div class="col-md-2 m-b">
-                                    <label>Expediter<em class="text-muted"></em></label>
-                                    <input type="text" class="form-control" ng-maxlength="255" name="expediter"  ng-model="order.expediter" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
-                                    <br>
-                                    <span style="color:#f44336" ng-show="orderAddForm.cs_expediter.$error.maxlength">Please enter Name less then 255 characters.</span>
-                                </div>
-                                <div class="col-md-2 m-b">
-                                    <label>Customer PO<em class="text-muted"></em></label>
-                                    <input type="text" class="form-control" ng-maxlength="255"  ng-model="order.customer_po_id" name="customer_po_id" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
-                                    <br>
-                                    <span style="color:#f44336" ng-show="orderAddForm.cs_customer_po.$error.maxlength">Please enter Name less then 255 characters.</span>
-                                </div>
-                                <div class=" col-md-2 m-b nopad-right">
-                                    <label>Order Main Contact<em class="text-muted"></em></label>
-                                    <select  class="form-control" ng-model="order.contact_main_id" name="contact_main_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
-                                        <option ng-repeat="user in client_main_data" ng-selected="{{order.contact_main_id==user.id}}" value="{{user.id}}">{{user.first_name}}&nbsp;{{user.last_name}}</option>
-                                    </select>
-                                </div>
+
                                
                             </div>
                         </div>
@@ -47,9 +27,9 @@
                        
                         <ul class="nav nav-tabs input-group col-sm-12">
                             <li class="active"><a href data-toggle="tab" data-target="#tab1">Position</a></li>
-                            <li> <a href data-toggle="tab" data-target="#tab2" class="tab2" ui-event="{ click : 'openTab(\'orderline\')' }">Screen Sets</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab4" class="tab4" ui-event="{ click : 'openTab(\'orderline\')' }">Screen Sets</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab3" ui-event="{ click : 'openTab(\'distribution\')' }">Order Group</a> </li>
-                            <li> <a href data-toggle="tab" data-target="#tab4" ui-event="{ click : 'openTab(\'notes\')' }">Order line</a> </li>
+                            <li> <a href data-toggle="tab" data-target="#tab2" ui-event="{ click : 'openTab(\'notes\')' }">Order line</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab5" class="tab5" ui-event="{ click : 'openTab(\'purchaseorder\')' }">Art Work</a> </li>
                             <li> <a href data-toggle="tab" data-target="#tab6">Note</a> </li>
                         </ul>
@@ -122,7 +102,7 @@
                                     </div>
 
                                     <!-- POSITION TAB FIELDS -->
-                                    <div class="positionTab_content" ng-repeat="(key,order_position) in orderPositionAll">
+                                    <div class="positionTab_content" ng-repeat="(key,order_position) in Artjob_position.records">
                                         <input type="hidden" class="col-md-1"  ng-model="order_position.order_id" ng-value="order_position.order_id"/>
                                         <numeric_tag input-value="123" input-name="wks.name"/>
                                       
@@ -135,17 +115,7 @@
                                             <div class="form-group col-md-4 nopad-left">
                                                 <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
-                                            
-
-
-                                            <div ng-class="order_position.placementvalue.length == 0 ? 'sgpDetails disabled-sgpDetails' : 'sgpDetails'"  class="form-group col-md-2 nopad-left">
-                                              <a ng-click="openOrderPlacement('order_placement.html',order_position.position_id,$index)" title="Add Placement" role="button" tabindex="0">
-                                                <i class="mdi-maps-navigation"></i>
-                                              </a>
-                                            </div>
-
-
-
+                               
 
                                             <div class="form-group col-md-3 nopad-left">
                                                 <select  ng-model="order_position.placement_type" class="form-control" ng-change="updatePosition(orderPositionAll,order_position.id)">
@@ -159,7 +129,7 @@
                                                 <input type="text" class="form-control"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control" ng-class="{ cred: order_position.qnty != total_qty }"  ng-model="order_position.qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control" ng-model="order_position.qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
                                                 <input type="text" class="form-control"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
@@ -208,25 +178,10 @@
                                                 </button>
                                                 <span>Artwork</span>
                                             </div>
-                                            <div class="col-md-2 nopad-form">
-                                                <button type="button" ng-click="removeOrder($index,order_position.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
-                                        </div>
+                                            
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="button" ng-click="addOrder()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <button  type="submit" class="btn btn-info" ng-click="saveButtonData('cp')" >Create Contract Screen PO</button>
-                                    </div>
-
-                                    <div class="col-md-1">
-                                        <button  type="submit" class="btn btn-info" ng-click="saveButtonData('ce')" >Create Contract Embroidery</button>
-                                    </div>
-                                    <!-- <div class="form-group pull-right">
-                                        <button  type="submit" class="btn btn-info" ng-click="savePositionData(orderPositionAll)" >Save</button>
-                                    </div> -->
+                            
                                 </div>
                             </div>
                             <!-- POSITION TAB END -->
