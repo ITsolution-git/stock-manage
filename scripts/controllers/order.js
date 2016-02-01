@@ -91,9 +91,24 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
                 
                 if(result.data.success == '1') 
                 {
-                    modalInstance.close($scope);
-                    $state.go('order.edit',{id: result.data.id,client_id:order_data.data.client_id});
-                    return false;
+
+
+                var art_data = {};
+                var artData = {};
+
+                artData.order_id =result.data.id;
+                art_data.data = artData;
+                art_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
+                art_data.table ='art'
+
+                $http.post('api/public/common/InsertRecords',art_data).success(function(result) {                        
+                     
+                });
+
+                modalInstance.close($scope);
+                $state.go('order.edit',{id: result.data.id,client_id:order_data.data.client_id});
+                return false;
+                
                 }
                 else
                 {
