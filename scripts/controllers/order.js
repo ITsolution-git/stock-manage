@@ -91,9 +91,24 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
                 
                 if(result.data.success == '1') 
                 {
-                    modalInstance.close($scope);
-                    $state.go('order.edit',{id: result.data.id,client_id:order_data.data.client_id});
-                    return false;
+
+
+                var art_data = {};
+                var artData = {};
+
+                artData.order_id =result.data.id;
+                art_data.data = artData;
+                art_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
+                art_data.table ='art'
+
+                $http.post('api/public/common/InsertRecords',art_data).success(function(result) {                        
+                     
+                });
+
+                modalInstance.close($scope);
+                $state.go('order.edit',{id: result.data.id,client_id:order_data.data.client_id});
+                return false;
+                
                 }
                 else
                 {
@@ -202,10 +217,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     $scope.client_main_data = result.data.client_main_data;
                     $scope.orderPositionAll = result.data.order_position;
                     $scope.orderLineAll = result.data.order_line;
-                    //console.log($scope.orderLineAll[0].products);
                     $scope.order_items = result.data.order_item;
                     $scope.orderTaskAll = result.data.order_task;
-                   // $scope.order_po_data = result.data.order_po_data;
 
                     $scope.price_grid =result.data.price_grid[0];
                     $scope.allGrid =result.data.price_grid;
@@ -304,6 +317,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             $http.post('api/public/finishing/removeFinishingItem',item_data).success(function(result) {
             
                 $("#ajax_loader").hide();
+                get_order_details(order_id,client_id,company_id);
             });
         }
         else
@@ -326,6 +340,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             var item_data = {item_name:item_name,order_id:order_id,total_qty:$scope.total_qty}
             $http.post('api/public/finishing/addFinishingItem',item_data).success(function(result) {
                 $("#ajax_loader").hide();
+                get_order_details(order_id,client_id,company_id);
             });
         }
     }
@@ -522,6 +537,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             if(value.id == position_id)
             {
+                if(value.placement_type == 43 || value.placement_type == 44)
+                {
+                    value.screen_fees_qnty = value.color_stitch_count;
+                }
                 var order_data = {};
                 order_data.table ='order_positions'
                 order_data.data =value
@@ -1782,7 +1801,6 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             }
             $("#ajax_loader").hide();
         }, 500);
-        
     }
 
     $scope.calulate_tax = function(tax_rate)
@@ -2090,10 +2108,10 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            angular.forEach($scope.orderLineAll, function(value) {
+            /*angular.forEach($scope.orderLineAll, function(value) {
                     $scope.calculate_all(value.id);
                     get_order_details(order_id,client_id,company_id)
-            });
+            });*/
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);
@@ -2147,7 +2165,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
      $scope.printPdf=function()
         {
 
-
+               
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/order/savePDF';
@@ -2240,8 +2258,103 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             get_order_details(order_id,client_id,company_id);
         });
     }
-                                       
 
+    $scope.allStates        = '';
+    $scope.current_line        = '';
+
+    $scope.getProducts = function(orderline)
+    {
+        $scope.current_line = orderline;
+        var vendor_arr = {'vendor_id' : orderline.vendor_id};
+
+        $http.post('api/public/product/getProductByVendor',vendor_arr).success(function(result, status, headers, config) {
+            $scope.allStates = result.data.records[0].product_name
+        });
+    }
+
+    $scope.simulateQuery = false;
+    $scope.isDisabled    = false;
+    // list of `state` value/display objects
+    $scope.states        = '';
+    $scope.querySearch   = querySearch;
+    $scope.selectedItemChange = selectedItemChange;
+    $scope.searchTextChange   = searchTextChange;
+    $scope.newState = newState;
+
+    function newState(state) {
+      alert("Sorry! You'll need to create a Constituion for " + state + " first!");
+    }
+
+    function querySearch (query,vendor_id) {
+      
+      $scope.states =loadAll();
+
+      var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states,
+          deferred;
+      if ($scope.simulateQuery)
+      {
+            deferred = $q.defer();
+            $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+            return deferred.promise;
+      }
+      else
+      {
+        return results;
+      }
+
+    }
+    function searchTextChange(text) {
+      $log.info('Text changed to ' + text);
+    }
+    function selectedItemChange(item) {
+      angular.forEach($scope.orderLineAll, function(row, key) {
+
+            if(row.id == $scope.current_line.id)
+            {
+                var pname = item.display;
+                row.product_name = angular.copy(pname);
+                var order_data = {};
+                order_data.table ='order_orderlines'
+                order_data.data =row
+                order_data.cond ={id:row.id}
+
+                
+                $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
+                    $('.form-control').removeClass('ng-dirty');
+                    $("#ajax_loader").hide();
+                     get_order_details(order_id,client_id,company_id);
+                });
+            }
+        });
+    }
+    function loadAll() {
+
+        /*var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
+              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
+              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
+              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
+              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
+              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
+              Wisconsin, Wyoming';*/
+
+        var allStates = $scope.allStates;
+
+
+
+          return allStates.split(",").map( function (state) {
+            return {
+              value: state.toLowerCase(),
+              display: state,
+            };
+          });
+    }
+     function createFilterFor(query) {
+      var lowercaseQuery = angular.lowercase(query);
+      return function filterFn(state) {
+        return (state.value.indexOf(lowercaseQuery) === 0);
+      };
+
+    }
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {

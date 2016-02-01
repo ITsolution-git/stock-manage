@@ -67,18 +67,16 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="left" valign="top" width="25%">
-              <img src="../../../../images/logo-stokkup-login.png" alt="Logo" />
+              <!-- <img src="../../../../images/logo-stokkup-login.png" alt="Logo" /> -->
             </td>
-            <td align="center" valign="top" width="25%">
-              <h1>Stokkup</h1>
-              <p>Address</p>
-              <p>www.url.com</p>
+             <td align="left" valign="top" width="25%"><span style="font-size:15px; line-height:15px;"><strong>Stokkup</strong></span>
+              <br/>
+            <span>101,ahmedabad,Gujarat<br/>India - 380007<br />www.google.com</span>
             </td>
-            <td align="right" valign="top" width="50%">
-              <p>{{$shipping->description}}</p>
-                <p>{{$shipping->address}} {{$shipping->address2}}</p>
-                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
-                <p>{{$shipping->country}}</p>
+            <td align="right" valign="top" width="50%"><span>{{$shipping->description}}</span><br />
+                <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
+                <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</span><br />
+                <span>{{$shipping->country}}</span><br />
             </td>
           </tr>
           <tr>

@@ -26,10 +26,13 @@ class ClientController extends Controller {
     */
     public function addclient()
 	{
+
 		$client = array(); $contact = array(); $address = array();
 		$post = Input::all();
+		
 
 	/* SEPARATE CLIENT DATA IN TO ARRAY */
+	    $client['company_id'] = $post['company_id'];
 		$client['client_company'] = $post['client_company'];
 		$client['client_companytype'] = $post['client_companytype'];
 		$client['created_date']=CURRENT_DATETIME;
@@ -83,7 +86,8 @@ class ClientController extends Controller {
     */
     public function ListClient()
     {
-    	$result = $this->client->getClientdata();
+    	$post = Input::all();
+    	$result = $this->client->getClientdata($post);
     	return $this->return_response($result);
     }
     /**

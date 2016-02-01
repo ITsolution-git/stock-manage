@@ -94,5 +94,44 @@ class Product extends Model {
         return $result;
     }
 
+    public function getVendorProducts($data)
+    {
+        if(empty($data['fields']))
+        {
+            $listArray = ['*'];
+        }
+        else
+        {
+            $listArray = [DB::raw('GROUP_CONCAT(name) as product_name')];
+        }
+        
+
+        $orderData = DB::table('products')
+                        ->select($listArray)
+                        ->where($data['where'])
+                        ->skip(0)
+                        ->take(10)
+                        ->get();
+
+        return $orderData;  
+    }
+
+    public function GetProductColor($data)
+    {
+        $listArray = ['color_size_data'];
+        $orderData = DB::table('products')
+                        ->select($listArray)
+                        ->where($data)
+                        ->get();
+        return $orderData;
+    }
+
+    public function GetColorDeail($data)
+    {
+        $orderData = DB::table('color')
+                        ->where($data)
+                        ->get();
+        return $orderData;
+    }
 
 }

@@ -9,20 +9,22 @@ use Illuminate\Support\Facades\Redirect;
 use App\Order;
 use App\Common;
 use App\Purchase;
+use App\Product;
 use DB;
 use App;
 use Request;
-use Barryvdh\DomPDF\Facade as PDF;
+//use Barryvdh\DomPDF\Facade as PDF;
+use PDF;
 
 
 class OrderController extends Controller { 
 
-	public function __construct(Order $order,Common $common,Purchase $purchase) 
+	public function __construct(Order $order,Common $common,Purchase $purchase,Product $product) 
  	{
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
-        ini_set('xdebug.max_nesting_level', 256);
+        $this->product = $product;
     }
 
     /**
@@ -99,8 +101,27 @@ class OrderController extends Controller {
             foreach($result['order_line_data'] as $row)
             {
                 $row->orderline_id = $row->id;
-                $row->products = $this->common->GetTableRecords('products',array('vendor_id' => $row->vendor_id),array());
-                $row->colors = $this->order->GetProductColor($row->product_id);
+                $row->products = array();
+                $row->colors = array();
+
+                if($row->vendor_id > 0)
+                {
+
+                    $oldata = array();
+                    $oldata['where'] = array('vendor_id' => $row->vendor_id);
+                    $oldata['fields'] = array();
+                    //$row->products = $this->product->getVendorProducts($oldata);
+                }
+                if($row->product_id > 0)
+                {
+                    $colors = $this->product->GetProductColor(array('id'=>$row->product_id));
+                    $colors = unserialize($colors[0]->color_size_data);
+
+                    foreach($colors as $key=>$color) {
+                        $color_data = $this->product->GetColorDeail(array('id'=>$key));
+                        $row->colors[] = $color_data[0];
+                    }
+                }
 
                 $order_line_items = $this->order->getOrderLineItemById($row->id);
                 $count = 1;
@@ -175,7 +196,7 @@ class OrderController extends Controller {
         }
 
         $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
-        $products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
+        //$products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
         $vendors = $this->common->getAllVendors();
         $staff = $this->common->getStaffList();
@@ -199,7 +220,6 @@ class OrderController extends Controller {
                                 'embroidery_switch_count' => $embroidery_switch_count,
                                 'vendors' => $vendors,
                                 'client' => $client,
-                                'products' => $products,
                                 'staff' => $staff,
                                 'brandCo' => $brandCo
                                 );
@@ -327,6 +347,12 @@ class OrderController extends Controller {
     public function orderLineupdate()
     {
         $post = Input::all();
+
+        if($post['data']['product_name'] != '')
+        {
+            $product_data = $this->common->GetTableRecords('products',array('name' => $post['data']['product_name']),array());
+            $post['data']['product_id'] = $product_data[0]->id;
+        }
 
         $post['data']['created_date']=date('Y-m-d');
        
@@ -845,6 +871,8 @@ class OrderController extends Controller {
     */
     public function savePDF()
     {
+
+
         $all_company['all_company'] = json_decode($_POST['all_company']);
         $client_main_data['client_main_data'] = json_decode($_POST['client_main_data']);
         $staff_list['staff_list'] = json_decode($_POST['staff_list']);
@@ -859,11 +887,10 @@ class OrderController extends Controller {
         $order['order'] = json_decode($_POST['order']);
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
         $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data);
-        
-        $pdf = App::make('dompdf');
-        $pdf = PDF::loadView('pdf.order',array('data'=>$combine_array));
-        //return $pdf->download('order.pdf');
-        return $pdf->stream('order.pdf');
+     
+        PDF::AddPage('P','A4');
+        PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());
+        PDF::Output('order.pdf');
 
     }
 
@@ -871,16 +898,27 @@ class OrderController extends Controller {
     {
         $post = Input::all();
         $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array());
-        $sizeData = $this->order->getOrderLineItemByColor($post['product_id'],$post['color_id']);
+        $sizeData = $this->product->GetProductColor(array('id'=>$post['product_id']));
+        $sizeData = unserialize($sizeData[0]->color_size_data);
+        $sizeData = $sizeData[$post['color_id']];
+
+        $count = count($sizeData);
+        $inner_count = 1;
+
+        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0'));
 
         foreach ($purchase_detail as $key => $value) {
             
-            $update_data = array('size' => $sizeData[$key]->size,
-                                'price' => $sizeData[$key]->price
-                                );
+            if($inner_count <= $count)
+            {
+                $update_data = array('size' => $sizeData[$key]['name'],
+                                    'price' => $sizeData[$key]['piece_price']
+                                    );
 
-            $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
-            $this->common->UpdateTableRecords('distribution_detail',array('id' => $value->id),$update_data);
+                $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
+                $this->common->UpdateTableRecords('distribution_detail',array('id' => $value->id),$update_data);
+                $inner_count++;
+            }
         }
         $this->common->UpdateTableRecords('order_orderlines',array('id' => $post['orderline_id']),array('color_id' => $post['color_id']));
         $data = array("success"=>1,"message"=>INSERT_RECORD);

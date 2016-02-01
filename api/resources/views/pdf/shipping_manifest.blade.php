@@ -72,12 +72,11 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="left" valign="top" width="25%">
-              <img src="../../../../images/logo-stokkup-login.png" alt="Logo" />
+              <!-- <img src="../../../../images/logo-stokkup-login.png" alt="Logo" /> -->
             </td>
-            <td align="left" valign="top" width="25%">
-              <h1>Stokkup</h1>
-              <p>Address</p>
-              <p>www.url.com</p>
+            <td align="left" valign="top" width="25%"><span style="font-size:15px; line-height:15px;"><strong>Stokkup</strong></span>
+              <br/>
+            <span>101,ahmedabad,Gujarat<br/>India - 380007<br />www.google.com</span>
             </td>
             <td align="right" valign="top" width="50%">
               <p><strong>Job # {{$shipping->order_id}}</strong></p>
@@ -95,28 +94,28 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="left" valign="top" width="38%">
-              <p>SHIP TO</p>
+              <span>SHIP TO</span><br />
               <div class="prntBrdr">
-                <p>{{$shipping->description}}</p>
-                <p>{{$shipping->address}} {{$shipping->address2}}</p>
-                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
-                <p>{{$shipping->country}}</p>
+                <span>{{$shipping->description}}</span><br />
+                <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
+                <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</span><br />
+                <span>{{$shipping->country}}</span><br />
               </div>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
             <td align="left" valign="top" width="30%">    
-                <p>&nbsp;</p>          
-                <p>PO Number : #</p>
-                <p>&nbsp;</p>
-                <p>Shipped On : {{$shipping->shipping_by}}</p>
-              </div>
+                <span>&nbsp;</span> <br />         
+                <span>PO Number : #</span><br />
+                <span>&nbsp;</span><br />
+                <span>Shipped On : {{$shipping->shipping_by}}</span><br />
+              
             </td>
             <td align="left" valign="top" width="30%">   
-                <p>Tracking Number(s)</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>SKU : </p>
-              </div>
+                <span>Tracking Number(s)</span><br />
+                <span>&nbsp;</span><br />
+                <span>&nbsp;</span><br />
+                <span>SKU : </span><br />
+             
             </td>
           </tr>
         </table>

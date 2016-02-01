@@ -1,6 +1,6 @@
 
-app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
-  
+app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+   AuthService.AccessService('FM');
                          $("#ajax_loader").show();
                          $http.get('api/public/admin/vendor').success(function(result, status, headers, config) {
 
@@ -29,8 +29,8 @@ app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateP
 
 }]);
 
-app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
-  
+app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+   AuthService.AccessService('FM');
   $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
 
               $scope.staffRoles = result.data.records;

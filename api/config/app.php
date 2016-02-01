@@ -137,7 +137,8 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
         'Intervention\Image\ImageServiceProvider',
-        'Barryvdh\DomPDF\ServiceProvider',
+        //'Barryvdh\DomPDF\ServiceProvider',
+        'Elibyy\TCPDF\ServiceProvider',
 		/*
 		 * Application Service Providers...
 		 */

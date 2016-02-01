@@ -109,7 +109,6 @@ class CompanyController extends Controller {
 		{
 			$getData = $this->company->GetCompanybyId($id,$company_id);
 			
-
 			$getData[0]->company_url_photo = UPLOAD_PATH.'company/'.$getData[0]->company_logo;
 
 			$count = count($getData);
