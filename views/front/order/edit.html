@@ -427,10 +427,15 @@
                                                                     No products matching "{{order_line.product_name}}" were found.
                                                                 </md-not-found>
                                                             </md-autocomplete>
-                                                        </div>                                                  
+                                                        </div>
                                                     </div>
                                                     <div class="cols col-2 orderLinesecondRow">
                                                         <div class="col-md-12 nopad-form">
+                                                            <div class="col-md-1 nopad-left smallPad">
+                                                                <button type="button" class="btn btn-default addButton" ng-click="addproductpopup(order_line.product_id,'')">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </button>
+                                                            </div>
                                                             <div class="col-md-2 smallPad nopad-left">
                                                                 <select  ng-model="order_line.client_supplied"  class="form-control">
                                                                     <option ng-selected="order_line.client_supplied==1" value="1">Yes</option>
