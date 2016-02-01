@@ -412,7 +412,7 @@
                                                                 ng-disabled="isDisabled"
                                                                 md-no-cache="noCache"
                                                                 md-selected-item="selectedItem"
-                                                                md-search-text-change="searchTextChange(order_line.product_name)"
+                                                                md-search-text-change="searchTextChange(order_line.product_name,order_line.id)"
                                                                 md-search-text="order_line.product_name"
                                                                 md-selected-item-change="selectedItemChange(item)"
                                                                 md-items="item in querySearch(order_line.product_name,order_line.vendor_id)"
