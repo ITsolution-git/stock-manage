@@ -78,10 +78,9 @@
             <td align="left" valign="top" width="25%">
              <!--  <img src="../../../../images/logo-stokkup-login.png" alt="Logo" /> -->
             </td>
-            <td align="left" valign="top" width="25%">
-              <h1>Stokkup</h1>
-              <p>Address</p>
-              <p>www.url.com</p>
+            <td align="left" valign="top" width="25%"><span style="font-size:15px; line-height:15px;"><strong>Stokkup</strong></span>
+              <br/>
+            <span>101,ahmedabad,Gujarat<br/>India - 380007<br />www.google.com</span>
             </td>
             <td align="right" valign="top" width="50%">
               <p><strong>Job # {{$shipping->order_id}}</strong></p>
@@ -99,20 +98,20 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="left" valign="top" width="38%">
-              <p>Client</p>
+              <span>Client</span><br />
               <div class="prntBrdr">
-                <p>{{$shipping->description}}</p>
-                <p>{{$shipping->address}} {{$shipping->address2}}</p>
-                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
-                <p>{{$shipping->country}}</p>
+                <span>{{$shipping->description}}</span><br />
+                <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
+                <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</span><br />
+                <span>{{$shipping->country}}</span><br />
               </div>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
             <td align="left" valign="top" width="40%">    
-                <p>&nbsp;</p>          
-                <p><strong>PO Number : #</strong></p>
-                <p><strong>{{$shipping->job_name}}</strong></p>
-                <p>Shipped On : {{$shipping->shipping_by}}</p>
+                <span>&nbsp;</span><br />
+                <span><strong>PO Number : #</strong></span><br />
+                <span><strong>{{$shipping->job_name}}</strong></span><br />
+                <span>Shipped On : {{$shipping->shipping_by}}</span><br />
             </td>
           </tr>
         </table>
@@ -152,11 +151,10 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td width="10%">&nbsp;</td>
-            <td width="45%">
-              <p>{{$shipping->description}}</p>
-                <p>{{$shipping->address}} {{$shipping->address2}}</p>
-                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
-                <p>{{$shipping->country}}</p>
+            <td width="45%"><span>{{$shipping->description}}</span><br />
+                <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
+                <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</span><br />
+                <span>{{$shipping->country}}</span><br />
             </td>
             <td width="45%" style="font-size:24px;">
               Tracking Number
@@ -222,8 +220,8 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td width="45%">
-              <p>Total Spoilage: {{$other_data['total_spoil']}}</p>
-              <p>Total Manufacturer Defect: {{$other_data['total_md']}}</p>
+              <span>Total Spoilage: {{$other_data['total_spoil']}}</span><br />
+              <span>Total Manufacturer Defect: {{$other_data['total_md']}}</span><br />
             </td>
           </tr>
         </table>
