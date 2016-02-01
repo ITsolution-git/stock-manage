@@ -1,5 +1,6 @@
 
-app.controller('priceListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant) {
+app.controller('priceListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+  AuthService.AccessService('FM');
    $("#ajax_loader").show();
   $http.get('api/public/admin/price').success(function(result, status, headers, config) {
 
@@ -28,9 +29,9 @@ app.controller('priceListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,$filter) {
+app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
    
-
+AuthService.AccessService('FM');
                         $scope.percentagecalc = function($event) {
                           
                                 var price_in_percentage = $event.target.value;
