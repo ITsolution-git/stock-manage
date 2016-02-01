@@ -76,7 +76,7 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="left" valign="top" width="25%">
-              <img src="../../../../images/logo-stokkup-login.png" alt="Logo" />
+             <!--  <img src="../../../../images/logo-stokkup-login.png" alt="Logo" /> -->
             </td>
             <td align="left" valign="top" width="25%">
               <h1>Stokkup</h1>
@@ -113,7 +113,6 @@
                 <p><strong>PO Number : #</strong></p>
                 <p><strong>{{$shipping->job_name}}</strong></p>
                 <p>Shipped On : {{$shipping->shipping_by}}</p>
-              </div>
             </td>
           </tr>
         </table>
