@@ -302,6 +302,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             $http.post('api/public/finishing/removeFinishingItem',item_data).success(function(result) {
             
                 $("#ajax_loader").hide();
+                get_order_details(order_id,client_id,company_id);
             });
         }
         else
@@ -324,6 +325,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             var item_data = {item_name:item_name,order_id:order_id,total_qty:$scope.total_qty}
             $http.post('api/public/finishing/addFinishingItem',item_data).success(function(result) {
                 $("#ajax_loader").hide();
+                get_order_details(order_id,client_id,company_id);
             });
         }
     }

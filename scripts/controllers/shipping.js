@@ -102,7 +102,7 @@ app.controller('shippingListCtrl', ['$scope','$rootScope','$http','$location','$
 
 }]);
 
-app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
+app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$stateParams','$modal','AuthService','$log','$filter','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$stateParams,$modal,AuthService,$log,$filter,sessionService,AllConstant) {
 
     $('.tab2').tab('show');
     $scope.shipping_id = $stateParams.id;
@@ -132,6 +132,10 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         
             if(result.data.success == '1') {
                 $scope.shipping =result.data.records[0];
+                $scope.shipping.shipping_by = $filter('dateWithFormat')($scope.shipping.shipping_by);
+                $scope.shipping.date_shipped = $filter('dateWithFormat')($scope.shipping.date_shipped);
+                $scope.shipping.fully_shipped = $filter('dateWithFormat')($scope.shipping.fully_shipped);
+                $scope.shipping.in_hands_by = $filter('dateWithFormat')($scope.shipping.in_hands_by);
                 $scope.shipping_type =result.data.shipping_type;
                 $scope.shipping_items =result.data.shippingItems;
                 $scope.shipping_boxes =result.data.shippingBoxes;

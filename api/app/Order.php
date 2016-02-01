@@ -534,7 +534,7 @@ public function updateOrderLineData($post)
 
     public function getDistributionItems($data)
     {
-        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.name_company as main_contact_person'];
+        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.name as color_name','p.name','v.name_company as main_contact_person'];
 
         $orderData = DB::table('orders as order')
                         ->select($listArray)
@@ -543,7 +543,7 @@ public function updateOrderLineData($post)
                         ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
                         ->leftJoin('products as p','p.id','=','ol.product_id')
                         ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
-                        ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
+                        ->leftJoin('color as mt2','mt2.id','=','ol.color_id')
                         ->where($data)
                         ->where('pd.qnty','!=','')
                         ->get();
@@ -566,7 +566,7 @@ public function updateOrderLineData($post)
 
     public function getDistributedItems($data)
     {
-        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.value as color_name','p.name','v.name_company as main_contact_person','pd.shipped_qnty'];
+        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.name as color_name','p.name','v.name_company as main_contact_person','pd.shipped_qnty'];
 
         $orderData = DB::table('orders as order')
                         ->select($listArray)
@@ -575,7 +575,7 @@ public function updateOrderLineData($post)
                         ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
                         ->leftJoin('products as p','p.id','=','ol.product_id')
                         ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
-                        ->leftJoin('misc_type as mt2','mt2.id','=','ol.color_id')
+                        ->leftJoin('color as mt2','mt2.id','=','ol.color_id')
                         ->leftJoin('item_address_mapping as ia', 'pd.id', '=', 'ia.item_id')
                         ->where($data)
                         ->get();
