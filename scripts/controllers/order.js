@@ -2303,8 +2303,22 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
       }
 
     }
-    function searchTextChange(text) {
-      $log.info('Text changed to ' + text);
+    function searchTextChange(text,orderline_id) {
+        $log.info('Text changed to ' + text);
+
+        if(text == '')
+        {
+            var orderline_data = {};
+            orderline_data.data = {
+                                    'product_id' : '0'
+                                };
+            orderline_data.cond = {};
+            orderline_data['table'] ='order_orderlines';
+            orderline_data.cond['id'] = orderline_id;
+            $http.post('api/public/common/UpdateTableRecords',orderline_data).success(function(result) {
+                get_order_details(order_id,client_id,company_id);
+            });
+        }
     }
     function selectedItemChange(item) {
       angular.forEach($scope.orderLineAll, function(row, key) {

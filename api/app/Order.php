@@ -274,7 +274,7 @@ public function updateOrderLineData($post)
         $result123 = DB::table('purchase_detail')
                     ->where('id','=',$row['id'])
                     ->update(array( 'size'=>$row['size'],
-                                    'qnty'=>$row['qnty'],
+                                    'qnty'=>$row['qnty'] ? $row['size'] : '0',
                                     'date'=>$post['created_date'])
                             );
 
