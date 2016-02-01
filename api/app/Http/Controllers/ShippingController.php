@@ -12,10 +12,10 @@ use App\Purchase;
 use App\Order;
 use DB;
 use App;
-use Barryvdh\DomPDF\Facade as PDF;
+//use Barryvdh\DomPDF\Facade as PDF;
 
 use Request;
-
+use PDF;
 class ShippingController extends Controller { 
 
 	public function __construct(Shipping $shipping,Common $common,Purchase $purchase,Order $order) 
@@ -338,21 +338,26 @@ class ShippingController extends Controller {
         $shipping['shipping_boxes'] = $shipping_boxes;
         $shipping['other_data'] = $other_data;
 
-        $pdf = App::make('dompdf');
+        
         if($post['print_type'] == 'manifest')
         {
-            $pdf = PDF::loadView('pdf.shipping_manifest',$shipping);
-            return $pdf->stream('Print Manifest');
+        
+            PDF::AddPage('P','A4');
+            PDF::writeHTML(view('pdf.shipping_manifest',$shipping)->render());
+            PDF::Output('shipping_manifest.pdf');
+
         }
         else if($post['print_type'] == 'report')
         {
-            $pdf = PDF::loadView('pdf.shipping_report',$shipping);
-            return $pdf->stream('Shipping Report');
+            PDF::AddPage('P','A4');
+            PDF::writeHTML(view('pdf.shipping_report',$shipping)->render());
+            PDF::Output('shipping_report.pdf');
         }
         else if($post['print_type'] == 'label')
         {
-            $pdf = PDF::loadView('pdf.shipping_label',$shipping);
-            return $pdf->stream('Shipping Label');
+            PDF::AddPage('P','A4');
+            PDF::writeHTML(view('pdf.shipping_label',$shipping)->render());
+            PDF::Output('shipping_label.pdf');
         }
     }
 }
