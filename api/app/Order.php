@@ -747,5 +747,22 @@ public function saveColorSize($post)
     }
 
 
+/**
+* Update product price           
+* @access public updateOrderNotes
+* @param  array $post
+* @return array $result
+*/
+
+
+    public function updatePriceProduct($size_array_data,$product_id)
+   {
+            $result = DB::table('products')
+                        ->where('id','=',$product_id)
+                        ->update(array('color_size_data'=>$size_array_data));
+        return $result;
+   }
+
+
     
 }

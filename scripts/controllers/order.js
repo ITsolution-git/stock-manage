@@ -662,10 +662,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             if(value.id == orderline_id)
             {
-                if(value.product_id == 'addproduct'){
-                  $scope.addproductpopup(value.product_id,value.id);
-                  return false;
-                }
+               
 
                 var order_data = {};
                 order_data.table ='order_orderlines'
@@ -683,7 +680,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     }
 
 
-         $scope.addproductpopup = function(value,product_updated_id)
+         $scope.addproductpopup = function(value,orderline_id,vendor_id)
     {
 
 
@@ -691,7 +688,7 @@ $scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, sc
 $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
 
- if(value == 'addproduct'){
+ if(value == 0){
 
             var product_data = {};
             var productData = {};
@@ -700,7 +697,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             product_data.data = productData;
            
             product_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
-            product_data.data.vendor_id =value.vendor_id;
+            product_data.data.vendor_id =vendor_id;
            
 
             product_data.table ='products'
@@ -708,20 +705,16 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             $http.post('api/public/common/InsertRecords',product_data).success(function(result) {
                 
                 var id = result.data.id;
-                 getProductDetailById(id);
-
-
-
-                // getProductDetailColorSize(id);
+                
+                getProductDetailByIdAll(id);
                  $scope.product_id_new  = id;
                  
-
-                 if(product_updated_id) {
+                 if(orderline_id) {
 
                     var new_order_data = {};
                     new_order_data.table ='order_orderlines'
                     new_order_data.data ={product_id:$scope.product_id_new}
-                    new_order_data.cond ={id:product_updated_id}
+                    new_order_data.cond ={id:orderline_id}
                     
                     $http.post('api/public/common/UpdateTableRecords',new_order_data).success(function(result) {
                         
@@ -751,18 +744,18 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                                 color_data.product_id = $scope.product_id_new;
 
                                 $http.post('api/public/order/saveColorSize',color_data).success(function(Listdata) {
-                                   getProductDetailColorSize($scope.product_id_new);
-
+                                    getProductDetailByIdAll($scope.product_id_new);
                                 });
                         },
                         onItemDeselect: function(item) {
+                          
+                               var color_data = {};
+                                color_data.color_id = item.id;
+                                color_data.product_id = $scope.product_id_new;
 
-                             var color_data = {};
-                             color_data.table ='product_color_size'
-                             color_data.cond ={color_id:item.id,product_id:$scope.product_id_new}
-                             $http.post('api/public/common/DeleteTableRecords',color_data).success(function(result) {        
-                                          getProductDetailColorSize($scope.product_id_new);
-                                  });
+                                $http.post('api/public/order/deleteColorSize',color_data).success(function(Listdata) {
+                                    getProductDetailByIdAll($scope.product_id_new);
+                                });
                         } 
                         
              };
@@ -840,7 +833,24 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     }
 
 
-     $scope.updateOrderAll = function($event,id,table_name,match_condition)
+     $scope.updateOrderAll = function($event,id,temp_array)
+    {
+        
+          var combine_array_id = {};
+            combine_array_id.id = id;
+            combine_array_id.temp_array = temp_array;
+           
+            
+
+            $http.post('api/public/order/updatePriceProduct',combine_array_id).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
+            });
+      
+    }
+
+      $scope.updateProductData = function($event,id,table_name,match_condition)
     {
           var order_main_data = {};
           order_main_data.table =table_name;
@@ -1211,11 +1221,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     {
        
                         $http.post('api/public/order/productDetail',id).success(function(result) {
-                            
-                                
                                 $scope.allProductColorSize =result.data;
-                              //  console.log($scope.allProductColorSize);return false;
-                               // console.log($scope.allProductColorSize['product_data'][0].name);return false;
                             
                          });
     }

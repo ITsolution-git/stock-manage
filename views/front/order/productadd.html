@@ -11,7 +11,7 @@
                         <lable for="order">Product:</lable>
                     </div>
                     <div class="col-md-10 nopad-form">
-                        <input ng-model="allProductColorSize.product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                        <input ng-model="allProductColorSize.product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateProductData($event,allProductColorSize.product_data[0].id,\'products\',\'id\')' }"/>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                         <lable for="order">Brand:</lable>
                     </div>
                     <div class="col-md-10 nopad-form">
-                        <input ng-model="product_data[0].brand" type="text" id="name" name="brand" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                        <input ng-model="allProductColorSize.product_data[0].brand" type="text" id="name" name="brand" class="form-control" ui-event="{ blur : 'updateProductData($event,allProductColorSize.product_data[0].id,\'products\',\'id\')' }"/>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                         <lable for="order">Mill #:</lable>
                     </div>
                     <div class="col-md-10 nopad-form">
-                        <input ng-model="product_data[0].mill" type="text" id="name" name="mill" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                        <input ng-model="allProductColorSize.product_data[0].mill" type="text" id="name" name="mill" class="form-control" ui-event="{ blur : 'updateProductData($event,allProductColorSize.product_data[0].id,\'products\',\'id\')' }"/>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         <lable for="desc">Product Description:</lable>
                     </div>
                     <div class="col-md-10 nopad-form">
-                        <textarea class="form-control task_desc" rows="4" id="desc" name="description" ng-model="product_data[0].description" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"></textarea>
+                        <textarea class="form-control task_desc" rows="4" id="desc" name="description" ng-model="allProductColorSize.product_data[0].description" ui-event="{ blur : 'updateProductData($event,allProductColorSize.product_data[0].id,\'products\',\'id\')' }"></textarea>
                     </div>
                 </div>
             </div>
@@ -77,17 +77,20 @@
             </div>
 
             <!-- Listing Fields -->
-            <div class="col-md-12 nopad-form" ng-repeat="(key,allProduct) in allProductColorSize['productColorSizeData']">
-                <div class="col-md-12 form-group listContent">
+            <div class="col-md-12 nopad-form" ng-repeat="(key,allProduct) in allProductColorSize['allData']">
+                <div class="col-md-12 form-group listContent" ng-repeat="(s_key,alldatasize) in allProduct">
                     <div class="col-md-3 nopad-left">
-                        <span>{{allProduct.color}}</span>
+                        <span>{{allProductColorSize.color_name[key]}}</span>
                     </div>
+
                     <div class="col-md-3 nopad-left">
-                        <span>{{allProduct.size}}</span>
+                        <span>{{alldatasize.name}}</span>
                     </div>
                     <div class="col-md-5 nopad-left">
-                        <input type="text" class="form-control" value="" name="price" ng-model="allProduct.price" ui-event="{ blur : 'updateOrderAll($event,allProduct.id,\'product_color_size\',\'id\')' }"/>
+                        <input type="text" class="form-control" value="" name="piece_price" ng-model="alldatasize.piece_price" ui-event="{ blur : 'updateOrderAll($event,allProductColorSize.product_data[0].id,allProductColorSize.allData)' }"/>
                     </div>
+
+
                     <!-- <div class="col-md-1 nopad-form"> 
                         <div class="sgpDetails disabled-sgpDetails btnCircle">
                           <a class="" tabindex="0" role="button" ng-click="removeColorSize($index,allProduct.id)"><i class="fa fa-minus"></i></a>
