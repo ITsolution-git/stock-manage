@@ -347,6 +347,10 @@ class OrderController extends Controller {
     public function orderLineupdate()
     {
         $post = Input::all();
+//        print_r($post['data']);exit;
+        $post['data']['print_charges'] = round($post['data']['print_charges'],2);
+        $post['data']['peritem'] = round($post['data']['peritem'],2);
+        $post['data']['per_line_total'] = round($post['data']['per_line_total'],2);
 
         if($post['data']['product_name'] != '')
         {

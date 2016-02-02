@@ -406,14 +406,14 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 {
                     var subtract = parseFloat(override_value) - parseFloat(value.peritem);
                     value.override_diff = subtract.toFixed(2);
-                    value.peritem = override_valuetoFixed(2);
+                    value.peritem = override_value.toFixed(2);
 
                     var mul = parseInt(value.qnty) * parseFloat(value.peritem);
                     value.per_line_total = mul.toFixed(2);
 
                     var orderline_data = {};
                     orderline_data.data = {
-                                            'peritem' : value.peritem,
+                                            'peritem' : value.peritem.toFixed(2),
                                             'override': override_value,
                                             'per_line_total' : value.per_line_total,
                                             'override_diff' : value.override_diff
@@ -1538,8 +1538,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 var calc_press_setup =  parseInt($scope.press_setup_qnty) * parseFloat($scope.price_grid.press_setup);
                 var calc_screen_fees =  parseInt($scope.screen_fees_qnty) * parseFloat($scope.price_grid.screen_fees);
 
-                var calc_total = calc_descharge + calc_speciality + calc_foil + calc_ink_charge + calc_number_on_dark + calc_number_on_light + calc_oversize + calc_press_setup + calc_screen_fees;
-                $scope.print_charges +=  calc_total.toFixed(2);
+                var calc_total = parseFloat(calc_descharge) + parseFloat(calc_speciality) + parseFloat(calc_foil) + parseFloat(calc_ink_charge) + parseFloat(calc_number_on_dark) + parseFloat(calc_number_on_light) + parseFloat(calc_oversize) + parseFloat(calc_press_setup) + parseFloat(calc_screen_fees);
+                $scope.print_charges +=  calc_total;
                 
                 if(value.placement_type == 43)
                 {
@@ -1784,7 +1784,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 {
                     value.avg_garment_cost = $scope.avg_garment_cost;
                     value.avg_garment_price = $scope.avg_garment_price;
-                    value.print_charges = $scope.print_charges;
+                    value.print_charges = parseFloat($scope.print_charges);
                     value.peritem = $scope.per_item;
                     value.per_line_total = $scope.per_line_total;
                     value.markup = $scope.shipping_charge;
