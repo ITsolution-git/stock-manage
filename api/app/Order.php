@@ -274,14 +274,14 @@ public function updateOrderLineData($post)
         $result123 = DB::table('purchase_detail')
                     ->where('id','=',$row['id'])
                     ->update(array( 'size'=>$row['size'],
-                                    'qnty'=>$row['qnty'] ? $row['size'] : '0',
+                                    'qnty'=>$row['qnty'],
                                     'date'=>$post['created_date'])
                             );
 
       $distribution_detail = DB::table('distribution_detail')
                     ->where('id','=',$row['id'])
                     ->update(array( 'size'=>$row['size'],
-                                    'qnty'=>$row['qnty'] ? $row['size'] : '0',
+                                    'qnty'=>$row['qnty'],
                                     'date'=>$post['created_date'])
                             );
 
