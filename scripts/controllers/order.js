@@ -711,7 +711,10 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 
                 var id = result.data.id;
                  getProductDetailById(id);
-                 getProductDetailColorSize(id);
+
+
+
+                // getProductDetailColorSize(id);
                  $scope.product_id_new  = id;
                  
 
@@ -732,10 +735,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                        
 
             } else {
-                 getProductDetailById(value);
-                 getProductDetailColorSize(value);
+                 getProductDetailByIdAll(value);
+                // getProductDetailColorSize(value);
 
                  $scope.product_id_new  = value;
+                // console.log($scope.product_data);return false;
                  
             } 
 
@@ -1201,6 +1205,20 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                             {
                                 $scope.product_data=[];
                             }
+                         });
+    }
+
+
+    function getProductDetailByIdAll(id)
+    {
+       
+                        $http.post('api/public/order/productDetail',id).success(function(result) {
+                            
+                                
+                                $scope.allProductColorSize =result.data;
+                              //  console.log($scope.allProductColorSize);return false;
+                               // console.log($scope.allProductColorSize['product_data'][0].name);return false;
+                            
                          });
     }
 
