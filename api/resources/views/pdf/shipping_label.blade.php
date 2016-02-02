@@ -63,31 +63,31 @@
 </head>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">    
     <tr>
-      <td align="left" valign="top" width="100%">          
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td align="left" valign="top" width="25%">
-              <!-- <img src="../../../../images/logo-stokkup-login.png" alt="Logo" /> -->
-            </td>
-            <td align="center" valign="top" width="25%">
-              <h1>Stokkup</h1>
-              <p>Address</p>
-              <p>www.url.com</p>
-            </td>
-            <td align="right" valign="top" width="50%">
-              <p>{{$shipping->description}}</p>
-                <p>{{$shipping->address}} {{$shipping->address2}}</p>
-                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
-                <p>{{$shipping->country}}</p>
-            </td>
-          </tr>
-          <tr>
-              <td align="left" valign="top">&nbsp;</td>
-          </tr>
-        </table>
-      </td>
+        <td align="left" valign="top" width="100%">          
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td align="left" valign="top" width="25%">
+                        <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" />
+                    </td>
+                    <td align="center" valign="top" width="25%" class="tableCol">
+                        <span style="font-size:15px; line-height:15px;">
+                            <strong>{{$company_detail[0]->name}}</strong>                
+                        </span>
+                        <br/>
+                        <span>{{$company_detail[0]->address}}, {{$company_detail[0]->city}}, {{$company_detail[0]->state}}, <br/>{{$company_detail[0]->country}} - {{$company_detail[0]->zip}}<br />{{$company_detail[0]->url}}</span>
+                    </td>
+                    <td align="right" valign="top" width="50%"><span>{{$shipping->description}}</span><br />
+                        <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
+                        <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</span><br />
+                        <span>{{$shipping->country}}</span><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">&nbsp;</td>
+                </tr>
+            </table>
+        </td>
     </tr>
-
     <tr>
       <td align="left" valign="top" width="100%">PO : </td>
     </tr>

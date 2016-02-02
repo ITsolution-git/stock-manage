@@ -68,26 +68,28 @@
 </head>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">    
     <tr>
-      <td align="left" valign="top" width="100%">          
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td align="left" valign="top" width="25%">
-              <!-- <img src="../../../../images/logo-stokkup-login.png" alt="Logo" /> -->
-            </td>
-            <td align="left" valign="top" width="25%">
-              <h1>Stokkup</h1>
-              <p>Address</p>
-              <p>www.url.com</p>
-            </td>
-            <td align="right" valign="top" width="50%">
-              <p><strong>Job # {{$shipping->order_id}}</strong></p>
-            </td>
-          </tr>
-          <tr>
-              <td align="left" valign="top">&nbsp;</td>
-          </tr>
-        </table>
-      </td>
+        <td align="left" valign="top" width="100%">          
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td align="left" valign="top" width="25%">
+                        <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" />
+                    </td>
+                    <td align="center" valign="top" width="25%" class="tableCol">
+                        <span style="font-size:15px; line-height:15px;">
+                            <strong>{{$company_detail[0]->name}}</strong>                
+                        </span>
+                        <br/>
+                        <span>{{$company_detail[0]->address}}, {{$company_detail[0]->city}}, {{$company_detail[0]->state}}, <br/>{{$company_detail[0]->country}} - {{$company_detail[0]->zip}}<br />{{$company_detail[0]->url}}</span>
+                    </td>
+                    <td align="right" valign="top" width="50%">
+                        <p><strong>Job # {{$shipping->order_id}}</strong></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top">&nbsp;</td>
+                </tr>
+            </table>
+        </td>
     </tr>
 
     <tr>
@@ -95,27 +97,27 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
             <td align="left" valign="top" width="38%">
-              <p>SHIP TO</p>
+              <span>SHIP TO</span><br />
               <div class="prntBrdr">
-                <p>{{$shipping->description}}</p>
-                <p>{{$shipping->address}} {{$shipping->address2}}</p>
-                <p>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</p>
-                <p>{{$shipping->country}}</p>
+                <span>{{$shipping->description}}</span><br />
+                <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
+                <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</span><br />
+                <span>{{$shipping->country}}</span><br />
               </div>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
             <td align="left" valign="top" width="30%">    
-                <p>&nbsp;</p>          
-                <p>PO Number : #</p>
-                <p>&nbsp;</p>
-                <p>Shipped On : {{$shipping->shipping_by}}</p>
+                <span>&nbsp;</span> <br />         
+                <span>PO Number : #</span><br />
+                <span>&nbsp;</span><br />
+                <span>Shipped On : {{$shipping->shipping_by}}</span><br />
               
             </td>
             <td align="left" valign="top" width="30%">   
-                <p>Tracking Number(s)</p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <p>SKU : </p>
+                <span>Tracking Number(s)</span><br />
+                <span>&nbsp;</span><br />
+                <span>&nbsp;</span><br />
+                <span>SKU : </span><br />
              
             </td>
           </tr>

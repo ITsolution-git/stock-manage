@@ -102,7 +102,7 @@ app.controller('shippingListCtrl', ['$scope','$rootScope','$http','$location','$
 
 }]);
 
-app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$stateParams','$modal','AuthService','$log','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$stateParams,$modal,AuthService,$log,sessionService,dateWithFormat,AllConstant) {
+app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','notifyService','$location','$state','$stateParams','$modal','AuthService','$log','$filter','sessionService','AllConstant', function($scope,$rootScope,$http,logger,notifyService,$location,$state,$stateParams,$modal,AuthService,$log,$filter,sessionService,AllConstant) {
 
     $('.tab2').tab('show');
     $scope.shipping_id = $stateParams.id;
@@ -132,6 +132,10 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         
             if(result.data.success == '1') {
                 $scope.shipping =result.data.records[0];
+                $scope.shipping.shipping_by = $filter('dateWithFormat')($scope.shipping.shipping_by);
+                $scope.shipping.date_shipped = $filter('dateWithFormat')($scope.shipping.date_shipped);
+                $scope.shipping.fully_shipped = $filter('dateWithFormat')($scope.shipping.fully_shipped);
+                $scope.shipping.in_hands_by = $filter('dateWithFormat')($scope.shipping.in_hands_by);
                 $scope.shipping_type =result.data.shipping_type;
                 $scope.shipping_items =result.data.shippingItems;
                 $scope.shipping_boxes =result.data.shippingBoxes;
@@ -150,6 +154,18 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         else
         {
             $scope.allorders=[];
+        }
+    });
+
+    $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+                    
+        if(result.data.success == '1') 
+        {
+            $scope.allCompanyDetail =result.data.records;
+        } 
+        else
+        {
+            $scope.allCompanyDetail=[];
         }
     });
 
@@ -357,7 +373,6 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
-                get_shipping_details();
             });
     }
     $scope.create_box_shipment = function(shipping_items)
@@ -458,6 +473,11 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         shipping_boxes.name = 'shipping_boxes';
         shipping_boxes.setAttribute('value', JSON.stringify($scope.shipping_boxes));
         form.appendChild(shipping_boxes);
+
+        var input_company_detail = document.createElement('input');
+        input_company_detail.name = 'company_detail';
+        input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
+        form.appendChild(input_company_detail);
 
         document.body.appendChild(form);
         form.submit();

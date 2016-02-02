@@ -84,6 +84,9 @@
                                 <!-- <div class="col-md-3 pull-left nopad-right smallPad">
                                     <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
                                 </div>  -->                   
+                                <div class="col-md-3 nopad-right smallPad">
+                                    <button ng-click="confirmPricing()" type="button"  class="btn btn-info">Confirm Pricing</button>
+                                </div>
                                 <div class="col-md-3 pull-right nopad-right smallPad">
                                     <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
                                 </div> 
@@ -369,7 +372,7 @@
                                                                 <input type="text" class="form-control c-green"  ng-model="size_qty.size" onfocus="this.blur()" />
                                                             </div>
                                                             <div class="form-group">
-                                                                <input ng-if="size_qty.size != ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="update_qnty(size_qty.qnty,order_line.orderline_id)"/>
+                                                                <input ng-if="size_qty.size != ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="calculate_all(order_line.orderline_id)"/>
                                                                 <input ng-if="size_qty.size == ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" onfocus="this.blur()"/>
                                                             </div>
                                                         </span>
@@ -395,28 +398,15 @@
                                                     <div class="cols col-1">
                                                         <div class="col-md-3 nopad-left smallPad">
                                                             <select  ng-model="order_line.color_id"  class="form-control" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line)">
-                                                                <option value="0">Select</option>
                                                                 <option ng-selected="order_line.color_id==color.id" ng-repeat="color in order_line.colors" value={{color.id}}>{{color.name}}</option>
                                                             </select>
                                                         </div>
-                                                        <!-- <div class="form-group">
-                                                            <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" id="product_select" ng-disabled="order_line.vendor_id == 0" ng-change="getProductColor(order_line.product_id)">
-                                                                <option value="0">Select</option>
-                                                                <option value="addproduct">Add Product</option>
-                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in order_line.products" value={{product_data.id}}>{{product_data.name}}</option>
-                                                            </select>
-                                                            <span ng-click="addproductpopup(order_line.product_id,'')" ng-hide="order_line.product_id <= 0">Edit Product</span>
-                                                        </div> -->
-
                                                         <div class="col-md-9 nopad-left smallPad">
-
-                                                        <div class="form-group">
-
                                                             <md-autocomplete
                                                                 ng-disabled="isDisabled"
                                                                 md-no-cache="noCache"
                                                                 md-selected-item="selectedItem"
-                                                                md-search-text-change="searchTextChange(order_line.product_name)"
+                                                                md-search-text-change="searchTextChange(order_line.product_name,order_line.id)"
                                                                 md-search-text="order_line.product_name"
                                                                 md-selected-item-change="selectedItemChange(item)"
                                                                 md-items="item in querySearch(order_line.product_name,order_line.vendor_id)"
@@ -431,20 +421,15 @@
                                                                     No products matching "{{order_line.product_name}}" were found.
                                                                 </md-not-found>
                                                             </md-autocomplete>
-
-                                                        </div>                                                  
-
                                                         </div>
-                                                        <div class="form-group">
-                                                            <select  ng-model="order_line.client_supplied"  class="form-control">
-                                                                <option ng-selected="order_line.client_supplied==1" value="1">Yes</option>
-                                                                <option ng-selected="order_line.client_supplied==0" value="0">No</option>
-                                                            </select>
-                                                        </div>
-
                                                     </div>
                                                     <div class="cols col-2 orderLinesecondRow">
                                                         <div class="col-md-12 nopad-form">
+                                                            <div class="col-md-1 nopad-left smallPad">
+                                                                <button type="button" class="btn btn-default addButton" ng-click="addproductpopup(order_line.product_id,'')">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </button>
+                                                            </div>
                                                             <div class="col-md-2 smallPad nopad-left">
                                                                 <select  ng-model="order_line.client_supplied"  class="form-control">
                                                                     <option ng-selected="order_line.client_supplied==1" value="1">Yes</option>
@@ -454,11 +439,6 @@
                                                             <div class="col-md-1 smallPad nopad-left">
                                                                 <input type="text" class="form-control"/>
                                                             </div>
-                                                          <!--   <div class="col-md-3 smallPad nopad-left">
-                                                                <button type="button" class="btn btn-default addButton">
-                                                                    <i class="fa fa-plus"></i> Artwork Proof
-                                                                </button>
-                                                            </div> --> 
                                                             <div class="col-md-5 smallPad nopad-left">
                                                                 <input type="text" class="form-control" ng-model="order_line.product_description"/>
                                                             </div>
@@ -1246,8 +1226,6 @@
                                                 <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="removePOLine($index,poline.id)">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
-
-
                                             </div>
                                         </div>
                                         <!-- / -->

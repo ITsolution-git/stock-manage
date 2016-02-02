@@ -347,6 +347,10 @@ class OrderController extends Controller {
     public function orderLineupdate()
     {
         $post = Input::all();
+//        print_r($post['data']);exit;
+        $post['data']['print_charges'] = round($post['data']['print_charges'],2);
+        $post['data']['peritem'] = round($post['data']['peritem'],2);
+        $post['data']['per_line_total'] = round($post['data']['per_line_total'],2);
 
         if($post['data']['product_name'] != '')
         {
@@ -924,4 +928,37 @@ class OrderController extends Controller {
         $data = array("success"=>1,"message"=>INSERT_RECORD);
         return response()->json(['data'=>$data]);
     }
+
+
+   /**
+   * Get Product Detail.
+   * @return json data
+   */
+    public function productDetail()
+    {
+        $post = Input::all();
+
+        $result = $this->order->getProductDetail($post[0]);
+        
+
+        $colors = unserialize($result[0]->color_size_data);
+      //  print_r($colors);exit;
+        $color_all = array();
+        $colorData = array();
+
+        foreach($colors as $key=>$color) {
+            $all_data = $this->product->GetColorDeail(array('id'=>$key));
+             $colorData[]['id'] = $key;
+        }
+
+
+        $combine_array['colorData'] = $colorData;
+        $combine_array['allData'] = $colors;
+        $combine_array['product_data'] = $result;
+        
+      return response()->json(['data'=>$combine_array]);
+        
+        
+    }
+
 }
