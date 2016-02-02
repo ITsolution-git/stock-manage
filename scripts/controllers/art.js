@@ -2,23 +2,27 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$root
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
-                         
+                          $("#ajax_loader").show();
                           $http.get('api/public/art/listing/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
                           			$scope.Art_array = RetArray.data;
+                          			 $("#ajax_loader").hide();
                               	}
                             });
 
 }]);
 app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService) {
+						  $("#ajax_loader").hide();
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.art_id = $stateParams.id;
+                          $("#ajax_loader").show();
                           $http.get('api/public/art/Art_detail/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
+                          			$("#ajax_loader").hide();
                           			$scope.art_position = RetArray.data.records.art_position;
                           			$scope.art_orderline = RetArray.data.records.art_orderline;
                           			//console.log($scope.art_orderline.line_array);
