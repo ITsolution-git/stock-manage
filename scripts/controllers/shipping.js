@@ -373,7 +373,6 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
-                get_shipping_details();
             });
     }
     $scope.create_box_shipment = function(shipping_items)

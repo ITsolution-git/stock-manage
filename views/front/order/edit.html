@@ -398,18 +398,9 @@
                                                     <div class="cols col-1">
                                                         <div class="col-md-3 nopad-left smallPad">
                                                             <select  ng-model="order_line.color_id"  class="form-control" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line)">
-                                                                <option value="0">Select</option>
                                                                 <option ng-selected="order_line.color_id==color.id" ng-repeat="color in order_line.colors" value={{color.id}}>{{color.name}}</option>
                                                             </select>
                                                         </div>
-                                                        <!-- <div class="form-group">
-                                                            <select  ng-model="order_line.product_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" id="product_select" ng-disabled="order_line.vendor_id == 0" ng-change="getProductColor(order_line.product_id)">
-                                                                <option value="0">Select</option>
-                                                                <option value="addproduct">Add Product</option>
-                                                                <option ng-selected="order_line.product_id==product_data.id" ng-repeat="product_data in order_line.products" value={{product_data.id}}>{{product_data.name}}</option>
-                                                            </select>
-                                                            <span ng-click="addproductpopup(order_line.product_id,'')" ng-hide="order_line.product_id <= 0">Edit Product</span>
-                                                        </div> -->
                                                         <div class="col-md-9 nopad-left smallPad">
                                                             <md-autocomplete
                                                                 ng-disabled="isDisabled"
@@ -448,11 +439,6 @@
                                                             <div class="col-md-1 smallPad nopad-left">
                                                                 <input type="text" class="form-control"/>
                                                             </div>
-                                                          <!--   <div class="col-md-3 smallPad nopad-left">
-                                                                <button type="button" class="btn btn-default addButton">
-                                                                    <i class="fa fa-plus"></i> Artwork Proof
-                                                                </button>
-                                                            </div> -->
                                                             <div class="col-md-5 smallPad nopad-left">
                                                                 <input type="text" class="form-control" ng-model="order_line.product_description"/>
                                                             </div>
