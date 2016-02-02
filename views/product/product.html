@@ -21,12 +21,6 @@
               <th data-toggle="true">
                   Product Description
               </th>
-              <th>
-                  Size
-              </th>
-              <th data-hide="phone,tablet">
-                  Color
-              </th>
               <th data-hide="phone,tablet">
                   Vendor
               </th>
@@ -47,8 +41,6 @@
 
           <tr ng-repeat="data in products" id="product_{{data.id}}">
               <td>{{data.description}}</td>
-              <td>{{data.size_group}}</td>
-              <td>{{data.color_ids}}</td>
               <td>{{data.name_company}}</td>
               <td>{{data.vendor_sku}}</td>
               
