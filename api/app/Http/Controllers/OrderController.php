@@ -842,20 +842,33 @@ class OrderController extends Controller {
     public function saveColorSize()
     {
         $post = Input::all();
-       
-        if(!empty($post['color_id']) && !empty($post['product_id']))
-        {
-            $result = $this->order->saveColorSize($post);
-            $message = INSERT_RECORD;
-            $success = 1;
-        }
-        else
-        {
-            $message = MISSING_PARAMS.", id";
-            $success = 0;
-        }
         
-        $data = array("success"=>$success,"message"=>$message);
+
+         $result = $this->order->getProductDetail($post['product_id']);
+         $colors_array = unserialize($result[0]->color_size_data);
+
+         $static_array = array();
+        
+                
+         $static_array[$post['color_id']] = array(array('name' => 'XS','piece_price' => 0),
+                                         array('name' => 'S','piece_price' => 0),
+                                         array('name' => 'M','piece_price' => 0),
+                                         array('name' => 'L','piece_price' => 0),
+                                         array('name' => 'XL','piece_price' => 0),
+                                         array('name' => '2XL','piece_price' => 0),
+                                         array('name' => '3XL','piece_price' => 0)); 
+              
+     
+      if($colors_array){
+      $merge_array = $colors_array + $static_array;
+      } else {
+        $merge_array = $static_array;
+      }
+
+      $colors_all_array = serialize($merge_array);
+      
+       $result = $this->order->updatePriceProduct($colors_all_array,$post['product_id']);
+       $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
     }
 
@@ -939,26 +952,68 @@ class OrderController extends Controller {
         $post = Input::all();
 
         $result = $this->order->getProductDetail($post[0]);
-        
+
 
         $colors = unserialize($result[0]->color_size_data);
       //  print_r($colors);exit;
         $color_all = array();
         $colorData = array();
+        $colorName = array();
 
-        foreach($colors as $key=>$color) {
-            $all_data = $this->product->GetColorDeail(array('id'=>$key));
-             $colorData[]['id'] = $key;
-        }
+        if(!empty($colors)) {
+            foreach($colors as $key=>$color) {
+                $all_data = $this->product->GetColorDeail(array('id'=>$key));
+                
 
+                 $colorData[]['id'] = (string)$key;
+                 $colorName[$key] = $all_data[0]->name;
+
+            }
+         }
 
         $combine_array['colorData'] = $colorData;
         $combine_array['allData'] = $colors;
         $combine_array['product_data'] = $result;
+        $combine_array['color_name'] = $colorName;
         
       return response()->json(['data'=>$combine_array]);
         
         
+    }
+
+
+    /**
+    * Update product price in add/edit product
+    * @params id
+    * @params color_id
+    * @return json data
+    */
+    public function updatePriceProduct()
+    {
+        $post = Input::all();
+        $size_array_data = serialize($post['temp_array']);
+        $result = $this->order->updatePriceProduct($size_array_data,$post['id']);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+     /**
+   * Save Color size.
+   * @return json data
+    */
+    public function deleteColorSize()
+    {
+        $post = Input::all();
+        
+        $result = $this->order->getProductDetail($post['product_id']);
+        $colors_array = unserialize($result[0]->color_size_data);
+
+        unset($colors_array[$post['color_id']]);
+        $colors_all_array = serialize($colors_array);
+      
+       $result = $this->order->updatePriceProduct($colors_all_array,$post['product_id']);
+       $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
     }
 
 }

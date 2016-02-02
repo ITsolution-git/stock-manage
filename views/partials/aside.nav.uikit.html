@@ -133,9 +133,9 @@
         <li ui-sref-active="active">
           <a md-ink-ripple ui-sref="setting.price">Price Grid</a>
         </li>
-        <li ui-sref-active="active">
+       <!--  <li ui-sref-active="active">
           <a md-ink-ripple ui-sref="setting.quick">Quick book</a>
-        </li>
+        </li> -->
 
          <li ui-sref-active="active">
           <a md-ink-ripple ui-sref="setting.placement">Placement</a>
@@ -282,16 +282,22 @@
 
 
   <!-- Code Start for Production tab -->
-    <li ng-show="app.role=='BC'">
+   <!--  <li ng-show="app.role=='BC'">
       <a md-ink-ripple>
        
         <i class="icon fa fa-tags i-20"></i>
         <span class="font-normal">Production</span>
       </a>
-    </li>
+    </li> -->
   <!-- Code end for Production tab --> 
 
-
+ <li ng-show="app.role=='BC'">
+      <a md-ink-ripple ui-sref="finishing.list">
+        <i class="icon fa fa-check-square i-20"></i>
+        <span class="font-normal">Finishing</span>
+      </a>
+    </li>
+    
  <!-- Code Start for Shipping tab -->
     <li ng-show="app.role=='BC'">
       <a md-ink-ripple ui-sref="shipping.list">
@@ -302,12 +308,7 @@
         <span class="font-normal">Shipping</span>
       </a>
         </li>
-    <li ng-show="app.role=='BC'">
-      <a md-ink-ripple ui-sref="finishing.list">
-        <i class="icon fa fa-check-square i-20"></i>
-        <span class="font-normal">Finishing</span>
-      </a>
-    </li>
+   
   <!-- Code end for Shipping tab --> 
    <!-- Code Start for Production tab -->
     <li ng-show="app.role=='CA'">

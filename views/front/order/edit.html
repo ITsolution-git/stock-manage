@@ -426,7 +426,7 @@
                                                     <div class="cols col-2 orderLinesecondRow">
                                                         <div class="col-md-12 nopad-form">
                                                             <div class="col-md-1 nopad-left smallPad">
-                                                                <button type="button" class="btn btn-default addButton" ng-click="addproductpopup(order_line.product_id,'')">
+                                                                <button type="button" class="btn btn-default addButton" ng-click="addproductpopup(order_line.product_id,order_line.id,order_line.vendor_id)">
                                                                     <i class="fa fa-pencil"></i>
                                                                 </button>
                                                             </div>
@@ -964,13 +964,13 @@
 
                             <!-- Notes TAB START -->
                             <div role="tabpanel" class="tab-pane  animated fadeIn orderNoteTab" id="tab4">
-                                <ul class="nav nav-tabs input-group col-sm-12">
+                               <!--  <ul class="nav nav-tabs input-group col-sm-12">
                                     <li class="active"> <a href data-toggle="tab" data-target="#tab_notes">Notes</a> </li>
                                     <li> <a href data-toggle="tab" data-target="#tab_tasks" ui-event="{ click : 'openTab(\'tasks\')' }">Tasks</a> </li>
-                                </ul>
-                                <div class="tab-content p b-a no-b-t bg-white m-b-md">
+                                </ul> -->
+                               <!--  <div class="tab-content p b-a no-b-t bg-white m-b-md"> -->
                                 <!-- Notes -->
-                                    <div role="tabpanel" class="tab-pane animated fadeIn active col-md-12" id="tab_notes">
+                                   <!--  <div role="tabpanel" class="tab-pane animated fadeIn active col-md-12" id="tab_notes"> -->
                                         <div class="col-md-12 nopad-form order_notes">
                                             <div class="col-md-8 nopad-left tabTitle m-b">                          
                                                 <div class="col-md-2 nopad-left"><label>Created</label></div>
@@ -1022,10 +1022,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                   <!--  </div> -->
                                     <!-- End Notes -->
                                     <!-- Note Tasks -->
-                                    <div role="tabpanel" class="tab-pane animated fadeIn col-md-12" id="tab_tasks">
+                                    <!-- <div role="tabpanel" class="tab-pane animated fadeIn col-md-12" id="tab_tasks">
                                         <div class="col-md-12">
                                             <div class="form-group col-md-1"></div>
                                             <div class="form-group col-md-1">
@@ -1094,9 +1094,9 @@
                                                 <button type="button" ng-click="removeOrderText($index,task.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- End Note Tasks -->
-                                </div>
+                                <!-- </div> -->
                             </div>
                             <!-- Notes TAB END -->
 
