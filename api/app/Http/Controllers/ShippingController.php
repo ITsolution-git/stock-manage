@@ -276,6 +276,7 @@ class ShippingController extends Controller {
         $shipping['shipping'] = json_decode($post['shipping']);
         $shipping['shipping_type'] = json_decode($post['shipping_type']);
         $shipping['shipping_items'] = json_decode($post['shipping_items']);
+        $shipping['company_detail'] = json_decode($_POST['company_detail']);
         $shipping_boxes = json_decode($post['shipping_boxes']);
 
         $actual_total = 0;

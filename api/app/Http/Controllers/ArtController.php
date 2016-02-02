@@ -23,12 +23,22 @@ class ArtController extends Controller {
     {
     	if(!empty($company_id) 	&& $company_id != 'undefined')
     	{
+    		
+        	
     		$result = $this->art->listing($company_id);
-    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+    		if(count($result)>0)
+    		{
+    			$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+    		}
+    		
 		}
     	else 
         {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+            $response = array('success' => 0, 'message' => MISSING_PARAMS,'records' => $result);
         }
         return  response()->json(["data" => $response]);
     }
@@ -36,8 +46,11 @@ class ArtController extends Controller {
     {
     	if(!empty($company_id) && !empty($art_id)	&& $company_id != 'undefined')
     	{
-    		$result = $this->art->art_position($art_id,$company_id);
-    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+    		$art_position = $this->art->art_position($art_id,$company_id);
+    		$art_orderline = $this->art->art_orderline($art_id,$company_id);
+
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline);
+    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
         {
@@ -45,4 +58,5 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+
 }
