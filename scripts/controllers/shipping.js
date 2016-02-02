@@ -157,6 +157,18 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         }
     });
 
+    $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+                    
+        if(result.data.success == '1') 
+        {
+            $scope.allCompanyDetail =result.data.records;
+        } 
+        else
+        {
+            $scope.allCompanyDetail=[];
+        }
+    });
+
     function get_box_items(id)
     {
         AJloader.show();
@@ -462,6 +474,11 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         shipping_boxes.name = 'shipping_boxes';
         shipping_boxes.setAttribute('value', JSON.stringify($scope.shipping_boxes));
         form.appendChild(shipping_boxes);
+
+        var input_company_detail = document.createElement('input');
+        input_company_detail.name = 'company_detail';
+        input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
+        form.appendChild(input_company_detail);
 
         document.body.appendChild(form);
         form.submit();
