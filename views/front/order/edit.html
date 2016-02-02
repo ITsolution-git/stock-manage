@@ -84,6 +84,9 @@
                                 <!-- <div class="col-md-3 pull-left nopad-right smallPad">
                                     <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
                                 </div>  -->                   
+                                <div class="col-md-3 nopad-right smallPad">
+                                    <button ng-click="confirmPricing()" type="button"  class="btn btn-info">Confirm Pricing</button>
+                                </div>
                                 <div class="col-md-3 pull-right nopad-right smallPad">
                                     <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
                                 </div> 
@@ -369,7 +372,7 @@
                                                                 <input type="text" class="form-control c-green"  ng-model="size_qty.size" onfocus="this.blur()" />
                                                             </div>
                                                             <div class="form-group">
-                                                                <input ng-if="size_qty.size != ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="update_qnty(size_qty.qnty,order_line.orderline_id)"/>
+                                                                <input ng-if="size_qty.size != ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="calculate_all(order_line.orderline_id)"/>
                                                                 <input ng-if="size_qty.size == ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" onfocus="this.blur()"/>
                                                             </div>
                                                         </span>

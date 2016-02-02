@@ -347,10 +347,10 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
     $scope.update_qnty = function(qty,id) {
 
-        var i = '';
-        var total = 0;
+/*        var i = '';
+        var total = 0;*/
 
-        if(qty == undefined && id == undefined)
+/*        if(qty == undefined && id == undefined)
         {
             for(i=1;i<=7;i++)
             {
@@ -373,11 +373,16 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 }
                 total += parseInt(size);
             }
-        }
-        $scope.orderLineAllNew = [];
+        }*/
+/*        $scope.orderLineAllNew = [];
 
         $scope.total_qty = 0;
         angular.forEach($scope.orderLineAll, function(value) {
+
+            var total = 0;
+            angular.forEach(value.items, function(item) {
+                total += parseInt(qnty);
+            });
             
             if(value.orderline_id == id)
             {
@@ -387,10 +392,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             
             $scope.orderLineAllNew = value;
         });
-
-
-
-        $scope.calculate_all(id);
+        $scope.calculate_all(id);*/
     }
 
     $scope.update_override = function(override_value,orderline_id) {
@@ -404,7 +406,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 {
                     var subtract = parseFloat(override_value) - parseFloat(value.peritem);
                     value.override_diff = subtract.toFixed(2);
-                    value.peritem = override_value;
+                    value.peritem = override_valuetoFixed(2);
 
                     var mul = parseInt(value.qnty) * parseFloat(value.peritem);
                     value.per_line_total = mul.toFixed(2);
@@ -1415,12 +1417,25 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     $scope.calculate_all = function(orderline_id)
     {
         $("#ajax_loader").show();
+
+         $scope.orderLineAllNew = [];
+
+        $scope.total_qty = 0;
         angular.forEach($scope.orderLineAll, function(value) {
+
+            var total = 0;
             
             if(value.orderline_id == orderline_id)
             {
+                angular.forEach(value.items, function(item) {
+                    total += parseInt(item.qnty);
+                });
+                value.qnty = total;
                 $scope.line_qty = parseInt(value.qnty);
             }
+            $scope.total_qty += parseInt(value.qnty);
+            
+            $scope.orderLineAllNew = value;
         });
 
         $scope.color_stitch_count = 0;
@@ -1438,6 +1453,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         $scope.print_charges = 0;
         $scope.os = 0;
+        $scope.per_line_total = 0;
 
         if($scope.orderPositionAll.length > 0)
         {
@@ -1659,76 +1675,107 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             });
         }
 
-        setTimeout(function () {
-            
-            if($scope.price_grid_markup.length > 0)
-            {
-                angular.forEach($scope.price_grid_markup, function(value) {
+        /* -------------------------------------------------------------------------------------------------- */
+        
+        if($scope.price_grid_markup.length > 0)
+        {
+            angular.forEach($scope.price_grid_markup, function(value) {
 
-                    $scope.shipping_charge = 0;
-                    if(parseInt($scope.position_qty) >= parseInt(value.range_low) && parseInt($scope.position_qty) <= parseInt(value.range_high))
-                    {
-                        $scope.shipping_charge = value.percentage;
+                $scope.shipping_charge = 0;
+                if(parseInt($scope.position_qty) >= parseInt(value.range_low) && parseInt($scope.position_qty) <= parseInt(value.range_high))
+                {
+                    $scope.shipping_charge = value.percentage;
 
-                        $scope.avg_garment_cost = 0;
+                    $scope.avg_garment_cost = 0;
 
-                        angular.forEach($scope.orderLineAll, function(oline) {
-                    
-                            if(oline.orderline_id == orderline_id)
-                            {
-                                var item_price = 0;
-                                angular.forEach(oline.items, function(item) {
-                                    
-                                    if(item.qnty > 0)
-                                    {
-                                        var sum = parseFloat(item.price) + parseFloat($scope.price_grid.shipping_charge);
-                                        $scope.avg_garment_cost += parseFloat(sum);
-                                    }
-                                });
-
-                                if(oline.os == '1')
-                                {
-                                    $scope.os = parseFloat(0.50);
-                                }
-                                else if(oline.os == '2')
-                                {
-                                    $scope.os = parseInt(1);
-                                }
-                                else if(oline.os == '3')
-                                {
-                                    $scope.os = parseFloat(1.50);
-                                }
-                                else if(oline.os == '4')
-                                {
-                                    $scope.os = parseInt(2);
-                                }
-                                else
-                                {
-                                    $scope.os = parseInt(0);
-                                }
-                            }
-                        });
-
-                        if($scope.avg_garment_cost == 0)
+                    angular.forEach($scope.orderLineAll, function(oline) {
+                
+                        if(oline.orderline_id == orderline_id)
                         {
-                            $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
+                            var item_price = 0;
+                            angular.forEach(oline.items, function(item) {
+                                
+                                if(item.qnty > 0)
+                                {
+                                    var sum = parseFloat(item.price) + parseFloat($scope.price_grid.shipping_charge);
+                                    $scope.avg_garment_cost += parseFloat(sum);
+                                }
+                            });
+
+                            if(oline.os == '1')
+                            {
+                                $scope.os = parseFloat(0.50);
+                            }
+                            else if(oline.os == '2')
+                            {
+                                $scope.os = parseInt(1);
+                            }
+                            else if(oline.os == '3')
+                            {
+                                $scope.os = parseFloat(1.50);
+                            }
+                            else if(oline.os == '4')
+                            {
+                                $scope.os = parseInt(2);
+                            }
+                            else
+                            {
+                                $scope.os = parseInt(0);
+                            }
                         }
+                    });
 
-                        var garment_mackup = parseInt(value.percentage)/100;
-                        var avg_garment_price = parseFloat($scope.avg_garment_cost) * parseFloat(garment_mackup) + parseFloat($scope.avg_garment_cost);
-                        $scope.avg_garment_price = avg_garment_price.toFixed(2);
+                    if($scope.avg_garment_cost == 0)
+                    {
+                        $scope.avg_garment_cost = parseFloat($scope.price_grid.shipping_charge);
+                    }
 
-                        $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges) + parseFloat($scope.os);
-                        var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
-                        $scope.per_line_total = line_total.toFixed(2);
+                    var garment_mackup = parseInt(value.percentage)/100;
+                    var avg_garment_price = parseFloat($scope.avg_garment_cost) * parseFloat(garment_mackup) + parseFloat($scope.avg_garment_cost);
+                    $scope.avg_garment_price = avg_garment_price.toFixed(2);
 
+                    $scope.per_item = parseFloat($scope.avg_garment_price) + parseFloat($scope.print_charges) + parseFloat($scope.os);
+                    var line_total = parseFloat($scope.per_item) * parseInt($scope.line_qty);
+                    $scope.per_line_total = line_total.toFixed(2);
+
+                    var orderline_data = {};
+                    orderline_data.data = {'avg_garment_cost' : $scope.avg_garment_cost,
+                                            'avg_garment_price' : $scope.avg_garment_price,
+                                            'print_charges' : $scope.print_charges,
+                                            'peritem' : $scope.per_item,
+                                            'per_line_total' : $scope.per_line_total,
+                                            'markup' : $scope.shipping_charge
+                                        };
+                    orderline_data.cond = {};
+                    orderline_data['table'] ='order_orderlines'
+                    orderline_data.cond['id'] = orderline_id;
+                    $http.post('api/public/common/UpdateTableRecords',orderline_data).success(function(result) {
+
+                    });
+                }
+            });
+
+            $scope.orderLineAllNew = [];
+
+            $scope.order.order_line_total = 0;
+            var order_line_total = 0;
+            $scope.total_qty = 0;
+            angular.forEach($scope.orderLineAll, function(value) {
+                
+                if(value.orderline_id == orderline_id)
+                {
+                    value.avg_garment_cost = $scope.avg_garment_cost;
+                    value.avg_garment_price = $scope.avg_garment_price;
+                    value.print_charges = $scope.print_charges;
+                    value.peritem = $scope.per_item;
+                    value.per_line_total = $scope.per_line_total;
+                    value.markup = $scope.shipping_charge;
+
+                    if(value.override == '' || value.override == '0')
+                    {
+                        value.override_diff = '0';
                         var orderline_data = {};
-                        orderline_data.data = {'avg_garment_cost' : $scope.avg_garment_cost,
-                                                'avg_garment_price' : $scope.avg_garment_price,
-                                                'print_charges' : $scope.print_charges,
-                                                'peritem' : $scope.per_item,
-                                                'per_line_total' : $scope.per_line_total,
-                                                'markup' : $scope.shipping_charge
+                        orderline_data.data = {'override_diff' : '0'
                                             };
                         orderline_data.cond = {};
                         orderline_data['table'] ='order_orderlines'
@@ -1737,70 +1784,38 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                         });
                     }
-                });
-
-                $scope.orderLineAllNew = [];
-
-                $scope.order.order_line_total = 0;
-                var order_line_total = 0;
-                $scope.total_qty = 0;
-                angular.forEach($scope.orderLineAll, function(value) {
-                    
-                    if(value.orderline_id == orderline_id)
-                    {
-                        value.avg_garment_cost = $scope.avg_garment_cost;
-                        value.avg_garment_price = $scope.avg_garment_price;
-                        value.print_charges = $scope.print_charges;
-                        value.peritem = $scope.per_item;
-                        value.per_line_total = $scope.per_line_total;
-                        value.markup = $scope.shipping_charge;
-
-                        if(value.override == '' || value.override == '0')
-                        {
-                            value.override_diff = '0';
-                            var orderline_data = {};
-                            orderline_data.data = {'override_diff' : '0'
-                                                };
-                            orderline_data.cond = {};
-                            orderline_data['table'] ='order_orderlines'
-                            orderline_data.cond['id'] = orderline_id;
-                            $http.post('api/public/common/UpdateTableRecords',orderline_data).success(function(result) {
-
-                            });
-                        }
-                    }
-                    $scope.orderLineAllNew = value;
-                    order_line_total += parseFloat(value.per_line_total);
-                    $scope.total_qty += parseInt(value.qnty);
-                });
+                }
+                $scope.orderLineAllNew = value;
+                order_line_total += parseFloat(value.per_line_total);
+                $scope.total_qty += parseInt(value.qnty);
+            });
 
 
-                $scope.position_total_qty = 0;
-                $scope.pos_total_qty = 0;
-                angular.forEach($scope.orderPositionAll, function(value) {
-                    $scope.position_total_qty += parseInt(value.qnty);
-                    $scope.pos_total_qty = parseInt(value.qnty);
-                });
+            $scope.position_total_qty = 0;
+            $scope.pos_total_qty = 0;
+            angular.forEach($scope.orderPositionAll, function(value) {
+                $scope.position_total_qty += parseInt(value.qnty);
+                $scope.pos_total_qty = parseInt(value.qnty);
+            });
 
-                $scope.order.order_line_total = order_line_total.toFixed(2);
+            $scope.order.order_line_total = order_line_total.toFixed(2);
 
-                var sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
-                $scope.order.sales_order_total = sales_order_total.toFixed(2);
-                
-                var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.tax);
-                $scope.order.grand_total = grand_total.toFixed(2);
+            var sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
+            $scope.order.sales_order_total = sales_order_total.toFixed(2);
+            
+            var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.tax);
+            $scope.order.grand_total = grand_total.toFixed(2);
 
-                var order_data = {};
-                order_data.data = {'order_line_total' : $scope.order.order_line_total,'sales_order_total' : $scope.order.sales_order_total,'grand_total':$scope.order.grand_total};
-                order_data.cond = {id: $scope.order_id};
-                order_data['table'] ='orders'
-                $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-                    $scope.updateOrderLine($scope.orderLineAll,orderline_id);
-                });
-                
-            }
-            $("#ajax_loader").hide();
-        }, 500);
+            var order_data = {};
+            order_data.data = {'order_line_total' : $scope.order.order_line_total,'sales_order_total' : $scope.order.sales_order_total,'grand_total':$scope.order.grand_total};
+            order_data.cond = {id: $scope.order_id};
+            order_data['table'] ='orders'
+            $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+                $scope.updateOrderLine($scope.orderLineAll,orderline_id);
+            });
+            
+        }
+        $("#ajax_loader").hide();
     }
 
     $scope.calulate_tax = function(tax_rate)
@@ -2362,13 +2377,19 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             };
           });
     }
-     function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
-      return function filterFn(state) {
-        return (state.value.indexOf(lowercaseQuery) === 0);
-      };
-
+    function createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+        return function filterFn(state) {
+            return (state.value.indexOf(lowercaseQuery) === 0);
+        };
     }
+    $scope.confirmPricing = function()
+    {
+        angular.forEach($scope.orderLineAll, function(value) {
+            $scope.calculate_all(value.orderline_id);
+        });
+    }
+
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
