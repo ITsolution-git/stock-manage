@@ -738,4 +738,14 @@ public function saveColorSize($post)
 
         return $productColorSizeData;
     }
+
+  public function getProductDetail($product_id)
+    {
+        $whereProductConditions = ['id' => $product_id];
+        $productData = DB::table('products')->where($whereProductConditions)->get();
+        return $productData;
+    }
+
+
+    
 }

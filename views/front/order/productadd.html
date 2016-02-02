@@ -11,7 +11,7 @@
                         <lable for="order">Product:</lable>
                     </div>
                     <div class="col-md-10 nopad-form">
-                        <input ng-model="product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
+                        <input ng-model="allProductColorSize.product_data[0].name" type="text" id="name" name="name" class="form-control" ui-event="{ blur : 'updateOrderAll($event,product_data[0].id,\'products\',\'id\')' }"/>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="col-md-2 nopad-left text-right">
                     <lable for="order">Color :</lable>
                 </div>
-                <div class="col-md-10 nopad-form" ng-dropdown-multiselect="" options="allColor" selected-model="allProductColorSize['ColorData']" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
+                <div class="col-md-10 nopad-form" ng-dropdown-multiselect="" options="allColor" selected-model="allProductColorSize['colorData']" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
                 </div>
             </div>
         </div>
