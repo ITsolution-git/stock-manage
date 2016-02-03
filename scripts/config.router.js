@@ -841,9 +841,9 @@ angular.module('app')
                             },
                        }
             })
-    .state('art.screen', {
+    .state('art.screenlist', {
                 url: '/screen',
-                templateUrl: 'views/front/art/screen.html',
+                templateUrl: 'views/front/art/screenlist.html',
                 controller: 'ArtListCtrl',
                 data : { title: 'Art' },
                 resolve: {
@@ -854,7 +854,7 @@ angular.module('app')
             })
     .state('art.job', {
                 url: '/job/:id',
-                templateUrl: 'views/front/art/job.html',
+                templateUrl: 'views/front/art/art_job.html',
                 controller: 'ArtJobCtrl',
                 data : { title: 'Art' },
                 resolve: {
