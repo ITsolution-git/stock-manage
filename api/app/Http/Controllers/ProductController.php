@@ -145,10 +145,11 @@ class ProductController extends Controller {
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
                     $extention = $info->getExtension();
-                    $uploaddir = FILEUPLOAD . "product/" . $insertedid;
+                    $uploaddir = base_path() . "/public/uploads/product/" . $insertedid;
                     ProductController::create_dir($uploaddir);
                     
-                    $newfilename = "product_main_" . $insertedid . "." . $extention;
+                   
+                    $newfilename = "product-".time().".".$extention;
 
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
                        
@@ -204,15 +205,16 @@ class ProductController extends Controller {
                 if (!$_FILES['image']['error'] && isset($data['product']['id'])) {
 
 
-                     array_map('unlink', glob(FILEUPLOAD . "product/" . $data['product']['id']."/*"));
+                     array_map('unlink', glob(base_path() . "/public/uploads/product/" . $data['product']['id']."/*"));
 
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
                     $extention = $info->getExtension();
-                    $uploaddir = FILEUPLOAD . "product/" . $data['product']['id'];
+                    $uploaddir = base_path() . "/public/uploads/product/" . $data['product']['id'];
                     ProductController::create_dir($uploaddir);
                     
-                    $newfilename = "product_main_" . $data['product']['id'] . "." . $extention;
+                   
+                    $newfilename = "product-".time().".".$extention;
 
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
                        

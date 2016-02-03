@@ -76,6 +76,9 @@ textarea {
 	clear: both;
 }
 
+.aestric_required {
+	color: red;
+}
 /*=========================
 	Background Video
 =========================*/
