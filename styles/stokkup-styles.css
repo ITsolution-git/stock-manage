@@ -76,6 +76,9 @@ textarea {
 	clear: both;
 }
 
+.aestric_required {
+	color: red;
+}
 /*=========================
 	Background Video
 =========================*/
@@ -244,6 +247,10 @@ nav ul.nav li ul.nav-sub li:first-child {
 }
 nav ul.nav li:hover ul.nav-sub {
 	max-height:999px;
+}
+
+nav ul.nav li.passive {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .p-lg.md-whiteframe-z1 {

@@ -10,13 +10,13 @@
                         <div class="col-md-10 nopad-form">
                             <div class="form-group col-md-12 m-b nopad-form">
                                 <div class="col-md-2 m-b nopad-left">
-                                    <label>Job Name <em class="text-muted"></em></label>
+                                    <label>Job Name<span class="aestric_required"> *</span><em class="text-muted"></em></label>
                                     <input type="text" class="form-control" ng-maxlength="255" name="job_name"  ng-model="order.job_name"  required name="job_name" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                     <br>
                                     <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
                                 </div>
                                 <div class="col-md-2 m-b">
-                                    <label>Company <em class="text-muted"></em></label>
+                                    <label>Company<span class="aestric_required"> *</span><em class="text-muted"></em></label>
                                     <i class="mdi-image-control-point" target="_blank" ng-click="addCompany()" title="Add Company" role="button" tabindex="0"></i>
                                     <i class="mdi-content-send pull-right" target="_blank" ng-click="openCompany(order.client_id)" title="Company" role="button" tabindex="0"></i>
                                     <select  ng-model="order.client_id"  class="form-control" required name="client_id" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">

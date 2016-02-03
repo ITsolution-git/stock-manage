@@ -141,10 +141,11 @@ class StaffController extends Controller {
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
                     $extention = $info->getExtension();
-                    $uploaddir = FILEUPLOAD . "staff/" . $insertedid;
+                    $uploaddir = base_path() . "/public/uploads/staff/" . $insertedid;
                     StaffController::create_dir($uploaddir);
                     
-                    $newfilename = "staff_main_" . $insertedid . "." . $extention;
+                    
+                    $newfilename = "staff-".time().".".$extention;
 
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
                        
@@ -270,16 +271,16 @@ class StaffController extends Controller {
                 if (!$_FILES['image']['error'] && isset($data['staff']['id'])) {
 
 
-                     array_map('unlink', glob(FILEUPLOAD . "staff/" . $data['staff']['id']."/*"));
+                     array_map('unlink', glob(base_path() . "/public/uploads/staff/" . $data['staff']['id']."/*"));
 
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
                     $extention = $info->getExtension();
-                    $uploaddir = FILEUPLOAD . "staff/" . $data['staff']['id'];
+                    $uploaddir = base_path() . "/public/uploads/staff/" . $data['staff']['id'];
                     StaffController::create_dir($uploaddir);
                     
-                    $newfilename = "staff_main_" . $data['staff']['id'] . "." . $extention;
-
+                    $newfilename = "staff-".time().".".$extention;
+                   
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
                        
                        $result = $this->staff->staffImageUpdate($data['staff']['id'],$newfilename);
@@ -313,7 +314,7 @@ public function create_dir($dir_path) {
         if (!file_exists($dir_path)) {
             mkdir($dir_path, 0777, true);
         } else {
-            chmod($dir_path, 0777);
+           // chmod($dir_path, 0777);
         }
     }
 

@@ -834,16 +834,16 @@ angular.module('app')
                 url: '/list',
                 templateUrl: 'views/front/art/list.html',
                 controller: 'ArtListCtrl',
-                data : { title: 'Art' },
+                data : { title: 'Art' , folded: true},
                 resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
                        }
             })
-    .state('art.screen', {
+    .state('art.screenlist', {
                 url: '/screen',
-                templateUrl: 'views/front/art/screen.html',
+                templateUrl: 'views/front/art/screenlist.html',
                 controller: 'ArtListCtrl',
                 data : { title: 'Art' },
                 resolve: {
@@ -854,7 +854,7 @@ angular.module('app')
             })
     .state('art.job', {
                 url: '/job/:id',
-                templateUrl: 'views/front/art/job.html',
+                templateUrl: 'views/front/art/art_job.html',
                 controller: 'ArtJobCtrl',
                 data : { title: 'Art' },
                 resolve: {
