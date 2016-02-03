@@ -204,8 +204,9 @@ class ProductController extends Controller {
 
                 if (!$_FILES['image']['error'] && isset($data['product']['id'])) {
 
+                      $delete_dir = base_path() . "/public/uploads/product/" . $data['product']['id'];
+                      exec('rm -rf '.escapeshellarg($delete_dir));
 
-                     array_map('unlink', glob(base_path() . "/public/uploads/product/" . $data['product']['id']."/*"));
 
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
@@ -248,7 +249,7 @@ public function create_dir($dir_path) {
         if (!file_exists($dir_path)) {
             mkdir($dir_path, 0777, true);
         } else {
-          //  chmod($dir_path, 0777);
+           exec("chmod $dir_path 0777");
         }
     }
 

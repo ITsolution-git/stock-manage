@@ -247,9 +247,9 @@ $vendor_contact = json_decode($_REQUEST['vendor_contact_data_all']);
 
                 if (!$_FILES['image']['error'] && isset($data['vendor']['id'])) {
 
-                      
+                      $delete_dir = base_path() . "/public/uploads/vendor/" . $data['vendor']['id'];
+                      exec('rm -rf '.escapeshellarg($delete_dir));
 
-                     array_map('unlink', glob(base_path() . "/public/uploads/vendor/" . $data['vendor']['id']."/*"));
 
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
@@ -324,7 +324,7 @@ public function create_dir($dir_path) {
            
             mkdir($dir_path, 0777, true);
         } else {
-            chmod($dir_path, 0777);
+            exec("chmod $dir_path 0777");
         }
     }
 
