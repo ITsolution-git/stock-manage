@@ -271,8 +271,9 @@ class StaffController extends Controller {
                 if (!$_FILES['image']['error'] && isset($data['staff']['id'])) {
 
                     
-                     
-                     //array_map('unlink', glob(base_path() . "/public/uploads/staff/" . $data['staff']['id']."/*"));
+                    
+                     $delete_dir = base_path() . "/public/uploads/staff/" . $data['staff']['id'];
+                      exec('rm -rf '.escapeshellarg($delete_dir));
 
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
@@ -315,7 +316,7 @@ public function create_dir($dir_path) {
         if (!file_exists($dir_path)) {
             mkdir($dir_path, 0777, true);
         } else {
-
+         exec("chmod $dir_path 0777");
            // chmod($dir_path, 0777);
         }
     }
