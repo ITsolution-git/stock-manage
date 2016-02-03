@@ -246,6 +246,10 @@ nav ul.nav li:hover ul.nav-sub {
 	max-height:999px;
 }
 
+nav ul.nav li.passive {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 .p-lg.md-whiteframe-z1 {
 	box-shadow:none;
 	background: none;

@@ -8,7 +8,7 @@
         <span class="font-normal">Dashboard</span>
       </a>
     </li>
-    <li ng-class="{active:$state.includes('company')}" ng-show="app.role=='SA'">
+    <li ng-class="{passive:$state.includes('company')}" ng-show="app.role=='SA'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -26,7 +26,7 @@
        
       </ul>
     </li>
-    <li ng-show="app.role=='FM'">
+    <li ng-show="app.role=='FM'" ng-class="{passive:$state.includes('staff')}">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -49,7 +49,7 @@
 
 <!-- Code start for Products tab -->
 
-    <li ng-show="app.role=='FM'">
+    <li ng-show="app.role=='FM'" ng-class="{passive:$state.includes('product')}">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -73,7 +73,7 @@
 
 <!-- Code start for Vendors tab -->
 
-    <li ng-show="app.role=='FM'">
+    <li ng-show="app.role=='FM'" ng-class="{passive:$state.includes('vendor')}">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -121,7 +121,7 @@
 
 <!-- Code start for Settings tab -->
 
-    <li ng-show="app.role=='FM'">
+    <li ng-show="app.role=='FM'" ng-class="{passive:$state.includes('setting')}">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -153,7 +153,7 @@
 
 <!-- Code start for Misc tab -->
 
-    <li ng-show="app.role=='FM'">
+    <li ng-show="app.role=='FM'" ng-class="{passive:$state.includes('misc')}">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -181,7 +181,7 @@
 <!-- Code end for Misc tab -->
 
  <!-- Code Start for Company tab -->
-    <li ng-class="{active:$state.includes('account')}" ng-show="app.role=='CA'">
+    <li ng-class="{passive:$state.includes('account')}" ng-show="app.role=='CA'">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -202,7 +202,7 @@
   <!-- Code end for Company tab --> 
 
 <!-- Code Start for Home tab -->
-    <li ng-show="app.role=='BC'">
+    <li ng-show="app.role=='BC'" ui-sref-active="active">
       <a md-ink-ripple ui-sref="app.home">
             
         <i class="icon fa fa-home i-20"></i>
@@ -215,7 +215,7 @@
   <!-- Code end for Home tab -->
 
 <!-- Code Start for Client tab -->
-    <li ng-show="app.role=='BC'">
+    <li ng-show="app.role=='BC'" ng-class="{passive:$state.includes('client')}" >
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -236,7 +236,7 @@
   <!-- Code end for Client tab --> 
 
  <!-- Code Start for Orders tab -->
-    <li ng-show="app.role=='BC'">
+    <li ng-show="app.role=='BC'" ui-sref-active="active">
       <a md-ink-ripple ui-sref="order.list">
         <i class="icon fa fa-reorder i-20"></i>
         <span class="font-normal">Orders</span>
@@ -245,7 +245,7 @@
   <!-- Code end for Orders tab --> 
 
  <!-- Code Start for Purchasing tab -->
-    <li ng-show="app.role=='BC'">
+    <li ng-show="app.role=='BC'" ng-class="{passive:$state.includes('purchase')}">
       <a md-ink-ripple>
         <span class="pull-right text-muted">
           <i class="fa fa-caret-down"></i>
@@ -272,7 +272,7 @@
 
 
  <!-- Code Start for Art tab -->
-    <li ng-show="app.role=='BC'">
+    <li ng-show="app.role=='BC'" ui-sref-active="active">
       <a md-ink-ripple  ui-sref="art.list">
         <i class="icon fa fa-pie-chart i-20"></i>
         <span class="font-normal">Art</span>
@@ -291,7 +291,7 @@
     </li> -->
   <!-- Code end for Production tab --> 
 
- <li ng-show="app.role=='BC'">
+ <li ng-show="app.role=='BC'" ui-sref-active="active">
       <a md-ink-ripple ui-sref="finishing.list">
         <i class="icon fa fa-check-square i-20"></i>
         <span class="font-normal">Finishing</span>
@@ -299,11 +299,8 @@
     </li>
     
  <!-- Code Start for Shipping tab -->
-    <li ng-show="app.role=='BC'">
+    <li ng-show="app.role=='BC'" ui-sref-active="active">
       <a md-ink-ripple ui-sref="shipping.list">
-        <span class="pull-right text-muted">
-          <i class="fa fa-caret-down"></i>
-        </span>
         <i class="icon fa fa-truck i-20"></i>
         <span class="font-normal">Shipping</span>
       </a>
@@ -311,7 +308,7 @@
    
   <!-- Code end for Shipping tab --> 
    <!-- Code Start for Production tab -->
-    <li ng-show="app.role=='CA'">
+    <li ng-show="app.role=='CA'" ui-sref-active="active">
       <a md-ink-ripple ui-sref="api.list">
        
         <i class="icon fa fa-tags i-20"></i>
