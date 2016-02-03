@@ -834,7 +834,7 @@ angular.module('app')
                 url: '/list',
                 templateUrl: 'views/front/art/list.html',
                 controller: 'ArtListCtrl',
-                data : { title: 'Art' },
+                data : { title: 'Art' , folded: true},
                 resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
