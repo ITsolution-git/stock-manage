@@ -116,10 +116,12 @@ class OrderController extends Controller {
                 {
                     $colors = $this->product->GetProductColor(array('id'=>$row->product_id));
                     $colors = unserialize($colors[0]->color_size_data);
-
-                    foreach($colors as $key=>$color) {
-                        $color_data = $this->product->GetColorDeail(array('id'=>$key));
-                        $row->colors[] = $color_data[0];
+                    if(!empty($colors))
+                    {
+                        foreach($colors as $key=>$color) {
+                            $color_data = $this->product->GetColorDeail(array('id'=>$key));
+                            $row->colors[] = $color_data[0];
+                        }
                     }
                 }
 
