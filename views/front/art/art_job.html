@@ -4,6 +4,12 @@
             <div class="panel panel-default">
                 <input type="hidden" ng-model="order.id">
                 <div class="panel-body">
+                                <div class="col-md-5 nopad-right smallPad"></div>
+                                <div class="col-md-3 nopad-right smallPad">
+                                    <button title="Go to ArtListing" ui-sref="art.list" type="button" class="btn btn-info active" tabindex="0">Art List</button>
+                                    <button title="Go to ScreenListing" ui-sref="art.screenlist" type="button" class="btn btn-info" tabindex="0">Screen List</button>
+                                    <button title="Order Id" type="button" class="btn btn-info" tabindex="0">#{{art_position[0].order_id}}</button>
+                                </div>
                     <div class="col-sm-12 m-b nopad-form">
                         <div class="col-sm-12 m-b"></div>
                         
@@ -36,155 +42,13 @@
                         <div class="tab-content p b-a no-b-t bg-white m-b-md">
                             <!-- POSITION TAB START -->
                             <div role="tabpanel" class="tab-pane  animated fadeIn" id="tab1">
-                                <div class="orderTab_scroll" class="col-md-12 nopad-form">
-                                <!-- POSITION TAB TITLE -->
-                                    <div class="positionTab_content">                    
-                                        <div class="col-md-3 nopad-form">                                        
-                                            <div class="form-group col-md-3 nopad-left">
-                                                <label>Position</label>
-                                            </div>
-                                            <div class="form-group col-md-6 nopad-left">
-                                                <label>Description</label>
-                                            </div>
-
-                                            <div class="form-group col-md-3 nopad-left">
-                                                <label>Placement Type</label>                          
-                                            </div>
-                                        </div>
-                                         <div class="col-md-1 nopad-left">
-                                            <div class="form-group col-md-6 nopad-left">
-                                                <label>DtG Size</label>
-                                            </div>
-                                            <div class="form-group col-md-6 nopad-left">
-                                              <label>DtG On</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 nopad-left">
-                                            <div class="form-group col-md-1">
-                                                <label>Stitch/ Color Count</label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label>Qnty</label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Discharge</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Speciality</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Foil</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Ink Charge</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Number on Dark</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Number on Light</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Oversize<span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Oversize Screen(s)</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Press Setup</span></label>
-                                            </div>
-                                            <div class="form-group col-md-1">
-                                                <label class="rotateText"><span>Screen Fee(s)</span></label>
-                                            </div>
-                                        </div>
-                                       
-                                    </div>
-
-                                    <!-- POSITION TAB FIELDS -->
-                                    <div class="positionTab_content" ng-repeat="(key,order_position) in art_position">
-                                        <input type="hidden" class="col-md-1"  ng-model="order_position.order_id" ng-value="order_position.order_id"/>
-                                        <numeric_tag input-value="123" input-name="wks.name"/>
-                                      
-                                        <div class="col-md-3 nopad-form">                                        
-                                            <div class="form-group col-md-3 nopad-left">
-                                                <input type="text" class="form-control" ng-model="order_position.position_id" placeholder="Position" />
-                                            </div>
-                                            <div class="form-group col-md-6 nopad-left">
-                                                <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" />
-                                            </div>
-                                            <div class="form-group col-md-3 nopad-left">
-                                                <input type="text" class="form-control" ng-model="order_position.placement_type" placeholder="Placement Type" />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-1 nopad-left">
-                                            <div class="form-group col-md-6 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.dtg_size" placeholder="Dtg Size" />
-                                            </div>
-                                            <div class="form-group col-md-6 nopad-form">
-                                                <input type="text" class="form-control" ng-model="order_position.dtg_on" placeholder="Dtg On" />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 nopad-left">
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control" ng-model="order_position.qnty"/>
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.discharge_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.speciality_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.foil_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.ink_charge_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.number_on_dark_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.number_on_light_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form"> 
-                                                <input type="text" class="form-control"  ng-model="order_position.oversize" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.oversize_screens_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.press_setup_qnty" />
-                                            </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.screen_fees_qnty" />
-                                            </div>
-                                            
-                                        </div>
-
-                                        <div class="col-md-2 nopad-left">
-                                            
-                                            <div class="form-group col-md-8 nopad-left artworkButton">
-                                                <button type="button" class="btn btn-default addButton c-dgreen">
-                                                  <i class="fa fa-plus"></i> 
-                                                </button>
-                                                <span>Artwork</span>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                            
-                                </div>
+                                 <div ng-include="'views/front/art/artjob/position.html'"></div>
                             </div>
                             <!-- POSITION TAB END -->
                            
                             <!-- SCREEN SETS START -->
                             <div role="tabpanel" class="tab-pane  animated fadeIn orderNoteTab" id="tab2">
-                                Screen 
+                                <div ng-include="'views/front/art/artjob/screensets.html'"></div>
                             </div>
                             <!-- SCREEN SETS END -->
 
@@ -326,7 +190,7 @@
 
                             <!-- ART WORK TAB START -->
                             <div role="tabpanel" class="tab-pane  animated fadeIn orderPOTab" id="tab5">
-                                Order Group
+                               Working.
                             </div>
                             <!-- ART WORK TAB END -->
 

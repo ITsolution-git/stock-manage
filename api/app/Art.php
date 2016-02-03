@@ -36,7 +36,7 @@ class Art extends Model {
 		$Misc_data = $this->AllMsiData();
 
 		$query = DB::table('art as art')
-				->select('op.*','art.art_id','art.notes','or.job_name','or.grand_total','or.f_approval')
+				->select('op.*','art.art_id','art.notes','or.job_name','or.id as order_id','or.grand_total','or.f_approval')
 				->join('orders as or','art.order_id','=','or.id')
 				->join('order_positions as op','op.order_id','=','or.id')
 				->where('or.is_delete','=','1')
