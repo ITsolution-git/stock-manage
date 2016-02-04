@@ -308,8 +308,8 @@
                                     </div>
                                     <div class="col-md-12 nopad-form form-group">
                                         <div class="col-md-4 nopad-left smallPad">
-                                            <select  ng-model="shipping.shipping_type"  class="form-control" name="shipping_type_id" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }">
-                                                <option ng-selected="shipping.shipping_type_id==type.id" ng-repeat="type in shipping_type" value={{type.id}}>{{type.name}}</option>
+                                            <select  ng-model="shipping_type_id" class="form-control" name="shipping_type_id" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }">
+                                                <option ng-selected="shipping_type_id==type.id" ng-repeat="type in shipping_type" value={{type.id}}>{{type.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-md-4 nopad-left smallPad">

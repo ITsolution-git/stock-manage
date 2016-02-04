@@ -648,10 +648,13 @@ class OrderController extends Controller {
         {
             $item_data = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
-            foreach ($item_data as $item) {
-                if($item->item_id > 0)
-                {
-                    $this->common->UpdateTableRecords('distribution_detail',array('id' => $item->item_id),array('is_distribute' => '0'));
+            if(!empty($item_data))
+            {
+                foreach ($item_data as $item) {
+                    if($item->item_id > 0)
+                    {
+                        $this->common->UpdateTableRecords('distribution_detail',array('id' => $item->item_id),array('is_distribute' => '0'));
+                    }
                 }
             }
 
@@ -659,6 +662,15 @@ class OrderController extends Controller {
 
             $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
             $this->common->DeleteTableRecords('shipping',$post['cond']);
+
+            $boxarr = $this->common->GetTableRecords('box_item_mapping',array('item_id' => $post['item_id'],'shipping_id' => $post['shipping_id']),array());
+
+            if(!empty($boxarr))
+            {
+                foreach ($boxarr as $value) {
+                    $this->common->DeleteTableRecords('shipping_box',array('id' => $value->box_id));
+                }
+            }
 
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
@@ -668,6 +680,17 @@ class OrderController extends Controller {
             
             $post['cond'] = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
             $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
+
+            $boxarr = $this->common->GetTableRecords('box_item_mapping',array('item_id' => $post['item_id'],'shipping_id' => $post['shipping_id']),array());
+
+            if(!empty($boxarr))
+            {
+                foreach ($boxarr as $value) {
+                    $this->common->DeleteTableRecords('shipping_box',array('id' => $value->box_id));
+                }
+            }
+
+            print_r($boxarr);exit;
 
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
