@@ -153,10 +153,10 @@ class VendorController extends Controller {
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
                     $extention = $info->getExtension();
-                    $uploaddir = FILEUPLOAD . "vendor/" . $insertedid;
+                    $uploaddir = base_path() . "/public/uploads/vendor/" . $insertedid;
                     VendorController::create_dir($uploaddir);
                     
-                    $newfilename = "vendor_main_" . $insertedid . "." . $extention;
+                    $newfilename = "vendor-".time().".".$extention;
 
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
                        
@@ -182,7 +182,7 @@ class VendorController extends Controller {
 * @return json data
 */
     public function edit() {
- 
+
 $vendor_contact = json_decode($_REQUEST['vendor_contact_data_all']);
          
           $data['vendor'] = array('id' => isset($_REQUEST['id']) ? $_REQUEST['id'] : '',
@@ -245,18 +245,20 @@ $vendor_contact = json_decode($_REQUEST['vendor_contact_data_all']);
 
             if ($_FILES) {
 
-                if (!$_FILES['image']['error'] && isset($data['staff']['id'])) {
+                if (!$_FILES['image']['error'] && isset($data['vendor']['id'])) {
 
+                      $delete_dir = base_path() . "/public/uploads/vendor/" . $data['vendor']['id'];
+                      exec('rm -rf '.escapeshellarg($delete_dir));
 
-                     array_map('unlink', glob(FILEUPLOAD . "vendor/" . $data['vendor']['id']."/*"));
 
                     $filename = $_FILES['image']['name'];
                     $info = new SplFileInfo($filename);
                     $extention = $info->getExtension();
-                    $uploaddir = FILEUPLOAD . "vendor/" . $data['vendor']['id'];
-                    StaffController::create_dir($uploaddir);
+                    $uploaddir = base_path() . "/public/uploads/vendor/" . $data['vendor']['id'];
+                    VendorController::create_dir($uploaddir);
                     
-                    $newfilename = "vendor_main_" . $data['vendor']['id'] . "." . $extention;
+                   
+                    $newfilename = "vendor-".time().".".$extention;
 
                     if (move_uploaded_file($_FILES["image"]["tmp_name"], $uploaddir . "/" . $newfilename)) {
                        
@@ -319,9 +321,10 @@ return response()->json(["data" => $response]);
 public function create_dir($dir_path) {
 
         if (!file_exists($dir_path)) {
+           
             mkdir($dir_path, 0777, true);
         } else {
-            chmod($dir_path, 0777);
+            exec("chmod $dir_path 0777");
         }
     }
 

@@ -10,13 +10,13 @@
                         <div class="col-md-10 nopad-form">
                             <div class="form-group col-md-12 m-b nopad-form">
                                 <div class="col-md-2 m-b nopad-left">
-                                    <label>Job Name <em class="text-muted"></em></label>
+                                    <label>Job Name<span class="aestric_required"> *</span><em class="text-muted"></em></label>
                                     <input type="text" class="form-control" ng-maxlength="255" name="job_name"  ng-model="order.job_name"  required name="job_name" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
                                     <br>
                                     <span style="color:#f44336" ng-show="orderAddForm.cs_job_name.$error.maxlength">Please enter Name less then 255 characters.</span>
                                 </div>
                                 <div class="col-md-2 m-b">
-                                    <label>Company <em class="text-muted"></em></label>
+                                    <label>Company<span class="aestric_required"> *</span><em class="text-muted"></em></label>
                                     <i class="mdi-image-control-point" target="_blank" ng-click="addCompany()" title="Add Company" role="button" tabindex="0"></i>
                                     <i class="mdi-content-send pull-right" target="_blank" ng-click="openCompany(order.client_id)" title="Company" role="button" tabindex="0"></i>
                                     <select  ng-model="order.client_id"  class="form-control" required name="client_id" ui-event="{ blur : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }">
@@ -24,7 +24,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2 m-b">
-                                    <label>Price Grid<em class="text-muted"></em></label>
+                                    <label>Price Grid<span class="aestric_required"> *</span><em class="text-muted"></em></label>
                                     <i class="mdi-content-send pull-right" target="_blank" ng-click="openPriceGrid(order.price_id)" title="Price Grid" role="button" tabindex="0"></i>
                                     <select  ng-model="order.price_id"  class="form-control" name="price_id" ui-event="{ change : 'updateOrderAll($event,order.id,\'orders\',\'id\')' }" >
                                         <option ng-selected="order.price_id==data.id" ng-repeat="data in allGrid" value={{data.id}}>{{data.name}}</option>
@@ -99,7 +99,7 @@
                                     <label>Order Line Total</label>
                                 </div>
                                 <div class="form-group col-md-6 nopad-form smallPad">
-                                    <input type="text" class="form-control"  ng-model="order.order_line_total" readonly="" onfocus="this.blur()"/>
+                                    <input type="text" class="form-control text-right"  ng-model="order.order_line_total" readonly="" onfocus="this.blur()"/>
                                 </div>
                             </div>
                             <div class="col-md-12 nopad-form">
@@ -107,7 +107,7 @@
                                     <label>Order Charges Total</label>
                                 </div>
                                 <div class="form-group col-md-6 nopad-form smallPad">
-                                    <input type="text" class="form-control"  ng-model="order.order_charges_total" readonly="" onfocus="this.blur()"/>
+                                    <input type="text" class="form-control text-right"  ng-model="order.order_charges_total" readonly="" onfocus="this.blur()"/>
                                 </div>
                             </div>
                             <div class="col-md-12 nopad-form">
@@ -115,7 +115,7 @@
                                     <label>Sales Order Total</label>
                                 </div>
                                 <div class="form-group col-md-6 nopad-form smallPad">
-                                    <input type="text" class="form-control"  ng-model="order.sales_order_total" readonly="" onfocus="this.blur()"/>
+                                    <input type="text" class="form-control text-right"  ng-model="order.sales_order_total" readonly="" onfocus="this.blur()"/>
                                 </div>
                             </div>
                         </div>
@@ -234,38 +234,38 @@
 
                                         <div class="col-md-6 nopad-left">
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.color_stitch_count" placeholder="Stitch Count" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control" ng-class="{ cred: order_position.qnty != total_qty }"  ng-model="order_position.qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center" ng-class="{ cred: order_position.qnty != total_qty }"  ng-model="order_position.qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.discharge_qnty" ng-keypress="myFunct($event)" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.speciality_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.speciality_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.foil_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.foil_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.ink_charge_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.ink_charge_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.number_on_dark_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.number_on_dark_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.number_on_light_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.number_on_light_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form"></div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.oversize_screens_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.oversize_screens_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.press_setup_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.press_setup_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.screen_fees_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
+                                                <input type="text" class="form-control text-center"  ng-model="order_position.screen_fees_qnty" ng-blur="updatePosition(orderPositionAll,order_position.id)"/>
                                             </div>
                                         </div>
 
@@ -363,29 +363,29 @@
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input id="qnty_{{order_line.orderline_id}}" type="text" class="form-control"  ng-model="order_line.qnty" readonly="" />
+                                                            <input id="qnty_{{order_line.orderline_id}}" type="text" class="form-control text-center"  ng-model="order_line.qnty" readonly="" />
                                                         </div>
                                                     </div>
                                                     <div class="cols col-2">
                                                         <span ng-repeat="size_qty in order_line.items">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control c-green"  ng-model="size_qty.size" onfocus="this.blur()" />
+                                                                <input type="text" class="form-control c-green text-center"  ng-model="size_qty.size" onfocus="this.blur()" />
                                                             </div>
                                                             <div class="form-group">
-                                                                <input ng-if="size_qty.size != ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" ng-blur="calculate_all(order_line.orderline_id)"/>
-                                                                <input ng-if="size_qty.size == ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control"  ng-model="size_qty.qnty" onfocus="this.blur()"/>
+                                                                <input ng-if="size_qty.size != ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control text-center"  ng-model="size_qty.qnty" ng-blur="calculate_all(order_line.orderline_id)"/>
+                                                                <input ng-if="size_qty.size == ''" id="qnty_{{order_line.orderline_id}}_{{size_qty.number}}" type="text" class="form-control text-center"  ng-model="size_qty.qnty" onfocus="this.blur()"/>
                                                             </div>
                                                         </span>
                                                     </div>
                                                     <div class="cols col-3">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control"  ng-model="order_line.markup" value="{{order_line.markup}}%" readonly="" />
+                                                            <input type="text" class="form-control text-center"  ng-model="order_line.markup" value="{{order_line.markup}}%" readonly="" />
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control"  ng-model="order_line.override" ng-blur="update_override(order_line.override,order_line.id)"/>
+                                                            <input type="text" class="form-control text-center"  ng-model="order_line.override" ng-blur="update_override(order_line.override,order_line.id)"/>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control"  ng-model="order_line.peritem"/ readonly="">
+                                                            <input type="text" class="form-control text-right"  ng-model="order_line.peritem"/ readonly="">
                                                         </div>
                                                         <div class="form-group lastItem">
                                                             <button type="button" ng-click="removeOrderLine($index,order_line.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
@@ -437,7 +437,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-1 smallPad nopad-left">
-                                                                <input type="text" class="form-control"/>
+                                                                <input type="text" class="form-control text-center"/>
                                                             </div>
                                                             <div class="col-md-5 smallPad nopad-left">
                                                                 <input type="text" class="form-control" ng-model="order_line.product_description"/>
@@ -459,12 +459,12 @@
                                                     <div class="cols col-3">
                                                         <div class="col-md-12 nopad-form smallPad">
                                                             <div class="col-md-4 nopad-left smallPad">
-                                                                <input ng-if="order_line.override_diff == 0" type="text" class="form-control" ng-model="order_line.override_diff" readonly=""/>
-                                                                <input ng-if="order_line.override_diff > 0" type="text" class="form-control" ng-model="order_line.override_diff" ng-class="{cgreen: order_line.override_diff > 0}" readonly=""/>
-                                                                <input ng-if="order_line.override_diff < 0" type="text" class="form-control cred" ng-model="order_line.override_diff" ng-class="{cred: order_line.override_diff < 0}" readonly=""/>
+                                                                <input ng-if="order_line.override_diff == 0" type="text" class="form-control text-center" ng-model="order_line.override_diff" readonly=""/>
+                                                                <input ng-if="order_line.override_diff > 0" type="text" class="form-control text-center" ng-model="order_line.override_diff" ng-class="{cgreen: order_line.override_diff > 0}" readonly=""/>
+                                                                <input ng-if="order_line.override_diff < 0" type="text" class="form-control cred text-center" ng-model="order_line.override_diff" ng-class="{cred: order_line.override_diff < 0}" readonly=""/>
                                                             </div>
                                                             <div class="col-md-7 nopad-right smallPad">
-                                                                <input type="text" class="form-control"  ng-model="order_line.per_line_total" readonly="" />
+                                                                <input type="text" class="form-control text-right"  ng-model="order_line.per_line_total" readonly="" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -489,7 +489,7 @@
                                                     <label> Total Units </label>
                                                 </div>                                                
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" class="form-control" ng-class="{ cred: total_qty != pos_total_qty}" ng-model="total_qty" readonly="" /> 
+                                                    <input type="text" class="form-control text-center" ng-class="{ cred: total_qty != pos_total_qty}" ng-model="total_qty" readonly="" /> 
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad"></div>
                                             </div>
@@ -499,21 +499,21 @@
                                                     <label> Separations </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-left smallPad">
-                                                    <input type="text" ng-model="order.separations_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'separations_charge')"/> 
+                                                    <input type="text" ng-model="order.separations_charge" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'separations_charge')"/> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Rush </label>
                                                 </div>
                                                 <div class="form-group col-md-2 text-right nopad-left smallPad">
-                                                    <input type="text" ng-model="order.rush_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'rush_charge')"/> 
+                                                    <input type="text" ng-model="order.rush_charge" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'rush_charge')"/> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Shipping </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.shipping_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'shipping_charge')"/> 
+                                                    <input type="text" ng-model="order.shipping_charge" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'shipping_charge')"/> 
                                                 </div>
                                             </div>
 
@@ -523,7 +523,7 @@
                                                     <label> Set Up </label>
                                                 </div>
                                                 <div class="form-group col-md-7 nopad-right smallPad">
-                                                    <input type="text" ng-model="order.setup_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'setup_charge')"/> 
+                                                    <input type="text" ng-model="order.setup_charge" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'setup_charge')"/> 
                                                 </div>
                                             </div>                                            
                                         </div>
@@ -545,21 +545,21 @@
                                                     <label> Distribution </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-left smallPad">
-                                                    <input type="text" ng-model="order.distribution_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'distribution_charge')"/> 
+                                                    <input type="text" ng-model="order.distribution_charge" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'distribution_charge')"/> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Digitize </label>
                                                 </div>
                                                 <div class="form-group col-md-2 text-right nopad-left smallPad">
-                                                    <input type="text" ng-model="order.digitize_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'digitize_charge')"/> 
+                                                    <input type="text" ng-model="order.digitize_charge" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'digitize_charge')"/> 
                                                 </div>
 
                                                 <div class="form-group labelMiddle col-md-2 text-right nopad-left smallPad">
                                                     <label> Artwork </label>
                                                 </div>
                                                 <div class="form-group col-md-2 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.artwork_charge" class="form-control c-blue" ng-blur="update_order_charge(order.id,'artwork_charge')"/> 
+                                                    <input type="text" ng-model="order.artwork_charge" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'artwork_charge')"/> 
                                                 </div>
                                             </div>
 
@@ -569,18 +569,16 @@
                                                     <label> Discount </label>
                                                 </div>
                                                 <div class="form-group col-md-7 nopad-right smallPad">
-                                                    <input type="text" ng-model="order.discount" class="form-control c-blue" ng-blur="update_order_charge(order.id,'discount')"/> 
+                                                    <input type="text" ng-model="order.discount" class="form-control c-blue text-right" ng-blur="update_order_charge(order.id,'discount')"/> 
                                                 </div>
                                             </div>                                            
                                         </div>
                                         <!-- / -->
 
                                         <!-- CONFIRM PRICING -->
-                                        <div class="col-md-12 nopad-form">
+                                        <!-- <div class="col-md-12 nopad-form">
                                             <div class="col-md-4 nopad-left smallPad">
-                                               <!--  <div class="form-group col-md-6 nopad-left smallPad">
-                                                    <button  type="submit" class="btn btn-block btn-info">Confirm Pricing</button>
-                                                </div>  -->                                               
+                                                                                             
                                                 <div class="form-group col-md-1 nopad-form smallPad"></div>
                                                 <div class="form-group col-md-5 nopad-form smallPad">
                                                     <input type="text" class="form-control" />
@@ -625,7 +623,7 @@
                                                     <button  type="submit" class="btn btn-block btn-info">Distribute to Order: OFF</button>
                                                 </div>                                                
                                             </div>                                            
-                                        </div>
+                                        </div> -->
                                         <!-- / -->
 
                                         <!-- SAVE Record -->
@@ -645,7 +643,7 @@
                                                 </div>
                                                 <div class="col-md-4 nopad-form">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control"  ng-model="order_item.charge" readonly="" onfocus="this.blur()"/>
+                                                        <input type="text" class="form-control text-right"  ng-model="order_item.charge" readonly="" onfocus="this.blur()"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -659,7 +657,7 @@
                                                     <label>Screens</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.screen_charge" class="form-control c-blue" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.screen_charge" class="form-control c-blue text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -667,7 +665,7 @@
                                                     <label>Press Setup</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.press_setup_charge" class="form-control c-blue" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.press_setup_charge" class="form-control c-blue text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -675,7 +673,7 @@
                                                     <label>Lines Total</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.order_line_total" class="form-control" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.order_line_total" class="form-control text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -683,7 +681,7 @@
                                                     <label>Order Total</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.sales_order_total" class="form-control" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.sales_order_total" class="form-control text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -691,7 +689,7 @@
                                                     <label>Tax Rate</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.tax_rate" class="form-control" ng-blur="calulate_tax(order.tax_rate)"/>
+                                                    <input type="text" ng-model="order.tax_rate" class="form-control text-right" ng-blur="calulate_tax(order.tax_rate)"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -699,7 +697,7 @@
                                                     <label>Tax</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.tax" class="form-control" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.tax" class="form-control text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -707,7 +705,7 @@
                                                     <label>Grand Total</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.grand_total" class="form-control highlightBox" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.grand_total" class="form-control highlightBox text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -715,7 +713,7 @@
                                                     <label>Total Payments</label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.total_payments" class="form-control highlightBox" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.total_payments" class="form-control highlightBox text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-12 nopad-form">
@@ -723,7 +721,7 @@
                                                     <label>Balance Due </label>
                                                 </div>
                                                 <div class="col-md-6 nopad-form smallPad">
-                                                    <input type="text" ng-model="order.balance_due" class="form-control highlightBox" readonly="" onfocus="this.blur()"/>
+                                                    <input type="text" ng-model="order.balance_due" class="form-control highlightBox text-right" readonly="" onfocus="this.blur()"/>
                                                 </div>
                                             </div>
                                         </div>
