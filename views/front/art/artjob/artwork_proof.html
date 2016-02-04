@@ -1,0 +1,80 @@
+ <div class="panel-body">
+ <div class="col-md-12 nopad-form">
+              <div class="form-group col-sm-12 m-b nopad-left">
+                <div class="col-sm-12 m-b nopad-left">
+                  <label>Client <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="workproof_array[0].client_company"  >
+                </div>
+                <div class="col-md-6 m-b nopad-left">
+                  <label>Size Group <em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="workproof_array[0].size_group_id"  >
+                </div>
+                <div class=" col-md-6 m-b nopad-left">
+                  <label>Order<em class="text-muted"></em></label>
+                  <input type="text" class="form-control" ng-model="workproof_array[0].job_name" >
+                </div>
+              </div>
+              <div class="form-group col-sm-12 m-b nopad-left">
+	                <div class="col-md-6 m-b nopad-left">
+	                  <label>Product <em class="text-muted"></em></label>
+	                  <input type="text" class="form-control" ng-model="workproof_array[0].product_name"  >
+	                </div>
+	                <div class="col-md-6 m-b nopad-left">
+	                  <label>Garment Color<em class="text-muted"></em></label>
+	                  <input type="text" class="form-control" ng-model="workproof_array[0].product_color"  >
+	                </div>
+	                <div class=" col-md-6 m-b nopad-left">
+	                  <label>Position <em class="text-muted"></em></label>
+	                  <input type="text" class="form-control" ng-model="workproof_array[0].position_id" >
+	                </div>
+	                <div class="col-md-6 m-b nopad-left">
+	                  <label>Screen Sets <em class="text-muted"></em></label>
+	                  <select class="form-control" ng-model="main.client_type">
+	                    <option value="">Select Type</option>
+	                    <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
+	                  </select>
+	                </div>
+	                <div class=" col-md-6 m-b nopad-left">
+	                  <label>Placement<em class="text-muted"></em></label>
+	                      	<div  class="input-group col-sm-12 m-b">
+					            <ul ng-repeat="placement in positiondata" class="form-fields col-md-6 nopad-left chkBoxes">
+					            	<li>
+					                    <div class="form-group">
+					                        <label class="md-check">
+					                            <input type="checkbox" checklist-model="orderPositionAll[position_index].placementvalue" checklist-value="placement.id"  class="has-value">
+					                            <i class="c-default"></i>
+					                            {{placement.misc_value}}
+					                        </label>
+					                    </div>
+					                </li>
+					            </ul>
+					        </div
+	                </div>
+	              </div>
+              </div>
+               <div class="form-group col-sm-12 m-b nopad-left">
+	              <div class="form-group col-sm-6 m-b nopad-right">
+	                <label>LOGO <em class="text-muted"></em></label>
+	                <div class="form-group col-sm-12 m-b panel panel-default" style="height:200px;"> </div>
+	              </div>
+	              <div class="form-group col-sm-6 m-b nopad-right">
+		                <div class="form-group col-sm-12 m-b nopad-right">
+			                <label>Image Type <em class="text-muted"></em></label><br>
+			                <input class="form-group" selected="selected" type="radio"> Art work Proof
+		                </div>
+		                <div class="form-group col-sm-12 m-b nopad-right">
+			                <label>Image Description <em class="text-muted"></em></label>
+			                <textarea class="form-group" cols="22" rows="5"></textarea>
+		               </div>
+	              </div>
+
+	              
+              </div>
+
+              <div class="input-group col-sm-12 m-b form-buttons">
+                <button  type="submit" class="btn btn-info" ng-click="SaveArtWorkProof(main)" ng-disabled="staffForm.$invalid">Submit</button>
+                &nbsp;
+                <button ng-click="ClosePopup();" type="button" class="btn btn-info">Cancel</button>
+                &nbsp; 
+              </div>
+            </div></div>

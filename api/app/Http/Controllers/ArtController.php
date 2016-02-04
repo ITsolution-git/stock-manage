@@ -19,6 +19,7 @@ class ArtController extends Controller {
         $this->common = $common;
     }
 
+    // ART LISTING PAGE
     public function listing($company_id)
     {
     	if(!empty($company_id) 	&& $company_id != 'undefined')
@@ -42,19 +43,53 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+
+    //ARTJOB-  ART DETAIL TAB WITH POSITION AND ORDERLINE TAB DATA.
     public function Art_detail($art_id,$company_id)
     {
     	if(!empty($company_id) && !empty($art_id)	&& $company_id != 'undefined')
     	{
     		$art_position = $this->art->art_position($art_id,$company_id);
     		$art_orderline = $this->art->art_orderline($art_id,$company_id);
+			$artjobscreen_list = $this->art->artjobscreen_list($art_id,$company_id);
+			$graphic_size = $this->common->GetMicType('graphic_size');
 
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline);
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
         {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+            $response = array('success' => 2, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+
+    //ARTJOB-  ART WORKPROOF POPUP DATA RETRIVE
+    public function artworkproof_data($orderline_id, $company_id)
+    {
+    	if(!empty($company_id) && !empty($orderline_id)	&& $company_id != 'undefined')
+    	{
+    		$art_workproof = $this->art->artworkproof_data($orderline_id,$company_id);
+    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_workproof);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+
+    // ARTJOB-  SCREEN SETS TAB DATA LISTING
+    public function artjobscreen_list($art_id, $company_id)
+    {
+    	if(!empty($company_id) && !empty($art_id)	&& $company_id != 'undefined')
+    	{
+    		$artjobscreen_list = $this->art->artjobscreen_list($art_id,$company_id);
+    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $artjobscreen_list);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
     }

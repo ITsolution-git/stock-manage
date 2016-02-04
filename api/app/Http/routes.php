@@ -235,3 +235,6 @@ Route::post('api/save_SnsApi', 'ApiController@save_api');
 // ART CONTROLLER
 Route::get('art/listing/{company_id}', 'ArtController@listing');
 Route::get('art/Art_detail/{art_id}/{company_id}', 'ArtController@Art_detail');
+Route::get('art/artworkproof_data/{orderline_id}/{company_id}', 'ArtController@artworkproof_data');
+Route::get('art/artjob_screen_list/{art_id}/{company_id}', 'ArtController@artjob_screen_list');
+Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');

@@ -110,7 +110,10 @@ class CommonController extends Controller {
 
     
 
-
+    /**
+    * Get Array of All Misc Data with argument Type
+    * @return json data
+    */
      public function GetMicType($type)
      {
         $result = $this->common->GetMicType($type);
