@@ -1,0 +1,129 @@
+
+                                <div class="col-md-12 nopad-form">
+                                    <div class="col-md-12 nopad-left">
+                                        <div class="form-group">
+                                        <!-- Orderline Tab Title -->
+                                            <div class="">                      
+                                                <div class="cols col-1">
+                                                    <div class="form-group">
+                                                        <label>Size Group / <br />Product Color</label>
+                                                    </div>
+                                                    <div class="form-group secondContainer">
+                                                        <label>Product / <br />Product Vendor</label>
+                                                    </div>
+                                                </div>
+                                                <div class="cols col-2">
+                                                    <div class="form-group">
+                                                        <label>----------------------------------------------------------------Size / Qnty-----------------------------------------------------------</label>
+                                                    </div>
+                                                    <div class="form-group col-md-1">
+                                                       <label> Qnty / Client Supply </label>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <!-- Orderline Tab Fields -->
+                                            <div class="orderLineTabScroll formFields" ng-repeat="(key,order_line) in art_orderline.line_array">
+                                                <!-- First ROW OrderLine -->
+                                                <div class="col-md-12 nopad-form">
+                                                    <div class="cols col-1">
+                                                        <div class="form-group">
+                                                            <input  type="text" class="form-control"  ng-model="order_line.size_group_id" readonly="" />
+                                                        </div>
+                                                        <div class="form-group secondContainer">
+                                                            <input type="text" class="form-control"  ng-model="order_line.product_name" readonly="" />
+                                                        </div>
+                                                        <div class="col-md-1 nopad-left smallPad"></div>
+                                                        <div class="form-group">
+                                                            <label> Set Group </label>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="cols col-2">
+                                                        <span ng-repeat="(s_key,i) in getNumber(7)  track by $index">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control c-green"  ng-model="art_orderline.line_array[key].size_array[s_key].size"/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"  ng-model="art_orderline.line_array[key].size_array[s_key].qnty" />
+                                                            </div>
+                                                        </span>
+                                                        <span>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"  />
+                                                            </div>
+                                                        </span>
+                                                     <div class="col-md-2 nopad-left smallPad"></div>
+                                                 
+
+                                                    </div>
+                                                       <div class="col-md-2 nopad-left">
+                                                        <div class="nopad-left artworkButton">
+                                                            <button ng-click="UpdateField_detail(order_line.line_id);" type="button" class="btn btn-default addButton c-dgreen">
+                                                              <i class="fa fa-plus"></i> 
+                                                            </button>
+                                                            <span>Artwork Proof</span>
+                                                        </div>
+                                                      </div>
+                                                </div>
+
+                                                <!-- Second ROW -->
+                                                <div class="col-md-12 nopad-form">
+                                                    <div class="cols col-1">
+                                                       <div class="form-group">
+                                                            <input  type="text" class="form-control"  ng-model="order_line.product_color" readonly="" />
+                                                        </div>
+                                                         <div class="form-group">
+                                                            <input  class="form-control"  ng-model="order_line.name_company" readonly="" />
+                                                        </div>
+                                                        <div class="col-md-1 nopad-left smallPad"></div>
+                                                        <div class="col-md-3 smallPad nopad-left" style="width:98px !important;">
+                                                            <select class="form-control ng-pristine ng-valid ng-touched" tabindex="0" aria-invalid="false" style="">
+                                                               
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-1 nopad-left smallPad">
+                                                            <div class="sgpDetails btnCircle">
+                                                              <a class="" tabindex="0" role="button" title="Go To">
+                                                                <i class="fa fa-arrow-circle-right"></i>
+                                                              </a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="cols col-2">
+                                                        <span ng-repeat="(a_key,i) in getNumber(7)  track by $index">
+                                                           <div class="col-md-3 smallPad nopad-left" style="width:98px !important;">
+                                                                <select class="form-control ng-pristine ng-valid ng-touched" ng-model="order_line.client_supplied" tabindex="0" aria-invalid="false" style="">
+                                                                   
+                                                                </select>
+                                                            </div>
+                                                            
+                                                        </span>
+                                                         <span>
+                                                           <div class="col-md-3 smallPad nopad-left" style="width:85px !important;">
+                                                                <select class="form-control ng-pristine ng-valid ng-touched" ng-model="order_line.client_supplied" tabindex="0" aria-invalid="false" style="">
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                                <!-- / -->
+                                        
+
+                                            </div>
+
+   
+                                        </div>
+                                  
+                                    </div>
+                                    
+                                </div>  
+                                <!-- POP UP on Orderline Tab Page -->
+                                
+                            
