@@ -5,13 +5,61 @@ AuthService.checksession();
 
 
   $http.get('api/public/common/getAllColorData').success(function(result, status, headers, config) {
-              $scope.colorData = result.data.records;
+              $scope.colors = result.data.records;
+
+              var init;
+
+              $scope.searchKeywords = '';
+              $scope.filteredColors = [];
+              $scope.row = '';
+              $scope.select = function (page) {
+                  var end, start;
+                  start = (page - 1) * $scope.numPerPage;
+                  end = start + $scope.numPerPage;
+                  return $scope.currentPageColors = $scope.filteredColors.slice(start, end);
+              };
+              $scope.onFilterChange = function () {
+                  $scope.select(1);
+                  $scope.currentPage = 1;
+                  return $scope.row = '';
+              };
+              $scope.onNumPerPageChange = function () {
+                  $scope.select(1);
+                  return $scope.currentPage = 1;
+              };
+              $scope.onOrderChange = function () {
+                  $scope.select(1);
+                  return $scope.currentPage = 1;
+              };
+              $scope.search = function () {
+                  $scope.filteredColors = $filter('filter')($scope.colors, $scope.searchKeywords);
+                  return $scope.onFilterChange();
+              };
+              $scope.order = function (rowName) {
+                  if ($scope.row === rowName) {
+                      return;
+                  }
+                  $scope.row = rowName;
+                  $scope.filteredColors = $filter('orderBy')($scope.colors, rowName);
+                  return $scope.onOrderChange();
+              };
+              $scope.numPerPageOpt = [10, 20, 50, 100];
+              $scope.numPerPage = 10;
+              $scope.currentPage = 1;
+              $scope.currentPageColors = [];
+
+              init = function () {
+                  $scope.search();
+
+                  return $scope.select($scope.currentPage);
+              };
+              return init();
 
       });
 
 
 
-$scope.updateColor = function(value,id,updatedcolumn) {
+$scope.updateColors = function(value,id,updatedcolumn) {
 
 
 if(angular.isUndefined(id)){
@@ -44,18 +92,18 @@ if(angular.isUndefined(id)){
   };
 
 
-$scope.addColor = function(){
-                            $scope.colorData.push({ name:''});
+$scope.addColors = function(){
+                            $scope.colors.push({ name:''});
                           }
 
 
-    $scope.removeColor = function(index,id){
+    $scope.removeColors = function(index,id){
 
   var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
                                 if (permission == true) {
   
   if(angular.isUndefined(id)){
-     $scope.colorData.splice(index,1);
+     $scope.colors.splice(index,1);
   } else {
 
  var position_data = {};
@@ -67,7 +115,7 @@ $http.post('api/public/common/DeleteTableRecords',position_data).success(functio
   });
 
 
-     $scope.colorData.splice(index,1);
+     $scope.colors.splice(index,1);
   }
 
 }
