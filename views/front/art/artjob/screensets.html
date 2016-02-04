@@ -26,37 +26,51 @@
                                               <label>Position</label>
                                             </div>
                                         </div>
+                                            <div class="form-group col-md-2 nopad-left">
+                                                <div class="form-group col-md-8 nopad-left artworkButton">
+                                                    <button type="button" class="btn btn-default addButton c-dgreen" ng-click="create_screen()">
+                                                      <i class="fa fa-plus"></i> 
+                                                    </button>
+                                                <span>Create Screen</span>
+                                               </div>
+                                            </div>
                                         
         
                                     <!-- POSITION TAB FIELDS -->
-                                    <div class="positionTab_content" ng-repeat="(key,order_position) in art_position">
-                                        <input type="hidden" class="col-md-1"  ng-model="order_position.order_id" ng-value="order_position.order_id"/>
-                                        <numeric_tag input-value="123" input-name="wks.name"/>
-                                      
+                                    <div class="positionTab_content" ng-repeat="(key,screen_data) in artjobscreen_list">
                                         <div class="col-md-3 nopad-form">                                        
                                             <div class="form-group col-md-4 nopad-left">
-                                                <input type="text" class="form-control" ng-model="order_position.position_id" placeholder="Position" />
+                                                <input type="text" class="form-control" ng-model="screen_data.screen_set" name="screen_set" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" placeholder="Screen sets" />
                                             </div>
                                             <div class="form-group col-md-4 nopad-left">
-                                                <input type="text" class="form-control" ng-model="order_position.description" placeholder="Description" />
+                                                <select ng-model="order_position.graphic_size" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" aria-required="false" aria-invalid="false" name="graphic_size" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" style="">
+                                                    <option ng-repeat="grsize in graphic_size" ng-selected="{{grsize.id==screen_data.graphic_size}}" value="{{grsize.id}}">{{grsize.value}}</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-4 nopad-left">
-                                                <input type="text" class="form-control" ng-model="order_position.placement_type" placeholder="Placement Type" />
+                                                <input type="text" class="form-control" name="screen_count" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" ng-model="screen_data.screen_count" placeholder="Screen Count" />
                                             </div>
                                         </div>
 
                                         <div class="col-md-4 nopad-left">
                                             <div class="form-group col-md-3 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.dtg_size" placeholder="Dtg Size" />
+                                                <select ng-model="order_position.art_dept_complete" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" aria-required="false" aria-invalid="false" name="art_dept_complete" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" style="">
+                                                    <option ng-selected="{{screen_data.art_dept_complete==1}}" value="1">Yes</option>
+                                                    <option ng-selected="{{screen_data.art_dept_complete==0}}" value="0">No</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-3 nopad-form">
-                                                <input type="text" class="form-control" ng-model="order_position.dtg_on" placeholder="Dtg On" />
+                                                <select ng-model="order_position.screens_created" name="screens_created" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" aria-required="false" aria-invalid="false" style="">
+                                                    <option ng-selected="{{screen_data.screens_created==1}}" value="1">Yes</option>
+                                                    <option ng-selected="{{screen_data.screens_created==0}}" value="0">No</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-3 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="order_position.dtg_size" placeholder="Dtg Size" />
+                                                <input    type="text" class="form-control"   ng-model="screen_data.screen_date" name="screen_date" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" />
+                                               
                                             </div>
                                             <div class="form-group col-md-3 nopad-form">
-                                                <input type="text" class="form-control" ng-model="order_position.dtg_on" placeholder="Dtg On" />
+                                                <input type="text" class="form-control"  ng-model="screen_data.positions" placeholder="Position" />
                                             </div>
                                         </div>
 
