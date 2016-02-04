@@ -1674,6 +1674,7 @@ a.list-group-item.hover {
 .table > thead > tr > th {
   padding: 12px 24px;
   border-bottom: 1px solid #e7e8ea;
+  font-weight: bolder;
 }
 
 .table-bordered {
