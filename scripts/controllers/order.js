@@ -1221,7 +1221,10 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        
                         $http.post('api/public/order/productDetail',id).success(function(result) {
                                 $scope.allProductColorSize =result.data;
-                            
+                             
+                                 if($scope.allProductColorSize.colorData.length == '0'){
+                                  $scope.allProductColorSize.colorData = [];
+                            }
                          });
     }
 
