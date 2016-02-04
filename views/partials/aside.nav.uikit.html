@@ -2,7 +2,7 @@
   <ul class="nav md-navbar navbar-default">
    
     
-    <li ui-sref-active="active" class="active">
+    <li ui-sref-active="active" ng-class="{passive:$state.includes('dashboard')}">
       <a ui-sref="app.dashboard" md-ink-ripple="">
         <i class="icon mdi-action-settings-input-svideo i-20"></i>
         <span class="font-normal">Dashboard</span>
@@ -202,7 +202,7 @@
   <!-- Code end for Company tab --> 
 
 <!-- Code Start for Home tab -->
-    <li ng-show="app.role=='BC'" ui-sref-active="active">
+    <li ng-show="app.role=='BC'" ng-class="{passive:$state.includes('home')}">
       <a md-ink-ripple ui-sref="app.home">
             
         <i class="icon fa fa-home i-20"></i>
@@ -236,7 +236,7 @@
   <!-- Code end for Client tab --> 
 
  <!-- Code Start for Orders tab -->
-    <li ng-show="app.role=='BC'" ui-sref-active="active">
+    <li ng-show="app.role=='BC'"  ng-class="{passive:$state.includes('order')}">
       <a md-ink-ripple ui-sref="order.list">
         <i class="icon fa fa-reorder i-20"></i>
         <span class="font-normal">Orders</span>
@@ -272,7 +272,7 @@
 
 
  <!-- Code Start for Art tab -->
-    <li ng-show="app.role=='BC'" ui-sref-active="active">
+    <li ng-show="app.role=='BC'" ng-class="{passive:$state.includes('art')}">
       <a md-ink-ripple  ui-sref="art.list">
         <i class="icon fa fa-pie-chart i-20"></i>
         <span class="font-normal">Art</span>
@@ -291,7 +291,7 @@
     </li> -->
   <!-- Code end for Production tab --> 
 
- <li ng-show="app.role=='BC'" ui-sref-active="active">
+ <li ng-show="app.role=='BC'" ng-class="{passive:$state.includes('finishing')}">
       <a md-ink-ripple ui-sref="finishing.list">
         <i class="icon fa fa-check-square i-20"></i>
         <span class="font-normal">Finishing</span>
@@ -299,7 +299,7 @@
     </li>
     
  <!-- Code Start for Shipping tab -->
-    <li ng-show="app.role=='BC'" ui-sref-active="active">
+    <li ng-show="app.role=='BC'" ng-class="{passive:$state.includes('shipping')}">
       <a md-ink-ripple ui-sref="shipping.list">
         <i class="icon fa fa-truck i-20"></i>
         <span class="font-normal">Shipping</span>
@@ -308,7 +308,7 @@
    
   <!-- Code end for Shipping tab --> 
    <!-- Code Start for Production tab -->
-    <li ng-show="app.role=='CA'" ui-sref-active="active">
+    <li ng-show="app.role=='CA'" ng-class="{passive:$state.includes('api')}">
       <a md-ink-ripple ui-sref="api.list">
        
         <i class="icon fa fa-tags i-20"></i>
