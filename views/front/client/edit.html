@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <form name="staffForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
+    <form name="clientForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
       <div class="panel panel-default">
         <input type="hidden" ng-model="staff.id">
         <div class="panel-body">
@@ -20,19 +20,23 @@
                 </div>
                 <div class="col-md-6 m-b nopad-left">
                   <label>Billing Email <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="main.billing_email"  >
+                  <input type="text" class="form-control" ng-model="main.billing_email"  ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"  name="billing_email">
+                   <span style="color:#f44336" ng-show="clientForm.billing_email.$error.pattern">Please enter valid email address</span> 
                 </div>
                 <div class="col-md-6 m-b nopad-left">
                   <label>Main Contact Phone <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="maincompcontact.phone"  >
+                  <input type="text" class="form-control" ng-model="maincompcontact.phone"  ng-pattern="/^[0-9]{10,10}$/" name="phone">
+                  <span style="color:#f44336" ng-show="clientForm.phone.$error.pattern">This Field Should Contain 10 Numeric</span> 
                 </div>
                 <div class=" col-md-6 m-b nopad-left">
                   <label>Company Phone <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="main.company_phone" >
+                  <input type="text" class="form-control" ng-model="main.company_phone" ng-pattern="/^[0-9]{10,10}$/" name="company_phone">
+                  <span style="color:#f44336" ng-show="clientForm.company_phone.$error.pattern">This Field Should Contain 10 Numeric</span> 
                 </div>
                 <div class="col-md-6 m-b nopad-left">
                   <label>Contact's Email <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="maincompcontact.email" >
+                  <input type="text" class="form-control" ng-model="maincompcontact.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/"  name="email">
+                   <span style="color:#f44336" ng-show="clientForm.email.$error.pattern">Please enter valid email address</span> 
                 </div>
                 <div class=" col-md-6 m-b nopad-left">
                   <label>Company URL <em class="text-muted"></em></label>
@@ -58,7 +62,7 @@
                 <div class="form-group col-sm-12 m-b panel panel-default" style="height:300px;"> </div>
               </div>
               <div class="input-group col-sm-12 m-b form-buttons">
-                <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="staffForm.$invalid">Submit</button>
+                <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="clientForm.$invalid">Submit</button>
                 &nbsp;
                 <button ui-sref="client.list" type="button"  class="btn btn-info">Cancel</button>
                 &nbsp; 
@@ -102,10 +106,12 @@
                       <input type="text" class="form-control" ng-model="client_contacts.location" placeholder="Location" />
                     </div>
                     <div class="col-md-2 nopad-left">
-                      <input type="text" class="form-control" ng-model="client_contacts.phone" placeholder="Phone" />
+                      <input type="text" class="form-control" ng-model="client_contacts.phone" placeholder="Phone" ng-pattern="/^[0-9]{10,10}$/" name="phone_{{key}}"/>
+                      <span style="color:#f44336" ng-show="clientForm.phone_{{key}}.$error.pattern">This Field Should Contain 10 Numeric</span> 
                     </div>
                     <div class="col-md-2 nopad-left">
-                      <input type="text" class="form-control" ng-model="client_contacts.email" placeholder="Email"  />
+                      <input type="text" class="form-control" ng-model="client_contacts.email" placeholder="Email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" name="email_{{key}}"/>
+                       <span style="color:#f44336" ng-show="clientForm.email_{{key}}.$error.pattern">Please enter valid email address</span> 
                     </div>
                     <div class="col-md-1 nopad-form">
                       <button type="button" ng-click="removeContacts($index)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button>
