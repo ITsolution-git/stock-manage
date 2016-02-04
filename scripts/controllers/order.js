@@ -247,12 +247,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
                     $scope.order.order_line_total = order_line_total.toFixed(2);
 
-                    $scope.position_total_qty = 0;
-                    $scope.pos_total_qty = 0;
-                    angular.forEach($scope.orderPositionAll, function(value) {
-                        $scope.position_total_qty += parseInt(value.qnty);
-                        $scope.pos_total_qty = parseInt(value.qnty);
-                    });
+                    $scope.position_qty = 0;
+                    if($scope.orderPositionAll.length > 0)
+                    {
+                        $scope.position_qty = parseInt($scope.orderPositionAll[0].qnty);
+                    }
                 }
                 else {
                     $state.go('order.list');
@@ -527,10 +526,8 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         order_data_insert.table ='order_positions'
 
         $http.post('api/public/order/insertPositions',order_data_insert).success(function(result) {
-
+            get_order_details(order_id,client_id,company_id);
         });
-
-        get_order_details(order_id,client_id,company_id);
     }
     $scope.updatePosition = function(postArray,position_id)
     {
@@ -686,7 +683,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     {
 
 
-$scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, scrollableHeight: '100px',showCheckAll:false,showUncheckAll:false,scrollable: true};
+$scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, scrollableHeight: '400px',showCheckAll:false,showUncheckAll:false,scrollable: true};
 $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
 
@@ -1517,9 +1514,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                 $scope.color_stitch_count = parseInt(value.color_stitch_count);
 
-                angular.forEach($scope.orderPositionAll, function(position) {
-                    $scope.position_qty = parseInt(position.qnty);
-                });
+                $scope.position_qty = parseInt($scope.orderPositionAll[0].qnty);
                 
                 $scope.discharge_qnty = parseInt(value.discharge_qnty);
                 $scope.speciality_qnty = parseInt(value.speciality_qnty);
@@ -1698,10 +1693,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 }
             });
         }
-
         /* -------------------------------------------------------------------------------------------------- */
         
-        if($scope.price_grid_markup.length > 0)
+        if($scope.price_grid_markup.length > 0 && $scope.position_qty > 0)
         {
             angular.forEach($scope.price_grid_markup, function(value) {
 
@@ -1815,11 +1809,9 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             });
 
 
-            $scope.position_total_qty = 0;
-            $scope.pos_total_qty = 0;
+            $scope.position_qty = 0;
             angular.forEach($scope.orderPositionAll, function(value) {
-                $scope.position_total_qty += parseInt(value.qnty);
-                $scope.pos_total_qty = parseInt(value.qnty);
+                $scope.position_qty += parseInt(value.qnty);
             });
 
             $scope.order.order_line_total = order_line_total.toFixed(2);
