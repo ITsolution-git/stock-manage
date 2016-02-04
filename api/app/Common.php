@@ -134,6 +134,8 @@ class Common extends Model {
 
         $staffData = DB::table('staff as staff')
                          ->Join('misc_type as misc', 'staff.staff_type', '=', 'misc.id')
+                          ->Join('users as users', 'users.id', '=', 'staff.user_id')
+                         ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();

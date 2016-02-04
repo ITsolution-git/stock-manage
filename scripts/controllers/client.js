@@ -182,7 +182,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                         
                                         $scope.StaffList =$scope.Response.StaffList;
                                         $scope.ArrCleintType =$scope.Response.ArrCleintType;
-                                        $scope.PriceGrid = $scope.Response.PriceGrid;
+                                      //  $scope.PriceGrid = $scope.Response.PriceGrid;
                                         $scope.allContacts = $scope.Response.allContacts;
                                         $scope.allclientnotes = $scope.Response.allclientnotes;
                                         $scope.Arrdisposition = $scope.Response.Arrdisposition;

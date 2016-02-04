@@ -1,5 +1,5 @@
 
-app.controller('miscListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService) {
+app.controller('miscListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService,$filter) {
   AuthService.AccessService('FM');
 
 $("#ajax_loader").show();

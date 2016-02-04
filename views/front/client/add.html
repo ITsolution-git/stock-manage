@@ -33,12 +33,12 @@
                     <div class="m-b">
                         <label>First<span class="aestric_required"> *</span> <em class="text-muted"></em></label>
                         <input type="text" class="form-control" name="first_name" ng-model="client.contact.first_name" ng-pattern="/^[a-zA-Z]{2,255}$/"  required >
-                        <span style="color:#f44336" ng-show="clientAddForm.first_name.$error.pattern">Please enter charcters only.</span>
+                        <span style="color:#f44336" ng-show="clientAddForm.first_name.$error.pattern">Please enter atleast 2 charcters.</span>
                     </div>
                     <div class=" m-b">
                         <label>Last<span class="aestric_required"> *</span> <em class="text-muted"></em></label>
                         <input type="text" class="form-control" name="last_name" ng-model="client.contact.last_name" ng-pattern="/^[a-zA-Z]{2,255}$/"  ng-model="client.contact.last_name" required >
-                        <span style="color:#f44336" ng-show="clientAddForm.last_name.$error.pattern">Please enter charcters only.</span>
+                        <span style="color:#f44336" ng-show="clientAddForm.last_name.$error.pattern">Please enter atleast 2 charcters.</span>
                     </div>
                     <div class="m-b">
                         <label>Phone<span class="aestric_required"> *</span> <em class="text-muted"></em></label>
@@ -47,8 +47,8 @@
                     </div>
                     <div class=" m-b">
                         <label>Email<span class="aestric_required"> *</span><em class="text-muted"></em></label>
-                        <input type="email" class="form-control" name="contact_email" ng-model="client.contact.email" required>
-                             <span style="color:#f44336" ng-show="clientAddForm.contact_email.$error.email"> Not valid email!</span>
+                        <input type="text" class="form-control" name="contact_email" ng-model="client.contact.email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+                             <span style="color:#f44336" ng-show="clientAddForm.contact_email.$error.email">Please enter valid email address.</span>
                     </div>
               </div>
 
