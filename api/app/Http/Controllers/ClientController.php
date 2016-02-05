@@ -488,4 +488,86 @@ class ClientController extends Controller {
     	$data = array("success"=>$success,"message"=>$message,'result'=>$result);
 		return response()->json(['data'=>$data]);
 	}
+
+
+	 /**
+   * Get Documents.
+   * @return json data
+   */
+    public function getDocument($id)
+    {
+
+        $result = $this->client->getDocument($id);
+        return $this->return_response($result);
+        
+    }
+
+     /**
+    * Get Document Details by ID
+    * @params document_id
+    * @return json data
+    */
+    public function getDocumentDetailbyId($id)
+    {
+        $result = $this->client->getDocumentDetailbyId($id);
+        return $this->return_response($result);
+    }
+
+
+     /**
+    * Update document tab record
+    * @params document note array
+    * @return json data
+    */
+    public function updateDoc()
+    {
+        $post = Input::all();
+        $result = $this->client->updateDoc($post['data'][0]);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+
+    /**
+   * Save Order notes.
+   * @return json data
+    */
+    public function saveDoc()
+    {
+
+        $post = Input::all();
+        $post['data']['created_date']=date('Y-m-d');
+ 
+        if(!empty($post['data']['client_id']))
+        {
+            $result = $this->client->saveDoc($post['data']);
+            $message = INSERT_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS.", id";
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
+
+     /**
+    * Delete Doc.
+    * @params id
+    * @return json data
+    */
+    public function deleteClientDoc($id)
+    {
+        $result = $this->client->deleteClientDoc($id);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+
+
+
  } 
