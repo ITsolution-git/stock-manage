@@ -510,6 +510,8 @@ class ClientController extends Controller {
     public function getDocumentDetailbyId($id)
     {
         $result = $this->client->getDocumentDetailbyId($id);
+
+        $result[0]->document_photo_url = UPLOAD_PATH.'document/'.$result[0]->document_photo;
         return $this->return_response($result);
     }
 
@@ -522,6 +524,25 @@ class ClientController extends Controller {
     public function updateDoc()
     {
         $post = Input::all();
+
+         if(isset($post['data'][0]['document_photo']['base64'])){
+
+            	$split = explode( '/', $post['data'][0]['document_photo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url_doc = "doc-logo-".time().".".$type;
+				$path = base_path() . "/public/uploads/document/" . $png_url_doc;
+				$img = $post['data'][0]['document_photo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data'][0]['document_photo'] = $png_url_doc;
+
+	    }
+
+
         $result = $this->client->updateDoc($post['data'][0]);
         $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
@@ -537,6 +558,25 @@ class ClientController extends Controller {
 
         $post = Input::all();
         $post['data']['created_date']=date('Y-m-d');
+
+
+        if(isset($post['data']['document_photo']['base64'])){
+
+            	$split = explode( '/', $post['data']['document_photo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url_doc = "doc-logo-".time().".".$type;
+				$path = base_path() . "/public/uploads/document/" . $png_url_doc;
+				$img = $post['data']['document_photo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data']['document_photo'] = $png_url_doc;
+
+	    }
+
  
         if(!empty($post['data']['client_id']))
         {

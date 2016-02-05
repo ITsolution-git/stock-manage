@@ -265,6 +265,11 @@
                                       <div class="col-md-8 nopad-left">
                                           <input type="text" class="form-control" name="order_notes" ng-model="document_note.description">
                                       </div>
+
+                                       <div class="col-md-2 nopad-left">
+                                          <img  ng-if="document_note.document_photo" ng-src="{{document_note.document_photo_url}}" alt="" height="200" width="200" class="img-responsive"/> 
+                                      </div>
+
                                       <div class="col-md-1">
                                           <button type="button" ng-click="editDocumentPopup(document_note.id)" class="btn btn-default addButton">
                                               <i class="fa fa-edit"></i>

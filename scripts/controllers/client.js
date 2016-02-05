@@ -614,9 +614,9 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                 });
                             }
 
-                           
+                           $scope.thisorderNote=[];
                             $scope.editDocumentPopup = function (id) {
-        
+                    
                               getDocumentDetailbyId(id);
                                
 
@@ -690,6 +690,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                         if(result.data.success == '1') 
                                         {
                                             $scope.thisorderNote =result.data.records;
+
                                            
                                         }
                                         else

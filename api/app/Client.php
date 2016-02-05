@@ -295,7 +295,18 @@ class Client extends Model {
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
-        return $clientDocumentData;  
+
+        $final_array = array();
+        foreach ($clientDocumentData as $key => $all_data) {
+
+          $all_data->document_photo_url = '';
+          if($all_data->document_photo != ''){
+            $all_data->document_photo_url = UPLOAD_PATH.'document/'.$all_data->document_photo;
+          }
+         $final_array[] = $all_data;
+        }
+      
+        return $final_array;  
 
    }
 
@@ -325,7 +336,7 @@ class Client extends Model {
    {
             $result = DB::table('client_document')
                         ->where('id','=',$post['id'])
-                        ->update(array('description'=>$post['description']));
+                        ->update(array('description'=>$post['description'],'document_photo'=>$post['document_photo']));
         return $result;
    }
 
