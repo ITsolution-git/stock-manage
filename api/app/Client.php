@@ -123,6 +123,10 @@ class Client extends Model {
     			$result['main']['salesweb'] = $value->salesweb;
     			$result['main']['client_type'] = $value->client_type;
     			$result['main']['client_desposition'] = $value->client_desposition;
+          $result['main']['color_logo'] = $value->color_logo;
+          $result['main']['b_w_logo'] = $value->b_w_logo;
+          $result['main']['shipping_logo'] = $value->shipping_logo;
+          $result['main']['blind_text'] = $value->blind_text;
 
 
     			$result['contact']['email'] = $value->email;
@@ -146,6 +150,7 @@ class Client extends Model {
     			$result['tax']['tax_id'] = $value->tax_id;
     			$result['tax']['tax_rate'] = $value->tax_rate;
     			$result['tax']['tax_exempt'] = $value->tax_exempt;
+          $result['tax']['tax_document'] = $value->tax_document;
 
     			$result['pl_imp']['pl_businessname'] = $value->pl_businessname;
     			$result['pl_imp']['pl_address'] = $value->pl_address;
@@ -184,6 +189,11 @@ class Client extends Model {
    }
    public function SaveCleintDetails($post,$id)
    {
+
+     unset($post['color_url_photo']);
+     unset($post['bw_url_photo']);
+     unset($post['shipping_url_photo']);
+
    		$result = DB::table('client')
    						->where('client_id','=',$id)
    						->update($post);
@@ -191,6 +201,7 @@ class Client extends Model {
    }
    public function SaveCleintTax($post,$id)
    {
+    unset($post['tax_document_url']);
    		$result = DB::table('client')
    						->where('client_id','=',$id)
    						->update($post);
