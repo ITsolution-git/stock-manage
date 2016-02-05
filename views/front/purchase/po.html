@@ -37,7 +37,7 @@
                   <label>Contact <em class="text-muted"></em></label>
 
                    <select class="form-control" id="vendor_contact_id" ng-model="ArrPo.vendor_contact_id" name="vendor_contact_id" ui-event="{ change : 'UpdateField_order($event)' }">
-                    <option value="">Select Type</option>
+                    <option value="">Select Vendor</option>
                     <option ng-repeat="item in AllContacts" value="{{item.id}}"   ng-selected="{{ArrPo.vendor_contact_id==item.id}}">{{item.first_name}}{{item.last_name}}</option>
                   </select>
 
@@ -320,15 +320,15 @@
             <div class="panel-body">
            
                 <div class="col-sm-12 m-b">
-                  <div class="col-sm-2 m-b">
+                <!--   <div class="col-sm-2 m-b">
                     <label>PO Id <em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="po_id"  >
-                  </div>
+                  </div> -->
                   <div class="col-sm-2 m-b">
                     <label>Vendor <em class="text-muted"></em></label>
                     
                    <select class="form-control" ng-model="ArrPo.vendor_id" name="vendor_id" ui-event="{ change : 'UpdateField_order($event)' }">
-                    <option value="">Select Type</option>
+                    <option value="">Select Vendor</option>
                     <option ng-repeat="item in list_vendors" value="{{item.id}}"   ng-selected="{{ArrPo.vendor_id==item.id}}">{{item.name_company}}</option>
                   </select>
 

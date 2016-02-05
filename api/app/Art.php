@@ -160,6 +160,7 @@ class Art extends Model {
 				->join('art as art','art.art_id','=','ass.art_id')
 				->join('orders as ord','ord.id','=','art.order_id')
 				->where('ord.company_id','=',$company_id)
+				->where('ass.art_id','=',$art_id)
 				->get();
 				
 		if(count($query)>0)
@@ -171,6 +172,34 @@ class Art extends Model {
 		}
 		
 		return $query;
+    }
+
+    public function artjobgroup_list($art_id,$company_id)
+    {
+		$query = DB::table('artjob_ordergroup as aog')
+				->select('aog.*',DB::raw("GROUP_CONCAT(ass.screen_set) as screen_set"))
+				->join('art as art','art.art_id','=','aog.art_id')
+				->join('orders as ord','ord.id','=','art.order_id')
+				->leftJoin('artjob_screensets as ass',DB::raw("FIND_IN_SET(ass.id,aog.screen_sets)"),DB::raw(''),DB::raw(''))
+				->where('ord.company_id','=',$company_id)
+				->where('aog.art_id','=',$art_id)
+				->GroupBy('aog.id')
+				->get();
+		if(count($query)>0)
+		{
+			foreach ($query as $key => $value) 
+			{
+				$query[$key]->screen_array = explode(",",$value->screen_sets);
+			}
+		}
+		return $query;
+    }
+    public function update_orderScreen($post)
+    {
+    	$fliter  =  array_filter($post['data']);
+    	$data = implode(',',$fliter);
+    	$result = DB::table('artjob_ordergroup')->where('id','=',$post['cond']['id'])->update(array("screen_sets" => $data));
+		return $result;
     }
 
 }

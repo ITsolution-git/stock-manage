@@ -237,4 +237,6 @@ Route::get('art/listing/{company_id}', 'ArtController@listing');
 Route::get('art/Art_detail/{art_id}/{company_id}', 'ArtController@Art_detail');
 Route::get('art/artworkproof_data/{orderline_id}/{company_id}', 'ArtController@artworkproof_data');
 Route::get('art/artjob_screen_list/{art_id}/{company_id}', 'ArtController@artjob_screen_list');
+Route::get('art/artjobgroup_list/{art_id}/{company_id}', 'ArtController@artjobgroup_list');
 Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
+Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');

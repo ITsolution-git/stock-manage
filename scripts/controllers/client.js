@@ -172,6 +172,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                 {
                                     if(result.data.success == '1') 
                                     {
+
                                         $scope.Response = result.data.records;
                                         $scope.mainaddress = $scope.Response.clientDetail.address;
                                         $scope.salesDetails =$scope.Response.clientDetail.sales;
@@ -190,6 +191,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
 
    
                                         $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.main.salesweb);
+
                                         $("#ajax_loader").hide();
                                     } 
                                     
@@ -523,7 +525,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               Tax_data.data = TaxDetails;
                               Tax_data.id = $stateParams.id;
                               $http.post('api/public/client/SaveCleintTax',Tax_data).success(function(Listdata) {
-                                    //getClientDetail(getclient_id );
+                                    getClientDetail(getclient_id );
                               });
                           };
                           $scope.SavePlimpDetails=function(PlimpDetails)
