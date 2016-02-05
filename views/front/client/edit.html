@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-    <form name="clientForm" class="form-validation stokkupForm client-form" ng-submit="saveStaff()">
+    <form name="clientForm" class="form-validation  client-form" ng-submit="saveStaff()">
       <div class="panel panel-default">
         <input type="hidden" ng-model="staff.id">
         <div class="panel-body">
@@ -59,7 +59,9 @@
               </div>
               <div class="form-group col-sm-4 m-b nopad-right">
                 <label>LOGO <em class="text-muted"></em></label>
-                <div class="form-group col-sm-12 m-b panel panel-default" style="height:300px;"> </div>
+                <div class="form-group col-sm-12 m-b"> 
+                  <img  ng-if="main.color_logo" ng-src="{{main.color_url_photo}}" alt=""  class="img-responsive" height="300px" width="300px"/> 
+                </div>
               </div>
               <div class="input-group col-sm-12 m-b form-buttons">
                 <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)" ng-disabled="clientForm.$invalid">Submit</button>
@@ -225,10 +227,17 @@
                   <label>TaxId <em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="client_tax.tax_id"  >
                 </div>
+
+
                 <div class="input-group col-sm-12 m-b">
                   <label>TaxId Document <em class="text-muted"></em></label>
-                  <textarea class="form-control"  ></textarea>
+
+                 
+                  <img  ng-if="client_tax.tax_document" ng-src="{{client_tax.tax_document_url}}" alt=""  class="img-responsive" height="200px" width="200px"/> 
+                      <input type='file' data-ng-model="client_tax.tax_document" base-sixty-four-input>
                 </div>
+
+
                 <div class="input-group col-sm-12 m-b">
                   <label>Tax Rate % <em class="text-muted"></em></label>
                   <input type="text" class="form-control" ng-model="client_tax.tax_rate"  >
@@ -500,7 +509,57 @@
                   </a> </div>
                 <iframe ng-src="{{currentProjectUrl}}" height="500" width="100%"> Please wait...</iframe>
               </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab16">Logos</div>
+             
+
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab16">
+                  
+                   <div class="form-group">
+                    <label>Color Logo</label>
+
+                     <img  ng-if="main.color_logo" ng-src="{{main.color_url_photo}}" alt="" height="200" width="200" class="img-responsive"/> 
+                  
+                      <input type='file' data-ng-model="main.color_logo" base-sixty-four-input>
+                  </div>
+
+
+                   <div class="form-group">
+                    <label>B/W Logo</label>
+
+                     <img  ng-if="main.b_w_logo" ng-src="{{main.bw_url_photo}}" alt="" height="200" width="200" class="img-responsive"/> 
+                  
+                      <input type='file' data-ng-model="main.b_w_logo" base-sixty-four-input>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label>Shipping Logo</label>
+
+                     <img  ng-if="main.shipping_logo" ng-src="{{main.shipping_url_photo}}" alt="" height="200" width="200" class="img-responsive"/> 
+                  
+                      <input type='file' data-ng-model="main.shipping_logo" base-sixty-four-input>
+                  </div>
+
+
+                   <div class="form-group">
+                    <label>Blind Approval Text</label>
+
+                    <textarea class="col-md-12 nopad-form ng-pristine ng-valid ng-touched" rows="4" ng-model="main.blind_text"  cols="40" aria-multiline="true" tabindex="0" aria-invalid="false" style=""></textarea>
+
+                  </div>
+
+
+                   <div class="input-group col-sm-12 m-b form-buttons">
+                      <button  type="submit" class="btn btn-info" ng-click="SaveCleintDetails(main)">Submit</button> 
+                  </div>
+                
+              
+              </div>
+
+
+
+
+
+
               <div role="tabpanel" class="tab-pane animated fadeIn" id="tab17">Depends Art</div>
             </div>
           </div>

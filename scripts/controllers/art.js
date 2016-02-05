@@ -31,6 +31,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           			$scope.art_orderline = RetArray.data.records.art_orderline;
                           			$scope.artjobscreen_list = RetArray.data.records.artjobscreen_list;
                           			$scope.graphic_size = RetArray.data.records.graphic_size;
+                          			$scope.artjobgroup_list = RetArray.data.records.artjobgroup_list;
                           			//console.log($scope.art_orderline.line_array);
                               	}
                               	if(RetArray.data.success=='2')
@@ -99,11 +100,11 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 			                            }
 		                            };
 
-		                $scope.create_screen = function(num) {
+		                $scope.create_screen = function(table) {
 
 		                	 var Address_data = {};
                                 Address_data.data = {art_id:$scope.art_id};
-                                Address_data.table ='artjob_screensets'
+                                Address_data.table =table
                                 
                                 $http.post('api/public/common/InsertRecords',Address_data).success(function(result) {
                                     if(result.data.success == '1') 
@@ -117,9 +118,19 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 	                                    notifyService.notify(data.status, data.message);
                                     }
                                 });
-
-							    return new Array(num);   
 							}
+  						$scope.UpdateField_orderscreen = function(data,id,table) {
+								var Receive_data = {};
+                          		  Receive_data.table =table;
+
+                          		  Receive_data.data = data;
+                          		  
+	                              Receive_data.cond ={ id :id}
+	                              $http.post('api/public/art/update_orderScreen',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                });
+						}
 
                        
 

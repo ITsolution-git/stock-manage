@@ -121,7 +121,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     
     function get_shipping_details()
     {
-        AJloader.show();
+       $("#ajax_loader").show();
         var shipping_arr = {};
         shipping_arr.client_id = $stateParams.client_id;
         shipping_arr.order_id = $stateParams.order_id;
@@ -132,6 +132,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         
             if(result.data.success == '1') {
                 $scope.shipping =result.data.records[0];
+                $scope.shipping_type_id = $scope.shipping.shipping_type_id;
                 $scope.shipping.shipping_by = $filter('dateWithFormat')($scope.shipping.shipping_by);
                 $scope.shipping.date_shipped = $filter('dateWithFormat')($scope.shipping.date_shipped);
                 $scope.shipping.fully_shipped = $filter('dateWithFormat')($scope.shipping.fully_shipped);
@@ -141,33 +142,33 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
                 $scope.shipping_boxes =result.data.shippingBoxes;
                 $scope.boxing_items = [];
             }
-            AJloader.hide();
+
+            $http.get('api/public/shipping/getShippingOrders').success(function(result) {
+        
+                if(result.data.success == '1') 
+                {
+                    $scope.allorders =result.data.records;
+                } 
+                else
+                {
+                    $scope.allorders=[];
+                }
+            });
+
+            $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+                            
+                if(result.data.success == '1') 
+                {
+                    $scope.allCompanyDetail =result.data.records;
+                } 
+                else
+                {
+                    $scope.allCompanyDetail=[];
+                }
+            });
+            $("#ajax_loader").hide();
         });
     }
-
-    $http.get('api/public/shipping/getShippingOrders').success(function(result) {
-        
-        if(result.data.success == '1') 
-        {
-            $scope.allorders =result.data.records;
-        } 
-        else
-        {
-            $scope.allorders=[];
-        }
-    });
-
-    $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
-                    
-        if(result.data.success == '1') 
-        {
-            $scope.allCompanyDetail =result.data.records;
-        } 
-        else
-        {
-            $scope.allCompanyDetail=[];
-        }
-    });
 
     function get_box_items(id)
     {
@@ -194,7 +195,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
     function get_distribution_list()
     {
-        AJloader.show();
+        $("#ajax_loader").show();
         var combine_array_id = {};
         combine_array_id.client_id = $stateParams.client_id;
         combine_array_id.order_id = $stateParams.order_id;
@@ -208,7 +209,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
                 $scope.distributed_items =result.data.distributed_items;
                 $scope.distributed_address =result.data.distributed_address;
             }
-            AJloader.hide();
+            $("#ajax_loader").hide();
         });
     }
     
@@ -222,6 +223,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
             $scope.closePopup('cancel')
             get_distribution_list();
+            get_shipping_details()
             $("#ajax_loader").hide();
         });
     }
@@ -231,9 +233,11 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         var address_data = {};
         address_data.order_id = $scope.order_id;
         address_data.address_id = address_id;
+        address_data.shipping_id = $scope.shipping_id;
 
         $http.post('api/public/order/removeFromDistribute',address_data).success(function(result, status, headers, config) {
-            get_distribution_list($scope.order_id,$scope.client_id);
+            get_distribution_list();
+            get_shipping_details();
             $("#ajax_loader").hide();
         });
     }
@@ -242,7 +246,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     {
         $("#ajax_loader").show();
         $scope.address_id = id;
-        get_distribution_list($scope.order_id,$scope.client_id);
+        get_distribution_list();
         $("#ajax_loader").hide();
     }
     $scope.select_box = function(id)
@@ -264,6 +268,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
            $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
                 get_distribution_list($scope.order_id,$scope.client_id);
+                get_shipping_details();
                 $("#ajax_loader").hide();
             });
         }
@@ -277,16 +282,22 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     }
     $scope.remove_item_from_distribute = function(item_id)
     {
-        $("#ajax_loader").show();
-        var item_data = {};
-        item_data.order_id = $scope.order_id;
-        item_data.address_id = $scope.address_id;
-        item_data.item_id = item_id;
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) 
+        {
+            $("#ajax_loader").show();
+            var item_data = {};
+            item_data.order_id = $scope.order_id;
+            item_data.address_id = $scope.address_id;
+            item_data.item_id = item_id;
+            item_data.shipping_id = $scope.shipping_id;
 
-        $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
-            get_distribution_list($scope.order_id,$scope.client_id);
-            $("#ajax_loader").hide();
-        });
+            $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
+                get_distribution_list($scope.order_id,$scope.client_id);
+                get_shipping_details();
+                $("#ajax_loader").hide();
+            });
+        }
     }
 
     $scope.openTab = function(tab_name){
@@ -295,6 +306,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
        } else if(tab_name == 'shipping_orders') {
         get_shipping_details();
+        get_distribution_list()
        }
     }
 
@@ -307,6 +319,7 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
 
         $http.post('api/public/order/updateDistributedQty',task).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
+            get_shipping_details()
             $("#ajax_loader").hide();
         });
     }
