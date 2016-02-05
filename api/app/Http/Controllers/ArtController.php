@@ -53,8 +53,11 @@ class ArtController extends Controller {
     		$art_orderline = $this->art->art_orderline($art_id,$company_id);
 			$artjobscreen_list = $this->art->artjobscreen_list($art_id,$company_id);
 			$graphic_size = $this->common->GetMicType('graphic_size');
+			$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id);
 
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size);
+
+
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
@@ -92,6 +95,35 @@ class ArtController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
+    }
+    // ARTJOB-  GROUP TAB DATA LISTING
+    public function artjobgroup_list($art_id, $company_id)
+    {
+    	if(!empty($company_id) && !empty($art_id)	&& $company_id != 'undefined')
+    	{
+    		$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id);
+    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $artjobgroup_list);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function update_orderScreen()
+    {
+    	$post = Input::all();
+    	if(!empty($post['data']) && !empty($post['cond']))
+    	{
+    		$artjobgroup_list = $this->art->update_orderScreen($post);
+    		$response = array('success' => 1, 'message' => UPDATE_RECORD);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+
     }
 
 }
