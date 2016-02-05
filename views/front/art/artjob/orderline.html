@@ -80,7 +80,7 @@
                                                         <div class="col-md-1 nopad-left smallPad"></div>
                                                         <div class="col-md-3 smallPad nopad-left" style="width:98px !important;">
                                                             <select class="form-control ng-pristine ng-valid ng-touched" tabindex="0" aria-invalid="false" style="">
-                                                               
+                                                               <option ng-repeat="groups in artjobgroup_list" value="{{groups.id}}">{{groups.group_name}}</option>
                                                             </select>
                                                         </div>
 
