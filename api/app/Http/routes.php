@@ -143,6 +143,11 @@ Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
 Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
 Route::post('client/checkCompName', 'ClientController@checkCompName');
+Route::get('client/getDocument/{id}','ClientController@getDocument');
+Route::get('client/getDocumentDetailbyId/{id}', 'ClientController@getDocumentDetailbyId');
+Route::post('client/updateDoc', 'ClientController@updateDoc');
+Route::post('client/saveDoc', 'ClientController@saveDoc');
+Route::get('client/deleteClientDoc/{id}', 'ClientController@deleteClientDoc');
 
 
 

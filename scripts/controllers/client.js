@@ -538,5 +538,131 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                     //getClientDetail(getclient_id );
                               });
                           };
+
+
+                          $scope.openTab = function(tab_name){
+                           if(tab_name == 'document'){
+                            get_document_list(getclient_id);
+
+                           } 
+                        }
+
+
+
+                         function get_document_list(client_id)
+                            {
+                                $("#ajax_loader").show();
+                                $http.get('api/public/client/getDocument/'+client_id).success(function(result, status, headers, config) 
+                                {
+                                    if(result.data.success == '1') 
+                                    {
+                                        $scope.alldocumentnotes =result.data.records;
+                                    } 
+                                    else
+                                    {
+                                        $scope.alldocumentnotes=[];
+                                    }
+                                    $("#ajax_loader").hide();
+                                });
+                            }
+
+                           
+                            $scope.editDocumentPopup = function (id) {
+        
+                              getDocumentDetailbyId(id);
+                               
+
+                              $scope.edit='edit';
+                              var modalInstanceEdit = $modal.open({
+                                  templateUrl: 'views/front/client/document.html',
+                                  scope : $scope,
+                              });
+
+                              modalInstanceEdit.result.then(function (selectedItem) {
+                                  $scope.selected = selectedItem;
+                              }, function () {
+                                  //$log.info('Modal dismissed at: ' + new Date());
+                              });
+
+                              $scope.closePopup = function (cancel)
+                              {
+                                  modalInstanceEdit.dismiss('cancel');
+                              };
+
+                                $scope.updateDoc=function(updateDoc)
+                                  {
+                                      var updateDocData = {};
+                                      updateDocData.data = updateDoc;
+                                      $http.post('api/public/client/updateDoc',updateDocData).success(function(Listdata) {
+                                          get_document_list(getclient_id);
+                                      });
+                                      modalInstanceEdit.dismiss('cancel');
+                                  };
+                            };
+
+
+                            $scope.addDocumentPopup = function () {
+
+                                      $scope.edit='add';
+                                      var modalInstance = $modal.open({
+                                                              templateUrl: 'views/front/client/document.html',
+                                                              scope : $scope,
+                                                          });
+
+                                      modalInstance.result.then(function (selectedItem) {
+                                          $scope.selected = selectedItem;
+                                      }, function () {
+                                          //$log.info('Modal dismissed at: ' + new Date());
+                                      });
+
+                                      $scope.closePopup = function (cancel)
+                                      {
+                                          modalInstance.dismiss('cancel');
+                                      };
+                                      
+                                      $scope.saveDoc=function(saveDocDetails)
+                                      {
+                                          var doc_data = {};
+                                          doc_data.data = saveDocDetails;
+                                          doc_data.data.client_id = getclient_id;
+                                         
+
+                                          $http.post('api/public/client/saveDoc',doc_data).success(function(Listdata) {
+                                             get_document_list(getclient_id);
+                                          });
+                                          modalInstance.dismiss('cancel');
+                                      };
+                                  };
+
+
+                              function getDocumentDetailbyId(id)
+                                {
+                                    $http.get('api/public/client/getDocumentDetailbyId/'+id).success(function(result) {
+
+                                        if(result.data.success == '1') 
+                                        {
+                                            $scope.thisorderNote =result.data.records;
+                                           
+                                        }
+                                        else
+                                        {
+                                            $scope.thisorderNote=[];
+                                        }
+                                    });
+                                }
+
+
+                                $scope.removeDoc = function(index,id) {
+        
+                                      $http.get('api/public/client/deleteClientDoc/'+id).success(function(Listdata) {
+                                          //getNotesDetail(order_id);
+                                      });
+                                      $scope.alldocumentnotes.splice(index,1);
+                                  }
+                              
+                              
+
+
+
                          
 }]);

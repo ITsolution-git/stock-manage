@@ -276,4 +276,89 @@ class Client extends Model {
       $result = $result->get();
       return count($result);
   }
+
+
+/**
+* Document          
+* @access public getDocument
+* @param  int $clientId
+* @return array $result
+*/ 
+
+     public function getDocument($id)
+   {
+       
+        $whereConditions = ['client_id' => $id,'status' => '1','is_delete' => '1'];
+        $listArray = ['id','description','document_photo','status','is_delete'];
+
+        $clientDocumentData = DB::table('client_document')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+        return $clientDocumentData;  
+
+   }
+
+   /**
+* Document Note Details           
+* @access public getDocumentDetailbyId
+* @param  int $documentId
+* @return array $result
+*/
+
+
+   public function getDocumentDetailbyId($id)
+   {
+        $result = DB::table('client_document')->where('id','=',$id)->get();
+        return $result;
+   }
+
+   /**
+* Update Order Note           
+* @access public updateOrderNotes
+* @param  array $post
+* @return array $result
+*/
+
+
+    public function updateDoc($post)
+   {
+            $result = DB::table('client_document')
+                        ->where('id','=',$post['id'])
+                        ->update(array('description'=>$post['description']));
+        return $result;
+   }
+
+
+   /**
+* Insert Document       
+* @access public saveDoc
+* @param  array $post
+* @return array $result
+*/
+
+
+public function saveDoc($post)
+   {
+        $result = DB::table('client_document')->insert($post);
+        return $result;
+   }
+
+
+   /**
+* Delete Doc          
+* @access public deleteClientDoc
+* @param  array $post
+* @return array $result
+*/
+    public function  deleteClientDoc($id)
+   {
+        $result = DB::table('client_document')
+                        ->where('id','=',$id)
+                        ->update(array('is_delete'=>'0'));
+        return $result;
+   }
+
+
+
 }
