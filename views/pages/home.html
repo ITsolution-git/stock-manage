@@ -1,4 +1,15 @@
- <!--h3 class="no-margin">Welcome Home page, {{name}}</h3--> 
+<style type="text/css">
+#table_list table > thead > tr > th
+{
+	padding: 0px !important;
+	z-index: 999;
+}
+#table_list table > tbody > tr > td
+{
+	border-top: 1px solid #e7e8ea !important;
+    padding: 12px 0px !important;
+}
+</style> <!--h3 class="no-margin">Welcome Home page, {{name}}</h3--> 
 <div class="panel panel-default stokkupForm client_home_page">
 	<div class="panel-body form-group">
 		<ul class="nav nav-tabs input-group col-md-12 selectNav-Tabs">
@@ -608,8 +619,22 @@
 			<!-- <div role="tabpanel" class="tab-pane animated active fadeIn clientTab" id="homeOrders"> -->
 				<div class="col-md-12 nopad-form m-b">
 					<!-- Top Panel -->
-					<div class="form-group col-md-8 nopad-form">
-						<div class="col-md-3 nopad-left">
+					<div class="form-group col-md-12 nopad-form">
+						<div class="col-sm-3">
+				            <form>
+				                <input type="text"
+				                       placeholder="search"
+				                       class="form-control"
+				                       data-ng-model="searchKeywords"
+				                       data-ng-keyup="search()">
+				            </form>
+				        </div>
+				        <div class="col-sm-2 filter-result-info">
+				            <span>
+				                Showing {{filteredOrders.length}} of {{orders.length}} orders
+				            </span>              
+				        </div>
+						<div class="col-md-2 nopad-left">
 							<select  multiple  class="form-control" name="f_approval" ng-model="f_approval"  ng-change="new_data_fun()">
 								 <option  value='0'>Select Approval</option>
                                  <option ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
@@ -637,60 +662,76 @@
 					<!-- Order Paid in Full Fields -->
 					
 					<div id="table_list">
-						<table class="table m-b-none" ui-jp="footable" data-filter="#filter" data-page-size="10">
+						<table class="table m-b-none">
 							<thead>
 								<tr>
+									<th class="th">Client
+				                        <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_company')" data-ng-class="{active: row == 'client_company'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_company')" data-ng-class="{active: row == '-client_company'}"></span>
+				                    </th>
 
-									<th data-toggle="true">
-									Client
-									</th>
+									<th class="th">Job Name
+				                        <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+				                    </th>
 
+									<th class="th">Approval
+				                        <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('approval')" data-ng-class="{active: row == 'approval'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-approval')" data-ng-class="{active: row == '-approval'}"></span>
+				                    </th>
 
-									<th data-toggle="true">
-									Job Name
-									</th>
-
-									<th data-toggle="true">
-									Approval
-									</th>
-
-									<th data-toggle="true">
-									Approve by
-									</th>
+									<th class="th">Approved By
+				                        <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('approved_date')" data-ng-class="{active: row == 'approved_date'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-approved_date')" data-ng-class="{active: row == '-approved_date'}"></span>
+				                    </th>
 
 									<th data-toggle="true">
 									Garment Received by
+										<span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('needs_garment')" data-ng-class="{active: row == 'needs_garment'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-needs_garment')" data-ng-class="{active: row == '-needs_garment'}"></span>
 									</th>
 
 
 									<th data-toggle="true">
 									Art Dept. Done by
+										<span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('in_art_done')" data-ng-class="{active: row == 'in_art_done'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-in_art_done')" data-ng-class="{active: row == '-in_art_done'}"></span>
 									</th>
 
 									<th data-toggle="true">
 									Third Party Done by
+										<span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('third_party_from')" data-ng-class="{active: row == 'third_party_from'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-third_party_from')" data-ng-class="{active: row == '-third_party_from'}"></span>
 									</th>
 
 									<th data-toggle="true">
 									Production Done by
+										<span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('in_production')" data-ng-class="{active: row == 'in_production'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-in_production')" data-ng-class="{active: row == '-in_production'}"></span>
 									</th>
 
 									<th data-toggle="true">
 									Finishing Done by
+										<span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('in_finish_done')" data-ng-class="{active: row == 'in_finish_done'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-in_finish_done')" data-ng-class="{active: row == '-in_finish_done'}"></span>
 									</th>
 
 									<th data-toggle="true">
 									Shipped by
+										<span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('shipping_by')" data-ng-class="{active: row == 'shipping_by'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-shipping_by')" data-ng-class="{active: row == '-shipping_by'}"></span>
 									</th>
 
 									<th data-toggle="true">
 									In Hand by
+										<span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('in_hands_by')" data-ng-class="{active: row == 'in_hands_by'}"></span>
+				                        <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-in_hands_by')" data-ng-class="{active: row == '-in_hands_by'}"></span>
 									</th>
 
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="value in listOrder.records" ng-if="listOrder.success>0" id="order_{{value.id}}">
+								<tr ng-repeat="value in currentPageOrders" id="order_{{value.id}}">
 
                                     <td>{{value.client_company}}</td>
 									<td>{{value.job_name}}</td>
@@ -706,7 +747,7 @@
 									<td>{{value.in_hands_by | dateWithFormat}}</td>
 									
 								</tr>
-								<tr ng-if="listOrder.success==0"><td>{{listOrder.message}}</td></tr>
+								<tr ng-if="currentPageOrders.success==0"><td>{{orders.message}}</td></tr>
 							</tbody>
 							<tfoot class="hide-if-no-paging">
 								<tr>
@@ -716,6 +757,21 @@
 								</tr>
 							</tfoot>
 						</table>
+						<footer class="table-footer">
+				            <div class="row">
+				                <div class="col-md-6 text-right pagination-container">
+				                    <pagination class="pagination-sm"
+				                                ng-model="currentPage"
+				                                total-items="filteredOrders.length"
+				                                max-size="4"
+				                                ng-change="select(currentPage)"
+				                                items-per-page="numPerPage"
+				                                rotate="false"
+				                                boundary-links="true">
+				                    </pagination>
+				                </div>
+				            </div>
+				        </footer>
 					</div>
 					
 					<!-- End Fields -->
