@@ -8,8 +8,8 @@
  * Controller of the app
  */
 angular.module('app')  
-  .controller('AppCtrl', ['$http','$scope','$state', '$translate', '$localStorage', '$window', '$document', '$location', '$rootScope', '$timeout', '$mdSidenav', '$mdColorPalette', '$anchorScroll','AuthService','sessionService','notifyService','$q',
-    function ( $http, $scope, $state,  $translate,   $localStorage,   $window,   $document,   $location,   $rootScope,   $timeout,   $mdSidenav,   $mdColorPalette,   $anchorScroll,AuthService,sessionService,notifyService,$q ) {
+  .controller('AppCtrl', ['$http','$scope','$state', '$translate', '$localStorage', '$window', '$document', '$location', '$rootScope', '$timeout', '$mdSidenav', '$mdColorPalette', '$anchorScroll','sessionService','AuthService','notifyService','$q',
+    function ( $http, $scope, $state,  $translate,   $localStorage,   $window,   $document,   $location,   $rootScope,   $timeout,   $mdSidenav,   $mdColorPalette,   $anchorScroll,sessionService,AuthService,notifyService,$q ) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i) || !!navigator.userAgent.match(/Trident.*rv:11\./);
       isIE && angular.element($window.document.body).addClass('ie');

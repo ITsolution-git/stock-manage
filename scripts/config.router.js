@@ -9,8 +9,8 @@
  */
 angular.module('app')
   .run(
-    [           '$rootScope', '$state', '$stateParams','$location','$http','AuthService',
-      function ( $rootScope,   $state,  $stateParams ,$location,$http,AuthService) {
+    [           '$rootScope', '$state', '$stateParams','$location','$http','AuthService','sessionService',
+      function ( $rootScope,   $state,  $stateParams ,$location,$http,AuthService,sessionService) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
           AuthService.CompanyService();
@@ -64,6 +64,9 @@ angular.module('app')
               resolve: { 
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        },
             })
@@ -286,6 +289,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -297,6 +303,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -310,6 +319,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -321,6 +333,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -334,6 +349,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -345,6 +363,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -358,6 +379,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
           })
 
@@ -370,6 +394,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -381,6 +408,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -395,6 +425,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -406,6 +439,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -419,6 +455,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -431,6 +470,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
               
             })
@@ -442,6 +484,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
            .state('account.edit', {
@@ -452,6 +497,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
            .state('account.delete', {
@@ -460,6 +508,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -473,6 +524,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -485,6 +539,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -496,6 +553,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -551,6 +611,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -756,6 +819,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
         /*==========================================
@@ -785,6 +851,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
 
@@ -797,6 +866,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
               .state('company.edit', {
@@ -807,6 +879,9 @@ angular.module('app')
               resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -839,6 +914,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
     .state('art.screenlist', {
@@ -850,6 +928,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
     .state('art.job', {
@@ -860,6 +941,9 @@ angular.module('app')
                 resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -890,6 +974,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkCompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
             .state('shipping.edit', {
@@ -900,6 +987,9 @@ angular.module('app')
                 resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkCompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
@@ -929,6 +1019,9 @@ angular.module('app')
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
                             },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
                        }
             })
             .state('api.sns', {
@@ -939,6 +1032,9 @@ angular.module('app')
                 resolve: {
                             checklogin: function (AuthService) {
                                return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
                             },
                        }
             })
