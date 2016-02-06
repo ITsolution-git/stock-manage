@@ -13,12 +13,12 @@
 				<!-- Form Fields Left Side -->
 				<div class="col-sm-8">
 					<div class="form-group col-sm-12 m-b">
-						<label>Product Description<em class="text-muted"></em></label>
+						<label>Product Description<span class="aestric_required"> *</span><em class="text-muted"></em></label>
 						<textarea rows="5" class="form-control" ng-model="product.description" required></textarea>
 					</div>
 
 					<div class="form-group col-sm-6 m-b">
-						<label>Vendor<em class="text-muted"></em></label>
+						<label>Vendor<em class="text-muted"><span class="aestric_required"> *</span></em></label>
 						<select class="form-control" ng-model="product.vendor_id" required>
 							<option ng-selected="product.vendor_id==data.id" ng-repeat="data in vendors" value={{data.id}}>{{data.name_company}}</option>
 						</select>
@@ -40,7 +40,7 @@
 					</div>
 
 					<div class="form-group col-sm-12 m-b">
-						<label>Status</label>
+						<label>Status<span class="aestric_required"> *</span></label>
 						<select class="form-control" ng-model="product.status" required>
 							<option value="1">Yes</option>
 							<option value="0">No</option>                    

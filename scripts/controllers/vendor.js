@@ -1,5 +1,5 @@
 
-app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
    AuthService.AccessService('FM');
                          $("#ajax_loader").show();
                          $http.get('api/public/admin/vendor').success(function(result, status, headers, config) {
@@ -7,6 +7,54 @@ app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateP
                                   $scope.vendors = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
                                   $("#ajax_loader").hide();
+
+                                  var init;
+
+                                  $scope.searchKeywords = '';
+                                  $scope.filteredVendors = [];
+                                  $scope.row = '';
+                                  $scope.select = function (page) {
+                                      var end, start;
+                                      start = (page - 1) * $scope.numPerPage;
+                                      end = start + $scope.numPerPage;
+                                      return $scope.currentPageVendors = $scope.filteredVendors.slice(start, end);
+                                  };
+                                  $scope.onFilterChange = function () {
+                                      $scope.select(1);
+                                      $scope.currentPage = 1;
+                                      return $scope.row = '';
+                                  };
+                                  $scope.onNumPerPageChange = function () {
+                                      $scope.select(1);
+                                      return $scope.currentPage = 1;
+                                  };
+                                  $scope.onOrderChange = function () {
+                                      $scope.select(1);
+                                      return $scope.currentPage = 1;
+                                  };
+                                  $scope.search = function () {
+                                      $scope.filteredVendors = $filter('filter')($scope.vendors, $scope.searchKeywords);
+                                      return $scope.onFilterChange();
+                                  };
+                                  $scope.order = function (rowName) {
+                                      if ($scope.row === rowName) {
+                                          return;
+                                      }
+                                      $scope.row = rowName;
+                                      $scope.filteredVendors = $filter('orderBy')($scope.vendors, rowName);
+                                      return $scope.onOrderChange();
+                                  };
+                                  $scope.numPerPageOpt = [3, 5, 10, 20];
+                                  $scope.numPerPage = $scope.numPerPageOpt[2];
+                                  $scope.currentPage = 1;
+                                  $scope.currentPageVendors = [];
+
+                                  init = function () {
+                                      $scope.search();
+
+                                      return $scope.select($scope.currentPage);
+                                  };
+                                  return init();
                          
                           });
 

@@ -1,58 +1,89 @@
+app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+    AuthService.AccessService('FM');
+    $("#ajax_loader").show();
+    $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
+        $scope.staffs = result.data.records;
 
+        $scope.pagination = AllConstant.pagination;
+        $("#ajax_loader").hide();
 
+        var init;
 
-app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
-  AuthService.AccessService('FM');
-  $("#ajax_loader").show();
-  $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
+        $scope.searchKeywords = '';
+        $scope.filteredStaffs = [];
+        $scope.row = '';
+        $scope.select = function (page) {
+          var end, start;
+          start = (page - 1) * $scope.numPerPage;
+          end = start + $scope.numPerPage;
+          return $scope.currentPageStaffs = $scope.filteredStaffs.slice(start, end);
+        };
+        $scope.onFilterChange = function () {
+          $scope.select(1);
+          $scope.currentPage = 1;
+          return $scope.row = '';
+        };
+        $scope.onNumPerPageChange = function () {
+          $scope.select(1);
+          return $scope.currentPage = 1;
+        };
+        $scope.onOrderChange = function () {
+          $scope.select(1);
+          return $scope.currentPage = 1;
+        };
+        $scope.search = function () {
+          $scope.filteredStaffs = $filter('filter')($scope.staffs, $scope.searchKeywords);
+          return $scope.onFilterChange();
+        };
+        $scope.order = function (rowName) {
+          if ($scope.row === rowName) {
+              return;
+          }
+          $scope.row = rowName;
+          $scope.filteredStaffs = $filter('orderBy')($scope.staffs, rowName);
+          return $scope.onOrderChange();
+        };
+        $scope.numPerPageOpt = [10, 20, 50, 100];
+        $scope.numPerPage = 10;
+        $scope.currentPage = 1;
+        $scope.currentPageStaffs = [];
 
-                                  $scope.staffs = result.data.records;
-                                  $scope.pagination = AllConstant.pagination;
-                                  $("#ajax_loader").hide();
-                          });
+        init = function () {
+          $scope.search();
 
-                         $scope.delete = function (staff_id,user_id) {
-                          
-                           var combine_array_delete = {};
-                          combine_array_delete.staff_id = staff_id;
-                          combine_array_delete.user_id = user_id;
+          return $scope.select($scope.currentPage);
+        };
+        return init();
+    });
 
+    $scope.delete = function (staff_id,user_id) {
+        var combine_array_delete = {};
+        combine_array_delete.staff_id = staff_id;
+        combine_array_delete.user_id = user_id;
                          
-                            var permission = confirm(AllConstant.deleteMessage);
-                            if (permission == true) {
-                            $http.post('api/public/admin/staffDelete',combine_array_delete).success(function(result, status, headers, config) {
-                                          
-                                          if(result.data.success=='1')
-                                          {
-                                           
-                                            $state.go('staff.list');
-                                            $("#comp_"+staff_id).remove();
-                                            return false;
-                                          }  
-                                     });
-                                  }
-                              } 
-
+        var permission = confirm(AllConstant.deleteMessage);
+        if (permission == true) {
+        $http.post('api/public/admin/staffDelete',combine_array_delete).success(function(result, status, headers, config) {
+                      
+                      if(result.data.success=='1')
+                      {
+                       
+                        $state.go('staff.list');
+                        $("#comp_"+staff_id).remove();
+                        return false;
+                      }  
+                 });
+              }
+    }
 }]);
 
 app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
    
-     AuthService.AccessService('FM');
+    AuthService.AccessService('FM');
 
-$http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
-
-                                  $scope.timeOffTypes = result.data.records;
-                         
-                          });
-
-
-
-    /*$http.get('api/public/common/type/staff').success(function(result, status, headers, config) {
-
-                                  $scope.types = result.data.records;
-                         
-                          });*/
-
+    $http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
+        $scope.timeOffTypes = result.data.records;
+    });
 
     var miscData = {};
       miscData.table ='misc_type'

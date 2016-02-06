@@ -1,7 +1,7 @@
 
 
 
-app.controller('productListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+app.controller('productListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
   AuthService.AccessService('FM');
   $("#ajax_loader").show();
   $http.get('api/public/admin/product').success(function(result, status, headers, config) {
@@ -9,6 +9,54 @@ app.controller('productListCtrl', ['$scope','$http','$location','$state','$state
                                   $scope.products = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
                                   $("#ajax_loader").hide();
+
+                                  var init;
+
+                                  $scope.searchKeywords = '';
+                                  $scope.filteredProducts = [];
+                                  $scope.row = '';
+                                  $scope.select = function (page) {
+                                      var end, start;
+                                      start = (page - 1) * $scope.numPerPage;
+                                      end = start + $scope.numPerPage;
+                                      return $scope.currentPageProducts = $scope.filteredProducts.slice(start, end);
+                                  };
+                                  $scope.onFilterChange = function () {
+                                      $scope.select(1);
+                                      $scope.currentPage = 1;
+                                      return $scope.row = '';
+                                  };
+                                  $scope.onNumPerPageChange = function () {
+                                      $scope.select(1);
+                                      return $scope.currentPage = 1;
+                                  };
+                                  $scope.onOrderChange = function () {
+                                      $scope.select(1);
+                                      return $scope.currentPage = 1;
+                                  };
+                                  $scope.search = function () {
+                                      $scope.filteredProducts = $filter('filter')($scope.products, $scope.searchKeywords);
+                                      return $scope.onFilterChange();
+                                  };
+                                  $scope.order = function (rowName) {
+                                      if ($scope.row === rowName) {
+                                          return;
+                                      }
+                                      $scope.row = rowName;
+                                      $scope.filteredProducts = $filter('orderBy')($scope.products, rowName);
+                                      return $scope.onOrderChange();
+                                  };
+                                  $scope.numPerPageOpt = [10, 20, 50, 100];
+                                  $scope.numPerPage = 10;
+                                  $scope.currentPage = 1;
+                                  $scope.currentPageProducts = [];
+
+                                  init = function () {
+                                      $scope.search();
+
+                                      return $scope.select($scope.currentPage);
+                                  };
+                                  return init();
                          
                           });
 

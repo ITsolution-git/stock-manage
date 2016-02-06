@@ -222,6 +222,14 @@ class ClientController extends Controller {
 		if(!empty($id))
 		{
 			$result = $this->client->GetclientDetail($id);
+			
+           
+			$result['main']['color_url_photo'] = UPLOAD_PATH.'client/'.$result['main']['color_logo'];
+			$result['main']['bw_url_photo'] = UPLOAD_PATH.'client/'.$result['main']['b_w_logo'];
+			$result['main']['shipping_url_photo'] = UPLOAD_PATH.'client/'.$result['main']['shipping_logo'];
+			$result['tax']['tax_document_url'] = UPLOAD_PATH.'tax/'.$result['tax']['tax_document'];
+
+            
 			if(count($result)>0)
 			{
 				$StaffList = $this->common->getStaffList();
@@ -268,6 +276,59 @@ class ClientController extends Controller {
 	public function SaveCleintDetails()
 	{
 		$post = Input::all();
+
+
+
+		if(isset($post['data']['color_logo']['base64'])){
+
+            	$split = explode( '/', $post['data']['color_logo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url1 = "color-logo-".time().".".$type;
+				$path = base_path() . "/public/uploads/client/" . $png_url1;
+				$img = $post['data']['color_logo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data']['color_logo'] = $png_url1;
+
+	    }
+
+	    if(isset($post['data']['b_w_logo']['base64'])){
+
+            	$split = explode( '/', $post['data']['b_w_logo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url2 = "b-w-".time().".".$type;
+				$path = base_path() . "/public/uploads/client/" . $png_url2;
+				$img = $post['data']['b_w_logo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data']['b_w_logo'] = $png_url2;
+	    }
+
+	    if(isset($post['data']['shipping_logo']['base64'])){
+
+            	$split = explode( '/', $post['data']['shipping_logo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url3 = "shipping-".time().".".$type;
+				$path = base_path() . "/public/uploads/client/" . $png_url3;
+				$img = $post['data']['shipping_logo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data']['shipping_logo'] = $png_url3;
+	    }
+
+
 		$result = $this->client->SaveCleintDetails($post['data'],$post['id']);
 
     	$data = array("success"=>1,"message"=>UPDATE_RECORD);
@@ -280,6 +341,23 @@ class ClientController extends Controller {
 	public function SaveCleintTax()
 	{
 		$post = Input::all();
+
+		 if(isset($post['data']['tax_document']['base64'])){
+
+            	$split = explode( '/', $post['data']['tax_document']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url4 = "shipping-".time().".".$type;
+				$path = base_path() . "/public/uploads/tax/" . $png_url4;
+				$img = $post['data']['tax_document']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data']['tax_document'] = $png_url4;
+	    }
+
 		$result = $this->client->SaveCleintTax($post['data'],$post['id']);
 
     	$data = array("success"=>1,"message"=>UPDATE_RECORD);
@@ -410,4 +488,126 @@ class ClientController extends Controller {
     	$data = array("success"=>$success,"message"=>$message,'result'=>$result);
 		return response()->json(['data'=>$data]);
 	}
+
+
+	 /**
+   * Get Documents.
+   * @return json data
+   */
+    public function getDocument($id)
+    {
+
+        $result = $this->client->getDocument($id);
+        return $this->return_response($result);
+        
+    }
+
+     /**
+    * Get Document Details by ID
+    * @params document_id
+    * @return json data
+    */
+    public function getDocumentDetailbyId($id)
+    {
+        $result = $this->client->getDocumentDetailbyId($id);
+
+        $result[0]->document_photo_url = UPLOAD_PATH.'document/'.$result[0]->document_photo;
+        return $this->return_response($result);
+    }
+
+
+     /**
+    * Update document tab record
+    * @params document note array
+    * @return json data
+    */
+    public function updateDoc()
+    {
+        $post = Input::all();
+
+         if(isset($post['data'][0]['document_photo']['base64'])){
+
+            	$split = explode( '/', $post['data'][0]['document_photo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url_doc = "doc-logo-".time().".".$type;
+				$path = base_path() . "/public/uploads/document/" . $png_url_doc;
+				$img = $post['data'][0]['document_photo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data'][0]['document_photo'] = $png_url_doc;
+
+	    }
+
+
+        $result = $this->client->updateDoc($post['data'][0]);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+
+    /**
+   * Save Order notes.
+   * @return json data
+    */
+    public function saveDoc()
+    {
+
+        $post = Input::all();
+        $post['data']['created_date']=date('Y-m-d');
+
+
+        if(isset($post['data']['document_photo']['base64'])){
+
+            	$split = explode( '/', $post['data']['document_photo']['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url_doc = "doc-logo-".time().".".$type;
+				$path = base_path() . "/public/uploads/document/" . $png_url_doc;
+				$img = $post['data']['document_photo']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+				
+
+				$post['data']['document_photo'] = $png_url_doc;
+
+	    }
+
+ 
+        if(!empty($post['data']['client_id']))
+        {
+            $result = $this->client->saveDoc($post['data']);
+            $message = INSERT_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS.", id";
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
+
+     /**
+    * Delete Doc.
+    * @params id
+    * @return json data
+    */
+    public function deleteClientDoc($id)
+    {
+        $result = $this->client->deleteClientDoc($id);
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+
+
+
  } 

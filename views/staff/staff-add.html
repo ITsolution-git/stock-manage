@@ -10,46 +10,46 @@
 			  <div class="row">
 				  <div class="col-md-8 nopad-left">
 					  <div class="form-group col-md-6 m-b nopad-right">
-						<label>Name Last <em class="text-muted"></em></label>
+						<label>Last Name<span class="aestric_required"> *</span><em class="text-muted"></em></label>
 						<input type="text" class="form-control" ng-model="staff.last_name" required >
 					  </div>
 					  <div class="form-group col-md-3 m-b nopad-right">
-						<label>First <em class="text-muted"></em></label>
+						<label>First Name<span class="aestric_required"> *</span><em class="text-muted"></em></label>
 						<input type="text" class="form-control" ng-model="staff.first_name" required >
 					  </div>
 					  <div class="form-group col-md-3 m-b nopad-right">
-						<label>Middle<em class="text-muted"></em></label>
+						<label>Middle Name<span class="aestric_required"> *</span><em class="text-muted"></em></label>
 						<input type="text" class="form-control" ng-model="staff.middle_name" required >
 					  </div>
 					  <div class="form-group col-md-12 m-b nopad-right">
-						<label>Address<em class="text-muted"></em></label>
-						<input type="text" class="form-control col-md-6 m-b" ng-model="staff.prime_address1" required >
-						<input type="text" class="form-control col-md-6 m-b" ng-model="staff.prime_address2" required >
-						<input type="text" class="form-control col-md-6 m-b" ng-model="staff.prime_address_city" required>
-						<input type="text" class="form-control col-md-2 m-b" ng-model="staff.prime_address_state" required>
-						<input type="text" class="form-control col-md-4 m-b" ng-model="staff.prime_address_zip" required>
+						<label>Address<span class="aestric_required"> *</span><em class="text-muted"></em></label>
+						<input type="text" class="form-control col-md-6 m-b" ng-model="staff.prime_address1" required placeholder="Address">
+						<input type="text" class="form-control col-md-6 m-b" ng-model="staff.prime_address2" required placeholder="Street">
+						<input type="text" class="form-control col-md-6 m-b" ng-model="staff.prime_address_city" required placeholder="City">
+						<input type="text" class="form-control col-md-2 m-b" ng-model="staff.prime_address_state" required placeholder="State">
+						<input type="text" class="form-control col-md-4 m-b" ng-model="staff.prime_address_zip" required placeholder="zip Code">
 					  </div>
 					  <div class="form-group col-md-12 m-b nopad-right">
-						<label>Phone</label>
+						<label>Phone<span class="aestric_required"> *</span></label>
 						<input type="text" class="form-control" placeholder="XXXXXXXXXX" ng-model="staff.prime_phone_main" ng-pattern="/^[0-9]{10,10}$/" required name="phone" />
 						<span style="color:#f44336" ng-show="staffForm.phone.$error.pattern">This Field Should Contain 10 Numeric</span> 
 					  </div>
 					  <div class="form-group col-md-12 m-b nopad-right">
-						<label>Email</label>
+						<label>Email<span class="aestric_required"> *</span></label>
 						<input type="email" class="form-control" ng-model="users.email" required  ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required name="email">
             <span style="color:#f44336" ng-show="staffForm.email.$error.pattern">Please enter valid email address</span> 
 					  </div>
 					  <div class="form-group col-md-12 m-b nopad-right">
-						<label>Username <em class="text-muted">(allow 'a-z,A-Z,0-9', 4-20 length)</em></label>
+						<label>Username <span class="aestric_required"> *</span><em class="text-muted">(allow 'a-z,A-Z,0-9', 4-20 length)</em></label>
 						<input type="text" class="form-control" name="user_name" data-ng-model="users.user_name" ng-pattern="/^[a-zA-Z0-9]{4,20}$/" required />
 						<span style="color:#f44336" ng-show="staffForm.user_name.$error.pattern"> This Field Should Contain 4-20 Numeric/characters</span> 
 					  </div>
 					  <div class="form-group col-md-12 m-b nopad-right">
-						<label>Password</label>
+						<label>Password<span class="aestric_required"> *</span></label>
 						<input type="password" class="form-control" ng-model="users.password" required >
 					  </div>
 					  <div class="form-group col-md-12 m-b nopad-right">
-						<label>Status</label>
+						<label>Status<span class="aestric_required"> *</span></label>
 						<select class="form-control" ng-model="staff.status" required>
 						  <option value="1">Yes</option>
 						  <option value="0">No</option>
@@ -61,6 +61,7 @@
 					  <div class="form-group">
 						<input type="file" title="Upload Profile Picture"  data-ui-file-upload  onchange="angular.element(this).scope().setFiles(this)">
 						<img  ng-if="staff.photo" ng-src="{{staff.all_url_photo}}" alt="" /> 
+            <img ng-show="picFile[0] != null" ngf-src="picFile[0]" class="thumb">
 					  </div>
 				  </div>			  
 			  </div>
@@ -73,7 +74,7 @@
                 <div class="tab-content p b-a no-b-t bg-white m-b-md">
                   <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab1">
                     <div class="form-group">
-                      <label>Position <em class="text-muted"></em></label>
+                      <label>Position <span class="aestric_required">*</span><em class="text-muted"></em></label>
                       <select class="form-control" ng-model="users.role_id" required>
                         <option ng-repeat="data in staffRoles" value={{data.id}}>{{data.title}}</option>
                       </select>
@@ -118,7 +119,7 @@
                     <!-- / datepicker -->
                     
                     <div class="form-group">
-                      <label>Email Secondary <em class="text-muted"></em></label>
+                      <label>Email Secondary <span class="aestric_required">*</span><em class="text-muted"></em></label>
                       <input type="email" class="form-control" ng-model="staff.second_mail"  ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required name="second_mail">
                       <span style="color:#f44336" ng-show="staffForm.second_mail.$error.pattern">Please enter valid email address</span> 
                     </div>
@@ -246,7 +247,7 @@
         <footer class="panel-footer text-right">
           <button  type="submit" class="btn btn-info" ng-disabled="staffForm.$invalid">Submit</button>
           &nbsp;
-          <button ui-sref="staff.list" type="button"  class="btn btn-info">Cancel</button>
+          <button ui-sref="#/staff/list" type="button"  class="btn btn-info">Cancel</button>
           &nbsp; 
         </footer>
       </div>

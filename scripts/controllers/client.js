@@ -43,7 +43,7 @@ app.controller('clientAddCtrl', ['$scope','$rootScope','$http','$location','$sta
                           }
 
 }]);
-app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log) {
+app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','$filter', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,$filter) {
                           AuthService.AccessService('BC');
                          $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.CurrentController=$state.current.controller;
@@ -76,8 +76,56 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
                           $http.post('api/public/client/ListClient',company_list_data).success(function(Listdata) {
                                        if(Listdata.data.success=='1')
                                        {
-                                          $scope.ListClient = Listdata.data;
+                                          $scope.clients = Listdata.data.records;
                                           $("#ajax_loader").hide();
+
+                                          var init;
+
+                                          $scope.searchKeywords = '';
+                                          $scope.filteredClients = [];
+                                          $scope.row = '';
+                                          $scope.select = function (page) {
+                                            var end, start;
+                                            start = (page - 1) * $scope.numPerPage;
+                                            end = start + $scope.numPerPage;
+                                            return $scope.currentPageClients = $scope.filteredClients.slice(start, end);
+                                          };
+                                          $scope.onFilterChange = function () {
+                                            $scope.select(1);
+                                            $scope.currentPage = 1;
+                                            return $scope.row = '';
+                                          };
+                                          $scope.onNumPerPageChange = function () {
+                                            $scope.select(1);
+                                            return $scope.currentPage = 1;
+                                          };
+                                          $scope.onOrderChange = function () {
+                                            $scope.select(1);
+                                            return $scope.currentPage = 1;
+                                          };
+                                          $scope.search = function () {
+                                            $scope.filteredClients = $filter('filter')($scope.clients, $scope.searchKeywords);
+                                            return $scope.onFilterChange();
+                                          };
+                                          $scope.order = function (rowName) {
+                                            if ($scope.row === rowName) {
+                                                return;
+                                            }
+                                            $scope.row = rowName;
+                                            $scope.filteredClients = $filter('orderBy')($scope.clients, rowName);
+                                            return $scope.onOrderChange();
+                                          };
+                                          $scope.numPerPageOpt = [10, 20, 50, 100];
+                                          $scope.numPerPage = 10;
+                                          $scope.currentPage = 1;
+                                          $scope.currentPageClients = [];
+
+                                          init = function () {
+                                            $scope.search();
+
+                                            return $scope.select($scope.currentPage);
+                                          };
+                                          return init();
                                        }
                                   });
 
@@ -172,6 +220,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                 {
                                     if(result.data.success == '1') 
                                     {
+
                                         $scope.Response = result.data.records;
                                         $scope.mainaddress = $scope.Response.clientDetail.address;
                                         $scope.salesDetails =$scope.Response.clientDetail.sales;
@@ -182,7 +231,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                         
                                         $scope.StaffList =$scope.Response.StaffList;
                                         $scope.ArrCleintType =$scope.Response.ArrCleintType;
-                                        $scope.PriceGrid = $scope.Response.PriceGrid;
+                                      //  $scope.PriceGrid = $scope.Response.PriceGrid;
                                         $scope.allContacts = $scope.Response.allContacts;
                                         $scope.allclientnotes = $scope.Response.allclientnotes;
                                         $scope.Arrdisposition = $scope.Response.Arrdisposition;
@@ -190,6 +239,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
 
    
                                         $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.main.salesweb);
+
                                         $("#ajax_loader").hide();
                                     } 
                                     
@@ -523,7 +573,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               Tax_data.data = TaxDetails;
                               Tax_data.id = $stateParams.id;
                               $http.post('api/public/client/SaveCleintTax',Tax_data).success(function(Listdata) {
-                                    //getClientDetail(getclient_id );
+                                    getClientDetail(getclient_id );
                               });
                           };
                           $scope.SavePlimpDetails=function(PlimpDetails)
@@ -536,5 +586,132 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                     //getClientDetail(getclient_id );
                               });
                           };
+
+
+                          $scope.openTab = function(tab_name){
+                           if(tab_name == 'document'){
+                            get_document_list(getclient_id);
+
+                           } 
+                        }
+
+
+
+                         function get_document_list(client_id)
+                            {
+                                $("#ajax_loader").show();
+                                $http.get('api/public/client/getDocument/'+client_id).success(function(result, status, headers, config) 
+                                {
+                                    if(result.data.success == '1') 
+                                    {
+                                        $scope.alldocumentnotes =result.data.records;
+                                    } 
+                                    else
+                                    {
+                                        $scope.alldocumentnotes=[];
+                                    }
+                                    $("#ajax_loader").hide();
+                                });
+                            }
+
+                           $scope.thisorderNote=[];
+                            $scope.editDocumentPopup = function (id) {
+                    
+                              getDocumentDetailbyId(id);
+                               
+
+                              $scope.edit='edit';
+                              var modalInstanceEdit = $modal.open({
+                                  templateUrl: 'views/front/client/document.html',
+                                  scope : $scope,
+                              });
+
+                              modalInstanceEdit.result.then(function (selectedItem) {
+                                  $scope.selected = selectedItem;
+                              }, function () {
+                                  //$log.info('Modal dismissed at: ' + new Date());
+                              });
+
+                              $scope.closePopup = function (cancel)
+                              {
+                                  modalInstanceEdit.dismiss('cancel');
+                              };
+
+                                $scope.updateDoc=function(updateDoc)
+                                  {
+                                      var updateDocData = {};
+                                      updateDocData.data = updateDoc;
+                                      $http.post('api/public/client/updateDoc',updateDocData).success(function(Listdata) {
+                                          get_document_list(getclient_id);
+                                      });
+                                      modalInstanceEdit.dismiss('cancel');
+                                  };
+                            };
+
+
+                            $scope.addDocumentPopup = function () {
+
+                                      $scope.edit='add';
+                                      var modalInstance = $modal.open({
+                                                              templateUrl: 'views/front/client/document.html',
+                                                              scope : $scope,
+                                                          });
+
+                                      modalInstance.result.then(function (selectedItem) {
+                                          $scope.selected = selectedItem;
+                                      }, function () {
+                                          //$log.info('Modal dismissed at: ' + new Date());
+                                      });
+
+                                      $scope.closePopup = function (cancel)
+                                      {
+                                          modalInstance.dismiss('cancel');
+                                      };
+                                      
+                                      $scope.saveDoc=function(saveDocDetails)
+                                      {
+                                          var doc_data = {};
+                                          doc_data.data = saveDocDetails;
+                                          doc_data.data.client_id = getclient_id;
+                                         
+
+                                          $http.post('api/public/client/saveDoc',doc_data).success(function(Listdata) {
+                                             get_document_list(getclient_id);
+                                          });
+                                          modalInstance.dismiss('cancel');
+                                      };
+                                  };
+
+
+                              function getDocumentDetailbyId(id)
+                                {
+                                    $http.get('api/public/client/getDocumentDetailbyId/'+id).success(function(result) {
+
+                                        if(result.data.success == '1') 
+                                        {
+                                            $scope.thisorderNote =result.data.records;
+
+                                           
+                                        }
+                                        else
+                                        {
+                                            $scope.thisorderNote=[];
+                                        }
+                                    });
+                                }
+
+
+                                $scope.removeDoc = function(index,id) {
+        
+                                      $http.get('api/public/client/deleteClientDoc/'+id).success(function(Listdata) {
+                                          //getNotesDetail(order_id);
+                                      });
+                                      $scope.alldocumentnotes.splice(index,1);
+                                  }
+                              
+                              
+
+
+
                          
 }]);

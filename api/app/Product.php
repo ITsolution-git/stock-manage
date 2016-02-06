@@ -134,4 +134,29 @@ class Product extends Model {
         return $orderData;
     }
 
+
+/**
+* Product Image Upload          
+* @access public productImageUpdate
+* @param  int $insertedid
+* @param  array $newfilename
+* @return array $result
+*/ 
+
+     public function productImageUpdate($insertedid,$newfilename)
+    {
+        if(!empty($insertedid))
+        {
+            
+           $result =  DB::table('products')
+                        ->where('id', $insertedid)
+                        ->update(['photo' => $newfilename]);
+           return $result;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

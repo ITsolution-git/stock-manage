@@ -36,7 +36,7 @@ class SettingController extends Controller {
     public function price() {
  
         $result = $this->price->priceList();
-       
+     
        
         if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
