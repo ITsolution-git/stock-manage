@@ -245,3 +245,5 @@ Route::get('art/artjob_screen_list/{art_id}/{company_id}', 'ArtController@artjob
 Route::get('art/artjobgroup_list/{art_id}/{company_id}', 'ArtController@artjobgroup_list');
 Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
 Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');
+Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListing');
+

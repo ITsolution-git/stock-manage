@@ -201,5 +201,30 @@ class Art extends Model {
     	$result = DB::table('artjob_ordergroup')->where('id','=',$post['cond']['id'])->update(array("screen_sets" => $data));
 		return $result;
     }
+    public function ScreenListing($art_id=0,$company_id)
+	{
+		$Misc_data = $this->AllMsiData();
+		$query = DB::table('artjob_screensets as ass')
+				->select('or.id','or.job_name','ass.screen_count','ass.screen_set','ass.graphic_size','art.art_id')
+				->join('art as art','art.art_id','=','ass.art_id')
+				->join('orders as or','art.order_id','=','or.id')
+				->where('or.is_delete','=','1')
+				->where('or.company_id','=',$company_id);
+		if(!empty($art_id))
+		{
+			$query=$query->where('art.art_id','=',$art_id);
+		}
+				
+		$query=$query->get();
+
+		if(count($query)>0)
+		{
+			foreach ($query as $key => $value) 
+			{
+				$query[$key]->graphic_size = (!empty($value->graphic_size))?$Misc_data[$value->graphic_size]:'';
+			}
+		}
+		return $query;
+	}
 
 }

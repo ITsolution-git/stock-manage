@@ -2,6 +2,7 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$root
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
+                          $scope.art_id = $stateParams.art_id;
                           $("#ajax_loader").show();
                           $http.get('api/public/art/listing/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
@@ -11,6 +12,21 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$root
                               	}
                             });
 
+                          	$http.get('api/public/art/ScreenListing/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
+
+                          			$("#ajax_loader").hide();
+                          			$scope.screen_listing = RetArray.data;
+
+                              	if(RetArray.data.success=='2')
+                          		{
+                          			$("#ajax_loader").hide();
+                          			var data = {"status": "success", "message": RetArray.data.message}
+                                    notifyService.notify(data.status, data.message);
+                                    window.location.reload();
+                          		}
+                            });
+
+
 }]);
 app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService','$modal',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService,$modal) {
 						  $("#ajax_loader").hide();
@@ -18,14 +34,12 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.art_id = $stateParams.id;
-
                           Get_artDetail();
                           function Get_artDetail()
                           {
                           	$("#ajax_loader").show();
                           	$http.get('api/public/art/Art_detail/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
-	                          	if(RetArray.data.success=='1')
-                          		{
+
                           			$("#ajax_loader").hide();
                           			$scope.art_position = RetArray.data.records.art_position;
                           			$scope.art_orderline = RetArray.data.records.art_orderline;
@@ -33,7 +47,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           			$scope.graphic_size = RetArray.data.records.graphic_size;
                           			$scope.artjobgroup_list = RetArray.data.records.artjobgroup_list;
                           			//console.log($scope.art_orderline.line_array);
-                              	}
+
                               	if(RetArray.data.success=='2')
                           		{
                           			$("#ajax_loader").hide();
@@ -131,6 +145,8 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                         notifyService.notify(data.status, data.message); 
                                 });
 						}
+
+						
 
                        
 

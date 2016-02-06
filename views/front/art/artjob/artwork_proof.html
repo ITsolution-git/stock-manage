@@ -3,29 +3,29 @@
               <div class="form-group col-sm-12 m-b nopad-left">
                 <div class="col-sm-12 m-b nopad-left">
                   <label>Client <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="workproof_array[0].client_company"  >
+                  <input type="text" disabled="disabled" class="form-control" ng-model="workproof_array[0].client_company"  >
                 </div>
                 <div class="col-md-6 m-b nopad-left">
                   <label>Size Group <em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="workproof_array[0].size_group_id"  >
+                  <input type="text" disabled="disabled"  class="form-control" ng-model="workproof_array[0].size_group_id"  >
                 </div>
                 <div class=" col-md-6 m-b nopad-left">
                   <label>Order<em class="text-muted"></em></label>
-                  <input type="text" class="form-control" ng-model="workproof_array[0].job_name" >
+                  <input type="text" disabled="disabled"  class="form-control" ng-model="workproof_array[0].job_name" >
                 </div>
               </div>
               <div class="form-group col-sm-12 m-b nopad-left">
 	                <div class="col-md-6 m-b nopad-left">
 	                  <label>Product <em class="text-muted"></em></label>
-	                  <input type="text" class="form-control" ng-model="workproof_array[0].product_name"  >
+	                  <input type="text" disabled="disabled"  class="form-control" ng-model="workproof_array[0].product_name"  >
 	                </div>
 	                <div class="col-md-6 m-b nopad-left">
 	                  <label>Garment Color<em class="text-muted"></em></label>
-	                  <input type="text" class="form-control" ng-model="workproof_array[0].product_color"  >
+	                  <input type="text" disabled="disabled"  class="form-control" ng-model="workproof_array[0].product_color"  >
 	                </div>
 	                <div class=" col-md-6 m-b nopad-left">
 	                  <label>Position <em class="text-muted"></em></label>
-	                  <input type="text" class="form-control" ng-model="workproof_array[0].position_id" >
+	                  <input type="text" disabled="disabled"  class="form-control" ng-model="workproof_array[0].position_id" >
 	                </div>
 	                <div class="col-md-6 m-b nopad-left">
 	                  <label>Screen Sets <em class="text-muted"></em></label>
@@ -72,7 +72,7 @@
               </div>
 
               <div class="input-group col-sm-12 m-b form-buttons">
-                <button  type="submit" class="btn btn-info" ng-click="SaveArtWorkProof(main)" ng-disabled="staffForm.$invalid">Submit</button>
+                <button  type="submit" class="btn btn-info" ng-click="SaveArtWorkProof(main)" ng-disabled="staffForm.$invalid">Save</button>
                 &nbsp;
                 <button ng-click="ClosePopup();" type="button" class="btn btn-info">Cancel</button>
                 &nbsp; 

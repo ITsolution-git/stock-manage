@@ -125,5 +125,25 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
 
     }
+    public function ScreenListing($art_id,$company_id)
+    {
+    	if(!empty($company_id) && $company_id != 'undefined')
+    	{
+    		$scren_listing = $this->art->ScreenListing($art_id,$company_id);
+    		if(count($scren_listing)>0)
+    		{
+    			$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $scren_listing);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+    		}
+    	}
+    	else 
+        {
+            $response = array('success' => 2, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
 
 }
