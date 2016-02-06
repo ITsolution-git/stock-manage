@@ -16,20 +16,69 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
           order_list_data.cond = angular.copy(condition_obj);
 
 
-       if($event) {
+           if($event) {
+                
+              $scope.name_filed = $event.target.name;
+              var obj = {};
+              obj[$scope.name_filed] =  $event.target.value;
+              order_list_data.data = angular.copy(obj);
+              
+              } 
+
+            $http.post('api/public/order/listOrder',order_list_data).success(function(Listdata) {
             
-          $scope.name_filed = $event.target.name;
-          var obj = {};
-          obj[$scope.name_filed] =  $event.target.value;
-          order_list_data.data = angular.copy(obj);
-          
-          } 
+                $scope.orders = Listdata.data.records;
+                $("#ajax_loader").hide();
 
-        $http.post('api/public/order/listOrder',order_list_data).success(function(Listdata) {
-            $scope.listOrder = Listdata.data;
-            $("#ajax_loader").hide();
+                var init;
 
-        });
+                $scope.searchKeywords = '';
+                $scope.filteredOrders = [];
+                $scope.row = '';
+                $scope.select = function (page) {
+                var end, start;
+                start = (page - 1) * $scope.numPerPage;
+                end = start + $scope.numPerPage;
+                return $scope.currentPageOrders = $scope.filteredOrders.slice(start, end);
+                };
+                $scope.onFilterChange = function () {
+                $scope.select(1);
+                $scope.currentPage = 1;
+                return $scope.row = '';
+                };
+                $scope.onNumPerPageChange = function () {
+                $scope.select(1);
+                return $scope.currentPage = 1;
+                };
+                $scope.onOrderChange = function () {
+                $scope.select(1);
+                return $scope.currentPage = 1;
+                };
+                $scope.search = function () {
+                $scope.filteredOrders = $filter('filter')($scope.orders, $scope.searchKeywords);
+                return $scope.onFilterChange();
+                };
+                $scope.order = function (rowName) {
+                if ($scope.row === rowName) {
+                    return;
+                }
+                $scope.row = rowName;
+                $scope.filteredOrders = $filter('orderBy')($scope.orders, rowName);
+                return $scope.onOrderChange();
+                };
+                $scope.numPerPageOpt = [10, 20, 50, 100];
+                $scope.numPerPage = 10;
+                $scope.currentPage = 1;
+                $scope.currentPageOrders = [];
+
+                init = function () {
+                $scope.search();
+
+                return $scope.select($scope.currentPage);
+                };
+              return init();
+
+          });
 
        } 
 
