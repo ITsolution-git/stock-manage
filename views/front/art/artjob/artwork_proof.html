@@ -30,8 +30,8 @@
 	                <div class="col-md-6 m-b nopad-left">
 	                  <label>Screen Sets <em class="text-muted"></em></label>
 	                  <select class="form-control" ng-model="main.client_type">
-	                    <option value="">Select Type</option>
-	                    <option ng-repeat="item in ArrCleintType" value="{{item.id}}"  ng-selected="{{main.client_type==item.id}}">{{item.name}}</option>
+	                    <option value="">Select Screen</option>
+	                    <option ng-repeat="screen in artjobscreen_list" value="{{screen.id}}"  ng-selected="{{screen.id==workproof_array[0].screen_id}}">{{screen.screen_set}}</option>
 	                  </select>
 	                </div>
 	                <div class=" col-md-6 m-b nopad-left">
