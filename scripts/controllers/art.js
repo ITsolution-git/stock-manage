@@ -46,6 +46,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           			$scope.artjobscreen_list = RetArray.data.records.artjobscreen_list;
                           			$scope.graphic_size = RetArray.data.records.graphic_size;
                           			$scope.artjobgroup_list = RetArray.data.records.artjobgroup_list;
+                          			$scope.art_worklist = RetArray.data.records.art_worklist;
                           			//console.log($scope.art_orderline.line_array);
 
                               	if(RetArray.data.success=='2')
@@ -77,13 +78,15 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                         notifyService.notify(data.status, data.message); 
                                 });
                           }
-                          $scope.UpdateField_detail = function(orderline_id){
+                          $scope.artworkproof_popup = function(orderline_id){
 
                           	$http.get('api/public/art/artworkproof_data/'+orderline_id+'/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
-                          			$scope.workproof_array = RetArray.data.records;
-                          			$scope.Artworkproof();
+                          			$scope.workproof = RetArray.data.records.art_workproof[0];
+                          			$scope.get_artworkproof_placement = RetArray.data.records.get_artworkproof_placement;
+                          			$scope.wp_position = RetArray.data.records.wp_position;
+                          			$scope.Artworkproof_data();
 		                            
 		                        }
 		                        else
@@ -94,7 +97,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 		                        }
                      	    });
                         }
-                        $scope.Artworkproof= function () {
+                        $scope.Artworkproof_data= function () {
 			                            var modalInstanceEdit = $modal.open({
 			                              templateUrl: 'views/front/art/artjob/artwork_proof.html',
 			                              scope : $scope,
@@ -108,9 +111,14 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 			                            {
 			                               modalInstanceEdit.dismiss('cancel');
 			                            };
-			                            $scope.SaveArtWorkProof=function()
+			                            $scope.SaveArtWorkProof=function(Receive_data)
 			                            {
-			                            	alert('KPJ');
+			                            	$http.post('api/public/art/SaveArtWorkProof',Receive_data).success(function(result) 
+			                            	{
+					                        	var data = {"status": "success", "message": result.data.message}
+				                                notifyService.notify(data.status, data.message); 
+				                                $scope.ClosePopup('close');
+				                            });
 			                            }
 		                            };
 

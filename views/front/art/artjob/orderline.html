@@ -43,15 +43,15 @@
                                                     <div class="cols col-2">
                                                         <span ng-repeat="(s_key,i) in getNumber(7)  track by $index">
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control c-green"  ng-model="art_orderline.line_array[key].size_array[s_key].size"/>
+                                                                <input type="text" class="form-control c-green" onfocus="this.blur()" ng-model="art_orderline.line_array[key].size_array[s_key].size"/>
                                                             </div>
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control"  ng-model="art_orderline.line_array[key].size_array[s_key].qnty" />
+                                                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="art_orderline.line_array[key].size_array[s_key].qnty" />
                                                             </div>
                                                         </span>
                                                         <span>
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control"  />
+                                                                <input type="text" class="form-control" ng-model="order_line.ordline_qnty" />
                                                             </div>
                                                         </span>
                                                      <div class="col-md-2 nopad-left smallPad"></div>
@@ -60,7 +60,7 @@
                                                     </div>
                                                        <div class="col-md-2 nopad-left">
                                                         <div class="nopad-left artworkButton">
-                                                            <button ng-click="UpdateField_detail(order_line.line_id);" type="button" class="btn btn-default addButton c-dgreen">
+                                                            <button ng-click="artworkproof_popup(order_line.line_id);" type="button" class="btn btn-default addButton c-dgreen">
                                                               <i class="fa fa-plus"></i> 
                                                             </button>
                                                             <span>Artwork Proof</span>
@@ -97,7 +97,7 @@
                                                         <span ng-repeat="(a_key,i) in getNumber(7)  track by $index">
                                                            <div class="col-md-3 smallPad nopad-left" style="width:98px !important;">
                                                                 <select class="form-control ng-pristine ng-valid ng-touched" ng-model="order_line.client_supplied" tabindex="0" aria-invalid="false" style="">
-                                                                   
+		                                                               <option ng-repeat="groups in artjobgroup_list" value="{{groups.id}}">{{groups.group_name}}</option>
                                                                 </select>
                                                             </div>
                                                             
@@ -105,7 +105,8 @@
                                                          <span>
                                                            <div class="col-md-3 smallPad nopad-left" style="width:85px !important;">
                                                                 <select class="form-control ng-pristine ng-valid ng-touched" ng-model="order_line.client_supplied" tabindex="0" aria-invalid="false" style="">
-                                                                    
+                                                                    <option ng-selected="{{order_line.client_supplied==1}}" >Yes</option>
+                                                                    <option ng-selected="{{order_line.client_supplied==0}}" >No</option>
                                                                 </select>
                                                             </div>
                                                             
