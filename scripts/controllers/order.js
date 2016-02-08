@@ -1055,7 +1055,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     $scope.openPriceGrid=function(gridid)
     {
         var url = $state.href('setting.priceedit', {id: gridid});
-        window.open(url,'_blank');
+        window.open(url);
     }
 
     $scope.openCompany=function(companyid)
