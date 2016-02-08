@@ -360,6 +360,11 @@ class ClientController extends Controller {
 
 		$result = $this->client->SaveCleintTax($post['data'],$post['id']);
 
+		if($post['data']['tax_exempt'] == '0' && $post['data']['tax_rate'] > 0)
+		{
+			$this->common->UpdateTableRecords('orders',array('client_id' => $post['id']),array('tax_rate' => $post['data']['tax_rate']));
+		}
+
     	$data = array("success"=>1,"message"=>UPDATE_RECORD);
 		return response()->json(['data'=>$data]);
 	}
