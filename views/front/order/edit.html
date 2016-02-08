@@ -431,7 +431,7 @@
                                                                 </button>
                                                             </div>
                                                             <div class="col-md-2 smallPad nopad-left">
-                                                                <select  ng-model="order_line.client_supplied"  class="form-control">
+                                                                <select  ng-model="order_line.client_supplied"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
                                                                     <option ng-selected="order_line.client_supplied==1" value="1">Yes</option>
                                                                     <option ng-selected="order_line.client_supplied==0" value="0">No</option>
                                                                 </select>

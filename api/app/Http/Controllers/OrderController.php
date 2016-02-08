@@ -664,15 +664,6 @@ class OrderController extends Controller {
             $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
             $this->common->DeleteTableRecords('shipping',$post['cond']);
 
-            $boxarr = $this->common->GetTableRecords('box_item_mapping',array('item_id' => $post['item_id'],'shipping_id' => $post['shipping_id']),array());
-
-            if(!empty($boxarr))
-            {
-                foreach ($boxarr as $value) {
-                    $this->common->DeleteTableRecords('shipping_box',array('id' => $value->box_id));
-                }
-            }
-
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
         else
