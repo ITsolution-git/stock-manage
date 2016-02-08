@@ -81,6 +81,7 @@ class OrderController extends Controller {
  
         $data = Input::all();
 
+
         $result = $this->order->orderDetail($data);
 
         if(empty($result['order']))
@@ -202,7 +203,7 @@ class OrderController extends Controller {
 
         $vendors = $this->common->getAllVendors();
         $staff = $this->common->getStaffList();
-        $brandCo = $this->common->getBrandCordinator();
+        $brandCo = $this->common->getBrandCordinator($data['company_id']);
 
         if (count($result) > 0) {
             $response = array(
