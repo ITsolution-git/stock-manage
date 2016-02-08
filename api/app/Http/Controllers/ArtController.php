@@ -55,9 +55,11 @@ class ArtController extends Controller {
 			$graphic_size = $this->common->GetMicType('graphic_size');
 			$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id);
 
+			$art_worklist = $this->art->art_worklist($art_id,$company_id);
 
+			
 
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list);
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
@@ -73,7 +75,21 @@ class ArtController extends Controller {
     	if(!empty($company_id) && !empty($orderline_id)	&& $company_id != 'undefined')
     	{
     		$art_workproof = $this->art->artworkproof_data($orderline_id,$company_id);
-    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_workproof);
+    		if(count($art_workproof)>0)
+    		{
+	    		$art_id = $art_workproof[0]->art_id;
+	    		$get_artworkproof_placement = $this->art->get_artworkproof_placement($art_id,$company_id);
+
+	    		$wp_position = $this->common->GetMicType('position');
+
+
+	    		$ret_array = array('art_workproof'=>$art_workproof,'get_artworkproof_placement'=>$get_artworkproof_placement,'wp_position'=>$wp_position);
+	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $ret_array);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS);
+    		}
     	}
     	else 
         {
@@ -145,5 +161,22 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
-
+    public function SaveArtWorkProof()
+    {
+    	$post = Input::all();
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die;
+    	if(!empty($post['wp_id']))
+    	{
+    		$val = array_filter($post['wp_placement']);
+    		$post['wp_placement'] = implode(",", $val);
+    		//echo "<pre>"; print_r($post['wp_placement']); echo "</pre>"; die;
+    		$this->art->SaveArtWorkProof($post);
+    		$response = array('success' => 1, 'message' => UPDATE_RECORD);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
 }
