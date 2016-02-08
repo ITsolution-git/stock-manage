@@ -1,4 +1,4 @@
-app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService',function($scope,$http,$state,$stateParams,$rootScope,AuthService) {
+app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','$filter',function($scope,$http,$state,$stateParams,$rootScope,AuthService,$filter) {
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
@@ -7,8 +7,56 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$root
                           $http.get('api/public/art/listing/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
-                          			$scope.Art_array = RetArray.data;
+                          			$scope.arts = RetArray.data.records;
                           			 $("#ajax_loader").hide();
+
+                                  var init;
+
+                                  $scope.searchKeywords = '';
+                                  $scope.filteredArts = [];
+                                  $scope.row = '';
+                                  $scope.select = function (page) {
+                                    var end, start;
+                                    start = (page - 1) * $scope.numPerPage;
+                                    end = start + $scope.numPerPage;
+                                    return $scope.currentPageArts = $scope.filteredArts.slice(start, end);
+                                  };
+                                  $scope.onFilterChange = function () {
+                                    $scope.select(1);
+                                    $scope.currentPage = 1;
+                                    return $scope.row = '';
+                                  };
+                                  $scope.onNumPerPageChange = function () {
+                                    $scope.select(1);
+                                    return $scope.currentPage = 1;
+                                  };
+                                  $scope.onOrderChange = function () {
+                                    $scope.select(1);
+                                    return $scope.currentPage = 1;
+                                  };
+                                  $scope.search = function () {
+                                    $scope.filteredArts = $filter('filter')($scope.arts, $scope.searchKeywords);
+                                    return $scope.onFilterChange();
+                                  };
+                                  $scope.order = function (rowName) {
+                                    if ($scope.row === rowName) {
+                                        return;
+                                    }
+                                    $scope.row = rowName;
+                                    $scope.filteredArts = $filter('orderBy')($scope.arts, rowName);
+                                    return $scope.onOrderChange();
+                                  };
+                                  $scope.numPerPageOpt = [10, 20, 50, 100];
+                                  $scope.numPerPage = 10;
+                                  $scope.currentPage = 1;
+                                  $scope.currentPageArts = [];
+
+                                  init = function () {
+                                    $scope.search();
+
+                                    return $scope.select($scope.currentPage);
+                                  };
+                                  return init();
                               	}
                             });
 

@@ -44,7 +44,7 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
           $scope.filteredOrders = $filter('filter')($scope.orders, $scope.searchKeywords);
           return $scope.onFilterChange();
         };
-        $scope.order = function (rowName) {
+        $scope.order_by = function (rowName) {
           if ($scope.row === rowName) {
               return;
           }
