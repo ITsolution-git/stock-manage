@@ -327,16 +327,15 @@ class OrderController extends Controller {
     */
     public function orderLineadd()
     {
-
         $post = Input::all();
-        
 
         $post['data']['created_date']=date('Y-m-d');
- 
        
-            $result = $this->order->saveOrderLineData($post['data']);
-            $message = INSERT_RECORD;
-            $success = 1;
+        $result = $this->order->saveOrderLineData($post['data']);
+
+        $shipping_id = $this->common->InsertRecords('artjob_artworkproof',array('orderline_id' => $result));
+        $message = INSERT_RECORD;
+        $success = 1;
         
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
