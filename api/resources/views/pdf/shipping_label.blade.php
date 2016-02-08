@@ -9,56 +9,32 @@
     body {
       margin: 0;
       padding: 0;
+      border: 0 none;
     }
     div.boxbrdr {
-      border:2px solid #000000;
+      border:1px solid #000000;
       color: #000000;
-      font-size: 70px;
+      font-size: 50px;
       margin-top: 10px;
       padding-top:70px;
       padding-right:15px;
       padding-left:15px;
       text-align: center;       
-      width: 100%;
-      height: 50px;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      margin: 0;
-      padding: 0;      
-      line-height: 1;
-    }
-    table, tr, td, th {
-      margin: 0;
-      padding: 0;
-    }
-    th {
-      font-size: 22px;
-      height: 30px;
-      line-height: 19px;
-      padding: 5px;
-    }
-    td {
-      font-size: 16px;
-    }
-    td.topbrdr {
-      border-top:1px solid #999999;
+      width: 50px !important;
+      height: 50px !important;
     }
     p {
-      margin: 0;
-      padding: 0;
-      font-size: 14px;
+      margin:0;
+      padding:0;
+      font-size: 10px;
+      line-height: 14px;
+    }
+    th {
       line-height: 19px;
     }
-    thead.title th {
-      padding: 5px 0;
-      border-bottom: 1px solid #999999;
-    }
-    tbody.color-grey td {
-      border:0 none;
+    td {
       line-height: 19px;
-      height: 20px;
-      padding: 10px 0;
-    }
+    } 
   </style>
 </head>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">    
@@ -72,26 +48,35 @@
                     <td align="center" valign="top" width="25%" class="tableCol">
                         <span style="font-size:15px; line-height:15px;">
                             <strong>{{$company_detail[0]->name}}</strong>                
+                        </span><br/>
+                        <span>{{$company_detail[0]->address}}, {{$company_detail[0]->city}}, {{$company_detail[0]->state}}, <br/>
+                          {{$company_detail[0]->country}} - {{$company_detail[0]->zip}}<br />
+                          {{$company_detail[0]->url}}
                         </span>
-                        <br/>
-                        <span>{{$company_detail[0]->address}}, {{$company_detail[0]->city}}, {{$company_detail[0]->state}}, <br/>{{$company_detail[0]->country}} - {{$company_detail[0]->zip}}<br />{{$company_detail[0]->url}}</span>
                     </td>
-                    <td align="right" valign="top" width="50%"><span>{{$shipping->description}}</span><br />
+                    <td align="right" valign="top" width="50%"><p><strong><span>{{$shipping->description}}</span><br />
                         <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
-                        <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}}</span><br />
-                        <span>{{$shipping->country}}</span><br />
+                        <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}} {{$shipping->country}}</span></strong></p>
                     </td>
-                </tr>
-                <tr>
-                    <td align="left" valign="top">&nbsp;</td>
                 </tr>
             </table>
         </td>
     </tr>
-    <tr>
-      <td align="left" valign="top" width="100%">PO : </td>
-    </tr>
     
+    <tr>
+      <td align="left" valign="top" width="100%">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td align="left" valign="top" width="100%">          
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+              <td align="left" valign="top" width="100%">PO : </td>
+            </tr>
+          </table>
+        </td>
+    </tr>
+
     <tr>
       <?php if($shipping->boxing_type == '0')
       { ?>
@@ -99,22 +84,23 @@
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <thead class="title">
                 <tr>
-                  <th align="left" valign="top" width="49%">Description</th>
+                  <th align="left" valign="top" width="49%" style="font-size:16px; line-height:32px;"><span><strong>Description</strong></span></th>
                   <th align="left" valign="top" width="2%">&nbsp;</th>
-                  <th align="right" valign="top" width="49%">Color</th>
+                  <th align="right" valign="top" width="49%" style="font-size:16px; line-height:32px;"><span><strong>Color</strong></span></th>
                 </tr>
               </thead>
               <tbody class="color-grey">
+                <tr>
+                  <td align="left" valign="top" colspan="3" style="border-top:1px solid #000000;">&nbsp;</td>
+                </tr>
                 @foreach ($shipping_boxes as $box)
                 <tr>
-                  <td align="left" valign="top" width="49%" height="10">
-                    {{$box->product_name}}
+                  <td align="left" valign="top" width="49%" height="10"><span>{{$box->product_name}}</span><br/>
                     <div class="boxbrdr">3</div>
                   </td>
                   <td align="left" valign="top" width="2%">&nbsp;</td>
-                  <td align="right" valign="top" width="49%" height="10">
-                    {{$box->color_name}}
-                    <div class="boxbrdr" style="float:right;">{{$box->size}}</div>
+                  <td align="right" valign="top" width="49%" height="10"><span>{{$box->color_name}}</span><br/>
+                    <div class="boxbrdr">{{$box->size}}</div>
                   </td>
                 </tr>
                 @endforeach
@@ -129,21 +115,20 @@
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <thead class="title">
             <tr>
-              <th align="left" valign="top" width="10%">Qty.</th>
-              <th align="center" valign="top" width="20%">Type</th>
-              <th align="left" valign="top" width="20%">Size</th>
-              <th align="left" valign="top" width="20%">Color</th>
-              <th align="left" valign="top" width="30%">Description</th>
+              <th align="left" valign="top" width="10%" style="border:1px solid #000000;"> Qty.</th>
+              <th align="center" valign="top" width="20%" style="border:1px solid #000000;"> Type</th>
+              <th align="left" valign="top" width="20%" style="border:1px solid #000000;"> Size</th>
+              <th align="left" valign="top" width="20%" style="border:1px solid #000000;"> Color</th>
+              <th align="left" valign="top" width="30%" style="border:1px solid #000000;"> Description</th>
             </tr>
           </thead>
           <tbody class="color-grey">
           @foreach ($shipping_boxes as $box)
             <tr>
-              <td align="left" valign="top" class="brdrBox" width="10%">{{$box->qnty}}</td>
-              <td align="center" valign="top" class="brdrBox" width="20%">{{$box->size_group_name}}</td>
-              <td align="left" valign="top" class="brdrBox" width="20%">{{$box->size_group_name}}</td>
-              <td align="left" valign="top" class="brdrBox" width="20%">{{$box->color_name}}</td>
-              <td align="left" valign="top" class="brdrBox" width="30%">{{$box->product_name}}</td>
+              <td align="center" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
+              <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
+              <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->color_name}}</td>
+              <td align="left" valign="top" class="brdrBox" width="30%" style="border:1px solid #000000;"> {{$box->product_name}}</td>
             </tr>
           @endforeach
           </tbody>
