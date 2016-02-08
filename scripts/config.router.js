@@ -920,7 +920,7 @@ angular.module('app')
                        }
             })
     .state('art.screenlist', {
-                url: '/screen',
+                url: '/screen/:art_id/:company_id',
                 templateUrl: 'views/front/art/screenlist.html',
                 controller: 'ArtListCtrl',
                 data : { title: 'Art' },

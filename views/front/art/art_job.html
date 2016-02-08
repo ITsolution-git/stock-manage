@@ -7,7 +7,7 @@
                                 <div class="col-md-5 nopad-right smallPad"></div>
                                 <div class="col-md-3 nopad-right smallPad">
                                     <button title="Go to ArtListing" ui-sref="art.list" type="button" class="btn btn-info active" tabindex="0">Art List</button>
-                                    <button title="Go to ScreenListing" ui-sref="art.screenlist" type="button" class="btn btn-info" tabindex="0">Screen List</button>
+                                    <button title="Go to ScreenListing" ui-sref="art.screenlist({art_id:art_id,company_id:company_id})" type="button" class="btn btn-info" tabindex="0">Screen List</button>
                                     <button title="Order Id" type="button" class="btn btn-info" tabindex="0">#{{art_position[0].order_id}}</button>
                                 </div>
                     <div class="col-sm-12 m-b nopad-form">
@@ -66,7 +66,7 @@
 
                             <!-- ART WORK TAB START -->
                             <div role="tabpanel" class="tab-pane  animated fadeIn orderPOTab" id="tab5">
-                               Working.
+                               <div ng-include="'views/front/art/artjob/art_work.html'"></div>
                             </div>
                             <!-- ART WORK TAB END -->
 

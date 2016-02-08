@@ -623,8 +623,12 @@
         &nbsp;
         <button  type="submit" class="btn btn-info" ng-disabled="priceForm.$invalid">Submit</button>
         &nbsp;
-        <button ui-sref="setting.price" type="button"  class="btn btn-info">Cancel</button>
+        <button  type="button"  class="btn btn-info" ng-click="cancel()">Cancel</button>
         &nbsp; </footer>
     </form>
+
+    <div class="nav-header" ng-click="doTheBack()">Reverse!</div>
+
+
   </div>
 </div>
