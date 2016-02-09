@@ -658,7 +658,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
 
 
                             $scope.addDocumentPopup = function () {
-
+                                        $scope.thisorderNote=[];
                                       $scope.edit='add';
                                       var modalInstance = $modal.open({
                                                               templateUrl: 'views/front/client/document.html',
