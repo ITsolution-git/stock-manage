@@ -76,7 +76,7 @@
               <li> <a href data-toggle="tab" data-target="#tab3">Sales Detail</a> </li>
              <!--  <li> <a href data-toggle="tab" data-target="#tab4">Credit/QB</a> </li> -->
               <li> <a href data-toggle="tab" data-target="#tab5"> Tax</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab6"> Document</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab6" ui-event="{ click : 'openTab(\'document\')' }"> Document</a> </li>
               <!-- <li> <a href data-toggle="tab" data-target="#tab7"> Pay Method</a> </li>
               <li> <a href data-toggle="tab" data-target="#tab8"> PI Imp</a> </li> -->
             </ul>
@@ -257,11 +257,38 @@
               <!-- TAX TAB END -->
               
               <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="tab6">
-                <div class="panel b-a ng-scope">
-                  <div class="panel-body">
-                    <button ng-click="openPopup('document.html')" class="btn btn-success" tabindex="0">+</button>
-                  </div>
-                </div>
+
+                          <div class="col-md-12 nopad-form">
+                              <div class="col-md-8 nopad-left m-b order_notes">                          
+                                  <div ng-repeat="document_note in alldocumentnotes" class="col-md-12 nopad-form form-group">
+                                   
+                                      <div class="col-md-8 nopad-left">
+                                          <input type="text" class="form-control" name="order_notes" ng-model="document_note.description">
+                                      </div>
+
+                                       <div class="col-md-2 nopad-left">
+                                          <img  ng-if="document_note.document_photo" ng-src="{{document_note.document_photo_url}}" alt="" height="200" width="200" class="img-responsive"/> 
+                                      </div>
+
+                                      <div class="col-md-1">
+                                          <button type="button" ng-click="editDocumentPopup(document_note.id)" class="btn btn-default addButton">
+                                              <i class="fa fa-edit"></i>
+                                          </button>
+                                      </div>
+                                      <div class="col-md-1">
+                                          <button type="button" ng-click="removeDoc($index,document_note.id)" class="btn btn-default addButton">
+                                              <i class="fa fa-minus"></i>
+                                          </button>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-12 nopad-form m-b">
+                                      <button type="button" ng-click="addDocumentPopup()" class="btn btn-default addButton">
+                                          <i class="fa fa-plus"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                              
+                          </div>
               </div>
               <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="tab7">Depends Order Module</div>
               

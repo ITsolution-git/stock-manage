@@ -44,7 +44,7 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
           $scope.filteredOrders = $filter('filter')($scope.orders, $scope.searchKeywords);
           return $scope.onFilterChange();
         };
-        $scope.order = function (rowName) {
+        $scope.order_by = function (rowName) {
           if ($scope.row === rowName) {
               return;
           }
@@ -299,6 +299,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                     if($scope.orderPositionAll.length > 0)
                     {
                         $scope.position_qty = parseInt($scope.orderPositionAll[0].qnty);
+                    }
+
+                    if($scope.order.tax_rate > 0)
+                    {
+                        $scope.calulate_tax($scope.order.tax_rate);
                     }
                 }
                 else {
@@ -1055,7 +1060,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     $scope.openPriceGrid=function(gridid)
     {
         var url = $state.href('setting.priceedit', {id: gridid});
-        window.open(url,'_blank');
+        window.open(url);
     }
 
     $scope.openCompany=function(companyid)
@@ -1902,6 +1907,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             $scope.order.grand_total = grand_total.toFixed(2);
             $scope.order.tax_rate = '0';
             $scope.order.tax = '0';
+            $scope.order.grand_total = $scope.order.sales_order_total;
         }
         var order_data = {};
         order_data.data = {'grand_total':$scope.order.grand_total,'tax_rate':$scope.order.tax_rate,'tax':$scope.order.tax};
@@ -2190,10 +2196,16 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            /*angular.forEach($scope.orderLineAll, function(value) {
+            var count = $scope.orderLineAll.length;
+            var flag = 0;
+            angular.forEach($scope.orderLineAll, function(value) {
                     $scope.calculate_all(value.id);
-                    get_order_details(order_id,client_id,company_id)
-            });*/
+                    flag++;
+                    if(count == flag)
+                    {
+                        get_order_details(order_id,client_id,company_id)
+                    }
+            });
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);

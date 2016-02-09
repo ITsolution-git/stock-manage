@@ -1,15 +1,79 @@
-app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService',function($scope,$http,$state,$stateParams,$rootScope,AuthService) {
+app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','$filter',function($scope,$http,$state,$stateParams,$rootScope,AuthService,$filter) {
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
+                          $scope.art_id = $stateParams.art_id;
                           $("#ajax_loader").show();
                           $http.get('api/public/art/listing/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
-                          			$scope.Art_array = RetArray.data;
+                          			$scope.arts = RetArray.data.records;
                           			 $("#ajax_loader").hide();
+
+                                  var init;
+
+                                  $scope.searchKeywords = '';
+                                  $scope.filteredArts = [];
+                                  $scope.row = '';
+                                  $scope.select = function (page) {
+                                    var end, start;
+                                    start = (page - 1) * $scope.numPerPage;
+                                    end = start + $scope.numPerPage;
+                                    return $scope.currentPageArts = $scope.filteredArts.slice(start, end);
+                                  };
+                                  $scope.onFilterChange = function () {
+                                    $scope.select(1);
+                                    $scope.currentPage = 1;
+                                    return $scope.row = '';
+                                  };
+                                  $scope.onNumPerPageChange = function () {
+                                    $scope.select(1);
+                                    return $scope.currentPage = 1;
+                                  };
+                                  $scope.onOrderChange = function () {
+                                    $scope.select(1);
+                                    return $scope.currentPage = 1;
+                                  };
+                                  $scope.search = function () {
+                                    $scope.filteredArts = $filter('filter')($scope.arts, $scope.searchKeywords);
+                                    return $scope.onFilterChange();
+                                  };
+                                  $scope.order = function (rowName) {
+                                    if ($scope.row === rowName) {
+                                        return;
+                                    }
+                                    $scope.row = rowName;
+                                    $scope.filteredArts = $filter('orderBy')($scope.arts, rowName);
+                                    return $scope.onOrderChange();
+                                  };
+                                  $scope.numPerPageOpt = [10, 20, 50, 100];
+                                  $scope.numPerPage = 10;
+                                  $scope.currentPage = 1;
+                                  $scope.currentPageArts = [];
+
+                                  init = function () {
+                                    $scope.search();
+
+                                    return $scope.select($scope.currentPage);
+                                  };
+                                  return init();
                               	}
                             });
+
+                          	$http.get('api/public/art/ScreenListing/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
+
+                          			$("#ajax_loader").hide();
+                          			$scope.screen_listing = RetArray.data;
+
+                              	if(RetArray.data.success=='2')
+                          		{
+                          			$("#ajax_loader").hide();
+                          			var data = {"status": "success", "message": RetArray.data.message}
+                                    notifyService.notify(data.status, data.message);
+                                    window.location.reload();
+                          		}
+                            });
+
 
 }]);
 app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService','$modal',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService,$modal) {
@@ -18,22 +82,21 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.art_id = $stateParams.id;
-
                           Get_artDetail();
                           function Get_artDetail()
                           {
                           	$("#ajax_loader").show();
                           	$http.get('api/public/art/Art_detail/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
-	                          	if(RetArray.data.success=='1')
-                          		{
+
                           			$("#ajax_loader").hide();
                           			$scope.art_position = RetArray.data.records.art_position;
                           			$scope.art_orderline = RetArray.data.records.art_orderline;
                           			$scope.artjobscreen_list = RetArray.data.records.artjobscreen_list;
                           			$scope.graphic_size = RetArray.data.records.graphic_size;
                           			$scope.artjobgroup_list = RetArray.data.records.artjobgroup_list;
+                          			$scope.art_worklist = RetArray.data.records.art_worklist;
                           			//console.log($scope.art_orderline.line_array);
-                              	}
+
                               	if(RetArray.data.success=='2')
                           		{
                           			$("#ajax_loader").hide();
@@ -63,13 +126,15 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                         notifyService.notify(data.status, data.message); 
                                 });
                           }
-                          $scope.UpdateField_detail = function(orderline_id){
+                          $scope.artworkproof_popup = function(orderline_id){
 
                           	$http.get('api/public/art/artworkproof_data/'+orderline_id+'/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
-                          			$scope.workproof_array = RetArray.data.records;
-                          			$scope.Artworkproof();
+                          			$scope.workproof = RetArray.data.records.art_workproof[0];
+                          			$scope.get_artworkproof_placement = RetArray.data.records.get_artworkproof_placement;
+                          			$scope.wp_position = RetArray.data.records.wp_position;
+                          			$scope.Artworkproof_data();
 		                            
 		                        }
 		                        else
@@ -80,7 +145,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 		                        }
                      	    });
                         }
-                        $scope.Artworkproof= function () {
+                        $scope.Artworkproof_data= function () {
 			                            var modalInstanceEdit = $modal.open({
 			                              templateUrl: 'views/front/art/artjob/artwork_proof.html',
 			                              scope : $scope,
@@ -94,9 +159,15 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 			                            {
 			                               modalInstanceEdit.dismiss('cancel');
 			                            };
-			                            $scope.SaveArtWorkProof=function()
+			                            $scope.SaveArtWorkProof=function(Receive_data)
 			                            {
-			                            	alert('KPJ');
+			                            	$http.post('api/public/art/SaveArtWorkProof',Receive_data).success(function(result) 
+			                            	{
+			                            		Get_artDetail();
+					                        	var data = {"status": "success", "message": result.data.message}
+				                                notifyService.notify(data.status, data.message); 
+				                                $scope.ClosePopup('close');
+				                            });
 			                            }
 		                            };
 
@@ -131,6 +202,8 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                         notifyService.notify(data.status, data.message); 
                                 });
 						}
+
+						
 
                        
 

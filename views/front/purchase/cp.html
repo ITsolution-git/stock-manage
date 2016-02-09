@@ -363,8 +363,18 @@
 
                          </div>
                     </div> </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab14">Working</div>
-              
+              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab14">
+
+                    <div class="col-sm-12 nopad-form" ng-repeat="(key,order_line) in order_line_data">
+                      <span>SKU:</span>
+                      <span>{{order_line.product_description}}</span>
+                      <span>COLOR:</span>
+                      <span>{{order_line.color_name}}</span>&nbsp;
+                      <span ng-if="size_qty.qnty != '0'" ng-repeat="size_qty in order_line.items">[{{size_qty.size}}]:{{size_qty.qnty}}&nbsp;</span>
+                      <span>:TOTAL QNTY</span>&nbsp;
+                      <span>{{order_line.qnty}}</span>
+                    </div>
+              </div>
             </div>
           </div>
           <div>&nbsp;</div>

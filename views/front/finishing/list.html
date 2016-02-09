@@ -2,81 +2,105 @@
     <div class="panel-heading">
         <h4>List Finishing</h4>
     </div>
-    <div class="panel-body b-b b-light npb">
-        <!-- <div class="form-group" ng-controller="DatepickerDemoCtrl">
-            <label>Select Date <em class="text-muted"></em></label>
-            <p class="input-group" style="width:300px;">
-                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="finishing.date" is-open="opened" datepicker-options="dateOptions"  ng-change="getList()" close-text="Close" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-            </p>
-        </div> -->
-        <div class="form-group">
-            Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/>
+        <div class="panel-body b-b b-light">
+    <!--       Search: <input id="filter" type="text" class="form-control input-sm w-auto inline m-r"/> -->
+            <div class="col-sm-4 col-xs-6">
+                <form>
+                    <input type="text"
+                           placeholder="search"
+                           class="form-control"
+                           data-ng-model="searchKeywords"
+                           data-ng-keyup="search()">
+                </form>
+            </div>
+            <div class="col-sm-3 col-xs-6 filter-result-info">
+                <span>
+                    Showing {{filteredOrders.length}} of {{orders.length}} orders
+                </span>              
+            </div>
         </div>
 
         <div class="col-md-12 finishingTab nopad-form">
         <div role="tabpanel" class="tab-pane animated fadeIn clientTab">
             <ul class="nav nav-tabs input-group col-md-12">
                 <li class="active"> 
-                    <a href data-toggle="tab" data-target="#all">Overview</a>
+                    <a href data-toggle="tab" data-target="#all" ui-event="{ click : 'openTab(\'active\')' }">Overview</a>
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#poly_bagging">Poly Bagging</a> 
+                    <a href data-toggle="tab" data-target="#poly_bagging" ui-event="{ click : 'openTab(\'poly_bagging\')' }">Poly Bagging</a> 
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#hang_tag">Hang Tag</a> 
+                    <a href data-toggle="tab" data-target="#hang_tag" ui-event="{ click : 'openTab(\'hang_tag\')' }">Hang Tag</a> 
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#tag_removal">Tag Removal</a> 
+                    <a href data-toggle="tab" data-target="#tag_removal" ui-event="{ click : 'openTab(\'tag_removal\')' }">Tag Removal</a> 
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#speciality">Speciality</a> 
+                    <a href data-toggle="tab" data-target="#speciality" ui-event="{ click : 'openTab(\'speciality\')' }">Speciality</a>
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#packing">Packing</a> 
+                    <a href data-toggle="tab" data-target="#packing" ui-event="{ click : 'openTab(\'packing\')' }">Packing</a> 
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#sticker">Sticker</a> 
+                    <a href data-toggle="tab" data-target="#sticker" ui-event="{ click : 'openTab(\'sticker\')' }">Sticker</a> 
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#sew_on_women_tag">Sew On Women Tag</a> 
+                    <a href data-toggle="tab" data-target="#sew_on_women_tag" ui-event="{ click : 'openTab(\'sew_on_women_tag\')' }">Sew On Women Tag</a>
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#inside_tag">Inside Tag</a> 
+                    <a href data-toggle="tab" data-target="#inside_tag" ui-event="{ click : 'openTab(\'inside_tag\')' }">Inside Tag</a> 
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#active">Active</a>
+                    <a href data-toggle="tab" data-target="#active" ui-event="{ click : 'openTab(\'active\')' }">Active</a>
                 </li>
                 <li> 
-                    <a href data-toggle="tab" data-target="#completed">Completed</a>
+                    <a href data-toggle="tab" data-target="#completed" ui-event="{ click : 'openTab(\'completed\')' }">Completed</a>
                 </li>
             </ul>
             <div class="tab-content p b-a no-b-t bg-white m-b-md">
                 <div role="tabpanel" class="tab-pane active animated fadeIn clientTab" id="all">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                         <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders" id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -138,27 +162,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="poly_bagging">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.poly_bagging" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders" id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -220,27 +264,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="hang_tag">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.hang_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -302,27 +366,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="tag_removal">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.tag_removal" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -384,27 +468,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="speciality">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.speciality" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -466,27 +570,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="packing">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.packing" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -548,27 +672,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sticker">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sticker" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -630,27 +774,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="sew_on_women_tag">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.sew_on_women_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -712,27 +876,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="inside_tag">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.inside_tag" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -794,27 +978,47 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="active">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.active" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders"  id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -876,27 +1080,48 @@
                 </div>
                 <div role="tabpanel" class="tab-pane animated fadeIn clientTab" id="completed">
                     <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
-                        <div class="col-md-4 nopad-left smallPad">
-                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label></div>
-                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label></div>
-                            <div class="col-md-4 nopad-form"><label>Client</label></div>
+                         <div class="col-md-4 nopad-left smallPad">
+                            <div class="col-md-2 nopad-left smallPad"><label>Job #</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('order_id')" data-ng-class="{active: row == 'order_id'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-order_id')" data-ng-class="{active: row == '-order_id'}"></span>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Qty</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('qty')" data-ng-class="{active: row == 'qty'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-qty')" data-ng-class="{active: row == '-qty'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-left smallPad"><label>Finishing Item</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('category_name')" data-ng-class="{active: row == 'category_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-category_name')" data-ng-class="{active: row == '-category_name'}"></span>
+                            </div>
+                            <div class="col-md-4 nopad-form"><label>Client</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('client_name')" data-ng-class="{active: row == 'client_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-client_name')" data-ng-class="{active: row == '-client_name'}"></span>
+                            </div>
                         </div>
                         <div class="col-md-5 nopad-left smallPad">
-                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label></div>
-                            <div class="col-md-5 nopad-left smallPad"><label>Note</label></div>
-                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label></div>
-                            <div class="col-md-2 nopad-form"><label>Start</label></div>                            
+                            <div class="col-md-3 nopad-left smallPad"><label>Job Name</label>
+                                <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('job_name')" data-ng-class="{active: row == 'job_name'}"></span>
+                                <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-job_name')" data-ng-class="{active: row == '-job_name'}"></span>
+                            </div>
+                            <div class="col-md-5 nopad-left smallPad"><label>Note</label>
+                            </div>
+                            <div class="col-md-2 nopad-left smallPad"><label>Time (hrs)</label>
+                            </div>
+                            <div class="col-md-2 nopad-form"><label>Start</label>
+                            </div>                            
                         </div>
                         <div class="col-md-3 nopad-left smallPad">                          
-                            <div class="col-md-3 nopad-left smallPad"><label>End</label></div>
-                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label></div>
+                            <div class="col-md-3 nopad-left smallPad"><label>End</label>
+                            </div>
+                            <div class="col-md-3 nopad-left smallPad"><label>EST Completion Time</label>
+                            </div>
                             <div class="col-md-3 nopad-left smallPad"></div>
                             <div class="col-md-3 nopad-form t-a-c"><label>Action</label></div>
                         </div>
                     </div>
                     <div class="task_assign_details">
-                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in listFinishing.records.completed" ng-if="listFinishing.success>0" id="order_{{value.id}}">
+                <li> 
+                        <div class="form-group col-md-12 tabTitle nopad-form" ng-repeat="value in currentPageOrders" id="order_{{value.id}}">
                             <div class="form-group col-md-12 tabTitle nopad-form" ng-click="updateFinishing()">
                                 <div class="col-md-4 nopad-left smallPad">
                                     <div class="col-md-2 nopad-left smallPad">
@@ -959,5 +1184,19 @@
             </div>
         </div>
     </div>
-    </div>
+    <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredOrders.length"
+                                max-size="4"
+                                ng-change="select(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true">
+                    </pagination>
+                </div>
+            </div>
+        </footer>
 </div>

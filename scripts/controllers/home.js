@@ -10,11 +10,15 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
       $scope.orderListAll = function($event,column_name){
 
 
-        var order_list_data = {};
-          var condition_obj = {};
-          condition_obj['company_id'] =  company_id;
-          order_list_data.cond = angular.copy(condition_obj);
+        var combine_array = {};
+         combine_array.data = {};
+          combine_array.cond = {};
 
+
+        combine_array.data.f_approval = $scope.f_approval;
+       combine_array.data.client_id = $scope.client_id;
+       combine_array.data.sales_id = $scope.sales_id;
+        combine_array.cond.company_id = company_id;
 
            if($event) {
                 
@@ -25,7 +29,7 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
               
               } 
 
-            $http.post('api/public/order/listOrder',order_list_data).success(function(Listdata) {
+            $http.post('api/public/order/listOrder',combine_array).success(function(Listdata) {
             
                 $scope.orders = Listdata.data.records;
                 $("#ajax_loader").hide();
@@ -109,29 +113,4 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
         $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) {
               $scope.staffList = result.data.records;
         });
-
-
-        $scope.new_data_fun = function(){
-        
-        var combine_array = {};
-         combine_array.data = {};
-          combine_array.cond = {};
-
-
-        combine_array.data.f_approval = $scope.f_approval;
-       combine_array.data.client_id = $scope.client_id;
-       combine_array.data.sales_id = $scope.sales_id;
-        combine_array.cond.company_id = company_id;
-
-
-
-        $http.post('api/public/order/listOrder',combine_array).success(function(Listdata) {
-            $scope.listOrder = Listdata.data;
-            $("#ajax_loader").hide();
-
-        });
-
-       }
-     
-
 }]);

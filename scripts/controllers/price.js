@@ -77,9 +77,11 @@ app.controller('priceListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','sessionService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,sessionService,fileUpload,AllConstant,$filter) {
    
-AuthService.AccessService('FM');
+ AuthService.AccessService('FM,BC');
+
+
                         $scope.percentagecalc = function($event) {
                           
                                 var price_in_percentage = $event.target.value;
@@ -381,9 +383,16 @@ AuthService.AccessService('FM');
         
                             if(result.data.success == '1') {
 
-
-                                   $state.go('setting.price');
+                              var role = sessionService.get('role_slug');
+                             
+                             if(role == 'BC') {
+                               window.history.back();
+                             } else {
+                              $state.go('setting.price');
                                     return false;
+                             }
+                                  
+                                   
                                    
 
                              } 
@@ -489,9 +498,13 @@ AuthService.AccessService('FM');
                                   $http.post('api/public/admin/priceGridDuplicate',combine_array_data).success(function(result, status, headers, config) {
         
                                   if(result.data.success == '1') {
-
-                                         $state.go('setting.price');
-                                          return false;
+                                        var role = sessionService.get('role_slug');
+                                         if(role == 'BC') {
+                                           window.history.back();
+                                         } else {
+                                          $state.go('setting.price');
+                                                return false;
+                                         }
                                          
                                    } 
                          
@@ -541,6 +554,18 @@ AuthService.AccessService('FM');
 
                             }
                         } 
+
+
+                        $scope.cancel = function() {
+                          var role = sessionService.get('role_slug');
+                           if(role == 'BC') {
+                                 window.history.back();
+                               } else {
+                                $state.go('setting.price');
+                                      return false;
+                               }
+
+                        }
 
 
                        

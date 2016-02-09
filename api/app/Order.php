@@ -240,7 +240,9 @@ public function saveOrderNotes($post)
                 'qnty'=>$row['qnty'],
                 'date'=>$post['created_date']]);
 
-        } 
+        }
+
+        return $insertedid; 
 
    }
 

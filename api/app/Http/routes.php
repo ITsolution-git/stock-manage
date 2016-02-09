@@ -143,6 +143,11 @@ Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
 Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
 Route::post('client/checkCompName', 'ClientController@checkCompName');
+Route::get('client/getDocument/{id}','ClientController@getDocument');
+Route::get('client/getDocumentDetailbyId/{id}', 'ClientController@getDocumentDetailbyId');
+Route::post('client/updateDoc', 'ClientController@updateDoc');
+Route::post('client/saveDoc', 'ClientController@saveDoc');
+Route::get('client/deleteClientDoc/{id}', 'ClientController@deleteClientDoc');
 
 
 
@@ -240,3 +245,6 @@ Route::get('art/artjob_screen_list/{art_id}/{company_id}', 'ArtController@artjob
 Route::get('art/artjobgroup_list/{art_id}/{company_id}', 'ArtController@artjobgroup_list');
 Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
 Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');
+Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListing');
+Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
+Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');

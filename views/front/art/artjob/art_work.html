@@ -1,0 +1,64 @@
+<div class="orderTab_scroll" class="col-md-12 nopad-form">
+                                <!-- POSITION TAB TITLE -->
+                                        <div class="col-md-10 nopad-form">                                        
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <label>Size Group</label>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <label>Product color</label>
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <label>Description</label>                          
+                                            </div>
+                                             <div class="form-group col-md-1 nopad-form">
+                                                <label>Position</label>                          
+                                            </div>
+                                             <div class="form-group col-md-5 nopad-form">
+                                                <label>Placement</label>                          
+                                            </div>
+                                             <div class="form-group col-md-1 nopad-form">
+                                                <label>Type</label>                          
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <label>Screenset</label>                          
+                                            </div>
+                                        </div>
+
+        
+                                    <!-- POSITION TAB FIELDS -->
+                                    <div class="positionTab_content" ng-repeat="(key,art_data) in art_worklist">
+                                        <div class="col-md-10 nopad-form">                                        
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control" ng-model="art_data.size_group_id" name="size_group"  placeholder="Size Group" />
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control" ng-model="art_data.product_color" name="product_color"  placeholder="Color" />
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control" ng-model="art_data.wp_desc" name="group_qnty"  placeholder="description" />
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control" ng-model="art_data.wp_position" name="group_qnty"  placeholder="Poition" />
+                                            </div>
+                                            <div class="form-group col-md-5 nopad-form">
+                                               {{art_data.placement_name}}
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control" value="Art Work Screen" name="type" placeholder="Type" />
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+                                                <input type="text" class="form-control" ng-model="art_data.screen_set" name="screen_set"  placeholder="Screen Set" />
+                                            </div>
+                                            <div class="form-group col-md-1 nopad-form">
+	                                            <div class="sgpDetails btnCircle" ng-click="artworkproof_popup(art_data.line_id);" >
+	                                              <a class="" tabindex="0" role="button" title="Edit">
+	                                                <i class="fa fa-arrow-circle-right"></i>
+	                                              </a>
+	                                            </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                            
+                                </div>
