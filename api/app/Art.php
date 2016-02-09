@@ -293,4 +293,42 @@ class Art extends Model {
 
 				return $query;
     }
+    public function Client_art_screen($client_id,$company_id)
+    {
+    	$Misc_data = $this->AllMsiData();
+
+    	$query = DB::table('orders as or')
+		->select('or.id as order_id','art.art_id','ass.graphic_size','aaw.id as wp_id','ass.id as screen_id','ass.screen_set','aaw.wp_image')
+		->join('art as art','art.order_id','=','or.id')
+		->leftJoin('order_orderlines as ol','ol.order_id','=','or.id')
+		->leftJoin('artjob_artworkproof as aaw','ol.id','=','aaw.orderline_id')
+		->leftJoin('artjob_screensets as ass','ass.art_id','=','art.art_id')
+		->where('or.is_delete','=','1')
+		->where('or.company_id','=',$company_id)
+		->where('or.client_id','=',$client_id)
+		->get();
+		//echo "<pre>"; print_r($query); echo "</pre>"; die;
+		$client_array = array();
+		if(count($query)>0)
+		{
+			foreach ($query as $key => $value) 
+			{
+				if(!empty($value->screen_id))
+				{
+					$client_array['screen'][$value->screen_id]['screen_set'] = $value->screen_set; 		
+					$client_array['screen'][$value->screen_id]['graphic_size'] = (!empty($value->graphic_size))? $Misc_data[$value->graphic_size] : '';		
+					$client_array['screen'][$value->screen_id]['wp_image'] = '';
+					$client_array['screen'][$value->screen_id]['art_id'] = $value->art_id; 	
+				} 
+				if(!empty($value->wp_id))
+				{
+					$client_array['art'][$value->wp_id]['image'] = $value->wp_image; 
+					$client_array['art'][$value->wp_id]['type'] = 'Art Work Screen'; 
+					$client_array['art'][$value->wp_id]['art_id'] = $value->art_id;					
+				}
+			}
+		}
+
+		return $client_array;
+    }
 }
