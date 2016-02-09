@@ -35,7 +35,7 @@
                   <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>Created for date<em class="text-muted"></em></label>
                       <p class="input-group">
-                        <input name="created_for_date" type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.created_for_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <input name="created_for_date" type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.created_for_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -44,7 +44,7 @@
                   <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>Product to vendor Arrival<em class="text-muted"></em></label>
                      <p class="input-group">
-                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_arrival_date"  type="text" class="form-control"   datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.vendor_arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_arrival_date"  type="text" class="form-control"   datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.vendor_arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -53,7 +53,7 @@
                   <div class="col-sm-2 m-b"  ng-controller="DatepickerDemoCtrl">
                     <label>Vendor deadline<em class="text-muted"></em></label>
                     <p class="input-group">
-                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_deadline"  type="text" class="form-control"   datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.vendor_deadline"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_deadline"  type="text" class="form-control"   datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.vendor_deadline"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
