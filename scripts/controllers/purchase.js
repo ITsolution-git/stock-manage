@@ -6,6 +6,7 @@ app.controller('PurchaseListCtrl', ['$scope', '$rootScope', '$http','$state','$s
                            var type = {};
                           $scope.CurrentController=$state.current.controller;
                           type.type = $stateParams.id;
+                          $scope.Maintype = $scope.Maintype.toLowerCase();
                           type.company_id = $rootScope.company_profile.company_id;
                           $http.post('api/public/purchase/ListPurchase',type ).success(function(Listdata) 
                           		  {

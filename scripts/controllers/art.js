@@ -115,6 +115,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 			                            {
 			                            	$http.post('api/public/art/SaveArtWorkProof',Receive_data).success(function(result) 
 			                            	{
+			                            		Get_artDetail();
 					                        	var data = {"status": "success", "message": result.data.message}
 				                                notifyService.notify(data.status, data.message); 
 				                                $scope.ClosePopup('close');
