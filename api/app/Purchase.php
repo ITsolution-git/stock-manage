@@ -229,6 +229,18 @@ class Purchase extends Model {
     	return $result;
 	}
 
+	function GetOrderLineData($id)
+	{
+		$listArray = ['o.*','p.description as product_description','p.name as product_name','c.name as color_name'];
+        $whereOrderLineConditions = ['order_id' => $id];
+        $orderLineData = DB::table('order_orderlines as o')
+                        ->leftJoin('products as p','o.product_id','=','p.id')
+                        ->leftJoin('color as c','o.color_id','=','c.id')
+                        ->select($listArray)
+                        ->where($whereOrderLineConditions)->get();
+        return $orderLineData;                
+	}
+
 }
 
 ?>
