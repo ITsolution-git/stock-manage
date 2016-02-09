@@ -16,6 +16,8 @@
                     Showing {{filteredColors.length}} of {{colors.length}} colors
                 </span>              
             </div>
+              <button class="btn btn-fw btn-danger pull-right" md-ink-ripple="" ng-click="openColorPopup('color-add.html')">
+      New
         </div>
         <div class="col-md-12 nopad-form misc-view-details horizontal-only" id="misc-view">
             <table class="table m-b-none">
@@ -32,11 +34,7 @@
                         <td align="center"><a editable-text="value.name" onaftersave="updateColors(value.name,value.id,'name')">{{value.name || 'not set'}}</a></td>
                         <td>  <button type="button" ng-click="removeColors($index,value.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button></td>
                     </tr>
-                    <tr>
-                        <td colspan="3">
-                            <button type="button" ng-click="addColors()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
-                        </td>
-                    </tr>
+                  
                 </tbody>
             </table>
             <footer class="table-footer">

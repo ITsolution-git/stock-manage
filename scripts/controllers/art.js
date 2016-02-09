@@ -126,9 +126,16 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                         notifyService.notify(data.status, data.message); 
                                 });
                           }
-                          $scope.artworkproof_popup = function(orderline_id){
+                           $scope.create_artworkproof = function(orderline_id){
+                           	
+                           	$http.get('api/public/art/Insert_artworkproof/'+orderline_id).success(function(RetArray) {
+                           		$scope.artworkproof_popup(RetArray.data.records);
+                     	    });
 
-                          	$http.get('api/public/art/artworkproof_data/'+orderline_id+'/'+$scope.company_id).success(function(RetArray) {
+                           }
+                          $scope.artworkproof_popup = function(wp_id){
+
+                          	$http.get('api/public/art/artworkproof_data/'+wp_id+'/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
                           			$scope.workproof = RetArray.data.records.art_workproof[0];
@@ -169,7 +176,40 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 				                                $scope.ClosePopup('close');
 				                            });
 			                            }
-		                            };
+		                            }
+
+		                $scope.color_popup = function(screen_id){
+
+
+                          			$scope.color_popup_open();
+
+                        }
+		                $scope.color_popup_open = function(){
+		                	var modalInstanceEdit = $modal.open({
+			                              templateUrl: 'views/front/art/artjob/add_color.html',
+			                              scope : $scope,
+			                             // controller:'ArtJobCtrl'
+			                            });
+			                            modalInstanceEdit.result.then(function (selectedItem) {
+			                              $scope.selected = selectedItem;
+			                            }, function () {
+			                            });
+			                            $scope.CloseColorPopup = function (cancel)
+			                            {
+			                               modalInstanceEdit.dismiss('cancel');
+			                            };
+			                            $scope.SaveArtWorkProof=function(Receive_data)
+			                            {
+			                            	$http.post('api/public/art/SaveArtWorkProof',Receive_data).success(function(result) 
+			                            	{
+			                            		Get_artDetail();
+					                        	var data = {"status": "success", "message": result.data.message}
+				                                notifyService.notify(data.status, data.message); 
+				                                $scope.ClosePopup('close');
+				                            });
+			                            }
+		                	
+		                }
 
 		                $scope.create_screen = function(table) {
 

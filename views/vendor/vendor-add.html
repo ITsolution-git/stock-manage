@@ -70,32 +70,33 @@
                         <label class="col-md-2 nopad-left">Phone #<em class="text-muted"></em></label>
                       </div>
                       <div class="form-group col-md-12 nopad-form">
-                        <div ng-repeat="vendor_contacts in allContacts" class="vendor_contacts">
-							<div class="col-md-2 nopad-left">
-								<input type="text" ng-model="vendor_contacts.first_name" class="form-control" />
-							</div>
-							<div class="col-md-2 nopad-left">
-								<input type="text" ng-model="vendor_contacts.last_name" class="form-control" />
-							</div>
-							<div class="col-md-2 nopad-left">
-								<select  ng-model="vendor_contacts.role_id" required class="form-control">
-									<option ng-selected="vendor_contacts.role_id==data.id" ng-repeat="data in staffRoles" value={{data.id}}>{{data.title}}</option>
-								</select>
-							</div>
-							<div class="col-md-3 nopad-left">
-								<input type="email"   ng-model="vendor_contacts.prime_email" class="form-control" />
-							</div>
-							<div class="col-md-2 nopad-left">
-								<input type="text" placeholder="XXXXXXXXXX" ng-model="vendor_contacts.prime_phone" ng-pattern="/^[0-9]{10,10}$/" name="telephone" class="form-control">
-								<span style="color:#f44336" ng-show="vendorForm.telephone.$error.pattern" class="form-control"> This Field Should Contain 10 Numeric</span>
-							</div>	
-							<div class="col-md-1 nopad-form">							
-								<!--button ng-click="removeInput($index)" class="col-md-1">Remove</button>
-								<button ng-click="removeInput($index)" class="removeRecord formBtns">Remove</button-->
-								<button class="btn btn-default addButton" ng-click="removeInput($index)" type="button" tabindex="0">
-									<i class="fa fa-minus"></i>
-								</button>								
-							</div>
+                        <div ng-repeat="vendor_contacts in allContacts" class="vendor_contacts form-group col-md-12 nopad-form">
+              							<div class="col-md-2 nopad-left">
+              								<input type="text" ng-model="vendor_contacts.first_name" class="form-control" />
+              							</div>
+              							<div class="col-md-2 nopad-left">
+              								<input type="text" ng-model="vendor_contacts.last_name" class="form-control" />
+              							</div>
+              							<div class="col-md-2 nopad-left">
+              								<select  ng-model="vendor_contacts.role_id" required class="form-control">
+              									<option ng-selected="vendor_contacts.role_id==data.id" ng-repeat="data in staffRoles" value={{data.id}}>{{data.title}}</option>
+              								</select>
+              							</div>
+              							<div class="col-md-3 nopad-left">
+              								<input type="email"   ng-model="vendor_contacts.prime_email" class="form-control" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" name="email_{{$index}}"/>
+                              <span style="color:#f44336" ng-show="vendorForm.email_{{$index}}.$error.pattern">Please enter valid email address</span> 
+              							</div>
+              							<div class="col-md-2 nopad-left">
+              								<input type="text" placeholder="XXXXXXXXXX" ng-model="vendor_contacts.prime_phone" ng-pattern="/^[0-9]{10,10}$/" name="telephone_{{$index}}" class="form-control">
+              								<span style="color:#f44336" ng-show="vendorForm.telephone_{{$index}}.$error.pattern"> This Field Should Contain 10 Numeric</span>
+              							</div>	
+              							<div class="col-md-1 nopad-form">							
+              								<!--button ng-click="removeInput($index)" class="col-md-1">Remove</button>
+              								<button ng-click="removeInput($index)" class="removeRecord formBtns">Remove</button-->
+              								<button class="btn btn-default addButton" ng-click="removeInput($index)" type="button" tabindex="0">
+              									<i class="fa fa-minus"></i>
+              								</button>								
+              							</div>
                         </div>
                         <!--button type="button" ng-click="addInput()">add input</button>
 						<button type="button" ng-click="addInput()" class="newRecord formBtns">add input</button>
