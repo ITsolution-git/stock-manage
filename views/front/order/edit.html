@@ -1142,7 +1142,7 @@
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
                                                 <select  ng-model="orderPO.vendor_id"  name="vendor_id" class="form-control" ui-event="{ change : 'updateProductData($event,orderPO.po_id,\'purchase_order\',\'po_id\')' }" >
-                                                    <option ng-selected="orderPO.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.main_contact_person}}</option>
+                                                    <option ng-selected="orderPO.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.name_company}}</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-2 nopad-left smallPad ">
