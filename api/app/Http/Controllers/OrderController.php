@@ -19,7 +19,7 @@ use PDF;
 
 class OrderController extends Controller { 
 
-	public function __construct(Order $order,Common $common,Purchase $purchase,Product $product) 
+	public function __construct(Order $order,Common $common,Purchase $purchase,Product $product)
  	{
         $this->order = $order;
         $this->purchase = $purchase;
@@ -327,16 +327,15 @@ class OrderController extends Controller {
     */
     public function orderLineadd()
     {
-
         $post = Input::all();
-        
 
         $post['data']['created_date']=date('Y-m-d');
- 
        
-            $result = $this->order->saveOrderLineData($post['data']);
-            $message = INSERT_RECORD;
-            $success = 1;
+        $result = $this->order->saveOrderLineData($post['data']);
+
+        $shipping_id = $this->common->InsertRecords('artjob_artworkproof',array('orderline_id' => $result));
+        $message = INSERT_RECORD;
+        $success = 1;
         
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
@@ -919,6 +918,9 @@ class OrderController extends Controller {
         $order_position['order_position'] = json_decode($_POST['order_position']);
         $order_line['order_line'] = json_decode($_POST['order_line']);
         $order['order'] = json_decode($_POST['order']);
+        $order['order']->created_date = date('m/d/Y',strtotime($order['order']->created_date));
+        $order['order']->shipping_by = date('m/d/Y',strtotime($order['order']->shipping_by));
+        $order['order']->in_hands_by = date('m/d/Y',strtotime($order['order']->in_hands_by));
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
         $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data);
      

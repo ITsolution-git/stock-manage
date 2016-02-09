@@ -7,6 +7,8 @@ use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Purchase;
+use App\Order;
+use App\Product;
 use App\Common;
 use DB;
 
@@ -14,9 +16,11 @@ use Request;
 
 class PurchaseController extends Controller { 
 
-	public function __construct(Purchase $purchase,Common $common) 
+	public function __construct(Purchase $purchase,Common $common,Product $product,Order $order) 
  	{
         $this->purchase = $purchase;
+        $this->product = $product;
+        $this->order = $order;
         $this->common = $common;
     }
 
@@ -203,7 +207,38 @@ class PurchaseController extends Controller {
     		{
                 $list_vendors = $this->common->getAllVendors();
     			$order_id = $screen_data[0]->order_id;
-	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors );
+                $order_line_data = $this->purchase->GetOrderLineData($order_id);
+
+                
+
+                if(!empty($order_line_data))
+                    {
+                        $sum = 0;
+                        foreach($order_line_data as $row)
+                        {
+                            $row->orderline_id = $row->id;
+                          
+
+                            $order_line_items = $this->order->getOrderLineItemById($row->id);
+                            $count = 1;
+                            $order_line = array();
+                            foreach ($order_line_items as $line) {
+                             
+                                $line->number = $count;
+                                $order_line[] = $line;
+                                $count++;
+                            }
+                            $row->items = $order_line;
+
+                            $order_line_data_new[] = $row;
+                        }
+                    }
+                        else
+                        {
+                            $order_line_data_new = array();
+                        }
+
+	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors,'order_line_data_new'=>$order_line_data_new );
 	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result );
     		}
     		else
