@@ -179,4 +179,24 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+    public function Client_art_screen($client_id,$company_id)
+    {
+    	if(!empty($company_id) && !empty($client_id)	&& $company_id != 'undefined')
+    	{
+    		$Client_art_screen = $this->art->Client_art_screen($client_id,$company_id);
+    		if(count($Client_art_screen)>0)
+    		{
+    			$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $Client_art_screen);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS,'records' => $Client_art_screen);
+    		}
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
 }

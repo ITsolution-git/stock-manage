@@ -247,3 +247,4 @@ Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
 Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');
 Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListing');
 Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
+Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');
