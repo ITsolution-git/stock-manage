@@ -1,0 +1,69 @@
+ <div class="panel-body">
+ <div class="col-md-12 nopad-form">
+              <div class="form-group col-md-12  nopad-left">
+
+	            <div class="col-md-4  nopad-left">
+	                <label>Art Work Complete <em class="text-muted"></em></label>
+	                <select class="form-control">
+	                  	<option>Yes</option><option>No</option>
+	                </select>
+	            </div>
+	           
+	             <div class="col-md-4 nopad-left">
+	                  <label>Width <em class="text-muted"></em></label>
+	                  <input type="text" class="form-control" ng-model="workproof.product_name"  >
+	                </div>
+	           <div class="col-md-4  nopad-left">
+	                  <label>Height<em class="text-muted"></em></label>
+	                  <input type="text" class="form-control" ng-model="workproof.product_color"  >
+	            </div>
+	            <div class="col-md-6  nopad-left">
+	                  <label>Screen Note<em class="text-muted"></em></label>
+	                   <textarea class="form-group" cols="22" rows="5" ng-model="workproof.wp_desc"></textarea>
+	            </div>
+				<div class="form-group col-md-6  nopad-right">
+	                <label>LOGO <em class="text-muted"></em></label>
+	                <div class="form-group col-md-12  panel panel-default" style="height:200px;"> </div>
+	            </div>
+	            <div class="col-md-12  nopad-form">
+	              		<div class=" col-md-12  nopad-right">
+		                	<label>Colors <em class="text-muted"></em></label>&emsp;&emsp;
+		                	<button ng-click="add_color_line();" type="button" class="btn btn-default addButton c-dgreen">
+                                <i class="fa fa-plus"></i> 
+                            </button>
+		                </div>
+		                <div class="col-md-12  nopad-right">
+		                	<div class="col-md-4  nopad-form">Color</div>
+		                	<div class="col-md-4  nopad-form">Thread Color</div>
+		                	<div class="col-md-4  nopad-form">Inq</div>
+		                </div>
+		                <div class="col-md-12  nopad-form">
+		                	<div class="col-md-4  nopad-left">
+		                	 	<select class="form-control">
+			                  		<option>Yes</option><option>No</option>
+			                    </select>
+			                </div>
+		                	<div class="col-md-4  nopad-left">
+		                		<select class="form-control">
+				                  	<option>Yes</option><option>No</option>
+				                </select>
+		                	</div>
+		                	<div class="col-md-4  nopad-left">
+		                		<input type="text" class="form-control">
+		                	</div>
+		                </div>
+
+		                
+	              </div>
+
+              </div>
+
+              </div>
+
+              <div class="input-group col-md-12  foruttons">
+                <button  type="submit" class="btn btn-info" ng-click="CloseColorPopup();" ng-disabled="staffForm.$invalid">Save</button>
+                &nbsp;
+                <button ng-click="CloseColorPopup();" type="button" class="btn btn-info">Cancel</button>
+                &nbsp; 
+              </div>
+            </div></div>
