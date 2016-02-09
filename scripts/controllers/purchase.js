@@ -336,11 +336,13 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                           		  		  	  $state.go('purchase.list',{"id":'cp'});
                            					      return false;
                           		  		  }
+                                    
                                           $scope.ArrPo = PoData.data.records.screen_data[0];
                                           $scope.ArrPoLine = PoData.data.records.screen_line;
                                           $scope.ordered = PoData.data.records.order_total[0];
                                           $scope.order_id = PoData.data.records.order_id;
                                           $scope.list_vendors = PoData.data.records.list_vendors;
+                                          $scope.order_line_data = PoData.data.records.order_line_data_new;
                                           //console.log($scope.list_vendors);
                                           get_contacts_vendors($scope.ArrPo.vendor_id);
                                           AJloader.hide();
