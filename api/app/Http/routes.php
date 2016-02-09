@@ -137,7 +137,7 @@ Route::post('client/ClientContacts', 'ClientController@ClientContacts');
 Route::post('client/getContacts', 'ClientController@getContacts');
 Route::post('client/ClientAddress', 'ClientController@ClientAddress');
 Route::post('client/getAddress', 'ClientController@getAddress');
-Route::get('client/GetclientDetail/{id}','ClientController@GetclientDetail');
+Route::post('client/GetclientDetail','ClientController@GetclientDetail');
 Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
