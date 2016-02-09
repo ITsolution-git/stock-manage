@@ -135,7 +135,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
 
                            $("#ajax_loader").show();
                           $scope.company_id = $rootScope.company_profile.company_id;
-                         // console.log(company_id);
+                          
                           var client_contacts=[];
                           var AddrTypeData={};
                           var PriceGrid={};
@@ -212,11 +212,18 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               }
                            }
 
-                           getClientDetail(getclient_id );
-                           function getClientDetail(getclient_id)
+                           getClientDetail(getclient_id,$scope.company_id);
+                           function getClientDetail(getclient_id,company_id)
                            {
                                 $("#ajax_loader").show();
-                                $http.get('api/public/client/GetclientDetail/'+getclient_id).success(function(result) 
+
+                                  var combine_array_id = {};
+                                 
+                                  combine_array_id.client_id = getclient_id;
+                                  combine_array_id.company_id = company_id;
+                                    
+
+                                $http.post('api/public/client/GetclientDetail',combine_array_id).success(function(result) 
                                 {
                                     if(result.data.success == '1') 
                                     {
@@ -236,6 +243,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                         $scope.allclientnotes = $scope.Response.allclientnotes;
                                         $scope.Arrdisposition = $scope.Response.Arrdisposition;
                                         $scope.Client_orders = $scope.Response.Client_orders;
+                                        $scope.art_detail = $scope.Response.art_detail;
 
    
                                         $scope.currentProjectUrl = $sce.trustAsResourceUrl($scope.main.salesweb);
@@ -542,7 +550,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               contact_data.id = $stateParams.id;
                               $http.post('api/public/client/ClientContacts',contact_data).success(function(Listdata) {
                                     getContacts(getclient_id );
-                                    getClientDetail(getclient_id );
+                                    getClientDetail(getclient_id,$scope.company_id);
                               });
                             
 
@@ -553,7 +561,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               sales_data.data = salesDetails;
                               sales_data.id = $stateParams.id;
                               $http.post('api/public/client/SaveSalesDetails',sales_data).success(function(Listdata) {
-                                    getClientDetail(getclient_id );
+                                    getClientDetail(getclient_id,$scope.company_id);
                               });
                           };
                          $scope.SaveCleintDetails=function(ClientDetails)
@@ -563,7 +571,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               Cleint_data.data = ClientDetails;
                               Cleint_data.id = $stateParams.id;
                               $http.post('api/public/client/SaveCleintDetails',Cleint_data).success(function(Listdata) {
-                                    getClientDetail(getclient_id);
+                                    getClientDetail(getclient_id,$scope.company_id);
                               });
                           };
                          $scope.SaveTaxDetails=function(TaxDetails)
@@ -573,7 +581,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               Tax_data.data = TaxDetails;
                               Tax_data.id = $stateParams.id;
                               $http.post('api/public/client/SaveCleintTax',Tax_data).success(function(Listdata) {
-                                    getClientDetail(getclient_id );
+                                    getClientDetail(getclient_id,$scope.company_id);
                               });
                           };
                           $scope.SavePlimpDetails=function(PlimpDetails)
@@ -650,7 +658,7 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
 
 
                             $scope.addDocumentPopup = function () {
-
+                                        $scope.thisorderNote=[];
                                       $scope.edit='add';
                                       var modalInstance = $modal.open({
                                                               templateUrl: 'views/front/client/document.html',
