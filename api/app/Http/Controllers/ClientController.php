@@ -232,8 +232,11 @@ class ClientController extends Controller {
 			$result['main']['bw_url_photo'] = UPLOAD_PATH.'client/'.$result['main']['b_w_logo'];
 			$result['main']['shipping_url_photo'] = UPLOAD_PATH.'client/'.$result['main']['shipping_logo'];
 			$result['tax']['tax_document_url'] = UPLOAD_PATH.'tax/'.$result['tax']['tax_document'];
+			if($result['sales']['anniversarydate'] != '')
+			{
+				$result['sales']['anniversarydate'] = date('m/d/Y',strtotime($result['sales']['anniversarydate']));
+			}
 
-            
 			if(count($result)>0)
 			{
 				$StaffList = $this->common->getStaffList();
