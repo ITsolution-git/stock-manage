@@ -1,25 +1,22 @@
 
-app.controller('placementListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
-   AuthService.AccessService('FM');
+app.controller('placementListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter','$modal','notifyService','$log', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter,$modal,notifyService,$log) {
+AuthService.AccessService('FM');
 
+    get_placement_data();
+    function get_placement_data()
+    {
+        $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
+            $scope.miscData = result.data.records;
+        });
 
- $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
-
-           
-              $scope.miscData = result.data.records;
-
-             
-      });
-
-
-  $http.get('api/public/common/getAllPlacementData').success(function(result, status, headers, config) {
-              $scope.placementData = result.data.records;
-              $scope.pagination = AllConstant.pagination;
+        $http.get('api/public/common/getAllPlacementData').success(function(result, status, headers, config) {
+            $scope.placementData = result.data.records;
+            $scope.pagination = AllConstant.pagination;
               
-              for(var i=0; i < $scope.placementData.length; i++){
+            for(var i=0; i < $scope.placementData.length; i++){
                 $scope.placementData[i].user = {
-                  group: $scope.placementData[i].misc_id,
-                  groupName: $scope.placementData[i].position,
+                    group: $scope.placementData[i].misc_id,
+                    groupName: $scope.placementData[i].position,
                 };  
 
                 $scope.$watch($scope.placementData[i].user.group, function(newVal, oldVal) {
@@ -78,90 +75,127 @@ app.controller('placementListCtrl', ['$scope','$http','$location','$state','$sta
                 return $scope.select($scope.currentPage);
             };
             return init();
-      });
-  
+        });
+    }
+
+    $scope.openpopup = function () {
+
+        $scope.placement = {};
+        placement_data = {};
+        $scope.placement.misc_value = '';
+        $scope.placement.misc_id = '0';
+
+        $http.get('api/public/common/getMiscData').success(function(data) {
+            $scope.groups = data;
+        });
+
+        var modalInstance = $modal.open({
+                                        animation: $scope.animationsEnabled,
+                                        templateUrl: 'views/setting/add_placement.html',
+                                        scope: $scope,
+                                        size: 'sm'
+                            });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
 
 
-  $scope.groups = [];
-
-  $scope.loadGroups = function() {
-    return $scope.groups.length ? null : $http.get('api/public/common/getMiscData').success(function(data) {
-      
-      $scope.groups = data;
-      
-    });
-  };
-
-  
-
-
-
-
-
-$scope.updatePlacement = function(value,id,updatedcolumn) {
-
-
-if(angular.isUndefined(id)){
-
-   var combine_array_data = {};
-              combine_array_data.updatedcolumn = value;
-              combine_array_data.columnname = updatedcolumn;
-             
-               $http.post('api/public/admin/placementInsert',combine_array_data).success(function(result, status, headers, config) {
-                        
-                          });
-} else {
-
-    var combine_array_data = {};
-              combine_array_data.updatedcolumn = value;
-              combine_array_data.columnname = updatedcolumn;
-              combine_array_data.id = id;
-
-             
-               $http.post('api/public/admin/placementSave',combine_array_data).success(function(result, status, headers, config) {
-                         
-                          });
-
-}
+        $scope.savePlacement = function (placement)
+        {
+            if($scope.placement.misc_value == '')
+            {
+                var data = {"status": "error", "message": "Price Grid name is required"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if($scope.placement.misc_id == '' || $scope.placement.misc_id == '0')
+            {
+                var data = {"status": "error", "message": "Misc Value is required"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
             
-       
-                         $state.go('setting.placement','',{reload:true});
-                                return false;                   
+            placement_data.data = placement;
 
-  };
+            placement_data.table ='placement';
+
+            $http.post('api/public/common/InsertRecords',placement_data).success(function(result) {
+                
+                if(result.data.success == '1') 
+                {
+                    modalInstance.dismiss('cancel');
+                    var data = {"status": "success", "message": "Placement has been added"}
+                    notifyService.notify(data.status, data.message);
+                    get_placement_data();
+                }
+            });
+        };
+
+        $scope.cancel = function () {
+            modalInstance.dismiss('cancel');
+        };
+    };
+
+    $scope.groups = [];
+
+    $scope.loadGroups = function() {
+        return $scope.groups.length ? null : $http.get('api/public/common/getMiscData').success(function(data) {
+            $scope.groups = data;
+        });
+    };
 
 
-  $scope.addPlacement = function(){
-                            $scope.placementData.push({ misc_value:''});
-                          }
+    $scope.updatePlacement = function(value,id,updatedcolumn) {
 
+        if(angular.isUndefined(id))
+        {
+            var combine_array_data = {};
+            combine_array_data.updatedcolumn = value;
+            combine_array_data.columnname = updatedcolumn;
+            $http.post('api/public/admin/placementInsert',combine_array_data).success(function(result, status, headers, config) {
 
+            });
+        }
+        else {
 
-  $scope.removePlacement = function(index,id){
+            var combine_array_data = {};
+            combine_array_data.updatedcolumn = value;
+            combine_array_data.columnname = updatedcolumn;
+            combine_array_data.id = id;
+             
+            $http.post('api/public/admin/placementSave',combine_array_data).success(function(result, status, headers, config) {
 
-  var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
-                                if (permission == true) {
+            });
+        }
+        $state.go('setting.placement','',{reload:true});
+        return false;
+    };
+
+    $scope.addPlacement = function(){
+        $scope.placementData.push({ misc_value:''});
+    }
+
+    $scope.removePlacement = function(index,id){
+
+        var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+        if (permission == true) {
   
-  if(angular.isUndefined(id)){
-     $scope.placementData.splice(index,1);
-  } else {
-
- var position_data = {};
-position_data.table ='placement'
-position_data.cond ={id:id}
-$http.post('api/public/common/DeleteTableRecords',position_data).success(function(result) {
-     
-
-  });
-
-
-     $scope.placementData.splice(index,1);
-  }
-
-}
-   
-}
-
-
+            if(angular.isUndefined(id)){
+                $scope.placementData.splice(index,1);
+            }
+            else {
+                var position_data = {};
+                position_data.table ='placement'
+                position_data.cond ={id:id}
+                $http.post('api/public/common/DeleteTableRecords',position_data).success(function(result) {
+                    $scope.placementData.splice(index,1);
+                    get_placement_data();
+                });
+                
+            }
+        }
+    }
 }]);
-

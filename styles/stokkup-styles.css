@@ -79,6 +79,11 @@ textarea {
 .aestric_required {
 	color: red;
 }
+.label-change {
+	padding: 10px;
+	font-size: 12px;
+	
+}
 /*=========================
 	Background Video
 =========================*/
@@ -762,6 +767,33 @@ a.btnEditOrder:hover {
 /*---------------------------
 		ORDER LINE TAB
 ---------------------------*/
+.strip-content {
+	overflow: hidden;
+}
+
+.strip-content .stripedDiv {
+	padding: 5px;
+}
+.strip-content .stripedDiv .form-group {
+	margin-bottom: 0;
+}
+.strip-content .stripedDiv:nth-child(2n) {
+	background: #e5e5e5;
+}
+.strip-content .stripedDiv:hover,
+.strip-content .stripedDiv.active {
+	background: #e5e5e5;
+}
+.strip-content .orderLineTabScroll {
+	padding: 15px 5px 0 5px;
+}
+.strip-content .orderLineTabScroll:nth-child(2n) {
+	background: #e5e5e5;
+}
+.strip-content .orderLineTabScroll:hover,
+.strip-content .orderLineTabScroll.active {
+	background: #e5e5e5;
+}
 .orderTotalPrice {
 	margin-top: 30px;
 }
@@ -781,13 +813,14 @@ a.btnEditOrder:hover {
 	overflow:hidden;
 	border: 1px solid #cccccc;
 	box-sizing:border-box;
-	padding: 20px 0 0 20px;
+	padding: 15px;
 	max-height: 470px;
 	overflow: hidden;
 	overflow-y:scroll; 
 }
 .orderLineTabScroll {
-	width: 100% !important;
+	width: 102% !important;
+	/*width: 100% !important;*/
 	overflow: hidden;
 }
 .cols {
@@ -948,7 +981,7 @@ input[readonly].cgreen {
 
 .orderDistributionContainer .col-md-12:hover,
 .orderDistributionContainer .col-md-12.active {
-	background: #999;
+	background: #e5e5e5;
 }
 .blockTitle label {
 	width: 100%;
