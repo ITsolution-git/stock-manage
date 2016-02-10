@@ -1,4 +1,4 @@
-app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$state','$filter','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$filter,$modal,AuthService,$log,AllConstant) {
+app.controller('orderListCtrl', ['$scope','$rootScope','$http','notifyService','$location','$state','$filter','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,notifyService,$location,$state,$filter,$modal,AuthService,$log,AllConstant) {
 
     $("#ajax_loader").show();
 
@@ -123,19 +123,53 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
         });
 
         $scope.ok = function (orderData) {
+ 
+           
+           if(orderData == undefined) {
+
+              var data = {"status": "error", "message": "Company and Job Name should not be blank"}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+            } else if(orderData.job_name == undefined) {
+
+              var data = {"status": "error", "message": "Job Name should not be blank"}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+            } else if(orderData.client_id == undefined) {
+
+              var data = {"status": "error", "message": "Company should not be blank"}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+            }
 
             var order_data = {};
             orderData.company_id =company_id;
             orderData.login_id =login_id;
 
+
+            order_data.data = orderData;           
+            order_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+            order_data.table ='orders';
             
-            order_data.data = orderData;
-           
-            order_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');;
+            var combine_array_id = {};
+             
+              combine_array_id.client_id = orderData.client_id;
+              combine_array_id.company_id = company_id;
+                
 
-            order_data.table ='orders'
-
-            $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
+            $http.post('api/public/client/GetclientDetail',combine_array_id).success(function(result) 
+            {
+                if(result.data.success == '1') 
+                {
+                    $scope.Response = result.data.records;
+                    $scope.salesDetails =$scope.Response.clientDetail.sales;
+                    order_data.data.sales_id = $scope.salesDetails.salesperson;
+                    order_data.data.price_id = $scope.salesDetails.salespricegrid;
+                } 
+                
+            }).then(function() {
+                
+              $http.post('api/public/common/InsertRecords',order_data).success(function(result) {
                 
                 if(result.data.success == '1') 
                 {
@@ -164,6 +198,9 @@ app.controller('orderListCtrl', ['$scope','$rootScope','$http','$location','$sta
                 }
             });
             // modalInstance.close($scope.selected.item);
+            });
+           
+            
         };
 
         $scope.cancel = function () {

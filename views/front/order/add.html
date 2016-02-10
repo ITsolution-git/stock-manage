@@ -3,9 +3,21 @@
     <h3 class="modal-title">Create Order!</h3>
 </div>
 <div class="modal-body">
-            <select  ng-model="order.client_id"  class="form-control">
+
+
+            
+
+                	<div class="input-group col-sm-12 m-b">
+			    	<label>Company<span class="aestric_required"> *</span><em class="text-muted"></em></label>
+			    	<select  ng-model="order.client_id"  class="form-control">
                   <option  ng-repeat="data in allCompany" value={{data.client_id}}>{{data.client_company}}</option>
                 </select>
+		    	</div>
+
+               	<div class="input-group col-sm-12 m-b">
+			    	<label>Job Name<span class="aestric_required"> *</span><em class="text-muted"></em></label>
+			    	<input type="text" class="form-control" ng-model="order.job_name" required/>
+		    	</div>
             
         </div>
 <div class="modal-footer">                  
