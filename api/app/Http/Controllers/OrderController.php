@@ -959,7 +959,8 @@ class OrderController extends Controller {
             if($inner_count <= $count)
             {
                 $update_data = array('size' => $sizeData[$key]['name'],
-                                    'price' => $sizeData[$key]['piece_price']
+                                    'price' => $sizeData[$key]['piece_price'],
+                                    'qnty' => '0'
                                     );
 
                 $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
