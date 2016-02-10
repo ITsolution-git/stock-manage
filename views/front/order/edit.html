@@ -723,7 +723,7 @@
                                             <label>Balance Due </label>
                                         </div>
                                         <div class="col-md-6 nopad-form smallPad">
-                                            <input type="text" ng-model="order.balance_due" class="form-control highlightBox text-right" readonly="" onfocus="this.blur()"/>
+                                            <input type="text" ng-model="order.grand_total" class="form-control highlightBox text-right" readonly="" onfocus="this.blur()"/>
                                         </div>
                                     </div>
                                 </div>
@@ -880,10 +880,10 @@
                                         <div class="col-md-12 nopad-left orderDistributionContainer">
                                         <div class="col-md-12" ng-repeat="oitem in distributed_items">
                                             <!-- First Row -->
-                                            <div class="col-md-3 smallPad m-b nopad-left">
+                                            <div class="col-md-9 smallPad m-b nopad-left">
                                                 <input type="text" class="form-control" ng-model="oitem.name" onfocus="this.blur()">
                                             </div>
-                                            <div class="col-md-9 smallPad m-b nopad-right">
+                                            <div class="col-md-3 smallPad m-b nopad-right">
                                                 <input type="text" class="form-control" ng-model="oitem.size_group_name" onfocus="this.blur()">
                                             </div>
 
@@ -892,10 +892,10 @@
                                                 <input type="text" class="form-control" ng-model="oitem.color_name" onfocus="this.blur()">
                                             </div>
                                             <div class="col-md-2 smallPad m-b nopad-left">
-                                                <input type="text" class="form-control" ng-model="oitem.size" onfocus="this.blur()">
+                                                <input type="text" class="form-control text-center" ng-model="oitem.size" onfocus="this.blur()">
                                             </div>
                                             <div class="col-md-2 smallPad m-b nopad-left">
-                                                <input type="text" class="form-control" ng-model="oitem.qnty" ng-blur="updateDistributedQty(oitem.id,oitem.qnty)">
+                                                <input type="text" class="form-control text-center" ng-model="oitem.qnty" ng-blur="updateDistributedQty(oitem.id,oitem.qnty)">
                                             </div>
                                             <div class="col-md-3 m-b nopad-form">
                                                 <input type="text" class="form-control" ng-model="oitem.main_contact_person" onfocus="this.blur()">
@@ -928,10 +928,10 @@
                                 <div class="col-md-12 nopad-left orderDistributionContainer">
                                 <div class="col-md-12" ng-repeat="oitem in items">
                                     <!-- First Row -->
-                                    <div class="col-md-3 smallPad m-b nopad-left">
+                                    <div class="col-md-9 smallPad m-b nopad-left">
                                         <input type="text" class="form-control" ng-model="oitem.name" onfocus="this.blur()">
                                     </div>
-                                    <div class="col-md-9 smallPad m-b nopad-right">
+                                    <div class="col-md-3 smallPad m-b nopad-right">
                                         <input type="text" class="form-control" ng-model="oitem.size_group_name" onfocus="this.blur()">
                                     </div>
 
@@ -945,10 +945,10 @@
                                         <input type="text" class="form-control" ng-model="oitem.color_name" onfocus="this.blur()">
                                     </div>
                                     <div class="col-md-2 smallPad m-b nopad-left">
-                                        <input type="text" class="form-control" ng-model="oitem.size" onfocus="this.blur()">
+                                        <input type="text" class="form-control text-center" ng-model="oitem.size" onfocus="this.blur()">
                                     </div>
                                     <div class="col-md-2 smallPad m-b nopad-left">
-                                        <input type="text" class="form-control" ng-model="oitem.qnty" onfocus="this.blur()">
+                                        <input type="text" class="form-control text-center" ng-model="oitem.qnty" onfocus="this.blur()">
                                     </div>
                                     <div class="col-md-3 m-b nopad-form">
                                         <input type="text" class="form-control" ng-model="oitem.main_contact_person" onfocus="this.blur()">

@@ -217,7 +217,7 @@ class Client extends Model {
      public function GetNoteDetails($id)
    {
    		$result = DB::table('client_notes as cn')
-   					->select('cn.client_notes','cn.note_id','cn.created_date','u.user_name')
+   					->select('cn.client_notes','cn.note_id',DB::raw('DATE_FORMAT(cn.created_date, "%m/%d/%Y") as created_date'),'u.user_name')
    					->join('users as u','u.id','=','cn.user_id')
    					->where('cn.client_id','=',$id)
    					->where('cn.note_status','=','1')
@@ -256,7 +256,7 @@ class Client extends Model {
    {
    		$result = DB::table('orders as ord')
    					->leftJoin('misc_type as mt','mt.id','=','ord.f_approval')
-   					->select('mt.value','ord.id','ord.client_id','ord.job_name','ord.f_approval',DB::raw('DATE_FORMAT(ord.created_date, "%Y-%m-%d") as created_date'))
+   					->select('mt.value','ord.id','ord.client_id','ord.job_name','ord.f_approval',DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'))
    					->where('ord.client_id','=',$id)
    					->where('ord.is_delete','=','1')
    					->get();
