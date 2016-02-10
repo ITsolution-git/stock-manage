@@ -1,8 +1,9 @@
 
-app.controller('colorListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService,$filter) {
+app.controller('colorListCtrl', ['$scope','$http','notifyService','$location','$state','$stateParams','$modal','fileUpload','AllConstant','AuthService','$filter', function($scope,$http,notifyService,$location,$state,$stateParams,$modal,fileUpload,AllConstant,AuthService,$filter) {
   
 AuthService.checksession();
-
+ get_all_color();
+function get_all_color() {
 
   $http.get('api/public/common/getAllColorData').success(function(result, status, headers, config) {
               $scope.colors = result.data.records;
@@ -57,17 +58,19 @@ AuthService.checksession();
 
       });
 
-
+}
 
 $scope.updateColors = function(value,id,updatedcolumn) {
 
 
 if(angular.isUndefined(id)){
 
+ 
+
    var combine_array_data = {};
               combine_array_data.updatedcolumn = value;
               combine_array_data.columnname = updatedcolumn;
-             
+            
                $http.post('api/public/admin/colorInsert',combine_array_data).success(function(result, status, headers, config) {
                         
                           });
@@ -77,7 +80,7 @@ if(angular.isUndefined(id)){
               combine_array_data.updatedcolumn = value;
               combine_array_data.columnname = updatedcolumn;
               combine_array_data.id = id;
-
+ 
              
                $http.post('api/public/admin/colorSave',combine_array_data).success(function(result, status, headers, config) {
                          
@@ -91,10 +94,6 @@ if(angular.isUndefined(id)){
 
   };
 
-
-$scope.addColors = function(){
-                            $scope.colors.push({ name:''});
-                          }
 
 
     $scope.removeColors = function(index,id){
@@ -113,9 +112,7 @@ $http.post('api/public/common/DeleteTableRecords',position_data).success(functio
      
 
   });
-
-
-     $scope.colors.splice(index,1);
+     get_all_color();
   }
 
 }
@@ -123,6 +120,48 @@ $http.post('api/public/common/DeleteTableRecords',position_data).success(functio
 }
 
 
+$scope.openColorPopup = function (page) {
+
+       
+        var modalInstance = $modal.open({
+                                templateUrl: 'views/setting/'+page,
+                                scope : $scope,
+                            });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+        });
+
+        $scope.closePopup = function (cancel)
+        {
+            modalInstance.dismiss('cancel');
+        };
+        
+        $scope.saveColor=function(colorName)
+        {
+          
+        
+            if(colorName == undefined) {
+
+              var data = {"status": "error", "message": "Color should not be blank"}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+            }
+
+
+            var combine_array_data = {};
+              combine_array_data.updatedcolumn = colorName;
+              combine_array_data.columnname = "name";
+             
+               $http.post('api/public/admin/colorInsert',combine_array_data).success(function(result, status, headers, config) {
+                        
+                          });
+            modalInstance.dismiss('cancel');
+              get_all_color();
+        };
+    };
   
 
 

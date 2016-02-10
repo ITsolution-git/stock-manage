@@ -70,11 +70,11 @@ class ArtController extends Controller {
     }
 
     //ARTJOB-  ART WORKPROOF POPUP DATA RETRIVE
-    public function artworkproof_data($orderline_id, $company_id)
+    public function artworkproof_data($wp_id, $company_id)
     {
-    	if(!empty($company_id) && !empty($orderline_id)	&& $company_id != 'undefined')
+    	if(!empty($company_id) && !empty($wp_id)	&& $company_id != 'undefined')
     	{
-    		$art_workproof = $this->art->artworkproof_data($orderline_id,$company_id);
+    		$art_workproof = $this->art->artworkproof_data($wp_id,$company_id);
     		if(count($art_workproof)>0)
     		{
 	    		$art_id = $art_workproof[0]->art_id;
@@ -192,6 +192,19 @@ class ArtController extends Controller {
     		{
     			$response = array('success' => 0, 'message' => NO_RECORDS,'records' => $Client_art_screen);
     		}
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function Insert_artworkproof($line_id)
+    {
+    	if(!empty($line_id) && $line_id != 'undefined')
+    	{
+    		$wp_id = $this->art->Insert_artworkproof($line_id);
+    		$response = array('success' => 1, 'message' => INSERT_RECORD,'records'=>$wp_id);
     	}
     	else 
         {

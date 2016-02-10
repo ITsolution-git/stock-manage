@@ -6,7 +6,8 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
             var company_id = $rootScope.company_profile.company_id;
             var login_id = $scope.app.user_id;
    
-                
+                $scope.client_id = '0';
+                $scope.sales_id = '0';
       $scope.orderListAll = function($event,column_name){
 
 

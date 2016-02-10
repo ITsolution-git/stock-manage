@@ -724,7 +724,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 
                 $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
                     $('.form-control').removeClass('ng-dirty');
-                    $("#ajax_loader").hide();
                      get_order_details(order_id,client_id,company_id);
                 });
             }
@@ -1749,6 +1748,10 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 }
             });
         }
+        else
+        {
+            $("#ajax_loader").hide();
+        }
         /* -------------------------------------------------------------------------------------------------- */
         
         if($scope.price_grid_markup.length > 0 && $scope.position_qty > 0)
@@ -1885,9 +1888,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
                 $scope.updateOrderLine($scope.orderLineAll,orderline_id);
             });
-            
         }
-        $("#ajax_loader").hide();
+        else
+        {
+            $("#ajax_loader").hide();
+        }
     }
 
     $scope.calulate_tax = function(tax_rate)
@@ -2381,21 +2386,28 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
     function querySearch (query,vendor_id) {
       
-      $scope.states =loadAll();
+        $scope.states =loadAll();
 
-      var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states,
-          deferred;
-      if ($scope.simulateQuery)
-      {
+        var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states,
+        deferred;
+
+        if(results == '' || results == null || results == undefined)
+        {
+            var data = {"status": "error", "message": "Please select valid product"}
+            notifyService.notify(data.status, data.message);
+            return false;
+        }
+
+        if ($scope.simulateQuery)
+        {
             deferred = $q.defer();
             $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
             return deferred.promise;
-      }
-      else
-      {
-        return results;
-      }
-
+        }
+        else
+        {
+            return results;
+        }
     }
     function searchTextChange(text,orderline_id) {
         $log.info('Text changed to ' + text);
@@ -2437,17 +2449,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     }
     function loadAll() {
 
-        /*var allStates = 'Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware,\
-              Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana,\
-              Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana,\
-              Nebraska, Nevada, New Hampshire, New Jersey, New Mexico, New York, North Carolina,\
-              North Dakota, Ohio, Oklahoma, Oregon, Pennsylvania, Rhode Island, South Carolina,\
-              South Dakota, Tennessee, Texas, Utah, Vermont, Virginia, Washington, West Virginia,\
-              Wisconsin, Wyoming';*/
-
         var allStates = $scope.allStates;
-
-
 
           return allStates.split(",").map( function (state) {
             return {

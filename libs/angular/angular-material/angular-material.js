@@ -12591,8 +12591,8 @@ function MdAutocompleteCtrl ($scope, $element, $mdUtil, $mdConstant, $timeout, $
    * Removes any events or leftover elements created by this controller
    */
   function cleanup () {
-    angular.element($window).off('resize', positionDropdown);
-    elements.$.ul.remove();
+    /*angular.element($window).off('resize', positionDropdown);
+    elements.$.ul.remove();*/
   }
 
   /**
