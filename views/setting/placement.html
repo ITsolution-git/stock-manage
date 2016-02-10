@@ -15,6 +15,10 @@
                     Showing {{filteredPlacementData.length}} of {{placementData.length}} placement
                 </span>              
             </div>
+            <button class="btn btn-fw btn-danger pull-right" md-ink-ripple="" ng-click="openpopup()">
+                New
+                <div class="md-ripple-container" style=""></div>
+            </button>
         </div>
         <div class="col-md-12 nopad-form misc-view-details horizontal-only">
             <table class="table m-b-none" data-filter="#filter">
@@ -40,11 +44,11 @@
                         </td> 
                         <td>  <button type="button" ng-click="removePlacement($index,value.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button></td>
                     </tr>
-                    <tr>
+<!--                     <tr>
                         <td colspan="3">
-                            <button type="button" ng-click="addPlacement()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
+                            <button type="button" ng-click="openpopup()" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>&nbsp;
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
             <footer class="table-footer">
