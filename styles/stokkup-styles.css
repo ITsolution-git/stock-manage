@@ -79,6 +79,11 @@ textarea {
 .aestric_required {
 	color: red;
 }
+.label-change {
+	padding: 10px;
+	font-size: 12px;
+	
+}
 /*=========================
 	Background Video
 =========================*/

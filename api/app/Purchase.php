@@ -42,8 +42,9 @@ class Purchase extends Model {
 		
 		if(count($result)>0)
 		{
+
 			array_walk_recursive($result[0], function(&$item) {
-	            $item = str_replace(array(' ','0000-00-00'),array('',''), $item);
+	            $item = str_replace(array('0000-00-00'),array(''), $item);
 	        });
 		}
 		
@@ -196,7 +197,7 @@ class Purchase extends Model {
 	function Update_shiftlock($post)
 	{
 		$result = DB::table('purchase_order')
-   						->where('order_id','=',$post['po_id'])
+   						->where('po_id','=',$post['po_id'])
    						->update(array('shipt_block'=>$post['data']));
     	return $result;
 	}
