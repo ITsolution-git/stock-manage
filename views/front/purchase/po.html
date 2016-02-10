@@ -338,7 +338,7 @@
                   <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>Arrival Date <em class="text-muted"></em></label>
                      <p class="input-group">
-                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="arrival_date"  type="text" class="form-control"  datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="arrival_date"  type="text" class="form-control"  datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>

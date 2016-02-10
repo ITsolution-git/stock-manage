@@ -130,7 +130,7 @@ class Order extends Model {
    {
        
         $whereConditions = ['on.order_id' => $id,'on.note_status' => '1'];
-        $listArray = ['on.order_notes','on.note_id','on.created_date','u.user_name'];
+        $listArray = ['on.order_notes','on.note_id',DB::raw('DATE_FORMAT(on.created_date, "%m/%d/%Y") as created_date'),'u.user_name'];
 
         $orderNoteData = DB::table('order_notes as on')
                          ->Join('users as u', 'u.id', '=', 'on.user_id')
