@@ -84,6 +84,9 @@ textarea {
 	font-size: 12px;
 	
 }
+.label-bold {
+	font-weight: bold;
+}
 /*=========================
 	Background Video
 =========================*/
