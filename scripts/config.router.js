@@ -947,6 +947,20 @@ angular.module('app')
                             },
                        }
             })
+     .state('art.screen', {
+                url: '/screen/:id',
+                templateUrl: 'views/front/art/screen_set.html',
+                controller: 'ArtScreenCtrl',
+                data : { title: 'Screen' },
+                resolve: {
+                            checklogin: function (AuthService) {
+                               return AuthService.checksession();
+                            },
+                            checkcompany: function (AuthService) {
+                               return AuthService.CompanyService();
+                            },
+                       }
+            })
     /*==========================================
           ART MODULE CODE END
     ==========================================*/

@@ -357,3 +357,12 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 
 }]);
 
+app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService','$modal',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService,$modal) {
+
+						  AuthService.AccessService('BC');
+                          $scope.CurrentController=$state.current.controller;
+                          $scope.company_id = $rootScope.company_profile.company_id;
+
+
+
+	}]);

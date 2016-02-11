@@ -7,29 +7,13 @@
                                 <div class="col-md-5 nopad-right smallPad"></div>
                                 <div class="col-md-3 nopad-right smallPad">
                                     <button title="Go to ArtListing" ui-sref="art.list" type="button" class="btn btn-info active" tabindex="0">Art List</button>
-                                    <button title="Go to ScreenListing" ui-sref="art.screenlist({art_id:art_id,company_id:company_id})" type="button" class="btn btn-info" tabindex="0">Screen List</button>
+                                    <button title="Go to ScreenListing" ui-sref="art.screenlist({art_id:'',company_id:company_id})" type="button" class="btn btn-info" tabindex="0">Screen List</button>
                                     <button title="Order Id" type="button" class="btn btn-info" tabindex="0">#{{art_position[0].order_id}}</button>
                                 </div>
                     <div class="col-sm-12 m-b nopad-form">
                         <div class="col-sm-12 m-b"></div>
                         
-                        <div class="col-md-10 nopad-form">
-                            
-                            <div class="form-group col-md-12 m-b nopad-form">
-                                <div class="col-md-2 m-b nopad-left">
-                                    <label>Job Name <em class="text-muted"></em></label>
-                                    <input  class="form-control" ng-model="art_position[0].job_name" name="job_name" >
-                                        
-                                </div>
-                                <div class="col-md-2 m-b">
-                                    <label>Sales Total<em class="text-muted"></em></label>
-                                    <input  class="form-control" ng-model="art_position[0].grand_total" name="sales_total" >
-                                </div>
 
-                               
-                            </div>
-                        </div>
-                        
                        
                         <ul class="nav nav-tabs input-group col-sm-12">
                             <li class="active"><a href data-toggle="tab" data-target="#tab1">Screen Set Detail</a></li>
@@ -40,25 +24,25 @@
                         <div class="tab-content p b-a no-b-t bg-white m-b-md">
                             <!-- POSITION TAB START -->
                             <div role="tabpanel" class="tab-pane active animated fadeIn" id="tab1">
-                                 <div ng-include="'views/front/screen/artjob/position.html'"></div>
+                                 <div ng-include="'views/front/art/screen/screen_detail.html'"></div>
                             </div>
                             <!-- POSITION TAB END -->
                            
                             <!-- SCREEN SETS START -->
                             <div role="tabpanel" class="tab-pane  animated fadeIn orderNoteTab" id="tab2">
-                                <div ng-include="'views/front/screen/artjob/screensets.html'"></div>
+                                <div ng-include="'views/front/art/screen/screen_art.html'"></div>
                             </div>
                             <!-- SCREEN SETS END -->
 
                             <!-- ORDER GROUP TAB -->
                             <div role="tabpanel" class="tab-pane animated fadeIn tab2Ol" id="tab3">
-                                <div ng-include="'views/front/screen/artjob/order_group.html'"></div>
+                                <div ng-include="'views/front/art/screen/screen_garment.html'"></div>
                             </div>
                             <!-- ORDERGROUP TAB -->
 
                             <!-- ORDERLINE TAB START -->
                             <div role="tabpanel" class="tab-pane animated fadeIn tab2Ol" id="tab4">
-                                <div ng-include="'views/front/screen/artjob/orderline.html'"></div>
+                                <div ng-include="'views/front/art/screen/screen_note.html'"></div>
                             </div>
                             <!-- ORDERLINE TAB END -->
 
