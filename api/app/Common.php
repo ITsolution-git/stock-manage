@@ -267,7 +267,7 @@ class Common extends Model {
     public function getAllColorData() {
         
         $whereColorConditions = ['status' => '1','is_delete' => '1'];
-        $colorData = DB::table('color')->select('id','name')->where($whereColorConditions)->where('name','!=','')->get();       
+        $colorData = DB::table('color')->select('id','name')->where($whereColorConditions)->where('name','!=','')->orderby('name')->get();       
         return $colorData;
     }
 

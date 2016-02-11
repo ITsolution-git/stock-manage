@@ -943,25 +943,35 @@ input[readonly].cgreen {
 }
 
 /* Multiple Search */
-.orderLineTabScroll md-autocomplete input:not(.md-input) {
+.md-autocomplete-suggestions {
+	z-index: 9999;
+}
+md-autocomplete input:not(.md-input) {
 	height: 34px;
 	padding:0 5px;
 	line-height: 19px;
 }
-.orderLineTabScroll  md-autocomplete button {
+md-autocomplete button {
 	width: 20px;
 	height: 15px;
 }
-.orderLineTabScroll .md-whiteframe-z1 {
+.md-whiteframe-z1 {
 	border:1px solid #cfd1d4;
 	border-radius: 5px;
 	box-shadow: none;
-	height: 34px;
+	height: 34px;	
     margin-bottom: 15px;
 }
-.orderLineTabScroll .md-autocomplete-suggestions {
+.md-autocomplete-suggestions {
 	height: 150px;
 	max-height: 150px;
+}
+md-autocomplete input {
+	width:50px !important;
+}
+
+.addColorModal .modal-dialog {
+	width: 1024px;
 }
 /*----- DISTRIBUSTION TAB -----*/
 .orderDistributionContainer {
@@ -1417,3 +1427,4 @@ button.topNavButtons.active {
     color: #000;
     background-color: #828282;
 }
+.typeahead { z-index: 10501; }
