@@ -8,16 +8,18 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Client;
 use App\Common;
+use App\Art;
 use DB;
 
 use Request;
 
 class ClientController extends Controller { 
 
-	public function __construct(Client $client,Common $common) 
+	public function __construct(Client $client,Common $common,Art $art) 
  	{
         $this->client = $client;
         $this->common = $common;
+        $this->art = $art;
     }
 
     /**
@@ -217,8 +219,10 @@ class ClientController extends Controller {
     * Get Array List of Client details(added from client create page)
     * @return json data
     */
-	public function GetclientDetail($id)
+	public function GetclientDetail()
 	{
+		$post = Input::all();
+		$id = $post['client_id'];
 		if(!empty($id))
 		{
 			$result = $this->client->GetclientDetail($id);
@@ -228,8 +232,11 @@ class ClientController extends Controller {
 			$result['main']['bw_url_photo'] = UPLOAD_PATH.'client/'.$result['main']['b_w_logo'];
 			$result['main']['shipping_url_photo'] = UPLOAD_PATH.'client/'.$result['main']['shipping_logo'];
 			$result['tax']['tax_document_url'] = UPLOAD_PATH.'tax/'.$result['tax']['tax_document'];
+			if($result['sales']['anniversarydate'] != '')
+			{
+				$result['sales']['anniversarydate'] = date('m/d/Y',strtotime($result['sales']['anniversarydate']));
+			}
 
-            
 			if(count($result)>0)
 			{
 				$StaffList = $this->common->getStaffList();
@@ -239,9 +246,11 @@ class ClientController extends Controller {
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
 				$Client_orders = $this->client->ListClientOrder($id);
+				$art_detail = $this->art->Client_art_screen($post['client_id'],$post['company_id']);
+				
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else

@@ -70,15 +70,23 @@
                                                
                                             </div>
                                             <div class="form-group col-md-3 nopad-form">
-                                                <input type="text" class="form-control"  ng-model="screen_data.positions" placeholder="Position" />
+                                                <!-- <input type="text" class="form-control"  ng-model="screen_data.positions" placeholder="Position" /> -->
+                                                 <select class="form-control" ng-model="screen_data.positions" name="positions" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" >
+                                                    <option value="">Select Position</option>
+                                                    <option ng-repeat="position in wp_position" value="{{position.id}}"  ng-selected="{{position.id==screen_data.positions}}">{{position.value}}</option>
+                                                  </select>
+
+                                
                                             </div>
                                         </div>
 
-                                        
-
-                                        <div class="col-md-2 nopad-left">
-                                            
-                                            <div class="sgpDetails btnCircle">
+                                        <div class="col-md-1 nopad-left">
+                                            <div class="col-md-6 sgpDetails btnCircle">
+                                                <button title="Add color" ng-click="color_popup(screen_data.id)" type="button" class="btn btn-default addButton c-dgreen" >
+                                                          <i class="fa fa-edit"></i> 
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 sgpDetails btnCircle">
                                               <a class="" tabindex="0" role="button" title="Go To Screen">
                                                 <i class="fa fa-arrow-circle-right"></i>
                                               </a>

@@ -51,15 +51,18 @@ class ArtController extends Controller {
     	{
     		$art_position = $this->art->art_position($art_id,$company_id);
     		$art_orderline = $this->art->art_orderline($art_id,$company_id);
-			$artjobscreen_list = $this->art->artjobscreen_list($art_id,$company_id);
+			$artjobscreen_list = $this->art->artjobscreen_list($art_id,$company_id);  // SCREEN LISTING DATA
 			$graphic_size = $this->common->GetMicType('graphic_size');
 			$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id);
 
-			$art_worklist = $this->art->art_worklist($art_id,$company_id);
+			$art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
+			$allcolors = $this->common->getAllColorData();
+			$wp_position = $this->common->GetMicType('position');
+			foreach ($allcolors as $key => $value) {
+				$allcolors[$key]->name = strtolower($value->name);
+			}
 
-			
-
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist);
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'allcolors'=>$allcolors,'wp_position'=>$wp_position);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
@@ -70,20 +73,20 @@ class ArtController extends Controller {
     }
 
     //ARTJOB-  ART WORKPROOF POPUP DATA RETRIVE
-    public function artworkproof_data($orderline_id, $company_id)
+    public function artworkproof_data($wp_id, $company_id)
     {
-    	if(!empty($company_id) && !empty($orderline_id)	&& $company_id != 'undefined')
+    	if(!empty($company_id) && !empty($wp_id)	&& $company_id != 'undefined')
     	{
-    		$art_workproof = $this->art->artworkproof_data($orderline_id,$company_id);
+    		$art_workproof = $this->art->artworkproof_data($wp_id,$company_id);
     		if(count($art_workproof)>0)
     		{
 	    		$art_id = $art_workproof[0]->art_id;
 	    		$get_artworkproof_placement = $this->art->get_artworkproof_placement($art_id,$company_id);
 
-	    		$wp_position = $this->common->GetMicType('position');
+	    		
 
 
-	    		$ret_array = array('art_workproof'=>$art_workproof,'get_artworkproof_placement'=>$get_artworkproof_placement,'wp_position'=>$wp_position);
+	    		$ret_array = array('art_workproof'=>$art_workproof,'get_artworkproof_placement'=>$get_artworkproof_placement);
 	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $ret_array);
     		}
     		else
@@ -192,6 +195,58 @@ class ArtController extends Controller {
     		{
     			$response = array('success' => 0, 'message' => NO_RECORDS,'records' => $Client_art_screen);
     		}
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function Insert_artworkproof($line_id)
+    {
+    	if(!empty($line_id) && $line_id != 'undefined')
+    	{
+    		$wp_id = $this->art->Insert_artworkproof($line_id);
+    		$response = array('success' => 1, 'message' => INSERT_RECORD,'records'=>$wp_id);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function screen_colorpopup ($screen_id,$company_id)
+    {
+    	if(!empty($company_id) && !empty($screen_id)	&& $company_id != 'undefined')
+    	{
+    		$screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
+    		$allcolors = $this->common->getAllColorData();
+    		foreach ($allcolors as $key => $value) 
+			{
+				$allcolors[$value->id]= $value->name;
+			}
+
+    		//echo "<pre>"; print_r($allcolors); echo "</pre>"; die;
+    		if(count($screen_colorpopup)>0)
+			{
+				foreach ($screen_colorpopup as $key => $value) 
+				{
+					$screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $allcolors[$value->color_name]:'';
+					$screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $allcolors[$value->thread_color]:'';
+				}
+			}	
+
+    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup);
+    		
+    		if(count($screen_colorpopup)>0)
+    		{
+    			$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $ret_array);
+    		}
+    		else
+    		{
+    			$response = array('success' => 0, 'message' => NO_RECORDS,'records' => $ret_array);
+    		}
+
     	}
     	else 
         {

@@ -123,7 +123,7 @@ class Art extends Model {
     	}
     	return $ret_array;
     }
-    public function artworkproof_data($orderline_id, $company_id)
+    public function artworkproof_data($wp_id, $company_id)
     {
     	$Misc_data = $this->AllMsiData();
     	$position_data = $this->AllMsiData();
@@ -138,7 +138,7 @@ class Art extends Model {
 				->leftJoin('placement as pl',DB::raw("FIND_IN_SET(pl.id,aaw.wp_placement)"),DB::raw(''),DB::raw(''))
 				->where('or.is_delete','=','1')
 				->where('or.company_id','=',$company_id)
-				->where('oo.id','=',$orderline_id)
+				->where('aaw.id','=',$wp_id)
 				->GroupBy('aaw.id')
 				->get();
 
@@ -166,14 +166,6 @@ class Art extends Model {
 				->where('ass.art_id','=',$art_id)
 				->get();
 				
-		if(count($query)>0)
-		{
-			foreach ($query as $key => $value) 
-			{
-				//$query[$key]->f_approval = (!empty($value->f_approval))?$Misc_data[$value->f_approval]:'';
-			}
-		}
-		
 		return $query;
     }
 
@@ -269,17 +261,18 @@ class Art extends Model {
     {	
     			$Misc_data = $this->AllMsiData();
 
-    	    	$query = DB::table('artjob_artworkproof as aaw')
+    	    	$query = DB::table('art as art')
 				->select('or.id as order_id','or.job_name','art.art_id',DB::raw("GROUP_CONCAT(pl.misc_value) as placement_name"),'cl.name as product_color','ol.size_group_id','ol.color_id','ass.screen_set','ol.id as line_id','aaw.*')
-				->leftJoin('order_orderlines as ol','ol.id','=','aaw.orderline_id')
-				->join('orders as or','ol.order_id','=','or.id')
-				->join('art as art','art.order_id','=','or.id')
+				->join('orders as or','art.order_id','=','or.id')
+				->leftJoin('order_orderlines as ol','ol.order_id','=','or.id')
+				->leftJoin('artjob_artworkproof as aaw','ol.id','=','aaw.orderline_id')
 				->leftJoin('color as cl','cl.id','=','ol.color_id')
 				->leftJoin('placement as pl',DB::raw("FIND_IN_SET(pl.id,aaw.wp_placement)"),DB::raw(''),DB::raw(''))
 				->leftJoin('artjob_screensets as ass','ass.id','=','aaw.wp_screen')
 				->where('or.is_delete','=','1')
 				->where('or.company_id','=',$company_id)
 				->where('art.art_id','=',$art_id)
+				->GroupBy('aaw.id')
 				->get();
 
 				if(count($query)>0)
@@ -330,5 +323,25 @@ class Art extends Model {
 		}
 
 		return $client_array;
+    }
+    public function Insert_artworkproof($line_id)
+    {
+    	$result = DB::table('artjob_artworkproof')->insert(array("orderline_id"=>$line_id));
+
+    	$wp_id = DB::getPdo()->lastInsertId();
+    	return $wp_id;
+    }
+    public function screen_colorpopup ($screen_id,$company_id)
+    {
+    	$query = DB::table('artjob_screensets as ass')
+				->select('asc.*','asc.id as color_id','ass.*','ass.id as screen_id')
+				->join('art as art','art.art_id','=','ass.art_id')
+				->join('orders as ord','ord.id','=','art.order_id')
+				->leftjoin('artjob_screencolors as asc','asc.screen_id','=','ass.id')
+				->where('ord.company_id','=',$company_id)
+				->where('ass.id','=',$screen_id)
+				->get();
+
+		return $query;
     }
 }

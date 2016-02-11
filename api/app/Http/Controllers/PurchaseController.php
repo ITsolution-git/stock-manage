@@ -250,4 +250,27 @@ class PurchaseController extends Controller {
     	}
     	return  response()->json(["data" => $response]);
 	}
+
+    public function getPurchaseNote($id)
+    {
+        $result = $this->purchase->getPurchaseNote($id);
+        return $this->return_response($result);
+    }
+
+    /**
+    * Get Array
+    * @return json data
+    */
+    public function return_response($result)
+    {
+        if (count($result) > 0) 
+        {
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+        } 
+        else 
+        {
+            $response = array('success' => 0, 'message' => NO_RECORDS);
+        }
+        return  response()->json(["data" => $response]);
+    }
 }

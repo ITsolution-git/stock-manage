@@ -125,10 +125,7 @@ app.controller('PurchasePOCtrl', ['$scope','$rootScope','$sce',  '$http','$modal
                           }
                           function getNotesDetail()
                           {
-                            var ArrNotes = {};
-                            ArrNotes.table ='purchase_notes'
-                            ArrNotes.cond ={po_id: $scope.po_id}
-                            $http.post('api/public/common/GetTableRecords',ArrNotes).success(function(result) {
+                            $http.post('api/public/purchase/getPurchaseNote/'+$scope.po_id).success(function(result) {
                                 if(result.data.success == '1') 
                                 {
                                     $scope.AllNotesData =result.data.records;

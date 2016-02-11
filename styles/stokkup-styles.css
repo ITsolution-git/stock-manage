@@ -79,6 +79,14 @@ textarea {
 .aestric_required {
 	color: red;
 }
+.label-change {
+	padding: 10px;
+	font-size: 12px;
+	
+}
+.label-bold {
+	font-weight: bold;
+}
 /*=========================
 	Background Video
 =========================*/
@@ -762,6 +770,33 @@ a.btnEditOrder:hover {
 /*---------------------------
 		ORDER LINE TAB
 ---------------------------*/
+.strip-content {
+	overflow: hidden;
+}
+
+.strip-content .stripedDiv {
+	padding: 5px;
+}
+.strip-content .stripedDiv .form-group {
+	margin-bottom: 0;
+}
+.strip-content .stripedDiv:nth-child(2n) {
+	background: #e5e5e5;
+}
+.strip-content .stripedDiv:hover,
+.strip-content .stripedDiv.active {
+	background: #e5e5e5;
+}
+.strip-content .orderLineTabScroll {
+	padding: 15px 5px 0 5px;
+}
+.strip-content .orderLineTabScroll:nth-child(2n) {
+	background: #e5e5e5;
+}
+.strip-content .orderLineTabScroll:hover,
+.strip-content .orderLineTabScroll.active {
+	background: #e5e5e5;
+}
 .orderTotalPrice {
 	margin-top: 30px;
 }
@@ -781,13 +816,14 @@ a.btnEditOrder:hover {
 	overflow:hidden;
 	border: 1px solid #cccccc;
 	box-sizing:border-box;
-	padding: 20px 0 0 20px;
+	padding: 15px;
 	max-height: 470px;
 	overflow: hidden;
 	overflow-y:scroll; 
 }
 .orderLineTabScroll {
-	width: 100% !important;
+	width: 102% !important;
+	/*width: 100% !important;*/
 	overflow: hidden;
 }
 .cols {
@@ -907,25 +943,35 @@ input[readonly].cgreen {
 }
 
 /* Multiple Search */
-.orderLineTabScroll md-autocomplete input:not(.md-input) {
+.md-autocomplete-suggestions {
+	z-index: 9999;
+}
+md-autocomplete input:not(.md-input) {
 	height: 34px;
 	padding:0 5px;
 	line-height: 19px;
 }
-.orderLineTabScroll  md-autocomplete button {
+md-autocomplete button {
 	width: 20px;
 	height: 15px;
 }
-.orderLineTabScroll .md-whiteframe-z1 {
+.md-whiteframe-z1 {
 	border:1px solid #cfd1d4;
 	border-radius: 5px;
 	box-shadow: none;
-	height: 34px;
+	height: 34px;	
     margin-bottom: 15px;
 }
-.orderLineTabScroll .md-autocomplete-suggestions {
+.md-autocomplete-suggestions {
 	height: 150px;
 	max-height: 150px;
+}
+md-autocomplete input {
+	width:50px !important;
+}
+
+.addColorModal .modal-dialog {
+	width: 1024px;
 }
 /*----- DISTRIBUSTION TAB -----*/
 .orderDistributionContainer {
@@ -948,7 +994,7 @@ input[readonly].cgreen {
 
 .orderDistributionContainer .col-md-12:hover,
 .orderDistributionContainer .col-md-12.active {
-	background: #999;
+	background: #e5e5e5;
 }
 .blockTitle label {
 	width: 100%;
@@ -1381,3 +1427,4 @@ button.topNavButtons.active {
     color: #000;
     background-color: #828282;
 }
+.typeahead { z-index: 10501; }

@@ -137,7 +137,7 @@ Route::post('client/ClientContacts', 'ClientController@ClientContacts');
 Route::post('client/getContacts', 'ClientController@getContacts');
 Route::post('client/ClientAddress', 'ClientController@ClientAddress');
 Route::post('client/getAddress', 'ClientController@getAddress');
-Route::get('client/GetclientDetail/{id}','ClientController@GetclientDetail');
+Route::post('client/GetclientDetail','ClientController@GetclientDetail');
 Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
@@ -170,6 +170,7 @@ Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
 Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
 Route::get('purchase/GetScreendata/{id}/{company_id}', 'PurchaseController@GetScreendata');
 Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
+Route::post('purchase/getPurchaseNote/{id}', 'PurchaseController@getPurchaseNote');
 
 
 // ORDER CONTROLLER 
@@ -247,4 +248,6 @@ Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
 Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');
 Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListing');
 Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
+Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkproof');
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');
+Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');

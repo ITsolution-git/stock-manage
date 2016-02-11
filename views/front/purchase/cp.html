@@ -6,24 +6,22 @@
         <div class="panel-body">
     <div class="col-sm-6 m-b">
 
-    <button  type="button" ui-sref="purchase.cp({id:po_id})" class="btn btn-info topNavButtons active">Contract Prints</button>
+    
+    <span class="label bg-dark label-change">Contract Prints</span>
       <!-- <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info topNavButtons">Company PO</button>
       <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info topNavButtons">Supplied Garments</button>
       
       <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info topNavButtons">Contract Embrodiery</button>    --> 
     </div>
     <div class="col-sm-2 m-b">
-      <button class="btn m-v-xs btn-sm btn-dark">PO#  <b class="badge m-l-xs">{{po_id}}</b></button>
+       <span class="label bg-dark label-change">PO#  <b class="badge m-l-xs">{{po_id}}</b></span>
     </div>
     <div class="col-sm-2 m-b">
-      <button class="btn m-v-xs btn-sm btn-dark">JOB#  <b class="badge m-l-xs">{{order_id}}</b></button>    
+      <span class="label bg-dark label-change">JOB#  <b class="badge m-l-xs">{{order_id}}</b></span>   
     </div>
 
             <div class="col-sm-12 m-b">
-              <div class="col-sm-2 m-b">
-                    <label>Purchase OrderId <em class="text-muted"></em></label>
-                    <input type="text" disabled="" class="form-control" ng-model="ArrPo.po_id"  >
-                  </div>
+             
                   <div class="col-sm-2 m-b">
                     <label>Client<em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="ArrPo.client_company"  >
@@ -35,7 +33,7 @@
                   <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>Created for date<em class="text-muted"></em></label>
                       <p class="input-group">
-                        <input name="created_for_date" type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.created_for_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <input name="created_for_date" type="text" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }" datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.created_for_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -44,7 +42,7 @@
                   <div class="col-sm-2 m-b" ng-controller="DatepickerDemoCtrl">
                     <label>Product to vendor Arrival<em class="text-muted"></em></label>
                      <p class="input-group">
-                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_arrival_date"  type="text" class="form-control"   datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.vendor_arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_arrival_date"  type="text" class="form-control"   datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.vendor_arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -53,7 +51,7 @@
                   <div class="col-sm-2 m-b"  ng-controller="DatepickerDemoCtrl">
                     <label>Vendor deadline<em class="text-muted"></em></label>
                     <p class="input-group">
-                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_deadline"  type="text" class="form-control"   datepicker-popup="yyyy-MM-dd" ng-model="ArrPo.vendor_deadline"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <input  ui-event="{ blur : 'UpdateField_order($event)' }" name="vendor_deadline"  type="text" class="form-control"   datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.vendor_deadline"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
                         <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -363,15 +361,15 @@
 
                          </div>
                     </div> </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab14">
+              <div role="tabpanel" class="tab-pane animated fadeIn strip-content" id="tab14">
 
-                    <div class="col-sm-12 nopad-form" ng-repeat="(key,order_line) in order_line_data">
-                      <span>SKU:</span>
+                    <div class="col-sm-12 nopad-form stripedDiv" ng-repeat="(key,order_line) in order_line_data">
+                      <span class="label-bold">SKU:</span>
                       <span>{{order_line.product_description}}</span>
-                      <span>COLOR:</span>
+                      <span class="label-bold">COLOR:</span>
                       <span>{{order_line.color_name}}</span>&nbsp;
                       <span ng-if="size_qty.qnty != '0'" ng-repeat="size_qty in order_line.items">[{{size_qty.size}}]:{{size_qty.qnty}}&nbsp;</span>
-                      <span>:TOTAL QNTY</span>&nbsp;
+                      <span class="label-bold">:TOTAL QNTY</span>&nbsp;
                       <span>{{order_line.qnty}}</span>
                     </div>
               </div>

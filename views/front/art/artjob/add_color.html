@@ -1,0 +1,120 @@
+ <div class="panel-body">
+ <div class="col-md-12 nopad-form">
+              <div class="form-group col-md-12  nopad-left">
+
+
+	           
+	            <div class="col-md-6 nopad-left">
+	                <label>Width <em class="text-muted"></em></label>
+	                <input type="text" class="form-control" ng-model="screen_colorpopup[0].screen_width" name="screen_width" ui-event="{ blur : 'UpdateField_field($event,screen_colorpopup[0].screen_id,\'artjob_screensets\')' }" >
+	            </div>
+	            <div class="col-md-6  nopad-left">
+	                <label>Height<em class="text-muted"></em></label>
+	                <input type="text" class="form-control" ng-model="screen_colorpopup[0].screen_height"  name="screen_height" ui-event="{ blur : 'UpdateField_field($event,screen_colorpopup[0].screen_id,\'artjob_screensets\')' }" >
+	            </div>
+				<div class="col-md-6  nopad-left">
+				 	<div class="form-group col-md-12 nopad-left">
+		                <label> Screen <em class="text-muted"></em></label>
+		                <input type="text" disabled="disabled" class="form-control" ng-model="screen_colorpopup[0].screen_set"  >
+		            </div>
+		            <div class="col-md-12  nopad-left">
+		                <label>Screen Note<em class="text-muted"></em></label>
+		                <textarea class="form-group" cols="30" rows="3" ng-model="screen_colorpopup[0].screen_notes" name="screen_notes" ui-event="{ blur : 'UpdateField_field($event,screen_colorpopup[0].screen_id,\'artjob_screensets\')' }"></textarea>
+		            </div>
+		            <div class="form-group col-md-12 nopad-right">
+		                <label> <em class="text-muted"></em></label>
+		                <input type="file">
+		            </div>
+	            </div>
+	            <div class="col-md-6  nopad-left">
+					<div class="form-group col-md-12  nopad-right">
+		                <label>LOGO <em class="text-muted"></em></label>
+		                <div class="form-group col-md-12  panel panel-default" style="height:200px;"> </div>
+		            </div>
+				</div>
+	            <div class="col-md-12  nopad-form">
+	              		<div class=" col-md-12  nopad-right">
+		                	<label>Colors <em class="text-muted"></em></label>&emsp;&emsp;
+		                	<button ng-click="add_color_line(screen_colorpopup[0].screen_id);" type="button" class="btn btn-default addButton c-dgreen">
+                                <i class="fa fa-plus"></i> 
+                            </button>
+		                </div>
+		                <div class="col-md-12  nopad-right">
+		                	<div class="col-md-4  nopad-form">Color</div>
+		                	<div class="col-md-4  nopad-form">Thread Color</div>
+		                	<div class="col-md-4  nopad-form">Inq</div>
+		                </div>
+		                <div class="col-md-12  nopad-form" ng-repeat="(key,allcolor) in screen_colorpopup" id={{allcolor.color_id}}>
+		                	<div class="col-md-4  nopad-left">
+
+		                	                <md-autocomplete
+                                            ng-disabled="isDisabled"
+                                            md-no-cache="noCache"
+                                            md-selected-item=""
+                                            md-search-text-change=""
+                                            md-search-text="allcolor.color_name"
+                                            md-selected-item-change="change_color('color_name',item.id,allcolor.color_id,'artjob_screencolors')"
+                                            md-items="item in querySearch(allcolor.color_name)"
+                                            md-item-text="item.name"
+                                            md-min-length="1"
+                                            ng-click=""
+                                            ng-blur="change_color('color_name',item.id,allcolor.color_id,'artjob_screencolors')"
+                                            <md-item-template>
+                                                <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                No Color found.
+                                            </md-not-found>
+                                        </md-autocomplete>
+
+
+		                	 	<!-- <select class="form-control" ng-model="allcolor.color_name" name="color_name" ui-event="{ blur : 'UpdateField_field($event,allcolor.color_id,\'artjob_screencolors\')' }" >
+			                  		<option  ng-selected="allcolor.color_name==color.id" ng-repeat="color in screen_allcolors" ng-value="color.id">{{color.name}}</option>
+			                    </select> -->
+			                </div>
+		                	<div class="col-md-4  nopad-left">
+		                	 	<md-autocomplete
+                                            ng-disabled="isDisabled"
+                                            md-no-cache="noCache"
+                                            md-selected-item=""
+                                            md-search-text-change=""
+                                            md-search-text="allcolor.thread_color"
+                                            md-selected-item-change="change_color('thread_color',thread.id,allcolor.color_id,'artjob_screencolors')"
+                                            md-items="thread in querySearch(allcolor.thread_color)"
+                                            md-item-text="thread.name"
+                                            md-min-length="1"
+                                            ng-click=""
+                                            ng-blur="change_color('thread_color',thread.id,allcolor.color_id,'artjob_screencolors')"
+                                            <md-item-template>
+                                                <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{thread.name}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                No Color found.
+                                            </md-not-found>
+                                        </md-autocomplete>
+
+		                		<!-- <select class="form-control"  ng-model="allcolor.thread_color" name="thread_color" ui-event="{ blur : 'UpdateField_field($event,allcolor.color_id,\'artjob_screencolors\')' }" >
+				                  	<option  ng-selected="allcolor.thread_color==color.id" ng-repeat="color in screen_allcolors" ng-value="color.id">{{color.name}}</option>
+				                </select> -->
+		                	</div>
+		                	<div class="col-md-3  nopad-left">
+		                		<input type="text" ng-model="allcolor.inq" name="inq" ui-event="{ blur : 'UpdateField_field($event,allcolor.color_id,\'artjob_screencolors\')' }" class="form-control">
+		                	</div>
+		                	<div class="col-md-1  nopad-left">
+		                	<button ng-click="remove_data(allcolor.color_id,'artjob_screencolors')" title="Delete" class="btn btn-xs btn-danger addButton c-dgreen" tabindex="0">X</button>
+		                	</div>
+		                </div>
+
+		                
+	              </div>
+
+              </div>
+
+              </div>
+
+              <div class="input-group col-md-12  foruttons">
+                &nbsp;
+                <button ng-click="CloseColorPopup();" type="button" class="btn btn-info">Close</button>
+                &nbsp; 
+              </div>
+            </div></div>
