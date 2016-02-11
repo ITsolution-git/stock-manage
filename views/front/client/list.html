@@ -54,8 +54,8 @@
               </th>
           </tr>
         </thead>
-        <tbody>
-          <tr ng-repeat="value in currentPageClients" id="comp_{{value.client_id}}">
+        <tbody class="strip-content" >
+          <tr ng-repeat="value in currentPageClients" id="comp_{{value.client_id}}" class="stripedDiv">
               <td>{{value.client_company}}</td>
               <td>{{value.first_name}}&nbsp;{{value.last_name}}</td>
               <td>{{value.phone}}</td>

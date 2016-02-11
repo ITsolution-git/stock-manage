@@ -730,8 +730,8 @@
 
 								</tr>
 							</thead>
-							<tbody>
-								<tr ng-repeat="value in currentPageOrders" id="order_{{value.id}}">
+							<tbody class="strip-content">
+								<tr ng-repeat="value in currentPageOrders" id="order_{{value.id}}" class="stripedDiv">
 
                                     <td ><a ui-sref="client.edit({ id: value.client_id })" title="View Client">{{value.client_company}}</a></td>
 									<td><a ui-sref="order.edit({ id: value.id,client_id: value.client_id })" title="View Order">{{value.job_name}}</a></td>

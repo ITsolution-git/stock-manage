@@ -20,9 +20,9 @@
               
           </tr>
         </thead>
-        <tbody>
+        <tbody class="strip-content">
 
-          <tr data-ng-repeat="i in range">
+          <tr data-ng-repeat="i in range" class="stripedDiv">
               <td><a editable-text="miscData.shipping_method[i].value" onaftersave="updateUser(miscData.shipping_method[i].value,miscData.shipping_method[i].id)">{{miscData.shipping_method[i].value}}</a></td>
 
               <td><a editable-text="miscData.time_off_type[i].value" onaftersave="updateUser(miscData.time_off_type[i].value,miscData.time_off_type[i].id)">{{miscData.time_off_type[i].value}}</a></td>

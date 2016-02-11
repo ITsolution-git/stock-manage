@@ -29,8 +29,8 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr ng-repeat="value in currentPageColors">
+                <tbody class="strip-content">
+                    <tr ng-repeat="value in currentPageColors" class="stripedDiv">
                         <td align="center"><a editable-text="value.name" onaftersave="updateColors(value.name,value.id,'name')">{{value.name || 'not set'}}</a></td>
                         <td>  <button type="button" ng-click="removeColors($index,value.id)" class="btn btn-default addButton"><i class="fa fa-minus"></i></button></td>
                     </tr>
