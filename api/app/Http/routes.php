@@ -170,6 +170,7 @@ Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
 Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
 Route::get('purchase/GetScreendata/{id}/{company_id}', 'PurchaseController@GetScreendata');
 Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
+Route::post('purchase/getPurchaseNote/{id}', 'PurchaseController@getPurchaseNote');
 
 
 // ORDER CONTROLLER 
@@ -249,3 +250,4 @@ Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListi
 Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
 Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkproof');
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');
+Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');

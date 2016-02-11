@@ -130,7 +130,7 @@ class Order extends Model {
    {
        
         $whereConditions = ['on.order_id' => $id,'on.note_status' => '1'];
-        $listArray = ['on.order_notes','on.note_id','on.created_date','u.user_name'];
+        $listArray = ['on.order_notes','on.note_id',DB::raw('DATE_FORMAT(on.created_date, "%m/%d/%Y") as created_date'),'u.user_name'];
 
         $orderNoteData = DB::table('order_notes as on')
                          ->Join('users as u', 'u.id', '=', 'on.user_id')
@@ -500,7 +500,12 @@ public function updateOrderLineData($post)
     public function POorderDetail($data) {
 
         $wherePoConditions = ['order_id' => $data['id']];
-        $orderPOData = DB::table('purchase_order')->where($wherePoConditions)->get();
+        $listPoArray = ['po_id','order_id','vendor_id','vendor_contact_id','po_type','shipt_block','vendor_charge','order_total',DB::raw('DATE_FORMAT(ship_date, "%m/%d/%Y") as ship_date'),
+                      DB::raw('DATE_FORMAT(hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(arrival_date, "%m/%d/%Y") as arrival_date'),
+                      DB::raw('DATE_FORMAT(expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(created_for_date, "%m/%d/%Y") as created_for_date'),
+                      DB::raw('DATE_FORMAT(vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
+                      'vendor_party_bill','ship_to','vendor_instruction','receive_note',DB::raw('DATE_FORMAT(date, "%m/%d/%Y") as date'),'complete'];
+        $orderPOData = DB::table('purchase_order')->select($listPoArray)->where($wherePoConditions)->get();
         $combine_array['order_po_data'] = $orderPOData;
         return $combine_array;
     }

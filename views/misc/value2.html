@@ -17,9 +17,9 @@
               <th data-toggle="true">Terms</th> 
           </tr>
         </thead>
-        <tbody>
+        <tbody class="strip-content">
 
-          <tr data-ng-repeat="i in range">
+          <tr data-ng-repeat="i in range" class="stripedDiv">
 
                <td><a editable-text="miscData.placement_type[i].value" onaftersave="updateUser(miscData.placement_type[i].value,miscData.placement_type[i].id)">{{miscData.placement_type[i].value}}</a></td>
 

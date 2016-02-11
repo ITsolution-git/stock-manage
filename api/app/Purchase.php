@@ -26,7 +26,12 @@ class Purchase extends Model {
 	}
 	function GetPodata($id,$company_id)
 	{
-		$result = DB::select("SELECT v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,pg.name,vc.id as contact_id, vc.first_name,vc.last_name,v.url,po.*
+		$result = DB::select("SELECT v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,pg.name,vc.id as contact_id, vc.first_name,vc.last_name,v.url,po.po_id,
+							po.order_id,po.vendor_id,po.vendor_contact_id,po.po_type,po.shipt_block,po.vendor_charge,po.order_total,po.vendor_instruction,po.receive_note,po.complete,
+							DATE_FORMAT(po.ship_date, '%m/%d/%Y') as ship_date,
+							DATE_FORMAT(po.hand_date, '%m/%d/%Y') as hand_date,DATE_FORMAT(po.arrival_date, '%m/%d/%Y') as arrival_date,DATE_FORMAT(po.expected_date, '%m/%d/%Y') as expected_date,
+							DATE_FORMAT(po.created_for_date, '%m/%d/%Y') as created_for_date,DATE_FORMAT(po.vendor_arrival_date, '%m/%d/%Y') as vendor_arrival_date,DATE_FORMAT(po.vendor_deadline, '%m/%d/%Y') as vendor_deadline,
+							DATE_FORMAT(po.date, '%m/%d/%Y') as date
 		FROM purchase_order po
 		Inner join orders ord on po.order_id = ord.id
 		left join client cl on ord.client_id = cl.client_id
@@ -62,22 +67,26 @@ class Purchase extends Model {
 	function GetPoLinedata($id=0,$postatus=0)
 	{
 		$result = DB::table('purchase_order as po')
-				  ->leftJoin('orders as ord','po.order_id','=','ord.id')
-				  ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-				  ->leftJoin('purchase_detail as pd','pd.id','=','pol.line_id')
-				  ->leftJoin('order_orderlines as oo','oo.id','=','pd.orderline_id')
-				  ->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
-				  ->leftJoin('misc_type as mt1','mt1.id','=','oo.color_id')
-				  ->leftJoin('products as p','p.id','=','oo.product_id')
-				  ->leftJoin('vendors as v','v.id','=','po.vendor_id')
-				  ->select('v.name_company','p.name as product_name','ord.job_name','po.po_id','mt.value as size_group','mt1.value as product_color','pd.size','pd.qnty','pol.*',DB::raw('(select sum(qnty_received) from purchase_received where poline_id=pd.id) as total_qnty') )
-				  ->where('ord.status','=','1')
-				  ->where('ord.is_delete','=','1')
-				  ->where('pd.size','<>','')
-				  ->where('pd.size','<>','0')
-				  ->where('pd.qnty','<>','0')
-				  ->where('pd.qnty','<>','')
-				  ->where('pol.status','=',$postatus);
+					->leftJoin('orders as ord','po.order_id','=','ord.id')
+					->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+					->leftJoin('purchase_detail as pd','pd.id','=','pol.line_id')
+					->leftJoin('order_orderlines as oo','oo.id','=','pd.orderline_id')
+					->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
+					->leftJoin('misc_type as mt1','mt1.id','=','oo.color_id')
+					->leftJoin('products as p','p.id','=','oo.product_id')
+					->leftJoin('vendors as v','v.id','=','po.vendor_id')
+					->select('v.name_company','p.name as product_name','ord.job_name','po.po_id','mt.value as size_group','mt1.value as product_color','pd.size','pd.qnty','pol.*',DB::raw('(select sum(qnty_received) from purchase_received where poline_id=pd.id) as total_qnty'),'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
+                      DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
+                      DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
+                      DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete' )
+					->where('ord.status','=','1')
+					->where('ord.is_delete','=','1')
+					->where('pd.size','<>','')
+					->where('pd.size','<>','0')
+					->where('pd.qnty','<>','0')
+					->where('pd.qnty','<>','')
+					->where('pol.status','=',$postatus);
 
 
 				  if(!empty($id))
@@ -87,7 +96,6 @@ class Purchase extends Model {
 				  }
 				  $result = $result->get();
 
-				 //echo "<pre>"; print_r($result); die;
 		return $result;
 	}
 	function getOrdarTotal($po_id)
@@ -177,18 +185,28 @@ class Purchase extends Model {
 	}
 	function GetPoReceived($po_id,$company_id)
 	{
+		$listArray = ['po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
+                      DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
+                      DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
+                      DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete'];
+
 		$result =  DB::table('purchase_order as po')
-				  ->leftJoin('orders as ord','po.order_id','=','ord.id')
-				  ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-				  ->leftJoin('purchase_detail as pd','pd.id','=','pol.line_id')
-				  ->leftJoin('order_orderlines as oo','oo.id','=','pd.orderline_id')
-				  ->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
-				  ->leftJoin('products as p','p.id','=','oo.product_id')
-				  ->leftJoin('vendors as v','v.id','=','po.vendor_id')
-				  ->join('purchase_received as pr','pr.poline_id','=','pol.id')
-				  ->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pr.id as pr_id','pr.poline_id','pr.qnty_received','pd.size','pd.qnty','pol.*')
-				  ->where('pr.po_id','=',$po_id)
-				  ->get();
+					->leftJoin('orders as ord','po.order_id','=','ord.id')
+					->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+					->leftJoin('purchase_detail as pd','pd.id','=','pol.line_id')
+					->leftJoin('order_orderlines as oo','oo.id','=','pd.orderline_id')
+					->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
+					->leftJoin('products as p','p.id','=','oo.product_id')
+					->leftJoin('vendors as v','v.id','=','po.vendor_id')
+					->join('purchase_received as pr','pr.poline_id','=','pol.id')
+					->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pr.id as pr_id','pr.poline_id','pr.qnty_received','pd.size','pd.qnty','pol.*','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
+                      DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
+                      DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
+                      DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete')
+					->where('pr.po_id','=',$po_id)
+					->get();
 
 				 // echo "<pre>"; print_r($result); die;
 		return $result;
@@ -240,6 +258,19 @@ class Purchase extends Model {
                         ->select($listArray)
                         ->where($whereOrderLineConditions)->get();
         return $orderLineData;                
+	}
+
+	public function getPurchaseNote($id)
+   	{
+       
+        $whereConditions = ['po_id' => $id];
+        $listArray = ['id','note',DB::raw('DATE_FORMAT(note_date, "%m/%d/%Y") as note_date')];
+
+        $orderNoteData = DB::table('purchase_notes')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+        return $orderNoteData;
 	}
 
 }
