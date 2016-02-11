@@ -112,7 +112,7 @@
                     <input type="text" disabled="" class="form-control" ng-model="poline.qnty" >
                   </div>
                   <div class="col-md-1 nopad-left smallPad ">
-                    <input type="text" class="form-control" disabled="" ng-model="poline.qnty_ordered" >
+                    <input type="text" class="form-control" ng-model="poline.qnty_ordered" ui-event="{ blur : 'EditOrderLine(poline)' }">
                   </div>
                   <div class=" col-md-1 nopad-left smallPad ">
                     <input type="text" class="form-control" disabled="" ng-model="poline.total_qnty" >
