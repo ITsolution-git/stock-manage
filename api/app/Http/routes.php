@@ -170,6 +170,7 @@ Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
 Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
 Route::get('purchase/GetScreendata/{id}/{company_id}', 'PurchaseController@GetScreendata');
 Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
+Route::post('purchase/getPurchaseNote/{id}', 'PurchaseController@getPurchaseNote');
 
 
 // ORDER CONTROLLER 
