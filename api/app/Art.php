@@ -166,14 +166,6 @@ class Art extends Model {
 				->where('ass.art_id','=',$art_id)
 				->get();
 				
-		if(count($query)>0)
-		{
-			foreach ($query as $key => $value) 
-			{
-				//$query[$key]->f_approval = (!empty($value->f_approval))?$Misc_data[$value->f_approval]:'';
-			}
-		}
-		
 		return $query;
     }
 
@@ -338,5 +330,18 @@ class Art extends Model {
 
     	$wp_id = DB::getPdo()->lastInsertId();
     	return $wp_id;
+    }
+    public function screen_colorpopup ($screen_id,$company_id)
+    {
+    	$query = DB::table('artjob_screensets as ass')
+				->select('asc.*','asc.id as color_id','ass.*','ass.id as screen_id')
+				->join('art as art','art.art_id','=','ass.art_id')
+				->join('orders as ord','ord.id','=','art.order_id')
+				->leftjoin('artjob_screencolors as asc','asc.screen_id','=','ass.id')
+				->where('ord.company_id','=',$company_id)
+				->where('ass.id','=',$screen_id)
+				->get();
+
+		return $query;
     }
 }

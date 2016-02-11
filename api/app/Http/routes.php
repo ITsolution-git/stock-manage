@@ -249,3 +249,4 @@ Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListi
 Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
 Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkproof');
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');
+Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
