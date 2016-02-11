@@ -1428,3 +1428,25 @@ button.topNavButtons.active {
     background-color: #828282;
 }
 .typeahead { z-index: 10501; }
+.glyphicon-chevron-up:before {
+    content: "\e113";
+    right: -18px;
+    top: -2px;
+    position: absolute;
+    font-size: 11px;
+}
+.glyphicon-chevron-down:before {
+    content: "\e114";
+    right: -15px;
+    top: 7px;
+    position: absolute;
+    font-size: 11px;
+}
+.glyphicon-chevron-up.active {
+    /*color: #31c0be;*/
+    overflow: hidden;
+}
+.glyphicon-chevron-down.active {
+    /*color: #31c0be;*/
+    overflow: hidden;
+}

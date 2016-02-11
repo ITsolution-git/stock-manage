@@ -44,9 +44,9 @@
                     <th class="th">Operations</th>
                 </tr>
             </thead>
-        <tbody>
+        <tbody class="strip-content">
 
-          <tr ng-repeat="data in currentPageProducts" id="product_{{data.id}}">
+          <tr ng-repeat="data in currentPageProducts" id="product_{{data.id}}" class="stripedDiv">
               <td>{{data.description}}</td>
               <td>{{data.name_company}}</td>
               <td>{{data.vendor_sku}}</td>

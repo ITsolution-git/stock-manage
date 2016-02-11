@@ -50,8 +50,8 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
-                <tr  ng-repeat="data in currentPageStaffs" id="comp_{{data.id}}">
+            <tbody class="strip-content">
+                <tr  ng-repeat="data in currentPageStaffs" id="comp_{{data.id}}" class="stripedDiv">
                     <td>{{data.first_name}}</td>
                     <td>{{data.last_name}}</td>
                     <td>{{data.title}}</td>

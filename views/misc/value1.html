@@ -22,9 +22,9 @@
              
           </tr>
         </thead>
-        <tbody>
+        <tbody class="strip-content">
 
-          <tr data-ng-repeat="i in range">
+          <tr data-ng-repeat="i in range" class="stripedDiv">
               
               <td><a editable-text="miscData.approval[i].value" onaftersave="updateUser(miscData.approval[i].value,miscData.approval.id)">{{miscData.approval[i].value}}</a></td>
 

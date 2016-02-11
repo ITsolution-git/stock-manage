@@ -36,9 +36,9 @@
 
           </tr>
         </thead>
-        <tbody>
+        <tbody class="strip-content">
 
-          <tr ng-repeat="data in currentPagePrice" id="price_{{data.id}}">
+          <tr ng-repeat="data in currentPagePrice" id="price_{{data.id}}" class="stripedDiv">
               <td>{{data.name}}</td>
             
               <td ng-if="data.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
