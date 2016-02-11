@@ -5,11 +5,11 @@
                     
                     <div class="form-group col-md-4 nopad-left">
                         <label>Screen Sets </label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" name="screen_set" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].screen_set" >
                    </div>
                    <div class="form-group col-md-4 nopad-left">
                         <label>Screen Count </label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" name="screen_count" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].screen_count"  >
                    </div>
                    <div class="form-group col-md-4 nopad-left">
                         <label>Colors </label>
@@ -17,30 +17,30 @@
                    </div>
 
                    <div class="form-group col-md-4 nopad-left">
-                        <label>Screen Sets </label>
-                        <select class="form-control" ng-model="workproof.wp_position">
-                            <option value="">Select Position</option>
-                            <option ng-repeat="position in wp_position" value="{{position.id}}"  ng-selected="{{position.id==workproof.wp_position}}">{{position.value}}
+                        <label>Screen Size </label>
+                        <select class="form-control"   name="graphic_size" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].graphic_size">
+                            <option value="">Select Size</option>
+                            <option ng-repeat="size in graphic_size_all" value="{{size.id}}"  ng-selected="{{screen_detail[0].graphic_size==size.id}}" >{{size.value}}
                             </option>
                         </select>
                    </div>
                    <div class="form-group col-md-4 nopad-left">
-                        <label>Screen Sets </label>
-                        <input type="text" class="form-control" >
+                        <label>Screen Resolution </label>
+                        <input type="text" class="form-control" name="screen_resolution" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].screen_resolution" >
                    </div>
                    <div class="form-group col-md-4 nopad-left">
-                        <label>Screen Sets </label>
-                        <input type="text" class="form-control" >
+                        <label>Line Per Inch </label>
+                        <input type="text" class="form-control" name="line_per_inch" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].line_per_inch" >
                    </div>
 
 
                     <div class="form-group col-md-4 nopad-left">
                         <label>Height </label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" name="screen_height" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].screen_height" >
                    </div>
                    <div class="form-group col-md-4 nopad-left">
                         <label>Width </label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" name="screen_width" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].screen_width" >
                    </div>
                    <div class="form-group col-md-4 nopad-left">
                         <label>Total Qnty</label>
@@ -50,15 +50,21 @@
 
                       <div class="form-group col-md-4 nopad-left">
                         <label>ArtWork Complete </label>
-                        <input type="text" class="form-control" >
+                         <select ng-model="order_position.art_dept_complete" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" aria-required="false" aria-invalid="false" name="art_dept_complete"  ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" style="">
+                            <option ng-selected="{{screen_detail[0].art_dept_complete==1}}" value="1">Yes</option>
+                            <option ng-selected="{{screen_detail[0].art_dept_complete==0}}" value="0">No</option>
+                        </select>
                    </div>
                    <div class="form-group col-md-4 nopad-left">
                         <label>Reuse Screen for Multiple group- color change </label>
-                        <input type="text" class="form-control" >
+                        <select ng-model="order_position.screen_reuse" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" aria-required="false" aria-invalid="false" name="screen_reuse"  ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" style="">
+                            <option ng-selected="{{screen_detail[0].screen_reuse==1}}" value="1">Yes</option>
+                            <option ng-selected="{{screen_detail[0].screen_reuse==0}}" value="0">No</option>
+                        </select>
                    </div>
                    <div class="form-group col-md-4 nopad-left">
                         <label>Schedule Date</label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control" name="schedule_date" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].schedule_date" >
                    </div>
 
                 </div>
@@ -94,33 +100,33 @@
                         </div>
 
                    </div>
-                   <div class="form-group col-md-12 nopad-right">
+                   <div class="form-group col-md-12 nopad-right" ng-repeat="(key,colors) in screen_detail">
                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="color_name" ng-model="colors.color_name" >
                         </div>
                          <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="thread_color" ng-model="colors.thread_color" >
                         </div>
                          <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" name="inq" ng-model="colors.inq" >
                         </div>
                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="stroke"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.stroke" >
                         </div>
                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="squeegee"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.squeegee" >
                         </div>
                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="mesh_thread_count" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.mesh_thread_count" >
                         </div>
                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="head_location" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.head_location" >
                         </div>
                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="position_type" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.position_type" >
                         </div>
                         <div class="form-group col-md-3 nopad-form">
-                            <input type="text" class="form-control" >
+                            <input type="text" class="form-control" name="note" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.note" >
                         </div>
                         <div class="form-group col-md-1 nopad-right">
                             <button title="Delete" class="btn btn-xs btn-danger addButton c-dgreen" tabindex="0">X</button>
