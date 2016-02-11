@@ -362,6 +362,29 @@ app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$ro
 						  AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
+                          $scope.screen_id = $stateParams.id;
+
+                          screen_colorpopup();
+                          function screen_colorpopup() {
+                          $http.get('api/public/art/screen_colorpopup/'+$scope.screen_id+'/'+$scope.company_id).success(function(RetArray) {
+		                			$scope.screen_detail = RetArray.data.records.screen_colorpopup;
+		                			$scope.graphic_size_all=  RetArray.data.records.graphic_size;
+                          		  });
+                      	  }
+                      	  $scope.UpdateField_field = function($event,id,table){
+                          		  var Receive_data = {};
+                          		  Receive_data.table =table;
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                });
+                          }
 
 
 
