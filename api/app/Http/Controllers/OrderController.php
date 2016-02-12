@@ -615,7 +615,7 @@ class OrderController extends Controller {
             $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
             if(empty($result))
             {
-                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
+                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")),'company_id' => $post['company_id']);
                 $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
 
                 $post['data']['shipping_id'] = $shipping_id;
