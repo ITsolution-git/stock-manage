@@ -140,6 +140,21 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                         notifyService.notify(data.status, data.message); 
                                 });
                           }
+                          $scope.Asign_group_order = function(id){
+                          		  var Receive_data = {};
+                          		  Receive_data.table ='purchase_detail';
+                          		  $scope.name_filed = 'art_group';
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] = $('#art_group_'+id).val();;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ orderline_id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                         Get_artDetail();
+                                });
+                          }
 
 
                            $scope.change_color = function(name,value,id,table){
