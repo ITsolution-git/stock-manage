@@ -80,7 +80,19 @@
           <td align="left" valign="top" width="2%">&nbsp;</td>
           <td align="left" valign="top" width="49%" style="border:1px solid #999;"><p><strong style="font-size:15px; line-height:15px;">SHIP TO</strong><br/>
             <strong>{{$company_name}}</strong><br/>
-            {{$main_contact_name}}</p>
+            <?php $first = true; $address ='';?>
+            
+            @foreach ($data['distributed_address'] as $key => $adddata)
+             <?php 
+             if($adddata->print_on_pdf == '1' && $first){
+                 $first = false;
+                 $address = $adddata->address ." ". $adddata->address2 ." ". $adddata->city ." ". $adddata->state ." ". $adddata->zipcode ." ".$adddata->country;
+               
+             }?>
+             @endforeach
+
+
+            {{$address}}</p>
           </td>
         </tr>
       </table>
