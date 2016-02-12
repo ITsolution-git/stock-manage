@@ -49,13 +49,14 @@
                                                         </div>
 
                                                         <div class="form-group col-md-3 nopad-form">
-                                                            <select class="form-control ng-pristine ng-valid ng-touched" tabindex="0" aria-invalid="false" style="">
+
+                                                            <select class="form-control ng-pristine ng-valid ng-touched" id="art_group_{{order_line.line_id}}" tabindex="0" aria-invalid="false" style="">
                                                                <option ng-repeat="groups in artjobgroup_list" value="{{groups.id}}">{{groups.group_name}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-1 nopad-form">
-                                                            <div class="sgpDetails btnCircle" title="Assign group">
-                                                                <i class="fa fa-arrow-circle-right"></i>
+                                                            <div class="sgpDetails btnCircle" title="Assign group" style="cursor:pointer;">
+                                                                <i class="fa fa-arrow-circle-right"  ui-event="{ click : 'Asign_group_order(order_line.line_id)' }"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -68,8 +69,17 @@
                                                                 	<input type="text" class="form-control" onfocus="this.blur()" ng-model="art_orderline.line_array[key].size_array[s_key].qnty" />
                                                                 </div>
                                                                 <div class="form-group col-md-12 nopad-form">
-                                                                 	<select class="form-control ng-pristine ng-valid ng-touched" ng-model="order_line.client_supplied" tabindex="0" aria-invalid="false" style="">
-		                                                            <option ng-repeat="groups in artjobgroup_list" value="{{groups.id}}">{{groups.group_name}}</option>
+                                                                 	
+                                                                 	<select class="form-control ng-pristine ng-valid ng-touched" ui-event="{ blur : 'UpdateField_field($event,art_orderline.line_array[key].size_array[s_key].sizeid,\'purchase_detail\')' }" ng-model="art_orderline.line_array[key].size_array[s_key].art_group" tabindex="0" name="art_group" aria-invalid="false" style="">
+
+		                                                            <option 
+		                                                            	ng-repeat="groups in artjobgroup_list" 
+		                                                            	ng-selected="{{groups.id==art_orderline.line_array[key].size_array[s_key].art_group}}" 
+		                                                            	
+		                                                            	value="{{groups.id}}">
+		                                                            	{{groups.group_name}}
+		                                                            </option>
+
                                                                 </select>
                                                                 </div>
                                                             </div>
