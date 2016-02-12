@@ -64,7 +64,7 @@ class Art extends Model {
 		$Misc_data = $this->AllMsiData();
 		$ret_array = array();
 		$query = DB::table('art as art')
-				->select('or.job_name','art.art_id','or.grand_total','or.f_approval','oo.id as line_id','oo.size_group_id','oo.qnty as ordline_qnty','oo.client_supplied','cl.name as product_color','pr.name as product_name','vn.name_company','pd.size', 'pd.qnty','pd.id as sizeid')
+				->select('or.job_name','art.art_id','or.grand_total','or.f_approval','oo.id as line_id','oo.size_group_id','oo.qnty as ordline_qnty','oo.client_supplied','cl.name as product_color','pr.name as product_name','vn.name_company','pd.size', 'pd.qnty','pd.id as sizeid','pd.art_group')
 				->join('orders as or','art.order_id','=','or.id')
 				->join('order_orderlines as oo','oo.order_id','=','or.id')
 				->join('purchase_detail as pd','pd.orderline_id','=','oo.id')
@@ -104,6 +104,8 @@ class Art extends Model {
 						
 						$lock = $temp;
 					}
+					$ret_array['line_array'][$line_count]['size_array'][$kk]['art_group'] = (!empty($value->art_group))?$value->art_group:'';
+					$ret_array['line_array'][$line_count]['size_array'][$kk]['sizeid'] = (!empty($value->sizeid))?$value->sizeid:'';
     				$ret_array['line_array'][$line_count]['size_array'][$kk]['size'] = (!empty($value->size))?$value->size:'';
 					$ret_array['line_array'][$line_count]['size_array'][$kk]['qnty'] = (!empty($value->qnty))?$value->qnty:'';
 					$kk ++;
