@@ -401,6 +401,7 @@ app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$ro
                           $http.get('api/public/art/screen_colorpopup/'+$scope.screen_id+'/'+$scope.company_id).success(function(RetArray) {
 		                			$scope.screen_detail = RetArray.data.records.screen_colorpopup;
 		                			$scope.graphic_size_all=  RetArray.data.records.graphic_size;
+		                			$scope.screen_garments  = RetArray.data.records.screen_garments;
                           		  });
                       	  }
                       	  $scope.UpdateField_field = function($event,id,table){

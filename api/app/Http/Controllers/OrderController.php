@@ -615,7 +615,7 @@ class OrderController extends Controller {
             $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
             if(empty($result))
             {
-                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
+                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")),'company_id' => $post['company_id']);
                 $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
 
                 $post['data']['shipping_id'] = $shipping_id;
@@ -905,6 +905,8 @@ class OrderController extends Controller {
     public function savePDF()
     {
 
+       
+       
 
         $all_company['all_company'] = json_decode($_POST['all_company']);
         $client_main_data['client_main_data'] = json_decode($_POST['client_main_data']);
@@ -918,6 +920,13 @@ class OrderController extends Controller {
         $order_position['order_position'] = json_decode($_POST['order_position']);
         $order_line['order_line'] = json_decode($_POST['order_line']);
         $order['order'] = json_decode($_POST['order']);
+
+     
+        $array3 = array('ia.order_id' => $order['order']->id);
+        $distributed_address['distributed_address'] = $this->order->getDistributedAddress($array3);
+
+        
+
         $order['order']->created_date = date('m/d/Y',strtotime($order['order']->created_date));
        
 
@@ -933,7 +942,7 @@ class OrderController extends Controller {
             $order['order']->in_hands_by ='';
         }
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
-        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data);
+        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data,$distributed_address);
      
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());

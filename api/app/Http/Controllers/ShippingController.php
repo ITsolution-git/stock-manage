@@ -361,4 +361,18 @@ class ShippingController extends Controller {
             PDF::Output('shipping_label.pdf');
         }
     }
+
+    public function addRemoveAddressToPdf()
+    {
+        $post = Input::all();
+
+        $this->common->UpdateTableRecords('item_address_mapping',array('order_id' => $post['order_id']),array('print_on_pdf' => '0'));
+        $this->common->UpdateTableRecords('item_address_mapping',array('address_id' => $post['address_id'],'order_id' => $post['order_id']),array('print_on_pdf' => $post['print_on_pdf']));
+
+        $success=1;
+        $message=UPDATE_RECORD;
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
 }
