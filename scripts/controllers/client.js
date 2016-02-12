@@ -77,7 +77,6 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
                                        if(Listdata.data.success=='1')
                                        {
                                           $scope.clients = Listdata.data.records;
-                                          $("#ajax_loader").hide();
 
                                           var init;
 
@@ -127,6 +126,7 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
                                           };
                                           return init();
                                        }
+                                       $("#ajax_loader").hide();
                                   });
 
 
