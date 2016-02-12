@@ -246,7 +246,9 @@ Route::get('art/artjob_screen_list/{art_id}/{company_id}', 'ArtController@artjob
 Route::get('art/artjobgroup_list/{art_id}/{company_id}', 'ArtController@artjobgroup_list');
 Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
 Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');
-Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListing');
+Route::get('art/ScreenListing/{company_id}', 'ArtController@ScreenListing');
+Route::post('art/create_screen', 'ArtController@create_screen');
+Route::post('art/DeleteScreenRecord', 'ArtController@DeleteScreenRecord');
 Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
 Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkproof');
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');

@@ -44,7 +44,7 @@
                    </div>
                    <div class="form-group col-md-4 nopad-left">
                         <label>Total Qnty</label>
-                        <input type="text" class="form-control" >
+                        <input type="text" class="form-control"  disabled="disabled" >
                    </div>
 
 
@@ -102,10 +102,10 @@
                    </div>
                    <div class="form-group col-md-12 nopad-right" ng-repeat="(key,colors) in screen_detail">
                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" name="color_name" ng-model="colors.color_name" >
+                            <input type="text" disabled="disabled" class="form-control" name="color_name" ng-model="colors.color_name" >
                         </div>
                          <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" name="thread_color" ng-model="colors.thread_color" >
+                            <input type="text" disabled="disabled" class="form-control" name="thread_color" ng-model="colors.thread_color" >
                         </div>
                          <div class="form-group col-md-1 nopad-form">
                             <input type="text" class="form-control"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" name="inq" ng-model="colors.inq" >

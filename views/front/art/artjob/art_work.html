@@ -26,7 +26,7 @@
 
         
                                     <!-- POSITION TAB FIELDS -->
-                                    <div class="positionTab_content" ng-repeat="(key,art_data) in art_worklist">
+                                    <div class="positionTab_content" ng-repeat="(key,art_data) in art_worklist" id={{art_data.id}}>
                                         <div class="col-md-10 nopad-form">                                        
                                             <div class="form-group col-md-1 nopad-form">
                                                 <input type="text" class="form-control" ng-model="art_data.size_group_id" name="size_group"  placeholder="Size Group" />
@@ -50,10 +50,14 @@
                                                 <input type="text" class="form-control" ng-model="art_data.screen_set" name="screen_set"  placeholder="Screen Set" />
                                             </div>
                                             <div class="form-group col-md-1 nopad-right">
-	                                            <button title="Edit" ng-click="artworkproof_popup(art_data.id);" type="button" class="btn btn-default addButton c-dgreen" >
-                                                    <i class="fa fa-edit"></i> 
-                                                </button>
-                                                  <button ng-click="" title="Delete" class="btn btn-xs btn-danger addButton c-dgreen" tabindex="0">X</button>
+                                                <div class="form-group col-md-6 nopad-right">
+    	                                            <button title="Edit" ng-click="artworkproof_popup(art_data.id);" type="button" class="btn btn-default addButton c-dgreen" >
+                                                        <i class="fa fa-edit"></i> 
+                                                    </button>
+                                                </div>
+                                                <div class="form-group col-md-6 nopad-right">
+                                                  <button title="Delete" ng-click="remove_data(art_data.id,'artjob_artworkproof');" class="btn btn-xs btn-danger addButton form-control c-dgreen" tabindex="0">X</button>
+                                                </div>
                                             </div>
                                              
 

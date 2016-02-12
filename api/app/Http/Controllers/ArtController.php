@@ -144,11 +144,11 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
 
     }
-    public function ScreenListing($art_id,$company_id)
+    public function ScreenListing($company_id)
     {
     	if(!empty($company_id) && $company_id != 'undefined')
     	{
-    		$scren_listing = $this->art->ScreenListing($art_id,$company_id);
+    		$scren_listing = $this->art->ScreenListing($company_id);
     		if(count($scren_listing)>0)
     		{
     			$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $scren_listing);
@@ -250,6 +250,39 @@ class ArtController extends Controller {
     			$response = array('success' => 0, 'message' => NO_RECORDS,'records' => $ret_array);
     		}
 
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function create_screen()
+    {
+    	$post = Input::all();
+
+    	//echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
+    	if(!empty($post['data']['art_id']))
+    	{
+    		$this->art->create_screen($post['data']);
+    		$response = array('success' => 1, 'message' => INSERT_RECORD);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+
+    }
+    public function DeleteScreenRecord()
+    {
+    	$post = Input::all();
+
+    	//echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
+    	if(!empty($post['cond']['id']))
+    	{
+    		$this->art->DeleteScreenRecord($post['cond']);
+    		$response = array('success' => 1, 'message' => DELETE_RECORD);
     	}
     	else 
         {
