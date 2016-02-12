@@ -1,8 +1,9 @@
 app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','$filter',function($scope,$http,$state,$stateParams,$rootScope,AuthService,$filter) {
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
-                          $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.art_id = $stateParams.art_id;
+                          $scope.company_id = $rootScope.company_profile.company_id;
+                          
                           $("#ajax_loader").show();
                           $http.get('api/public/art/listing/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
@@ -60,7 +61,7 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$root
                               	}
                             });
 
-                          	$http.get('api/public/art/ScreenListing/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
+                          	$http.get('api/public/art/ScreenListing/'+$scope.company_id).success(function(RetArray) {
 
                           			$("#ajax_loader").hide();
                           			$scope.screen_listing = RetArray.data;
@@ -261,8 +262,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 				                        }
 		                	
 		                }
-
-		                $scope.create_screen = function(table) {
+		                $scope.create_group = function(table) {
 
 		                	 var Address_data = {};
                                 Address_data.data = {art_id:$scope.art_id};
@@ -280,6 +280,24 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 	                                    notifyService.notify(data.status, data.message);
                                     }
                                 });
+						}
+		                $scope.create_screen = function() {
+
+		                	 var Address_data = {};
+                                Address_data.data = {art_id:$scope.art_id};
+                                
+                                $http.post('api/public/art/create_screen',Address_data).success(function(result) {
+                                    if(result.data.success == '1') 
+                                    {
+                                       Get_artDetail();
+                                    }
+                                    else
+                                    {
+                                        $("#ajax_loader").hide();
+	                          			var data = {"status": "error", "message": result.data.message}
+	                                    notifyService.notify(data.status, data.message);
+                                    }
+                                });
 							}
   						$scope.UpdateField_orderscreen = function(data,id,table) {
 								var Receive_data = {};
@@ -294,17 +312,31 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                 });
 						}
 						$scope.remove_data = function (id,table){
+							 	var permission = confirm("Are you sure to delete this record ?");
+                                if (permission == true) {
+	                        		var delete_data = {};
+	                                delete_data.cond = {id :id }
+	                                delete_data.table =table
 
-                        		var delete_data = {};
-                                delete_data.cond = {id :id }
-                                delete_data.table =table
+	                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) {
+	                                	jQuery("#"+id).remove();
+	                                	var data = {"status": "success", "message": "Record Deleted successfully"}
+	                                    notifyService.notify(data.status, data.message); 
+	                                });
+                            	}
+                        }
+                        $scope.remove_screen = function (id){
+							 	var permission = confirm("Are you sure to delete this record ?");
+                                if (permission == true) {
+                                	var delete_data = {};
+	                                delete_data.cond = {id :id }
 
-                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) {
-                                	jQuery("#"+id).remove();
-                                	var data = {"status": "success", "message": "Record Deleted successfully"}
-                                    notifyService.notify(data.status, data.message); 
-                                });
-
+	                                $http.post('api/public/art/DeleteScreenRecord',delete_data).success(function(result) {
+	                                	jQuery("#"+id).remove();
+	                                	var data = {"status": "success", "message": "Record Deleted successfully"}
+	                                    notifyService.notify(data.status, data.message); 
+	                                });
+                            	}
                         }
                         
                       
