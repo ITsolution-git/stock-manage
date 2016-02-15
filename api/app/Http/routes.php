@@ -43,7 +43,7 @@ Route::post('admin/account/save', 'AccountController@SaveData');
 Route::post('admin/account/delete', 'AccountController@DeleteData');
 
 // ADMIN STAFF ROUTERS
-Route::get('admin/staff', 'StaffController@index');
+Route::post('admin/staff', 'StaffController@index');
 Route::post('admin/staffAdd', 'StaffController@add');
 Route::post('admin/staffEdit', 'StaffController@edit');
 Route::post('admin/staffDelete', 'StaffController@delete');
@@ -66,7 +66,7 @@ Route::post('admin/staff/timeoffDetail', 'StaffController@timeoffdetail');
 
 
 // ADMIN Vendor ROUTERS
-Route::get('admin/vendor', 'VendorController@index');
+Route::post('admin/vendor', 'VendorController@index');
 Route::post('admin/vendorDelete', 'VendorController@delete');
 Route::post('admin/vendorAdd', 'VendorController@add');
 Route::post('admin/vendorEdit', 'VendorController@edit');
@@ -74,7 +74,7 @@ Route::post('admin/vendorDetail', 'VendorController@detail');
 Route::get('admin/VendorEdit/{id}', 'VendorController@detail');
 
 // ADMIN PRODUCT ROUTERS
-Route::get('admin/product', 'ProductController@index');
+Route::post('admin/product', 'ProductController@index');
 Route::post('admin/productAdd', 'ProductController@add');
 Route::post('admin/productEdit', 'ProductController@edit');
 Route::post('admin/productDelete', 'ProductController@delete');

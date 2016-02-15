@@ -1,10 +1,17 @@
 
 
 
-app.controller('productListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+app.controller('productListCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
   AuthService.AccessService('FM');
   $("#ajax_loader").show();
-  $http.get('api/public/admin/product').success(function(result, status, headers, config) {
+  var company_id = $rootScope.company_profile.company_id;
+
+var product_list_data = {};
+ var condition_obj = {};
+ condition_obj['company_id'] =  company_id;
+ product_list_data.cond = angular.copy(condition_obj);
+
+    $http.post('api/public/admin/product',product_list_data).success(function(result, status, headers, config) {
 
                                   $scope.products = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
@@ -80,8 +87,9 @@ app.controller('productListCtrl', ['$scope','$http','$location','$state','$state
 }]);
 
 
-app.controller('productAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+app.controller('productAddEditCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
    AuthService.AccessService('FM');
+   var company_id = $rootScope.company_profile.company_id;
    
  $http.get('api/public/common/getAllVendors').success(function(result, status, headers, config) {
 

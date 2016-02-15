@@ -1,7 +1,14 @@
-app.controller('staffListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+app.controller('staffListCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
     AuthService.AccessService('FM');
     $("#ajax_loader").show();
-    $http.get('api/public/admin/staff').success(function(result, status, headers, config) {
+     var company_id = $rootScope.company_profile.company_id;
+
+       var staff_list_data = {};
+       var condition_obj = {};
+       condition_obj['company_id'] =  company_id;
+       staff_list_data.cond = angular.copy(condition_obj);
+
+      $http.post('api/public/admin/staff',staff_list_data).success(function(result, status, headers, config) {
         $scope.staffs = result.data.records;
 
         $scope.pagination = AllConstant.pagination;
@@ -77,10 +84,10 @@ app.controller('staffListCtrl', ['$scope','$http','$location','$state','$statePa
     }
 }]);
 
-app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
    
     AuthService.AccessService('FM');
-
+    var company_id = $rootScope.company_profile.company_id;
     $http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
         $scope.timeOffTypes = result.data.records;
     });
@@ -137,6 +144,7 @@ app.controller('staffAddEditCtrl', ['$scope','$http','$location','$state','$stat
                     };
 
                     $scope.saveStaff = function () {
+                      $scope.staff.company_id = company_id;
                         var user_data_staff = $scope.staff;
                         var user_data_users = $scope.users;
                         
