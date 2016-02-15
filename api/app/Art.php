@@ -174,7 +174,7 @@ class Art extends Model {
     public function artjobgroup_list($art_id,$company_id)
     {
 		$query = DB::table('artjob_ordergroup as aog')
-				->select('aog.*',DB::raw("GROUP_CONCAT(ass.screen_set) as screen_set"))
+				->select('aog.*',DB::raw("GROUP_CONCAT(ass.screen_set) as screen_set"),DB::raw("(SELECT COUNT(art_group) FROM purchase_detail WHERE order_id= ord.id AND art_group= aog.id AND size<>'') as group_count"))
 				->join('art as art','art.art_id','=','aog.art_id')
 				->join('orders as ord','ord.id','=','art.order_id')
 				->leftJoin('artjob_screensets as ass',DB::raw("FIND_IN_SET(ass.id,aog.screen_sets)"),DB::raw(''),DB::raw(''))
@@ -189,6 +189,7 @@ class Art extends Model {
 				$query[$key]->screen_array = explode(",",$value->screen_sets);
 			}
 		}
+		//echo "<pre>"; print_r($query); echo "</pre>"; die;
 		return $query;
     }
     public function update_orderScreen($post)
@@ -332,7 +333,7 @@ class Art extends Model {
     public function screen_colorpopup ($screen_id,$company_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select('ord.id as order_id','asc.*','asc.id as color_id','ass.*','ass.id as screen_id',DB::raw('SUM(ol.qnty) as total_qnty'))
+				->select('ord.id as order_id','asc.*','asc.id as color_id','ass.*','ass.id as screen_id',DB::raw('SUM(ol.qnty) as total_qnty'),'art.art_id')
 				->join('art as art','art.art_id','=','ass.art_id')
 				->join('orders as ord','ord.id','=','art.order_id')
 				->join('order_orderlines as ol','ol.order_id','=','ord.id')
