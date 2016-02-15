@@ -1,10 +1,11 @@
 app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','$filter',function($scope,$http,$state,$stateParams,$rootScope,AuthService,$filter) {
+	                      $("#ajax_loader").show();
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
                           $scope.art_id = $stateParams.art_id;
                           $scope.company_id = $rootScope.company_profile.company_id;
                           
-                          $("#ajax_loader").show();
+
                           $http.get('api/public/art/listing/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
@@ -86,7 +87,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           Get_artDetail();
                           function Get_artDetail()
                           {
-                          	$("#ajax_loader").show();
+                          	
                           	$http.get('api/public/art/Art_detail/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
 
                           			$("#ajax_loader").hide();
@@ -96,19 +97,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           			$scope.graphic_size = RetArray.data.records.graphic_size;
                           			$scope.artjobgroup_list = RetArray.data.records.artjobgroup_list;
                           			$scope.art_worklist = RetArray.data.records.art_worklist;
-                          			$scope.screen_allcolors = RetArray.data.records.allcolors;
                           			$scope.wp_position = RetArray.data.records.wp_position;
-
-                          			//console.log($scope.art_orderline.line_array);
-                          			 
-                          				$scope.simulateQuery = false;
-									    $scope.isDisabled    = false;
-									    // list of `state` value/display objects
-									    $scope.states        = loadAll();
-									    //console.log( $scope.states )
-									    $scope.querySearch   = querySearch;
-									    $scope.selectedItemChange = selectedItemChange;
-									    $scope.searchTextChange   = searchTextChange;
 
                               	if(RetArray.data.success=='2')
                           		{
@@ -126,7 +115,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 							    return new Array(num);   
 							}
 
-						  $scope.UpdateField_field = function($event,id,table){
+						  $scope.UpdateField_field = function($event,id,table,fun_redirect){
                           		  var Receive_data = {};
                           		  Receive_data.table =table;
                           		  $scope.name_filed = $event.target.name;
@@ -138,7 +127,34 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
 	                              		var data = {"status": "success", "message": "Data Updated successfully"}
                                         notifyService.notify(data.status, data.message); 
+                                        //alert(fun_redirect);
+                                        if(fun_redirect =='get_groupdata')
+                                        {
+                                        	$scope.get_groupdata();
+                                        }
                                 });
+                          }
+                          
+                           $scope.UpdateField_clientnote = function($event,id,table){
+                          		  var Receive_data = {};
+                          		  Receive_data.table =table;
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ art_id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                });
+                          }
+
+
+                          $scope.get_groupdata = function(){
+                          	$http.get('api/public/art/artjobgroup_list/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
+                          		$scope.artjobgroup_list = RetArray.data.records;
+                          	});
                           }
                           $scope.Asign_group_order = function(id){
                           		  var Receive_data = {};
@@ -233,6 +249,18 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 		                		$("#ajax_loader").show();
 		                		$http.get('api/public/art/screen_colorpopup/'+screen_id+'/'+$scope.company_id).success(function(RetArray) {
 		                			$scope.screen_colorpopup = RetArray.data.records.screen_colorpopup;
+		                			$scope.screen_allcolors = RetArray.data.records.allcolors;
+
+
+                      				$scope.simulateQuery = false;
+								    $scope.isDisabled    = false;
+								    // list of `state` value/display objects
+								    $scope.states        = loadAll();
+								    //console.log( $scope.states )
+								    $scope.querySearch   = querySearch;
+
+
+
                           			$scope.color_popup_open();
                           		  });
 
@@ -369,20 +397,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 						        return results;
 						      }
 						    }
-						     function searchTextChange(text) {
-						      $log.info('Text changed to ' + text);
-						    }
-						    function selectedItemChange(item) {
-						      $log.info('Item changed to ' + JSON.stringify(item));
-						    }
 
-
-						    function searchTextChange(text) {
-						      $log.info('Text changed to ' + text);
-						    }
-						    function selectedItemChange(item) {
-						      $log.info('Item changed to ' + JSON.stringify(item));
-						    }
 						    /**
 						     * Build `states` list of key/value pairs
 						     */
