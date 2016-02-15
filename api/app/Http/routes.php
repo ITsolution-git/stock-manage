@@ -208,6 +208,9 @@ Route::post('order/productDetail', 'OrderController@productDetail');
 Route::post('order/updatePriceProduct', 'OrderController@updatePriceProduct');
 Route::post('order/deleteColorSize', 'OrderController@deleteColorSize');
 Route::post('order/sendEmail', 'OrderController@sendEmail');
+Route::post('order/getOrderPositionDetail', 'OrderController@getOrderPositionDetail');
+Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
+
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
