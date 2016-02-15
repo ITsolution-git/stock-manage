@@ -75,9 +75,20 @@ class Order extends Model {
         $whereOrderConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
         $orderData = DB::table('orders')->where($whereOrderConditions)->get();
 
-        $whereOrderPositionConditions = ['order_id' => $data['id']];
-        $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
+        $whereClientMainContactConditions = ['client_id' => $data['client_id']];
+        $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
 
+        $combine_array = array();
+
+        $combine_array['order'] = $orderData;
+        
+        $combine_array['client_main_data'] = $clientMainData;
+
+        return $combine_array;
+    }
+
+    public function getOrderLineDetail($data)
+    {
         $listArray = ['o.*','p.description as product_description','p.name as product_name','c.name as color_name'];
         $whereOrderLineConditions = ['order_id' => $data['id']];
         $orderLineData = DB::table('order_orderlines as o')
@@ -86,34 +97,27 @@ class Order extends Model {
                         ->select($listArray)
                         ->where($whereOrderLineConditions)->get();
 
-        $whereClientConditions = ['status' => '1','is_delete' => '1','client_id' => $data['client_id']];
-        $clientData = DB::table('client')->where($whereClientConditions)->get();
+        $combine_array['order_line_data'] = $orderLineData;
 
-        $whereClientMainContactConditions = ['client_id' => $data['client_id']];
-        $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
+        return $combine_array;
+    }
 
-        $combine_array = array();
-
-        $combine_array['order'] = $orderData;
-
-
+    public function getOrderPositionDetail($data)
+    {
+        $whereOrderPositionConditions = ['order_id' => $data['id']];
+        $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
+        
         foreach ($orderPositionData as $key=>$alldata){
 
-            if($alldata->placementvalue){
-                 $orderPositionData[$key]->placementvalue = explode(',', $alldata->placementvalue);
-            }
+                    if($alldata->placementvalue){
+                         $orderPositionData[$key]->placementvalue = explode(',', $alldata->placementvalue);
+                    }
 
-            if($alldata->sizegroupvalue){
-                $orderPositionData[$key]->sizegroupvalue = explode(',', $alldata->sizegroupvalue);
-            }
-           
-            
+                    if($alldata->sizegroupvalue){
+                        $orderPositionData[$key]->sizegroupvalue = explode(',', $alldata->sizegroupvalue);
+                    }
         }
-
         $combine_array['order_position'] = $orderPositionData;
-        $combine_array['client_data'] = $clientData;
-        $combine_array['client_main_data'] = $clientMainData;
-        $combine_array['order_line_data'] = $orderLineData;
 
         return $combine_array;
     }
