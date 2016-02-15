@@ -2509,7 +2509,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         });
     }
 
-<<<<<<< HEAD
+
 
 function get_company_data_selected(id)
     {
