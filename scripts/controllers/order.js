@@ -2508,6 +2508,84 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         });
     }
 
+
+function get_company_data_selected(id)
+    {
+        var companyData = {};
+        companyData.table ='client'
+        companyData.cond ={status:1,is_delete:1,company_id:company_id,client_id:id}
+        
+        $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.allCompany =result.data.records;
+            } 
+            else
+            {
+                $scope.allCompany=[];
+            }
+        });
+     }
+
+     $scope.openEmailPopup = function () {
+    
+
+        get_company_data_selected($scope.order.client_id);
+
+        var modalInstance = $modal.open({
+                                        animation: $scope.animationsEnabled,
+                                        templateUrl: 'views/front/order/email.html',
+                                        scope: $scope,
+                                        size: 'sm'
+                            });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+
+        $scope.ok = function (email) {
+ 
+           
+           if(email == undefined) {
+
+              var data = {"status": "error", "message": "Email should not be blank"}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+            } 
+
+
+            
+              var combine_array = {};
+             
+              combine_array.email = email;
+              combine_array.order_id = order_id;
+             
+            $http.post('api/public/order/sendEmail',combine_array).success(function(result) 
+            {
+                if(result.data.success == '1') 
+                {
+                    
+                } else {
+
+                    var data = {"status": "error", "message": "Please print the pdf before send an email."}
+                      notifyService.notify(data.status, data.message);
+                      
+                }
+                modalInstance.dismiss('cancel');
+                
+            });
+
+            
+        };
+
+        $scope.cancel = function () {
+            modalInstance.dismiss('cancel');
+        };
+    };
+
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {

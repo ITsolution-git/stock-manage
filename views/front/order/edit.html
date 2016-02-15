@@ -5,7 +5,7 @@
             <div class="col-sm-12 m-b nopad-form">
                 <div class="col-sm-12 m-b"></div>
                 
-                <div class="col-md-10 nopad-form">
+                <div class="col-md-9 nopad-form">
                     <div class="form-group col-md-12 m-b nopad-form">
                         <div class="col-md-2 m-b nopad-left">
                             <label>Job Name<em class="text-muted"></em></label>
@@ -76,21 +76,20 @@
                        
                     </div>
                 </div>
-                <div class="form-group col-md-2 m-b nopad-form smallPad orderLineCal">
+                <div class="form-group col-md-3 m-b nopad-form smallPad orderLineCal">
 
-                    <div class="input-group col-md-12 pull-right nopad-right t-r m-b">
-                        <!-- <div class="col-md-3 pull-left nopad-right smallPad">
-                            <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
-                        </div>  -->                   
-                        <div class="col-md-3 nopad-right smallPad">
-                            <button ng-click="confirmPricing()" type="button"  class="btn btn-info">Confirm Pricing</button>
-                        </div>
-                        <div class="col-md-3 pull-right nopad-right smallPad">
-                            <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
-                        </div> 
-                        <div class="col-md-3 pull-right nopad-right smallPad">
-                            <button ng-click="printPdf()" type="button"  class="btn btn-info">Print</button>
-                        </div>                                 
+                    <div class="input-group col-md-12 pull-right nopad-form t-r m-b">
+                                 
+                        
+                            <button ng-click="confirmPricing()" type="button"  class="btn btn-info order-button">Confirm Pricing</button>
+                        
+                      
+                            <button ng-click="printPdf()" type="button"  class="btn btn-info order-button">Print</button>
+                      
+                            <button class="btn btn-info order-button" ng-click="openEmailPopup()" tabindex="0">Email</button>
+                       
+                            <button ui-sref="order.list" type="button"  class="btn btn-info order-button">List</button>
+                                                   
                     </div>
                     <div class="col-md-12 nopad-form">
                         <div class="form-group col-md-6 text-right nopad-left smallPad">
