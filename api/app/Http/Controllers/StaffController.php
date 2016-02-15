@@ -34,8 +34,8 @@ class StaffController extends Controller {
 */
 
     public function index() {
- 
-        $result = $this->staff->staffList();
+         $post = Input::all();
+        $result = $this->staff->staffList($post);
        
        
         if (count($result) > 0) {
@@ -64,7 +64,7 @@ class StaffController extends Controller {
             'middle_name' => isset($_REQUEST['middle_name']) ? $_REQUEST['middle_name'] : '',
             'start_date' => isset($_REQUEST['start_date']) ? $_REQUEST['start_date'] : '',
             'prime_phone_main' => $_REQUEST['prime_phone_main'] ? $_REQUEST['prime_phone_main'] : '',
-            
+            'company_id' => $_REQUEST['company_id'] ? $_REQUEST['company_id'] : '',
             'status' => isset($_REQUEST['status']) ? $_REQUEST['status'] : '',
             'commision_base' => isset($_REQUEST['commision_base']) ? $_REQUEST['commision_base'] : '',
             'commission_sub' => isset($_REQUEST['commission_sub']) ? $_REQUEST['commission_sub'] : '',
