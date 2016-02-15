@@ -15,9 +15,9 @@ class Staff extends Model {
 * @return array $staffData
 */
 
-    public function staffList() {
+    public function staffList($post) {
         
-        $whereConditions = ['users.is_delete' => '1','staff.is_delete' => '1'];
+        $whereConditions = ['users.is_delete' => '1','staff.is_delete' => '1','staff.company_id' => $post['cond']['company_id']];
         $listArray = ['staff.user_id','staff.id','staff.first_name','staff.last_name','staff.prime_phone_main','staff.date_start','staff.status','roles.title'];
 
         $staffData = DB::table('staff as staff')

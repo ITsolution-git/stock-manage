@@ -14,9 +14,9 @@ class Vendor extends Model {
 * @return array $staffData
 */
 
-    public function vendorList() {
+    public function vendorList($post) {
         
-        $whereConditions = ['status' => '1','is_delete' => '1'];
+        $whereConditions = ['status' => '1','is_delete' => '1','company_id' => $post['cond']['company_id']];
         $vendorData = DB::table('vendors')->where($whereConditions)->get();
         return $vendorData;
     }

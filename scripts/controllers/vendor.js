@@ -1,8 +1,16 @@
 
-app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+app.controller('vendorListCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
    AuthService.AccessService('FM');
                          $("#ajax_loader").show();
-                         $http.get('api/public/admin/vendor').success(function(result, status, headers, config) {
+                         var company_id = $rootScope.company_profile.company_id;
+
+                         var vendor_list_data = {};
+                         var condition_obj = {};
+                         condition_obj['company_id'] =  company_id;
+                         vendor_list_data.cond = angular.copy(condition_obj);
+
+                        
+                          $http.post('api/public/admin/vendor',vendor_list_data).success(function(result, status, headers, config) {
 
                                   $scope.vendors = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
@@ -77,8 +85,9 @@ app.controller('vendorListCtrl', ['$scope','$http','$location','$state','$stateP
 
 }]);
 
-app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
+app.controller('vendorAddEditCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant) {
    AuthService.AccessService('FM');
+   var company_id = $rootScope.company_profile.company_id;
   $http.get('api/public/common/staffRole').success(function(result, status, headers, config) {
 
               $scope.staffRoles = result.data.records;
@@ -117,7 +126,7 @@ app.controller('vendorAddEditCtrl', ['$scope','$http','$location','$state','$sta
 
                     $scope.saveVendor = function () {
 
-
+                        $scope.vendor.company_id = company_id;
                         var vendor_data = $scope.vendor;
 
 

@@ -15,9 +15,9 @@ class Product extends Model {
 * @return array $productData
 */
 
-    public function productList() {
+    public function productList($post) {
         
-        $whereConditions = ['products.is_delete' => '1','vendors.is_delete' => '1'];
+        $whereConditions = ['products.is_delete' => '1','vendors.is_delete' => '1','vendors.company_id' => $post['cond']['company_id']];
         $listArray = ['products.vendor_id','products.id','products.description','products.vendor_sku','products.color_ids','products.size_group','products.status','vendors.name_company'];
 
         $vendorData = DB::table('products as products')
