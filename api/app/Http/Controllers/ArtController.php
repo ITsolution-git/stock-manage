@@ -52,17 +52,16 @@ class ArtController extends Controller {
     		$art_position = $this->art->art_position($art_id,$company_id);
     		$art_orderline = $this->art->art_orderline($art_id,$company_id);
 			$artjobscreen_list = $this->art->artjobscreen_list($art_id,$company_id);  // SCREEN LISTING DATA
-			$graphic_size = $this->common->GetMicType('graphic_size');
-			$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id);
+			$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id); // GROUP LIST DATA
 
 			$art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
-			$allcolors = $this->common->getAllColorData();
-			$wp_position = $this->common->GetMicType('position');
-			foreach ($allcolors as $key => $value) {
-				$allcolors[$key]->name = strtolower($value->name);
-			}
 
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'allcolors'=>$allcolors,'wp_position'=>$wp_position);
+			$graphic_size = $this->common->GetMicType('graphic_size');
+			//$allcolors = $this->common->getAllColorData();
+			$wp_position = $this->common->GetMicType('position');
+			
+
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'wp_position'=>$wp_position);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
@@ -224,9 +223,11 @@ class ArtController extends Controller {
     		$graphic_size = $this->common->GetMicType('graphic_size');
     		$screen_garments = $this->art->screen_garments($screen_id,$company_id);
     		
+    		$color_array= array();
     		foreach ($allcolors as $key => $value) 
 			{
-				$allcolors[$value->id]= $value->name;
+				$color_array[$value->id]= $value->name;
+				$allcolors[$key]->name = strtolower($value->name);
 			}
 
     		//echo "<pre>"; print_r($allcolors); echo "</pre>"; die;
@@ -234,12 +235,12 @@ class ArtController extends Controller {
 			{
 				foreach ($screen_colorpopup as $key => $value) 
 				{
-					$screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $allcolors[$value->color_name]:'';
-					$screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $allcolors[$value->thread_color]:'';
+					$screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $color_array[$value->color_name]:'';
+					$screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
 				}
 			}	
 
-    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments);
+    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'allcolors'=>$allcolors,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments);
     		
     		if(count($screen_colorpopup)>0)
     		{

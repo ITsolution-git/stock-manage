@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
 use App\Login;
 use Input;
+use Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Order;
@@ -13,6 +14,7 @@ use App\Product;
 use DB;
 use App;
 use Request;
+use Response;
 //use Barryvdh\DomPDF\Facade as PDF;
 use PDF;
 
@@ -946,7 +948,13 @@ class OrderController extends Controller {
      
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());
-        PDF::Output('order.pdf');
+     //   PDF::Output('order.pdf');
+
+      $pdf_url = "order-".$order['order']->id.".pdf";         
+      $filename = base_path() . "/public/uploads/pdf/". $pdf_url;
+     
+      PDF::Output($filename, 'F');
+      return Response::download($filename);
 
     }
 
@@ -1054,6 +1062,35 @@ class OrderController extends Controller {
        $result = $this->order->updatePriceProduct($colors_all_array,$post['product_id']);
        $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
+    }
+
+    public function sendEmail() {
+
+                $post = Input::all();
+                $email = trim($post['email']);
+                $email_array = explode(",",$email);
+                $attached_url = UPLOAD_PATH.'pdf/order-'.$post['order_id'].'.pdf';
+               
+               $uploaddir = base_path() . "/public/uploads/pdf/order-".$post['order_id'].'.pdf';
+               
+               if (file_exists($uploaddir)) {
+                 
+               } else {
+                $response = array('success' => 0, 'message' => "Email Attachement is blank");
+                return response()->json(["data" => $response]);
+                exit;
+               }
+                
+         
+                Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
+                {
+                     $message->to($email_array)->subject('Order Acknowledgement #'.$post['order_id']);
+                     $message->attach($attached_url);
+                });
+
+                $response = array('success' => 1, 'message' => MAIL_SEND);
+          
+         return response()->json(["data" => $response]);
     }
 
 }
