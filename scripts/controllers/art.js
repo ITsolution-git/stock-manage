@@ -140,6 +140,21 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                         notifyService.notify(data.status, data.message); 
                                 });
                           }
+                          $scope.Asign_group_order = function(id){
+                          		  var Receive_data = {};
+                          		  Receive_data.table ='purchase_detail';
+                          		  $scope.name_filed = 'art_group';
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] = $('#art_group_'+id).val();;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ orderline_id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                         Get_artDetail();
+                                });
+                          }
 
 
                            $scope.change_color = function(name,value,id,table){
@@ -401,6 +416,7 @@ app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$ro
                           $http.get('api/public/art/screen_colorpopup/'+$scope.screen_id+'/'+$scope.company_id).success(function(RetArray) {
 		                			$scope.screen_detail = RetArray.data.records.screen_colorpopup;
 		                			$scope.graphic_size_all=  RetArray.data.records.graphic_size;
+		                			$scope.screen_garments  = RetArray.data.records.screen_garments;
                           		  });
                       	  }
                       	  $scope.UpdateField_field = function($event,id,table){

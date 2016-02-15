@@ -980,6 +980,10 @@ input[readonly].cgreen {
 	overflow: hidden;
 	overflow-y: scroll;
 }
+.orderDistributionContainer label.ui-checks-lg {
+	margin-bottom: 0;
+	margin-top: 5px;
+}
 .orderDistributionContainer .col-md-12 {
 	padding-top: 15px;
 }
@@ -1074,6 +1078,10 @@ button.topNavButtons.active {
 =====================================*/
 .finishingForm .npb {
 	border: 0 none;	
+}
+
+.finishingTab .clientTab .strip-content {
+	overflow: visible;
 }
 /*---------- END ----------*/
 

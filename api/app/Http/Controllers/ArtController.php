@@ -222,8 +222,8 @@ class ArtController extends Controller {
     		$screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
     		$allcolors = $this->common->getAllColorData();
     		$graphic_size = $this->common->GetMicType('graphic_size');
-
-
+    		$screen_garments = $this->art->screen_garments($screen_id,$company_id);
+    		
     		foreach ($allcolors as $key => $value) 
 			{
 				$allcolors[$value->id]= $value->name;
@@ -239,7 +239,7 @@ class ArtController extends Controller {
 				}
 			}	
 
-    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'graphic_size'=>$graphic_size);
+    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments);
     		
     		if(count($screen_colorpopup)>0)
     		{

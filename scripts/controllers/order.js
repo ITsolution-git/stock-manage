@@ -2034,6 +2034,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         var address_data = {};
         address_data.order_id = $scope.order_id;
         address_data.address_id = address_id;
+        address_data.company_id = company_id;
 
         $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
@@ -2508,6 +2509,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         });
     }
 
+<<<<<<< HEAD
 
 function get_company_data_selected(id)
     {
@@ -2585,6 +2587,23 @@ function get_company_data_selected(id)
             modalInstance.dismiss('cancel');
         };
     };
+
+    $scope.addRemoveAddressToPdf = function (is_checked,id) {
+
+        if(is_checked == '0') {
+            is_checked = '1';
+        }
+        else {
+            is_checked = '0';
+        }
+        distribution_data = {};
+        distribution_data = {address_id:id,order_id:order_id,print_on_pdf:is_checked};
+        $http.post('api/public/shipping/addRemoveAddressToPdf',distribution_data).success(function(result) {
+            $("#ajax_loader").hide();
+            get_distribution_list(order_id,client_id);
+        });
+    }
+
 
 }]);
 
