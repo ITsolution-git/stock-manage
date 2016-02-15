@@ -74,6 +74,7 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
 
 
                           $http.post('api/public/client/ListClient',company_list_data).success(function(Listdata) {
+                            $("#ajax_loader").hide();
                                        if(Listdata.data.success=='1')
                                        {
                                           $scope.clients = Listdata.data.records;
