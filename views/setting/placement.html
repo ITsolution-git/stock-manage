@@ -21,6 +21,7 @@
             </button>
         </div>
         <div class="col-md-12 nopad-form misc-view-details horizontal-only">
+            <div ng-show="placementData.length > 0">
             <table class="table m-b-none" data-filter="#filter">
                 <thead>
                     <tr>
@@ -66,6 +67,11 @@
                     </div>
                 </div>
             </footer>
+        </div>
+    </div>
+    <div ng-show="placementData.length == 0">
+        <div class="col-md-12">
+            <h4>No Records found</h4>
         </div>
     </div>
 </div>

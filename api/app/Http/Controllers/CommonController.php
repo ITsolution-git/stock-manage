@@ -97,13 +97,15 @@ class CommonController extends Controller {
 
     public function getAllMiscData()
     {
-        $result = $this->common->getAllMiscData();
+         $post = Input::all();
+        $result = $this->common->getAllMiscData($post);
         return $this->return_response($result);
     }
 
      public function getAllMiscDataWithoutBlank()
     {
-        $result = $this->common->getAllMiscDataWithoutBlank();
+        $post = Input::all();
+        $result = $this->common->getAllMiscDataWithoutBlank($post);
         return $this->return_response($result);
     }
 
@@ -258,13 +260,15 @@ class CommonController extends Controller {
 
     public function getAllPlacementData()
     {
-        $result = $this->common->getAllPlacementData();
+          $post = Input::all();
+        $result = $this->common->getAllPlacementData($post);
         return $this->return_response($result);
     }
 
     public function getMiscData()
     {
-        $result = $this->common->getMiscData();
+        $post = Input::all();
+        $result = $this->common->getMiscData($post);
         return $result;
     }
 
@@ -324,7 +328,7 @@ class CommonController extends Controller {
         } 
         else 
         {
-            $response = array('success' => 0, 'message' => NO_RECORDS);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
         return  response()->json(["data" => $response]);
     }

@@ -26,7 +26,7 @@ class Company extends Model {
     public function InsertCompanyData($post)
     {
 
-     
+   
         if(!isset($post['company_logo'])) {
             $post['company_logo'] = '';
         }
@@ -53,7 +53,7 @@ class Company extends Model {
         $result_company_detail = DB::table('company_detail')->insert($result_array);
 
 
-/// Add default price grid code start 
+/// default price grid code start 
 
        $whereConditions = ['is_delete' => '1','company_id' => 0];
        
@@ -94,10 +94,10 @@ class Company extends Model {
                $priceDataChargeArray[$keyPrice]['price_id'] = $priceid;
                $priceDataChargeArray[$keyPrice]['created_date'] = date("Y-m-d H:i:s");
                $priceDataChargeArray[$keyPrice]['updated_date'] = date("Y-m-d H:i:s");
-               $result_price = DB::table('price_grid_charges')->insert($priceDataChargeArray[$keyPrice]);
                
           }
 
+      $result_price_charge = DB::table('price_grid_charges')->insert($priceDataChargeArray);
 // code end for price grid charge 
 
 // code start for price grid Primary
@@ -116,10 +116,11 @@ class Company extends Model {
                $priceDataPrimaryArray[$keyPrmary]['price_id'] = $priceid;
                $priceDataPrimaryArray[$keyPrmary]['created_date'] = date("Y-m-d H:i:s");
                $priceDataPrimaryArray[$keyPrmary]['updated_date'] = date("Y-m-d H:i:s");
-               $result_price = DB::table('price_screen_primary')->insert($priceDataPrimaryArray[$keyPrmary]);
+               
                
           }
 
+     $result_price_primary = DB::table('price_screen_primary')->insert($priceDataPrimaryArray);
 // code end for price grid Primary 
 
 
@@ -139,10 +140,10 @@ class Company extends Model {
                $priceDataSecondaryArray[$keySecondary]['price_id'] = $priceid;
                $priceDataSecondaryArray[$keySecondary]['created_date'] = date("Y-m-d H:i:s");
                $priceDataSecondaryArray[$keySecondary]['updated_date'] = date("Y-m-d H:i:s");
-               $result_price = DB::table('price_screen_secondary')->insert($priceDataSecondaryArray[$keySecondary]);
+              
                
           }
-
+ $result_price_secondary = DB::table('price_screen_secondary')->insert($priceDataSecondaryArray);
 // code end for price grid Secondary
 
 // code start for price grid garment markup
@@ -161,9 +162,11 @@ class Company extends Model {
                $priceDataGmArray[$keyGm]['price_id'] = $priceid;
                $priceDataGmArray[$keyGm]['created_date'] = date("Y-m-d H:i:s");
                $priceDataGmArray[$keyGm]['updated_date'] = date("Y-m-d H:i:s");
-               $result_price = DB::table('price_garment_mackup')->insert($priceDataGmArray[$keyGm]);
-               
+              
           }
+
+        $result_price_markup = DB::table('price_garment_mackup')->insert($priceDataGmArray);
+               
 
 // code end for price garment markup
 
@@ -183,9 +186,8 @@ class Company extends Model {
                $priceDataDgArray[$keyDg]['price_id'] = $priceid;
                $priceDataDgArray[$keyDg]['created_date'] = date("Y-m-d H:i:s");
                $priceDataDgArray[$keyDg]['updated_date'] = date("Y-m-d H:i:s");
-               $result_price = DB::table('price_direct_garment')->insert($priceDataDgArray[$keyDg]);
-               
           }
+          $result_dg = DB::table('price_direct_garment')->insert($priceDataDgArray);
 
 // code end for price direct garment
 
@@ -205,9 +207,10 @@ class Company extends Model {
                $priceDataEsArray[$keyEs]['price_id'] = $priceid;
                $priceDataEsArray[$keyEs]['created_date'] = date("Y-m-d H:i:s");
                $priceDataEsArray[$keyEs]['updated_date'] = date("Y-m-d H:i:s");
-               $result_price = DB::table('embroidery_switch_count')->insert($priceDataEsArray[$keyEs]);
-               $switchId = DB::getPdo()->lastInsertId();
+              
           }
+           $result_embro = DB::table('embroidery_switch_count')->insert($priceDataEsArray);
+           $switchId = DB::getPdo()->lastInsertId();
 
 // code end for price  Embroidery switch count
 
@@ -229,14 +232,36 @@ class Company extends Model {
                $priceDataEmbroArray[$keyEmbro]['embroidery_switch_id'] = $switchId;
                $priceDataEmbroArray[$keyEmbro]['created_date'] = date("Y-m-d H:i:s");
                $priceDataEmbroArray[$keyEmbro]['updated_date'] = date("Y-m-d H:i:s");
-               $result_price = DB::table('price_screen_embroidery')->insert($priceDataEmbroArray[$keyEmbro]);
-               
+              
           }
+           $result_screeen_embro = DB::table('price_screen_embroidery')->insert($priceDataEmbroArray);
+               
 
 // code end for price  grid Embroidery
 
 
-/// Add default price grid code end          
+/// default price grid code end  
+
+
+// Code for Default Misc data Start
+           
+        $whereConditionsMisc = ['is_delete' => '1','company_id' => 0];
+        $miscData = DB::table('misc_type')
+                         ->select('*')
+                         ->where($whereConditionsMisc)
+                         ->get();
+ 
+        $miscDataArray = json_decode(json_encode($miscData), true);
+        
+        foreach($miscDataArray as $Misckey => $misclink) 
+        { 
+                unset($miscDataArray[$Misckey]['id']);
+               $miscDataArray[$Misckey]['company_id'] = $companyid;       
+         }
+
+        $result_misc = DB::table('misc_type')->insert($miscDataArray);
+
+// Code for Default Misc data End
 
     	return $result;
     }

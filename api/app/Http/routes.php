@@ -109,20 +109,15 @@ Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::post('auth/company', 'CommonController@CompanyService');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
-Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
-Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
+Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
+Route::post('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
-Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
-Route::get('common/getMiscData', 'CommonController@getMiscData');
+Route::post('common/getAllPlacementData', 'CommonController@getAllPlacementData');
+Route::post('common/getMiscData', 'CommonController@getMiscData');
 Route::get('common/getAllColorData', 'CommonController@getAllColorData');
 Route::post('common/getCompanyDetail', 'CommonController@getCompanyDetail');
 Route::post('common/SaveImage', 'CommonController@SaveImage');
-
-
-Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
-Route::get('common/getMiscData', 'CommonController@getMiscData');
-
 Route::post('common/InsertRecords', 'CommonController@InsertRecords'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/UpdateTableRecords', 'CommonController@UpdateTableRecords'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
