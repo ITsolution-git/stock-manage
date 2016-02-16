@@ -82,7 +82,7 @@ Route::post('admin/productDetail', 'ProductController@detail');
 Route::get('admin/productEdit/{id}', 'ProductController@detail');
 
 // ADMIN SETTING ROUTERS
-Route::get('admin/price', 'SettingController@price');
+Route::post('admin/price', 'SettingController@price');
 Route::post('admin/priceDelete', 'SettingController@delete');
 Route::post('admin/priceGridDuplicate', 'SettingController@priceGridDuplicate');
 Route::post('admin/priceEdit', 'SettingController@priceEdit');
