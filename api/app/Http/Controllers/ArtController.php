@@ -170,13 +170,12 @@ class ArtController extends Controller {
     	//echo "<pre>"; print_r($post); echo "</pre>"; die;
     	if(!empty($post['wp_id']))
     	{
-    		$post['save_image'] = '';
+    		
     		$val = array_filter($post['wp_placement']);
     		$post['wp_placement'] = implode(",", $val);
     		//echo "<pre>"; print_r($post['wp_placement']); echo "</pre>"; die;
     		//echo FILEUPLOAD; die;
     		$post['save_image'] = $this->Ret_imageUrl($post['wp_image'],'Artwork-logo','art/'.$post['art_id']);
-			
 
     		$this->art->SaveArtWorkProof($post);
     		$response = array('success' => 1, 'message' => UPDATE_RECORD);
