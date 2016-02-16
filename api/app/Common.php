@@ -313,5 +313,39 @@ class Common extends Model {
                          ->get();
         return $admindata;
     }
+    public function SaveImage($post)
+    {
+        $png_url='';
+         $image_array = $post['image_array'];
+         $field = $post['field'];
+         $table = $post['table'];
+         $image_name = $post['image_name'];
+         $image_path = $post['image_path'];
+         $cond = $post['cond'];
+         $value = $post['value'];
+
+        if(!empty($image_array['base64'])){
+
+                $split = explode( '/',$image_array['filetype'] );
+                $type = $split[1]; 
+
+                $png_url = $image_name."-".time().".".$type;
+                $image_path = FILEUPLOAD.$image_path;
+                
+                if (!file_exists($image_path)) {
+                        mkdir($image_path, 0777, true);
+                    } else {
+                     exec("chmod $image_path 0777");
+                       // chmod($dir_path, 0777);
+                    }
+                $image_path = $image_path."/".$png_url;     
+                $img = $image_array['base64'];
+                $data = base64_decode($img);
+                $success = file_put_contents($image_path, $data);
+
+                $query = DB::table($table)->where($cond,'=',$value)->update(array($field=>$png_url));
+            }
+            return $png_url;
+    }
 
 }

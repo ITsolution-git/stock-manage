@@ -329,5 +329,20 @@ class CommonController extends Controller {
         return  response()->json(["data" => $response]);
     }
 
+    public function SaveImage()
+    {
+        $post = Input::all();
 
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+        if(!empty($post['image_array']) && !empty($post['field']) && !empty($post['table']) && !empty($post['image_name']) && !empty($post['image_path']) && !empty($post['cond']) && !empty($post['value']))
+        {
+            $upload_image = $this->common->SaveImage($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD,'records'=>$upload_image );
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
 }
