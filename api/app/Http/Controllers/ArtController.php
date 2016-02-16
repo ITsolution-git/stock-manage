@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Art;
 use DB;
+use File;
 
 use Request;
 
@@ -77,12 +78,12 @@ class ArtController extends Controller {
     	if(!empty($company_id) && !empty($wp_id)	&& $company_id != 'undefined')
     	{
     		$art_workproof = $this->art->artworkproof_data($wp_id,$company_id);
+
     		if(count($art_workproof)>0)
     		{
+    			$art_workproof[0]->logo_image =  UPLOAD_PATH.'art/'.$art_workproof[0]->art_id.'/'.$art_workproof[0]->wp_image;
 	    		$art_id = $art_workproof[0]->art_id;
 	    		$get_artworkproof_placement = $this->art->get_artworkproof_placement($art_id,$company_id);
-
-	    		
 
 
 	    		$ret_array = array('art_workproof'=>$art_workproof,'get_artworkproof_placement'=>$get_artworkproof_placement);
@@ -169,9 +170,14 @@ class ArtController extends Controller {
     	//echo "<pre>"; print_r($post); echo "</pre>"; die;
     	if(!empty($post['wp_id']))
     	{
+    		$post['save_image'] = '';
     		$val = array_filter($post['wp_placement']);
     		$post['wp_placement'] = implode(",", $val);
     		//echo "<pre>"; print_r($post['wp_placement']); echo "</pre>"; die;
+    		//echo FILEUPLOAD; die;
+    		$post['save_image'] = $this->Ret_imageUrl($post['wp_image'],'Artwork-logo','art/'.$post['art_id']);
+			
+
     		$this->art->SaveArtWorkProof($post);
     		$response = array('success' => 1, 'message' => UPDATE_RECORD);
     	}
@@ -180,6 +186,31 @@ class ArtController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
+    }
+
+    public function Ret_imageUrl($image_array,$image_name,$path)
+    {
+    	$png_url='';
+    	if(!empty($image_array['base64'])){
+
+            	$split = explode( '/',$image_array['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url = $image_name."-".time().".".$type;
+				$path = FILEUPLOAD.$path;
+				
+				if (!file_exists($path)) {
+			            mkdir($path, 0777, true);
+			        } else {
+			         exec("chmod $path 0777");
+			           // chmod($dir_path, 0777);
+			        }
+				$path = $path."/".$png_url;		
+				$img = $image_array['base64'];
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+	    	}
+	    	return $png_url;
     }
     public function Client_art_screen($client_id,$company_id)
     {
@@ -229,7 +260,7 @@ class ArtController extends Controller {
 				$color_array[$value->id]= $value->name;
 				$allcolors[$key]->name = strtolower($value->name);
 			}
-
+			$screen_colorpopup[0]->logo_image = (!empty($screen_colorpopup[0]->color_logo))? UPLOAD_PATH.'art/'.$screen_colorpopup[0]->art_id.'/'.$screen_colorpopup[0]->color_logo:'';
     		//echo "<pre>"; print_r($allcolors); echo "</pre>"; die;
     		if(count($screen_colorpopup)>0)
 			{

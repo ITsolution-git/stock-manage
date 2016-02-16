@@ -82,7 +82,7 @@ Route::post('admin/productDetail', 'ProductController@detail');
 Route::get('admin/productEdit/{id}', 'ProductController@detail');
 
 // ADMIN SETTING ROUTERS
-Route::get('admin/price', 'SettingController@price');
+Route::post('admin/price', 'SettingController@price');
 Route::post('admin/priceDelete', 'SettingController@delete');
 Route::post('admin/priceGridDuplicate', 'SettingController@priceGridDuplicate');
 Route::post('admin/priceEdit', 'SettingController@priceEdit');
@@ -117,6 +117,7 @@ Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData')
 Route::get('common/getMiscData', 'CommonController@getMiscData');
 Route::get('common/getAllColorData', 'CommonController@getAllColorData');
 Route::post('common/getCompanyDetail', 'CommonController@getCompanyDetail');
+Route::post('common/SaveImage', 'CommonController@SaveImage');
 
 
 Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
@@ -208,6 +209,9 @@ Route::post('order/productDetail', 'OrderController@productDetail');
 Route::post('order/updatePriceProduct', 'OrderController@updatePriceProduct');
 Route::post('order/deleteColorSize', 'OrderController@deleteColorSize');
 Route::post('order/sendEmail', 'OrderController@sendEmail');
+Route::post('order/getOrderPositionDetail', 'OrderController@getOrderPositionDetail');
+Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
+
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

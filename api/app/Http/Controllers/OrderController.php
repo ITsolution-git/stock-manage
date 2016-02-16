@@ -94,58 +94,9 @@ class OrderController extends Controller {
                                 'message' => NO_RECORDS
                                 ); 
            return response()->json(["data" => $response]);
-           
-
         }
 
-        if(!empty($result['order_line_data']))
-        {
-            $sum = 0;
-            foreach($result['order_line_data'] as $row)
-            {
-                $row->orderline_id = $row->id;
-                $row->products = array();
-                $row->colors = array();
-
-                if($row->vendor_id > 0)
-                {
-
-                    $oldata = array();
-                    $oldata['where'] = array('vendor_id' => $row->vendor_id);
-                    $oldata['fields'] = array();
-                    //$row->products = $this->product->getVendorProducts($oldata);
-                }
-                if($row->product_id > 0)
-                {
-                    $colors = $this->product->GetProductColor(array('id'=>$row->product_id));
-                    $colors = unserialize($colors[0]->color_size_data);
-                    if(!empty($colors))
-                    {
-                        foreach($colors as $key=>$color) {
-                            $color_data = $this->product->GetColorDeail(array('id'=>$key));
-                            $row->colors[] = $color_data[0];
-                        }
-                    }
-                }
-
-                $order_line_items = $this->order->getOrderLineItemById($row->id);
-                $count = 1;
-                $order_line = array();
-                foreach ($order_line_items as $line) {
-                 
-                    $line->number = $count;
-                    $order_line[] = $line;
-                    $count++;
-                }
-                $row->items = $order_line;
-
-                $result['order_line'][] = $row;
-            }
-        }
-        else
-        {
-            $result['order_line'] = array();
-        }
+        
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
 
         if(!empty($order_items))
@@ -201,7 +152,6 @@ class OrderController extends Controller {
         }
 
         $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
-        //$products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
 
         $vendors = $this->common->getAllVendors();
         $staff = $this->common->getStaffList();
@@ -212,10 +162,7 @@ class OrderController extends Controller {
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['order'],
-                                'client_data' => $result['client_data'],
                                 'client_main_data' => $result['client_main_data'],
-                                'order_position' => $result['order_position'],
-                                'order_line' => $result['order_line'],
                                 'order_item' => $result['order_item'],
                                 'price_grid' => $price_grid,
                                 'price_garment_mackup' => $price_garment_mackup,
@@ -235,8 +182,6 @@ class OrderController extends Controller {
                                 'records' => $result['order'],
                                 'client_data' => $result['client_data'],
                                 'client_main_data' => $result['client_main_data'],
-                                'order_position' => $result['order_position'],
-                                'order_line' => $result['order_line'],
                                 'order_item' => $result['order_item'],
                                 'order_po_data' => $result['order_po_data']);
 
@@ -246,6 +191,98 @@ class OrderController extends Controller {
 
     }
 
+    public function getOrderPositionDetail()
+    {
+        $data = Input::all();
+        $result = $this->order->getOrderPositionDetail($data);
+        
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'order_position' => $result['order_position']
+                            );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'order_position' => $result['order_position']
+                            );
+        }
+        return response()->json(["data" => $response]);
+    }
+
+    public function getOrderLineDetail()
+    {
+        $data = Input::all();
+        $result = $this->order->getOrderLineDetail($data);
+
+        if(!empty($result['order_line_data']))
+        {
+            $sum = 0;
+            foreach($result['order_line_data'] as $row)
+            {
+                $row->orderline_id = $row->id;
+                $row->products = array();
+                $row->colors = array();
+
+                if($row->vendor_id > 0)
+                {
+
+                    $oldata = array();
+                    $oldata['where'] = array('vendor_id' => $row->vendor_id);
+                    $oldata['fields'] = array();
+                    //$row->products = $this->product->getVendorProducts($oldata);
+                }
+                if($row->product_id > 0)
+                {
+                    $colors = $this->product->GetProductColor(array('id'=>$row->product_id));
+                    $colors = unserialize($colors[0]->color_size_data);
+                    if(!empty($colors))
+                    {
+                        foreach($colors as $key=>$color) {
+                            $color_data = $this->product->GetColorDeail(array('id'=>$key));
+                            $row->colors[] = $color_data[0];
+                        }
+                    }
+                }
+
+                $order_line_items = $this->order->getOrderLineItemById($row->id);
+                $count = 1;
+                $order_line = array();
+                foreach ($order_line_items as $line) {
+                 
+                    $line->number = $count;
+                    $order_line[] = $line;
+                    $count++;
+                }
+                $row->items = $order_line;
+
+                $result['order_line'][] = $row;
+            }
+        }
+        else
+        {
+            $result['order_line'] = array();
+        }
+
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'order_line' => $result['order_line'],
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'order_line' => $result['order_line']
+                            );
+
+        }
+
+        return response()->json(["data" => $response]);
+    }
 
    /**
    * Get Order notes.

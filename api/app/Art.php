@@ -253,7 +253,7 @@ class Art extends Model {
     }
     public function SaveArtWorkProof($post)
     {
-    	$result = DB::table('artjob_artworkproof')->where('id','=',$post['wp_id'])->update(array("wp_position" => $post['wp_position'],"wp_desc" => $post['wp_desc'],'wp_screen'=>$post['wp_screen'],'wp_placement'=>$post['wp_placement']));
+    	$result = DB::table('artjob_artworkproof')->where('id','=',$post['wp_id'])->update(array("wp_position" => $post['wp_position'],"wp_desc" => $post['wp_desc'],'wp_screen'=>$post['wp_screen'],'wp_image'=>$post['save_image'],'wp_placement'=>$post['wp_placement']));
     	return $result;
     }
     public function art_worklist($art_id,$company_id)

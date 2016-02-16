@@ -358,7 +358,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group secondContainer">
-                                                        <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" ng-change="getVendorProduct(order_line.vendor_id)">
+                                                        <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
                                                             <option value="0">Select</option>
                                                             <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.name_company}}</option>
                                                         </select>
@@ -398,7 +398,7 @@
                                             <div class="col-md-12 nopad-form">
                                                 <div class="cols col-1">
                                                     <div class="col-md-3 nopad-left smallPad">
-                                                        <select  ng-model="order_line.color_id"  class="form-control" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line)">
+                                                        <select  ng-model="order_line.color_id"  class="form-control" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line)" ng-click="getColor(order_line.product_name)">
                                                             <option ng-selected="order_line.color_id==color.id" ng-repeat="color in order_line.colors" value={{color.id}}>{{color.name}}</option>
                                                         </select>
                                                     </div>
