@@ -288,20 +288,21 @@ class ClientController extends Controller {
 
 
 
-		if(isset($post['data']['color_logo']['base64'])){
+		if(isset($post['data']['color_logo']['base64']))
+		{
 
-            	$split = explode( '/', $post['data']['color_logo']['filetype'] );
-                $type = $split[1]; 
+	    	$split = explode( '/', $post['data']['color_logo']['filetype'] );
+	        $type = $split[1]; 
 
-		        $png_url1 = "color-logo-".time().".".$type;
-				$path = base_path() . "/public/uploads/client/" . $png_url1;
-				$img = $post['data']['color_logo']['base64'];
-				
-				$data = base64_decode($img);
-				$success = file_put_contents($path, $data);
-				
+	        $png_url1 = "color-logo-".time().".".$type;
+			$path = base_path() . "/public/uploads/client/" . $png_url1;
+			$img = $post['data']['color_logo']['base64'];
+			
+			$data = base64_decode($img);
+			$success = file_put_contents($path, $data);
+			
 
-				$post['data']['color_logo'] = $png_url1;
+			$post['data']['color_logo'] = $png_url1;
 
 	    }
 

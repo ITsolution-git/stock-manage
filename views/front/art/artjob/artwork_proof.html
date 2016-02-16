@@ -58,7 +58,10 @@
                <div class="form-group col-sm-12 m-b nopad-left">
 	              <div class="form-group col-sm-6 m-b nopad-right">
 	                <label>LOGO <em class="text-muted"></em></label>
-	                <div class="form-group col-sm-12 m-b panel panel-default" style="height:200px;"> </div>
+	                <div class="form-group col-sm-12 m-b panel panel-default" onclick="document.getElementById('upload').click(); return false" style="height:200px;">
+	                	<img  ng-if="workproof.logo_image" ng-src="{{workproof.logo_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
+	                </div>
+	                <input type='file' id="upload" style="display:none;" data-ng-model="workproof.wp_image" base-sixty-four-input>
 	              </div>
 	              <div class="form-group col-sm-6 m-b nopad-right">
 		                <div class="form-group col-sm-12 m-b nopad-right">
