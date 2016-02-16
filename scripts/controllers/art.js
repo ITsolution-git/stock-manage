@@ -303,7 +303,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 				                        {
 				                         	$scope.SaveImage(image_array,field,table,image_name,image_path,cond,value);
 				                         	$scope.CloseColorPopup();
-				                         	setTimeout($scope.color_popup(value), 500);
+				                         	//setTimeout($scope.color_popup(value), 500);
 				                     	}
 		                	
 		                }

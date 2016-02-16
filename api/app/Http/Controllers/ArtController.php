@@ -260,7 +260,7 @@ class ArtController extends Controller {
 				$color_array[$value->id]= $value->name;
 				$allcolors[$key]->name = strtolower($value->name);
 			}
-			$screen_colorpopup[0]->logo_image = (!empty($screen_colorpopup[0]->color_logo))? UPLOAD_PATH.'art/'.$screen_colorpopup[0]->art_id.'/'.$screen_colorpopup[0]->color_logo:'';
+			$screen_colorpopup[0]->logo_image = (!empty($screen_colorpopup[0]->screen_logo))? UPLOAD_PATH.'art/'.$screen_colorpopup[0]->art_id.'/'.$screen_colorpopup[0]->screen_logo:'';
     		//echo "<pre>"; print_r($allcolors); echo "</pre>"; die;
     		if(count($screen_colorpopup)>0)
 			{
