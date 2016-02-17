@@ -241,8 +241,8 @@ class ClientController extends Controller {
 			{
 				$StaffList = $this->common->getStaffList();
 				$ArrCleintType=$this->common->TypeList('company');
-				$AddrTypeData = $this->common->GetMicType('address_type');
-				$Arrdisposition = $this->common->GetMicType('disposition');
+				$AddrTypeData = $this->common->GetMicType('address_type',$post['company_id']);
+				$Arrdisposition = $this->common->GetMicType('disposition',$post['company_id']);
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
 				$Client_orders = $this->client->ListClientOrder($id);
