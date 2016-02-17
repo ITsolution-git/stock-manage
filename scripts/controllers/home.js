@@ -89,7 +89,13 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
 
       $scope.orderListAll();
     
-         $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
+        var misc_list_data = {};
+       var condition_obj = {};
+       condition_obj['company_id'] =  company_id;
+       misc_list_data.cond = angular.copy(condition_obj);
+
+      
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
                       $scope.miscData = result.data.records;
             });
 

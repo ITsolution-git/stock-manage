@@ -141,7 +141,9 @@ class OrderController extends Controller {
         $price_direct_garment = array();
         $embroidery_switch_count = array();
 
-        $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id,'is_delete' => '1','status' => '1'),array());
+       // Remove price id condition and add company id condition.
+       // $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id,'is_delete' => '1','status' => '1','company_id' => $data['company_id']),array());
+          $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','company_id' => $data['company_id']),array());
         if($price_id > 0)
         {
             $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
