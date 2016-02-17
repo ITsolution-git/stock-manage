@@ -24,6 +24,7 @@ class Login extends Model {
         			 ->where('usr.user_name', '=', $username)
         			 ->where('usr.password', '=', md5($password))
         			 ->where('usr.is_delete','=','1')
+                     ->where('usr.status','=','1')
         			 ->get();
         return $admindata;
     }
