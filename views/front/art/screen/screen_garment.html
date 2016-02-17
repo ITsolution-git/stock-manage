@@ -1,32 +1,45 @@
 <div class="col-md-12 nopad-form">
                                 
-
-                <div class="form-group col-md-7 nopad-form">
+    <div class="form-group col-md-7 nopad-form">
+                <div class="form-group col-md-12 nopad-form">
                     
                     <div class="form-group col-md-2 nopad-left">
                         <label>Order </label>
-                        <input type="text" class="form-control" >
                    </div>
                    <div class="form-group col-md-2 nopad-left">
                         <label>Group </label>
-                        <input type="text" class="form-control" >
                    </div>
                    <div class="form-group col-md-2 nopad-left">
                         <label>Qnty </label>
-                        <input type="text" class="form-control" >
                    </div>
                    <div class="form-group col-md-2 nopad-left">
                         <label>Size </label>
-                        <input type="text" class="form-control" >
                    </div>
                      <div class="form-group col-md-2 nopad-left">
                         <label>Color </label>
-                        <input type="text" class="form-control" >
+                   </div>
+                   </div>
+
+                   <div class="form-group col-md-12 nopad-form" ng-repeat="garment in screen_garments">
+                   <div class="form-group col-md-2 nopad-left">
+                        <input type="text" class="form-control" ng-model="garment.job_name" >
+                   </div>
+                   <div class="form-group col-md-2 nopad-left">
+                        <input type="text" class="form-control" ng-model="garment.group_name" >
+                   </div>
+                   <div class="form-group col-md-2 nopad-left">
+                        <input type="text" class="form-control"  ng-model="garment.qnty" >
+                   </div>
+                   <div class="form-group col-md-2 nopad-left">
+                        <input type="text" class="form-control" ng-model="garment.size"  >
+                   </div>
+
+                     <div class="form-group col-md-2 nopad-left">
+                        <input type="text" class="form-control"  ng-model="garment.color_id" >
                    </div>
                    
-
                 </div>
-
+      </div>
                  <div class="form-group col-md-5 nopad-form">
                   	<div class="form-group col-md-8 nopad-form">
                   		<label>Label</label>

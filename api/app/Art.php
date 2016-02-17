@@ -394,10 +394,11 @@ class Art extends Model {
     public function screen_garments ($screen_id,$company_id)
     {
     	$query = DB::table('artjob_ordergroup as aog')
-				->select('aog.*','pd.size','pd.qnty','ord.id as order_id','ord.job_name','aog.group_name')
+				->select('aog.*','pd.size','pd.qnty','ord.id as order_id','ord.job_name','aog.group_name','oo.color_id')
 				->join('art as art','art.art_id','=','aog.art_id')
 				->join('orders as ord','ord.id','=','art.order_id')
 				->join('purchase_detail as pd','pd.art_group','=','aog.id')
+				->join('order_orderlines as oo','oo.id','=','pd.orderline_id')
 				->where('ord.company_id','=',$company_id)
 				->whereRaw("FIND_IN_SET($screen_id,aog.screen_sets)")
 				->where('pd.size','<>','')
