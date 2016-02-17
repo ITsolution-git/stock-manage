@@ -1,18 +1,32 @@
 
-app.controller('placementListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter','$modal','notifyService','$log', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter,$modal,notifyService,$log) {
+app.controller('placementListCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter','$modal','notifyService','$log', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter,$modal,notifyService,$log) {
 AuthService.AccessService('FM');
 
     get_placement_data();
     function get_placement_data()
     {
-        $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
+
+        var company_id = $rootScope.company_profile.company_id;
+
+         var misc_list_data = {};
+         var condition_obj = {};
+         condition_obj['company_id'] =  company_id;
+         misc_list_data.cond = angular.copy(condition_obj);
+
+
+        
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
             $scope.miscData = result.data.records;
         });
 
-        $http.get('api/public/common/getAllPlacementData').success(function(result, status, headers, config) {
+       
+        $http.post('api/public/common/getAllPlacementData',misc_list_data).success(function(result, status, headers, config) {
+        
             $scope.placementData = result.data.records;
             $scope.pagination = AllConstant.pagination;
               
+            if(result.data.success == '1'){
+
             for(var i=0; i < $scope.placementData.length; i++){
                 $scope.placementData[i].user = {
                     group: $scope.placementData[i].misc_id,
@@ -27,7 +41,7 @@ AuthService.AccessService('FM');
                   }
                 });
             }
-
+           }
             var init;
 
             $scope.searchKeywords = '';
@@ -85,7 +99,14 @@ AuthService.AccessService('FM');
         $scope.placement.misc_value = '';
         $scope.placement.misc_id = '0';
 
-        $http.get('api/public/common/getMiscData').success(function(data) {
+         var company_id = $rootScope.company_profile.company_id;
+
+         var misc_list_data = {};
+         var condition_obj = {};
+         condition_obj['company_id'] =  company_id;
+         misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getMiscData',misc_list_data).success(function(data) {
             $scope.groups = data;
         });
 
@@ -105,6 +126,8 @@ AuthService.AccessService('FM');
 
         $scope.savePlacement = function (placement)
         {
+            placement.company_id = company_id;
+
             if($scope.placement.misc_value == '')
             {
                 var data = {"status": "error", "message": "Price Grid name is required"}
@@ -142,7 +165,14 @@ AuthService.AccessService('FM');
     $scope.groups = [];
 
     $scope.loadGroups = function() {
-        return $scope.groups.length ? null : $http.get('api/public/common/getMiscData').success(function(data) {
+        var company_id = $rootScope.company_profile.company_id;
+
+        var misc_list_data = {};
+         var condition_obj = {};
+         condition_obj['company_id'] =  company_id;
+         misc_list_data.cond = angular.copy(condition_obj);
+
+        return $scope.groups.length ? null : $http.post('api/public/common/getMiscData',misc_list_data).success(function(data) {
             $scope.groups = data;
         });
     };

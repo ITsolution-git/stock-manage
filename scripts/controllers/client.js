@@ -254,8 +254,13 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               } 
                               
                           });*/
-                           $http.get('api/public/admin/price').success(function(result, status, headers, config) 
-                          {
+
+                           var price_list_data = {};
+                           var condition_obj = {};
+                           condition_obj['company_id'] =  $scope.company_id;
+                           price_list_data.cond = angular.copy(condition_obj);
+
+                            $http.post('api/public/admin/price',price_list_data).success(function(result, status, headers, config) {
                               if(result.data.success == '1') 
                               {
                                   $scope.PriceGrid =result.data.records;

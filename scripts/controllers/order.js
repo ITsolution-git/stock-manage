@@ -398,7 +398,12 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     $scope.CurrentUserId =  sessionService.get('user_id');
     $scope.CurrentController=$state.current.controller;
 
-    $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
+    var misc_list_data = {};
+    var condition_obj = {};
+    condition_obj['company_id'] =  company_id;
+    misc_list_data.cond = angular.copy(condition_obj);
+
+    $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
               $scope.miscData = result.data.records;
     });
 
@@ -2627,8 +2632,8 @@ function get_company_data_selected(id)
 
 }]);
 
-app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
-            
+app.controller('orderAddCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
+     var company_id = $rootScope.company_profile.company_id;
     var companyData = {};
     companyData.table ='client'
     companyData.cond ={status:1,is_delete:1}
@@ -2645,20 +2650,22 @@ app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','
     });
 }]);
 
-app.factory('getPDataByPosService', function($http){
+app.factory('getPDataByPosService', function($http,$rootScope){
     return{
         getPlacementDataBySizeGroup: function(){
           var miscData = {};
+          var company_id = $rootScope.company_profile.company_id;
           miscData.table ='misc_type'
-          miscData.cond ={status:1,is_delete:1,type:'size_group'}
+          miscData.cond ={status:1,is_delete:1,type:'size_group',company_id:company_id}
           miscData.notcond ={value:""}
           return $http.post('api/public/common/GetTableRecords',miscData);
         },
 
         getPlacementDataByPosition: function(id){
           var miscData = {};
+          var company_id = $rootScope.company_profile.company_id;
           miscData.table ='placement'
-          miscData.cond ={status:1,is_delete:1,misc_id:id}
+          miscData.cond ={status:1,is_delete:1,misc_id:id,company_id:company_id}
           return $http.post('api/public/common/GetTableRecords',miscData);
         }
 

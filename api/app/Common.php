@@ -67,9 +67,9 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getAllMiscData() {
+    public function getAllMiscData($post) {
         
-        $whereMiscConditions = ['status' => '1','is_delete' => '1'];
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $post['cond']['company_id']];
         $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
 
         $allData = array ();
@@ -98,9 +98,9 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getAllMiscDataWithoutBlank() {
+    public function getAllMiscDataWithoutBlank($post) {
         
-        $whereMiscConditions = ['status' => '1','is_delete' => '1'];
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $post['cond']['company_id']];
         $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
 
         $allData = array ();
@@ -110,12 +110,8 @@ class Common extends Model {
             $allData[$data->type][$data->id] = $data;
            }
 
-
-            
-
         }
 
-          
         return $allData;
     }
 
@@ -231,14 +227,14 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getAllPlacementData() {
+    public function getAllPlacementData($post) {
         
 
         $listArray = ['placement.misc_id','placement.misc_value','placement.id','misc_type.value as position'];
 
-        $wherePlacementConditions = ['placement.status' => '1','placement.is_delete' => '1'];
+        $wherePlacementConditions = ['placement.status' => '1','placement.is_delete' => '1','placement.company_id' => $post['cond']['company_id']];
         $placementData = DB::table('placement')
-        ->leftJoin('misc_type as misc_type', 'placement.misc_id', '=', 'misc_type.id')
+        ->leftJoin('misc_type as misc_type','placement.misc_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['cond']['company_id']))
         ->select($listArray)
         ->where($wherePlacementConditions)->get();          
         return $placementData;
@@ -250,9 +246,9 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getMiscData() {
+    public function getMiscData($post) {
         
-        $whereMiscConditions = ['status' => '1','is_delete' => '1','type'=>'position'];
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','type'=>'position','company_id' => $post['cond']['company_id']];
         $miscData = DB::table('misc_type')->select('id','value')->where($whereMiscConditions)->where('value','!=','')->get();       
         return $miscData;
     }
