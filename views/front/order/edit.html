@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-2 m-b">
                             <label>Approval<em class="text-muted"></em></label>
-                            <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateProductData($event,order.id,\'orders\',\'id\')' }">
+                            <select  id="approval" ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateProductData($event,order.id,\'orders\',\'id\')' }">
                                 <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                             </select>
                         </div>
@@ -1140,11 +1140,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3 nopad-left smallPad">
-                                      <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_id" ng-click="getPoAllData(orderPO.po_id)">
+                                      <input type="text" readonly onfocus="this.blur()" class="form-control" ng-model="orderPO.po_id">
                                     </div>
                                     <div class="col-md-2 nopad-left smallPad ">
 
-                                      <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_type" ng-click="getPoAllData(orderPO.po_id)">
+                                      <input type="text" readonly onfocus="this.blur()" class="form-control" ng-model="orderPO.po_type">
 
                                     </div>
                                     <div class="col-md-2 nopad-left smallPad ">
@@ -1153,7 +1153,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 nopad-left smallPad ">
-                                      <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.date" ng-click="getPoAllData(orderPO.po_id)">
+                                      <input type="text" readonly onfocus="this.blur()" class="form-control" ng-model="orderPO.date" >
                                     </div>
                                     <div class="col-md-1 nopad-left">
                                         <div class="sgpDetails">

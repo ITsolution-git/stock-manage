@@ -1252,6 +1252,16 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                      return false;
                                    
                 }
+        }else if(textdata == 'po') {
+            
+            var dropdown_value = $( "#approval option:selected" ).text();
+
+
+                if(dropdown_value == 'Order-Estimate' ) {
+                     alert("Order is still an Estimate and POs can not be created.");
+                     return false;
+                                   
+                }
         }
 
             var po_data  = {};
