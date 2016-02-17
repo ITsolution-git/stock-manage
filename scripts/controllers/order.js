@@ -1228,6 +1228,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         if(textdata == 'cp') {
             
+            if($scope.orderPositionAll.length > 0) {
+        
             
               if(dropdown_value == 137 ) {
                   
@@ -1249,7 +1251,14 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                       return false;  
                                    
                 }
+            } else {
+                  var data = {"status": "error", "message": "Please enter Position data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false; 
+            }
         } else if(textdata == 'ce') {
+
+            if($scope.orderPositionAll.length > 0) {
             
               if(dropdown_value == 137 ) {
                     var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
@@ -1272,7 +1281,15 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                       return false;  
                                    
                 }
+
+            } else {
+                  var data = {"status": "error", "message": "Please enter Position data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false; 
+            }
         }else if(textdata == 'po') {
+          
+            if($scope.orderLineAll.length > 0) {
             
 
                 if(dropdown_value == 137 ) {
@@ -1281,6 +1298,22 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                       return false;  
                                    
                 }
+               } else {
+
+                var data = {"status": "error", "message": "Please enter Order Lines data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+               } 
+        } else if(textdata == 'sg') {
+
+            if($scope.orderLineAll.length > 0) {
+            
+               } else {
+
+                var data = {"status": "error", "message": "Please enter Order Lines data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+               } 
         }
 
             var po_data  = {};
