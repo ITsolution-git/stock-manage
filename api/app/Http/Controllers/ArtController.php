@@ -251,6 +251,7 @@ class ArtController extends Controller {
     		$screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
     		$allcolors = $this->common->getAllColorData();
     		$graphic_size = $this->common->GetMicType('graphic_size');
+    		$screen_arts = $this->art->screen_arts($screen_id,$company_id);
     		$screen_garments = $this->art->screen_garments($screen_id,$company_id);
     		$art_approval = $this->common->GetMicType('approval');
     		$color_array= array();

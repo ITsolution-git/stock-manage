@@ -10,9 +10,8 @@ class Art extends Model {
 
 	public function Listing($company_id)
 	{
-		$Misc_data = $this->AllMsiData();
+		$Misc_data = $this->AllMsiData($company_id);
 
-		
 		$query = DB::table('art as art')
 				->select('*')
 				->join('orders as or','art.order_id','=','or.id')
@@ -33,7 +32,7 @@ class Art extends Model {
 	}
 	public function art_position($art_id,$company_id)
 	{
-		$Misc_data = $this->AllMsiData();
+		$Misc_data = $this->AllMsiData($company_id);
 
 		$query = DB::table('art as art')
 				->select('op.*','art.art_id','art.notes','art.mokup_image','cl.client_company','or.job_name','or.id as order_id','or.grand_total','or.f_approval')
@@ -62,7 +61,7 @@ class Art extends Model {
 	}
 	public function art_orderline($art_id,$company_id)
 	{
-		$Misc_data = $this->AllMsiData();
+		$Misc_data = $this->AllMsiData($company_id);
 		$ret_array = array();
 		$query = DB::table('art as art')
 				->select('or.job_name','art.art_id','or.grand_total','or.f_approval','oo.id as line_id','oo.size_group_id','oo.qnty as ordline_qnty','oo.client_supplied','cl.name as product_color','pr.name as product_name','vn.name_company','pd.size', 'pd.qnty','pd.id as sizeid','pd.art_group')
@@ -117,19 +116,21 @@ class Art extends Model {
 		//echo "<pre>"; print_r($ret_array); echo "</pre>"; die;
 		return $ret_array;
 	}
-	public function AllMsiData()
+	public function AllMsiData($compay_id)
     {
-    	$query = DB::table('misc_type')->select('id','value')->get();
+    	$query = DB::table('misc_type')->where('company_id','=',$compay_id)->select('id','value','company_id')->get();
     	$ret_array = array();
     	foreach ($query as $key => $value) {
     		$ret_array[$value->id] = $value->value;
     	}
+
+    	//echo "<pre>"; print_r($query); echo "</pre>"; die;
     	return $ret_array;
     }
     public function artworkproof_data($wp_id, $company_id)
     {
-    	$Misc_data = $this->AllMsiData();
-    	$position_data = $this->AllMsiData();
+    	$Misc_data = $this->AllMsiData($company_id);
+    	//$position_data = $this->AllMsiData($company_id);
     	$query = DB::table('order_orderlines as oo')
 				->select('or.job_name','or.id as order_id','art.art_id','or.grand_total','or.f_approval','oo.id as line_id','oo.size_group_id','cl.name as product_color','pr.name as product_name','cln.client_company',DB::raw("GROUP_CONCAT(pl.misc_value) as placement_name"),'aaw.id as wp_id','wp_position','aaw.wp_desc','aaw.wp_screen','aaw.wp_placement','aaw.wp_image')
 				->join('orders as or','oo.order_id','=','or.id')
@@ -160,7 +161,7 @@ class Art extends Model {
 
     public function artjobscreen_list($art_id,$company_id)
     {
-    	//$Misc_data = $this->AllMsiData();	
+    	//$Misc_data = $this->AllMsiData($company_id);	
 		$query = DB::table('artjob_screensets as ass')
 				->select('ass.*')
 				->join('art as art','art.art_id','=','ass.art_id')
@@ -202,7 +203,7 @@ class Art extends Model {
     }
     public function ScreenListing($company_id)
 	{
-		$Misc_data = $this->AllMsiData();
+		$Misc_data = $this->AllMsiData($company_id);
 		$query = DB::table('artjob_screensets as ass')
 				->select('or.id','or.job_name','ass.screen_count','ass.screen_set','ass.graphic_size','art.art_id','ass.id as screen_id')
 				->join('art as art','art.art_id','=','ass.art_id')
@@ -263,7 +264,7 @@ class Art extends Model {
     }
     public function art_worklist($art_id,$company_id)
     {	
-    			$Misc_data = $this->AllMsiData();
+    			$Misc_data = $this->AllMsiData($company_id);
 
     	    	$query = DB::table('art as art')
 				->select('or.id as order_id','or.job_name','art.art_id',DB::raw("GROUP_CONCAT(pl.misc_value) as placement_name"),'cl.name as product_color','ol.size_group_id','ol.color_id','ass.screen_set','ol.id as line_id','aaw.*')
@@ -292,7 +293,7 @@ class Art extends Model {
     }
     public function Client_art_screen($client_id,$company_id)
     {
-    	$Misc_data = $this->AllMsiData();
+    	$Misc_data = $this->AllMsiData($company_id);
 
     	$query = DB::table('orders as or')
 		->select('or.id as order_id','art.art_id','ass.graphic_size','aaw.id as wp_id','ass.id as screen_id','ass.screen_set','aaw.wp_image')
@@ -366,17 +367,18 @@ class Art extends Model {
 
     	return $result;
     }
-    public function screen_garments ($screen_id,$company_id)
+    public function screen_arts ($screen_id,$company_id)
     {
-    	$Misc_data = $this->AllMsiData();
+    	$Misc_data = $this->AllMsiData($company_id);
     	$query = DB::table('artjob_screensets as ass')
-				->select('aaw.*',DB::raw("GROUP_CONCAT(pl.misc_value) as wp_placement"))
+				->select('aaw.*',DB::raw("GROUP_CONCAT(pl.misc_value) as wp_placement"),'ord.id as order_id','art.art_id')
 				->join('art as art','art.art_id','=','ass.art_id')
 				->join('orders as ord','ord.id','=','art.order_id')
 				->leftjoin('artjob_artworkproof as aaw','aaw.wp_screen','=','ass.id')
 				->leftJoin('placement as pl',DB::raw("FIND_IN_SET(pl.id,aaw.wp_placement)"),DB::raw(''),DB::raw(''))
 				->where('ord.company_id','=',$company_id)
 				->where('ass.id','=',$screen_id)
+				->groupBy('aaw.id')
 				->get();
 
 		if(count($query)>0)
@@ -384,8 +386,25 @@ class Art extends Model {
 					foreach ($query as $key => $value) 
 					{
 						$query[$key]->wp_position = (!empty($value->wp_position))? $Misc_data[$value->wp_position] : '';
+						$query[$key]->wp_image = (!empty($value->wp_image))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->wp_image : '';
 					}
 				}		
+		return $query;
+    }
+    public function screen_garments ($screen_id,$company_id)
+    {
+    	$query = DB::table('artjob_ordergroup as aog')
+				->select('aog.*','pd.size','pd.qnty','ord.id as order_id','ord.job_name','aog.group_name')
+				->join('art as art','art.art_id','=','aog.art_id')
+				->join('orders as ord','ord.id','=','art.order_id')
+				->join('purchase_detail as pd','pd.art_group','=','aog.id')
+				->where('ord.company_id','=',$company_id)
+				->whereRaw("FIND_IN_SET($screen_id,aog.screen_sets)")
+				->where('pd.size','<>','')
+				->where('pd.qnty','>',0)
+				->get();
+
+		//echo "<pre>"; print_r($query); echo "</pre>"; die;
 		return $query;
     }
 }

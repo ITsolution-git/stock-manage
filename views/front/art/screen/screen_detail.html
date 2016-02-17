@@ -100,37 +100,39 @@
                         </div>
 
                    </div>
-                   <div class="form-group col-md-12 nopad-right" ng-repeat="(key,colors) in screen_detail">
-                        <div class="form-group col-md-1 nopad-form">
-                            <input type="text" disabled="disabled" class="form-control" name="color_name" ng-model="colors.color_name" >
-                        </div>
-                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" disabled="disabled" class="form-control" name="thread_color" ng-model="colors.thread_color" >
-                        </div>
-                         <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" name="inq" ng-model="colors.inq" >
-                        </div>
-                        <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" name="stroke"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.stroke" >
-                        </div>
-                        <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" name="squeegee"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.squeegee" >
-                        </div>
-                        <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" name="mesh_thread_count" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.mesh_thread_count" >
-                        </div>
-                        <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" name="head_location" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.head_location" >
-                        </div>
-                        <div class="form-group col-md-1 nopad-form">
-                            <input type="text" class="form-control" name="position_type" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.position_type" >
-                        </div>
-                        <div class="form-group col-md-3 nopad-form">
-                            <input type="text" class="form-control" name="note" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.note" >
-                        </div>
-                        <div class="form-group col-md-1 nopad-right">
-                            <button title="Delete" class="btn btn-xs btn-danger addButton c-dgreen" tabindex="0">X</button>
-                        </div>
+                   <div class="panel panel-default panel-body SOD nopad-left  col-md-12 ">
+                     <div class="form-group col-md-12 nopad-right " ng-repeat="(key,colors) in screen_detail">
+                          <div class="form-group col-md-1 nopad-form">
+                              <input type="text" disabled="disabled" class="form-control" name="color_name" ng-model="colors.color_name" >
+                          </div>
+                           <div class="form-group col-md-1 nopad-form">
+                              <input type="text" disabled="disabled" class="form-control" name="thread_color" ng-model="colors.thread_color" >
+                          </div>
+                           <div class="form-group col-md-1 nopad-form">
+                              <input type="text" class="form-control"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" name="inq" ng-model="colors.inq" >
+                          </div>
+                          <div class="form-group col-md-1 nopad-form">
+                              <input type="text" class="form-control" name="stroke"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.stroke" >
+                          </div>
+                          <div class="form-group col-md-1 nopad-form">
+                              <input type="text" class="form-control" name="squeegee"  ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.squeegee" >
+                          </div>
+                          <div class="form-group col-md-1 nopad-form">
+                              <input type="text" class="form-control" name="mesh_thread_count" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.mesh_thread_count" >
+                          </div>
+                          <div class="form-group col-md-1 nopad-form">
+                              <input type="text" class="form-control" name="head_location" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.head_location" >
+                          </div>
+                          <div class="form-group col-md-1 nopad-form">
+                              <input type="text" class="form-control" name="position_type" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.position_type" >
+                          </div>
+                          <div class="form-group col-md-3 nopad-form">
+                              <input type="text" class="form-control" name="note" ui-event="{ blur : 'UpdateField_field($event,colors.color_id,\'artjob_screencolors\')' }" ng-model="colors.note" >
+                          </div>
+                          <div class="form-group col-md-1 nopad-right">
+                              <button title="Delete" class="btn btn-xs btn-danger addButton c-dgreen" tabindex="0">X</button>
+                          </div>
+                     </div>
                    </div>
                 </div>
 

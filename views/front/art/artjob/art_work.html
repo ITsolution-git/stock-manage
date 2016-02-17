@@ -67,7 +67,7 @@
 
                                     <div class="positionTab_content col-md-3" title="Upload Mokup Image" style="cursor:pointer;">
                                         <div class="form-group col-sm-8 m-b panel panel-default" onclick="document.getElementById('mokup').click(); return false" style="height:200px;">
-                                        <img  ng-if="art_position[0].mokup_display_image" ng-src="{{art_position[0].mokup_display_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
+                                        <img  ng-src="{{art_position[0].mokup_display_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
                                         </div>
                                          <div class="form-group col-sm-3 m-b" style="height:200px;">
                                             <input type='file' id="mokup" style="display:none;" data-ng-model="art_position[0].mokup_image" base-sixty-four-input>
