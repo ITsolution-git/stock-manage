@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
 use App\Login;
 use Input;
+use Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Order;
@@ -13,6 +14,7 @@ use App\Product;
 use DB;
 use App;
 use Request;
+use Response;
 //use Barryvdh\DomPDF\Facade as PDF;
 use PDF;
 
@@ -92,9 +94,130 @@ class OrderController extends Controller {
                                 'message' => NO_RECORDS
                                 ); 
            return response()->json(["data" => $response]);
-           
-
         }
+
+        
+        $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
+
+        if(!empty($order_items))
+        {
+            $items = $this->order->getItemsByOrder($data['id']);
+
+            foreach ($order_items as $order_item)
+            {
+                $i = 0;
+                foreach ($items as $item)
+                {
+                    if($item->item_id == $order_item->id)
+                    {
+                        $i = 1;
+                    }
+                }
+                
+                if($i == 1)
+                {
+                    $order_item->selected = '1';
+                    $result['order_item'][] = $order_item;
+                }
+                else
+                {
+                    $order_item->selected = '0';
+                    $result['order_item'][] = $order_item;
+                }
+            }
+        }
+        else
+        {
+            $result['order_item'] = array();
+        }
+
+        $price_id = $result['order'][0]->price_id;
+        $client_id = $result['order'][0]->client_id;
+
+        
+        $price_garment_mackup = array();
+        $price_screen_primary = array();
+        $price_screen_secondary = array();
+        $price_direct_garment = array();
+        $embroidery_switch_count = array();
+
+       // Remove price id condition and add company id condition.
+       // $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id,'is_delete' => '1','status' => '1','company_id' => $data['company_id']),array());
+          $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','company_id' => $data['company_id']),array());
+        if($price_id > 0)
+        {
+            $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
+            $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
+            $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
+            $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
+            $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
+        }
+
+        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
+
+        $vendors = $this->common->getAllVendors();
+        $staff = $this->common->getStaffList();
+        $brandCo = $this->common->getBrandCordinator($data['company_id']);
+
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $result['order'],
+                                'client_main_data' => $result['client_main_data'],
+                                'order_item' => $result['order_item'],
+                                'price_grid' => $price_grid,
+                                'price_garment_mackup' => $price_garment_mackup,
+                                'price_screen_primary' => $price_screen_primary,
+                                'price_screen_secondary' => $price_screen_secondary,
+                                'price_direct_garment' => $price_direct_garment,
+                                'embroidery_switch_count' => $embroidery_switch_count,
+                                'vendors' => $vendors,
+                                'client' => $client,
+                                'staff' => $staff,
+                                'brandCo' => $brandCo
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'records' => $result['order'],
+                                'client_data' => $result['client_data'],
+                                'client_main_data' => $result['client_main_data'],
+                                'order_item' => $result['order_item'],
+                                'order_po_data' => $result['order_po_data']);
+
+        } 
+        
+        return response()->json(["data" => $response]);
+
+    }
+
+    public function getOrderPositionDetail()
+    {
+        $data = Input::all();
+        $result = $this->order->getOrderPositionDetail($data);
+        
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'order_position' => $result['order_position']
+                            );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'order_position' => $result['order_position']
+                            );
+        }
+        return response()->json(["data" => $response]);
+    }
+
+    public function getOrderLineDetail()
+    {
+        $data = Input::all();
+        $result = $this->order->getOrderLineDetail($data);
 
         if(!empty($result['order_line_data']))
         {
@@ -144,106 +267,24 @@ class OrderController extends Controller {
         {
             $result['order_line'] = array();
         }
-        $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
-
-        if(!empty($order_items))
-        {
-            $items = $this->order->getItemsByOrder($data['id']);
-
-            foreach ($order_items as $order_item)
-            {
-                $i = 0;
-                foreach ($items as $item)
-                {
-                    if($item->item_id == $order_item->id)
-                    {
-                        $i = 1;
-                    }
-                }
-                
-                if($i == 1)
-                {
-                    $order_item->selected = '1';
-                    $result['order_item'][] = $order_item;
-                }
-                else
-                {
-                    $order_item->selected = '0';
-                    $result['order_item'][] = $order_item;
-                }
-            }
-        }
-        else
-        {
-            $result['order_item'] = array();
-        }
-
-        $price_id = $result['order'][0]->price_id;
-        $client_id = $result['order'][0]->client_id;
-
-        
-        $price_garment_mackup = array();
-        $price_screen_primary = array();
-        $price_screen_secondary = array();
-        $price_direct_garment = array();
-        $embroidery_switch_count = array();
-
-        $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id,'is_delete' => '1','status' => '1'),array());
-        if($price_id > 0)
-        {
-            $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
-            $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
-            $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
-            $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
-            $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
-        }
-
-        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
-        //$products = $this->common->GetTableRecords('products',array('status' => '1','is_delete' => '1'),array());
-
-        $vendors = $this->common->getAllVendors();
-        $staff = $this->common->getStaffList();
-        $brandCo = $this->common->getBrandCordinator($data['company_id']);
 
         if (count($result) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
-                                'records' => $result['order'],
-                                'client_data' => $result['client_data'],
-                                'client_main_data' => $result['client_main_data'],
-                                'order_position' => $result['order_position'],
                                 'order_line' => $result['order_line'],
-                                'order_item' => $result['order_item'],
-                                'price_grid' => $price_grid,
-                                'price_garment_mackup' => $price_garment_mackup,
-                                'price_screen_primary' => $price_screen_primary,
-                                'price_screen_secondary' => $price_screen_secondary,
-                                'price_direct_garment' => $price_direct_garment,
-                                'embroidery_switch_count' => $embroidery_switch_count,
-                                'vendors' => $vendors,
-                                'client' => $client,
-                                'staff' => $staff,
-                                'brandCo' => $brandCo
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'records' => $result['order'],
-                                'client_data' => $result['client_data'],
-                                'client_main_data' => $result['client_main_data'],
-                                'order_position' => $result['order_position'],
-                                'order_line' => $result['order_line'],
-                                'order_item' => $result['order_item'],
-                                'order_po_data' => $result['order_po_data']);
+                                'order_line' => $result['order_line']
+                            );
 
-        } 
-        
+        }
+
         return response()->json(["data" => $response]);
-
     }
-
 
    /**
    * Get Order notes.
@@ -615,7 +656,7 @@ class OrderController extends Controller {
             $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
             if(empty($result))
             {
-                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
+                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")),'company_id' => $post['company_id']);
                 $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
 
                 $post['data']['shipping_id'] = $shipping_id;
@@ -905,6 +946,8 @@ class OrderController extends Controller {
     public function savePDF()
     {
 
+       
+       
 
         $all_company['all_company'] = json_decode($_POST['all_company']);
         $client_main_data['client_main_data'] = json_decode($_POST['client_main_data']);
@@ -918,6 +961,13 @@ class OrderController extends Controller {
         $order_position['order_position'] = json_decode($_POST['order_position']);
         $order_line['order_line'] = json_decode($_POST['order_line']);
         $order['order'] = json_decode($_POST['order']);
+
+     
+        $array3 = array('ia.order_id' => $order['order']->id);
+        $distributed_address['distributed_address'] = $this->order->getDistributedAddress($array3);
+
+        
+
         $order['order']->created_date = date('m/d/Y',strtotime($order['order']->created_date));
        
 
@@ -933,11 +983,17 @@ class OrderController extends Controller {
             $order['order']->in_hands_by ='';
         }
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
-        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data);
+        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data,$distributed_address);
      
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());
-        PDF::Output('order.pdf');
+     //   PDF::Output('order.pdf');
+
+      $pdf_url = "order-".$order['order']->id.".pdf";         
+      $filename = base_path() . "/public/uploads/pdf/". $pdf_url;
+     
+      PDF::Output($filename, 'F');
+      return Response::download($filename);
 
     }
 
@@ -1045,6 +1101,35 @@ class OrderController extends Controller {
        $result = $this->order->updatePriceProduct($colors_all_array,$post['product_id']);
        $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
+    }
+
+    public function sendEmail() {
+
+                $post = Input::all();
+                $email = trim($post['email']);
+                $email_array = explode(",",$email);
+                $attached_url = UPLOAD_PATH.'pdf/order-'.$post['order_id'].'.pdf';
+               
+               $uploaddir = base_path() . "/public/uploads/pdf/order-".$post['order_id'].'.pdf';
+               
+               if (file_exists($uploaddir)) {
+                 
+               } else {
+                $response = array('success' => 0, 'message' => "Email Attachement is blank");
+                return response()->json(["data" => $response]);
+                exit;
+               }
+                
+         
+                Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
+                {
+                     $message->to($email_array)->subject('Order Acknowledgement #'.$post['order_id']);
+                     $message->attach($attached_url);
+                });
+
+                $response = array('success' => 1, 'message' => MAIL_SEND);
+          
+         return response()->json(["data" => $response]);
     }
 
 }

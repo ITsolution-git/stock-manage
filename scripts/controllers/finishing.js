@@ -13,106 +13,110 @@ app.controller('finishingListCtrl', ['$scope','$rootScope','$http','$location','
         {
             $("#ajax_loader").hide();
 
-            if($scope.tab_name == '')
+            if(result.data.success == 1)
             {
-                $scope.orders = result.data.records.active;
-            }
 
-            $scope.openTab = function(tab_name) {
-                if(tab_name == 'active'){
-                    $scope.tab_name = 'active';
+                if($scope.tab_name == '')
+                {
                     $scope.orders = result.data.records.active;
                 }
-                else if(tab_name == 'poly_bagging') {
-                    $scope.tab_name = 'poly_bagging';
-                    $scope.orders = result.data.records.poly_bagging;
+
+                $scope.openTab = function(tab_name) {
+                    if(tab_name == 'active'){
+                        $scope.tab_name = 'active';
+                        $scope.orders = result.data.records.active;
+                    }
+                    else if(tab_name == 'poly_bagging') {
+                        $scope.tab_name = 'poly_bagging';
+                        $scope.orders = result.data.records.poly_bagging;
+                    }
+                    else if(tab_name == 'hang_tag') {
+                        $scope.tab_name = 'hang_tag';
+                        $scope.orders = result.data.records.hang_tag;
+                    }
+                    else if(tab_name == 'tag_removal') {
+                        $scope.tab_name = 'tag_removal';
+                        $scope.orders = result.data.records.tag_removal;
+                    }
+                    else if(tab_name == 'speciality') {
+                        $scope.tab_name = 'speciality';
+                        $scope.orders = result.data.records.speciality;
+                    }
+                    else if(tab_name == 'packing') {
+                        $scope.tab_name = 'packing';
+                        $scope.orders = result.data.records.packing;
+                    }
+                    else if(tab_name == 'sticker') {
+                        $scope.tab_name = 'sticker';
+                        $scope.orders = result.data.records.sticker;
+                    }
+                    else if(tab_name == 'sew_on_women_tag') {
+                        $scope.tab_name = 'sew_on_women_tag';
+                        $scope.orders = result.data.records.sew_on_women_tag;
+                    }
+                    else if(tab_name == 'inside_tag') {
+                        $scope.tab_name = 'inside_tag';
+                        $scope.orders = result.data.records.inside_tag;
+                    }
+                    else if(tab_name == 'completed') {
+                        $scope.tab_name = 'completed';
+                        $scope.orders = result.data.records.completed;
+                    }
+                    getFinishingData();
+                    if($scope.orders == undefined)
+                    {
+                        $scope.orders = [];
+                    }
                 }
-                else if(tab_name == 'hang_tag') {
-                    $scope.tab_name = 'hang_tag';
-                    $scope.orders = result.data.records.hang_tag;
-                }
-                else if(tab_name == 'tag_removal') {
-                    $scope.tab_name = 'tag_removal';
-                    $scope.orders = result.data.records.tag_removal;
-                }
-                else if(tab_name == 'speciality') {
-                    $scope.tab_name = 'speciality';
-                    $scope.orders = result.data.records.speciality;
-                }
-                else if(tab_name == 'packing') {
-                    $scope.tab_name = 'packing';
-                    $scope.orders = result.data.records.packing;
-                }
-                else if(tab_name == 'sticker') {
-                    $scope.tab_name = 'sticker';
-                    $scope.orders = result.data.records.sticker;
-                }
-                else if(tab_name == 'sew_on_women_tag') {
-                    $scope.tab_name = 'sew_on_women_tag';
-                    $scope.orders = result.data.records.sew_on_women_tag;
-                }
-                else if(tab_name == 'inside_tag') {
-                    $scope.tab_name = 'inside_tag';
-                    $scope.orders = result.data.records.inside_tag;
-                }
-                else if(tab_name == 'completed') {
-                    $scope.tab_name = 'completed';
-                    $scope.orders = result.data.records.completed;
-                }
-                getFinishingData();
-                if($scope.orders == undefined)
-                {
-                    $scope.orders = [];
-                }
+
+                var init;
+
+                $scope.searchKeywords = '';
+                $scope.filteredOrders = [];
+                $scope.row = '';
+                $scope.select = function (page) {
+                  var end, start;
+                  start = (page - 1) * $scope.numPerPage;
+                  end = start + $scope.numPerPage;
+                  return $scope.currentPageOrders = $scope.filteredOrders.slice(start, end);
+                };
+                $scope.onFilterChange = function () {
+                  $scope.select(1);
+                  $scope.currentPage = 1;
+                  return $scope.row = '';
+                };
+                $scope.onNumPerPageChange = function () {
+                  $scope.select(1);
+                  return $scope.currentPage = 1;
+                };
+                $scope.onOrderChange = function () {
+                  $scope.select(1);
+                  return $scope.currentPage = 1;
+                };
+                $scope.search = function () {
+                  $scope.filteredOrders = $filter('filter')($scope.orders, $scope.searchKeywords);
+                  return $scope.onFilterChange();
+                };
+                $scope.order = function (rowName) {
+                  if ($scope.row === rowName) {
+                      return;
+                  }
+                  $scope.row = rowName;
+                  $scope.filteredOrders = $filter('orderBy')($scope.orders, rowName);
+                  return $scope.onOrderChange();
+                };
+                $scope.numPerPageOpt = [10, 20, 50, 100];
+                $scope.numPerPage = 10;
+                $scope.currentPage = 1;
+                $scope.currentPageOrders = [];
+
+                init = function () {
+                  $scope.search();
+
+                  return $scope.select($scope.currentPage);
+                };
+                return init();
             }
-
-            var init;
-
-            $scope.searchKeywords = '';
-            $scope.filteredOrders = [];
-            $scope.row = '';
-            $scope.select = function (page) {
-              var end, start;
-              start = (page - 1) * $scope.numPerPage;
-              end = start + $scope.numPerPage;
-              return $scope.currentPageOrders = $scope.filteredOrders.slice(start, end);
-            };
-            $scope.onFilterChange = function () {
-              $scope.select(1);
-              $scope.currentPage = 1;
-              return $scope.row = '';
-            };
-            $scope.onNumPerPageChange = function () {
-              $scope.select(1);
-              return $scope.currentPage = 1;
-            };
-            $scope.onOrderChange = function () {
-              $scope.select(1);
-              return $scope.currentPage = 1;
-            };
-            $scope.search = function () {
-              $scope.filteredOrders = $filter('filter')($scope.orders, $scope.searchKeywords);
-              return $scope.onFilterChange();
-            };
-            $scope.order = function (rowName) {
-              if ($scope.row === rowName) {
-                  return;
-              }
-              $scope.row = rowName;
-              $scope.filteredOrders = $filter('orderBy')($scope.orders, rowName);
-              return $scope.onOrderChange();
-            };
-            $scope.numPerPageOpt = [10, 20, 50, 100];
-            $scope.numPerPage = 10;
-            $scope.currentPage = 1;
-            $scope.currentPageOrders = [];
-
-            init = function () {
-              $scope.search();
-
-              return $scope.select($scope.currentPage);
-            };
-            return init();
         });
     }
 

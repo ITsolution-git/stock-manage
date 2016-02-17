@@ -59,8 +59,8 @@
               </th>
           </tr>
         </thead>
-        <tbody>
-          <tr ng-repeat="value in currentPageListPurchase" id="comp_{{value.client_id}}">
+        <tbody class="strip-content">
+          <tr ng-repeat="value in currentPageListPurchase" id="comp_{{value.client_id}}" class="stripedDiv">
               <td>{{value.id}}</td>
               <td>{{value.client_company}}</td>
               <td>{{value.name_company}}</td>

@@ -25,6 +25,8 @@ class Company extends Model {
     }
     public function InsertCompanyData($post)
     {
+
+   
         if(!isset($post['company_logo'])) {
             $post['company_logo'] = '';
         }
@@ -44,11 +46,222 @@ class Company extends Model {
        
 
         $companyid_array = array('company_id'=>$companyid);
-            $result_array = array_merge((array)$new_post, (array)$companyid_array); 
+        $result_array = array_merge((array)$new_post, (array)$companyid_array); 
 
 
 
         $result_company_detail = DB::table('company_detail')->insert($result_array);
+
+
+/// default price grid code start 
+
+       $whereConditions = ['is_delete' => '1','company_id' => 0];
+       
+        $priceData = DB::table('price_grid')
+                         ->select('*')
+                         ->where($whereConditions)
+                         ->get();
+ 
+        $priceDataArray = json_decode(json_encode($priceData), true);
+     
+        foreach($priceDataArray as $key => $link) 
+        { 
+              
+                $old_price_id = $link['id'];
+                unset($link['id']);
+                $link['name'] = $link['name'].' '.$post['user_name'];
+                $link['created_date'] = date("Y-m-d H:i:s");
+                $link['updated_date'] = date("Y-m-d H:i:s");
+                $link['company_id'] = $companyid;
+                $result = DB::table('price_grid')->insert($link);
+                $priceid = DB::getPdo()->lastInsertId();
+         }
+
+
+// code start for price grid charge
+        $wherePriceGridCharge = ['is_delete' => '1','price_id' => $old_price_id];
+       
+        $priceDataCharge = DB::table('price_grid_charges')
+                         ->select('*')
+                         ->where($wherePriceGridCharge)
+                         ->get();
+
+         $priceDataChargeArray = json_decode(json_encode($priceDataCharge), true);
+        
+          foreach($priceDataChargeArray as $keyPrice => $linkArray) 
+          { 
+               unset($priceDataChargeArray[$keyPrice]['id']);
+               $priceDataChargeArray[$keyPrice]['price_id'] = $priceid;
+               $priceDataChargeArray[$keyPrice]['created_date'] = date("Y-m-d H:i:s");
+               $priceDataChargeArray[$keyPrice]['updated_date'] = date("Y-m-d H:i:s");
+               
+          }
+
+      $result_price_charge = DB::table('price_grid_charges')->insert($priceDataChargeArray);
+// code end for price grid charge 
+
+// code start for price grid Primary
+        $wherePriceGridPrimary = ['is_delete' => '1','price_id' => $old_price_id];
+       
+        $priceDataPrimary = DB::table('price_screen_primary')
+                         ->select('*')
+                         ->where($wherePriceGridPrimary)
+                         ->get();
+
+         $priceDataPrimaryArray = json_decode(json_encode($priceDataPrimary), true);
+        
+          foreach($priceDataPrimaryArray as $keyPrmary => $linkArray) 
+          { 
+               unset($priceDataPrimaryArray[$keyPrmary]['id']);
+               $priceDataPrimaryArray[$keyPrmary]['price_id'] = $priceid;
+               $priceDataPrimaryArray[$keyPrmary]['created_date'] = date("Y-m-d H:i:s");
+               $priceDataPrimaryArray[$keyPrmary]['updated_date'] = date("Y-m-d H:i:s");
+               
+               
+          }
+
+     $result_price_primary = DB::table('price_screen_primary')->insert($priceDataPrimaryArray);
+// code end for price grid Primary 
+
+
+// code start for price grid Secondary
+        $wherePriceGridSecondary = ['is_delete' => '1','price_id' => $old_price_id];
+       
+        $priceDataSecondary = DB::table('price_screen_secondary')
+                         ->select('*')
+                         ->where($wherePriceGridSecondary)
+                         ->get();
+
+         $priceDataSecondaryArray = json_decode(json_encode($priceDataSecondary), true);
+        
+          foreach($priceDataSecondaryArray as $keySecondary => $linkArray) 
+          { 
+               unset($priceDataSecondaryArray[$keySecondary]['id']);
+               $priceDataSecondaryArray[$keySecondary]['price_id'] = $priceid;
+               $priceDataSecondaryArray[$keySecondary]['created_date'] = date("Y-m-d H:i:s");
+               $priceDataSecondaryArray[$keySecondary]['updated_date'] = date("Y-m-d H:i:s");
+              
+               
+          }
+ $result_price_secondary = DB::table('price_screen_secondary')->insert($priceDataSecondaryArray);
+// code end for price grid Secondary
+
+// code start for price grid garment markup
+        $wherePriceGridGm = ['is_delete' => '1','price_id' => $old_price_id];
+       
+        $priceDataGm = DB::table('price_garment_mackup')
+                         ->select('*')
+                         ->where($wherePriceGridGm)
+                         ->get();
+
+         $priceDataGmArray = json_decode(json_encode($priceDataGm), true);
+        
+          foreach($priceDataGmArray as $keyGm => $linkArray) 
+          { 
+               unset($priceDataGmArray[$keyGm]['id']);
+               $priceDataGmArray[$keyGm]['price_id'] = $priceid;
+               $priceDataGmArray[$keyGm]['created_date'] = date("Y-m-d H:i:s");
+               $priceDataGmArray[$keyGm]['updated_date'] = date("Y-m-d H:i:s");
+              
+          }
+
+        $result_price_markup = DB::table('price_garment_mackup')->insert($priceDataGmArray);
+               
+
+// code end for price garment markup
+
+// code start for price grid direct garment
+        $wherePriceGridDg = ['is_delete' => '1','price_id' => $old_price_id];
+       
+        $priceDataDg = DB::table('price_direct_garment')
+                         ->select('*')
+                         ->where($wherePriceGridDg)
+                         ->get();
+
+         $priceDataDgArray = json_decode(json_encode($priceDataDg), true);
+        
+          foreach($priceDataDgArray as $keyDg => $linkArray) 
+          { 
+               unset($priceDataDgArray[$keyDg]['id']);
+               $priceDataDgArray[$keyDg]['price_id'] = $priceid;
+               $priceDataDgArray[$keyDg]['created_date'] = date("Y-m-d H:i:s");
+               $priceDataDgArray[$keyDg]['updated_date'] = date("Y-m-d H:i:s");
+          }
+          $result_dg = DB::table('price_direct_garment')->insert($priceDataDgArray);
+
+// code end for price direct garment
+
+// code start for price grid Embroidery switch count
+        $wherePriceGridEs = ['is_delete' => '1','price_id' => $old_price_id];
+       
+        $priceDataEs = DB::table('embroidery_switch_count')
+                         ->select('*')
+                         ->where($wherePriceGridEs)
+                         ->get();
+
+         $priceDataEsArray = json_decode(json_encode($priceDataEs), true);
+        
+          foreach($priceDataEsArray as $keyEs => $linkArray) 
+          { 
+               unset($priceDataEsArray[$keyEs]['id']);
+               $priceDataEsArray[$keyEs]['price_id'] = $priceid;
+               $priceDataEsArray[$keyEs]['created_date'] = date("Y-m-d H:i:s");
+               $priceDataEsArray[$keyEs]['updated_date'] = date("Y-m-d H:i:s");
+              
+          }
+           $result_embro = DB::table('embroidery_switch_count')->insert($priceDataEsArray);
+           $switchId = DB::getPdo()->lastInsertId();
+
+// code end for price  Embroidery switch count
+
+
+// code start for price grid Embroidery
+        $wherePriceGridEmbro = ['is_delete' => '1','price_id' => $old_price_id];
+       
+        $priceDataEmbro = DB::table('price_screen_embroidery')
+                         ->select('*')
+                         ->where($wherePriceGridEmbro)
+                         ->get();
+
+         $priceDataEmbroArray = json_decode(json_encode($priceDataEmbro), true);
+        
+          foreach($priceDataEmbroArray as $keyEmbro => $linkArray) 
+          { 
+               unset($priceDataEmbroArray[$keyEmbro]['id']);
+               $priceDataEmbroArray[$keyEmbro]['price_id'] = $priceid;
+               $priceDataEmbroArray[$keyEmbro]['embroidery_switch_id'] = $switchId;
+               $priceDataEmbroArray[$keyEmbro]['created_date'] = date("Y-m-d H:i:s");
+               $priceDataEmbroArray[$keyEmbro]['updated_date'] = date("Y-m-d H:i:s");
+              
+          }
+           $result_screeen_embro = DB::table('price_screen_embroidery')->insert($priceDataEmbroArray);
+               
+
+// code end for price  grid Embroidery
+
+
+/// default price grid code end  
+
+
+// Code for Default Misc data Start
+           
+        $whereConditionsMisc = ['is_delete' => '1','company_id' => 0];
+        $miscData = DB::table('misc_type')
+                         ->select('*')
+                         ->where($whereConditionsMisc)
+                         ->get();
+ 
+        $miscDataArray = json_decode(json_encode($miscData), true);
+        
+        foreach($miscDataArray as $Misckey => $misclink) 
+        { 
+                unset($miscDataArray[$Misckey]['id']);
+               $miscDataArray[$Misckey]['company_id'] = $companyid;       
+         }
+
+        $result_misc = DB::table('misc_type')->insert($miscDataArray);
+
+// Code for Default Misc data End
 
     	return $result;
     }

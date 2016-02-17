@@ -42,7 +42,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="value in screen_listing.records"  id="art_{{value.screen_id}}">
+          <tr ng-repeat="value in screen_listing.records"  id="{{value.screen_id}}">
               
               <td>{{value.id}}</td>
               <td>{{value.job_name}}</td>
@@ -53,7 +53,7 @@
 
               <td>
 
-                <button class="btn btn-xs btn-info" ui-sref="art.screen_detail({ id: value.screen_id })">Edit</button>
+                <button class="btn btn-xs btn-info" ui-sref="art.screen({ id: value.screen_id })">Edit</button>
                 <button class="btn btn-xs btn-danger" ng-click="">Delete</button>
               </td> 
           </tr>

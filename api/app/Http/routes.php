@@ -43,7 +43,7 @@ Route::post('admin/account/save', 'AccountController@SaveData');
 Route::post('admin/account/delete', 'AccountController@DeleteData');
 
 // ADMIN STAFF ROUTERS
-Route::get('admin/staff', 'StaffController@index');
+Route::post('admin/staff', 'StaffController@index');
 Route::post('admin/staffAdd', 'StaffController@add');
 Route::post('admin/staffEdit', 'StaffController@edit');
 Route::post('admin/staffDelete', 'StaffController@delete');
@@ -66,7 +66,7 @@ Route::post('admin/staff/timeoffDetail', 'StaffController@timeoffdetail');
 
 
 // ADMIN Vendor ROUTERS
-Route::get('admin/vendor', 'VendorController@index');
+Route::post('admin/vendor', 'VendorController@index');
 Route::post('admin/vendorDelete', 'VendorController@delete');
 Route::post('admin/vendorAdd', 'VendorController@add');
 Route::post('admin/vendorEdit', 'VendorController@edit');
@@ -74,7 +74,7 @@ Route::post('admin/vendorDetail', 'VendorController@detail');
 Route::get('admin/VendorEdit/{id}', 'VendorController@detail');
 
 // ADMIN PRODUCT ROUTERS
-Route::get('admin/product', 'ProductController@index');
+Route::post('admin/product', 'ProductController@index');
 Route::post('admin/productAdd', 'ProductController@add');
 Route::post('admin/productEdit', 'ProductController@edit');
 Route::post('admin/productDelete', 'ProductController@delete');
@@ -82,7 +82,7 @@ Route::post('admin/productDetail', 'ProductController@detail');
 Route::get('admin/productEdit/{id}', 'ProductController@detail');
 
 // ADMIN SETTING ROUTERS
-Route::get('admin/price', 'SettingController@price');
+Route::post('admin/price', 'SettingController@price');
 Route::post('admin/priceDelete', 'SettingController@delete');
 Route::post('admin/priceGridDuplicate', 'SettingController@priceGridDuplicate');
 Route::post('admin/priceEdit', 'SettingController@priceEdit');
@@ -109,19 +109,15 @@ Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::post('auth/company', 'CommonController@CompanyService');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
-Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
-Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
+Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
+Route::post('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
-Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
-Route::get('common/getMiscData', 'CommonController@getMiscData');
+Route::post('common/getAllPlacementData', 'CommonController@getAllPlacementData');
+Route::post('common/getMiscData', 'CommonController@getMiscData');
 Route::get('common/getAllColorData', 'CommonController@getAllColorData');
 Route::post('common/getCompanyDetail', 'CommonController@getCompanyDetail');
-
-
-Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
-Route::get('common/getMiscData', 'CommonController@getMiscData');
-
+Route::post('common/SaveImage', 'CommonController@SaveImage');
 Route::post('common/InsertRecords', 'CommonController@InsertRecords'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/UpdateTableRecords', 'CommonController@UpdateTableRecords'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
@@ -207,6 +203,10 @@ Route::post('order/AssignSize', 'OrderController@AssignSize');
 Route::post('order/productDetail', 'OrderController@productDetail');
 Route::post('order/updatePriceProduct', 'OrderController@updatePriceProduct');
 Route::post('order/deleteColorSize', 'OrderController@deleteColorSize');
+Route::post('order/sendEmail', 'OrderController@sendEmail');
+Route::post('order/getOrderPositionDetail', 'OrderController@getOrderPositionDetail');
+Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
+
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
@@ -229,6 +229,7 @@ Route::post('shipping/DeleteBox', 'ShippingController@DeleteBox');
 Route::post('shipping/addShippingItem', 'ShippingController@addShippingItem');
 Route::post('shipping/getBoxItems', 'ShippingController@getBoxItems');
 Route::post('shipping/createPDF', 'ShippingController@createPDF');
+Route::post('shipping/addRemoveAddressToPdf', 'ShippingController@addRemoveAddressToPdf');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
@@ -246,7 +247,9 @@ Route::get('art/artjob_screen_list/{art_id}/{company_id}', 'ArtController@artjob
 Route::get('art/artjobgroup_list/{art_id}/{company_id}', 'ArtController@artjobgroup_list');
 Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
 Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');
-Route::get('art/ScreenListing/{art_id}/{company_id}', 'ArtController@ScreenListing');
+Route::get('art/ScreenListing/{company_id}', 'ArtController@ScreenListing');
+Route::post('art/create_screen', 'ArtController@create_screen');
+Route::post('art/DeleteScreenRecord', 'ArtController@DeleteScreenRecord');
 Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
 Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkproof');
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');

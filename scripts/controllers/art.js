@@ -1,9 +1,11 @@
 app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','$filter',function($scope,$http,$state,$stateParams,$rootScope,AuthService,$filter) {
+	                      $("#ajax_loader").show();
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
-                          $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.art_id = $stateParams.art_id;
-                          $("#ajax_loader").show();
+                          $scope.company_id = $rootScope.company_profile.company_id;
+                          
+
                           $http.get('api/public/art/listing/'+$scope.company_id).success(function(RetArray) {
 	                          	if(RetArray.data.success=='1')
                           		{
@@ -60,7 +62,7 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$root
                               	}
                             });
 
-                          	$http.get('api/public/art/ScreenListing/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
+                          	$http.get('api/public/art/ScreenListing/'+$scope.company_id).success(function(RetArray) {
 
                           			$("#ajax_loader").hide();
                           			$scope.screen_listing = RetArray.data;
@@ -76,7 +78,7 @@ app.controller('ArtListCtrl', ['$scope',  '$http','$state','$stateParams','$root
 
 
 }]);
-app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService','$modal',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService,$modal) {
+app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService','$modal','$q',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService,$modal,$q) {
 						  $("#ajax_loader").hide();
                           AuthService.AccessService('BC');
                           $scope.CurrentController=$state.current.controller;
@@ -85,7 +87,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           Get_artDetail();
                           function Get_artDetail()
                           {
-                          	$("#ajax_loader").show();
+                          	
                           	$http.get('api/public/art/Art_detail/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
 
                           			$("#ajax_loader").hide();
@@ -95,19 +97,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           			$scope.graphic_size = RetArray.data.records.graphic_size;
                           			$scope.artjobgroup_list = RetArray.data.records.artjobgroup_list;
                           			$scope.art_worklist = RetArray.data.records.art_worklist;
-                          			$scope.screen_allcolors = RetArray.data.records.allcolors;
                           			$scope.wp_position = RetArray.data.records.wp_position;
-
-                          			//console.log($scope.art_orderline.line_array);
-                          			 
-                          				$scope.simulateQuery = false;
-									    $scope.isDisabled    = false;
-									    // list of `state` value/display objects
-									    $scope.states        = loadAll();
-									    //console.log( $scope.states )
-									    $scope.querySearch   = querySearch;
-									    $scope.selectedItemChange = selectedItemChange;
-									    $scope.searchTextChange   = searchTextChange;
 
                               	if(RetArray.data.success=='2')
                           		{
@@ -125,7 +115,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 							    return new Array(num);   
 							}
 
-						  $scope.UpdateField_field = function($event,id,table){
+						  $scope.UpdateField_field = function($event,id,table,fun_redirect){
                           		  var Receive_data = {};
                           		  Receive_data.table =table;
                           		  $scope.name_filed = $event.target.name;
@@ -137,6 +127,48 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
 	                              		var data = {"status": "success", "message": "Data Updated successfully"}
                                         notifyService.notify(data.status, data.message); 
+                                        //alert(fun_redirect);
+                                        if(fun_redirect =='get_groupdata')
+                                        {
+                                        	$scope.get_groupdata();
+                                        }
+                                });
+                          }
+                          
+                           $scope.UpdateField_clientnote = function($event,id,table){
+                          		  var Receive_data = {};
+                          		  Receive_data.table =table;
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ art_id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                });
+                          }
+
+
+                          $scope.get_groupdata = function(){
+                          	$http.get('api/public/art/artjobgroup_list/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {
+                          		$scope.artjobgroup_list = RetArray.data.records;
+                          	});
+                          }
+                          $scope.Asign_group_order = function(id){
+                          		  var Receive_data = {};
+                          		  Receive_data.table ='purchase_detail';
+                          		  $scope.name_filed = 'art_group';
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] = $('#art_group_'+id).val();;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ orderline_id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                         Get_artDetail();
                                 });
                           }
 
@@ -203,12 +235,14 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 			                            };
 			                            $scope.SaveArtWorkProof=function(Receive_data)
 			                            {
+			                            	Receive_data.art_id = $scope.art_id;
 			                            	$http.post('api/public/art/SaveArtWorkProof',Receive_data).success(function(result) 
 			                            	{
 			                            		Get_artDetail();
 					                        	var data = {"status": "success", "message": result.data.message}
 				                                notifyService.notify(data.status, data.message); 
 				                                $scope.ClosePopup('close');
+				                                $scope.artworkproof_popup(Receive_data.wp_id);
 				                            });
 			                            }
 		                            }
@@ -217,6 +251,18 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 		                		$("#ajax_loader").show();
 		                		$http.get('api/public/art/screen_colorpopup/'+screen_id+'/'+$scope.company_id).success(function(RetArray) {
 		                			$scope.screen_colorpopup = RetArray.data.records.screen_colorpopup;
+		                			$scope.screen_allcolors = RetArray.data.records.allcolors;
+
+
+                      				$scope.simulateQuery = false;
+								    $scope.isDisabled    = false;
+								    // list of `state` value/display objects
+								    $scope.states        = loadAll();
+								    //console.log( $scope.states )
+								    $scope.querySearch   = querySearch;
+
+
+
                           			$scope.color_popup_open();
                           		  });
 
@@ -238,31 +284,30 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 			                            });
 			                            $scope.CloseColorPopup = function (cancel)
 			                            {
-			                               modalInstanceEdit.dismiss('cancel');
+			                            	deferred = $q.defer();
+									        setTimeout(function () { modalInstanceEdit.dismiss('cancel'); }, Math.random() * 500, false);
+									        return deferred.promise;
+
+			                               
 			                            };
-			                            $scope.SaveArtWorkProof=function(Receive_data)
-			                            {
-			                            	$http.post('api/public/art/SaveArtWorkProof',Receive_data).success(function(result) 
-			                            	{
-			                            		Get_artDetail();
-					                        	var data = {"status": "success", "message": result.data.message}
-				                                notifyService.notify(data.status, data.message); 
-				                                $scope.ClosePopup('close');
-				                            });
-			                            }
-			                             $scope.add_color_line = function (screen_id){
+			                            $scope.add_color_line = function (screen_id){
 				                        		var colors_insert = {};
 				                                colors_insert.data = {screen_id :screen_id }
 				                                colors_insert.table ='artjob_screencolors'
 				                                $http.post('api/public/common/InsertRecords',colors_insert).success(function(result) {
-				                                	modalInstanceEdit.dismiss('cancel');
+				                                	 $scope.CloseColorPopup();
 				                                	$scope.color_popup(screen_id);
 				                                });
 				                        }
+				                        $scope.add_color_logo = function (image_array,field,table,image_name,image_path,cond,value)
+				                        {
+				                         	$scope.SaveImage(image_array,field,table,image_name,image_path,cond,value);
+				                         	$scope.CloseColorPopup();
+				                         	//setTimeout($scope.color_popup(value), 500);
+				                     	}
 		                	
 		                }
-
-		                $scope.create_screen = function(table) {
+		                $scope.create_group = function(table) {
 
 		                	 var Address_data = {};
                                 Address_data.data = {art_id:$scope.art_id};
@@ -280,6 +325,24 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 	                                    notifyService.notify(data.status, data.message);
                                     }
                                 });
+						}
+		                $scope.create_screen = function() {
+
+		                	 var Address_data = {};
+                                Address_data.data = {art_id:$scope.art_id};
+                                
+                                $http.post('api/public/art/create_screen',Address_data).success(function(result) {
+                                    if(result.data.success == '1') 
+                                    {
+                                       Get_artDetail();
+                                    }
+                                    else
+                                    {
+                                        $("#ajax_loader").hide();
+	                          			var data = {"status": "error", "message": result.data.message}
+	                                    notifyService.notify(data.status, data.message);
+                                    }
+                                });
 							}
   						$scope.UpdateField_orderscreen = function(data,id,table) {
 								var Receive_data = {};
@@ -294,17 +357,31 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                                 });
 						}
 						$scope.remove_data = function (id,table){
+							 	var permission = confirm("Are you sure to delete this record ?");
+                                if (permission == true) {
+	                        		var delete_data = {};
+	                                delete_data.cond = {id :id }
+	                                delete_data.table =table
 
-                        		var delete_data = {};
-                                delete_data.cond = {id :id }
-                                delete_data.table =table
+	                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) {
+	                                	jQuery("#"+id).remove();
+	                                	var data = {"status": "success", "message": "Record Deleted successfully"}
+	                                    notifyService.notify(data.status, data.message); 
+	                                });
+                            	}
+                        }
+                        $scope.remove_screen = function (id){
+							 	var permission = confirm("Are you sure to delete this record ?");
+                                if (permission == true) {
+                                	var delete_data = {};
+	                                delete_data.cond = {id :id }
 
-                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) {
-                                	jQuery("#"+id).remove();
-                                	var data = {"status": "success", "message": "Record Deleted successfully"}
-                                    notifyService.notify(data.status, data.message); 
-                                });
-
+	                                $http.post('api/public/art/DeleteScreenRecord',delete_data).success(function(result) {
+	                                	jQuery("#"+id).remove();
+	                                	var data = {"status": "success", "message": "Record Deleted successfully"}
+	                                    notifyService.notify(data.status, data.message); 
+	                                });
+                            	}
                         }
                         
                       
@@ -322,20 +399,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 						        return results;
 						      }
 						    }
-						     function searchTextChange(text) {
-						      $log.info('Text changed to ' + text);
-						    }
-						    function selectedItemChange(item) {
-						      $log.info('Item changed to ' + JSON.stringify(item));
-						    }
 
-
-						    function searchTextChange(text) {
-						      $log.info('Text changed to ' + text);
-						    }
-						    function selectedItemChange(item) {
-						      $log.info('Item changed to ' + JSON.stringify(item));
-						    }
 						    /**
 						     * Build `states` list of key/value pairs
 						     */
@@ -351,9 +415,59 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 							      };
 							    }
                       
+                       $scope.SaveImage = function (image_array,field,table,image_name,image_path,cond,value){
+                                	
+                                	var Image_data = {};
+	                                Image_data.image_array = image_array;
+	                                Image_data.field = field;
+	                                Image_data.table = table;
+	                                Image_data.image_name = image_name;
+	                                Image_data.image_path = image_path;
+	                                Image_data.cond = cond;
+	                                Image_data.value = value;
+
+	                                $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
+	                                	
+	                                	var data = {"status": "success", "message": "Image Uploaded Successfully"}
+	                                    notifyService.notify(data.status, data.message); 
+	                                });
+                                }
 												
 
                        
 
 }]);
 
+app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService','$modal',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService,$modal) {
+
+						  AuthService.AccessService('BC');
+                          $scope.CurrentController=$state.current.controller;
+                          $scope.company_id = $rootScope.company_profile.company_id;
+                          $scope.screen_id = $stateParams.id;
+
+                          screen_colorpopup();
+                          function screen_colorpopup() {
+                          $http.get('api/public/art/screen_colorpopup/'+$scope.screen_id+'/'+$scope.company_id).success(function(RetArray) {
+		                			$scope.screen_detail = RetArray.data.records.screen_colorpopup;
+		                			$scope.graphic_size_all=  RetArray.data.records.graphic_size;
+		                			$scope.screen_garments  = RetArray.data.records.screen_garments;
+                          		  });
+                      	  }
+                      	  $scope.UpdateField_field = function($event,id,table){
+                          		  var Receive_data = {};
+                          		  Receive_data.table =table;
+                          		  $scope.name_filed = $event.target.name;
+                          		  var obj = {};
+                          		  obj[$scope.name_filed] =  $event.target.value;
+                          		  Receive_data.data = angular.copy(obj);
+                          		  
+	                              Receive_data.cond ={ id :id}
+	                              $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+	                              		var data = {"status": "success", "message": "Data Updated successfully"}
+                                        notifyService.notify(data.status, data.message); 
+                                });
+                          }
+
+
+
+	}]);

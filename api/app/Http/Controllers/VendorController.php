@@ -34,8 +34,8 @@ class VendorController extends Controller {
 */
 
     public function index() {
- 
-        $result = $this->vendor->vendorList();
+         $post = Input::all();
+        $result = $this->vendor->vendorList($post);
        
        
         if (count($result) > 0) {
@@ -100,12 +100,13 @@ class VendorController extends Controller {
             'prime_address2' => isset($_REQUEST['prime_address2']) ? $_REQUEST['prime_address2'] : '',
             'prime_phone_no' => isset($_REQUEST['prime_phone_no']) ? $_REQUEST['prime_phone_no'] : '',
             'fax_number' => isset($_REQUEST['fax_number']) ? $_REQUEST['fax_number'] : '',
+            'fax_number' => isset($_REQUEST['fax_number']) ? $_REQUEST['fax_number'] : '',
 
             'mailing_address1' => isset($_REQUEST['mailing_address1']) ? $_REQUEST['mailing_address1'] : '',
             'mailing_address2' => isset($_REQUEST['mailing_address2']) ? $_REQUEST['mailing_address2'] : '',
             'mailing_address_city' => isset($_REQUEST['mailing_address_city']) ? $_REQUEST['mailing_address_city'] : '',
             'mailing_address_state' => isset($_REQUEST['mailing_address_state']) ? $_REQUEST['mailing_address_state'] : '',
-            'mailing_address_zip' => isset($_REQUEST['mailing_address_zip']) ? $_REQUEST['mailing_address_zip'] : '',
+            'company_id' => isset($_REQUEST['company_id']) ? $_REQUEST['company_id'] : '',
 
 
             'billing_address1' => isset($_REQUEST['billing_address1']) ? $_REQUEST['billing_address1'] : '',

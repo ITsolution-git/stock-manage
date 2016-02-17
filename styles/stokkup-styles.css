@@ -946,27 +946,27 @@ input[readonly].cgreen {
 .md-autocomplete-suggestions {
 	z-index: 9999;
 }
-md-autocomplete input:not(.md-input) {
+.orderLineTabScroll md-autocomplete input:not(.md-input) {
 	height: 34px;
 	padding:0 5px;
 	line-height: 19px;
 }
-md-autocomplete button {
+.orderLineTabScroll md-autocomplete button {
 	width: 20px;
 	height: 15px;
 }
-.md-whiteframe-z1 {
+.orderLineTabScroll .md-whiteframe-z1 {
 	border:1px solid #cfd1d4;
 	border-radius: 5px;
 	box-shadow: none;
 	height: 34px;	
     margin-bottom: 15px;
 }
-.md-autocomplete-suggestions {
+.orderLineTabScroll .md-autocomplete-suggestions {
 	height: 150px;
 	max-height: 150px;
 }
-md-autocomplete input {
+.orderLineTabScroll md-autocomplete input {
 	width:50px !important;
 }
 
@@ -979,6 +979,10 @@ md-autocomplete input {
 	max-height: 500px;
 	overflow: hidden;
 	overflow-y: scroll;
+}
+.orderDistributionContainer label.ui-checks-lg {
+	margin-bottom: 0;
+	margin-top: 5px;
 }
 .orderDistributionContainer .col-md-12 {
 	padding-top: 15px;
@@ -1074,6 +1078,10 @@ button.topNavButtons.active {
 =====================================*/
 .finishingForm .npb {
 	border: 0 none;	
+}
+
+.finishingTab .clientTab .strip-content {
+	overflow: visible;
 }
 /*---------- END ----------*/
 
@@ -1428,3 +1436,25 @@ button.topNavButtons.active {
     background-color: #828282;
 }
 .typeahead { z-index: 10501; }
+.glyphicon-chevron-up:before {
+    content: "\e113";
+    right: -18px;
+    top: -2px;
+    position: absolute;
+    font-size: 11px;
+}
+.glyphicon-chevron-down:before {
+    content: "\e114";
+    right: -15px;
+    top: 7px;
+    position: absolute;
+    font-size: 11px;
+}
+.glyphicon-chevron-up.active {
+    /*color: #31c0be;*/
+    overflow: hidden;
+}
+.glyphicon-chevron-down.active {
+    /*color: #31c0be;*/
+    overflow: hidden;
+}

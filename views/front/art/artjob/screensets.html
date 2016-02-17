@@ -37,7 +37,7 @@
                                         
         
                                     <!-- POSITION TAB FIELDS -->
-                                    <div class="positionTab_content" ng-repeat="(key,screen_data) in artjobscreen_list">
+                                    <div class="positionTab_content" ng-repeat="(key,screen_data) in artjobscreen_list" id={{screen_data.id}}>
                                         <div class="col-md-3 nopad-form">                                        
                                             <div class="form-group col-md-4 nopad-left">
                                                 <input type="text" class="form-control" ng-model="screen_data.screen_set" name="screen_set" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" placeholder="Screen sets" />
@@ -80,16 +80,19 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-1 nopad-left">
-                                            <div class="col-md-6 sgpDetails btnCircle">
+                                        <div class="col-md-2 nopad-left">
+                                            <div class="col-md-2 sgpDetails btnCircle">
                                                 <button title="Add color" ng-click="color_popup(screen_data.id)" type="button" class="btn btn-default addButton c-dgreen" >
                                                           <i class="fa fa-edit"></i> 
                                                 </button>
                                             </div>
-                                            <div class="col-md-6 sgpDetails btnCircle">
-                                              <a class="" tabindex="0" role="button" title="Go To Screen">
+                                            <div class="col-md-2 sgpDetails btnCircle" >
+                                              <a class="" tabindex="0" role="button" ui-sref="art.screen({id:screen_data.id})" title="Go To Screen">
                                                 <i class="fa fa-arrow-circle-right"></i>
                                               </a>
+                                            </div>
+                                            <div class="col-md-3 sgpDetails btnCircle" >
+                                             <button title="Delete" ng-click="remove_screen(screen_data.id);" class="btn btn-xs btn-danger addButton form-control c-dgreen" tabindex="0">X</button>
                                             </div>
                             
                                         </div>

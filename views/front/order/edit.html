@@ -5,7 +5,7 @@
             <div class="col-sm-12 m-b nopad-form">
                 <div class="col-sm-12 m-b"></div>
                 
-                <div class="col-md-10 nopad-form">
+                <div class="col-md-9 nopad-form">
                     <div class="form-group col-md-12 m-b nopad-form">
                         <div class="col-md-2 m-b nopad-left">
                             <label>Job Name<em class="text-muted"></em></label>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-2 m-b">
                             <label>Approval<em class="text-muted"></em></label>
-                            <select  ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateProductData($event,order.id,\'orders\',\'id\')' }">
+                            <select  id="approval" ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateProductData($event,order.id,\'orders\',\'id\')' }">
                                 <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                             </select>
                         </div>
@@ -76,21 +76,20 @@
                        
                     </div>
                 </div>
-                <div class="form-group col-md-2 m-b nopad-form smallPad orderLineCal">
+                <div class="form-group col-md-3 m-b nopad-form smallPad orderLineCal">
 
-                    <div class="input-group col-md-12 pull-right nopad-right t-r m-b">
-                        <!-- <div class="col-md-3 pull-left nopad-right smallPad">
-                            <a href="#" class="fa fa-file-text-o btnEditOrder"></a>
-                        </div>  -->                   
-                        <div class="col-md-3 nopad-right smallPad">
-                            <button ng-click="confirmPricing()" type="button"  class="btn btn-info">Confirm Pricing</button>
-                        </div>
-                        <div class="col-md-3 pull-right nopad-right smallPad">
-                            <button ui-sref="order.list" type="button"  class="btn btn-info">List</button>
-                        </div> 
-                        <div class="col-md-3 pull-right nopad-right smallPad">
-                            <button ng-click="printPdf()" type="button"  class="btn btn-info">Print</button>
-                        </div>                                 
+                    <div class="input-group col-md-12 pull-right nopad-form t-r m-b">
+                                 
+                        
+                            <button ng-click="confirmPricing()" type="button"  class="btn btn-info order-button">Confirm Pricing</button>
+                        
+                      
+                            <button ng-click="printPdf()" type="button"  class="btn btn-info order-button">Print</button>
+                      
+                            <button class="btn btn-info order-button" ng-click="openEmailPopup()" tabindex="0">Email</button>
+                       
+                            <button ui-sref="order.list" type="button"  class="btn btn-info order-button">List</button>
+                                                   
                     </div>
                     <div class="col-md-12 nopad-form">
                         <div class="form-group col-md-6 text-right nopad-left smallPad">
@@ -359,7 +358,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group secondContainer">
-                                                        <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)" ng-change="getVendorProduct(order_line.vendor_id)">
+                                                        <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
                                                             <option value="0">Select</option>
                                                             <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.name_company}}</option>
                                                         </select>
@@ -399,7 +398,7 @@
                                             <div class="col-md-12 nopad-form">
                                                 <div class="cols col-1">
                                                     <div class="col-md-3 nopad-left smallPad">
-                                                        <select  ng-model="order_line.color_id"  class="form-control" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line)">
+                                                        <select  ng-model="order_line.color_id"  class="form-control" ng-disabled="order_line.product_id == 0" ng-change="getSize(order_line)" ng-click="getColor(order_line.product_name)">
                                                             <option ng-selected="order_line.color_id==color.id" ng-repeat="color in order_line.colors" value={{color.id}}>{{color.name}}</option>
                                                         </select>
                                                     </div>
@@ -842,25 +841,31 @@
                                         </div>
                                         <div class="col-md-12 nopad-left orderDistributionContainer">
                                             <div id="row_{{dist.id}}" class="col-md-12" ng-repeat="dist in distributed_address" ng-class="{distribution_active: dist.id==address_id}">
-                                                <div ng-click="select_address(dist.id)">
-                                                    <div class="col-md-2 nopad-left m-b">
-                                                        <button type="button" class="btn btn-default addButton" tabindex="0">
-                                                            <i class="fa fa-search"></i>
-                                                        </button>
+                                                <div>
+                                                    <div class="col-md-1 nopad-form m-b">
+                                                        <!--label class="md-check">
+                                                            <input type="checkbox" checklist-model="1" checklist-value="1" class="has-value">
+                                                            <i class="c-default"></i>
+                                                        </label-->
+                                                        <label class="ui-checks ui-checks-lg">
+                                                            <input type="radio" ng-if="dist.print_on_pdf == 1" name="print_on_pdf" ng-value="dist.print_on_pdf" ng-click="addRemoveAddressToPdf(dist.print_on_pdf,dist.id)" checked="">
+                                                            <input type="radio" ng-if="dist.print_on_pdf == 0" name="print_on_pdf" ng-value="dist.print_on_pdf" ng-click="addRemoveAddressToPdf(dist.print_on_pdf,dist.id)">
+                                                            <i></i>
+                                                        </label>
                                                     </div>
                                                     <div class="col-md-10 nopad-right m-b">
                                                         <input type="text" class="form-control" ng-model="dist.description" onfocus="this.blur()">
                                                     </div>
-
                                                     <div class="col-md-10 nopad-left m-b">
                                                         <input type="test" class="form-control" ng-model="dist.full_address" onfocus="this.blur()">
                                                     </div>
-                                                </div>
-                                                <div class="col-md-2 nopad-right m-b">
+                                                    <div class="col-md-1 nopad-form m-b">
                                                     <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="remove_address_from_distribute(dist.id)">
                                                         <i class="fa fa-minus"></i>
                                                     </button>
                                                 </div>
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -1135,11 +1140,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3 nopad-left smallPad">
-                                      <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_id" ng-click="getPoAllData(orderPO.po_id)">
+                                      <input type="text" readonly onfocus="this.blur()" class="form-control" ng-model="orderPO.po_id">
                                     </div>
                                     <div class="col-md-2 nopad-left smallPad ">
 
-                                      <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.po_type" ng-click="getPoAllData(orderPO.po_id)">
+                                      <input type="text" readonly onfocus="this.blur()" class="form-control" ng-model="orderPO.po_type">
 
                                     </div>
                                     <div class="col-md-2 nopad-left smallPad ">
@@ -1148,7 +1153,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 nopad-left smallPad ">
-                                      <input type="text" readonly onfocus="this.blur()" class="form-control po-link-class" ng-model="orderPO.date" ng-click="getPoAllData(orderPO.po_id)">
+                                      <input type="text" readonly onfocus="this.blur()" class="form-control" ng-model="orderPO.date" >
                                     </div>
                                     <div class="col-md-1 nopad-left">
                                         <div class="sgpDetails">

@@ -19,6 +19,7 @@ class Shipping extends Model {
                          ->leftJoin('shipping_type as st', 's.shipping_type_id', '=', 'st.id')
                          ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
                          ->select($listArray)
+                         ->where('s.company_id','=',$company_id)
                          ->get();
         return $shippingData;
 	}

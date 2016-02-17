@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body b-b b-light">
         <div class="col-md-3 nopad-right smallPad">
-          <button title="Go to ScreenListing" ui-sref="art.screenlist({art_id:'0',company_id:company_id})" type="button" class="btn btn-info" tabindex="0">Screen List</button>
+          <button title="Go to ScreenListing" ui-sref="art.screenlist" type="button" class="btn btn-info" tabindex="0">Screen List</button>
         </div>
         <div class="col-sm-4 col-xs-6">
             <form>
@@ -104,8 +104,8 @@
               </th>
           </tr>
         </thead>
-        <tbody>
-          <tr ng-repeat="value in currentPageArts"  id="order_{{value.art_id}}">
+        <tbody class="strip-content">
+          <tr ng-repeat="value in currentPageArts"  id="order_{{value.art_id}}" class="stripedDiv">
               
               <td>{{value.job_name}}</td>
               <td>{{value.client_company}}</td>

@@ -1,8 +1,16 @@
 
-app.controller('priceListCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+app.controller('priceListCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
   AuthService.AccessService('FM');
    $("#ajax_loader").show();
-  $http.get('api/public/admin/price').success(function(result, status, headers, config) {
+
+   var company_id = $rootScope.company_profile.company_id;
+  
+    var price_list_data = {};
+    var condition_obj = {};
+    condition_obj['company_id'] =  company_id;
+    price_list_data.cond = angular.copy(condition_obj);
+
+    $http.post('api/public/admin/price',price_list_data).success(function(result, status, headers, config) {
 
                                   $scope.price = result.data.records;
                                   $scope.pagination = AllConstant.pagination;
@@ -77,10 +85,11 @@ app.controller('priceListCtrl', ['$scope','$http','$location','$state','$statePa
 
 }]);
 
-app.controller('priceAddEditCtrl', ['$scope','$http','$location','$state','$stateParams','AuthService','sessionService','fileUpload','AllConstant','$filter', function($scope,$http,$location,$state,$stateParams,AuthService,sessionService,fileUpload,AllConstant,$filter) {
+app.controller('priceAddEditCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','sessionService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,sessionService,fileUpload,AllConstant,$filter) {
    
  AuthService.AccessService('FM,BC');
 
+ var company_id = $rootScope.company_profile.company_id;
 
                         $scope.percentagecalc = function($event) {
                           

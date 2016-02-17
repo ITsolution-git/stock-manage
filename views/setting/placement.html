@@ -21,6 +21,7 @@
             </button>
         </div>
         <div class="col-md-12 nopad-form misc-view-details horizontal-only">
+            <div ng-show="placementData.length > 0">
             <table class="table m-b-none" data-filter="#filter">
                 <thead>
                     <tr>
@@ -34,8 +35,8 @@
                         </th> 
                     </tr>
                 </thead>
-                <tbody>
-                    <tr ng-repeat="value in currentPagePlacementData">
+                <tbody class="strip-content">
+                    <tr ng-repeat="value in currentPagePlacementData" class="stripedDiv">
                         <td><a editable-text="value.misc_value" onaftersave="updatePlacement(value.misc_value,value.id,'misc_value')">{{value.misc_value || 'not set'}}</a></td>
                         <td>
                             <a href="#" editable-select="value.user.group"  onaftersave="updatePlacement(value.user.group,value.id,'misc_id')" onshow="loadGroups()" e-ng-options="g.id as g.value for g in groups">
@@ -66,6 +67,11 @@
                     </div>
                 </div>
             </footer>
+        </div>
+    </div>
+    <div ng-show="placementData.length == 0">
+        <div class="col-md-12">
+            <h4>No Records found</h4>
         </div>
     </div>
 </div>

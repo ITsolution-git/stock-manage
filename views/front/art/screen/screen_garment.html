@@ -1,0 +1,116 @@
+<div class="col-md-12 nopad-form">
+                                
+
+                <div class="form-group col-md-7 nopad-form">
+                    
+                    <div class="form-group col-md-2 nopad-left">
+                        <label>Order </label>
+                        <input type="text" class="form-control" >
+                   </div>
+                   <div class="form-group col-md-2 nopad-left">
+                        <label>Group </label>
+                        <input type="text" class="form-control" >
+                   </div>
+                   <div class="form-group col-md-2 nopad-left">
+                        <label>Qnty </label>
+                        <input type="text" class="form-control" >
+                   </div>
+                   <div class="form-group col-md-2 nopad-left">
+                        <label>Size </label>
+                        <input type="text" class="form-control" >
+                   </div>
+                     <div class="form-group col-md-2 nopad-left">
+                        <label>Color </label>
+                        <input type="text" class="form-control" >
+                   </div>
+                   
+
+                </div>
+
+                 <div class="form-group col-md-5 nopad-form">
+                  	<div class="form-group col-md-8 nopad-form">
+                  		<label>Label</label>
+                  		<textarea class="form-control" ng-model="screen_detail[0].screen_label" name="screen_label" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" rows="7"></textarea>
+                  	</div>
+                  	<div class="form-group col-md-4 nopad-form">
+                  		<label>Production Date</label>	
+                  		 <input type="text" class="form-control" ng-model="screen_detail[0].production_date" name="production_date" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }">
+                  	</div>
+
+                  	<div class="form-group col-md-12 nopad-form">
+
+                  		<div class="form-group col-md-3 nopad-form">
+                  			<label>f_status_art_dept</label>
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input type="radio" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_art_dept" ng-checked="screen_detail[0].f_status_art_dept==1"> Yes
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input type="radio" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_art_dept" ng-checked="screen_detail[0].f_status_art_dept==0"> No
+                  		</div>
+                  		<div class="form-group col-md-3 nopad-form">
+                  			<input type="text" class="form-control" ng-model="screen_detail[0].f_status_art_dept_value" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_art_dept_value">
+                  		</div>
+                  	</div>
+                  	<div class="form-group col-md-12 nopad-form">
+                  		<div class="form-group col-md-3 nopad-form">
+                  			<label>f_status</label>
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status" type="radio"  ng-checked="screen_detail[0].f_status==1"> Yes
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status" type="radio"  ng-checked="screen_detail[0].f_status==0"> No
+                  		</div>
+                  		<div class="form-group col-md-3 nopad-form">
+                  			<input type="text" class="form-control" ng-model="screen_detail[0].f_status_value" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_value">
+                  		</div>
+                  	</div>
+                  	<div class="form-group col-md-12 nopad-form">
+                  		<div class="form-group col-md-3 nopad-form">
+                  		<label>f_status_print_dept</label>
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_print_dept" type="radio"  ng-checked="screen_detail[0].f_status_print_dept==1"> Yes
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_print_dept" type="radio"  ng-checked="screen_detail[0].f_status_print_dept==0"> No
+                  		</div>
+                  		<div class="form-group col-md-3 nopad-form">
+                  			<input type="text" class="form-control" ng-model="screen_detail[0].f_status_print_dept_value" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_print_dept_value">
+                  		</div>
+                  	</div>
+                  	<div class="form-group col-md-12 nopad-form">
+                  		<div class="form-group col-md-3 nopad-form">
+                  		<label>f_status_rush</label>
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_rush" type="radio"  ng-checked="screen_detail[0].f_status_rush==1"> Yes
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_rush" type="radio"  ng-checked="screen_detail[0].f_status_rush==0"> No
+                  		</div>
+                  		<div class="form-group col-md-3 nopad-form">
+                  			<input type="text" class="form-control" ng-model="screen_detail[0].f_status_rush_value" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_rush_value">
+                  		</div>
+                  	</div>
+                  	<div class="form-group col-md-12 nopad-form">
+                  		<div class="form-group col-md-3 nopad-form">
+                  		<label>f_status_screen_dept</label>
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_screen_dept" type="radio"  ng-checked="screen_detail[0].f_status_screen_dept==1"> Yes
+                  		</div>
+                  		<div class="form-group col-md-1 nopad-form">
+                  			<input ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_screen_dept" type="radio"  ng-checked="screen_detail[0].f_status_screen_dept==0"> No
+                  		</div>
+                  		<div class="form-group col-md-3 nopad-form">
+                  			<input type="text" class="form-control" ng-model="screen_detail[0].f_status_screen_dept_value" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }"  name="f_status_screen_dept_value">
+                  		</div>
+                  	</div>
+
+
+
+                 </div>
+
+        </div>

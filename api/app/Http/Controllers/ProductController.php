@@ -34,8 +34,8 @@ class ProductController extends Controller {
 */
 
     public function index() {
- 
-        $result = $this->product->productList();
+ $post = Input::all();
+        $result = $this->product->productList($post);
        
        
         if (count($result) > 0) {

@@ -74,10 +74,10 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
 
 
                           $http.post('api/public/client/ListClient',company_list_data).success(function(Listdata) {
+                            $("#ajax_loader").hide();
                                        if(Listdata.data.success=='1')
                                        {
                                           $scope.clients = Listdata.data.records;
-                                          $("#ajax_loader").hide();
 
                                           var init;
 
@@ -127,8 +127,95 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
                                           };
                                           return init();
                                        }
+                                       $("#ajax_loader").hide();
                                   });
 
+
+
+    AuthService.AccessService('BC');
+    $scope.company_id = $rootScope.company_profile.company_id;
+    $scope.CurrentController=$state.current.controller;
+    var delete_params = {};
+    
+    $scope.deleteclient = function (comp_id) {
+        delete_params.id = comp_id;
+        var permission = confirm("Are you sure to delete this record ?");
+        if (permission == true) {
+            $http.post('api/public/client/DeleteClient',delete_params).success(function(result, status, headers, config) {
+
+                if(result.data.success=='1')
+                {
+                    $state.go('client.list');
+                    $("#comp_"+comp_id).remove();
+                    return false;
+                }  
+            });
+        }
+    } // DELETE COMPANY FINISH
+
+    $("#ajax_loader").show();
+
+    var company_list_data = {};
+    var condition_obj = {};
+    condition_obj['company_id'] =  $scope.company_id;
+    company_list_data.cond = angular.copy(condition_obj);
+
+
+    $http.post('api/public/client/ListClient',company_list_data).success(function(Listdata) {
+
+        if(Listdata.data.success=='1')
+        {
+            $scope.clients = Listdata.data.records;
+
+            var init;
+
+            $scope.searchKeywords = '';
+            $scope.filteredClients = [];
+            $scope.row = '';
+            $scope.select = function (page) {
+                var end, start;
+                start = (page - 1) * $scope.numPerPage;
+                end = start + $scope.numPerPage;
+                return $scope.currentPageClients = $scope.filteredClients.slice(start, end);
+            };
+            $scope.onFilterChange = function () {
+                $scope.select(1);
+                $scope.currentPage = 1;
+                return $scope.row = '';
+            };
+            $scope.onNumPerPageChange = function () {
+                $scope.select(1);
+                return $scope.currentPage = 1;
+            };
+            $scope.onOrderChange = function () {
+                $scope.select(1);
+                return $scope.currentPage = 1;
+            };
+            $scope.search = function () {
+                $scope.filteredClients = $filter('filter')($scope.clients, $scope.searchKeywords);
+                return $scope.onFilterChange();
+            };
+            $scope.order = function (rowName) {
+                if ($scope.row === rowName) {
+                return;
+            }
+            $scope.row = rowName;
+            $scope.filteredClients = $filter('orderBy')($scope.clients, rowName);
+            return $scope.onOrderChange();
+            };
+            $scope.numPerPageOpt = [10, 20, 50, 100];
+            $scope.numPerPage = 10;
+            $scope.currentPage = 1;
+            $scope.currentPageClients = [];
+
+            init = function () {
+                $scope.search();
+
+                return $scope.select($scope.currentPage);
+            };
+            return init();
+        }
+    });
 
 }]);
 app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$location','$state','$modal','$stateParams','AuthService','$log','$filter', function($scope,$rootScope,$sce,$http,$location,$state,$modal,$stateParams,AuthService,$log,dateWithFormat,$filter) {
@@ -167,8 +254,13 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                               } 
                               
                           });*/
-                           $http.get('api/public/admin/price').success(function(result, status, headers, config) 
-                          {
+
+                           var price_list_data = {};
+                           var condition_obj = {};
+                           condition_obj['company_id'] =  $scope.company_id;
+                           price_list_data.cond = angular.copy(condition_obj);
+
+                            $http.post('api/public/admin/price',price_list_data).success(function(result, status, headers, config) {
                               if(result.data.success == '1') 
                               {
                                   $scope.PriceGrid =result.data.records;

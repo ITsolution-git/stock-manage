@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Art;
 use DB;
+use File;
 
 use Request;
 
@@ -52,17 +53,16 @@ class ArtController extends Controller {
     		$art_position = $this->art->art_position($art_id,$company_id);
     		$art_orderline = $this->art->art_orderline($art_id,$company_id);
 			$artjobscreen_list = $this->art->artjobscreen_list($art_id,$company_id);  // SCREEN LISTING DATA
-			$graphic_size = $this->common->GetMicType('graphic_size');
-			$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id);
+			$artjobgroup_list = $this->art->artjobgroup_list($art_id,$company_id); // GROUP LIST DATA
 
 			$art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
-			$allcolors = $this->common->getAllColorData();
-			$wp_position = $this->common->GetMicType('position');
-			foreach ($allcolors as $key => $value) {
-				$allcolors[$key]->name = strtolower($value->name);
-			}
 
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'allcolors'=>$allcolors,'wp_position'=>$wp_position);
+			$graphic_size = $this->common->GetMicType('graphic_size');
+			//$allcolors = $this->common->getAllColorData();
+			$wp_position = $this->common->GetMicType('position');
+			
+
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'wp_position'=>$wp_position);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
@@ -78,12 +78,12 @@ class ArtController extends Controller {
     	if(!empty($company_id) && !empty($wp_id)	&& $company_id != 'undefined')
     	{
     		$art_workproof = $this->art->artworkproof_data($wp_id,$company_id);
+
     		if(count($art_workproof)>0)
     		{
+    			$art_workproof[0]->logo_image =  UPLOAD_PATH.'art/'.$art_workproof[0]->art_id.'/'.$art_workproof[0]->wp_image;
 	    		$art_id = $art_workproof[0]->art_id;
 	    		$get_artworkproof_placement = $this->art->get_artworkproof_placement($art_id,$company_id);
-
-	    		
 
 
 	    		$ret_array = array('art_workproof'=>$art_workproof,'get_artworkproof_placement'=>$get_artworkproof_placement);
@@ -144,11 +144,11 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
 
     }
-    public function ScreenListing($art_id,$company_id)
+    public function ScreenListing($company_id)
     {
     	if(!empty($company_id) && $company_id != 'undefined')
     	{
-    		$scren_listing = $this->art->ScreenListing($art_id,$company_id);
+    		$scren_listing = $this->art->ScreenListing($company_id);
     		if(count($scren_listing)>0)
     		{
     			$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $scren_listing);
@@ -170,9 +170,13 @@ class ArtController extends Controller {
     	//echo "<pre>"; print_r($post); echo "</pre>"; die;
     	if(!empty($post['wp_id']))
     	{
+    		
     		$val = array_filter($post['wp_placement']);
     		$post['wp_placement'] = implode(",", $val);
     		//echo "<pre>"; print_r($post['wp_placement']); echo "</pre>"; die;
+    		//echo FILEUPLOAD; die;
+    		$post['save_image'] = $this->Ret_imageUrl($post['wp_image'],'Artwork-logo','art/'.$post['art_id']);
+
     		$this->art->SaveArtWorkProof($post);
     		$response = array('success' => 1, 'message' => UPDATE_RECORD);
     	}
@@ -181,6 +185,31 @@ class ArtController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
+    }
+
+    public function Ret_imageUrl($image_array,$image_name,$path)
+    {
+    	$png_url='';
+    	if(!empty($image_array['base64'])){
+
+            	$split = explode( '/',$image_array['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url = $image_name."-".time().".".$type;
+				$path = FILEUPLOAD.$path;
+				
+				if (!file_exists($path)) {
+			            mkdir($path, 0777, true);
+			        } else {
+			         exec("chmod $path 0777");
+			           // chmod($dir_path, 0777);
+			        }
+				$path = $path."/".$png_url;		
+				$img = $image_array['base64'];
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+	    	}
+	    	return $png_url;
     }
     public function Client_art_screen($client_id,$company_id)
     {
@@ -221,22 +250,27 @@ class ArtController extends Controller {
     	{
     		$screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
     		$allcolors = $this->common->getAllColorData();
+    		$graphic_size = $this->common->GetMicType('graphic_size');
+    		$screen_garments = $this->art->screen_garments($screen_id,$company_id);
+    		
+    		$color_array= array();
     		foreach ($allcolors as $key => $value) 
 			{
-				$allcolors[$value->id]= $value->name;
+				$color_array[$value->id]= $value->name;
+				$allcolors[$key]->name = strtolower($value->name);
 			}
-
+			$screen_colorpopup[0]->logo_image = (!empty($screen_colorpopup[0]->screen_logo))? UPLOAD_PATH.'art/'.$screen_colorpopup[0]->art_id.'/'.$screen_colorpopup[0]->screen_logo:'';
     		//echo "<pre>"; print_r($allcolors); echo "</pre>"; die;
     		if(count($screen_colorpopup)>0)
 			{
 				foreach ($screen_colorpopup as $key => $value) 
 				{
-					$screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $allcolors[$value->color_name]:'';
-					$screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $allcolors[$value->thread_color]:'';
+					$screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $color_array[$value->color_name]:'';
+					$screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
 				}
 			}	
 
-    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup);
+    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'allcolors'=>$allcolors,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments);
     		
     		if(count($screen_colorpopup)>0)
     		{
@@ -247,6 +281,39 @@ class ArtController extends Controller {
     			$response = array('success' => 0, 'message' => NO_RECORDS,'records' => $ret_array);
     		}
 
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function create_screen()
+    {
+    	$post = Input::all();
+
+    	//echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
+    	if(!empty($post['data']['art_id']))
+    	{
+    		$this->art->create_screen($post['data']);
+    		$response = array('success' => 1, 'message' => INSERT_RECORD);
+    	}
+    	else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+
+    }
+    public function DeleteScreenRecord()
+    {
+    	$post = Input::all();
+
+    	//echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
+    	if(!empty($post['cond']['id']))
+    	{
+    		$this->art->DeleteScreenRecord($post['cond']);
+    		$response = array('success' => 1, 'message' => DELETE_RECORD);
     	}
     	else 
         {

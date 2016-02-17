@@ -15,9 +15,9 @@ class Price extends Model {
 * @return array $priceData
 */
 
-    public function priceList() {
+    public function priceList($post) {
         
-        $whereConditions = ['is_delete' => '1'];
+        $whereConditions = ['is_delete' => '1','company_id' => $post['cond']['company_id']];
         $listArray = ['id','name','status'];
 
         $priceData = DB::table('price_grid')
