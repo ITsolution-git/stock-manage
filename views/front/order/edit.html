@@ -31,7 +31,7 @@
                         <div class="col-md-2 m-b">
                             <label>Approval<em class="text-muted"></em></label>
                             <select  id="approval" ng-model="order.f_approval"  class="form-control" name="f_approval" ui-event="{ change : 'updateProductData($event,order.id,\'orders\',\'id\')' }">
-                                <option ng-selected="order.f_approval==misc_approval.id" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
+                                <option ng-selected="order.f_approval==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</option>
                             </select>
                         </div>
                         <div class=" col-md-2 m-b nopad-right">
