@@ -98,6 +98,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           			$scope.artjobgroup_list = RetArray.data.records.artjobgroup_list;
                           			$scope.art_worklist = RetArray.data.records.art_worklist;
                           			$scope.wp_position = RetArray.data.records.wp_position;
+                          			$scope.art_approval = RetArray.data.records.art_approval;
 
                               	if(RetArray.data.success=='2')
                           		{
@@ -430,11 +431,16 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 	                                	
 	                                	var data = {"status": "success", "message": "Image Uploaded Successfully"}
 	                                    notifyService.notify(data.status, data.message); 
+	                                     $scope.art_worklist_listing();
 	                                });
                                 }
-												
-
-                       
+					 
+					 $scope.art_worklist_listing = function (){
+							 $http.get('api/public/art/art_worklist_listing/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {							
+                    		 $scope.art_worklist = RetArray.data.art_worklist;
+                    		 $scope.art_position = RetArray.data.art_position;
+                    		  });           
+                     }
 
 }]);
 
@@ -450,7 +456,9 @@ app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$ro
                           $http.get('api/public/art/screen_colorpopup/'+$scope.screen_id+'/'+$scope.company_id).success(function(RetArray) {
 		                			$scope.screen_detail = RetArray.data.records.screen_colorpopup;
 		                			$scope.graphic_size_all=  RetArray.data.records.graphic_size;
-		                			$scope.screen_garments  = RetArray.data.records.screen_garments;
+		                			$scope.screen_arts  = RetArray.data.records.screen_arts;
+		                			$scope.art_approval = RetArray.data.records.art_approval;
+		                			$scope.screen_garments = RetArray.data.records.screen_garments;
                           		  });
                       	  }
                       	  $scope.UpdateField_field = function($event,id,table){
@@ -466,6 +474,10 @@ app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$ro
 	                              		var data = {"status": "success", "message": "Data Updated successfully"}
                                         notifyService.notify(data.status, data.message); 
                                 });
+                          }
+                          $scope.swipe_image = function (image)
+                          {
+                          	$scope.art_work_image = image;
                           }
 
 

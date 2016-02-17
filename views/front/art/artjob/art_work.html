@@ -26,7 +26,7 @@
 
         
                                     <!-- POSITION TAB FIELDS -->
-                                    <div class="positionTab_content" ng-repeat="(key,art_data) in art_worklist" id={{art_data.id}}>
+                                    <div class="positionTab_content" ng-repeat="(key,art_data) in art_worklist" id="{{art_data.id}}">
                                         <div class="col-md-10 nopad-form">                                        
                                             <div class="form-group col-md-1 nopad-form">
                                                 <input type="text" class="form-control" ng-model="art_data.size_group_id" name="size_group"  placeholder="Size Group" />
@@ -61,6 +61,18 @@
                                             </div>
                                              
 
+                                        </div>
+
+                                    </div>
+
+                                    <div class="positionTab_content col-md-3" title="Upload Mokup Image" style="cursor:pointer;">
+                                        <div class="form-group col-sm-8 m-b panel panel-default" onclick="document.getElementById('mokup').click(); return false" style="height:200px;">
+                                        <img  ng-src="{{art_position[0].mokup_display_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
+                                        </div>
+                                         <div class="form-group col-sm-3 m-b" style="height:200px;">
+                                            <input type='file' id="mokup" style="display:none;" data-ng-model="art_position[0].mokup_image" base-sixty-four-input>
+
+                                            <button ng-click="SaveImage(art_position[0].mokup_image,'mokup_image','art','art-mokup','art/{{art_id}}','art_id',art_id);" type="button" class="btn btn-info">Save</button>
                                         </div>
 
                                     </div>
