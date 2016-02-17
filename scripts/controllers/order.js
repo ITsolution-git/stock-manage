@@ -653,6 +653,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
         $http.post('api/public/order/insertPositions',order_data_insert).success(function(result) {
             get_position_detail(order_id,client_id,company_id);
+             $("#ajax_loader").hide();
         });
     }
     $scope.updatePosition = function(postArray,position_id)
@@ -1223,43 +1224,61 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
     $scope.saveButtonData=function(textdata)
     {
-         
+         var dropdown_value = $( "#approval option:selected" ).attr('slug');
+
         if(textdata == 'cp') {
             
-
+            
+              if(dropdown_value == 137 ) {
+                  
+                      var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
+                      notifyService.notify(data.status, data.message);
+                      return false;              
+                }
             var log = [];
                 angular.forEach($scope.orderPositionAll, function(value, key) {
                    
-                  this.push(value.placement_type);
+                   var placement_type_id = value.placement_type;
+                  this.push($scope.miscData.placement_type[placement_type_id].slug);
                 }, log);
 
                 if(log.indexOf('43') <= -1 ) {
-                     alert("Please select Screen Print in Placement Type to generate Contract Screen");
-                     return false;
+
+                      var data = {"status": "error", "message": "Please select Screen Print in Placement Type to generate Contract Screen."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
                                    
                 }
         } else if(textdata == 'ce') {
             
+              if(dropdown_value == 137 ) {
+                    var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
+                                   
+                }
 
             var log = [];
                 angular.forEach($scope.orderPositionAll, function(value, key) {
-                   
-                  this.push(value.placement_type);
+                  
+                    var placement_type_id = value.placement_type;
+                  this.push($scope.miscData.placement_type[placement_type_id].slug);
                 }, log);
 
+              
                 if(log.indexOf('45') <= -1 ) {
-                     alert("Please select Embroidery in Placement Type to generate Contract Embroidery");
-                     return false;
+                     var data = {"status": "error", "message": "Please select Embroidery in Placement Type to generate Contract Embroidery."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
                                    
                 }
         }else if(textdata == 'po') {
             
-            var dropdown_value = $( "#approval option:selected" ).text();
 
-
-                if(dropdown_value == 'Order-Estimate' ) {
-                     alert("Order is still an Estimate and POs can not be created.");
-                     return false;
+                if(dropdown_value == 137 ) {
+                    var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
                                    
                 }
         }
