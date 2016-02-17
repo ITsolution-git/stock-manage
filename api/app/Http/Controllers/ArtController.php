@@ -57,10 +57,10 @@ class ArtController extends Controller {
 
 			$art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
 
-			$graphic_size = $this->common->GetMicType('graphic_size');
+			$graphic_size = $this->common->GetMicType('graphic_size',$company_id);
 			//$allcolors = $this->common->getAllColorData();
-			$wp_position = $this->common->GetMicType('position');
-			$art_approval = $this->common->GetMicType('approval');
+			$wp_position = $this->common->GetMicType('position',$company_id);
+			$art_approval = $this->common->GetMicType('approval',$company_id);
 
     		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'wp_position'=>$wp_position,'art_approval'=>$art_approval);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
@@ -250,10 +250,10 @@ class ArtController extends Controller {
     	{
     		$screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
     		$allcolors = $this->common->getAllColorData();
-    		$graphic_size = $this->common->GetMicType('graphic_size');
+    		$graphic_size = $this->common->GetMicType('graphic_size',$company_id);
     		$screen_arts = $this->art->screen_arts($screen_id,$company_id);
     		$screen_garments = $this->art->screen_garments($screen_id,$company_id);
-    		$art_approval = $this->common->GetMicType('approval');
+    		$art_approval = $this->common->GetMicType('approval',$company_id);
     		$color_array= array();
     		foreach ($allcolors as $key => $value) 
 			{
@@ -269,9 +269,16 @@ class ArtController extends Controller {
 					$screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $color_array[$value->color_name]:'';
 					$screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
 				}
+			}
+			if(count($screen_garments)>0)
+			{
+				foreach ($screen_garments as $key => $value) 
+				{
+					$screen_garments[$key]->color_id = (!empty($value->color_id))? $color_array[$value->color_id]:'';
+				}
 			}	
 
-    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'allcolors'=>$allcolors,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments,'art_approval'=>$art_approval);
+    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'screen_arts'=>$screen_arts,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments,'art_approval'=>$art_approval,'allcolors'=>$allcolors);
     		
     		if(count($screen_colorpopup)>0)
     		{

@@ -116,9 +116,9 @@ class CommonController extends Controller {
     * Get Array of All Misc Data with argument Type
     * @return json data
     */
-     public function GetMicType($type)
+     public function GetMicType($type,$company_id)
      {
-        $result = $this->common->GetMicType($type);
+        $result = $this->common->GetMicType($type,$company_id);
         return $this->return_response($result);
      }
     

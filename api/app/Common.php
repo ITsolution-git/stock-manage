@@ -115,9 +115,9 @@ class Common extends Model {
         return $allData;
     }
 
-    public function GetMicType($type)
+    public function GetMicType($type,$company_id)
     {
-        $whereVendorConditions = ['status' => '1','is_delete' => '1','type'=>$type];
+        $whereVendorConditions = ['status' => '1','is_delete' => '1','type'=>$type,'company_id'=>$company_id];
         $misc_type = DB::table('misc_type')->where($whereVendorConditions)->where('value','!=','')->get();
         return $misc_type;
     }
