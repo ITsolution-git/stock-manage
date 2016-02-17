@@ -165,14 +165,17 @@ app.controller('PurchasePOCtrl', ['$scope','$rootScope','$sce',  '$http','$modal
                           }
                          
  						 $scope.removeNotes = function(index,id){
- 						 	  var Note_data = {};
-	                          Note_data.cond = {id:id};
-	                          Note_data.table = 'purchase_notes';
-                              $http.post('api/public/common/DeleteTableRecords',Note_data).success(function(Listdata) {
-                                		var data = {"status": "error", "message": "1 Note removed"}
-                                        notifyService.notify(data.status, data.message);
-                              });
-                              $scope.AllNotesData.splice(index,1);
+                            var permission = confirm("Are you sure to delete this record ?");
+                            if (permission == true) {
+   						 	              var Note_data = {};
+  	                          Note_data.cond = {id:id};
+  	                          Note_data.table = 'purchase_notes';
+                                $http.post('api/public/common/DeleteTableRecords',Note_data).success(function(Listdata) {
+                                  		var data = {"status": "error", "message": "1 Note removed"}
+                                          notifyService.notify(data.status, data.message);
+                                });
+                                $scope.AllNotesData.splice(index,1);
+                            }
                           }
 
                            $scope.ChangeOrderStatus = function(poline_id,value,purchase_id ){
