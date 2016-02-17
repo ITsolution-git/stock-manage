@@ -36,7 +36,7 @@ class Art extends Model {
 		$Misc_data = $this->AllMsiData();
 
 		$query = DB::table('art as art')
-				->select('op.*','art.art_id','art.notes','cl.client_company','or.job_name','or.id as order_id','or.grand_total','or.f_approval')
+				->select('op.*','art.art_id','art.notes','art.mokup_image','cl.client_company','or.job_name','or.id as order_id','or.grand_total','or.f_approval')
 				->join('orders as or','art.order_id','=','or.id')
 				->leftJoin('order_positions as op','op.order_id','=','or.id')
 				->leftJoin('client as cl','cl.client_id','=','or.client_id')
@@ -50,11 +50,12 @@ class Art extends Model {
 		{
 			foreach ($query as $key => $value) 
 			{
-				$query[$key]->f_approval = (!empty($value->f_approval))? $Misc_data[$value->f_approval]:'';
+				//$query[$key]->f_approval = (!empty($value->f_approval))? $Misc_data[$value->f_approval]:'';
 				$query[$key]->placement_type = (!empty($value->placement_type))? $Misc_data[$value->placement_type]:'';
 				$query[$key]->position_id = (!empty($value->position_id))? $Misc_data[$value->position_id] : '';
 				$query[$key]->dtg_size = (!empty($value->dtg_size))? $Misc_data[$value->dtg_size]:'';
 				$query[$key]->dtg_on =  (!empty($value->dtg_size))?$Misc_data[$value->dtg_on]:'';
+				$query[$key]->mokup_display_image =  (!empty($value->mokup_image))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->mokup_image:'';
 			}
 		}
 		return $query;
@@ -337,7 +338,7 @@ class Art extends Model {
     public function screen_colorpopup ($screen_id,$company_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select('ord.id as order_id','asc.*','asc.id as color_id','ass.*','ass.id as screen_id',DB::raw('SUM(ol.qnty) as total_qnty'),'art.art_id')
+				->select('ord.id as order_id','ord.f_approval','asc.*','asc.id as color_id','ass.*','ass.id as screen_id',DB::raw('SUM(ol.qnty) as total_qnty'),'art.art_id')
 				->join('art as art','art.art_id','=','ass.art_id')
 				->join('orders as ord','ord.id','=','art.order_id')
 				->join('order_orderlines as ol','ol.order_id','=','ord.id')

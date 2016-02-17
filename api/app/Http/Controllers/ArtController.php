@@ -60,9 +60,9 @@ class ArtController extends Controller {
 			$graphic_size = $this->common->GetMicType('graphic_size');
 			//$allcolors = $this->common->getAllColorData();
 			$wp_position = $this->common->GetMicType('position');
-			
+			$art_approval = $this->common->GetMicType('approval');
 
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'wp_position'=>$wp_position);
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'wp_position'=>$wp_position,'art_approval'=>$art_approval);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
@@ -252,7 +252,7 @@ class ArtController extends Controller {
     		$allcolors = $this->common->getAllColorData();
     		$graphic_size = $this->common->GetMicType('graphic_size');
     		$screen_garments = $this->art->screen_garments($screen_id,$company_id);
-    		
+    		$art_approval = $this->common->GetMicType('approval');
     		$color_array= array();
     		foreach ($allcolors as $key => $value) 
 			{
@@ -270,7 +270,7 @@ class ArtController extends Controller {
 				}
 			}	
 
-    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'allcolors'=>$allcolors,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments);
+    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'allcolors'=>$allcolors,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments,'art_approval'=>$art_approval);
     		
     		if(count($screen_colorpopup)>0)
     		{
@@ -318,6 +318,21 @@ class ArtController extends Controller {
     	else 
         {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function art_worklist_listing($art_id,$company_id)
+    {
+    	if(!empty($company_id) && !empty($art_id)	&& $company_id != 'undefined')
+    	{
+    		$art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
+    		$art_position = $this->art->art_position($art_id,$company_id);
+
+    		$response = array('success' => 1, 'message' => GET_RECORDS,'art_worklist' => $art_worklist,'art_position'=>$art_position);
+    	}
+    	else 
+        {
+            $response = array('success' => 2, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
     }
