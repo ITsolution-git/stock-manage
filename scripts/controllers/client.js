@@ -531,6 +531,19 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                 });
                             }
                           };
+
+                           $scope.removeDestAddress = function(index,id){
+                             
+                             var delete_data = {};
+                                  delete_data.cond = {id :id };
+                                  delete_data.table ='client_distaddress';
+
+                                  $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) {
+                                   
+                                  });
+
+                              $scope.AllDistAddress.splice(index,1);
+                          }
                        
 
 
