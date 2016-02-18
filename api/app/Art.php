@@ -53,7 +53,7 @@ class Art extends Model {
 				$query[$key]->placement_type = (!empty($value->placement_type))? $Misc_data[$value->placement_type]:'';
 				$query[$key]->position_id = (!empty($value->position_id))? $Misc_data[$value->position_id] : '';
 				$query[$key]->dtg_size = (!empty($value->dtg_size))? $Misc_data[$value->dtg_size]:'';
-				$query[$key]->dtg_on =  (!empty($value->dtg_size))?$Misc_data[$value->dtg_on]:'';
+				$query[$key]->dtg_on =  (!empty($value->dtg_on))?$Misc_data[$value->dtg_on]:'';
 				$query[$key]->mokup_display_image =  (!empty($value->mokup_image))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->mokup_image:'';
 			}
 		}
