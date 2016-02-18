@@ -123,7 +123,7 @@ Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GE
 Route::post('common/UpdateTableRecords', 'CommonController@UpdateTableRecords'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('common/DeleteTableRecords', 'CommonController@DeleteTableRecords'); // DELETE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::get('common/getBrandCo', 'CommonController@getBrandCo');
-
+Route::post('common/updatedate', 'CommonController@UpdateDate'); // ONLY UPDATE THE IMAGE IN MYSQL DATE FORMAT.
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');

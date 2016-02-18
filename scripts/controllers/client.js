@@ -821,7 +821,17 @@ app.controller('clientEditCtrl', ['$scope','$rootScope','$sce','$http','$locatio
                                       });
                                       $scope.alldocumentnotes.splice(index,1);
                                   }
-                              
+                            $scope.UpdateDate=function($event)
+                            {
+                              var Array_data = {};
+                              Array_data.table ='client_distaddress'
+                              Array_data.data =postArray
+                              Array_data.cond ={id:id}
+
+                              $http.post('api/public/common/updatedate',Array_data).success(function(result) {
+                                  
+                                });
+                            }
                               
 
 

@@ -1,32 +1,32 @@
 <div class="orderTab_scroll" class="col-md-12 nopad-form">
                                 <!-- POSITION TAB TITLE -->
                                         <div class="col-md-3 nopad-form">                                        
-                                            <div class="form-group col-md-4 nopad-left">
+                                            <div class="form-group col-md-4 nopad-right">
                                                 <label>Screen Sets</label>
                                             </div>
-                                            <div class="form-group col-md-4 nopad-left">
+                                            <div class="form-group col-md-4 nopad-right">
                                                 <label>Graphic size</label>
                                             </div>
 
-                                            <div class="form-group col-md-4 nopad-left">
+                                            <div class="form-group col-md-4 nopad-right">
                                                 <label>Screen Count</label>                          
                                             </div>
                                         </div>
-                                         <div class="col-md-4 nopad-left">
-                                            <div class="form-group col-md-3 nopad-left">
+                                         <div class="col-md-6 nopad-left">
+                                            <div class="form-group col-md-3 nopad-right">
                                                 <label>Art Dept. Complete</label>
                                             </div>
-                                            <div class="form-group col-md-3 nopad-left">
+                                            <div class="form-group col-md-3 nopad-right">
                                               <label>Screen Created</label>
                                             </div>
-                                            <div class="form-group col-md-3 nopad-left">
+                                            <div class="form-group col-md-3 nopad-right">
                                               <label>Date Created</label>
                                             </div>
-                                             <div class="form-group col-md-3 nopad-left">
+                                             <div class="form-group col-md-3 nopad-right">
                                               <label>Position</label>
                                             </div>
                                         </div>
-                                            <div class="form-group col-md-2 nopad-left">
+                                            <div class="form-group col-md-3 nopad-left">
                                                 <div class="form-group col-md-8 nopad-left artworkButton">
                                                     <button type="button" class="btn btn-default addButton c-dgreen" ng-click="create_screen('artjob_screensets')">
                                                       <i class="fa fa-plus"></i> 
@@ -37,7 +37,7 @@
                                         
         
                                     <!-- POSITION TAB FIELDS -->
-                                    <div class="positionTab_content" ng-repeat="(key,screen_data) in artjobscreen_list" id={{screen_data.id}}>
+                                    <div class="col-md-12" ng-repeat="(key,screen_data) in artjobscreen_list" id={{screen_data.id}}>
                                         <div class="col-md-3 nopad-form">                                        
                                             <div class="form-group col-md-4 nopad-left">
                                                 <input type="text" class="form-control" ng-model="screen_data.screen_set" name="screen_set" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" placeholder="Screen sets" />
@@ -52,7 +52,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 nopad-left">
+                                        <div class="col-md-6 nopad-left">
                                             <div class="form-group col-md-3 nopad-form">
                                                 <select ng-model="order_position.art_dept_complete" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" aria-required="false" aria-invalid="false" name="art_dept_complete" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" style="">
                                                     <option ng-selected="{{screen_data.art_dept_complete==1}}" value="1">Yes</option>
@@ -65,11 +65,18 @@
                                                     <option ng-selected="{{screen_data.screens_created==0}}" value="0">No</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group col-md-3 nopad-form">
-                                                <input    type="text" class="form-control"   ng-model="screen_data.screen_date" name="screen_date" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" />
-                                               
+                                            <div class="form-group col-md-3 nopad-form" ng-controller="DatepickerDemoCtrl">
+
+                                                <div class="form-group col-md-10 nopad-form">
+                                                    <input    type="text" class="form-control"   ng-model="screen_data.screen_date" name="screen_date" ui-event="{ blur : 'UpdateDate($event,\'artjob_screensets\',\'id\',screen_data.id)' }"  datepicker-popup="MM/dd/yyyy" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-form">
+                                                        <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        </span>
+                                                   </div>
                                             </div>
-                                            <div class="form-group col-md-3 nopad-form">
+                                            <div class="form-group col-md-3 nopad-right">
                                                 <!-- <input type="text" class="form-control"  ng-model="screen_data.positions" placeholder="Position" /> -->
                                                  <select class="form-control" ng-model="screen_data.positions" name="positions" ui-event="{ blur : 'UpdateField_field($event,screen_data.id,\'artjob_screensets\')' }" >
                                                     <option value="">Select Position</option>
@@ -80,7 +87,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 nopad-left">
+                                        <div class="col-md-3 nopad-left">
                                             <div class="col-md-2 sgpDetails btnCircle">
                                                 <button title="Add color" ng-click="color_popup(screen_data.id)" type="button" class="btn btn-default addButton c-dgreen" >
                                                           <i class="fa fa-edit"></i> 
@@ -91,8 +98,8 @@
                                                 <i class="fa fa-arrow-circle-right"></i>
                                               </a>
                                             </div>
-                                            <div class="col-md-3 sgpDetails btnCircle" >
-                                             <button title="Delete" ng-click="remove_screen(screen_data.id);" class="btn btn-xs btn-danger addButton form-control c-dgreen" tabindex="0">X</button>
+                                            <div class="col-md-1 nopad-form sgpDetails btnCircle" >
+                                             <button title="Delete" ng-click="remove_screen(screen_data.id);" class="btn btn-xs btn-danger addButton" tabindex="0">X</button>
                                             </div>
                             
                                         </div>

@@ -349,4 +349,18 @@ class CommonController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+    public function UpdateDate()
+    {
+        $post = Input::all();
+        if(!empty($post['table']) && !empty($post['field']) && !empty($post['date']) && !empty($post['cond']) && !empty($post['value']))
+        {
+            $return_msg = $this->common->UpdateDate($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD,'records'=>$return_msg );
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
 }

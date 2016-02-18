@@ -55,17 +55,27 @@
                             <option ng-selected="{{screen_detail[0].art_dept_complete==0}}" value="0">No</option>
                         </select>
                    </div>
-                   <div class="form-group col-md-4 nopad-left">
+                   <div class="form-group col-md-4 nopad-left" ng-controller="DatepickerDemoCtrl">
+                        <label>Schedule Date</label>
+                         <div class="form-group col-md-10 nopad-form">
+                              <input    type="text" class="form-control"   ng-model="screen_detail[0].schedule_date" name="schedule_date" ui-event="{ blur : 'UpdateDate($event,\'artjob_screensets\',\'id\',screen_detail[0].screen_id)' }"  datepicker-popup="MM/dd/yyyy" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                          </div>
+                          <div class="form-group col-md-2 nopad-form">
+                                  <span class="input-group-btn">
+                                  <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                             </div>
+
+
+                   </div>
+                   <div class="form-group col-md-8 nopad-left">
                         <label>Reuse Screen for Multiple group- color change </label>
                         <select ng-model="order_position.screen_reuse" class="form-control ng-pristine ng-valid ng-valid-required ng-touched" aria-required="false" aria-invalid="false" name="screen_reuse"  ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" style="">
                             <option ng-selected="{{screen_detail[0].screen_reuse==1}}" value="1">Yes</option>
                             <option ng-selected="{{screen_detail[0].screen_reuse==0}}" value="0">No</option>
                         </select>
                    </div>
-                   <div class="form-group col-md-4 nopad-left">
-                        <label>Schedule Date</label>
-                        <input type="text" class="form-control" name="schedule_date" ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].screen_id,\'artjob_screensets\')' }" ng-model="screen_detail[0].schedule_date" >
-                   </div>
+                   
 
                 </div>
 
