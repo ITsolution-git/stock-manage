@@ -557,4 +557,19 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         document.body.appendChild(form);
         form.submit();
     }
+
+      $scope.UpdateDate=function($event,table,cond,value)
+                    {
+                      var Array_data = {};
+                      Array_data.table =table;
+                      Array_data.field =$event.target.name;
+                      Array_data.date = $event.target.value
+                      Array_data.cond =cond
+                      Array_data.value =value;
+
+                      $http.post('api/public/common/updatedate',Array_data).success(function(result) {
+                          
+                        });
+                    }
+                    
 }]);
