@@ -84,9 +84,16 @@ class CommonController extends Controller {
 * @return json data
 */
 
-    public function getAllVendors()
+    public function getAllVendors($company_id)
     {
-        $result = $this->common->getAllVendors();
+        if(!empty($company_id))
+        {
+            $result = $this->common->getAllVendors($company_id);
+        }
+        else
+        {
+            $result = array();
+        }
         return $this->return_response($result);
      }
 
