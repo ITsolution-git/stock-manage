@@ -112,7 +112,7 @@ Route::get('common/getAllVendors', 'CommonController@getAllVendors');
 Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::post('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
-Route::get('common/getStaffList', 'CommonController@getStaffList');
+Route::get('common/getStaffList/{id}', 'CommonController@getStaffList');
 Route::post('common/getAllPlacementData', 'CommonController@getAllPlacementData');
 Route::post('common/getMiscData', 'CommonController@getMiscData');
 Route::get('common/getAllColorData', 'CommonController@getAllColorData');
