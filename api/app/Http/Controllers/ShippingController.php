@@ -305,7 +305,7 @@ class ShippingController extends Controller {
             $total_spoil += $row->spoil;
            
         }
-       
+      
        /*
         foreach ($shipping_boxes as $row) {
 
