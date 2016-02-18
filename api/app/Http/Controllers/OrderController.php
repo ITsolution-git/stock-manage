@@ -155,8 +155,8 @@ class OrderController extends Controller {
 
         $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
 
-        $vendors = $this->common->getAllVendors();
-        $staff = $this->common->getStaffList();
+        $vendors = $this->common->getAllVendors($data['company_id']);
+        $staff = $this->common->getStaffList($data['company_id']);
         $brandCo = $this->common->getBrandCordinator($data['company_id']);
 
         if (count($result) > 0) {

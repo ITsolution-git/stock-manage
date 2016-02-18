@@ -121,16 +121,16 @@ class Common extends Model {
         $misc_type = DB::table('misc_type')->where($whereVendorConditions)->where('value','!=','')->get();
         return $misc_type;
     }
-    public function getStaffList()
+    public function getStaffList($company_id)
     {
 
 
-        $whereConditions = ['misc.status' => '1','misc.is_delete' => '1','staff.is_delete' => '1','misc.type' => 'staff_type'];
+        $whereConditions = ['misc.status' => '1','misc.is_delete' => '1','staff.is_delete' => '1','misc.type' => 'staff_type','staff.company_id' => $company_id];
         $listArray = ['staff.id','staff.first_name','staff.last_name'];
 
         $staffData = DB::table('staff as staff')
-                         ->Join('misc_type as misc', 'staff.staff_type', '=', 'misc.id')
-                          ->Join('users as users', 'users.id', '=', 'staff.user_id')
+                         ->Join('misc_type as misc','staff.staff_type','=',DB::raw("misc.id AND misc.company_id = ".$company_id))
+                         ->Join('users as users', 'users.id', '=', 'staff.user_id')
                          ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
                          ->select($listArray)
                          ->where($whereConditions)

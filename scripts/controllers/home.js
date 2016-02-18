@@ -105,6 +105,7 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
         companyData.cond ={status:1,is_delete:1,company_id:company_id}
         
         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
+
             
             if(result.data.success == '1') 
             {
@@ -116,8 +117,8 @@ app.controller('homeCtrl', ['$scope','$rootScope','$http','$location','$state','
             }
         });
 
-
-        $http.get('api/public/common/getStaffList').success(function(result, status, headers, config) {
+ $http.get('api/public/common/getStaffList/'+company_id).success(function(result) {
+      
               $scope.staffList = result.data.records;
         });
 }]);
