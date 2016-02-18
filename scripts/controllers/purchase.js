@@ -301,6 +301,20 @@ app.controller('PurchasePOCtrl', ['$scope','$rootScope','$sce',  '$http','$modal
                                         notifyService.notify(data.status, data.message);
                                 });
                           }
+                        $scope.UpdateDate=function($event,table,cond,value)
+                        {
+                          var Array_data = {};
+                          Array_data.table =table;
+                          Array_data.field =$event.target.name;
+                          Array_data.date = $event.target.value
+                          Array_data.cond =cond
+                          Array_data.value =value;
+
+                          $http.post('api/public/common/updatedate',Array_data).success(function(result) {
+                               var data = {"status": "success", "message": "Data Updated successfully"}
+                               notifyService.notify(data.status, data.message); 
+                            });
+                        }
                           
 }]);
 app.controller('PurchaseSGCtrl', ['$scope',  '$http','$state','$stateParams', 'AuthService',function($scope,$http,$state,$stateParams,AuthService) {
@@ -413,6 +427,20 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                                   		//getNotesDetail(po_id);
                                 });
                           }
+                        $scope.UpdateDate=function($event,table,cond,value)
+                        {
+                          var Array_data = {};
+                          Array_data.table =table;
+                          Array_data.field =$event.target.name;
+                          Array_data.date = $event.target.value
+                          Array_data.cond =cond
+                          Array_data.value =value;
+
+                          $http.post('api/public/common/updatedate',Array_data).success(function(result) {
+                               var data = {"status": "success", "message": "Data Updated successfully"}
+                               notifyService.notify(data.status, data.message); 
+                            });
+                        }
 
 
 }]);
