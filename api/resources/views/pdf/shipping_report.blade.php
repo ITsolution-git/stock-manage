@@ -95,8 +95,16 @@
                <td align="left" valign="top" width="100%" style="border:1px solid #000000; line-height:19px;">SKU: {{$colordata['desc']}} : COLOR: {{$color}}:
                <?php $sum = 0; ?>
                 @foreach ($colordata as $size => $value_data)
+               <?php if($size == 'desc'){
+                $size = '';
+               
+               }
+               ?>
               <?php $sum += $value_data;?>
-             [{{$size}}]:{{$value_data}} 
+
+                <?php if($size != ''){?>
+               [{{$size}}]:{{$value_data}} 
+               <?php }?>
                 @endforeach 
                 :TOTAL QNTY:<?php echo $sum;?>    
               </td> 
