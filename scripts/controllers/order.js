@@ -1226,12 +1226,20 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     {
          var dropdown_value = $( "#approval option:selected" ).attr('slug');
 
+         if(dropdown_value == undefined) {
+
+             var data = {"status": "error", "message": "Please select Approval first."}
+                      notifyService.notify(data.status, data.message);
+                      return false; 
+         }
+
         if(textdata == 'cp') {
-            
+           
             if($scope.orderPositionAll.length > 0) {
-        
-            
-              if(dropdown_value == 137 ) {
+               
+             
+
+              if(dropdown_value == 137) {
                   
                       var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
                       notifyService.notify(data.status, data.message);
@@ -1241,10 +1249,14 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 angular.forEach($scope.orderPositionAll, function(value, key) {
                    
                    var placement_type_id = value.placement_type;
-                  this.push($scope.miscData.placement_type[placement_type_id].slug);
+                   if(placement_type_id != 0) {
+                    this.push($scope.miscData.placement_type[placement_type_id].slug);
+                   }
+                  
                 }, log);
-
-                if(log.indexOf('43') <= -1 ) {
+                
+                 
+                if(log.indexOf('43') <= -1 && log.length == 0) {
 
                       var data = {"status": "error", "message": "Please select Screen Print in Placement Type to generate Contract Screen."}
                       notifyService.notify(data.status, data.message);
@@ -1260,7 +1272,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
             if($scope.orderPositionAll.length > 0) {
             
-              if(dropdown_value == 137 ) {
+              if(dropdown_value == 137) {
                     var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
                       notifyService.notify(data.status, data.message);
                       return false;  
@@ -1271,11 +1283,14 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 angular.forEach($scope.orderPositionAll, function(value, key) {
                   
                     var placement_type_id = value.placement_type;
-                  this.push($scope.miscData.placement_type[placement_type_id].slug);
+
+                    if(placement_type_id != 0) {
+                     this.push($scope.miscData.placement_type[placement_type_id].slug);
+                    }
                 }, log);
 
               
-                if(log.indexOf('45') <= -1 ) {
+                if(log.indexOf('45') <= -1 && log.length == 0) {
                      var data = {"status": "error", "message": "Please select Embroidery in Placement Type to generate Contract Embroidery."}
                       notifyService.notify(data.status, data.message);
                       return false;  
@@ -1288,11 +1303,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                       return false; 
             }
         }else if(textdata == 'po') {
-          
+           
             if($scope.orderLineAll.length > 0) {
             
 
-                if(dropdown_value == 137 ) {
+                if(dropdown_value == 137) {
                     var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
                       notifyService.notify(data.status, data.message);
                       return false;  
