@@ -228,6 +228,7 @@ class Purchase extends Model {
 				  ->leftJoin('vendors as v','v.id','=','po.vendor_id')
 				  ->select('v.name_company','ord.job_name','po.po_id','ord.id as order_id','op.qnty','op.color_stitch_count','op.id as position_id','pol.*')
 				  ->where('po.po_id','=',$po_id)
+				  ->where('ord.company_id','=',$company_id)
 				  ->get();
 				 // echo "<pre>"; print_r($result); die;
 		return $result;

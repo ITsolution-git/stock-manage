@@ -80,7 +80,7 @@ class PurchaseController extends Controller {
 		    	$received_total = $this->purchase->getreceivedTotal($po_id);
 		    	$received_line = $this->purchase->GetPoReceived($po_id,$company_id);
 
-                $list_vendors = $this->common->getAllVendors();
+                $list_vendors = $this->common->getAllVendors($company_id);
 
     			$order_id = $po[0]->order_id;
 	    		$result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
@@ -199,13 +199,14 @@ class PurchaseController extends Controller {
     	{
     		$this->purchase->Update_Ordertotal($po_id);
     		$screen_data = $this->purchase->GetPodata($po_id,$company_id);
-    		$screen_line = $this->purchase->GetScreendata($po_id,$company_id);
-    		$order_total = $this->purchase->getOrdarTotal($po_id);
+
 
     		//echo "<pre>"; print_r($screen_data); echo "</pre>"; die;
     		if(count($screen_data)>0)
     		{
-                $list_vendors = $this->common->getAllVendors();
+                $screen_line = $this->purchase->GetScreendata($po_id,$company_id);
+                $order_total = $this->purchase->getOrdarTotal($po_id);
+                $list_vendors = $this->common->getAllVendors($company_id);
     			$order_id = $screen_data[0]->order_id;
                 $order_line_data = $this->purchase->GetOrderLineData($order_id);
 

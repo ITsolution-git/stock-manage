@@ -54,9 +54,9 @@ class Common extends Model {
 * @return array $staffRoles
 */
 
-    public function getAllVendors() {
+    public function getAllVendors($company_id) {
         
-        $whereVendorConditions = ['status' => '1','is_delete' => '1'];
+        $whereVendorConditions = ['status' => '1','is_delete' => '1','company_id'=>$company_id];
         $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
         return $vendorData;
     }
