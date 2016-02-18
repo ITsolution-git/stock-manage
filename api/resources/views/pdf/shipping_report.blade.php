@@ -90,13 +90,9 @@
       <td align="left" valign="top">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           
-            
-
-
                @foreach ($color_all_data as $color => $colordata)
                <tr>
-               <td align="left" valign="top" width="100%" style="border:1px solid #000000; line-height:19px;">
-               COLOR: {{$color}}:
+               <td align="left" valign="top" width="100%" style="border:1px solid #000000; line-height:19px;">SKU: {{$colordata['desc']}} : COLOR: {{$color}}:
                <?php $sum = 0; ?>
                 @foreach ($colordata as $size => $value_data)
               <?php $sum += $value_data;?>
