@@ -312,9 +312,27 @@
                                                 <option ng-selected="shipping_type_id==type.id" ng-repeat="type in shipping_type" value={{type.id}}>{{type.name}}</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-4 nopad-left smallPad">
-                                            <input type="text" class="form-control" ng-model="shipping.date_shipped" name="date_shipped" ui-event="{ change : 'updateShippingAll($event,shipping.shipping_id,\'shipping\',\'id\')' }"/>
-                                        </div>
+
+
+                                         <div class="form-group col-md-4 nopad-left smallPad" ng-controller="DatepickerDemoCtrl">
+
+                                                <div class="form-group col-md-8 nopad-form">
+                                                    <input    type="text" class="form-control"   ng-model="shipping.date_shipped" name="date_shipped" ui-event="{ blur : 'UpdateDate($event,\'orders\',\'id\',shipping.order_id)' }"  datepicker-popup="MM/dd/yyyy" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                                                </div>
+                                                <div class="form-group col-md-2 nopad-form">
+                                                        <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                        </span>
+                                                   </div>
+                                            </div>
+
+
+
+
+
+
+
+
                                         <div class="col-md-4 nopad-form">
                                             <input type="text" class="form-control" ng-model="shipping.fully_shipped" onfocus="this.blur()"/>
                                         </div>

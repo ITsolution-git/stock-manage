@@ -294,16 +294,18 @@ class ShippingController extends Controller {
 
          $color_all_data = array();
         foreach ($shipping_boxes as $row) {
-         
+
             $color_all_data[$row->color_name][$row->size] = $row->size;
+            $color_all_data[$row->color_name]['desc'] = $row->product_desc;
             $color_all_data[$row->color_name][$row->size] = $row->qnty;
 
-             $total_qnty += $row->qnty;
+            $total_qnty += $row->qnty;
             $actual_total += $row->actual;
             $total_md += $row->md;
             $total_spoil += $row->spoil;
            
         }
+       
        /*
         foreach ($shipping_boxes as $row) {
 
