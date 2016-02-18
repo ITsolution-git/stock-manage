@@ -2,8 +2,7 @@
 			GENERAL STYLES 
 ==========================================*/
 .nopad-form {
-	padding-left:0;
-	padding-right:0;
+	padding: 1px ;
 }
 .nopad-left {
 	padding-left:0 !important;
@@ -23,8 +22,19 @@
 .t-a-c {
 	text-align: center;
 }
+.tab-content {
+	/*overflow: hidden;*/
+	height: auto;
+	clear: both;
+	float: left !important;
+	width: 100% !important;
+}
 .tab-content .active {
-	overflow: hidden;
+	/*overflow: hidden;*/
+	height: auto;
+	clear: both;
+	float: left !important;
+	width: 100% !important;
 }
 .nmb {
 	margin-bottom: 0;
@@ -86,6 +96,9 @@ textarea {
 }
 .label-bold {
 	font-weight: bold;
+}
+ul.dropdown-menu{	
+	width:290px !important;
 }
 /*=========================
 	Background Video
@@ -661,6 +674,7 @@ a.btnEditOrder:hover {
 .orderTab_scroll .positionTab_content {
 	clear: both;
 	overflow: hidden;	
+	
 }
 .orderTab_scroll .positionTab_content .form-group label {
 	font-size: 13px;

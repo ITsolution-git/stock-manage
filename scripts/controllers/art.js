@@ -84,6 +84,8 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           $scope.CurrentController=$state.current.controller;
                           $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.art_id = $stateParams.id;
+                          
+
                           Get_artDetail();
                           function Get_artDetail()
                           {
@@ -459,6 +461,21 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           	
                           }
 
+
+                    $scope.UpdateDate=function($event,table,cond,value)
+                    {
+                      var Array_data = {};
+                      Array_data.table =table;
+                      Array_data.field =$event.target.name;
+                      Array_data.date = $event.target.value
+                      Array_data.cond =cond
+                      Array_data.value =value;
+
+                      $http.post('api/public/common/updatedate',Array_data).success(function(result) {
+                          
+                        });
+                    }
+
 }]);
 
 app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$rootScope', 'AuthService','notifyService','$modal',function($scope,$http,$state,$stateParams,$rootScope,AuthService,notifyService,$modal) {
@@ -496,7 +513,19 @@ app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$ro
                           {
                           	$scope.art_work_image = image;
                           }
+                          $scope.UpdateDate=function($event,table,cond,value)
+		                    {
+		                      var Array_data = {};
+		                      Array_data.table =table;
+		                      Array_data.field =$event.target.name;
+		                      Array_data.date = $event.target.value
+		                      Array_data.cond =cond
+		                      Array_data.value =value;
 
+		                      $http.post('api/public/common/updatedate',Array_data).success(function(result) {
+		                          
+		                        });
+		                    }
 
 
 	}]);

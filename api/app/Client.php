@@ -181,7 +181,7 @@ class Client extends Model {
 
    public function SaveSalesDetails($post,$id)
    {
-   		$date = date('Y-m-d',strtotime($post['anniversarydate']));
+   		$post['anniversarydate'] = date('Y-m-d',strtotime($post['anniversarydate']));
    		$result = DB::table('client')
    						->where('client_id','=',$id)
    						->update($post);

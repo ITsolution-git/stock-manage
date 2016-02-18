@@ -192,7 +192,7 @@ class Common extends Model {
     }
     public function UpdateTableRecords($table,$cond,$data)
     {
-         $result = DB::table($table);
+        $result = DB::table($table);
         if(count($cond)>0)
         {
             foreach ($cond as $key => $value) 
@@ -342,6 +342,12 @@ class Common extends Model {
                 $query = DB::table($table)->where($cond,'=',$value)->update(array($field=>$png_url));
             }
             return $png_url;
+    }
+    public function UpdateDate($post)
+    {
+        $date = date('Y-m-d',strtotime($post['date']));
+        $result = DB::table($post['table'])->where($post['cond'],'=',$post['value'])->update(array($post['field']=>$date));
+        return $result;
     }
 
 }

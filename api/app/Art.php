@@ -354,7 +354,7 @@ class Art extends Model {
     }
     public function create_screen($post)
     {
-    	$result = DB::table('artjob_screensets')->insert(array("art_id"=>$post['art_id']));
+    	$result = DB::table('artjob_screensets')->insert(array("art_id"=>$post['art_id'],'screen_date'=>date('Y-m-d')));
     	$screen_id = DB::getPdo()->lastInsertId();
 
     	$result = DB::table('artjob_screencolors')->insert(array("screen_id"=>$screen_id));
