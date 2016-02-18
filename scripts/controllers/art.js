@@ -99,6 +99,7 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                           			$scope.art_worklist = RetArray.data.records.art_worklist;
                           			$scope.wp_position = RetArray.data.records.wp_position;
                           			$scope.art_approval = RetArray.data.records.art_approval;
+                          			$scope.mokup_display_image = $scope.art_position[0].mokup_display_image;
 
                               	if(RetArray.data.success=='2')
                           		{
@@ -439,8 +440,24 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 							 $http.get('api/public/art/art_worklist_listing/'+$scope.art_id+'/'+$scope.company_id).success(function(RetArray) {							
                     		 $scope.art_worklist = RetArray.data.art_worklist;
                     		 $scope.art_position = RetArray.data.art_position;
+                    		 $scope.mokup_display_image = $scope.art_position[0].mokup_display_image;
                     		  });           
                      }
+                      $scope.swipe_image = function (image)
+                          {
+                          	$scope.art_work_image = image;
+                          	var modalInstanceEdit = $modal.open({
+			                              templateUrl: 'views/front/art/artjob/art_image.html',
+			                              scope : $scope,
+			                              size : 'md',
+			                             // controller:'ArtJobCtrl'
+			                            });
+			                            modalInstanceEdit.result.then(function (selectedItem) {
+			                              $scope.selected = selectedItem;
+			                            }, function () {
+			                            });
+                          	
+                          }
 
 }]);
 

@@ -13,11 +13,16 @@
                                              <div class="form-group col-md-1 nopad-form">
                                                 <label>Position</label>                          
                                             </div>
-                                             <div class="form-group col-md-5 nopad-right">
+                                             <div class="form-group col-md-4 nopad-right">
                                                 <label>Placement</label>                          
                                             </div>
-                                             <div class="form-group col-md-1 nopad-form">
-                                                <label>Type</label>                          
+                                            <div class="form-group col-md-2 nopad-form">
+                                                <div class="form-group col-md-3 nopad-form">
+                                                    <label>Image</label>                          
+                                                </div>
+                                                 <div class="form-group col-md-9 nopad-form">
+                                                    <label>Type</label>                          
+                                                </div>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
                                                 <label>Screenset</label>                          
@@ -40,11 +45,20 @@
                                             <div class="form-group col-md-1 nopad-form">
                                                 <input type="text" class="form-control" ng-model="art_data.wp_position" name="group_qnty"  placeholder="Poition" />
                                             </div>
-                                            <div class="form-group col-md-5 nopad-right">
+                                            <div class="form-group col-md-4 nopad-right">
                                                {{art_data.placement_name}}
                                             </div>
-                                            <div class="form-group col-md-1 nopad-form">
-                                                <input type="text" class="form-control" value="Art Work Screen" name="type" placeholder="Type" />
+                                            <div class="form-group col-md-2 nopad-form">
+                                                <div class="form-group col-md-3 nopad-form">
+                                                    <div class="form-group col-md-12 nopad-form">
+                                                        <button title="Edit" ng-click="swipe_image(art_data.wp_image_display)" type="button" class="btn btn-default addButton c-dgreen" >
+                                                            <i class="glyphicon glyphicon-search"></i> 
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-9 nopad-form">
+                                                    <input type="text" class="form-control" value="Art Work Screen" name="type" placeholder="Type" />
+                                                </div>
                                             </div>
                                             <div class="form-group col-md-1 nopad-form">
                                                 <input type="text" class="form-control" ng-model="art_data.screen_set" name="screen_set"  placeholder="Screen Set" />
@@ -67,7 +81,7 @@
 
                                     <div class="positionTab_content col-md-3" title="Upload Mokup Image" style="cursor:pointer;">
                                         <div class="form-group col-sm-8 m-b panel panel-default" onclick="document.getElementById('mokup').click(); return false" style="height:200px;">
-                                        <img  ng-src="{{art_position[0].mokup_display_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
+                                        <img  ng-src="{{mokup_display_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
                                         </div>
                                          <div class="form-group col-sm-3 m-b" style="height:200px;">
                                             <input type='file' id="mokup" style="display:none;" data-ng-model="art_position[0].mokup_image" base-sixty-four-input>

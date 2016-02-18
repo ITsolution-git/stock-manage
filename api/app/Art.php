@@ -286,6 +286,7 @@ class Art extends Model {
 					{
 						$query[$key]->size_group_id = (!empty($value->size_group_id))? $Misc_data[$value->size_group_id] : '';
 						$query[$key]->wp_position = (!empty($value->wp_position))? $Misc_data[$value->wp_position] : '';
+						$query[$key]->wp_image_display = (!empty($value->wp_image))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->wp_image : '';
 					}
 				}
 
