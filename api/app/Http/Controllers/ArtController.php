@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Art;
 use DB;
+use File;
 
 use Request;
 
@@ -56,12 +57,12 @@ class ArtController extends Controller {
 
 			$art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
 
-			$graphic_size = $this->common->GetMicType('graphic_size');
+			$graphic_size = $this->common->GetMicType('graphic_size',$company_id);
 			//$allcolors = $this->common->getAllColorData();
-			$wp_position = $this->common->GetMicType('position');
-			
+			$wp_position = $this->common->GetMicType('position',$company_id);
+			$art_approval = $this->common->GetMicType('approval',$company_id);
 
-    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'wp_position'=>$wp_position);
+    		$art_array  = array('art_position'=>$art_position,'art_orderline'=>$art_orderline,'artjobscreen_list'=>$artjobscreen_list,'graphic_size'=>$graphic_size,'artjobgroup_list'=>$artjobgroup_list,'art_worklist'=>$art_worklist,'wp_position'=>$wp_position,'art_approval'=>$art_approval);
     		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $art_array);
 		}
     	else 
@@ -77,12 +78,12 @@ class ArtController extends Controller {
     	if(!empty($company_id) && !empty($wp_id)	&& $company_id != 'undefined')
     	{
     		$art_workproof = $this->art->artworkproof_data($wp_id,$company_id);
+
     		if(count($art_workproof)>0)
     		{
+    			$art_workproof[0]->logo_image =  UPLOAD_PATH.'art/'.$art_workproof[0]->art_id.'/'.$art_workproof[0]->wp_image;
 	    		$art_id = $art_workproof[0]->art_id;
 	    		$get_artworkproof_placement = $this->art->get_artworkproof_placement($art_id,$company_id);
-
-	    		
 
 
 	    		$ret_array = array('art_workproof'=>$art_workproof,'get_artworkproof_placement'=>$get_artworkproof_placement);
@@ -169,9 +170,13 @@ class ArtController extends Controller {
     	//echo "<pre>"; print_r($post); echo "</pre>"; die;
     	if(!empty($post['wp_id']))
     	{
+    		
     		$val = array_filter($post['wp_placement']);
     		$post['wp_placement'] = implode(",", $val);
     		//echo "<pre>"; print_r($post['wp_placement']); echo "</pre>"; die;
+    		//echo FILEUPLOAD; die;
+    		$post['save_image'] = $this->Ret_imageUrl($post['wp_image'],'Artwork-logo','art/'.$post['art_id']);
+
     		$this->art->SaveArtWorkProof($post);
     		$response = array('success' => 1, 'message' => UPDATE_RECORD);
     	}
@@ -180,6 +185,31 @@ class ArtController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
+    }
+
+    public function Ret_imageUrl($image_array,$image_name,$path)
+    {
+    	$png_url='';
+    	if(!empty($image_array['base64'])){
+
+            	$split = explode( '/',$image_array['filetype'] );
+                $type = $split[1]; 
+
+		        $png_url = $image_name."-".time().".".$type;
+				$path = FILEUPLOAD.$path;
+				
+				if (!file_exists($path)) {
+			            mkdir($path, 0777, true);
+			        } else {
+			         exec("chmod $path 0777");
+			           // chmod($dir_path, 0777);
+			        }
+				$path = $path."/".$png_url;		
+				$img = $image_array['base64'];
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+	    	}
+	    	return $png_url;
     }
     public function Client_art_screen($client_id,$company_id)
     {
@@ -220,16 +250,17 @@ class ArtController extends Controller {
     	{
     		$screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
     		$allcolors = $this->common->getAllColorData();
-    		$graphic_size = $this->common->GetMicType('graphic_size');
+    		$graphic_size = $this->common->GetMicType('graphic_size',$company_id);
+    		$screen_arts = $this->art->screen_arts($screen_id,$company_id);
     		$screen_garments = $this->art->screen_garments($screen_id,$company_id);
-    		
+    		$art_approval = $this->common->GetMicType('approval',$company_id);
     		$color_array= array();
     		foreach ($allcolors as $key => $value) 
 			{
 				$color_array[$value->id]= $value->name;
 				$allcolors[$key]->name = strtolower($value->name);
 			}
-
+			$screen_colorpopup[0]->logo_image = (!empty($screen_colorpopup[0]->screen_logo))? UPLOAD_PATH.'art/'.$screen_colorpopup[0]->art_id.'/'.$screen_colorpopup[0]->screen_logo:'';
     		//echo "<pre>"; print_r($allcolors); echo "</pre>"; die;
     		if(count($screen_colorpopup)>0)
 			{
@@ -238,9 +269,16 @@ class ArtController extends Controller {
 					$screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $color_array[$value->color_name]:'';
 					$screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
 				}
+			}
+			if(count($screen_garments)>0)
+			{
+				foreach ($screen_garments as $key => $value) 
+				{
+					$screen_garments[$key]->color_id = (!empty($value->color_id))? $color_array[$value->color_id]:'';
+				}
 			}	
 
-    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'allcolors'=>$allcolors,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments);
+    		$ret_array = array('screen_colorpopup'=>$screen_colorpopup,'screen_arts'=>$screen_arts,'graphic_size'=>$graphic_size,'screen_garments'=>$screen_garments,'art_approval'=>$art_approval,'allcolors'=>$allcolors);
     		
     		if(count($screen_colorpopup)>0)
     		{
@@ -288,6 +326,21 @@ class ArtController extends Controller {
     	else 
         {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function art_worklist_listing($art_id,$company_id)
+    {
+    	if(!empty($company_id) && !empty($art_id)	&& $company_id != 'undefined')
+    	{
+    		$art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
+    		$art_position = $this->art->art_position($art_id,$company_id);
+
+    		$response = array('success' => 1, 'message' => GET_RECORDS,'art_worklist' => $art_worklist,'art_position'=>$art_position);
+    	}
+    	else 
+        {
+            $response = array('success' => 2, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
     }

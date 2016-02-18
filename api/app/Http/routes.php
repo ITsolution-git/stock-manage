@@ -82,7 +82,7 @@ Route::post('admin/productDetail', 'ProductController@detail');
 Route::get('admin/productEdit/{id}', 'ProductController@detail');
 
 // ADMIN SETTING ROUTERS
-Route::get('admin/price', 'SettingController@price');
+Route::post('admin/price', 'SettingController@price');
 Route::post('admin/priceDelete', 'SettingController@delete');
 Route::post('admin/priceGridDuplicate', 'SettingController@priceGridDuplicate');
 Route::post('admin/priceEdit', 'SettingController@priceEdit');
@@ -109,19 +109,15 @@ Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::post('auth/company', 'CommonController@CompanyService');
 Route::get('common/getAllVendors', 'CommonController@getAllVendors');
-Route::get('common/getAllMiscData', 'CommonController@getAllMiscData');
-Route::get('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
+Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
+Route::post('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList', 'CommonController@getStaffList');
-Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
-Route::get('common/getMiscData', 'CommonController@getMiscData');
+Route::post('common/getAllPlacementData', 'CommonController@getAllPlacementData');
+Route::post('common/getMiscData', 'CommonController@getMiscData');
 Route::get('common/getAllColorData', 'CommonController@getAllColorData');
 Route::post('common/getCompanyDetail', 'CommonController@getCompanyDetail');
-
-
-Route::get('common/getAllPlacementData', 'CommonController@getAllPlacementData');
-Route::get('common/getMiscData', 'CommonController@getMiscData');
-
+Route::post('common/SaveImage', 'CommonController@SaveImage');
 Route::post('common/InsertRecords', 'CommonController@InsertRecords'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/UpdateTableRecords', 'CommonController@UpdateTableRecords'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
@@ -258,3 +254,5 @@ Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
 Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkproof');
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');
 Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
+Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
+

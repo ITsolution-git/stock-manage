@@ -241,8 +241,8 @@ class ClientController extends Controller {
 			{
 				$StaffList = $this->common->getStaffList();
 				$ArrCleintType=$this->common->TypeList('company');
-				$AddrTypeData = $this->common->GetMicType('address_type');
-				$Arrdisposition = $this->common->GetMicType('disposition');
+				$AddrTypeData = $this->common->GetMicType('address_type',$post['company_id']);
+				$Arrdisposition = $this->common->GetMicType('disposition',$post['company_id']);
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
 				$Client_orders = $this->client->ListClientOrder($id);
@@ -288,20 +288,21 @@ class ClientController extends Controller {
 
 
 
-		if(isset($post['data']['color_logo']['base64'])){
+		if(isset($post['data']['color_logo']['base64']))
+		{
 
-            	$split = explode( '/', $post['data']['color_logo']['filetype'] );
-                $type = $split[1]; 
+	    	$split = explode( '/', $post['data']['color_logo']['filetype'] );
+	        $type = $split[1]; 
 
-		        $png_url1 = "color-logo-".time().".".$type;
-				$path = base_path() . "/public/uploads/client/" . $png_url1;
-				$img = $post['data']['color_logo']['base64'];
-				
-				$data = base64_decode($img);
-				$success = file_put_contents($path, $data);
-				
+	        $png_url1 = "color-logo-".time().".".$type;
+			$path = base_path() . "/public/uploads/client/" . $png_url1;
+			$img = $post['data']['color_logo']['base64'];
+			
+			$data = base64_decode($img);
+			$success = file_put_contents($path, $data);
+			
 
-				$post['data']['color_logo'] = $png_url1;
+			$post['data']['color_logo'] = $png_url1;
 
 	    }
 

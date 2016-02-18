@@ -97,13 +97,15 @@ class CommonController extends Controller {
 
     public function getAllMiscData()
     {
-        $result = $this->common->getAllMiscData();
+         $post = Input::all();
+        $result = $this->common->getAllMiscData($post);
         return $this->return_response($result);
     }
 
      public function getAllMiscDataWithoutBlank()
     {
-        $result = $this->common->getAllMiscDataWithoutBlank();
+        $post = Input::all();
+        $result = $this->common->getAllMiscDataWithoutBlank($post);
         return $this->return_response($result);
     }
 
@@ -114,9 +116,9 @@ class CommonController extends Controller {
     * Get Array of All Misc Data with argument Type
     * @return json data
     */
-     public function GetMicType($type)
+     public function GetMicType($type,$company_id)
      {
-        $result = $this->common->GetMicType($type);
+        $result = $this->common->GetMicType($type,$company_id);
         return $this->return_response($result);
      }
     
@@ -258,13 +260,15 @@ class CommonController extends Controller {
 
     public function getAllPlacementData()
     {
-        $result = $this->common->getAllPlacementData();
+          $post = Input::all();
+        $result = $this->common->getAllPlacementData($post);
         return $this->return_response($result);
     }
 
     public function getMiscData()
     {
-        $result = $this->common->getMiscData();
+        $post = Input::all();
+        $result = $this->common->getMiscData($post);
         return $result;
     }
 
@@ -324,10 +328,25 @@ class CommonController extends Controller {
         } 
         else 
         {
-            $response = array('success' => 0, 'message' => NO_RECORDS);
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
         return  response()->json(["data" => $response]);
     }
 
+    public function SaveImage()
+    {
+        $post = Input::all();
 
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+        if(!empty($post['image_array']) && !empty($post['field']) && !empty($post['table']) && !empty($post['image_name']) && !empty($post['image_path']) && !empty($post['cond']) && !empty($post['value']))
+        {
+            $upload_image = $this->common->SaveImage($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD,'records'=>$upload_image );
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
 }

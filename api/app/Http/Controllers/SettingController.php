@@ -34,8 +34,8 @@ class SettingController extends Controller {
 */
 
     public function price() {
- 
-        $result = $this->price->priceList();
+        $post = Input::all();
+        $result = $this->price->priceList($post);
      
        
         if (count($result) > 0) {

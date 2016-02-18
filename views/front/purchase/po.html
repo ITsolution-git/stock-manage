@@ -38,7 +38,7 @@
                   <label>Contact <em class="text-muted"></em></label>
 
                    <select class="form-control" id="vendor_contact_id" ng-model="ArrPo.vendor_contact_id" name="vendor_contact_id" ui-event="{ change : 'UpdateField_order($event)' }">
-                    <option value="">Select Vendor</option>
+                    <option value="">Select Contact Person</option>
                     <option ng-repeat="item in AllContacts" value="{{item.id}}"   ng-selected="{{ArrPo.vendor_contact_id==item.id}}">{{item.first_name}}{{item.last_name}}</option>
                   </select>
 
@@ -259,9 +259,9 @@
                     &nbsp; </div> -->
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane col-sm-12 m-b animated fadeIn" id="tab12">
+              <div role="tabpanel" class="tab-pane col-sm-6 m-b animated fadeIn" id="tab12">
                <label>Shipt To Block<em class="text-muted"></em></label><br>
-              <textarea cols="40" ui-event="{ blur : 'shipttoblock($event,order_id)' }" ng-model="ArrPo.shipt_block"  rows="8"></textarea>
+              <textarea class="form-control" cols="40" ui-event="{ blur : 'shipttoblock($event,order_id)' }" ng-model="ArrPo.shipt_block"  rows="8"></textarea>
               </div>
 
               <div role="tabpanel" class="tab-pane col-sm-12 m-b animated fadeIn" id="tab13">

@@ -141,14 +141,19 @@
           <a md-ink-ripple ui-sref="setting.placement">Placement</a>
         </li>
 
-        <li ui-sref-active="active">
-          <a md-ink-ripple ui-sref="setting.color">Color</a>
-        </li>
+       
        
       </ul>
     </li>
 
 
+
+ <li ng-show="app.role=='SA'"  ng-class="{passive:$state.includes('color')}">
+     <a md-ink-ripple ui-sref="setting.color">
+        <i class="icon mdi-action-subject i-20"></i>
+        <span class="font-normal">Color</span>
+      </a>
+    </li>
 
 
 <!-- Code start for Misc tab -->

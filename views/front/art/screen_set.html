@@ -11,7 +11,14 @@
                                     <button title="Go to ScreenListing" type="button" class="btn btn-info" tabindex="0">#{{screen_detail[0].order_id}}</button>
                                 </div>
                     <div class="col-sm-12 m-b nopad-form">
-                        <div class="col-sm-12 m-b"></div>
+                        <div class="col-sm-12 m-b">
+                             <div class="col-md-2 m-b">
+                                    <label>Art Approval<em class="text-muted"></em></label>
+                                    <select class="form-control" ng-model="screen_detail[0].f_approval"  name="f_approval"  ui-event="{ blur : 'UpdateField_field($event,screen_detail[0].order_id,\'orders\')' }">
+                                        <option ng-repeat="(key,approval) in art_approval" value="{{approval.id}}"  ng-selected="{{approval.id==screen_detail[0].f_approval}}">{{key}} &nbsp;{{approval.value}}</option>
+                                    </select>
+                                </div>
+                        </div>
                         
 
                        

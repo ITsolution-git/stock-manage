@@ -67,9 +67,9 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getAllMiscData() {
+    public function getAllMiscData($post) {
         
-        $whereMiscConditions = ['status' => '1','is_delete' => '1'];
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $post['cond']['company_id']];
         $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
 
         $allData = array ();
@@ -98,9 +98,9 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getAllMiscDataWithoutBlank() {
+    public function getAllMiscDataWithoutBlank($post) {
         
-        $whereMiscConditions = ['status' => '1','is_delete' => '1'];
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $post['cond']['company_id']];
         $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
 
         $allData = array ();
@@ -110,18 +110,14 @@ class Common extends Model {
             $allData[$data->type][$data->id] = $data;
            }
 
-
-            
-
         }
 
-          
         return $allData;
     }
 
-    public function GetMicType($type)
+    public function GetMicType($type,$company_id)
     {
-        $whereVendorConditions = ['status' => '1','is_delete' => '1','type'=>$type];
+        $whereVendorConditions = ['status' => '1','is_delete' => '1','type'=>$type,'company_id'=>$company_id];
         $misc_type = DB::table('misc_type')->where($whereVendorConditions)->where('value','!=','')->get();
         return $misc_type;
     }
@@ -231,14 +227,14 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getAllPlacementData() {
+    public function getAllPlacementData($post) {
         
 
         $listArray = ['placement.misc_id','placement.misc_value','placement.id','misc_type.value as position'];
 
-        $wherePlacementConditions = ['placement.status' => '1','placement.is_delete' => '1'];
+        $wherePlacementConditions = ['placement.status' => '1','placement.is_delete' => '1','placement.company_id' => $post['cond']['company_id']];
         $placementData = DB::table('placement')
-        ->leftJoin('misc_type as misc_type', 'placement.misc_id', '=', 'misc_type.id')
+        ->leftJoin('misc_type as misc_type','placement.misc_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['cond']['company_id']))
         ->select($listArray)
         ->where($wherePlacementConditions)->get();          
         return $placementData;
@@ -250,9 +246,9 @@ class Common extends Model {
 * @return array $Misc
 */
 
-    public function getMiscData() {
+    public function getMiscData($post) {
         
-        $whereMiscConditions = ['status' => '1','is_delete' => '1','type'=>'position'];
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','type'=>'position','company_id' => $post['cond']['company_id']];
         $miscData = DB::table('misc_type')->select('id','value')->where($whereMiscConditions)->where('value','!=','')->get();       
         return $miscData;
     }
@@ -312,6 +308,40 @@ class Common extends Model {
                          ->where('com.is_delete','=','1')
                          ->get();
         return $admindata;
+    }
+    public function SaveImage($post)
+    {
+        $png_url='';
+         $image_array = $post['image_array'];
+         $field = $post['field'];
+         $table = $post['table'];
+         $image_name = $post['image_name'];
+         $image_path = $post['image_path'];
+         $cond = $post['cond'];
+         $value = $post['value'];
+
+        if(!empty($image_array['base64'])){
+
+                $split = explode( '/',$image_array['filetype'] );
+                $type = $split[1]; 
+
+                $png_url = $image_name."-".time().".".$type;
+                $image_path = FILEUPLOAD.$image_path;
+                
+                if (!file_exists($image_path)) {
+                        mkdir($image_path, 0777, true);
+                    } else {
+                     exec("chmod $image_path 0777");
+                       // chmod($dir_path, 0777);
+                    }
+                $image_path = $image_path."/".$png_url;     
+                $img = $image_array['base64'];
+                $data = base64_decode($img);
+                $success = file_put_contents($image_path, $data);
+
+                $query = DB::table($table)->where($cond,'=',$value)->update(array($field=>$png_url));
+            }
+            return $png_url;
     }
 
 }

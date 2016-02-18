@@ -11,7 +11,7 @@ date_default_timezone_set('America/Chicago');
 define('PATH', 'localhost');
 define('UPLOAD_PATH', url() . '/uploads/');
 define('THEME_IMAGES', url() . '/img/');
-define('FILEUPLOAD', $_SERVER['DOCUMENT_ROOT'] . "/stokkup/api/public/uploads/");
+define('FILEUPLOAD', base_path() . "/public/uploads/");
 define('CURRENT_URL','http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 
 

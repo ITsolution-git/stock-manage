@@ -25,7 +25,13 @@
                                     <label>Sales Total<em class="text-muted"></em></label>
                                     <input  class="form-control" ng-model="art_position[0].grand_total" name="sales_total" >
                                 </div>
-
+                                <div class="col-md-2 m-b">
+                                    <label>Art Approval<em class="text-muted"></em></label>
+                                     
+                                    <select class="form-control" ng-model="art_position[0].f_approval"  name="f_approval"  ui-event="{ blur : 'UpdateField_field($event,art_position[0].order_id,\'orders\')' }">
+                                        <option ng-repeat="(key,approval) in art_approval" value="{{approval.id}}"  ng-selected="{{approval.id==art_position[0].f_approval}}">{{key}} &nbsp;{{approval.value}}</option>
+                                    </select>
+                                </div>
                                
                             </div>
                         </div>

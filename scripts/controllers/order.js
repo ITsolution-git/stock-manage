@@ -353,7 +353,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         });
     }
 
-    get_orderline_detail(order_id,client_id,company_id);
+    get_orderline_detail();
 
     function get_orderline_detail()
     {
@@ -398,7 +398,12 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     $scope.CurrentUserId =  sessionService.get('user_id');
     $scope.CurrentController=$state.current.controller;
 
-    $http.get('api/public/common/getAllMiscDataWithoutBlank').success(function(result, status, headers, config) {
+    var misc_list_data = {};
+    var condition_obj = {};
+    condition_obj['company_id'] =  company_id;
+    misc_list_data.cond = angular.copy(condition_obj);
+
+    $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
               $scope.miscData = result.data.records;
     });
 
@@ -648,6 +653,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
         $http.post('api/public/order/insertPositions',order_data_insert).success(function(result) {
             get_position_detail(order_id,client_id,company_id);
+             $("#ajax_loader").hide();
         });
     }
     $scope.updatePosition = function(postArray,position_id)
@@ -657,7 +663,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             if(value.id == position_id)
             {
-                if(value.placement_type == 43 || value.placement_type == 44)
+                
+                placement_type_id =  value.placement_type;
+                $scope.miscData.placement_type[placement_type_id].slug;
+
+                if($scope.miscData.placement_type[placement_type_id].slug == 43 || $scope.miscData.placement_type[placement_type_id].slug == 44)
                 {
                     value.screen_fees_qnty = value.color_stitch_count;
                 }
@@ -770,11 +780,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         order_data_insert.table ='order_orderlines';
 
         $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
-            get_orderline_detail(order_id,client_id,company_id);
+            get_orderline_detail();
             $("#ajax_loader").hide();
         });
     }
-    $scope.updateOrderLine = function(postArray,orderline_id)
+    $scope.updateOrderLine = function(postArray,orderline_id,field)
     {
         $("#ajax_loader").show();
 
@@ -783,13 +793,32 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             if(value.id == orderline_id)
             {
                 var order_data = {};
-                order_data.table ='order_orderlines'
+                order_data.table ='order_orderlines';
+
+                if(field == 'vendor')
+                {
+                    value.color_id = '0';
+                    value.product_id = '0';
+                    value.product_name = '';
+                    value.product_description = '';
+
+                    angular.forEach(value.items, function(item, key) {
+                        item.qnty = '0';
+                        item.size = '';
+                    });
+                }
+
                 order_data.data =value
                 order_data.cond ={id:value.id}
                 
                 $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
                     $('.form-control').removeClass('ng-dirty');
                     $("#ajax_loader").hide();
+
+                    if(field == 'vendor' || field == 'misc')
+                    {
+                        $scope.calculate_all(orderline_id);
+                    }
                 });
             }
         });
@@ -1218,35 +1247,111 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
     $scope.saveButtonData=function(textdata)
     {
-         
+         var dropdown_value = $( "#approval option:selected" ).attr('slug');
+
+         if(dropdown_value == undefined) {
+
+             var data = {"status": "error", "message": "Please select Approval first."}
+                      notifyService.notify(data.status, data.message);
+                      return false; 
+         }
+
         if(textdata == 'cp') {
-            
+           
+            if($scope.orderPositionAll.length > 0) {
+               
+             
 
+              if(dropdown_value == 137) {
+                  
+                      var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
+                      notifyService.notify(data.status, data.message);
+                      return false;              
+                }
             var log = [];
                 angular.forEach($scope.orderPositionAll, function(value, key) {
                    
-                  this.push(value.placement_type);
+                   var placement_type_id = value.placement_type;
+                   if(placement_type_id != 0) {
+                    this.push($scope.miscData.placement_type[placement_type_id].slug);
+                   }
+                  
                 }, log);
+                
+                 
+                if(log.indexOf('43') <= -1 && log.length == 0) {
 
-                if(log.indexOf('43') <= -1 ) {
-                     alert("Please select Screen Print in Placement Type to generate Contract Screen");
-                     return false;
+                      var data = {"status": "error", "message": "Please select Screen Print in Placement Type to generate Contract Screen."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
                                    
                 }
+            } else {
+                  var data = {"status": "error", "message": "Please enter Position data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false; 
+            }
         } else if(textdata == 'ce') {
+
+            if($scope.orderPositionAll.length > 0) {
             
+              if(dropdown_value == 137) {
+                    var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
+                                   
+                }
 
             var log = [];
                 angular.forEach($scope.orderPositionAll, function(value, key) {
-                   
-                  this.push(value.placement_type);
+                  
+                    var placement_type_id = value.placement_type;
+
+                    if(placement_type_id != 0) {
+                     this.push($scope.miscData.placement_type[placement_type_id].slug);
+                    }
                 }, log);
 
-                if(log.indexOf('45') <= -1 ) {
-                     alert("Please select Embroidery in Placement Type to generate Contract Embroidery");
-                     return false;
+              
+                if(log.indexOf('45') <= -1 && log.length == 0) {
+                     var data = {"status": "error", "message": "Please select Embroidery in Placement Type to generate Contract Embroidery."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
                                    
                 }
+
+            } else {
+                  var data = {"status": "error", "message": "Please enter Position data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false; 
+            }
+        }else if(textdata == 'po') {
+           
+            if($scope.orderLineAll.length > 0) {
+            
+
+                if(dropdown_value == 137) {
+                    var data = {"status": "error", "message": "Order is still an Estimate and POs can not be created."}
+                      notifyService.notify(data.status, data.message);
+                      return false;  
+                                   
+                }
+               } else {
+
+                var data = {"status": "error", "message": "Please enter Order Lines data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+               } 
+        } else if(textdata == 'sg') {
+
+            if($scope.orderLineAll.length > 0) {
+            
+               } else {
+
+                var data = {"status": "error", "message": "Please enter Order Lines data first."}
+                      notifyService.notify(data.status, data.message);
+                      return false;
+               } 
         }
 
             var po_data  = {};
@@ -1445,11 +1550,13 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             
             if(value.orderline_id == id)
             {
-                $scope.avg_garment_cost = '$'+value.avg_garment_cost;
+                $scope.avg_garment_cost = value.avg_garment_cost;
                 $scope.markup_default = value.markup+'%';
-                $scope.avg_garment_price = '$'+value.avg_garment_price;
-                $scope.print_charges = '$'+value.print_charges;
-                $scope.order_line_charge = '$'+value.peritem;
+                $scope.avg_garment_price = value.avg_garment_price;
+                var print_charges = parseFloat(value.print_charges);
+                $scope.print_charges = print_charges.toFixed(2);
+                var order_line_charge = value.peritem;
+                $scope.order_line_charge = order_line_charge.toFixed(2);
             }
             if(value.orderline_id == undefined ||  value.orderline_id == '')
             {
@@ -1661,8 +1768,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                 var calc_total = parseFloat(calc_descharge) + parseFloat(calc_speciality) + parseFloat(calc_foil) + parseFloat(calc_ink_charge) + parseFloat(calc_number_on_dark) + parseFloat(calc_number_on_light) + parseFloat(calc_oversize) + parseFloat(calc_press_setup) + parseFloat(calc_screen_fees);
                 $scope.print_charges +=  calc_total;
+
+                placement_type_id =  value.placement_type;
+                $scope.miscData.placement_type[placement_type_id].slug;
                 
-                if(value.placement_type == 43)
+                if($scope.miscData.placement_type[placement_type_id].slug == 43)
                 {
                     angular.forEach($scope.price_screen_primary, function(primary) {
                         
@@ -1674,7 +1784,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         }
                     });
                 }
-                else if(value.placement_type == 44)
+                else if($scope.miscData.placement_type[placement_type_id].slug == 44)
                 {
                     angular.forEach($scope.price_screen_secondary, function(secondary) {
                         
@@ -1686,7 +1796,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         }
                     });   
                 }
-                else if(value.placement_type == 45)
+                else if($scope.miscData.placement_type[placement_type_id].slug == 45)
                 {
                     angular.forEach($scope.embroidery_switch_count, function(embroidery) {
                         
@@ -1777,30 +1887,36 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         });
                     });*/
                 }
-                if(value.placement_type == 46)
+                if($scope.miscData.placement_type[placement_type_id].slug == 46)
                 {
-                    if(value.dtg_size == 17 && value.dtg_on == 16){
+                    dtg_size_id =  value.dtg_size;
+                    $scope.miscData.dir_to_garment_sz[dtg_size_id].slug;
+
+                    dtg_on_id =  $scope.miscData.color_group[dtg_on_id].slug;
+                    $scope.miscData.color_group[dtg_on_id].slug;
+
+                    if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_1c';
                     }
-                    else if(value.dtg_size == 17 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_2c';
                     }
-                    else if(value.dtg_size == 18 && value.dtg_on == 16){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_3c';
                     }
-                    else if(value.dtg_size == 18 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_4c';
                     }
-                    else if(value.dtg_size == 19 && value.dtg_on == 16){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_5c';
                     }
-                    else if(value.dtg_size == 19 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_6c';
                     }
-                    else if(value.dtg_size == 20 && value.dtg_on == 16){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_7c';
                     }
-                    else if(value.dtg_size == 20 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_8c';
                     }
                     angular.forEach($scope.price_direct_garment, function(garment) {
@@ -1909,7 +2025,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                     value.avg_garment_cost = $scope.avg_garment_cost;
                     value.avg_garment_price = $scope.avg_garment_price;
                     value.print_charges = parseFloat($scope.print_charges);
-                    value.peritem = $scope.per_item;
+                    var peritem = $scope.per_item;
+                    value.peritem = peritem.toFixed(2);
                     value.per_line_total = $scope.per_line_total;
                     value.markup = $scope.shipping_charge;
                     value.override_diff = '0';
@@ -1933,7 +2050,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             order_data.cond = {id: $scope.order_id};
             order_data['table'] ='orders'
             $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-                $scope.updateOrderLine($scope.orderLineAll,orderline_id);
+                $scope.updateOrderLine($scope.orderLineAll,orderline_id,'');
             });
         }
         else
@@ -2393,7 +2510,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id};
         $http.post('api/public/order/AssignSize',lineData).success(function(result) {
 // /            $scope.calculate_all(orderline.id);
-            get_orderline_detail(order_id,client_id,company_id);
+            get_orderline_detail();
         });
     }
 
@@ -2622,11 +2739,10 @@ function get_company_data_selected(id)
     {
         console.log(orderline);
     }
-
 }]);
 
-app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
-            
+app.controller('orderAddCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
+     var company_id = $rootScope.company_profile.company_id;
     var companyData = {};
     companyData.table ='client'
     companyData.cond ={status:1,is_delete:1}
@@ -2643,20 +2759,22 @@ app.controller('orderAddCtrl', ['$scope','$http','$location','$state','$modal','
     });
 }]);
 
-app.factory('getPDataByPosService', function($http){
+app.factory('getPDataByPosService', function($http,$rootScope){
     return{
         getPlacementDataBySizeGroup: function(){
           var miscData = {};
+          var company_id = $rootScope.company_profile.company_id;
           miscData.table ='misc_type'
-          miscData.cond ={status:1,is_delete:1,type:'size_group'}
+          miscData.cond ={status:1,is_delete:1,type:'size_group',company_id:company_id}
           miscData.notcond ={value:""}
           return $http.post('api/public/common/GetTableRecords',miscData);
         },
 
         getPlacementDataByPosition: function(id){
           var miscData = {};
+          var company_id = $rootScope.company_profile.company_id;
           miscData.table ='placement'
-          miscData.cond ={status:1,is_delete:1,misc_id:id}
+          miscData.cond ={status:1,is_delete:1,misc_id:id,company_id:company_id}
           return $http.post('api/public/common/GetTableRecords',miscData);
         }
 

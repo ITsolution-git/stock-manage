@@ -38,7 +38,7 @@ class Order extends Model {
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('misc_type as misc_type', 'order.f_approval', '=', 'misc_type.id')
+                         ->leftJoin('misc_type as misc_type','order.f_approval','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['cond']['company_id']))
                          ->select($listArray)
                          ->where($whereConditions);
 

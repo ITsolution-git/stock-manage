@@ -1,15 +1,21 @@
 
-app.controller('miscListCtrl', ['$scope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService','$filter', function($scope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService,$filter) {
+app.controller('miscListCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','fileUpload','AllConstant','AuthService','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,fileUpload,AllConstant,AuthService,$filter) {
   AuthService.AccessService('FM');
 
 $("#ajax_loader").show();
- $http.get('api/public/common/getAllMiscData').success(function(result, status, headers, config) {
 
-              
+ var company_id = $rootScope.company_profile.company_id;
+
+ var misc_list_data = {};
+ var condition_obj = {};
+ condition_obj['company_id'] =  company_id;
+ misc_list_data.cond = angular.copy(condition_obj);
+
+ $http.post('api/public/common/getAllMiscData',misc_list_data).success(function(result, status, headers, config) {
+             
               $scope.miscData = result.data.records;
               $scope.pagination = AllConstant.pagination;
-              $("#ajax_loader").hide();
-    
+              $("#ajax_loader").hide();    
       });
 
 

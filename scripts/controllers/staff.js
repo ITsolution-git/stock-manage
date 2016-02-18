@@ -94,7 +94,7 @@ app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','$location','$
 
     var miscData = {};
       miscData.table ='misc_type'
-      miscData.cond ={status:1,is_delete:1,type:'staff_type'}
+      miscData.cond ={status:1,is_delete:1,type:'staff_type',company_id:company_id}
       miscData.notcond ={value:""}
       $http.post('api/public/common/GetTableRecords',miscData).success(function(result) {
           if(result.data.success == '1') 
