@@ -2249,16 +2249,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            var count = $scope.orderLineAll.length;
-            var flag = 0;
-            angular.forEach($scope.orderLineAll, function(value) {
-                    $scope.calculate_all(value.id);
-                    flag++;
-                    if(count == flag)
-                    {
-                        get_orderline_detail(order_id,client_id,company_id);
-                    }
-            });
+            
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);
@@ -2520,8 +2511,15 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     }
     $scope.confirmPricing = function()
     {
+        var count = $scope.orderLineAll.length;
+        var flag = 0;
         angular.forEach($scope.orderLineAll, function(value) {
-            $scope.calculate_all(value.orderline_id);
+                $scope.calculate_all(value.id);
+                flag++;
+                if(count == flag)
+                {
+                    get_orderline_detail(order_id,client_id,company_id);
+                }
         });
     }
 
