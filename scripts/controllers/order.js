@@ -353,7 +353,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         });
     }
 
-    get_orderline_detail(order_id,client_id,company_id);
+    get_orderline_detail();
 
     function get_orderline_detail()
     {
@@ -663,7 +663,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             if(value.id == position_id)
             {
-                if(value.placement_type == 43 || value.placement_type == 44)
+                
+                placement_type_id =  value.placement_type;
+                $scope.miscData.placement_type[placement_type_id].slug;
+
+                if($scope.miscData.placement_type[placement_type_id].slug == 43 || $scope.miscData.placement_type[placement_type_id].slug == 44)
                 {
                     value.screen_fees_qnty = value.color_stitch_count;
                 }
@@ -776,11 +780,11 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         order_data_insert.table ='order_orderlines';
 
         $http.post('api/public/order/orderLineAdd',order_data_insert).success(function(result) {
-            get_orderline_detail(order_id,client_id,company_id);
+            get_orderline_detail();
             $("#ajax_loader").hide();
         });
     }
-    $scope.updateOrderLine = function(postArray,orderline_id)
+    $scope.updateOrderLine = function(postArray,orderline_id,field)
     {
         $("#ajax_loader").show();
 
@@ -789,13 +793,32 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             if(value.id == orderline_id)
             {
                 var order_data = {};
-                order_data.table ='order_orderlines'
+                order_data.table ='order_orderlines';
+
+                if(field == 'vendor')
+                {
+                    value.color_id = '0';
+                    value.product_id = '0';
+                    value.product_name = '';
+                    value.product_description = '';
+
+                    angular.forEach(value.items, function(item, key) {
+                        item.qnty = '0';
+                        item.size = '';
+                    });
+                }
+
                 order_data.data =value
                 order_data.cond ={id:value.id}
                 
                 $http.post('api/public/order/orderLineUpdate',order_data).success(function(result) {
                     $('.form-control').removeClass('ng-dirty');
                     $("#ajax_loader").hide();
+
+                    if(field == 'vendor' || field == 'misc')
+                    {
+                        $scope.calculate_all(orderline_id);
+                    }
                 });
             }
         });
@@ -1527,11 +1550,13 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             
             if(value.orderline_id == id)
             {
-                $scope.avg_garment_cost = '$'+value.avg_garment_cost;
+                $scope.avg_garment_cost = value.avg_garment_cost;
                 $scope.markup_default = value.markup+'%';
-                $scope.avg_garment_price = '$'+value.avg_garment_price;
-                $scope.print_charges = '$'+value.print_charges;
-                $scope.order_line_charge = '$'+value.peritem;
+                $scope.avg_garment_price = value.avg_garment_price;
+                var print_charges = parseFloat(value.print_charges);
+                $scope.print_charges = print_charges.toFixed(2);
+                var order_line_charge = value.peritem;
+                $scope.order_line_charge = order_line_charge.toFixed(2);
             }
             if(value.orderline_id == undefined ||  value.orderline_id == '')
             {
@@ -1743,8 +1768,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                 var calc_total = parseFloat(calc_descharge) + parseFloat(calc_speciality) + parseFloat(calc_foil) + parseFloat(calc_ink_charge) + parseFloat(calc_number_on_dark) + parseFloat(calc_number_on_light) + parseFloat(calc_oversize) + parseFloat(calc_press_setup) + parseFloat(calc_screen_fees);
                 $scope.print_charges +=  calc_total;
+
+                placement_type_id =  value.placement_type;
+                $scope.miscData.placement_type[placement_type_id].slug;
                 
-                if(value.placement_type == 43)
+                if($scope.miscData.placement_type[placement_type_id].slug == 43)
                 {
                     angular.forEach($scope.price_screen_primary, function(primary) {
                         
@@ -1756,7 +1784,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         }
                     });
                 }
-                else if(value.placement_type == 44)
+                else if($scope.miscData.placement_type[placement_type_id].slug == 44)
                 {
                     angular.forEach($scope.price_screen_secondary, function(secondary) {
                         
@@ -1768,7 +1796,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         }
                     });   
                 }
-                else if(value.placement_type == 45)
+                else if($scope.miscData.placement_type[placement_type_id].slug == 45)
                 {
                     angular.forEach($scope.embroidery_switch_count, function(embroidery) {
                         
@@ -1859,30 +1887,36 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         });
                     });*/
                 }
-                if(value.placement_type == 46)
+                if($scope.miscData.placement_type[placement_type_id].slug == 46)
                 {
-                    if(value.dtg_size == 17 && value.dtg_on == 16){
+                    dtg_size_id =  value.dtg_size;
+                    $scope.miscData.dir_to_garment_sz[dtg_size_id].slug;
+
+                    dtg_on_id =  $scope.miscData.color_group[dtg_on_id].slug;
+                    $scope.miscData.color_group[dtg_on_id].slug;
+
+                    if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_1c';
                     }
-                    else if(value.dtg_size == 17 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_2c';
                     }
-                    else if(value.dtg_size == 18 && value.dtg_on == 16){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_3c';
                     }
-                    else if(value.dtg_size == 18 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_4c';
                     }
-                    else if(value.dtg_size == 19 && value.dtg_on == 16){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_5c';
                     }
-                    else if(value.dtg_size == 19 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_6c';
                     }
-                    else if(value.dtg_size == 20 && value.dtg_on == 16){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 16){
                         var garment_field = 'pricing_7c';
                     }
-                    else if(value.dtg_size == 20 && value.dtg_on == 15){
+                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 15){
                         var garment_field = 'pricing_8c';
                     }
                     angular.forEach($scope.price_direct_garment, function(garment) {
@@ -1991,7 +2025,8 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                     value.avg_garment_cost = $scope.avg_garment_cost;
                     value.avg_garment_price = $scope.avg_garment_price;
                     value.print_charges = parseFloat($scope.print_charges);
-                    value.peritem = $scope.per_item;
+                    var peritem = $scope.per_item;
+                    value.peritem = peritem.toFixed(2);
                     value.per_line_total = $scope.per_line_total;
                     value.markup = $scope.shipping_charge;
                     value.override_diff = '0';
@@ -2015,7 +2050,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             order_data.cond = {id: $scope.order_id};
             order_data['table'] ='orders'
             $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-                $scope.updateOrderLine($scope.orderLineAll,orderline_id);
+                $scope.updateOrderLine($scope.orderLineAll,orderline_id,'');
             });
         }
         else
@@ -2331,16 +2366,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
        } else if(tab_name == 'notes') {
         getNotesDetail($scope.order_id);
        } else if((tab_name == 'orderline')){
-            var count = $scope.orderLineAll.length;
-            var flag = 0;
-            angular.forEach($scope.orderLineAll, function(value) {
-                    $scope.calculate_all(value.id);
-                    flag++;
-                    if(count == flag)
-                    {
-                        get_orderline_detail(order_id,client_id,company_id);
-                    }
-            });
+            
        }
        else if(tab_name == 'tasks') {
             get_task_list($scope.order_id);
@@ -2484,7 +2510,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id};
         $http.post('api/public/order/AssignSize',lineData).success(function(result) {
 // /            $scope.calculate_all(orderline.id);
-            get_orderline_detail(order_id,client_id,company_id);
+            get_orderline_detail();
         });
     }
 
@@ -2602,8 +2628,15 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
     }
     $scope.confirmPricing = function()
     {
+        var count = $scope.orderLineAll.length;
+        var flag = 0;
         angular.forEach($scope.orderLineAll, function(value) {
-            $scope.calculate_all(value.orderline_id);
+                $scope.calculate_all(value.id);
+                flag++;
+                if(count == flag)
+                {
+                    get_orderline_detail(order_id,client_id,company_id);
+                }
         });
     }
 
@@ -2706,7 +2739,6 @@ function get_company_data_selected(id)
     {
         console.log(orderline);
     }
-
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {

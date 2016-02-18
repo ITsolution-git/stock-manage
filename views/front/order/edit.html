@@ -353,12 +353,12 @@
                                             <div class="col-md-12 nopad-form">
                                                 <div class="cols col-1">
                                                     <div class="form-group">
-                                                        <select  ng-model="order_line.size_group_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                        <select  ng-model="order_line.size_group_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id,'misc')">
                                                             <option ng-selected="order_line.size_group_id==misc_size_group.id" ng-repeat="misc_size_group in miscData.size_group" value={{misc_size_group.id}}>{{misc_size_group.value}}</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group secondContainer">
-                                                        <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                        <select  ng-model="order_line.vendor_id"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id,'vendor')">
                                                             <option value="0">Select</option>
                                                             <option ng-selected="order_line.vendor_id==vendor.id" ng-repeat="vendor in vendors" value={{vendor.id}}>{{vendor.name_company}}</option>
                                                         </select>
@@ -432,7 +432,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="col-md-2 smallPad nopad-left">
-                                                            <select  ng-model="order_line.client_supplied"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id)">
+                                                            <select  ng-model="order_line.client_supplied"  class="form-control" ng-change="updateOrderLine(orderLineAll,order_line.id,'client_supplied')">
                                                                 <option ng-selected="order_line.client_supplied==1" value="1">Yes</option>
                                                                 <option ng-selected="order_line.client_supplied==0" value="0">No</option>
                                                             </select>
@@ -738,7 +738,7 @@
                                         <label>Average Garment Cost</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" ng-model="avg_garment_cost" class="form-control  c-blue" readonly="readonly" />
+                                        <input type="text" value="${{avg_garment_cost}}" class="form-control  c-blue" readonly="readonly" />
                                     </div>
                                 </div>                                        
                                 <div class="col-md-12">
@@ -746,7 +746,7 @@
                                         <label>Markup % Default</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" ng-model="markup_default" class="form-control c-blue" readonly="readonly" />
+                                        <input type="text" value="${{markup_default}}" class="form-control c-blue" readonly="readonly" />
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -754,7 +754,7 @@
                                         <label>Average Garment Price</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" ng-model="avg_garment_price" class="form-control c-blue" readonly="readonly" />
+                                        <input type="text" value="${{avg_garment_price}}" class="form-control c-blue" readonly="readonly" />
                                     </div>
                                     <div class="form-group">
                                         <label>+</label>
@@ -765,7 +765,7 @@
                                         <label>Print Charges</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" ng-model="print_charges" class="form-control c-blue" readonly="readonly" />
+                                        <input type="text" value="${{print_charges}}" class="form-control c-blue" readonly="readonly" />
                                     </div>
                                     <div class="form-group">
                                         <label>=</label>
@@ -776,7 +776,7 @@
                                         <label>Total Line Charge</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" ng-model="order_line_charge" class="form-control c-blue" readonly="readonly" />
+                                        <input type="text" value="${{order_line_charge}}" class="form-control c-blue" readonly="readonly" />
                                     </div>
                                 </div>
                                 <button class="closeButtonOL" ng-click="closeOLDiv()">x</button>
