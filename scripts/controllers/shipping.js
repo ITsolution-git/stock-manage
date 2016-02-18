@@ -445,6 +445,13 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
     $scope.create_box_shipment = function(shipping_items)
     {
         $("#ajax_loader").show();
+
+        if(shipping_items.length == 0){
+            $("#ajax_loader").hide();
+                var data = {"status": "error", "message": "There are no items for boxing."}
+                notifyService.notify(data.status, data.message);
+                return false;
+        }
         $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
 
             if(result.data.success == '1') {
@@ -491,9 +498,10 @@ app.controller('shippingEditCtrl', ['$scope','$rootScope','$http','logger','noti
         var ship_data = {};
         ship_data['table'] ='shipping_box';
         ship_data.data = {'actual':box.actual, 'md':box.md, 'spoil':box.spoil};
-        ship_data.cond = {'id' : box.id};
+        ship_data.cond = {'id' : box.box_id};
         $http.post('api/public/common/UpdateTableRecords',ship_data).success(function(result) {
-            get_shipping_details();
+           // get_shipping_details();
+            get_box_items(box.box_id);
             $("#ajax_loader").hide();
         });
     }
