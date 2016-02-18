@@ -39,13 +39,23 @@
                     <label>Job Name<em class="text-muted"></em></label>
                     <input type="text" disabled="" class="form-control" ng-model="ArrPo.job_name"  >
                   </div>
-                  <div class="col-sm-2 m-b">
+                  <div class="col-sm-2 m-b"  ng-controller="DatepickerDemoCtrl">
                     <label>Expected date<em class="text-muted"></em></label>
-                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" class="form-control" name="expected_date" ng-model="ArrPo.expected_date"  >
+                      <p class="input-group">
+                        <input   ui-event="{ blur : 'UpdateDate($event,\'purchase_order\',\'po_id\',ArrPo.po_id)' }" name="expected_date"  type="text" class="form-control"  datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.expected_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
                   </div>
-                  <div class="col-sm-2 m-b">
+                  <div class="col-sm-2 m-b"  ng-controller="DatepickerDemoCtrl">
                     <label>Arrival Date <em class="text-muted"></em></label>
-                    <input type="text"  ui-event="{ blur : 'UpdateField_order($event)' }" class="form-control" name="arrival_date" ng-model="ArrPo.arrival_date"  >
+                      <p class="input-group">
+                        <input   ui-event="{ blur : 'UpdateDate($event,\'purchase_order\',\'po_id\',ArrPo.po_id)' }" name="arrival_date"  type="text" class="form-control"  datepicker-popup="MM/dd/yyyy" ng-model="ArrPo.arrival_date"   is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                      </p>
                   </div>
                   
                   <div class="col-sm-2 m-b">
@@ -252,9 +262,9 @@
           </div> 
      </div>
 
-        <div class="form-group col-md-4 nopad-form tabTitle m-b">
+        <div class="form-group col-md-3 nopad-form tabTitle m-b">
           <label>Received Notes<em class="text-muted"></em></label><br>
-          <textarea cols="40" ui-event="{ blur : 'UpdateField_order($event)' }" name="receive_note" ng-model="ArrPo.receive_note"  rows="8"></textarea>
+          <textarea class="form-control" cols="40" ui-event="{ blur : 'UpdateField_order($event)' }" name="receive_note" ng-model="ArrPo.receive_note"  rows="8"></textarea>
         </div>
      </div>
 

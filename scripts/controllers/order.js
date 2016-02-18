@@ -663,14 +663,17 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             if(value.id == position_id)
             {
-                
-                placement_type_id =  value.placement_type;
-                $scope.miscData.placement_type[placement_type_id].slug;
-
-                if($scope.miscData.placement_type[placement_type_id].slug == 43 || $scope.miscData.placement_type[placement_type_id].slug == 44)
+                if(value.placement_type != 0)
                 {
-                    value.screen_fees_qnty = value.color_stitch_count;
+                    placement_type_id =  value.placement_type;
+                    $scope.miscData.placement_type[placement_type_id].slug;
+
+                    if($scope.miscData.placement_type[placement_type_id].slug == 43 || $scope.miscData.placement_type[placement_type_id].slug == 44)
+                    {
+                        value.screen_fees_qnty = value.color_stitch_count;
+                    }
                 }
+                
                 var order_data = {};
                 order_data.table ='order_positions'
                 order_data.data =value
