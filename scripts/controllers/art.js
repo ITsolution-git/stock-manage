@@ -472,7 +472,8 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
                       Array_data.value =value;
 
                       $http.post('api/public/common/updatedate',Array_data).success(function(result) {
-                          
+                          		 var data = {"status": "success", "message": "Data Updated successfully"}
+                                 notifyService.notify(data.status, data.message); 
                         });
                     }
 
@@ -523,7 +524,8 @@ app.controller('ArtScreenCtrl', ['$scope',  '$http','$state','$stateParams','$ro
 		                      Array_data.value =value;
 
 		                      $http.post('api/public/common/updatedate',Array_data).success(function(result) {
-		                          
+		                            var data = {"status": "success", "message": "Data Updated successfully"}
+                               		notifyService.notify(data.status, data.message); 
 		                        });
 		                    }
 
