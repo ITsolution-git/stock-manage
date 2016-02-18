@@ -89,10 +89,25 @@
     <tr>
       <td align="left" valign="top">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <tr>
-            <td align="left" valign="top" width="100%" style="border:1px solid #000000; line-height:19px;">
-             COLOR: {{$shipping_items[0]->color_name}}: [XS]:{{$other_data['xs_qnty']}}[M]:{{$other_data['m_qnty']}}[L]:{{$other_data['l_qnty']}}[XL]:{{$other_data['xl_qnty']}}[2X]:{{$other_data['2xl_qnty']}}[3X]:{{$other_data['3xl_qnty']}}:TOTAL QNTY:{{$other_data['total_qnty']}}</td>      
-          </tr>
+          
+            
+
+
+               @foreach ($color_all_data as $color => $colordata)
+               <tr>
+               <td align="left" valign="top" width="100%" style="border:1px solid #000000; line-height:19px;">
+               COLOR: {{$color}}:
+               <?php $sum = 0; ?>
+                @foreach ($colordata as $size => $value_data)
+              <?php $sum += $value_data;?>
+             [{{$size}}]:{{$value_data}} 
+                @endforeach 
+                :TOTAL QNTY:<?php echo $sum;?>    
+              </td> 
+              </tr>
+              @endforeach
+              
+          
         </table>
       </td>
     </tr>
@@ -164,7 +179,7 @@
                 <tr>
                   <td align="left" valign="top" width="50%" style="font-size:14px;"><strong>TOTAL BOXES {{$other_data['total_box']}}</strong></td>
                   <td align="right" valign="top" width="50%" style="font-size:14px;">
-                    <strong>Totoal Pieces  {{$other_data['total_pieces']}}&nbsp;&nbsp;</strong>
+                    <strong>Total Pieces  {{$other_data['total_pieces']}}&nbsp;&nbsp;</strong>
                   </td>
                 </tr> 
               </tbody>

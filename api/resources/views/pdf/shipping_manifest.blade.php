@@ -89,24 +89,26 @@
               <thead class="title">
                 <tr>
                   <th align="left" valign="top" width="10%" style="border:1px solid #000000;"> No.</th>
-                  <th align="center" valign="top" width="10%" style="border:1px solid #000000;"> Size</th>
+                  <th align="center" valign="top" width="8%" style="border:1px solid #000000;"> Size</th>
                   <th align="left" valign="top" width="15%" style="border:1px solid #000000;"> Group</th>
                   <th align="left" valign="top" width="15%" style="border:1px solid #000000;"> Color</th>
                   <th align="left" valign="top" width="30%" style="border:1px solid #000000;"> Description</th>
-                  <th align="left" valign="top" width="10%" style="border:1px solid #000000;"> Defect Spoil</th>
-                  <th align="center" valign="top" width="10%" style="border:1px solid #000000;"> Qnty</th>
+                  <th align="left" valign="top" width="8%" style="border:1px solid #000000;"> Defect</th>
+                  <th align="left" valign="top" width="8%" style="border:1px solid #000000;"> Spoil</th>
+                  <th align="center" valign="top" width="6%" style="border:1px solid #000000;"> Qnty</th>
                 </tr>
               </thead>
               <tbody class="color-grey">
               @foreach ($shipping_boxes as $box)
                 <tr>
                   <td align="left" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"> {{$box->count}}</td>
-                  <td align="center" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"> {{$box->size}}</td>
+                  <td align="center" valign="top" class="brdrBox" width="8%" style="border:1px solid #000000;"> {{$box->size}}</td>
                   <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
                   <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;"> {{$box->color_name}}</td>
                   <td align="left" valign="top" class="brdrBox" width="30%" style="border:1px solid #000000;"> {{$box->product_name}}</td>
-                  <td align="left" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"> {{$box->spoil}}</td>
-                  <td align="center" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"6> {{$box->boxed_qnty}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="8%" style="border:1px solid #000000;"> {{$box->md}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="8%" style="border:1px solid #000000;"> {{$box->spoil}}</td>
+                  <td align="center" valign="top" class="brdrBox" width="6%" style="border:1px solid #000000;"6> {{$box->boxed_qnty}}</td>
                 </tr>
               @endforeach
               </tbody>

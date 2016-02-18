@@ -291,6 +291,20 @@ class ShippingController extends Controller {
         $total_md = 0;
         $total_spoil = 0;
 
+
+         $color_all_data = array();
+        foreach ($shipping_boxes as $row) {
+         
+            $color_all_data[$row->color_name][$row->size] = $row->size;
+            $color_all_data[$row->color_name][$row->size] = $row->qnty;
+
+             $total_qnty += $row->qnty;
+            $actual_total += $row->actual;
+            $total_md += $row->md;
+            $total_spoil += $row->spoil;
+           
+        }
+       /*
         foreach ($shipping_boxes as $row) {
 
             if($row->size == 'XS') {
@@ -315,22 +329,19 @@ class ShippingController extends Controller {
                 $xxxl_qnty += $row->qnty;
             }
 
-            $total_qnty += $row->qnty;
-            $actual_total += $row->actual;
-            $total_md += $row->md;
-            $total_spoil += $row->spoil;
-        }
+           
+        }*/
 
         $other_data['total_box'] = count($shipping_boxes);
         $other_data['total_pieces'] = $actual_total;
 
-        $other_data['xs_qnty'] = $xs_qnty;
+       /* $other_data['xs_qnty'] = $xs_qnty;
         $other_data['s_qnty'] = $s_qnty;
         $other_data['m_qnty'] = $m_qnty;
         $other_data['l_qnty'] = $l_qnty;
         $other_data['xl_qnty'] = $xl_qnty;
         $other_data['2xl_qnty'] = $xxl_qnty;
-        $other_data['3xl_qnty'] = $xxxl_qnty;
+        $other_data['3xl_qnty'] = $xxxl_qnty;*/
 
         $other_data['total_qnty'] = $total_qnty;
         $other_data['total_md'] = $total_md;
@@ -338,6 +349,7 @@ class ShippingController extends Controller {
 
         $shipping['shipping_boxes'] = $shipping_boxes;
         $shipping['other_data'] = $other_data;
+        $shipping['color_all_data'] = $color_all_data;
 
         
         if($post['print_type'] == 'manifest')
