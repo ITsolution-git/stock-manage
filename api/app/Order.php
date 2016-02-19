@@ -408,13 +408,13 @@ public function updateOrderLineData($post)
                     'date'=>$post['created_date']]);
                $insertedpoid = DB::getPdo()->lastInsertId();
               
-               $whereConditions = ['order_id' => $post['order_id'],'status' => '1'];
-               $orderData = DB::table('order_positions')->where($whereConditions)->get();
+               $whereConditions = ['op.order_id' => $post['order_id'],'op.status' => '1'];
+               $orderData = DB::table('order_positions as op')->leftJoin('misc_type as m','m.id','=','op.placement_type')->select("op.id",'m.slug')->where($whereConditions)->get();
 
                  foreach ($orderData as $key=>$alldata){
                     
                     
-                      if($alldata->placement_type == 43) {
+                      if($alldata->slug == 43) {
                      $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
                     'line_id'=>$alldata->id,
                     'date'=>$post['created_date']]);
@@ -427,11 +427,12 @@ public function updateOrderLineData($post)
                     'date'=>$post['created_date']]);
                $insertedpoid = DB::getPdo()->lastInsertId();
               
-               $whereConditions = ['order_id' => $post['order_id'],'status' => '1'];
-               $orderData = DB::table('order_positions')->where($whereConditions)->get();
+                $whereConditions = ['op.order_id' => $post['order_id'],'op.status' => '1'];
+               $orderData = DB::table('order_positions as op')->leftJoin('misc_type as m','m.id','=','op.placement_type')->select("op.id",'m.slug')->where($whereConditions)->get();
+
 
                  foreach ($orderData as $key=>$alldata){
-                     if($alldata->placement_type == 45) {
+                     if($alldata->slug == 45) {
                      $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
                     'line_id'=>$alldata->id,
                     'date'=>$post['created_date']]);

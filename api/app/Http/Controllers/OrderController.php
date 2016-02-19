@@ -656,12 +656,12 @@ class OrderController extends Controller {
             $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
             if(empty($result))
             {
-                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
+                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'company_id' => $post['company_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
                 $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
 
                 $post['data']['shipping_id'] = $shipping_id;
 
-                $result = $this->common->InsertRecords('item_address_mapping',$post['data']);
+                $result = $this->common->InsertRecords('item_address_mapping',$post['cond']);
                 $id = $result;
             }
             $message = INSERT_RECORD;
@@ -671,7 +671,7 @@ class OrderController extends Controller {
         {
             $arr = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
             $post['shipping_id'] = $arr[0]->shipping_id;
-            $result = $this->common->InsertRecords('item_address_mapping',$post);
+            $result = $this->common->InsertRecords('item_address_mapping',$post['cond']);
             $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
             
             $success=1;

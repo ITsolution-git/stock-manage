@@ -13,8 +13,6 @@ app.controller('finishingListCtrl', ['$scope','$rootScope','$http','$location','
         {
             $("#ajax_loader").hide();
 
-            if(result.data.success == 1)
-            {
 
                 if($scope.tab_name == '')
                 {
@@ -116,7 +114,6 @@ app.controller('finishingListCtrl', ['$scope','$rootScope','$http','$location','
                   return $scope.select($scope.currentPage);
                 };
                 return init();
-            }
         });
     }
 
@@ -247,7 +244,7 @@ app.controller('finishingListCtrl', ['$scope','$rootScope','$http','$location','
 
                 $("#est_"+tab+id).val(est);
 
-                var finishing = {'end_time':time2,'est':est,table:'finishing',id:id,field:''};
+                var finishing = {'end_time':time2,'est':est,table:'finishing',id:id,field:'','status':'1'};
                 $http.post('api/public/finishing/updateFinishing',finishing).success(function(result)
                 {
                     getFinishingData();                
