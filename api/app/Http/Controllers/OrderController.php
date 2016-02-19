@@ -722,7 +722,7 @@ class OrderController extends Controller {
                 }
             }
 
-            print_r($boxarr);exit;
+            
 
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
@@ -946,9 +946,6 @@ class OrderController extends Controller {
     public function savePDF()
     {
 
-       
-       
-
         $all_company['all_company'] = json_decode($_POST['all_company']);
         $client_main_data['client_main_data'] = json_decode($_POST['client_main_data']);
         $staff_list['staff_list'] = json_decode($_POST['staff_list']);
@@ -961,6 +958,56 @@ class OrderController extends Controller {
         $order_position['order_position'] = json_decode($_POST['order_position']);
         $order_line['order_line'] = json_decode($_POST['order_line']);
         $order['order'] = json_decode($_POST['order']);
+
+        $order_image['order_image'] = json_decode($_POST['order_image']);
+
+        $uploaddirfirst = '';
+        $uploaddirsecond = '';
+        $uploaddirthird = '';
+        $uploaddirfourth = '';
+
+        if($order_image['order_image']->first_logo != '') {
+        $uploaddirfirst = base_path() . "/public/uploads/order/".$order['order']->id.'/'.$order_image['order_image']->first_logo;
+        }
+        if($order_image['order_image']->second_logo != '') {
+            $uploaddirsecond = base_path() . "/public/uploads/order/".$order['order']->id.'/'.$order_image['order_image']->second_logo;
+        }
+        if($order_image['order_image']->third_logo != '') {
+             $uploaddirthird = base_path() . "/public/uploads/order/".$order['order']->id.'/'.$order_image['order_image']->third_logo;
+        }
+        if($order_image['order_image']->fourth_logo != '') {
+             $uploaddirfourth = base_path() . "/public/uploads/order/".$order['order']->id.'/'.$order_image['order_image']->fourth_logo;
+        }
+
+       $counter = 0;
+       $order_image_pdf = array();
+       if (file_exists($uploaddirfirst) && $counter < 2) {
+        $counter++;
+        $order_image_pdf[] = $order_image['order_image']->first_url_photo;
+
+
+       } 
+
+       if (file_exists($uploaddirsecond) && $counter < 2) {
+          $counter++;
+        $order_image_pdf[] = $order_image['order_image']->second_url_photo;
+          
+       }
+
+       if (file_exists($uploaddirthird) && $counter < 2) {
+          $counter++;
+        $order_image_pdf[] = $order_image['order_image']->third_url_photo;
+           
+       }
+
+       if (file_exists($uploaddirfourth) && $counter < 2) {
+          $counter++;
+        $order_image_pdf[] = $order_image['order_image']->fourth_url_photo;
+          
+       }
+
+     $order_image_pdf_data['order_image_pdf'] = $order_image_pdf;
+     
 
      
         $array3 = array('ia.order_id' => $order['order']->id);
@@ -983,7 +1030,7 @@ class OrderController extends Controller {
             $order['order']->in_hands_by ='';
         }
         $order_misc['order_misc'] = json_decode($_POST['order_misc']);
-        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data,$distributed_address);
+        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data,$distributed_address,$order_image_pdf_data);
      
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());
@@ -1130,6 +1177,137 @@ class OrderController extends Controller {
                 $response = array('success' => 1, 'message' => MAIL_SEND);
           
          return response()->json(["data" => $response]);
+    }
+
+
+    /**
+    * Update client form data, .
+    * @return json data
+    */
+    public function SaveOrderImage()
+    {
+        $post = Input::all();
+       
+
+      /* $delete_dir = base_path() . "/public/uploads/order/" . $post['order_id'];
+       exec('rm -rf '.escapeshellarg($delete_dir));*/
+       $uploaddir = base_path() . "/public/uploads/order/" . $post['order_id'];
+            OrderController::create_dir($uploaddir);
+
+        if(isset($post['data']['first_logo']['base64']))
+        {
+
+            $split = explode( '/', $post['data']['first_logo']['filetype'] );
+            $type = $split[1]; 
+
+            $png_url1 = "order-logo-1-".time().".".$type;
+            $path = base_path() . "/public/uploads/order/" .$post['order_id']. "/" .$png_url1;
+            $img = $post['data']['first_logo']['base64'];
+            
+            $data = base64_decode($img);
+            $success = file_put_contents($path, $data);
+            
+
+            $post['data']['first_logo'] = $png_url1;
+
+        }
+
+        if(isset($post['data']['second_logo']['base64'])){
+
+                $split = explode( '/', $post['data']['second_logo']['filetype'] );
+                $type = $split[1]; 
+
+                $png_url2 = "order-logo-2-".time().".".$type;
+                 $path = base_path() . "/public/uploads/order/" .$post['order_id']. "/" .$png_url2;
+                $img = $post['data']['second_logo']['base64'];
+                
+                $data = base64_decode($img);
+                $success = file_put_contents($path, $data);
+                
+
+                $post['data']['second_logo'] = $png_url2;
+        }
+
+        if(isset($post['data']['third_logo']['base64'])){
+
+                $split = explode( '/', $post['data']['third_logo']['filetype'] );
+                $type = $split[1]; 
+
+                $png_url3 = "order-logo-3-".time().".".$type;
+                 $path = base_path() . "/public/uploads/order/" .$post['order_id']. "/" .$png_url3;
+                $img = $post['data']['third_logo']['base64'];
+                
+                $data = base64_decode($img);
+                $success = file_put_contents($path, $data);
+                
+
+                $post['data']['third_logo'] = $png_url3;
+        }
+
+        if(isset($post['data']['fourth_logo']['base64'])){
+
+                $split = explode( '/', $post['data']['fourth_logo']['filetype'] );
+                $type = $split[1]; 
+
+                $png_url4 = "order-logo-4-".time().".".$type;
+                 $path = base_path() . "/public/uploads/order/" .$post['order_id']. "/" .$png_url4;
+                $img = $post['data']['fourth_logo']['base64'];
+                
+                $data = base64_decode($img);
+                $success = file_put_contents($path, $data);
+                
+
+                $post['data']['fourth_logo'] = $png_url4;
+        }
+
+
+        $result = $this->order->SaveOrderImage($post['data'],$post['order_id']);
+
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        return response()->json(['data'=>$data]);
+    }
+
+public function create_dir($dir_path) {
+
+        if (!file_exists($dir_path)) {
+           
+            mkdir($dir_path, 0777, true);
+        } else {
+            exec("chmod $dir_path 0777");
+        }
+    }
+
+    /**
+    * Order Detail controller      
+    * @access public detail
+    * @param  array $data
+    * @return json data
+    */
+    public function orderImageDetail() {
+ 
+        $data = Input::all();
+        $result = $this->order->orderImageDetail($data);
+
+        $result[0]->first_url_photo = UPLOAD_PATH.'order/'.$result[0]->id.'/'.$result[0]->first_logo;
+        $result[0]->second_url_photo = UPLOAD_PATH.'order/'.$result[0]->id.'/'.$result[0]->second_logo;
+        $result[0]->third_url_photo = UPLOAD_PATH.'order/'.$result[0]->id.'/'.$result[0]->third_logo;
+        $result[0]->fourth_url_photo = UPLOAD_PATH.'order/'.$result[0]->id.'/'.$result[0]->fourth_logo;
+
+        
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $result[0]
+                                
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'records' => '');
+        } 
+        return response()->json(['data'=>$response]);
     }
 
 }

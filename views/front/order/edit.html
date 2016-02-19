@@ -297,9 +297,45 @@
                                 <button  type="submit" class="btn btn-info" ng-click="saveButtonData('cp')" >Create Contract Screen PO</button>
                             </div>
 
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <button  type="submit" class="btn btn-info" ng-click="saveButtonData('ce')" >Create Contract Embroidery</button>
                             </div>
+
+                           
+
+                          <div class="form-group col-md-2">
+                                 <img  ng-if="orderImage.first_logo" ng-src="{{orderImage.first_url_photo}}" alt="" height="200" width="200" class="img-responsive"/> 
+                                  <input type='file' data-ng-model="orderImage.first_logo" base-sixty-four-input>
+                              </div>
+
+
+                               <div class="form-group col-md-2">
+                                 <img  ng-if="orderImage.second_logo" ng-src="{{orderImage.second_url_photo}}" alt="" height="200" width="200" class="img-responsive"/> 
+                                  <input type='file' data-ng-model="orderImage.second_logo" base-sixty-four-input>
+                              </div>
+
+
+                              <div class="form-group col-md-2">
+                               
+                                 <img  ng-if="orderImage.third_logo" ng-src="{{orderImage.third_url_photo}}" alt="" height="200" width="200" class="img-responsive"/>
+                                  <input type='file' data-ng-model="orderImage.third_logo" base-sixty-four-input>
+                              </div>
+
+
+                              <div class="form-group col-md-2">
+                               
+                                 <img  ng-if="orderImage.fourth_logo" ng-src="{{orderImage.fourth_url_photo}}" alt="" height="200" width="200" class="img-responsive"/>
+                                  <input type='file' data-ng-model="orderImage.fourth_logo" base-sixty-four-input>
+                              </div>
+
+                              <div class="col-md-12">
+                                  <button  type="submit" class="btn btn-info" ng-click="SaveOrderImage(orderImage)">Save Images</button> 
+                              </div>
+
+
+
+
+
                             <!-- <div class="form-group pull-right">
                                 <button  type="submit" class="btn btn-info" ng-click="savePositionData(orderPositionAll)" >Save</button>
                             </div> -->
