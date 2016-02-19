@@ -41,6 +41,17 @@ class FinishingController extends Controller {
         $post = Input::all();
         $data = $this->finishing->getFinishingdata($post[0]);
 
+        $result['poly_bagging'] = array();
+        $result['hang_tag'] = array();
+        $result['tag_removal'] = array();
+        $result['speciality'] = array();
+        $result['packing'] = array();
+        $result['sticker'] = array();
+        $result['sew_on_women_tag'] = array();
+        $result['inside_tag'] = array();
+        $result['active'] = array();
+        $result['completed'] = array();
+
         if(!empty($data))
         {
             foreach ($data as $value) {
@@ -86,10 +97,6 @@ class FinishingController extends Controller {
                     $result['completed'][] = $value;
                 }
             }
-        }
-        else
-        {
-            $result = $data;
         }
         return $this->return_response($result);
     }

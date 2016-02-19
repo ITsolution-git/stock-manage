@@ -18,8 +18,10 @@ class Finishing extends Model {
                         ->leftJoin('finishing as f', 'o.id', '=', 'f.order_id')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                         ->leftJoin('finishing_category as fc', 'f.category_id', '=', 'fc.id')
+                        ->leftJoin('misc_type as misc', 'o.f_approval', '=', 'misc.id')
                         ->select($listArray)
                         ->where('f.is_delete', '!=', '1')
+                        ->where('misc.slug', '=', '148')
                         ->where('o.company_id', '=', $company_id);
         
         $finishingData = $query->get();
