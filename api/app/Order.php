@@ -774,6 +774,34 @@ public function saveColorSize($post)
         return $result;
    }
 
+   public function SaveOrderImage($post,$id)
+   {
+
+     unset($post['first_url_photo']);
+     unset($post['second_url_photo']);
+     unset($post['third_url_photo']);
+     unset($post['fourth_url_photo']);
+
+      $result = DB::table('orders')
+              ->where('id','=',$id)
+              ->update($post);
+      return $result;
+   }
+
+   /**
+* Order Image Detail           
+* @access public orderDetail
+* @param  int $orderId and $clientId
+* @return array $combine_array
+*/  
+
+    public function orderImageDetail($data) {
+  
+        $whereOrderConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
+        $orderData = DB::table('orders')->where($whereOrderConditions)->get();
+        return $orderData;
+    }
+
 
     
 }

@@ -208,13 +208,14 @@
                   <div class="payDetails"><?php $pos_id = $position->position_id; 
                       $placement_id = $position->placement_type;
                       $display_label = '';
-                      if($data['order_misc']->placement_type->$placement_id->id == '43'){
+                      if($data['order_misc']->placement_type->$placement_id->slug == '43'){
                       $display_label = 'Colors:';
-                      }elseif ($data['order_misc']->placement_type->$placement_id->id == '45') {
+                      }elseif ($data['order_misc']->placement_type->$placement_id->slug == '45') {
                       $display_label = 'Stiches:';
                       } 
+                       
                       ?><span>Position: {{$data['order_misc']->position->$pos_id->value}} &nbsp;<strong><?php echo $display_label?>{{$position->color_stitch_count}}</strong></span><br />
-                  <?php if($position->discharge_qnty > '0'){
+                  <?php if($position->discharge_qnty > '0'){ 
                     $discharge_price = $position->discharge_qnty * $data['price_grid']->discharge; ?>
                     <span>Discharge Ink @ <?php echo $discharge_price;?></span><br/>
                   <?php }?>
@@ -260,15 +261,20 @@
                     <span>Screen Fee @ <?php echo $screen_fees_price;?></span><br/>
                   <?php }?>
 
-                  <?php  if($position->color_stitch_count > '0') {
-                          if($data['order_misc']->placement_type->$placement_id->id == '43') {
+                  <?php   if($position->color_stitch_count > '0') {
+                   
+                          if($data['order_misc']->placement_type->$placement_id->slug == '43') {
+                     
                    foreach ($data['price_screen_primary'] as $price_screen_primary) {
 
                       if($data['total_qty'] >= $price_screen_primary->range_low && $data['total_qty'] <= $price_screen_primary->range_high) {
+
                       $price_field = 'pricing_'.$position->color_stitch_count.'c';
-                      $screen_price_calc =  $price_screen_primary->$price_field;?>
+
+                      $screen_price_calc =  $price_screen_primary->$price_field; ?>
                       <span>Screen Print @ <?php echo $screen_price_calc;?></span><br/>
                      <?php 
+
                        }
                       }
                      } 
@@ -289,8 +295,14 @@
           <td align="left" valign="top" width="34%">
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <tr>
-                <td align="left" valign="top" width="100%"><img src="<?php echo url().'/images/c2.jpg';?>" alt="Logo" style="display:block; width:150px; height:150px;" width="150" height="150" /> <br/>   <br/>                
-                 <img src="<?php echo url().'/images/c1.jpg';?>" alt="Logo" style="display:block; width:150px; height:150px;" width="150" height="150" />
+                
+                <td align="left" valign="top" width="100%">
+                  <?php if(isset($data['order_image_pdf'][0])) {?>  
+                  <img  src="{{$data['order_image_pdf'][0]}}" alt="Logo" style="display:block; width:150px; height:150px;" width="150" height="150" /> <br/>   <br/>
+                  <?php }?>      
+                  <?php if(isset($data['order_image_pdf'][1])) {?>        
+                 <img src="{{$data['order_image_pdf'][1]}}" alt="Logo" style="display:block; width:150px; height:150px;" width="150" height="150" />
+                 <?php }?>
                 </td>
               </tr>
             </table>

@@ -225,6 +225,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
     var AJloader = $("#ajax_loader");
 
     get_order_details(order_id,client_id,company_id);
+    getOrderImage(order_id,client_id,company_id);
     
 
     function get_po_detail(order_id,client_id)
@@ -2503,6 +2504,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         input_all_client_main_data.setAttribute('value', JSON.stringify($scope.client_main_data));
                         form.appendChild(input_all_client_main_data);
 
+                        var input_all_order_image_data = document.createElement('input');
+                        input_all_order_image_data.name = 'order_image';
+                        input_all_order_image_data.setAttribute('value', JSON.stringify($scope.orderImage));
+                        form.appendChild(input_all_order_image_data);
+
 
                         document.body.appendChild(form);
                         form.submit();  
@@ -2742,6 +2748,45 @@ function get_company_data_selected(id)
     {
         console.log(orderline);
     }
+
+    function getOrderImage(order_id,client_id,company_id)
+    {
+        if($stateParams.id && $stateParams.client_id && company_id != 0 && company_id) {
+
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.client_id = $stateParams.client_id;
+            combine_array_id.company_id = company_id;
+            
+            $("#ajax_loader").show();
+
+            $http.post('api/public/order/orderImageDetail',combine_array_id).success(function(result, status, headers, config) {
+           
+                if(result.data.success == '1') {
+             
+                    $scope.orderImage = result.data.records;
+                    
+                }
+                else {
+                    $state.go('order.list');
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+    }
+
+    $scope.SaveOrderImage=function(OrderImages)
+                          {
+                            
+                              var order_image = {};
+                              //console.log(OrderImages); return false;
+                              order_image.data = OrderImages;
+                              order_image.order_id = order_id;
+                              $http.post('api/public/order/SaveOrderImage',order_image).success(function(Listdata) {
+                                     getOrderImage(order_id,client_id,company_id);
+                              });
+                          };
+
 }]);
 
 app.controller('orderAddCtrl', ['$scope','$rootScope','$http','$location','$state','$modal','AuthService','$log','AllConstant', function($scope,$rootScope,$http,$location,$state,$modal,AuthService,$log,AllConstant) {
