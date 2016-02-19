@@ -538,7 +538,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
                     var orderline_data = {};
                     orderline_data.data = {
-                                            'peritem' : value.peritem.toFixed(2),
+                                            'peritem' : value.peritem,
                                             'override': override_value,
                                             'per_line_total' : value.per_line_total,
                                             'override_diff' : value.override_diff
@@ -1558,8 +1558,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 $scope.avg_garment_price = value.avg_garment_price;
                 var print_charges = parseFloat(value.print_charges);
                 $scope.print_charges = print_charges.toFixed(2);
-                var order_line_charge = value.peritem;
-                $scope.order_line_charge = order_line_charge.toFixed(2);
+                $scope.order_line_charge = value.peritem;
             }
             if(value.orderline_id == undefined ||  value.orderline_id == '')
             {

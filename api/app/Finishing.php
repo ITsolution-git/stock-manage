@@ -12,7 +12,7 @@ class Finishing extends Model {
     public function getFinishingdata($company_id)
     {
         $listArray = ['o.id as order_id','f.id','f.qty','fc.category_name', DB::raw('CONCAT(c.pl_firstname," ",c.pl_lastname) as client_name'),'o.job_name',
-                      'f.status','f.note','f.category_id','c.client_id','f.time','f.start_time','f.end_time','f.est'];
+                      'o.status','f.note','f.category_id','c.client_id','f.time','f.start_time','f.end_time','f.est'];
 
         $query = DB::table('orders as o')
                         ->leftJoin('finishing as f', 'o.id', '=', 'f.order_id')
