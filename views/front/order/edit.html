@@ -79,17 +79,11 @@
                 <div class="form-group col-md-3 m-b nopad-form smallPad orderLineCal">
 
                     <div class="input-group col-md-12 pull-right nopad-form t-r m-b">
-                                 
-                        
+                            <span class="label bg-dark label-change">JOB#  <b class="badge m-l-xs">{{order_id}}</b></span>
                             <button ng-click="confirmPricing()" type="button"  class="btn btn-info order-button">Confirm Pricing</button>
-                        
-                      
                             <button ng-click="printPdf()" type="button"  class="btn btn-info order-button">Print</button>
-                      
                             <button class="btn btn-info order-button" ng-click="openEmailPopup()" tabindex="0">Email</button>
-                       
                             <button ui-sref="order.list" type="button"  class="btn btn-info order-button">List</button>
-                                                   
                     </div>
                     <div class="col-md-12 nopad-form">
                         <div class="form-group col-md-6 text-right nopad-left smallPad">

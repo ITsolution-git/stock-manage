@@ -369,15 +369,16 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             $scope.orderline_id = 0;
             $scope.total_qty = 0;
+            $scope.order.order_line_total = 0;
             var order_line_total = 0;
 
             angular.forEach($scope.orderLineAll, function(value) {
                 $scope.orderline_id = parseInt(value.id);
                 $scope.total_qty += parseInt(value.qnty);
-                order_line_total += parseFloat(value.per_line_total);
+                $scope.order.order_line_total += parseFloat(value.per_line_total);
             });
 
-            $scope.order.order_line_total = order_line_total.toFixed(2);
+            //$scope.order.order_line_total = order_line_total.toFixed(2);
             $("#ajax_loader").hide();
         });
     }
@@ -554,7 +555,16 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
         }
         else
         {
-            $scope.calculate_all(orderline_id);
+            var orderline_data = {};
+            orderline_data.data = {
+                                    'override_diff' : '0'
+                                };
+            orderline_data.cond = {};
+            orderline_data['table'] ='order_orderlines';
+            orderline_data.cond['id'] = orderline_id;
+            $http.post('api/public/common/UpdateTableRecords',orderline_data).success(function(result) {
+                $scope.calculate_all(orderline_id);
+            });
         }
         
     }
@@ -919,6 +929,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         $scope.selected = selectedItem;
                     }, function () {
                           get_order_details($scope.order_id,$scope.client_id,company_id);
+                          get_orderline_detail();
                         $log.info('Modal dismissed at: ' + new Date());
                     });
 
