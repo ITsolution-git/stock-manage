@@ -531,7 +531,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 {
                     var subtract = parseFloat(override_value) - parseFloat(value.peritem);
                     value.override_diff = subtract.toFixed(2);
-                    value.peritem = override_value.toFixed(2);
+                    value.peritem = override_value;
 
                     var mul = parseInt(value.qnty) * parseFloat(value.peritem);
                     value.per_line_total = mul.toFixed(2);
