@@ -189,14 +189,15 @@ class PurchaseController extends Controller {
 
 	public function GetScreendata($po_id,$company_id)
 	{
-    	if(empty($po_id))
+    	if(empty($po_id) || empty($company_id))
     	{
-    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id");
+    		$response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id, company_id");
     		return  response()->json(["data" => $response]);
     		die();
     	}
     	else
     	{
+            $Misc_data = $this->AllMsiData($company_id);
     		$this->purchase->Update_Ordertotal($po_id);
     		$screen_data = $this->purchase->GetPodata($po_id,$company_id);
 
@@ -210,7 +211,10 @@ class PurchaseController extends Controller {
     			$order_id = $screen_data[0]->order_id;
                 $order_line_data = $this->purchase->GetOrderLineData($order_id);
 
-                
+                foreach ($screen_line as $key => $value) 
+                {
+                    $screen_line[$key]->position = (!empty($value->position))?$Misc_data[$value->position]:'';
+                }
 
                 if(!empty($order_line_data))
                     {
@@ -273,5 +277,16 @@ class PurchaseController extends Controller {
             $response = array('success' => 0, 'message' => NO_RECORDS);
         }
         return  response()->json(["data" => $response]);
+    }
+    public function AllMsiData($compay_id)
+    {
+        $query = DB::table('misc_type')->where('company_id','=',$compay_id)->select('id','value','company_id')->get();
+        $ret_array = array();
+        foreach ($query as $key => $value) {
+            $ret_array[$value->id] = $value->value;
+        }
+
+        //echo "<pre>"; print_r($query); echo "</pre>"; die;
+        return $ret_array;
     }
 }
