@@ -206,6 +206,8 @@ Route::post('order/deleteColorSize', 'OrderController@deleteColorSize');
 Route::post('order/sendEmail', 'OrderController@sendEmail');
 Route::post('order/getOrderPositionDetail', 'OrderController@getOrderPositionDetail');
 Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
+Route::post('order/SaveOrderImage', 'OrderController@SaveOrderImage');
+Route::post('order/orderImageDetail', 'OrderController@orderImageDetail');
 
 
 // FINISHING CONTROLLER 
