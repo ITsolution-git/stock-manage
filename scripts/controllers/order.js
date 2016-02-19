@@ -1782,163 +1782,166 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 var calc_total = parseFloat(calc_descharge) + parseFloat(calc_speciality) + parseFloat(calc_foil) + parseFloat(calc_ink_charge) + parseFloat(calc_number_on_dark) + parseFloat(calc_number_on_light) + parseFloat(calc_oversize) + parseFloat(calc_press_setup) + parseFloat(calc_screen_fees);
                 $scope.print_charges +=  calc_total;
 
-                placement_type_id =  value.placement_type;
-                $scope.miscData.placement_type[placement_type_id].slug;
-                
-                if($scope.miscData.placement_type[placement_type_id].slug == 43)
+                if(value.placement_type > 0)
                 {
-                    angular.forEach($scope.price_screen_primary, function(primary) {
-                        
-                        var price_field = 'pricing_'+$scope.color_stitch_count+'c';
-
-                        if(value.qnty >= primary.range_low && value.qnty <= primary.range_high)
-                        {
-                            $scope.print_charges += parseFloat(primary[price_field]);
-                        }
-                    });
-                }
-                else if($scope.miscData.placement_type[placement_type_id].slug == 44)
-                {
-                    angular.forEach($scope.price_screen_secondary, function(secondary) {
-                        
-                        var price_field = 'pricing_'+$scope.color_stitch_count+'c';
-
-                        if(value.qnty >= secondary.range_low && value.qnty <= secondary.range_high)
-                        {
-                            $scope.print_charges += parseFloat(secondary[price_field]);
-                        }
-                    });   
-                }
-                else if($scope.miscData.placement_type[placement_type_id].slug == 45)
-                {
-                    angular.forEach($scope.embroidery_switch_count, function(embroidery) {
-                        
-                        var price_field = 'pricing_'+$scope.color_stitch_count+'c';
-
-                        if($scope.color_stitch_count >= embroidery.range_low_1 && $scope.color_stitch_count <= embroidery.range_high_1)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_1c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_2 && $scope.color_stitch_count <= embroidery.range_high_2)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_2c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_3 && $scope.color_stitch_count <= embroidery.range_high_3)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_3c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_4 && $scope.color_stitch_count <= embroidery.range_high_4)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_4c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_5 && $scope.color_stitch_count <= embroidery.range_high_5)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_5c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_6 && $scope.color_stitch_count <= embroidery.range_high_6)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_6c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_7 && $scope.color_stitch_count <= embroidery.range_high_7)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_7c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_8 && $scope.color_stitch_count <= embroidery.range_high_8)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_8c';
-                        }
-                        if($scope.color_stitch_count >= embroidery.range_low_9 && $scope.color_stitch_count <= embroidery.range_high_9)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_9c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_10 && $scope.color_stitch_count <= embroidery.range_high_10)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_10c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_11 && $scope.color_stitch_count <= embroidery.range_high_11)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_11c';
-                        }
-                        else if($scope.color_stitch_count >= embroidery.range_low_12 && $scope.color_stitch_count <= embroidery.range_high_12)
-                        {
-                            $scope.switch_id = embroidery.id;
-                            $scope.embroidery_field = 'pricing_12c';
-                        }
-                    });
-                    /*var screen_embroidery = {};
-                    screen_embroidery.table ='price_screen_embroidery';
-                    screen_embroidery.cond ={price_id:$scope.order.price_id,embroidery_switch_id:$scope.switch_id,is_delete:1,status:1}
+                    placement_type_id =  value.placement_type;
+                    $scope.miscData.placement_type[placement_type_id].slug;
                     
-                    $http.post('api/public/common/GetTableRecords',screen_embroidery).success(function(result) {
-                        
-                        if(result.data.success == '1')
-                        {
-                            $scope.price_screen_embroidery =result.data.records;
-                        } 
-                        else
-                        {
-                            $scope.price_screen_embroidery=[];
-                        }
+                    if($scope.miscData.placement_type[placement_type_id].slug == 43)
+                    {
+                        angular.forEach($scope.price_screen_primary, function(primary) {
+                            
+                            var price_field = 'pricing_'+$scope.color_stitch_count+'c';
 
-                        angular.forEach($scope.price_screen_embroidery, function(embroidery) {
-                        
-                            if(value.qnty >= embroidery.range_low && value.qnty <= embroidery.range_high)
+                            if(value.qnty >= primary.range_low && value.qnty <= primary.range_high)
                             {
-                                $scope.print_charges += parseFloat(embroidery[$scope.embroidery_field]);
+                                $scope.print_charges += parseFloat(primary[price_field]);
                             }
                         });
-                    });*/
-                }
-                if($scope.miscData.placement_type[placement_type_id].slug == 46)
-                {
-                    dtg_size_id =  value.dtg_size;
-                    $scope.miscData.dir_to_garment_sz[dtg_size_id].slug;
+                    }
+                    else if($scope.miscData.placement_type[placement_type_id].slug == 44)
+                    {
+                        angular.forEach($scope.price_screen_secondary, function(secondary) {
+                            
+                            var price_field = 'pricing_'+$scope.color_stitch_count+'c';
 
-                    dtg_on_id =  $scope.miscData.color_group[dtg_on_id].slug;
-                    $scope.miscData.color_group[dtg_on_id].slug;
+                            if(value.qnty >= secondary.range_low && value.qnty <= secondary.range_high)
+                            {
+                                $scope.print_charges += parseFloat(secondary[price_field]);
+                            }
+                        });   
+                    }
+                    else if($scope.miscData.placement_type[placement_type_id].slug == 45)
+                    {
+                        angular.forEach($scope.embroidery_switch_count, function(embroidery) {
+                            
+                            var price_field = 'pricing_'+$scope.color_stitch_count+'c';
 
-                    if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 16){
-                        var garment_field = 'pricing_1c';
-                    }
-                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 15){
-                        var garment_field = 'pricing_2c';
-                    }
-                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 16){
-                        var garment_field = 'pricing_3c';
-                    }
-                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 15){
-                        var garment_field = 'pricing_4c';
-                    }
-                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 16){
-                        var garment_field = 'pricing_5c';
-                    }
-                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 15){
-                        var garment_field = 'pricing_6c';
-                    }
-                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 16){
-                        var garment_field = 'pricing_7c';
-                    }
-                    else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 15){
-                        var garment_field = 'pricing_8c';
-                    }
-                    angular.forEach($scope.price_direct_garment, function(garment) {
+                            if($scope.color_stitch_count >= embroidery.range_low_1 && $scope.color_stitch_count <= embroidery.range_high_1)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_1c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_2 && $scope.color_stitch_count <= embroidery.range_high_2)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_2c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_3 && $scope.color_stitch_count <= embroidery.range_high_3)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_3c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_4 && $scope.color_stitch_count <= embroidery.range_high_4)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_4c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_5 && $scope.color_stitch_count <= embroidery.range_high_5)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_5c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_6 && $scope.color_stitch_count <= embroidery.range_high_6)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_6c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_7 && $scope.color_stitch_count <= embroidery.range_high_7)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_7c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_8 && $scope.color_stitch_count <= embroidery.range_high_8)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_8c';
+                            }
+                            if($scope.color_stitch_count >= embroidery.range_low_9 && $scope.color_stitch_count <= embroidery.range_high_9)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_9c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_10 && $scope.color_stitch_count <= embroidery.range_high_10)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_10c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_11 && $scope.color_stitch_count <= embroidery.range_high_11)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_11c';
+                            }
+                            else if($scope.color_stitch_count >= embroidery.range_low_12 && $scope.color_stitch_count <= embroidery.range_high_12)
+                            {
+                                $scope.switch_id = embroidery.id;
+                                $scope.embroidery_field = 'pricing_12c';
+                            }
+                        });
+                        /*var screen_embroidery = {};
+                        screen_embroidery.table ='price_screen_embroidery';
+                        screen_embroidery.cond ={price_id:$scope.order.price_id,embroidery_switch_id:$scope.switch_id,is_delete:1,status:1}
                         
-                        if(value.qnty >= garment.range_low && value.qnty <= garment.range_high)
-                        {
-                            $scope.print_charges += parseFloat(garment[garment_field]);
+                        $http.post('api/public/common/GetTableRecords',screen_embroidery).success(function(result) {
+                            
+                            if(result.data.success == '1')
+                            {
+                                $scope.price_screen_embroidery =result.data.records;
+                            } 
+                            else
+                            {
+                                $scope.price_screen_embroidery=[];
+                            }
+
+                            angular.forEach($scope.price_screen_embroidery, function(embroidery) {
+                            
+                                if(value.qnty >= embroidery.range_low && value.qnty <= embroidery.range_high)
+                                {
+                                    $scope.print_charges += parseFloat(embroidery[$scope.embroidery_field]);
+                                }
+                            });
+                        });*/
+                    }
+                    if($scope.miscData.placement_type[placement_type_id].slug == 46)
+                    {
+                        dtg_size_id =  value.dtg_size;
+                        $scope.miscData.dir_to_garment_sz[dtg_size_id].slug;
+
+                        dtg_on_id =  $scope.miscData.color_group[dtg_on_id].slug;
+                        $scope.miscData.color_group[dtg_on_id].slug;
+
+                        if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 16){
+                            var garment_field = 'pricing_1c';
                         }
-                    });
+                        else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 17 && $scope.miscData.color_group[dtg_on_id].slug == 15){
+                            var garment_field = 'pricing_2c';
+                        }
+                        else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 16){
+                            var garment_field = 'pricing_3c';
+                        }
+                        else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 18 && $scope.miscData.color_group[dtg_on_id].slug == 15){
+                            var garment_field = 'pricing_4c';
+                        }
+                        else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 16){
+                            var garment_field = 'pricing_5c';
+                        }
+                        else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 19 && $scope.miscData.color_group[dtg_on_id].slug == 15){
+                            var garment_field = 'pricing_6c';
+                        }
+                        else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 16){
+                            var garment_field = 'pricing_7c';
+                        }
+                        else if($scope.miscData.dir_to_garment_sz[dtg_size_id].slug == 20 && $scope.miscData.color_group[dtg_on_id].slug == 15){
+                            var garment_field = 'pricing_8c';
+                        }
+                        angular.forEach($scope.price_direct_garment, function(garment) {
+                            
+                            if(value.qnty >= garment.range_low && value.qnty <= garment.range_high)
+                            {
+                                $scope.print_charges += parseFloat(garment[garment_field]);
+                            }
+                        });
+                    }
                 }
             });
         }
