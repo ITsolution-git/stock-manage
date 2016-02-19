@@ -531,14 +531,14 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
                 {
                     var subtract = parseFloat(override_value) - parseFloat(value.peritem);
                     value.override_diff = subtract.toFixed(2);
-                    value.peritem = override_value.toFixed(2);
+                    value.peritem = override_value;
 
                     var mul = parseInt(value.qnty) * parseFloat(value.peritem);
                     value.per_line_total = mul.toFixed(2);
 
                     var orderline_data = {};
                     orderline_data.data = {
-                                            'peritem' : value.peritem.toFixed(2),
+                                            'peritem' : value.peritem,
                                             'override': override_value,
                                             'per_line_total' : value.per_line_total,
                                             'override_diff' : value.override_diff
@@ -1558,8 +1558,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                 $scope.avg_garment_price = value.avg_garment_price;
                 var print_charges = parseFloat(value.print_charges);
                 $scope.print_charges = print_charges.toFixed(2);
-                var order_line_charge = value.peritem;
-                $scope.order_line_charge = order_line_charge.toFixed(2);
+                $scope.order_line_charge = value.peritem;
             }
             if(value.orderline_id == undefined ||  value.orderline_id == '')
             {
@@ -2164,7 +2163,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         var address_data = {};
         address_data.order_id = $scope.order_id;
         address_data.address_id = address_id;
-        address_data.company_id = company_id;
+//        address_data.company_id = company_id;
 
         $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);

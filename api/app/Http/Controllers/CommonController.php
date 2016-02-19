@@ -133,10 +133,10 @@ class CommonController extends Controller {
     * Get Array of field selection, condition and table name.
     * @return json data
     */
-     public function getStaffList()
+     public function getStaffList($company_id)
      {
 
-        $result = $this->common->getStaffList();
+        $result = $this->common->getStaffList($company_id);
         return $this->return_response($result);
      }
 

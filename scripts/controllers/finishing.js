@@ -13,8 +13,6 @@ app.controller('finishingListCtrl', ['$scope','$rootScope','$http','$location','
         {
             $("#ajax_loader").hide();
 
-            if(result.data.success == 1)
-            {
 
                 if($scope.tab_name == '')
                 {
@@ -116,7 +114,6 @@ app.controller('finishingListCtrl', ['$scope','$rootScope','$http','$location','
                   return $scope.select($scope.currentPage);
                 };
                 return init();
-            }
         });
     }
 
