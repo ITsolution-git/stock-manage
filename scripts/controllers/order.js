@@ -2183,7 +2183,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         var address_data = {};
         address_data.order_id = $scope.order_id;
         address_data.address_id = address_id;
-//        address_data.company_id = company_id;
+        address_data.company_id = company_id;
 
         $http.post('api/public/order/addToDistribute',address_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
