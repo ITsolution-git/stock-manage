@@ -1793,9 +1793,12 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                             
                             var price_field = 'pricing_'+$scope.color_stitch_count+'c';
 
-                            if(value.qnty >= primary.range_low && value.qnty <= primary.range_high)
+                            if($scope.position_qty >= primary.range_low && $scope.position_qty <= primary.range_high)
                             {
-                                $scope.print_charges += parseFloat(primary[price_field]);
+                                if(primary[price_field] != undefined)
+                                {
+                                    $scope.print_charges += parseFloat(primary[price_field]);
+                                }
                             }
                         });
                     }
@@ -1805,9 +1808,12 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                             
                             var price_field = 'pricing_'+$scope.color_stitch_count+'c';
 
-                            if(value.qnty >= secondary.range_low && value.qnty <= secondary.range_high)
+                            if($scope.position_qty >= secondary.range_low && $scope.position_qty <= secondary.range_high)
                             {
-                                $scope.print_charges += parseFloat(secondary[price_field]);
+                                if(secondary[price_field] != undefined)
+                                {
+                                    $scope.print_charges += parseFloat(secondary[price_field]);
+                                }
                             }
                         });   
                     }
@@ -1895,7 +1901,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
                             angular.forEach($scope.price_screen_embroidery, function(embroidery) {
                             
-                                if(value.qnty >= embroidery.range_low && value.qnty <= embroidery.range_high)
+                                if($scope.position_qty >= embroidery.range_low && $scope.position_qty <= embroidery.range_high)
                                 {
                                     $scope.print_charges += parseFloat(embroidery[$scope.embroidery_field]);
                                 }
@@ -1936,7 +1942,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
                         }
                         angular.forEach($scope.price_direct_garment, function(garment) {
                             
-                            if(value.qnty >= garment.range_low && value.qnty <= garment.range_high)
+                            if($scope.position_qty >= garment.range_low && $scope.position_qty <= garment.range_high)
                             {
                                 $scope.print_charges += parseFloat(garment[garment_field]);
                             }
