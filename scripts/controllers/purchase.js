@@ -414,7 +414,7 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                           		  {
                                        GetScreenData($scope.po_id );
                                        var data = {"status": "success", "message": "Data Updated successfully"}
-                    				   notifyService.notify(data.status, data.message); 
+                    				           notifyService.notify(data.status, data.message); 
                                   });
                           }
                         $scope.vendorshipcharge = function($event){

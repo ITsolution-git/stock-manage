@@ -221,13 +221,13 @@ class Purchase extends Model {
 	}
 	function GetScreendata($po_id,$company_id)
 	{
+
 		$result =  DB::table('purchase_order as po')
 				  ->leftJoin('orders as ord','po.order_id','=','ord.id')
-				  ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+				  ->Join('purchase_order_line as pol','pol.po_id','=','po.po_id')
 				  ->leftJoin('order_positions as op','op.id','=','pol.line_id')
-				  ->leftJoin('vendors as v','v.id','=','po.vendor_id')
-				  ->select('v.name_company','ord.job_name','po.po_id','ord.id as order_id','op.qnty','op.color_stitch_count','op.id as position_id','pol.*')
-				  ->where('po.po_id','=',$po_id)
+				  ->select('op.description','po.po_id','ord.id as order_id','op.qnty','op.color_stitch_count','op.position_id as position','op.id as position_id','pol.*')
+				  ->where('pol.po_id','=',$po_id)
 				  ->where('ord.company_id','=',$company_id)
 				  ->get();
 				 // echo "<pre>"; print_r($result); die;

@@ -8,17 +8,11 @@
 
     
     <span class="label bg-dark label-change">Contract Prints</span>
-      <!-- <button  type="button" ui-sref="purchase.po({id:po_id})" class="btn btn-info topNavButtons">Company PO</button>
-      <button  type="button" ui-sref="purchase.sg({id:po_id})" class="btn btn-info topNavButtons">Supplied Garments</button>
-      
-      <button  type="button" ui-sref="purchase.ce({id:po_id})" class="btn btn-info topNavButtons">Contract Embrodiery</button>    --> 
-    </div>
-    <div class="col-sm-2 m-b">
        <span class="label bg-dark label-change">PO#  <b class="badge m-l-xs">{{po_id}}</b></span>
-    </div>
-    <div class="col-sm-2 m-b">
       <span class="label bg-dark label-change">JOB#  <b class="badge m-l-xs">{{order_id}}</b></span>   
+
     </div>
+
 
             <div class="col-sm-12 m-b">
              
@@ -100,12 +94,12 @@
               
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control" ng-model="poline.location" name="location"  ui-event="{ blur : 'UpdateField_detail($event,poline.id)' }" >
+                <input type="text" class="form-control" ng-model="poline.position" name="position_id"  disabled="disabled">
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control" ng-model="poline.instruction" name="instruction"   ui-event="{ blur : 'UpdateField_detail($event,poline.id)' }" >
+                <input type="text" class="form-control" ng-model="poline.description" name="description" >
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
@@ -141,15 +135,15 @@
           <!-- RIGHT SIDE FORM -->
           <div class="form-group col-sm-6 m-b">
             <ul class="nav nav-tabs input-group col-sm-12">
-              <!-- <li class="active"> <a href data-toggle="tab" data-target="#tab10">Placement1</a> </li>
+              <li class="active"> <a href data-toggle="tab" data-target="#tab10">Placement1</a> </li>
               <li> <a href data-toggle="tab" data-target="#tab11">Placement2</a> </li>
               <li> <a href data-toggle="tab" data-target="#tab12">Placement3</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab13">Placement4</a> </li> -->
-              <li class="active"> <a href data-toggle="tab" data-target="#tab14">Garments</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab13">Placement4</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab14">Garments</a> </li>
 
             </ul>
             <div class="tab-content p b-a no-b-t bg-white m-b-md">
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab10">
+              <div role="tabpanel" class="tab-pane animated active fadeIn" id="tab10">
                     <div class="col-md-4 nopad-left m-b">                
                       <div class="form-group">
                         <label>Location<em class="text-muted"></em></label>
@@ -200,7 +194,7 @@
                                 </div>
                             </div>
 
-                         </div>
+                        </div>
                     </div>                
               </div>
               <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11"> <div class="col-md-4 nopad-left m-b">                
@@ -361,7 +355,7 @@
 
                          </div>
                     </div> </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn strip-content active" id="tab14">
+              <div role="tabpanel" class="tab-pane animated fadeIn strip-content" id="tab14">
 
                     <div class="col-sm-12 nopad-form stripedDiv" ng-repeat="(key,order_line) in order_line_data">
                       <span class="label-bold">SKU:</span>
@@ -391,19 +385,19 @@
                     <div class="col-md-2 nopad-left smallPad">                
                       <div class="form-group">
                         <label>Bill To 3rd Party<em class="text-muted"></em></label>
-                        <textarea cols="30"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="vendor_party_bill" ng-model="ArrPo.vendor_party_bill"  rows="8"></textarea>
+                        <textarea class="form-control" cols="30"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="vendor_party_bill" ng-model="ArrPo.vendor_party_bill"  rows="8"></textarea>
                       </div>
                     </div>
                     <div class="col-md-2 nopad-left smallPad">                
                       <div class="form-group">
                         <label>Ship to<em class="text-muted"></em></label>
-                        <textarea cols="30"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="ship_to" ng-model="ArrPo.ship_to"  rows="8"></textarea>
+                        <textarea class="form-control" cols="30"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="ship_to" ng-model="ArrPo.ship_to"  rows="8"></textarea>
                       </div>
                     </div>
                     <div class="col-md-2 nopad-left smallPad">                
                       <div class="form-group">
                         <label>Vendor Instruction<em class="text-muted"></em></label>
-                        <textarea cols="40"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="vendor_instruction"  ng-model="ArrPo.vendor_instruction"  rows="8"></textarea>
+                        <textarea class="form-control" cols="40"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="vendor_instruction"  ng-model="ArrPo.vendor_instruction"  rows="8"></textarea>
                       </div>
                     </div>
           <div class="form-group col-sm-12 m-b"></div>
