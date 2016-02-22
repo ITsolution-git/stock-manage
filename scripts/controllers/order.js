@@ -292,6 +292,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
             combine_array_id.company_id = company_id;
             
             $("#ajax_loader").show();
+            $scope.order = [];
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
             
@@ -370,6 +371,7 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             $scope.orderline_id = 0;
             $scope.total_qty = 0;
+            $scope.order.order_line_total = 0;
             var order_line_total = 0;
 
             angular.forEach($scope.orderLineAll, function(value) {
