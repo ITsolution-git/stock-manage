@@ -208,6 +208,8 @@ class PurchaseController extends Controller {
                 $screen_line = $this->purchase->GetScreendata($po_id,$company_id);
                 $order_total = $this->purchase->getOrdarTotal($po_id);
                 $placements = $this->purchase->getPlacementData($po_id);
+
+
                 $list_vendors = $this->common->getAllVendors($company_id);
     			$order_id = $screen_data[0]->order_id;
                 $order_line_data = $this->purchase->GetOrderLineData($order_id);

@@ -331,6 +331,7 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                            var modalInstance='';
                            var AJloader = $("#ajax_loader");
                            $scope.po_id = $stateParams.id;
+                           $scope.highlight_placement ='0';
                            if($scope.po_id=='' || $scope.po_id==0)
                            {
                            		$state.go('purchase.list',{"id":1});
@@ -343,7 +344,7 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                           GetScreenData($scope.po_id);
 						  function GetScreenData(po_id)
                            {
-                           		//AJloader.show();
+                           		AJloader.show();
                            		$http.get('api/public/purchase/GetScreendata/'+po_id+'/'+$scope.company_id ).success(function(PoData) 
                           		  {
                           		  		  if(PoData.data.success==0)
@@ -359,6 +360,7 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                                           $scope.list_vendors = PoData.data.records.list_vendors;
                                           $scope.order_line_data = PoData.data.records.order_line_data_new;
                                           $scope.placements = PoData.data.records.placements;
+
                                           //console.log($scope.list_vendors);
                                           get_contacts_vendors($scope.ArrPo.vendor_id);
                                           AJloader.hide();
@@ -442,6 +444,76 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                                notifyService.notify(data.status, data.message); 
                             });
                         }
+                        $scope.placement_artwork=function(art_id,placemet_id,key)
+                        {
+                           $http.get('api/public/art/art_worklist_listing/'+art_id+'/'+$scope.company_id).success(function(RetArray) {             
+                               $scope.art_worklist = RetArray.data.art_worklist;
+                               $scope.placemet_id = placemet_id; 
+                              // console.log($scope.placemet_id ) ; 
+                               $scope.art_popup(key); 
+
+                            });     
+                        }
+                         $scope.art_popup=function(key)
+                        {
+                           var modalInstanceEdit = $modal.open({
+                                    templateUrl: 'views/front/purchase/art_popup.html',
+                                    scope : $scope,
+                                    size : 'md',
+                                    windowClass: 'addColorModal'
+                                   // controller:'ArtJobCtrl'
+                                  });
+                           
+                                  modalInstanceEdit.result.then(function (selectedItem) {
+                                    $scope.selected = selectedItem;
+                                  }, function () {
+                                     $("#ajax_loader").hide();
+                                  });  
+                               $scope.ClosePopup = function (cancel)
+                               {
+                                  modalInstanceEdit.dismiss('cancel');
+                               };
+                                $scope.save_art_placement = function(name,value,id,table){
+                                //console.log(value); return false;
+                                var Receive_data = {};
+                                Receive_data.table =table;
+                                $scope.name_filed = name;
+                                var obj = {};
+                                obj[$scope.name_filed] =  value;
+                                Receive_data.data = angular.copy(obj);
+                                
+                                Receive_data.cond ={ id :id}
+                                $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+                                    var data = {"status": "success", "message": result.data.message}
+                                        notifyService.notify(data.status, data.message); 
+                                        GetScreenData($scope.po_id);
+                                        $scope.ClosePopup();
+                                        console.log(key);
+                                        $scope.highlight_placement =key;
+
+                                 });
+                                }
+
+                        }
+
+                         $scope.save_art_placement_data = function($event,id,table){
+                                //console.log(value); return false;
+                                var Receive_data = {};
+                                Receive_data.table =table;
+                                $scope.name_filed = $event.target.name;
+                                var obj = {};
+                                obj[$scope.name_filed] =  $event.target.value;
+                                Receive_data.data = angular.copy(obj);
+                                
+                                Receive_data.cond ={ id :id}
+                                $http.post('api/public/common/UpdateTableRecords',Receive_data).success(function(result) {
+                                    var data = {"status": "success", "message": result.data.message}
+                                        notifyService.notify(data.status, data.message); 
+                                 });
+                                }
+
+
+                        
 
 
 }]);

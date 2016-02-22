@@ -133,22 +133,22 @@
           </div>
 
           <!-- RIGHT SIDE FORM -->
-          <div class="form-group col-sm-6 m-b">
+           <div class="form-group col-sm-6 m-b">
             <ul class="nav nav-tabs input-group col-sm-12">
-              <li class="active"> <a href data-toggle="tab" data-target="#tab_pl1">Placement1</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab_pl2">Placement2</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab_pl3">Placement3</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab_pl4">Placement4</a> </li>
+              <li class="active"> <a href data-toggle="tab" data-target="#tab_pl0">Placement1</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab_pl1">Placement2</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab_pl2">Placement3</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab_pl3">Placement4</a> </li>
               <li> <a href data-toggle="tab" data-target="#tab14">Garments</a> </li>
 
             </ul>
             <div class="tab-content p b-a no-b-t bg-white m-b-md">
-              <div role="tabpanel" ng-repeat="(key,pls_value) in placements" class="tab-pane animated fadeIn" id="tab_pl{{key}}">
+              <div role="tabpanel" ng-repeat="(key,pls_value) in placements" ng-class="{active: key==highlight_placement}" class="tab-pane animated fadeIn" id="tab_pl{{key}}">
                     <div class="col-md-4 nopad-left m-b">                
                       <div class="form-group">
                         <label>Location<em class="text-muted"></em></label>
                          
-                         <select class="form-control" ng-model="pls_value.position_id" name="position_id" >
+                         <select class="form-control" ng-model="pls_value.position_id" name="position_id"   ui-event="{ change : 'save_art_placement_data($event,pls_value.placement_id,\'purchase_placement\')' }"  >
                           <option ng-repeat="item in ArrPoLine" value="{{item.position}}"   ng-selected="{{pls_value.position_id==item.position}}">{{item.position_name}}</option>
                         </select>
 
@@ -156,13 +156,13 @@
                     </div>
                     <div class="col-sm-12 nopad-form">
                         <div class="col-sm-6 nopad-form">
-                            <div class="form-group col-sm-12 m-b panel panel-default" style="height:375px;"> 
-                               <img  ng-src="{{pls_value.wp_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
+                            <div class="form-group col-sm-12 m-b panel panel-default" ng-click="placement_artwork(pls_value.art_id,pls_value.placement_id,key)" style="height:375px;"> 
+                               <img  ng-src="{{pls_value.wp_image}}" style="width:100%; height:95%; padding:5px;" alt="" class="img-responsive" />
                             </div>
                             <div class="col-md-8 nopad-left m-b">                
                               <div class="form-group">
                                 <label>Art Id<em class="text-muted"></em></label>
-                                <input type="text" class="form-control"  ng-model="pls_value.art_id">
+                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="pls_value.art_id">
                               </div>
                             </div>
                         </div>
@@ -182,20 +182,20 @@
                                 <label>Color<em class="text-muted"></em></label>
                               </div>
                             </div>
-                            <div ng-repeat="colr in pls_value.color" class="col-sm-12 nopad-form" >
+                            <div ng-repeat="(key,i) in getNumber(12)  track by $index" class="col-sm-12 nopad-form" >
                                 <div class="col-md-4 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"  ng-model="colr.inq"   >
+                                    <input type="text" class="form-control" onfocus="this.blur()"  ng-model="pls_value.color[key].inq"   >
                                   </div>
                                 </div>
                                 <div class="col-md-4 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"  ng-model="colr.thread_color" >
+                                    <input type="text" class="form-control" onfocus="this.blur()" ng-model="pls_value.color[key].thread_color" >
                                   </div>
                                 </div>
                                 <div class="col-md-4 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"   ng-model="colr.color_name" >
+                                    <input type="text" class="form-control"  onfocus="this.blur()" ng-model="pls_value.color[key].color_name" >
                                   </div>
                                 </div>
                             </div>
@@ -203,7 +203,6 @@
                         </div>
                     </div>                
               </div>
-
 
               <div role="tabpanel" class="tab-pane animated fadeIn strip-content" id="tab14">
 
@@ -217,9 +216,9 @@
                       <span>{{order_line.qnty}}</span>
                     </div>
               </div>
+              
             </div>
           </div>
-          <div>&nbsp;</div>
                     <div class="col-md-2 nopad-left">                
                       <div class="form-group">
                         <label>Vendor ship charge<em class="text-muted"></em></label>

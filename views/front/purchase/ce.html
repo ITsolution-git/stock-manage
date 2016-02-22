@@ -14,10 +14,9 @@
         <span class="label bg-dark label-change">JOB#  <b class="badge m-l-xs">{{order_id}}</b></span>   
     </div>
   
-      
-    </div>
 
-            <div class="col-sm-12 m-b">
+
+          <div class="col-sm-12 m-b">
              
                   <div class="col-sm-2 m-b">
                     <label>Client<em class="text-muted"></em></label>
@@ -100,7 +99,7 @@
               
               <div class="col-md-2 nopad-left smallPad ">
                 <div class="form-group">
-                <input type="text" class="form-control" ng-model="poline.position" name="position" disabled="disabled"   >
+                <input type="text" class="form-control" ng-model="poline.position_name" name="position_name" disabled="disabled"   >
                 </div>
               </div>
               <div class="col-md-2 nopad-left smallPad ">
@@ -149,12 +148,12 @@
 
             </ul>
             <div class="tab-content p b-a no-b-t bg-white m-b-md">
-              <div role="tabpanel" ng-repeat="(key,pls_value) in placements" class="tab-pane animated fadeIn" id="tab_pl{{key}}">
+              <div role="tabpanel" ng-repeat="(key,pls_value) in placements" ng-class="{active: key==highlight_placement}" class="tab-pane animated fadeIn" id="tab_pl{{key}}">
                     <div class="col-md-4 nopad-left m-b">                
                       <div class="form-group">
                         <label>Location<em class="text-muted"></em></label>
                          
-                         <select class="form-control" ng-model="pls_value.position_id" name="position_id" >
+                         <select class="form-control" ng-model="pls_value.position_id" name="position_id"   ui-event="{ change : 'save_art_placement_data($event,pls_value.placement_id,\'purchase_placement\')' }"  >
                           <option ng-repeat="item in ArrPoLine" value="{{item.position}}"   ng-selected="{{pls_value.position_id==item.position}}">{{item.position_name}}</option>
                         </select>
 
@@ -162,46 +161,38 @@
                     </div>
                     <div class="col-sm-12 nopad-form">
                         <div class="col-sm-6 nopad-form">
-                            <div class="form-group col-sm-12 m-b panel panel-default" style="height:375px;"> 
-                               <img  ng-src="{{pls_value.wp_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
+                            <div class="form-group col-sm-12 m-b panel panel-default" ng-click="placement_artwork(pls_value.art_id,pls_value.placement_id,key)" style="height:375px;"> 
+                               <img  ng-src="{{pls_value.wp_image}}" style="width:100%; height:95%; padding:5px;" alt="" class="img-responsive" />
                             </div>
-                            <div class="col-md-8 nopad-left m-b">                
+                            <!-- <div class="col-md-8 nopad-left m-b">                
                               <div class="form-group">
                                 <label>Art Id<em class="text-muted"></em></label>
-                                <input type="text" class="form-control"  ng-model="pls_value.art_id">
+                                <input type="text" class="form-control" onfocus="this.blur()" ng-model="pls_value.art_id">
                               </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-sm-6">
-                            <div class="col-md-4 nopad-left smallPad">                
+                           
+                            <div class="col-md-6 nopad-left smallPad">                
                               <div class="form-group">
-                                <label>Ink Type<em class="text-muted"></em></label>
+                                <label>Stich Count<em class="text-muted"></em></label>
                               </div>
                             </div>
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Mesh<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div class="col-md-4 nopad-left smallPad">                
+                            <div class="col-md-6 nopad-left smallPad">                
                               <div class="form-group">
                                 <label>Color<em class="text-muted"></em></label>
                               </div>
                             </div>
-                            <div ng-repeat="colr in pls_value.color" class="col-sm-12 nopad-form" >
-                                <div class="col-md-4 nopad-left smallPad">                
+                            <div ng-repeat="(key,i) in getNumber(12)  track by $index" class="col-sm-12 nopad-form" >
+
+                                <div class="col-md-6 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"  ng-model="colr.inq"   >
+                                    <input type="text" class="form-control" onfocus="this.blur()" ng-model="pls_value.color[key].stich_count" >
                                   </div>
                                 </div>
-                                <div class="col-md-4 nopad-left smallPad">                
+                                <div class="col-md-6 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"  ng-model="colr.thread_color" >
-                                  </div>
-                                </div>
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"   ng-model="colr.color_name" >
+                                    <input type="text" class="form-control"  onfocus="this.blur()" ng-model="pls_value.color[key].color_name" >
                                   </div>
                                 </div>
                             </div>
@@ -225,7 +216,8 @@
               
             </div>
           </div>
-          <div>&nbsp;</div>
+ 
+          <div class="form-group col-sm-12 m-b">
                     <div class="col-md-2 nopad-left">                
                       <div class="form-group">
                         <label>Vendor ship charge<em class="text-muted"></em></label>
@@ -256,10 +248,13 @@
                         <textarea cols="40" class="form-control"  ui-event="{ blur : 'UpdateField_order($event)' }"  name="vendor_instruction"  ng-model="ArrPo.vendor_instruction"  rows="8"></textarea>
                       </div>
                     </div>
-          <div class="form-group col-sm-12 m-b"></div>
+                    </div>
+                
+    </div>
           <!-- RIGHT SIDE FORM -->
         </div>
       </div>
     </form>
   </div>
 </div>
+ 
