@@ -297,7 +297,7 @@ class Art extends Model {
     	$Misc_data = $this->AllMsiData($company_id);
 
     	$query = DB::table('orders as or')
-		->select('or.id as order_id','art.art_id','ass.graphic_size','aaw.id as wp_id','ass.id as screen_id','ass.screen_set','aaw.wp_image')
+		->select('or.id as order_id','art.art_id','ass.graphic_size','ass.screen_logo','aaw.id as wp_id','ass.id as screen_id','ass.screen_set','aaw.wp_image')
 		->join('art as art','art.order_id','=','or.id')
 		->leftJoin('order_orderlines as ol','ol.order_id','=','or.id')
 		->leftJoin('artjob_artworkproof as aaw','ol.id','=','aaw.orderline_id')
@@ -316,12 +316,12 @@ class Art extends Model {
 				{
 					$client_array['screen'][$value->screen_id]['screen_set'] = $value->screen_set; 		
 					$client_array['screen'][$value->screen_id]['graphic_size'] = (!empty($value->graphic_size))? $Misc_data[$value->graphic_size] : '';		
-					$client_array['screen'][$value->screen_id]['wp_image'] = '';
+					$client_array['screen'][$value->screen_id]['screen_logo'] = (!empty($value->screen_logo))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->screen_logo : '';
 					$client_array['screen'][$value->screen_id]['art_id'] = $value->art_id; 	
 				} 
 				if(!empty($value->wp_id))
 				{
-					$client_array['art'][$value->wp_id]['image'] = $value->wp_image; 
+					$client_array['art'][$value->wp_id]['wp_image'] = (!empty($value->wp_image))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->wp_image : '';
 					$client_array['art'][$value->wp_id]['type'] = 'Art Work Screen'; 
 					$client_array['art'][$value->wp_id]['art_id'] = $value->art_id;					
 				}
