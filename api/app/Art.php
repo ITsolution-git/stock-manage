@@ -318,12 +318,14 @@ class Art extends Model {
 					$client_array['screen'][$value->screen_id]['graphic_size'] = (!empty($value->graphic_size))? $Misc_data[$value->graphic_size] : '';		
 					$client_array['screen'][$value->screen_id]['screen_logo'] = (!empty($value->screen_logo))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->screen_logo : '';
 					$client_array['screen'][$value->screen_id]['art_id'] = $value->art_id; 	
+					$client_array['screen'][$value->screen_id]['screen_id'] = $value->screen_id; 	
 				} 
 				if(!empty($value->wp_id))
 				{
 					$client_array['art'][$value->wp_id]['wp_image'] = (!empty($value->wp_image))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->wp_image : '';
 					$client_array['art'][$value->wp_id]['type'] = 'Art Work Screen'; 
-					$client_array['art'][$value->wp_id]['art_id'] = $value->art_id;					
+					$client_array['art'][$value->wp_id]['art_id'] = $value->art_id;		
+					$client_array['art'][$value->wp_id]['wp_id'] = $value->wp_id; 				
 				}
 			}
 		}
