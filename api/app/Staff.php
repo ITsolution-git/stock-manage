@@ -55,39 +55,6 @@ class Staff extends Model {
 
          $staffid = DB::getPdo()->lastInsertId();
 
-
-        $timeoff_notes_array = json_decode(json_encode($timeoff_notes), true);
-        $staff_notes_array = json_decode(json_encode($staff_notes), true);
-
-         foreach($timeoff_notes_array as $key => $link) 
-              { 
-               
-                unset($timeoff_notes_array[$key]['name']);
-                unset($timeoff_notes_array[$key]['classification']);
-                $timeoff_notes_array[$key]['updated_date']  = date("Y-m-d H:i:s");
-
-                $timeoff_notes_array[$key]['date_begin']  = date("Y-m-d", strtotime($timeoff_notes_array[$key]['date_begin']));
-                $timeoff_notes_array[$key]['date_end']  = date("Y-m-d", strtotime($timeoff_notes_array[$key]['date_end']));
-
-
-                $timeoff_notes_array[$key]['staff_id'] = $staffid;
-                $result_notes = DB::table('time_off')->insert($timeoff_notes_array[$key]);
-
-              }
-
-
-          foreach($staff_notes_array as $key => $link) 
-          { 
-
-            $staff_notes_array[$key]['updated_date']  = date("Y-m-d H:i:s");
-            $staff_notes_array[$key]['type_note'] = 'staff';
-            $staff_notes_array[$key]['all_id'] = $staffid;
-            $result_notes = DB::table('notes')->insert($staff_notes_array[$key]);
-
-          }
-
-
-
         return $staffid;
     }
 
@@ -123,35 +90,11 @@ class Staff extends Model {
        
         $userData = DB::table('users')->select($listArray)->where($whereConditions)->get();
 
-
-
-        $whereNotesConditions = ['status' => '1','is_delete' => '1','type_note' => 'staff','all_id' => $staffId];
-        $listNotesArray = ['note','points'];
-        $notesData = DB::table('notes')->select($listNotesArray)->where($whereNotesConditions)->get();
-
-
-
-
-        $whereTimeoffConditions = ['staff_id' => $staffId,'time_off.is_delete' => '1','time_off.status' => '1','type.status' => '1','type.type' => 'timeoff'];
-        $listArrayTimeoff = ['time_off.classification_id','time_off.id','time_off.staff_id','time_off.timerecord','time_off.applied_hours','time_off.date_begin',
-                      'time_off.date_end', 'time_off.status','type.name'];
-
-         $timeoffData = DB::table('time_off as time_off')
-                         ->Join('type as type', 'type.id', '=', 'time_off.classification_id')
-                         ->select($listArrayTimeoff)
-                         ->where($whereTimeoffConditions)
-                         ->get();
-
-
-
-
-
         $combine_array = array();
 
         $combine_array['staff'] = $staffData;
         $combine_array['users'] = $userData;
-        $combine_array['allnotes'] = $notesData;
-        $combine_array['allTimeOff'] = $timeoffData;
+       
 
         return $combine_array;
     }
@@ -439,5 +382,38 @@ public function staffTimeOffEdit($timeoff_notes,$staffId) {
               }
         return  $staffId;
     }
+
+
+    /**
+* Staff Note Timeoff         
+* @access public staffNoteTimeoff
+* @param  int $staffId
+* @return array $combine_array
+*/  
+
+    public function staffNoteTimeoff($staffId) {
+
+        $whereNotesConditions = ['status' => '1','is_delete' => '1','type_note' => 'staff','all_id' => $staffId];
+        $listNotesArray = ['note','points','id'];
+        $notesData = DB::table('notes')->select($listNotesArray)->where($whereNotesConditions)->get();
+
+
+        $whereTimeoffConditions = ['staff_id' => $staffId,'time_off.is_delete' => '1','time_off.status' => '1'];
+        $listArrayTimeoff = ['time_off.classification_id','time_off.id','time_off.staff_id','time_off.timerecord','time_off.applied_hours','time_off.date_begin',
+                      'time_off.date_end', 'time_off.status','type.name'];
+
+         $timeoffData = DB::table('time_off as time_off')
+                         ->leftJoin('type as type','type.id','=',DB::raw("time_off.classification_id AND type.status = '1' AND type.type = 'timeoff' "))
+                         ->select($listArrayTimeoff)
+                         ->where($whereTimeoffConditions)
+                         ->get();
+
+        $combine_array = array();
+        $combine_array['allnotes'] = $notesData;
+        $combine_array['allTimeOff'] = $timeoffData;
+
+        return $combine_array;
+    }
+
 
 }

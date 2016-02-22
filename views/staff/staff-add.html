@@ -159,7 +159,7 @@
           </div>
 		  
 		  <!-- RIGHT SIDE FORM DETAILS-->
-          <div class="col-md-6">
+          <div class="col-md-6" id="notes-tab">
           	  <input type="hidden" ng-model="price.id" value="{{price.id}}">
               <div class="form-group col-sm-12 m-b">
             <ul class="nav nav-tabs">
@@ -174,14 +174,26 @@
                   <label class="col-md-2 nopad-form">Points<em class="text-muted"></em></label>
                 </div>
                 <div class="form-group col-md-12 nopad-form">
-					<div ng-repeat="notesdata in allnotes" class="formNotes">
-						<input type="text" ng-model="notesdata.note" class="col-md-7" />
-						<input type="text" ng-model="notesdata.points" class="col-md-2" />
-						<!--button ng-click="removeNotes($index)" class="col-md-1 removeRecord formBtns">Remove</button-->
-						<button class="btn btn-default addButton" ng-click="removeNotes($index)" type="button" tabindex="0">
-							<i class="fa fa-minus"></i>
-						</button>					
+					<div ng-repeat="notesdata in allnotes" class="col-md-12 nopad-form form-group">
+
+					
+            <div class="col-md-7 nopad-left">
+                  <input type="text" class="form-control"  name="note" ng-model="notesdata.note" ui-event="{ blur : 'updateStaffData($event,notesdata.id,\'notes\',\'id\')' }">
+            </div>
+
+             <div class="col-md-2 nopad-left">
+                  <input type="text" class="form-control"  name="points" ng-model="notesdata.points" ui-event="{ blur : 'updateStaffData($event,notesdata.id,\'notes\',\'id\')' }">
+            </div>
+
+             <div class="col-md-1">
+                    <button type="button"  ng-click="removeNotes($index,notesdata.id)" class="btn btn-default addButton">
+                        <i class="fa fa-minus"></i>
+                    </button>
+              </div>
+	
 					</div>
+
+
 					<button class="btn btn-default addButton" ng-click="addNotes()" type="button" tabindex="0">
 						<i class="fa fa-plus"></i>
 					</button>
@@ -192,40 +204,59 @@
 			  
 			  <!-- TIME OFF Section -->
               <div role="tabpanel" class="tab-pane animated fadeIn" id="timeoff">
-                <div class="form-group col-md-12 nopad-form">
-                  <label class="col-md-2 nopad-left">Classification<em class="text-muted"></em></label>
-                  <label class="col-md-4">Date Begin<em class="text-muted"></em></label>
-                  <label class="col-md-4">Date End<em class="text-muted"></em></label>
-                  <label class="col-md-2 nopad-left">Applied Hours<em class="text-muted"></em></label>
+                <div class="col-md-12 nopad-form">
+                  <label class="col-md-3">Classification<em class="text-muted"></em></label>
+                  <label class="col-md-3">Date Begin<em class="text-muted"></em></label>
+                  <label class="col-md-3">Date End<em class="text-muted"></em></label>
+                  <label class="col-md-1">Applied Hours<em class="text-muted"></em></label>
                 </div>
                 <div class="form-group col-md-12 nopad-form">
-                  <div ng-repeat="timeoffdata in allTimeOff" class="timeOffData">
-                    <select ng-model="timeoffdata.classification_id" class="col-md-2 nopad-form">
+                  <div ng-repeat="timeoffdata in allTimeOff" class="timeOffData form-group col-md-12">
+
+
+                   <div class="col-md-3 nopad-left">
+
+                    <select ng-model="timeoffdata.classification_id" class="form-control" name="classification_id" ui-event="{ change : 'updateStaffData($event,timeoffdata.id,\'time_off\',\'id\')' }">
                       <option ng-repeat="dataTimeOff in timeOffTypes" ng-selected="dataTimeOff.id==timeoffdata.classification_id" value={{dataTimeOff.id}}>{{dataTimeOff.name}}</option>
                     </select>
-                    <div  ng-controller="DatepickerDemoCtrl" class="col-md-4 datePick nopad-right">
-                      <p class="input-group">
-                        <input type="text" class="col-md-12" datepicker-popup="{{format}}" ng-model="timeoffdata.date_begin" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span> </p>
-                    </div>
-                    <div  ng-controller="DatepickerDemoCtrl" class="col-md-4 datePick">
-                      <p class="input-group">
-                        <input type="text" class="col-md-12" datepicker-popup="{{format}}" ng-model="timeoffdata.date_end" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
-                        <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span> </p>
-                    </div>
-                    <input type="text" ng-model="timeoffdata.applied_hours" class="col-md-1 nopad-form t-mid" />
+                   </div>
 
 
+                  <div class="col-md-3 nopad-form" ng-controller="DatepickerDemoCtrl">
+
+                      <div class="col-md-9 nopad-form">
+                          <input    type="text" class="form-control"   ng-model="timeoffdata.date_begin" name="date_begin" ui-event="{ blur : 'UpdateDate($event,\'time_off\',\'id\',timeoffdata.id)' }"  datepicker-popup="MM/dd/yyyy" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                      </div>
+                      <div class="col-md-2 nopad-form">
+                              <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                         </div>
+                  </div>
+
+
+                  <div class="col-md-3 nopad-form" ng-controller="DatepickerDemoCtrl">
+
+                      <div class="col-md-9 nopad-form">
+                          <input    type="text" class="form-control"   ng-model="timeoffdata.date_end" name="date_end" ui-event="{ blur : 'UpdateDate($event,\'time_off\',\'id\',timeoffdata.id)' }"  datepicker-popup="MM/dd/yyyy" is-open="opened" datepicker-options="dateOptions"   close-text="Close" />
+                      </div>
+                      <div class="col-md-2 nopad-form">
+                              <span class="input-group-btn">
+                              <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                              </span>
+                         </div>
+                  </div>
+
+                     <div class="col-md-2 nopad-left">
+                              <input type="text" ng-model="timeoffdata.applied_hours" name="applied_hours" class="form-control" ui-event="{ blur : 'updateStaffData($event,timeoffdata.id,\'time_off\',\'id\')' }"/>
+                    </div>
                     
 
-                    <button class="btn btn-default addButton" ng-click="removeTimeOff($index)" type="button" tabindex="0">
+                    <div class="col-md-1">
+                    <button class="btn btn-default addButton" ng-click="removeTimeOff($index,timeoffdata.id)" type="button" tabindex="0">
                       <i class="fa fa-minus"></i>
                     </button>
-
+                    </div>
 
 
                   </div>

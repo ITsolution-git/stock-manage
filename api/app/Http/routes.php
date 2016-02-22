@@ -49,6 +49,7 @@ Route::post('admin/staffEdit', 'StaffController@edit');
 Route::post('admin/staffDelete', 'StaffController@delete');
 Route::post('admin/staffDetail', 'StaffController@detail');
 Route::get('admin/StaffEdit/{id}', 'StaffController@detail');
+Route::post('admin/staffNoteTimeoff', 'StaffController@staffNoteTimeoff');
 
 // ADMIN NOTE ROUTERS
 Route::post('admin/staff/note', 'StaffController@note');
