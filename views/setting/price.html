@@ -27,9 +27,9 @@
                   <span class="glyphicon glyphicon-chevron-up" data-ng-click=" order('name')" data-ng-class="{active: row == 'name'}"></span>
                   <span class="glyphicon glyphicon-chevron-down" data-ng-click=" order('-name')" data-ng-class="{active: row == '-name'}"></span>
               </th>
-              <th data-hide="phone">
+             <!--  <th data-hide="phone">
                   Status
-              </th>
+              </th> -->
               <th data-hide="phone">
                   Operations
               </th>
@@ -41,11 +41,11 @@
           <tr ng-repeat="data in currentPagePrice" id="price_{{data.id}}" class="stripedDiv">
               <td>{{data.name}}</td>
             
-              <td ng-if="data.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
+         <!--      <td ng-if="data.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
               <td ng-if="data.status == 0" ><span class="label bg-danger" title="Deactive">Deactive</span></td>
 
 
-
+ -->
               <td style="white-space: nowrap">
 
                 <div class="buttons" ng-show="!rowform.$visible" aria-hidden="false">
