@@ -84,9 +84,10 @@ app.controller('staffListCtrl', ['$scope','$rootScope','$http','$location','$sta
     }
 }]);
 
-app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
+app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','notifyService','$location','$state','$stateParams','AuthService','fileUpload','AllConstant','$filter', function($scope,$rootScope,$http,notifyService,$location,$state,$stateParams,AuthService,fileUpload,AllConstant,$filter) {
    
     AuthService.AccessService('FM');
+
     var company_id = $rootScope.company_profile.company_id;
     $http.get('api/public/common/type/timeoff').success(function(result, status, headers, config) {
         $scope.timeOffTypes = result.data.records;
@@ -153,11 +154,7 @@ app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','$location','$
                             fd.append("image", $scope.files[i])
                         }
 
-                        fd.append("notes_data_all", angular.toJson($scope.allnotes))
-                        fd.append("timeoff_data_all", angular.toJson($scope.allTimeOff))
-
-
-
+                    
                          $.each(user_data_staff, function( index, value ) {
                             fd.append(index, value)
                           });
@@ -206,6 +203,7 @@ app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','$location','$
                     };
 
                     if($stateParams.id) {
+                      getStaffNoteTimeoff();
 
                       $("#ajax_loader").show();
 
@@ -220,20 +218,41 @@ app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','$location','$
                                      
                                      $scope.staff = result.data.records[0];
                                      $scope.users = result.data.users_records[0];
-                                     
-                                     var count_no = 0;
-                                     angular.forEach(result.data.allTimeOff, function(){
-                                     
-
-                                     result.data.allTimeOff[count_no].date_begin = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_begin);
-                                     result.data.allTimeOff[count_no].date_begin = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_begin);
-
-
-                                     result.data.allTimeOff[count_no].date_end = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_end);
-                                     result.data.allTimeOff[count_no].date_end = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_end); 
-                                      count_no++;
-
                                    
+                                     $("#ajax_loader").hide();
+
+
+                             }  else {
+                             $state.go('app.dashboard');
+                             }
+                         
+                          });
+
+                         } else {
+                          $("#notes-tab").hide();
+                         }
+
+                   function getStaffNoteTimeoff() {
+
+                         $http.post('api/public/admin/staffNoteTimeoff',$stateParams.id).success(function(result, status, headers, config) {
+        
+                            if(result.data.success == '1') {
+                                      count_no = 0;
+
+                                     angular.forEach(result.data.allTimeOff, function(){
+                                  
+                                     if(result.data.allTimeOff[count_no].date_begin != '0000-00-00 00:00:00' && result.data.allTimeOff[count_no].date_begin != '') {
+                                        result.data.allTimeOff[count_no].date_begin = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_begin);
+                                     } else {
+                                      result.data.allTimeOff[count_no].date_begin = '';
+                                     }
+
+                                      if(result.data.allTimeOff[count_no].date_end != '0000-00-00 00:00:00' && result.data.allTimeOff[count_no].date_end != '') {
+                                        result.data.allTimeOff[count_no].date_end = $filter('dateWithFormat')(result.data.allTimeOff[count_no].date_end);
+                                     } else {
+                                      result.data.allTimeOff[count_no].date_end = '';
+                                     }
+                                      count_no++;
                                     });
 
                                      $scope.allnotes = result.data.allnotes;
@@ -247,27 +266,106 @@ app.controller('staffAddEditCtrl', ['$scope','$rootScope','$http','$location','$
                          
                           });
 
-                         }
-
-
+                  }
                          $scope.allnotes = [];
                           $scope.addNotes = function(){
+
+                            var order_note_data = {};
+                            order_note_data.table ='notes'
+                            order_note_data.data ={all_id:$stateParams.id,type_note:"staff"}
+                            order_note_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                            order_note_data.data.updated_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+                            $http.post('api/public/common/InsertRecords',order_note_data).success(function(result) {
+                                 getStaffNoteTimeoff();
+                            });
+
                             $scope.allnotes.push({note:'', points:''});
                           }
 
-                          $scope.removeNotes = function(index){
+                          $scope.removeNotes = function(index,id){
+
+
+                             var delete_data = {};
+                                  delete_data.cond = {id :id };
+                                  delete_data.table ='notes';
+
+                                  $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) {
+                                   
+                                  });
+
+
                               $scope.allnotes.splice(index,1);
                           }
 
 
                           $scope.allTimeOff = [];
                           $scope.addTimeOff = function(){
+
+
+                             var order_timeoff_data = {};
+                            order_timeoff_data.table ='time_off'
+                            order_timeoff_data.data ={staff_id:$stateParams.id}
+                            order_timeoff_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                            order_timeoff_data.data.updated_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+                            $http.post('api/public/common/InsertRecords',order_timeoff_data).success(function(result) {
+                                 getStaffNoteTimeoff();
+                            });
+
+
                             $scope.allTimeOff.push({classification:'', date_begin:'',date_end:'', applied_hours:''});
                           }
 
-                          $scope.removeTimeOff = function(index){
+                          $scope.removeTimeOff = function(index,id){
+
+                             var delete_data = {};
+                              delete_data.cond = {id :id };
+                              delete_data.table ='time_off';
+
+                              $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) {
+                               
+                              });
+
                               $scope.allTimeOff.splice(index,1);
                           }
+
+
+                          $scope.updateStaffData = function($event,id,table_name,match_condition)
+                            {
+                                  var staff_main_data = {};
+                                  staff_main_data.table =table_name;
+                                  $scope.name_filed = $event.target.name;
+                                  var obj = {};
+                                  obj[$scope.name_filed] =  $event.target.value;
+                                  staff_main_data.data = angular.copy(obj);
+
+                                  var condition_obj = {};
+                                  condition_obj[match_condition] =  id;
+                                  staff_main_data.cond = angular.copy(condition_obj);
+                                  
+                                    $http.post('api/public/common/UpdateTableRecords',staff_main_data).success(function(result) {
+
+                                        var data = {"status": "success", "message": "Data Updated Successfully."}
+                                            notifyService.notify(data.status, data.message);
+                                    });
+                              
+                            }
+
+                              $scope.UpdateDate=function($event,table,cond,value)
+                        {
+                          var Array_data = {};
+                          Array_data.table =table;
+                          Array_data.field =$event.target.name;
+                          Array_data.date = $event.target.value
+                          Array_data.cond =cond
+                          Array_data.value =value;
+
+                          $http.post('api/public/common/updatedate',Array_data).success(function(result) {
+                               var data = {"status": "success", "message": "Data Updated successfully"}
+                               notifyService.notify(data.status, data.message); 
+                            });
+                        }
 
 
                        
