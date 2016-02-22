@@ -47,22 +47,7 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
                           AuthService.AccessService('BC');
                          $scope.company_id = $rootScope.company_profile.company_id;
                           $scope.CurrentController=$state.current.controller;
-                          var delete_params = {};
-                          $scope.deleteclient = function (comp_id) {
-                                delete_params.id = comp_id;
-                                var permission = confirm("Are you sure to delete this record ?");
-                                if (permission == true) {
-                                $http.post('api/public/client/DeleteClient',delete_params).success(function(result, status, headers, config) {
-                                              
-                                              if(result.data.success=='1')
-                                              {
-                                                $state.go('client.list');
-                                                $("#comp_"+comp_id).remove();
-                                                return false;
-                                              }  
-                                         });
-                                      }
-                                  } // DELETE COMPANY FINISH
+                          
 
                                   $("#ajax_loader").show();
 
@@ -130,7 +115,25 @@ app.controller('clientListCtrl', ['$scope','$rootScope','$http','$location','$st
                                        $("#ajax_loader").hide();
                                   });
 
-
+                                  var delete_params = {};
+                          $scope.deleteclient = function (comp_id) {
+                                delete_params.id = comp_id;
+                                var permission = confirm("Are you sure to delete this record ?");
+                                if (permission == true) {
+                                $http.post('api/public/client/DeleteClient',delete_params).success(function(result, status, headers, config) {
+                                              
+                                              if(result.data.success=='1')
+                                              {
+                                                $http.post('api/public/client/ListClient',company_list_data).success(function(Listdata) {
+                                                  $scope.clients  = result.data.records;
+                                                  $scope.filteredClients = $scope.clients;
+                                                  $scope.currentPageClients = $scope.clients;
+                                                  $scope.select($scope.currentPage);
+                                                });
+                                              }  
+                                         });
+                                      }
+                                  } // DELETE COMPANY FINISH
 
     AuthService.AccessService('BC');
     $scope.company_id = $rootScope.company_profile.company_id;

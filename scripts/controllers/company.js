@@ -1,26 +1,11 @@
 app.controller('companyListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService','$filter', function($scope,$http,$location,$state,AuthService,sessionService,$filter) {
 
                                 AuthService.AccessService('SA');
-                                var delete_params = {};
-                                $scope.deletecompany = function (comp_id) {
-                                delete_params.id = comp_id;
-                                var permission = confirm("Are you sure to delete this record ?");
-                                if (permission == true) {
-                                $http.post('api/public/admin/company/delete',delete_params).success(function(result, status, headers, config) {
-                                              
-                                              if(result.data.success=='1')
-                                              {
-                                                $state.go('company.list');
-                                                $("#comp_"+comp_id).remove();
-                                                return false;
-                                              }  
-                                         });
-                                      }
-                                  } // DELETE COMPANY FINISH
+                                
                             var company = {};
                             
                             $http.get('api/public/admin/company/list').success(function(result) {
-                                 $scope.company  = result.data.records; 
+                                 $scope.company  = result.data.records;
 
                                  var init;
 
@@ -71,7 +56,25 @@ app.controller('companyListCtrl', ['$scope','$http','$location','$state','AuthSe
                                 return init();
                              });
                       
-                       
+                              var delete_params = {};
+                              $scope.deletecompany = function (comp_id) {
+                              delete_params.id = comp_id;
+                              var permission = confirm("Are you sure to delete this record ?");
+                              if (permission == true) {
+                              $http.post('api/public/admin/company/delete',delete_params).success(function(result, status, headers, config) {
+                                            
+                                            if(result.data.success=='1')
+                                            {
+                                              $http.get('api/public/admin/company/list').success(function(result) {
+                                                $scope.company  = result.data.records;
+                                                $scope.filteredCompany = $scope.company;
+                                                $scope.currentPageCompany = $scope.company;
+                                                $scope.select($scope.currentPage);
+                                              });
+                                            }  
+                                       });
+                                    }
+                                } // DELETE COMPANY FINISH
 
 }]);
 app.controller('companyAddCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {

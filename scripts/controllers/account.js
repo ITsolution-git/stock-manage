@@ -3,21 +3,7 @@ app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthSe
                                 AuthService.AccessService('CA');
                                 $scope.parent_id = $scope.app.user_id;
                                 var delete_params = {};
-                                $scope.deletecompany = function (comp_id) {
-                                delete_params.id = comp_id;
-                                var permission = confirm("Are you sure to delete this record ?");
-                                if (permission == true) {
-                                $http.post('api/public/admin/account/delete',delete_params).success(function(result, status, headers, config) {
-                                              
-                                              if(result.data.success=='1')
-                                              {
-                                                $state.go('account.list');
-                                                $("#comp_"+comp_id).remove();
-                                                return false;
-                                              }  
-                                         });
-                                      }
-                                  } // DELETE COMPANY FINISH
+                                
                             var account = {};
                             
                             $http.get('api/public/admin/account/list/'+$scope.parent_id).success(function(result) {
@@ -71,6 +57,28 @@ app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthSe
                                 };
                                 return init();
                              });
+
+                              $scope.deletecompany = function (comp_id) {
+                                delete_params.id = comp_id;
+                                var permission = confirm("Are you sure to delete this record ?");
+                                if (permission == true) {
+                                $http.post('api/public/admin/account/delete',delete_params).success(function(result, status, headers, config) {
+                                              
+                                              if(result.data.success=='1')
+                                              {
+                                                /*$state.go('account.list');
+                                                $("#comp_"+comp_id).remove();
+                                                $state.go('account.list');*/
+                                                $http.get('api/public/admin/account/list/'+$scope.parent_id).success(function(result) {
+                                                  $scope.account  = result.data.records;
+                                                  $scope.filteredAccount = $scope.account;
+                                                  $scope.currentPageAccount = $scope.account;
+                                                  $scope.select($scope.currentPage);
+                                                });
+                                              }  
+                                         });
+                                      }
+                                  } // DELETE COMPANY FINISH
                       
                        
 
