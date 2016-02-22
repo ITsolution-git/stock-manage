@@ -22,7 +22,8 @@
                     else 
                     {
                        // console.log('Login with - '+result.data.username);
-                        $rootScope.username = result.data.username;
+                        //$rootScope.username = result.data.username;
+                        $rootScope.email = result.data.email;
                         sessionService.set('role_slug',result.data.role_session);
                         return true;
                     }

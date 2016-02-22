@@ -33,7 +33,7 @@ class LoginController extends Controller {
     /**
      * Check login functionality.
      *
-     * @param  $username,$password
+     * @param  $email,$password
      * @return Response- session
      */
 
@@ -41,12 +41,12 @@ class LoginController extends Controller {
  
         $data = Input::all();
 
-        if(!empty($data['username']) && !empty($data['password']))
+        if(!empty($data['email']) && !empty($data['password']))
         {
-            $username = htmlentities(trim($data['username']));
+            $email = htmlentities(trim($data['email']));
             $password = htmlentities($data['password']);
             
-            $result = $this->login->verifylogin($username, $password);
+            $result = $this->login->verifylogin($email, $password);
 
             if (count($result) > 0) 
             {
@@ -56,7 +56,7 @@ class LoginController extends Controller {
                 }
                 else
                 {
-                    Session::put('username', $username);
+                    Session::put('username',$result[0]->user_name);
                     Session::put('password', md5($password));
                     Session::put('useremail', $result[0]->email);
                     Session::put('role_title', $result[0]->title);
@@ -68,7 +68,7 @@ class LoginController extends Controller {
                     
                     $session = array();
                     $session['name'] = $result[0]->name;
-                    $session['username'] = $username;
+                    $session['username'] = $result[0]->user_name;
                     $session['password'] = md5($password);
                     $session['useremail'] = $result[0]->email;
                     $session['role_title'] = $result[0]->title;
@@ -116,8 +116,8 @@ class LoginController extends Controller {
      */
     public function check_session() {
   
-        if (!empty(Session::get("username"))) {
-            $response = array('success' => 1, 'message' => "session there","username" => Session::get("username"),"role_session"=>Session::get("role_slug"));
+        if (!empty(Session::get("useremail"))) {
+            $response = array('success' => 1, 'message' => "session there","email" => Session::get("useremail"),"role_session"=>Session::get("role_slug"));
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }
