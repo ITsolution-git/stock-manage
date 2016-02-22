@@ -183,7 +183,7 @@ class FinishingController extends Controller {
         }
         if(isset($post['end_time']))
         {
-            $finishingData['field'] = array('end_time' => $post['end_time'],'est' => $post['est']);
+            $finishingData['field'] = array('end_time' => $post['end_time'],'est' => $post['est'],'status' => '1');
             $finishingData['where'] = array('id' => $post['id']);
         }
 

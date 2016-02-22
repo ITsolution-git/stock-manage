@@ -109,10 +109,9 @@ if(angular.isUndefined(id)){
 position_data.table ='color'
 position_data.cond ={id:id}
 $http.post('api/public/common/DeleteTableRecords',position_data).success(function(result) {
-     
+  get_all_color();     
 
   });
-     get_all_color();
   }
 
 }
