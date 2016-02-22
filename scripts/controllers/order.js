@@ -841,6 +841,12 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
          $scope.addproductpopup = function(value,orderline_id,vendor_id)
     {
+        if(vendor_id == 0)
+        {
+            var data = {"status": "error", "message": "Please select any vendor"}
+            notifyService.notify(data.status, data.message);
+            return false;
+        }
 
 
 $scope.colorsettings = {displayProp: 'name', idProp: 'id',enableSearch: true, scrollableHeight: '400px',showCheckAll:false,showUncheckAll:false,scrollable: true};
