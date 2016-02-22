@@ -129,7 +129,7 @@ class AccountController extends Controller {
 				{
 					$post['password']=md5($post['password']);
 				}
-			$post['updated_date'] = date('Y-m-d H:i:s');z
+			$post['updated_date'] = date('Y-m-d H:i:s');
 			$getData = $this->account->SaveCompanyData($post);
 			$message = UPDATE_RECORD;
 			$success = 1;

@@ -242,11 +242,12 @@ app.controller('ArtJobCtrl', ['$scope',  '$http','$state','$stateParams','$rootS
 			                            	Receive_data.art_id = $scope.art_id;
 			                            	$http.post('api/public/art/SaveArtWorkProof',Receive_data).success(function(result) 
 			                            	{
-			                            		Get_artDetail();
+			                            		
 					                        	var data = {"status": "success", "message": result.data.message}
 				                                notifyService.notify(data.status, data.message); 
 				                                $scope.ClosePopup('close');
-				                                $scope.artworkproof_popup(Receive_data.wp_id);
+				                                Get_artDetail();
+				                                //$scope.artworkproof_popup(Receive_data.wp_id);
 				                            });
 			                            }
 		                            }
