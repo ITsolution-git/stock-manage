@@ -1,4 +1,4 @@
-app.controller('companyListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
+app.controller('companyListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService','$filter', function($scope,$http,$location,$state,AuthService,sessionService,$filter) {
 
                                 AuthService.AccessService('SA');
                                 var delete_params = {};
@@ -20,7 +20,55 @@ app.controller('companyListCtrl', ['$scope','$http','$location','$state','AuthSe
                             var company = {};
                             
                             $http.get('api/public/admin/company/list').success(function(result) {
-                                 $scope.company  = result.data; 
+                                 $scope.company  = result.data.records; 
+
+                                 var init;
+
+                                $scope.searchKeywords = '';
+                                $scope.filteredCompany = [];
+                                $scope.row = '';
+                                $scope.select = function (page) {
+                                  var end, start;
+                                  start = (page - 1) * $scope.numPerPage;
+                                  end = start + $scope.numPerPage;
+                                  return $scope.currentPageCompany = $scope.filteredCompany.slice(start, end);
+                                };
+                                $scope.onFilterChange = function () {
+                                  $scope.select(1);
+                                  $scope.currentPage = 1;
+                                  return $scope.row = '';
+                                };
+                                $scope.onNumPerPageChange = function () {
+                                  $scope.select(1);
+                                  return $scope.currentPage = 1;
+                                };
+                                $scope.onOrderChange = function () {
+                                  $scope.select(1);
+                                  return $scope.currentPage = 1;
+                                };
+                                $scope.search = function () {
+                                  $scope.filteredCompany = $filter('filter')($scope.company, $scope.searchKeywords);
+                                  return $scope.onFilterChange();
+                                };
+                                $scope.order = function (rowName) {
+                                  if ($scope.row === rowName) {
+                                      return;
+                                  }
+                                  $scope.row = rowName;
+                                  $scope.filteredCompany = $filter('orderBy')($scope.company, rowName);
+                                  return $scope.onOrderChange();
+                                };
+                                $scope.numPerPageOpt = [10, 20, 50, 100];
+                                $scope.numPerPage = 10;
+                                $scope.currentPage = 1;
+                                $scope.currentPageCompany = [];
+
+                                init = function () {
+                                  $scope.search();
+
+                                  return $scope.select($scope.currentPage);
+                                };
+                                return init();
                              });
                       
                        
