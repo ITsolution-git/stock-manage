@@ -135,28 +135,34 @@
           <!-- RIGHT SIDE FORM -->
           <div class="form-group col-sm-6 m-b">
             <ul class="nav nav-tabs input-group col-sm-12">
-              <li class="active"> <a href data-toggle="tab" data-target="#tab10">Placement1</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab11">Placement2</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab12">Placement3</a> </li>
-              <li> <a href data-toggle="tab" data-target="#tab13">Placement4</a> </li>
+              <li class="active"> <a href data-toggle="tab" data-target="#tab_pl1">Placement1</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab_pl2">Placement2</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab_pl3">Placement3</a> </li>
+              <li> <a href data-toggle="tab" data-target="#tab_pl4">Placement4</a> </li>
               <li> <a href data-toggle="tab" data-target="#tab14">Garments</a> </li>
 
             </ul>
             <div class="tab-content p b-a no-b-t bg-white m-b-md">
-              <div role="tabpanel" class="tab-pane animated active fadeIn" id="tab10">
+              <div role="tabpanel" ng-repeat="(key,pls_value) in placements" class="tab-pane animated fadeIn" id="tab_pl{{key}}">
                     <div class="col-md-4 nopad-left m-b">                
                       <div class="form-group">
                         <label>Location<em class="text-muted"></em></label>
-                        <input type="text" class="form-control" >
+                         
+                         <select class="form-control" ng-model="pls_value.position_id" name="position_id" >
+                          <option ng-repeat="item in ArrPoLine" value="{{item.position}}"   ng-selected="{{pls_value.position_id==item.position}}">{{item.position_name}}</option>
+                        </select>
+
                       </div>
                     </div>
                     <div class="col-sm-12 nopad-form">
                         <div class="col-sm-6 nopad-form">
-                            <div class="form-group col-sm-12 m-b panel panel-default" style="height:375px;"> </div>
+                            <div class="form-group col-sm-12 m-b panel panel-default" style="height:375px;"> 
+                               <img  ng-src="{{pls_value.wp_image}}" style="width:100%; height:100%; padding:5px;" alt="" class="img-responsive" />
+                            </div>
                             <div class="col-md-8 nopad-left m-b">                
                               <div class="form-group">
                                 <label>Art Id<em class="text-muted"></em></label>
-                                <input type="text" class="form-control" >
+                                <input type="text" class="form-control"  ng-model="pls_value.art_id">
                               </div>
                             </div>
                         </div>
@@ -176,20 +182,20 @@
                                 <label>Color<em class="text-muted"></em></label>
                               </div>
                             </div>
-                            <div ng-repeat="i in getNumber(12)  track by $index" class="col-sm-12 nopad-form" >
+                            <div ng-repeat="colr in pls_value.color" class="col-sm-12 nopad-form" >
                                 <div class="col-md-4 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"    >
+                                    <input type="text" class="form-control"  ng-model="colr.inq"   >
                                   </div>
                                 </div>
                                 <div class="col-md-4 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"  >
+                                    <input type="text" class="form-control"  ng-model="colr.thread_color" >
                                   </div>
                                 </div>
                                 <div class="col-md-4 nopad-left smallPad">                
                                   <div class="form-group">
-                                    <input type="text" class="form-control"   >
+                                    <input type="text" class="form-control"   ng-model="colr.color_name" >
                                   </div>
                                 </div>
                             </div>
@@ -197,164 +203,8 @@
                         </div>
                     </div>                
               </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab11"> <div class="col-md-4 nopad-left m-b">                
-                      <div class="form-group">
-                        <label>Location<em class="text-muted"></em></label>
-                        <input type="text" class="form-control"  >
-                      </div>
-                    </div>
-                    <div class="col-sm-12 nopad-form">
-                        <div class="col-sm-6 nopad-form">
-                            <div class="form-group col-sm-12 m-b panel panel-default" style="height:375px;"> </div>
-                            <div class="col-md-8 nopad-left m-b">                
-                              <div class="form-group">
-                                <label>Art Id<em class="text-muted"></em></label>
-                                <input type="text" class="form-control" >
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Ink Type<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Mesh<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Color<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div ng-repeat="i in getNumber(12)  track by $index" class="col-sm-12 nopad-form" >
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"    >
-                                  </div>
-                                </div>
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"  >
-                                  </div>
-                                </div>
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"   >
-                                  </div>
-                                </div>
-                            </div>
 
-                         </div>
-                    </div> </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab12"> 
-                    <div class="col-md-4 nopad-left m-b">                
-                      <div class="form-group">
-                        <label>Location<em class="text-muted"></em></label>
-                        <input type="text" class="form-control" >
-                      </div>
-                    </div>
-                    <div class="col-sm-12 nopad-form">
-                        <div class="col-sm-6 nopad-form">
-                            <div class="form-group col-sm-12 m-b panel panel-default" style="height:375px;"> </div>
-                            <div class="col-md-8 nopad-left m-b">                
-                              <div class="form-group">
-                                <label>Art Id<em class="text-muted"></em></label>
-                                <input type="text" class="form-control" >
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Ink Type<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Mesh<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Color<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div ng-repeat="i in getNumber(12)  track by $index" class="col-sm-12 nopad-form" >
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"    >
-                                  </div>
-                                </div>
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"  >
-                                  </div>
-                                </div>
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"   >
-                                  </div>
-                                </div>
-                            </div>
 
-                         </div>
-                    </div> 
-               </div>
-              <div role="tabpanel" class="tab-pane animated fadeIn" id="tab13"> <div class="col-md-4 nopad-left m-b">                
-                      <div class="form-group">
-                        <label>Location<em class="text-muted"></em></label>
-                        <input type="text" class="form-control"  >
-                      </div>
-                    </div>
-                    <div class="col-sm-12 nopad-form">
-                        <div class="col-sm-6 nopad-form">
-                            <div class="form-group col-sm-12 m-b panel panel-default" style="height:375px;"> </div>
-                            <div class="col-md-8 nopad-left m-b">                
-                              <div class="form-group">
-                                <label>Art Id<em class="text-muted"></em></label>
-                                <input type="text" class="form-control" >
-                              </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Ink Type<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Mesh<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div class="col-md-4 nopad-left smallPad">                
-                              <div class="form-group">
-                                <label>Color<em class="text-muted"></em></label>
-                              </div>
-                            </div>
-                            <div ng-repeat="i in getNumber(12)  track by $index" class="col-sm-12 nopad-form" >
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"    >
-                                  </div>
-                                </div>
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"  >
-                                  </div>
-                                </div>
-                                <div class="col-md-4 nopad-left smallPad">                
-                                  <div class="form-group">
-                                    <input type="text" class="form-control"   >
-                                  </div>
-                                </div>
-                            </div>
-
-                         </div>
-                    </div> </div>
               <div role="tabpanel" class="tab-pane animated fadeIn strip-content" id="tab14">
 
                     <div class="col-sm-12 nopad-form stripedDiv" ng-repeat="(key,order_line) in order_line_data">

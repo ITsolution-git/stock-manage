@@ -207,13 +207,14 @@ class PurchaseController extends Controller {
     		{
                 $screen_line = $this->purchase->GetScreendata($po_id,$company_id);
                 $order_total = $this->purchase->getOrdarTotal($po_id);
+                $placements = $this->purchase->getPlacementData($po_id);
                 $list_vendors = $this->common->getAllVendors($company_id);
     			$order_id = $screen_data[0]->order_id;
                 $order_line_data = $this->purchase->GetOrderLineData($order_id);
 
                 foreach ($screen_line as $key => $value) 
                 {
-                    $screen_line[$key]->position = (!empty($value->position))?$Misc_data[$value->position]:'';
+                    $screen_line[$key]->position_name = (!empty($value->position))?$Misc_data[$value->position]:'';
                 }
 
                 if(!empty($order_line_data))
@@ -243,7 +244,7 @@ class PurchaseController extends Controller {
                             $order_line_data_new = array();
                         }
 
-	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors,'order_line_data_new'=>$order_line_data_new );
+	    		$result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors,'order_line_data_new'=>$order_line_data_new,'placements'=>$placements );
 	    		$response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result );
     		}
     		else

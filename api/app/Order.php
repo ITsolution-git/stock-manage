@@ -410,6 +410,10 @@ public function updateOrderLineData($post)
               
                $whereConditions = ['op.order_id' => $post['order_id'],'op.status' => '1'];
                $orderData = DB::table('order_positions as op')->leftJoin('misc_type as m','m.id','=','op.placement_type')->select("op.id",'m.slug')->where($whereConditions)->get();
+                 for($i=0; $i<4; $i++)
+                 {
+                    DB::table('purchase_placement')->insert(['po_id'=>$insertedpoid]); // 4 placements
+                 }
 
                  foreach ($orderData as $key=>$alldata){
                     
@@ -418,6 +422,7 @@ public function updateOrderLineData($post)
                      $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
                     'line_id'=>$alldata->id,
                     'date'=>$post['created_date']]);
+                     
                    }
                  }
        } elseif ($post['textdata'] == 'ce') {
@@ -430,12 +435,19 @@ public function updateOrderLineData($post)
                 $whereConditions = ['op.order_id' => $post['order_id'],'op.status' => '1'];
                $orderData = DB::table('order_positions as op')->leftJoin('misc_type as m','m.id','=','op.placement_type')->select("op.id",'m.slug')->where($whereConditions)->get();
 
+                 for($i=0; $i<4; $i++)
+                 {
+                     DB::table('purchase_placement')->insert(['po_id'=>$insertedpoid]);// 4 placements
+                 }
 
                  foreach ($orderData as $key=>$alldata){
                      if($alldata->slug == 45) {
                      $resultnew = DB::table('purchase_order_line')->insert(['po_id'=>$insertedpoid,
                     'line_id'=>$alldata->id,
                     'date'=>$post['created_date']]);
+
+                   
+
                    }
                  }
        }
