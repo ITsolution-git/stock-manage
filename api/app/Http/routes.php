@@ -108,7 +108,7 @@ Route::get('common/checkemail/{email}', 'CommonController@checkemailExist');
 Route::get('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 Route::post('auth/company', 'CommonController@CompanyService');
-Route::get('common/getAllVendors', 'CommonController@getAllVendors');
+Route::get('common/getAllVendors/{id}', 'CommonController@getAllVendors');
 Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::post('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');

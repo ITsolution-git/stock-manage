@@ -91,8 +91,7 @@ app.controller('productAddEditCtrl', ['$scope','$rootScope','$http','$location',
    AuthService.AccessService('FM');
    var company_id = $rootScope.company_profile.company_id;
    
- $http.get('api/public/common/getAllVendors').success(function(result, status, headers, config) {
-
+ $http.get('api/public/common/getAllVendors/'+company_id).success(function(result, status, headers, config) {
       $scope.vendors = result.data.records;
                          
   });
