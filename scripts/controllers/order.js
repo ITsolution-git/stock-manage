@@ -370,7 +370,6 @@ app.controller('orderEditCtrl', ['$scope','$rootScope','$http','logger','notifyS
 
             $scope.orderline_id = 0;
             $scope.total_qty = 0;
-            $scope.order.order_line_total = 0;
             var order_line_total = 0;
 
             angular.forEach($scope.orderLineAll, function(value) {
