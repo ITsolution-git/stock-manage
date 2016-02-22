@@ -671,7 +671,7 @@ class OrderController extends Controller {
         {
             $arr = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
             $post['shipping_id'] = $arr[0]->shipping_id;
-            $result = $this->common->InsertRecords('item_address_mapping',$post['cond']);
+            $result = $this->common->InsertRecords('item_address_mapping',$post);
             $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
             
             $success=1;
@@ -1055,7 +1055,8 @@ class OrderController extends Controller {
         $count = count($sizeData);
         $inner_count = 1;
 
-        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0'));
+        $this->common->UpdateTableRecords('purchase_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0','is_distribute' => '0'));
+        $this->common->UpdateTableRecords('distribution_detail',array('orderline_id' => $post['orderline_id']),array('size' => '','price' => '0','is_distribute' => '0'));
 
         foreach ($purchase_detail as $key => $value) {
             
@@ -1068,6 +1069,7 @@ class OrderController extends Controller {
 
                 $this->common->UpdateTableRecords('purchase_detail',array('id' => $value->id),$update_data);
                 $this->common->UpdateTableRecords('distribution_detail',array('id' => $value->id),$update_data);
+                $this->common->DeleteTableRecords('item_address_mapping',array('item_id' => $value->id,'order_id' => $post['order_id']));
                 $inner_count++;
             }
         }
