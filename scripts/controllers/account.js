@@ -1,4 +1,4 @@
-app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService', function($scope,$http,$location,$state,AuthService,sessionService) {
+app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthService','sessionService','$filter', function($scope,$http,$location,$state,AuthService,sessionService,$filter) {
 
                                 AuthService.AccessService('CA');
                                 $scope.parent_id = $scope.app.user_id;
@@ -21,7 +21,55 @@ app.controller('accountListCtrl', ['$scope','$http','$location','$state','AuthSe
                             var account = {};
                             
                             $http.get('api/public/admin/account/list/'+$scope.parent_id).success(function(result) {
-                                 $scope.account  = result.data; 
+                                 $scope.account  = result.data.records;
+
+                                 var init;
+
+                                $scope.searchKeywords = '';
+                                $scope.filteredAccount = [];
+                                $scope.row = '';
+                                $scope.select = function (page) {
+                                  var end, start;
+                                  start = (page - 1) * $scope.numPerPage;
+                                  end = start + $scope.numPerPage;
+                                  return $scope.currentPageAccount = $scope.filteredAccount.slice(start, end);
+                                };
+                                $scope.onFilterChange = function () {
+                                  $scope.select(1);
+                                  $scope.currentPage = 1;
+                                  return $scope.row = '';
+                                };
+                                $scope.onNumPerPageChange = function () {
+                                  $scope.select(1);
+                                  return $scope.currentPage = 1;
+                                };
+                                $scope.onOrderChange = function () {
+                                  $scope.select(1);
+                                  return $scope.currentPage = 1;
+                                };
+                                $scope.search = function () {
+                                  $scope.filteredAccount = $filter('filter')($scope.account, $scope.searchKeywords);
+                                  return $scope.onFilterChange();
+                                };
+                                $scope.order = function (rowName) {
+                                  if ($scope.row === rowName) {
+                                      return;
+                                  }
+                                  $scope.row = rowName;
+                                  $scope.filteredAccount = $filter('orderBy')($scope.account, rowName);
+                                  return $scope.onOrderChange();
+                                };
+                                $scope.numPerPageOpt = [10, 20, 50, 100];
+                                $scope.numPerPage = 10;
+                                $scope.currentPage = 1;
+                                $scope.currentPageAccount = [];
+
+                                init = function () {
+                                  $scope.search();
+
+                                  return $scope.select($scope.currentPage);
+                                };
+                                return init();
                              });
                       
                        

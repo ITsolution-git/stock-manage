@@ -28,9 +28,9 @@
               <th data-toggle="true">
                   Name
               </th>
-              <th>
+          <!--     <th>
                   User Name
-              </th>
+              </th> -->
               <th data-hide="phone,tablet">
                   Email
               </th>
@@ -48,8 +48,8 @@
         <tbody>
           <tr ng-repeat="value in currentPageCompany" id="comp_{{value.id}}">
               <td>{{value.name}}</td>
-              <td>{{value.user_name}}</td>
-              <td>{{value.email}}</td>
+<!--               <td>{{value.user_name}}</td>
+ -->              <td>{{value.email}}</td>
               <td>{{value.title}}</td>
               <td ng-if="value.status == 1" ><span class="label bg-success" title="Active">Active</span></td>
               <td ng-if="value.status == 0" ><span class="label bg-danger" title="Deactive">Deactive</span></td>

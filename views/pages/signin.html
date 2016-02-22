@@ -26,9 +26,9 @@
       <form name="loginform" name="loginForm" class="form-horizontal form-validation" data-ng-submit="dosignin()">
         <div class="md-form-group float-label">
           <!-- <input type="email" class="md-input" ng-model="user.email" required> -->
-          <input type="username" name="username" class="md-input" ng-model="user.username"  ng-required="true">
+          <input type="email" name="email" class="md-input" ng-model="user.email"  ng-required="true">
 
-          <label>User Name <span style="color:#f44336" ng-show="loginform.username.$error.required">
+          <label>Email <span style="color:#f44336" ng-show="loginform.email.$error.required">
                                     *</span></label>
         </div>
         <div class="md-form-group float-label">

@@ -13,15 +13,15 @@ class Login extends Model {
      /**
     * Login Verify function           
     * @access public verifylogin
-    * @param  string $username
+    * @param  string $email
     * @param  string $password
     * @return array $admindata
     */
-    public function verifylogin($username, $password) {
+    public function verifylogin($email, $password) {
         $admindata = DB::table('users as usr')
-                    ->select('usr.id','usr.email','usr.status','usr.name','r.title','r.slug','usr.name')
+                    ->select('usr.id','usr.user_name','usr.email','usr.status','usr.name','r.title','r.slug','usr.name')
         			 ->leftjoin('roles as r','r.id', '=' ,'usr.role_id')
-        			 ->where('usr.user_name', '=', $username)
+        			 ->where('usr.email', '=', $email)
         			 ->where('usr.password', '=', md5($password))
         			 ->where('usr.is_delete','=','1')
                      ->where('usr.status','=','1')
