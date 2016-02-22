@@ -1611,7 +1611,12 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
         if(field == 'separations_charge')
         {
+            if($scope.order.separations_charge == '' || $scope.order.separations_charge == undefined)
+            {
+                $scope.order.separations_charge = '0';
+            }
             value = $scope.order.separations_charge;
+
             $scope.order_data.data = {'separations_charge' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
                                     'sales_order_total' : $scope.order.sales_order_total
@@ -1619,6 +1624,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
         if(field == 'rush_charge')
         {
+            if($scope.order.rush_charge == '' || $scope.order.rush_charge == undefined)
+            {
+                $scope.order.rush_charge = '0';
+            }
+
             value = $scope.order.rush_charge;
             $scope.order_data.data = {'rush_charge' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
@@ -1627,6 +1637,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
         if(field == 'shipping_charge')
         {
+            if($scope.order.shipping_charge == '' || $scope.order.shipping_charge == undefined)
+            {
+                $scope.order.shipping_charge = '0';
+            }
+
             value = $scope.order.shipping_charge;
             $scope.order_data.data = {'shipping_charge' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
@@ -1635,6 +1650,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
         if(field == 'setup_charge')
         {
+            if($scope.order.setup_charge == '' || $scope.order.setup_charge == undefined)
+            {
+                $scope.order.setup_charge = '0';
+            }
+
             value = $scope.order.setup_charge;
             $scope.order_data.data = {'setup_charge' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
@@ -1643,6 +1663,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
         if(field == 'distribution_charge')
         {
+            if($scope.order.distribution_charge == '' || $scope.order.distribution_charge == undefined)
+            {
+                $scope.order.distribution_charge = '0';
+            }
+
             value = $scope.order.distribution_charge;
             $scope.order_data.data = {'distribution_charge' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
@@ -1651,6 +1676,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
         if(field == 'digitize_charge')
         {
+            if($scope.order.digitize_charge == '' || $scope.order.digitize_charge == undefined)
+            {
+                $scope.order.digitize_charge = '0';
+            }
+
             value = $scope.order.digitize_charge;
             $scope.order_data.data = {'digitize_charge' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
@@ -1659,6 +1689,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
         if(field == 'artwork_charge')
         {
+            if($scope.order.artwork_charge == '' || $scope.order.artwork_charge == undefined)
+            {
+                $scope.order.artwork_charge = '0';
+            }
+
             value = $scope.order.artwork_charge;
             $scope.order_data.data = {'artwork_charge' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
@@ -1667,6 +1702,11 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
         }
         if(field == 'discount')
         {
+            if($scope.order.discount == '' || $scope.order.discount == undefined)
+            {
+                $scope.order.discount = '0';
+            }
+
             value = $scope.order.discount;
             $scope.order_data.data = {'discount' : value,
                                     'order_charges_total' : $scope.order.order_charges_total,
@@ -2542,7 +2582,7 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
 
     $scope.getSize = function(orderline)
     {
-        var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id};
+        var lineData = {'orderline_id':orderline.id,'product_id':orderline.product_id,'color_id':orderline.color_id,'order_id':$scope.order_id};
         $http.post('api/public/order/AssignSize',lineData).success(function(result) {
 // /            $scope.calculate_all(orderline.id);
             get_orderline_detail();
