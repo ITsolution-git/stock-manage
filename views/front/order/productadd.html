@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="col-md-3 nopad-left">
-                        <span>{{alldatasize.name}}</span>
+                         <input type="text" class="form-control" value="" name="name" ng-model="alldatasize.name" ui-event="{ blur : 'updateOrderAll($event,allProductColorSize.product_data[0].id,allProductColorSize.allData)' }"/>
                     </div>
                     <div class="col-md-5 nopad-left">
                         <input type="text" class="form-control" value="" name="piece_price" ng-model="alldatasize.piece_price" ui-event="{ blur : 'updateOrderAll($event,allProductColorSize.product_data[0].id,allProductColorSize.allData)' }"/>
