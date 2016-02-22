@@ -358,6 +358,7 @@ app.controller('PurchaseCPCtrl', ['$scope','$sce','$rootScope',  '$http','$modal
                                           $scope.order_id = PoData.data.records.order_id;
                                           $scope.list_vendors = PoData.data.records.list_vendors;
                                           $scope.order_line_data = PoData.data.records.order_line_data_new;
+                                          $scope.placements = PoData.data.records.placements;
                                           //console.log($scope.list_vendors);
                                           get_contacts_vendors($scope.ArrPo.vendor_id);
                                           AJloader.hide();

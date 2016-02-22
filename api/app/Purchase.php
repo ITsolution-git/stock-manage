@@ -273,6 +273,44 @@ class Purchase extends Model {
                          ->get();
         return $orderNoteData;
 	}
+	public function getPlacementData($po_id)
+	{
+		$placement = DB::table('purchase_order as po')
+		 				  ->leftJoin('purchase_placement as pp','pp.po_id','=','po.po_id')
+		 				  ->leftJoin('artjob_artworkproof as wp','wp.id','=','pp.artwork_id')
+		 				  ->leftJoin('artjob_screensets as scrn','wp.wp_screen','=','scrn.id')
+		 				  ->leftJoin('artjob_screencolors as col','col.screen_id','=','scrn.id')
+		 				  ->leftJoin('art as art','art.order_id','=','po.order_id')
+	 				      ->select('po.po_id','art.art_id','wp.wp_image','wp.id as wp_id','pp.id as placement_id','pp.position_id','col.id as color_id','col.color_name','col.thread_color','col.inq')
+                          ->where('po.po_id','=',$po_id)
+                          ->get();
+               
+                $temp_array=array();
+                $temp_array['placement']='';
+                foreach ($placement as $key => $value) 
+                {
+                	$temp_array['placement'][$value->placement_id]['po_id'] = $value->po_id;
+                	if(!empty($value->wp_id))
+                	{
+	                	$temp_array['placement'][$value->placement_id]['wp_image'] = (!empty($value->wp_image))? UPLOAD_PATH.'art/'.$value->art_id.'/'.$value->wp_image:'';
+	                	$temp_array['placement'][$value->placement_id]['wp_id']  = $value->wp_id;
+	                	$temp_array['placement'][$value->placement_id]['position_id']  = $value->position_id;
+	                	$temp_array['placement'][$value->placement_id]['art_id']  = $value->art_id;
+	                	$temp_array['placement'][$value->placement_id]['placement_id']  = $value->placement_id;
+	                	
+	                	if(!empty($value->color_id))
+	                	{
+	                		$temp_array['placement'][$value->placement_id]['color'][$value->color_id]['color_name']  = $value->color_name;
+	                		$temp_array['placement'][$value->placement_id]['color'][$value->color_id]['thread_color']  = $value->thread_color;
+	                		$temp_array['placement'][$value->placement_id]['color'][$value->color_id]['inq']  = $value->inq;
+	                		$temp_array['placement'][$value->placement_id]['color'][$value->color_id]['color_id']  = $value->color_id;
+	                	}
+                   }
+                }
+              $temp_array['placement'] = array_values($temp_array['placement']);
+       // echo "<pre>"; print_r($temp_array); echo "</pre>"; die;
+        return $temp_array['placement'];
+	}
 
 }
 
