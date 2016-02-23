@@ -590,7 +590,7 @@ public function updateOrderLineData($post)
 
     public function getDistributedItems($data)
     {
-        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.name as color_name','p.name','v.name_company as main_contact_person','pd.shipped_qnty'];
+        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.name as color_name','p.name','v.name_company as main_contact_person','pd.shipped_qnty','ia.shipping_id'];
 
         $orderData = DB::table('orders as order')
                         ->select($listArray)

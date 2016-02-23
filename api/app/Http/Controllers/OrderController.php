@@ -713,14 +713,14 @@ class OrderController extends Controller {
             $post['cond'] = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
             $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
 
-            //$boxarr = $this->common->GetTableRecords('box_item_mapping',array('item_id' => $post['item_id'],'shipping_id' => $post['shipping_id']),array());
+            $boxarr = $this->common->GetTableRecords('box_item_mapping',array('item_id' => $post['item_id'],'shipping_id' => $post['shipping_id']),array());
 
-            /*if(!empty($boxarr))
+            if(!empty($boxarr))
             {
                 foreach ($boxarr as $value) {
                     $this->common->DeleteTableRecords('shipping_box',array('id' => $value->box_id));
                 }
-            }*/
+            }
 
             
 

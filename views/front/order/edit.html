@@ -829,7 +829,7 @@
                                         CLIENT DISTRIBUTION LOCATION LIST
                                     </label>
                                     <label>
-                                        <span class="pull-left text-left">Discription</span>
+                                        <span class="pull-left text-left">Description</span>
                                         <span class="pull-right text-right">Address</span>
                                     </label>
                                 </div>
@@ -869,13 +869,13 @@
                                                 DISTRIBUTION LOCATION
                                             </label>
                                             <label>
-                                                <span class="pull-left text-left">Discription</span>
+                                                <span class="pull-left text-left">Description</span>
                                                 <span class="pull-right text-right">Address</span>
                                             </label>
                                         </div>
                                         <div class="col-md-12 nopad-left orderDistributionContainer">
-                                            <div id="row_{{dist.id}}" class="col-md-12" ng-repeat="dist in distributed_address" ng-class="{distribution_active: dist.id==address_id}">
-                                                <div ng-click="select_address(dist.id)">
+                                            <div id="row_{{dist.id}}" class="col-md-12" ng-repeat="dist in distributed_address" ng-class="{distribution_active: dist.id==address_id}" ng-click="select_address(dist.id)">
+                                                <div>
                                                     <div class="col-md-1 nopad-form m-b">
                                                         <!--label class="md-check">
                                                             <input type="checkbox" checklist-model="1" checklist-value="1" class="has-value">
@@ -940,7 +940,7 @@
                                                 <input type="text" class="form-control" ng-model="oitem.main_contact_person" onfocus="this.blur()">
                                             </div>
                                             <div class="col-md-2 smallPad m-b nopad-right">
-                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="remove_item_from_distribute(oitem.id)">
+                                                <button type="button" class="btn btn-default addButton" tabindex="0" ng-click="remove_item_from_distribute(oitem.id,oitem.shipping_id)">
                                                     <i class="fa fa-minus"></i>
                                                 </button>
                                             </div>

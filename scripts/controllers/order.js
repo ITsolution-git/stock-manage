@@ -2281,13 +2281,14 @@ $scope.colorcustomTexts = {buttonDefaultText: 'Select Colors'};
             $("#ajax_loader").hide();
         }
     }
-    $scope.remove_item_from_distribute = function(item_id)
+    $scope.remove_item_from_distribute = function(item_id,shipping_id)
     {
         $("#ajax_loader").show();
         var item_data = {};
         item_data.order_id = $scope.order_id;
         item_data.address_id = $scope.address_id;
         item_data.item_id = item_id;
+        item_data.shipping_id = shipping_id;
 
         $http.post('api/public/order/removeFromDistribute',item_data).success(function(result, status, headers, config) {
             get_distribution_list($scope.order_id,$scope.client_id);
