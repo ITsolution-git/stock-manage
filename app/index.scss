@@ -1,0 +1,70 @@
+/**
+ *  Do not remove this comments bellow. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+
+/**
+ *  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+@import "core/scss/global.scss";
+@import "core/theme-options/theme-options.scss";
+@import "core/directives/ms-card/ms-card.scss";
+@import "core/directives/ms-form-wizard/ms-form-wizard.scss";
+@import "core/directives/ms-material-color-picker/ms-material-color-picker.scss";
+@import "core/directives/ms-nav/ms-nav.scss";
+@import "core/directives/ms-navigation/ms-navigation.scss";
+@import "core/directives/ms-responsive-table/ms-responsive-table.scss";
+@import "core/directives/ms-scroll/ms-scroll.scss";
+@import "core/directives/ms-search-bar/ms-search-bar.scss";
+@import "core/directives/ms-splash-screen/ms-splash-screen.scss";
+@import "core/directives/ms-stepper/ms-stepper.scss";
+@import "core/directives/ms-timeline/ms-timeline.scss";
+@import "core/directives/ms-widget/ms-widget.scss";
+@import "core/scss/partials/angular-material-extend.scss";
+@import "core/scss/partials/animations.scss";
+@import "core/scss/partials/colors.scss";
+@import "core/scss/partials/helpers.scss";
+@import "core/scss/partials/icons.scss";
+@import "core/scss/partials/layouts-page.scss";
+@import "core/scss/partials/layouts-template.scss";
+@import "core/scss/partials/material.scss";
+@import "core/scss/partials/mixins.scss";
+@import "core/scss/partials/print.scss";
+@import "core/scss/partials/reset.scss";
+@import "core/scss/partials/typography.scss";
+@import "core/scss/partials/variables.scss";
+@import "core/scss/partials/plugins/angular-google-map.scss";
+@import "core/scss/partials/plugins/angular-moment-picker.scss";
+@import "core/scss/partials/plugins/c3.scss";
+@import "core/scss/partials/plugins/chartist.scss";
+@import "core/scss/partials/plugins/chartjs.scss";
+@import "core/scss/partials/plugins/datatable.scss";
+@import "core/scss/partials/plugins/highlight.scss";
+@import "core/scss/partials/plugins/nvd3.scss";
+@import "core/scss/partials/plugins/perfect-scrollbar.scss";
+@import "core/scss/partials/plugins/text-angular.scss";
+@import "core/directives/ms-card/templates/template-1/template-1.scss";
+@import "core/directives/ms-card/templates/template-10/template-10.scss";
+@import "core/directives/ms-card/templates/template-2/template-2.scss";
+@import "core/directives/ms-card/templates/template-3/template-3.scss";
+@import "core/directives/ms-card/templates/template-4/template-4.scss";
+@import "core/directives/ms-card/templates/template-5/template-5.scss";
+@import "core/directives/ms-card/templates/template-6/template-6.scss";
+@import "core/directives/ms-card/templates/template-7/template-7.scss";
+@import "core/directives/ms-card/templates/template-8/template-8.scss";
+@import "core/directives/ms-card/templates/template-9/template-9.scss";
+@import "core/directives/ms-stepper/templates/horizontal/horizontal.scss";
+@import "quick-panel/quick-panel.scss";
+@import "toolbar/toolbar.scss";
+@import "navigation/layouts/horizontal-navigation/navigation.scss";
+@import "navigation/layouts/vertical-navigation/navigation.scss";
+@import "quick-panel/tabs/activity/activity-tab.scss";
+@import "quick-panel/tabs/chat/chat-tab.scss";
+@import "quick-panel/tabs/today/today-tab.scss";
+@import "toolbar/layouts/content-with-toolbar/toolbar.scss";
+@import "toolbar/layouts/horizontal-navigation/toolbar.scss";
+// endinjector
