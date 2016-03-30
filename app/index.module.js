@@ -20,9 +20,8 @@
             // Quick panel
             'app.quick-panel',
 
-            // Sample
-            'app.sample'
-            
-           
+            // Client
+            'app.client'
+      
         ]);
 })();

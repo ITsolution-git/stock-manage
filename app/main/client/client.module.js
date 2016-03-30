@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.sample', [])
+        .module('app.client', [])
         .config(config);
 
     /** @ngInject */
@@ -11,43 +11,43 @@
     {
         // State
         $stateProvider
-            .state('app.sample', {
-                url    : '/sample',
+            .state('app.client', {
+                url    : '/client',
                 views  : {
                     'content@app': {
-                        templateUrl: 'app/main/sample/sample.html',
-                        controller : 'SampleController as vm'
+                        templateUrl: 'app/main/client/client.html',
+                        controller : 'ClientController as vm'
                     }
                 },
                 resolve: {
-                    SampleData: function (msApi)
+                    ClientData: function (msApi)
                     {
-                        return msApi.resolve('sample@get');
+                        return msApi.resolve('client@get');
                     }
                 }
             });
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/sample');
+        $translatePartialLoaderProvider.addPart('app/main/client');
 
         // Api
-        msApiProvider.register('sample', ['app/data/sample/sample.json']);
+        msApiProvider.register('client', ['app/data/client/client.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
-            title : 'Client',
+            title : 'Clients',
             group : true,
             weight: 1
         });
 
-        msNavigationServiceProvider.saveItem('fuse.sample', {
-            title    : 'Client',
+        msNavigationServiceProvider.saveItem('fuse.client', {
+            title    : 'Clients',
             icon     : 'icon-tile-four',
-            state    : 'app.sample',
+            state    : 'app.client',
             /*stateParams: {
                 'param1': 'page'
              },*/
-            translate: 'SAMPLE.SAMPLE_NAV',
+            translate: 'CLIENT.CLIENT_NAV',
             weight   : 1
         });
     }

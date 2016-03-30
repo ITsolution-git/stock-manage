@@ -2,6 +2,111 @@
 {
     'use strict';
 
+    config.$inject = ["$stateProvider", "$translatePartialLoaderProvider", "msApiProvider", "msNavigationServiceProvider"];
+    angular
+        .module('app.client', [])
+        .config(config);
+
+    /** @ngInject */
+    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    {
+        // State
+        $stateProvider
+            .state('app.client', {
+                url    : '/client',
+                views  : {
+                    'content@app': {
+                        templateUrl: 'app/main/client/client.html',
+                        controller : 'ClientController as vm'
+                    }
+                },
+                resolve: {
+                    ClientData: ["msApi", function (msApi)
+                    {
+                        return msApi.resolve('client@get');
+                    }]
+                }
+            });
+
+        // Translation
+        $translatePartialLoaderProvider.addPart('app/main/client');
+
+        // Api
+        msApiProvider.register('client', ['app/data/client/client.json']);
+
+        // Navigation
+        msNavigationServiceProvider.saveItem('fuse', {
+            title : 'Client',
+            group : true,
+            weight: 1
+        });
+
+        msNavigationServiceProvider.saveItem('fuse.client', {
+            title    : 'Client',
+            icon     : 'icon-tile-four',
+            state    : 'app.client',
+            /*stateParams: {
+                'param1': 'page'
+             },*/
+            translate: 'CLIENT.CLIENT_NAV',
+            weight   : 1
+        });
+    }
+})();
+(function ()
+{
+    'use strict';
+
+    ClientDialogController.$inject = ["$mdDialog", "Client", "Clients", "event"];
+    angular
+        .module('app.client')
+        .controller('ClientDialogController', ClientDialogController);
+
+    /** @ngInject */
+    function ClientDialogController($mdDialog, Client, Clients, event)
+    {
+        var vm = this;
+
+        // Data
+        vm.title = 'Edit Client';
+        vm.client = angular.copy(Client);
+        vm.clients = Clients;
+        vm.newClient = false;
+
+
+
+        // Methods
+        vm.addNewClient = addNewClient;
+
+        vm.closeDialog = closeDialog;
+
+        //////////
+
+        /**
+         * Add new task
+         */
+        function addNewClient()
+        {
+            vm.clients.unshift(vm.client);
+
+            closeDialog();
+        }
+
+     
+
+        /**
+         * Close dialog
+         */
+        function closeDialog()
+        {
+            $mdDialog.hide();
+        }
+    }
+})();
+(function ()
+{
+    'use strict';
+
     config.$inject = ["$translatePartialLoaderProvider", "msApiProvider"];
     angular
         .module('app.quick-panel', [])
@@ -3859,81 +3964,55 @@
         };
     }
 })();
-(function ()
-{
+(function () {
     'use strict';
 
-    config.$inject = ["$stateProvider", "$translatePartialLoaderProvider", "msApiProvider", "msNavigationServiceProvider"];
+    ClientController.$inject = ["ClientData", "$mdDialog", "$document"];
+    AngularWayCtrl.$inject = ["$resource"];
     angular
-        .module('app.sample', [])
-        .config(config);
+        .module('app.client')
+        
+        .controller('ClientController', ClientController)
+        .controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
-    {
-        // State
-        $stateProvider
-            .state('app.sample', {
-                url    : '/sample',
-                views  : {
-                    'content@app': {
-                        templateUrl: 'app/main/sample/sample.html',
-                        controller : 'SampleController as vm'
-                    }
-                },
-                resolve: {
-                    SampleData: ["msApi", function (msApi)
-                    {
-                        return msApi.resolve('sample@get');
-                    }]
-                }
-            });
-
-        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/sample');
-
-        // Api
-        msApiProvider.register('sample', ['app/data/sample/sample.json']);
-
-        // Navigation
-        msNavigationServiceProvider.saveItem('fuse', {
-            title : 'SAMPLE',
-            group : true,
-            weight: 1
-        });
-
-        msNavigationServiceProvider.saveItem('fuse.sample', {
-            title    : 'Sample',
-            icon     : 'icon-tile-four',
-            state    : 'app.sample',
-            /*stateParams: {
-                'param1': 'page'
-             },*/
-            translate: 'SAMPLE.SAMPLE_NAV',
-            weight   : 1
-        });
-    }
-})();
-(function ()
-{
-    'use strict';
-
-    SampleController.$inject = ["SampleData"];
-    angular
-        .module('app.sample')
-        .controller('SampleController', SampleController);
-
-    /** @ngInject */
-    function SampleController(SampleData)
-    {
+    function ClientController(ClientData, $mdDialog,$document) {
         var vm = this;
 
         // Data
-        vm.helloText = SampleData.data.helloText;
+        vm.clientData = ClientData.data;
 
+         vm.dtOptions = {
+            dom       : '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+            pagingType: 'simple',
+            autoWidth : false,
+            responsive: true
+        };
         // Methods
-
+vm.openClientDialog = openClientDialog;    
         //////////
+        function openClientDialog(ev, client)
+        {
+            $mdDialog.show({
+                controller         : 'ClientDialogController',
+                controllerAs       : 'vm',
+                templateUrl        : 'app/main/client/dialogs/client/client-dialog.html',
+                parent             : angular.element($document.body),
+                targetEvent        : ev,
+                clickOutsideToClose: true,
+                locals             : {
+                    Client : client,
+                    Clients: vm.clients,
+                    event: ev
+                }
+            });
+        }
+    }
+    function AngularWayCtrl($resource) {
+        var vmn = this;
+        $resource('i18n/data.json').query().$promise.then(function (persons) {
+            vmn.persons = persons;
+        });
     }
 })();
 
@@ -5940,8 +6019,9 @@
             // Quick panel
             'app.quick-panel',
 
-            // Sample
-            'app.sample'
+            // Client
+            'app.client'
+      
         ]);
 })();
 (function ()
@@ -6119,7 +6199,7 @@
     {
         $locationProvider.html5Mode(true);
 
-        $urlRouterProvider.otherwise('/sample');
+        $urlRouterProvider.otherwise('/client');
 
         /**
          * Layout Style Switcher

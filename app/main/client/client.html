@@ -1,0 +1,67 @@
+<div class="content client-list-page">
+    <div class="simple-table-container md-whiteframe-4dp">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=20>
+                Clients
+            </div>
+            <div class="search-block" flex=40>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Search</label>
+                    <input>
+                </md-input-container>
+            </div>
+            <div class="client-modal-title cursor-p" flex=50 ng-click="vm.openClientDialog($event)">
+                ADD NEW CLIENT
+            </div>
+        </div>
+        <div class="ms-responsive-table-wrapper">
+            <table class="simple" datatable="ng" dt-options="vm.dtOptions" ms-responsive-table="">
+                <thead>
+                    <tr>
+                        <th>Client Name</th>
+                        <th>Main Contact</th>
+                        <th>Contact Phone</th>
+                        <th>Contact Email</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr ng-repeat="client in ::vm.clientData">
+                        <td>{{ client.name }}</td>
+                        <td>{{ client.contact }}</td>
+                        <td>{{ client.phone }}</td>
+                        <td>{{ client.email }}</td>
+                    </tr>
+   <!--                <tr>
+                       <td>Culture Studio</td>
+                       <td>Rich Santo</td>
+                       <td>555-555-5555</td>
+                       <td>email@email.com</td>
+                   </tr>
+                   <tr>
+                       <td>Live Nation</td>
+                       <td>Contact Name</td>
+                       <td>555-555-5555</td>
+                       <td>email@email.com</td>
+                   </tr>
+                   <tr>
+                       <td>Culture Studio</td>
+                       <td>Rich Santo</td>
+                       <td>555-555-5555</td>
+                       <td>email@email.com</td>
+                   </tr>
+                   <tr>
+                       <td>Live Nation</td>
+                       <td>Contact Name</td>
+                       <td>555-555-5555</td>
+                       <td>email@email.com</td>
+                   </tr>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
