@@ -12,7 +12,7 @@
         var vm = this;
 
         // Data
-        vm.clientData = ClientData.data;
+        vm.clients = ClientData.data;
 
          vm.dtOptions = {
             dom       : '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
