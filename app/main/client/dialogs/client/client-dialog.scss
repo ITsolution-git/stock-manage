@@ -1,0 +1,159 @@
+md-dialog {
+
+    &.task-dialog {
+        max-width: 720px;
+        width: 720px;
+
+        md-dialog-content {
+            display: block;
+            position: relative;
+        }
+
+        md-toolbar {
+
+            .title {
+                font-size: 17px;
+            }
+        }
+
+        md-input-container {
+
+            textarea {
+                min-height: 150px;
+            }
+        }
+
+        .date-container {
+            padding: 16px 0 24px 0;
+        }
+
+        .notes {
+
+            > label {
+                color: rgba(0, 0, 0, 0.54);
+            }
+
+            .mce-tinymce {
+                margin-top: 8px;
+            }
+        }
+
+        .tags {
+            margin: 8px 0;
+
+            label {
+                font-size: 11px;
+                color: rgba(0, 0, 0, 0.54);
+            }
+
+            .md-chips {
+                font-size: 13px;
+
+                .md-chip {
+
+                    md-chip-template {
+
+                        .color {
+                            display: inline-block;
+                            position: relative;
+                            width: 8px;
+                            height: 8px;
+                            top: -1px;
+                            border-radius: 50%;
+                            margin: -2px 4px 0 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .attachment-list {
+            font-size: 13px;
+            padding-top: 16px;
+
+            .attachment {
+                background-color: rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(0, 0, 0, 0.12);
+                padding-left: 16px;
+                margin-top: 8px;
+                border-radius: 2px;
+
+                .filename {
+                    font-weight: 500;
+                }
+
+                .size {
+
+                }
+
+                .md-button {
+                    margin: 0;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        md-dialog-actions {
+            position: relative;
+            overflow-y: hidden;
+            overflow-x: auto;
+            justify-content: space-between;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-top: 1px solid rgba(0, 0, 0, 0.12);
+        }
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: $layout-breakpoint-md) {
+
+    md-dialog {
+
+        &.task-dialog {
+            width: 80%;
+        }
+    }
+}
+
+@media screen and (max-width: $layout-breakpoint-sm) {
+
+    md-dialog {
+
+        &.task-dialog {
+            width: 90%;
+        }
+    }
+}
+
+.content-heading {
+    border-bottom: 1px solid #000000;
+}
+.client-add-modal md-input-container {
+    margin-bottom: 0;
+    margin-top: -10px;
+}
+md-input-container.md-block.first-box.flex-gt-sm {
+    margin-top: 18px;
+}
+.upload{bottom: 25px;
+    position: absolute;
+    right: 0;}
+.upload-rel{position: relative}
+.height-image{height: 216px;background: #f5f5f5}
+.client-add-modal{background: #fff}
+md-card.card md-card-title md-card-title-text{flex-direction: row}
+md-card.card md-button{flex-direction: row}
+md-card.card md-card-title{height: 100%}
+.first-box.md-icon-float.md-default-theme {
+    margin-top: 18px;
+}
+md-input-container.first-box.md-icon-float {
+    margin-top: 18px;
+}
+.btn-small{width:50px}
+.c-white{color:#fff !important}
+.m-b-20{margin-bottom: 20px !important}
+.cursor-p{cursor:pointer}
