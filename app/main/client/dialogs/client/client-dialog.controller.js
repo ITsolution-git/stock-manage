@@ -16,7 +16,35 @@
         vm.client = angular.copy(Client);
         vm.clients = Clients;
         vm.newClient = false;
-
+        vm.client={
+            companyName:"",
+            type:"",
+            streetAddr:"",
+            suit:"",
+            city:"",
+            state:"",
+            zipCode:"",
+            billingEmail:"",
+            companyPhone:"",
+            companyWebURL:"",
+            disposition:"",
+            firstName:"",
+            lastName:"",
+            phone:"",
+            email:"",
+        };
+        vm.states=[
+            {abbrev:"State-1"},  
+            {abbrev:"State-2"}  
+        ];
+        vm.clientTypes=[
+            {abbrev:"Type-1"},  
+            {abbrev:"Type-2"}  
+        ];
+        vm.dispositions=[
+            {abbrev:"Disposition-1"},  
+            {abbrev:"Disposition-2"}  
+        ];
 
 
         // Methods

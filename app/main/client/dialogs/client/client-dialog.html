@@ -14,57 +14,56 @@
                     <span class="md-title">Company Information</span>
                 </div>
                 <md-input-container class="md-block first-box" flex-gt-sm>
-                    <label>Company Name</label>
-                    <input>
+                    <input placeholder="Company Name" ng-model="vm.client.companyName">
                 </md-input-container>
                 <md-input-container class="m-b-20">
                     <label>Type</label>
-                    <md-select ng-model="ctrl.userState">
-                        <md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">
-                            {{state.abbrev}}
+                    <md-select ng-model="vm.client.type">
+                        <md-option ng-repeat="type in vm.clientTypes" value="{{type.abbrev}}">
+                            {{type.abbrev}}
                         </md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Street Address">
+                    <input placeholder="Street Address" ng-model="vm.client.streetAddr">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Suite">
+                    <input placeholder="Suite" ng-model="vm.client.suit">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="City">
+                    <input placeholder="City" ng-model="vm.client.city">
                 </md-input-container>
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                     <md-input-container flex=45 class="m-b-20">
                         <label>State</label>
-                        <md-select ng-model="ctrl.userState">
-                            <md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">
+                        <md-select ng-model="vm.client.state">
+                            <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
                                 {{state.abbrev}}
                             </md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container flex="45">
-                        <input placeholder="Zip Code">
+                        <input placeholder="Zip Code" ng-model="vm.client.zipCode">
                     </md-input-container>
                 </div>
                 <md-input-container>
                     <label>Billing Email</label>
-                    <input requiredname="email">
+                    <input requiredname="email" ng-model="vm.client.billingEmail">
                     <div ng-messages="projectForm.clientName.$error">
                         <div ng-message="required">Please enter the email biling address.</div>
                     </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Company Phone">
+                    <input placeholder="Company Phone" ng-model="vm.client.companyPhone">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Company Website URL">
+                    <input placeholder="Company Website URL" ng-model="vm.client.companyWebURL">
                 </md-input-container>
                 <md-input-container class="m-b-20">
                     <label>Disposition</label>
-                    <md-select ng-model="ctrl.userState">
-                        <md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">
-                            {{state.abbrev}}
+                    <md-select ng-model="vm.client.disposition">
+                        <md-option ng-repeat="disp in vm.dispositions" value="{{disp.abbrev}}">
+                            {{disp.abbrev}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -89,16 +88,16 @@
                     <span class="md-title">Main Contact Information</span>
                 </div>
                 <md-input-container class="first-box">
-                    <input placeholder="First Name">
+                    <input placeholder="First Name" ng-model="vm.client.firstName">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Last Name">
+                    <input placeholder="Last Name" ng-model="vm.client.lastName">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Phone ">
+                    <input placeholder="Phone " ng-model="vm.client.phone">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Email" name="email">
+                    <input placeholder="Email" name="email" ng-model="vm.client.email">
                 </md-input-container>
                 <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
                     <md-button class="md-primary md-hue-1 md-accent ">Cancel</md-button>
