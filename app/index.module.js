@@ -18,7 +18,7 @@
             'app.toolbar',
 
             // Quick panel
-            'app.quick-panel',
+            /*'app.quick-panel',*/
 
             // Client
             'app.client'
