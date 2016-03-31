@@ -15,13 +15,30 @@
             </div>
         </div>
         <div class="ms-responsive-table-wrapper">
-            <table class="simple" datatable="ng" dt-options="vm.dtOptions" ms-responsive-table="">
+            <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
                 <thead>
                     <tr>
-                        <th>Client Name</th>
-                        <th>Main Contact</th>
-                        <th>Contact Phone</th>
-                        <th>Contact Email</th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Client Name</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Main Contact</span>
+                            </div>
+                        </th>
+                        
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Contact Phone</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Contact Email</span>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -31,13 +48,18 @@
                 </tfoot>
                 <tbody>
                     <tr ng-repeat="client in ::vm.clients">
-                        <td>{{ client.name }}</td>
-                        <td>{{ client.contact }}</td>
-                        <td>{{ client.phone }}</td>
-                        <td>{{ client.email }}</td>
+                        <td ui-sref="app.client.profile({id:client.id})">{{ client.name}}</td>
+                        <td>{{ client.contact}}</td>
+                        <td>{{ client.phone}}</td>
+                        <td>{{ client.email}}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+
+
+
+

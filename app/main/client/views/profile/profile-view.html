@@ -1,0 +1,836 @@
+<!-------------------------------------Client profile page------------------------------------------->
+<div class="client-profile-page">
+    <div class="header md-accent-bg"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
+            <div class="client-logo">
+                Logo
+            </div>
+            <h1>Live Nation</h1>
+        </div>
+    </div>
+    <div ng-cloak>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                <!-----------------Company Info Tab-------------------->
+                <md-tab label="Company Info">
+                    <md-content class="md-padding">
+                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Logo</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Company Contact</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="h4 text-semibold">Address:</div>
+                                        <span>123 1st St. #500</span>
+                                        <span>Chicago IL, 60611</span>
+                                        <div class="h4 text-semibold">Company Phone:</div>
+                                        <span>555-555-5555</span>
+                                        <div class="h4 text-semibold">Email:</div>
+                                        <span>email@email.com</span>
+                                        <div class="h4 text-semibold">Website:</div>
+                                        <span>www.website.com</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Main Contact</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="h4 text-semibold">Main Contact:</div>
+                                        <span>Joe Contact</span>
+                                        <div class="h4 text-semibold">Main Contact Email:</div>
+                                        <span>JoeContact@email.com</span>
+                                        <div class="h4 text-semibold">Main Contact Phone:</div>
+                                        <span>555-555-5555</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Account Information</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="h4 text-semibold">Account Type:</div>
+                                        <span>Contract</span>
+                                        <div class="h4 text-semibold">Disposition:</div>
+                                        <span>Good</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Contacts Tab-------------------->
+                <md-tab label="Contacts">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Contacts
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Location</th>
+                                            <th>Phone</th>
+                                            <th>Contact Email</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>Joe</td>
+                                            <td>Contact</td>
+                                            <td>Location Name</td>
+                                            <td>555-555-5555</td>
+                                            <td>email@email.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Joe</td>
+                                            <td>Contact</td>
+                                            <td>Location Name</td>
+                                            <td>555-555-5555</td>
+                                            <td>email@email.com</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"><a href="">Add New</a></td>                                                
+                                        </tr> 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Locations Tab-------------------->
+                <md-tab label="Locations">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Locations
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>Street Address</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Zipcode</th>
+                                            <th>Location Type</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>123 1st</td>
+                                            <td>Chicago</td>
+                                            <td>IL</td>
+                                            <td>60611</td>
+                                            <td>Shipping</td>
+                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                            
+                                    <tr>
+                                        <td>123 1st</td>
+                                        <td>Chicago</td>
+                                        <td>IL</td>
+                                        <td>60611</td>
+                                        <td>Physical</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                            
+                                    <tr>
+                                        <td>123 1st</td>
+                                        <td>Chicago</td>
+                                        <td>IL</td>
+                                        <td>60611</td>
+                                        <td>Main</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                            
+                                    <tr>
+                                        <td>123 1st</td>
+                                        <td>Chicago</td>
+                                        <td>IL</td>
+                                        <td>60611</td>
+                                        <td>Billing</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                            
+                                    <tr>
+                                        <td>123 1st</td>
+                                        <td>Chicago</td>
+                                        <td>IL</td>
+                                        <td>60611</td>
+                                        <td>Physical</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                            
+                                    <tr>
+                                        <td colspan="6"><a href="">Add New</a></td>                                                
+                                    </tr>                                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>   
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Sales Detail Tab-------------------->
+                <md-tab label="Sales Detail">
+                    <md-content class="md-padding">
+                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Web</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                    <md-card-content>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Anniversary Date</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>2/20/2013</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Sales Person</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>Salesperson Name</span>                                 
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Default Price Grid</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>CS 2011 Supplied Garments </span>
+                                        <span>Copy</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Tax Tab-------------------->
+                <md-tab label="Tax">
+                    <md-content class="md-padding">
+                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax ID</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>123456789 </span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax Rate Percentage</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>10.75%</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax Exempt</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>No</span>                                 
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax ID Document</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>taxdoc.pdf </span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Documents Tab-------------------->
+                <md-tab label="Documents">
+                    <md-content class="md-padding">                        
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Documents
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>File Name</th>
+                                            <th>Description</th>
+                                            <th>Date Added</th>                                               
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>doc.pdf</td>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                            <td>2/2/2016</td>
+                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                                                                      
+                                    <tr>
+                                        <td>doc.pdf</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                                                                      
+                                    <tr>
+                                        <td>doc.pdf</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                                                                      
+                                    <tr>
+                                        <td>doc.pdf</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                                                                      
+                                    <tr>
+                                        <td>doc.pdf</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>                                                                                      
+                                    <tr>
+                                        <td colspan="6"><a href="">Add New</a></td>                                                
+                                    </tr>                                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Notes Tab-------------------->
+                <md-tab label="Notes">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Notes
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>Created By</th>
+                                            <th>Note</th>
+                                            <th>Date Added</th>                                               
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>Jon Smith</td>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                            <td>2/2/2016</td>
+                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jon Smith</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jon Smith</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jon Smith</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jon Smith</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"><a href="">Add New</a></td>                                                
+                                    </tr>                                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Orders Tab-------------------->
+                <md-tab label="Orders">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Orders
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Order Name</th>
+                                            <th>Date Created</th>                                               
+                                            <th>Approval Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>31</td>
+                                            <td>Shirts</td>
+                                            <td>2/2/2016</td>
+                                            <td>Order-estimate</td>
+                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>32</td>
+                                        <td>Shirts</td>
+                                        <td>2/2/2016</td>
+                                        <td>Sales Review</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>33</td>
+                                        <td>Shirts</td>
+                                        <td>2/2/2016</td>
+                                        <td>Production Dept</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>Shirts</td>
+                                        <td>2/2/2016</td>
+                                        <td>Ready to Ship</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>Shirts</td>
+                                        <td>2/2/2016</td>
+                                        <td>DTG Department</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"><a href="">Add New</a></td>                                                
+                                    </tr>                                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Distribution Addresses Tab-------------------->
+                <md-tab label="Distribution Addresses">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=40>
+                                    Distribution Addresses
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Street Address</th>
+                                            <th>City</th>                                               
+                                            <th>State</th>
+                                            <th>Zipcode</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
+                                            <td>123 1st St</td>
+                                            <td>Chicago</td>
+                                            <td>IL</td>
+                                            <td>60611</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
+                                            <td>123 1st St</td>
+                                            <td>Chicago</td>
+                                            <td>IL</td>
+                                            <td>60611</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
+                                            <td>123 1st St</td>
+                                            <td>Chicago</td>
+                                            <td>IL</td>
+                                            <td>60611</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
+                                            <td>123 1st St</td>
+                                            <td>Chicago</td>
+                                            <td>IL</td>
+                                            <td>60611</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
+                                            <td>123 1st St</td>
+                                            <td>Chicago</td>
+                                            <td>IL</td>
+                                            <td>60611</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6"><a href="">Add New</a></td>                                                
+                                        </tr>                                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Screen Sets Tab-------------------->
+                <md-tab label="Screen Sets">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Screen Sets
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Graphic Size</th>
+                                            <th>Image</th>                                               
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>1-25152</td>
+                                            <td>Oversized 25" x 36"</td>
+                                            <td>Chicago</td>
+                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1-25152</td>
+                                        <td>Oversized 25" x 36"</td>
+                                        <td>Chicago</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>1-25152</td>
+                                        <td>Oversized 25" x 36"</td>
+                                        <td>Chicago</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1-25152</td>
+                                        <td>Oversized 25" x 36"</td>
+                                        <td>Chicago</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Web Portal Tab-------------------->
+                <md-tab label="Web Portal">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Web Portal
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>Client Url</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>www.url.com</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Logos Tab-------------------->
+                <md-tab label="Logos">
+                    <md-content class="md-padding">
+                        <div flex-xs flex-gt-xs="100" layout="column">
+                            <md-card>
+                                <md-card-header layout-align="space-between start">
+                                    <md-card-header-text>
+                                        <span class="md-title">Blind Approval Text</span>
+                                    </md-card-header-text>
+                                    <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-card-header>
+                                <md-card-content>
+                                    <span>" Please review and advise(action may be required): " & "¶¶" & "Please reply to this email with APPROVED, NAME, AND DATE. "& "¶¶" & "Dear  Valued Customer, "& "¶¶" &
+                                        "Please check the following carefully: size, layout, spelling, punctuation, colors, etc.  Changes if required should be noted on the proof when sent back.    Customer assumes full responsibility once proof is signed as approved.  Colors will be printed as close to proof as possible.  Graphics will be sized according to industry standard unless indicated by customer. "  & "¶¶" &
+                                        "Please note that the JPEG proofs are for layout purposes. It is only to show how the artwork will be positioned on the garment and its size. It will not be legible to indicate on how colors, overprints, knock outs and/or transparency images will or will not appear on the prints. Any JPEG proofs we sent to you can be in low resolution to transfer the file(s) smoothly during the email process but please also check the original file(s) if they are in a good minimum of 300 dpi resolution or Vector images." & "¶¶" &</span>
+                                </md-card-content>
+                            </md-card>
+                        </div>
+                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
+                            <div flex-xs flex-gt-xs="33" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Color Logo</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="33" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">B/W Logo</span>
+
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="33" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between start">
+                                        <md-card-header-text>
+                                            <span class="md-title">Shipping Logo</span>
+                                        </md-card-header-text>
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-card-header>
+                                    <md-card-content>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+
+                <!-----------------Art Tab-------------------->
+                <md-tab label="Art">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Art
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="">
+                                    <thead>
+                                        <tr>
+                                            <th>File name</th>
+                                            <th>Description</th>
+                                            <th>Date Added</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <tr>
+                                            <td>screen1.png</td>
+                                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
+                                            <td>2/2/2016</td>
+                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>screen1.png</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
+                                        <td>2/2/2016</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>screen1.png</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>screen1.png</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td>screen1.png</td>
+                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
+                                        <td>2/2/2016</td>
+                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"><a href="">Add New</a></td>                                                
+                                    </tr>   
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+</div>

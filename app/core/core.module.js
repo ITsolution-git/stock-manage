@@ -13,6 +13,7 @@
                 'ngSanitize',
                 'ngMaterial',
                 'pascalprecht.translate',
+                'datatables',
                 'ui.router'
                 
             ]);

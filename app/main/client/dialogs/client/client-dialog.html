@@ -4,7 +4,7 @@
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add New Client</span>
                 <md-button  ng-click="vm.closeDialog()">
-                    <span  >Cancel</span>
+                    <span>Cancel</span>
                 </md-button>
             </div>
         </md-toolbar>
@@ -16,7 +16,7 @@
                 <md-input-container class="md-block first-box" flex-gt-sm>
                     <input placeholder="Company Name" ng-model="vm.client.companyName">
                 </md-input-container>
-                <md-input-container class="m-b-20">
+                <md-input-container class="m-b-30">
                     <label>Type</label>
                     <md-select ng-model="vm.client.type">
                         <md-option ng-repeat="type in vm.clientTypes" value="{{type.abbrev}}">
@@ -59,7 +59,7 @@
                 <md-input-container>
                     <input placeholder="Company Website URL" ng-model="vm.client.companyWebURL">
                 </md-input-container>
-                <md-input-container class="m-b-20">
+                <md-input-container class="m-b-30">
                     <label>Disposition</label>
                     <md-select ng-model="vm.client.disposition">
                         <md-option ng-repeat="disp in vm.dispositions" value="{{disp.abbrev}}">
@@ -68,7 +68,7 @@
                     </md-select>
                 </md-input-container>
                 <md-input-container class="upload-rel">
-                    <input placeholder="vdfgg/fsdhi/gvdjg">
+                    <input placeholder="">
                     <md-button class="md-primary md-hue-1 md-accent upload">Upload</md-button>
                 </md-input-container>
                 <div layout-wrap="nowrap" flex="50">
@@ -84,7 +84,7 @@
                     </md-card>
 
                 </div>
-                <div class="content-heading" layout-padding>
+                <div class="content-heading p-t-30" layout-padding >
                     <span class="md-title">Main Contact Information</span>
                 </div>
                 <md-input-container class="first-box">
@@ -99,13 +99,14 @@
                 <md-input-container>
                     <input placeholder="Email" name="email" ng-model="vm.client.email">
                 </md-input-container>
-                <section layout="row" layout-sm="column" layout-align="end center" layout-wrap>
-                    <md-button class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-                    <md-button class="md-accent md-raised ">Save</md-button>
-                </section>
+               
             </div>
         </md-dialog-content>
-        <md-dialog-actions layout="row" layout-align="space-between center">
+        <md-dialog-actions layout="row" layout-align="end center">
+            
+                    <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+                    <md-button class="md-accent md-raised ">Save</md-button>
+             
         </md-dialog-actions>
     </form>
 </md-dialog>

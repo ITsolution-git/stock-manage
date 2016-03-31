@@ -1,6 +1,12 @@
-.simple-table-container .table-title { padding: 0 24px;border-bottom: 1px solid #ddd;}
-.table-title-text{font-weight: 600;}
-.search-block {font-size: 14px;}
+.simple-table-container .table-title { 
+    padding: 0 24px;border-bottom: 1px solid #ddd;
+}
+.table-title-text{
+    font-weight: 600;
+}
+.search-block {
+    font-size: 14px;
+}
 .search-block md-input-container {
     margin-bottom: 0;
 }
@@ -13,6 +19,20 @@
     background: #FFFFFF;
     margin: 20px;
 }
-.search-block md-input-container .md-errors-spacer{min-height: 10px;}
-.client-live-nation md-card{min-height: 300px}
-
+.search-block md-input-container .md-errors-spacer{
+    min-height: 10px;}
+.client-live-nation md-card{
+    min-height: 300px
+}
+div .dataTables_wrapper .dataTables_filter input {
+    margin-left: 0.5em;
+    border-top: none;
+    height: 24px;
+    padding: 4px 8px;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #ccc;
+}
+table.dataTable.row-border tbody tr:first-child td{
+        cursor: pointer;
+}

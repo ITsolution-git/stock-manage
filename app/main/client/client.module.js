@@ -25,6 +25,14 @@
                         return msApi.resolve('client@get');
                     }
                 }
+            }).state('app.client.profile', {
+                url  : '/profile/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/client/views/profile/profile-view.html',
+                        controller : 'ProfileViewController as vm'
+                    }
+                }
             });
 
         // Translation

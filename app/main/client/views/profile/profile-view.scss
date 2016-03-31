@@ -1,0 +1,40 @@
+.client-profile-page{
+    .client-logo {
+        margin: 5px 10px;
+        padding: 15px 30px;
+        background: #BBB;
+    }
+    .client-profile-tab{
+        .md-tab{
+            font-size: 11px;
+            padding: 12px 10px;
+        }
+        md-card-header {
+            background: #eee;
+            padding: 10px 16px;
+            .md-title {
+                font-size: 15px;
+            }
+        }
+        md-card-content{
+            .h4.text-semibold {
+                padding-top: 5px;
+            }
+        }
+        md-tabs-content-wrapper{
+
+            md-tab-content{
+                
+                md-content{
+
+                    .table-title{
+                        padding: 10px 24px;
+                        background: #eee;
+
+                    }
+                }
+
+            }
+        }
+    }
+}
