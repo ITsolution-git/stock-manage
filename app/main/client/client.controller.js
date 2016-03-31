@@ -20,7 +20,7 @@
             pagingType: 'simple',
             autoWidth: false,
             responsive: true,
-            bFilter: false
+//            bFilter: false
         };
         // Methods
         vm.openClientDialog = openClientDialog;
