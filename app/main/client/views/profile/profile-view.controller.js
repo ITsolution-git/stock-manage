@@ -10,8 +10,26 @@
     function ProfileViewController($document, $window, $timeout, $mdDialog)
     {
         var vm = this;
-        vm.clientName="Live Nation"
-        //Datatable data
+        //Dummy models data
+        vm.clientName="Live Nation"        
+        vm.compInfo={
+          "logo":"",
+          "compContact":{
+              "address":"123 1st St. #500 Chicago IL, 60611",
+              "phone":"555-555-5555",
+              "email":"email@email.com",
+              "website":"www.website.com",
+          },
+          "mainContact":{
+              "contact":"Joe Contact",
+              "email":"JoeContact@email.com",
+              "phone":"555-555-5555",
+          },
+          "accountInfo":{
+              "type":"Contract",
+              "disposition":"Good",
+          }
+        };
         vm.contacts = [
             {"firstname": "joe", "lastname": "contact", "location": "Location Name", "phone": "555-555-5555", "email": "email@email.com"},
             {"firstname": "joe", "lastname": "contact", "location": "Location Name", "phone": "555-555-5555", "email": "email@email.com"}
@@ -24,6 +42,18 @@
             {"streetAddress": "123 1st", "city": "chicago", "State": "IL", "zipcode": "60611", "locationType": "Physical"}
 
         ];
+        vm.salesDetail={
+            "web":"www.website.com",
+            "anniversaryDate":"2/20/2013",
+            "salesPerson":"Salesperson Name",
+            "defaultPriceGrid":"CS 2011 Supplied Garments Copy"
+        };
+        vm.tax={
+            "id":123456789,
+            "ratePercentage":"10.75%",
+            "exempt":"No",
+            "idDocument":"taxdoc.pdf"
+        };
         vm.documents = [
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
@@ -58,6 +88,17 @@
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"}
         ];
+        vm.webPortal={
+            "clientUrl":"www.url.com"
+        };
+        vm.logos={
+            "blindApprovalText":"\" Please review and advise(action may be required): \" & \"¶¶\" & \"Please reply to this email with APPROVED, NAME, AND DATE. \"& \"¶¶\" & \"Dear  Valued Customer, \"& \"¶¶\" &\n"+
+                    +"\"Please check the following carefully: size, layout, spelling, punctuation, colors, etc.  Changes if required should be noted on the proof when sent back.    Customer assumes full responsibility once proof is signed as approved.  Colors will be printed as close to proof as possible.  Graphics will be sized according to industry standard unless indicated by customer. \"  & \"¶¶\" &"
+                    +"\n\"Please note that the JPEG proofs are for layout purposes. It is only to show how the artwork will be positioned on the garment and its size. It will not be legible to indicate on how colors, overprints, knock outs and/or transparency images will or will not appear on the prints. Any JPEG proofs we sent to you can be in low resolution to transfer the file(s) smoothly during the email process but please also check the original file(s) if they are in a good minimum of 300 dpi resolution or Vector images.\" & \"¶¶\" &",
+            "colorLogo":"",
+            "bwLogo":"",
+            "shippingLogo":""
+        }
         vm.arts = [
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},

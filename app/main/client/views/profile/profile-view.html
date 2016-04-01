@@ -62,14 +62,13 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="h5 text-semibold">Address:</div>
-                                        <span>123 1st St. #500</span>
-                                        <span>Chicago IL, 60611</span>
+                                        <span>{{vm.compInfo.compContact.address}}</span>
                                         <div class="h5 text-semibold">Company Phone:</div>
-                                        <span>555-555-5555</span>
+                                        <span>{{vm.compInfo.compContact.phone}}</span>
                                         <div class="h5 text-semibold">Email:</div>
-                                        <span>email@email.com</span>
+                                        <span>{{vm.compInfo.compContact.email}}</span>
                                         <div class="h5 text-semibold">Website:</div>
-                                        <span>www.website.com</span>
+                                        <span>{{vm.compInfo.compContact.website}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -94,11 +93,11 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="h5 text-semibold">Main Contact:</div>
-                                        <span>Joe Contact</span>
+                                        <span>{{vm.compInfo.mainContact.contact}}</span>
                                         <div class="h5 text-semibold">Main Contact Email:</div>
-                                        <span>JoeContact@email.com</span>
+                                        <span>{{vm.compInfo.mainContact.email}}</span>
                                         <div class="h5 text-semibold">Main Contact Phone:</div>
-                                        <span>555-555-5555</span>
+                                        <span>{{vm.compInfo.mainContact.phone}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -123,9 +122,9 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="h5 text-semibold">Account Type:</div>
-                                        <span>Contract</span>
+                                        <span>{{vm.compInfo.accountInfo.type}}</span>
                                         <div class="h5 text-semibold">Disposition:</div>
-                                        <span>Good</span>
+                                        <span>{{vm.compInfo.accountInfo.disposition}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -317,6 +316,7 @@
                                         </md-card-title-text>
                                     </md-card-title>
                                     <md-card-content>
+                                        <span>{{vm.salesDetail.web}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -340,7 +340,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>2/20/2013</span>
+                                        <span>{{vm.salesDetail.anniversaryDate}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -364,7 +364,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>Salesperson Name</span>                                 
+                                        <span>{{vm.salesDetail.salesPerson}}</span>                                 
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -388,8 +388,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>CS 2011 Supplied Garments </span>
-                                        <span>Copy</span>
+                                        <span>{{vm.salesDetail.defaultPriceGrid}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -420,7 +419,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>123456789 </span>
+                                        <span><span>{{vm.tax.id}}</span></span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -444,7 +443,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>10.75%</span>
+                                        <span>{{vm.tax.ratePercentage}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -468,7 +467,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>No</span>                                 
+                                        <span>{{vm.tax.exempt}}</span>                                 
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -492,7 +491,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>taxdoc.pdf </span>
+                                        <span>{{vm.tax.idDocument}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -839,7 +838,7 @@
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td>www.url.com</td>
+                                            <td>{{vm.webPortal.clientUrl}}</td>
                                             <td></td>
                                         </tr>
                                     </tbody>
@@ -871,9 +870,7 @@
                                     </md-menu>
                                 </md-card-header>
                                 <md-card-content>
-                                    <span>" Please review and advise(action may be required): " & "¶¶" & "Please reply to this email with APPROVED, NAME, AND DATE. "& "¶¶" & "Dear  Valued Customer, "& "¶¶" &
-                                        "Please check the following carefully: size, layout, spelling, punctuation, colors, etc.  Changes if required should be noted on the proof when sent back.    Customer assumes full responsibility once proof is signed as approved.  Colors will be printed as close to proof as possible.  Graphics will be sized according to industry standard unless indicated by customer. "  & "¶¶" &
-                                        "Please note that the JPEG proofs are for layout purposes. It is only to show how the artwork will be positioned on the garment and its size. It will not be legible to indicate on how colors, overprints, knock outs and/or transparency images will or will not appear on the prints. Any JPEG proofs we sent to you can be in low resolution to transfer the file(s) smoothly during the email process but please also check the original file(s) if they are in a good minimum of 300 dpi resolution or Vector images." & "¶¶" &</span>
+                                    <span>{{vm.logos.blindApprovalText}}</span>
                                 </md-card-content>
                             </md-card>
                         </div>
@@ -898,6 +895,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
+                                        <span>{{vm.logo.colorLogo}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -921,6 +919,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
+                                        <span>{{vm.logo.bwLogo}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -944,6 +943,7 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
+                                         <span>{{vm.logo.shippingLogo}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
