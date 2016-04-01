@@ -9,21 +9,23 @@
     /** @ngInject */
     function ClientController(ClientData, $mdDialog, $document) {
         var vm = this;
-
         // Data
         vm.clients = ClientData.data;
-       
-        //Card
         
+
         vm.dtOptions = {
-            dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+            dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             pagingType: 'simple',
             autoWidth: false,
             responsive: true,
-//            bFilter: false
+//            bFilter: false,
+//            fnRowCallback: rowCallback
         };
+        vm.searchQuery = "";
         // Methods
         vm.openClientDialog = openClientDialog;
+        vm.dtInstanceCB = dtInstanceCB;
+        vm.searchTable = searchTable;
         //////////
         function openClientDialog(ev, client)
         {
@@ -41,6 +43,21 @@
                 }
             });
         }
+        function dtInstanceCB(dt) {
+            var datatableObj = dt.DataTable;
+            vm.tableInstance = datatableObj;
+        }
+        function searchTable() {
+            var query = vm.searchQuery;
+            vm.tableInstance.search(query).draw();
+        }
+//        function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+//            console.log("aData:" + JSON.stringify(aData));
+//            console.log("iDisplayIndex:" + iDisplayIndex);
+//            console.log("iDisplayIndexFull:" + iDisplayIndexFull);
+//            return nRow;
+//        }
+
     }
     function AngularWayCtrl($resource) {
         var vmn = this;
@@ -48,6 +65,6 @@
             vmn.persons = persons;
         });
     }
-    
-   
+
+
 })();

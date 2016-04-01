@@ -6,16 +6,15 @@
             </div>
             <div class="search-block" flex=40>
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label>Search</label>
-                    <input>
+                    <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" placeholder="Search">
                 </md-input-container>
             </div>
-            <div class="client-modal-title cursor-p" flex=50 ng-click="vm.openClientDialog($event)">
-                ADD NEW CLIENT
+            <div class="client-modal-title " flex=50>
+                <span class="cursor-p" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
             </div>
         </div>
         <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
+            <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                 <thead>
                     <tr>
                         <th class="secondary-text">
@@ -28,7 +27,7 @@
                                 <span class="column-title">Main Contact</span>
                             </div>
                         </th>
-                        
+
                         <th class="secondary-text">
                             <div class="table-header">
                                 <span class="column-title">Contact Phone</span>
@@ -41,14 +40,9 @@
                         </th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </tfoot>
                 <tbody>
-                    <tr ng-repeat="client in ::vm.clients">
-                        <td ui-sref="app.client.profile({id:client.id})">{{ client.name}}</td>
+                    <tr ng-repeat="client in ::vm.clients" ui-sref="app.client.profile({id:client.id})">
+                        <td >{{ client.name}}</td>
                         <td>{{ client.contact}}</td>
                         <td>{{ client.phone}}</td>
                         <td>{{ client.email}}</td>

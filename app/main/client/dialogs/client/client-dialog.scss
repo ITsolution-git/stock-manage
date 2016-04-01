@@ -7,6 +7,11 @@ md-dialog {
         md-dialog-content {
             display: block;
             position: relative;
+
+            md-input-container label:not(.md-no-float):not(.md-container-ignore){
+                   padding-left: 11px;
+            }
+            
         }
 
         md-toolbar {
@@ -20,6 +25,10 @@ md-dialog {
 
             textarea {
                 min-height: 150px;
+            }
+
+            label {
+                color: rgba(0,0,0,0.60);
             }
         }
 
@@ -100,10 +109,13 @@ md-dialog {
             position: relative;
             overflow-y: hidden;
             overflow-x: auto;
-            justify-content: space-between;
+            justify-content: flex-end;
             background-color: rgba(0, 0, 0, 0.03);
             border-top: 1px solid rgba(0, 0, 0, 0.12);
         }
+    }
+    md-select .md-select-value.md-select-placeholder {
+        color: rgba(0,0,0,0.6);
     }
 }
 
@@ -139,8 +151,8 @@ md-input-container.md-block.first-box.flex-gt-sm {
     margin-top: 18px;
 }
 .upload{bottom: 25px;
-    position: absolute;
-    right: 0;}
+        position: absolute;
+        right: 0;}
 .upload-rel{
     position: relative
 }

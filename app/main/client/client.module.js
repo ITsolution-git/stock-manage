@@ -43,14 +43,14 @@
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
-            title : 'Clients',
+            title : '',
             group : true,
             weight: 1
         });
 
         msNavigationServiceProvider.saveItem('fuse.client', {
             title    : 'Clients',
-            icon     : 'icon-tile-four',
+            icon     : 'icon-account-multiple',
             state    : 'app.client',
             /*stateParams: {
                 'param1': 'page'

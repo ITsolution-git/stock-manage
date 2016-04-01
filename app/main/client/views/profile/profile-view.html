@@ -5,7 +5,7 @@
             <div class="client-logo">
                 Logo
             </div>
-            <h1>Live Nation</h1>
+            <h1>{{vm.clientName}}</h1>
         </div>
     </div>
     <div ng-cloak>
@@ -17,67 +17,114 @@
                         <div layout="row" layout-wrap="nowrap" class="client-live-nation">
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Logo</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Logo Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
+                                        <div class="md-card-title" padding-layout="" layout-align="center center" layout="row" >
+                                            <span class="text-uppercase">Logo preview</span>
+                                        </div>
                                     </md-card-content>
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Company Contact</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Contact Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <div class="h4 text-semibold">Address:</div>
+                                        <div class="h5 text-semibold">Address:</div>
                                         <span>123 1st St. #500</span>
                                         <span>Chicago IL, 60611</span>
-                                        <div class="h4 text-semibold">Company Phone:</div>
+                                        <div class="h5 text-semibold">Company Phone:</div>
                                         <span>555-555-5555</span>
-                                        <div class="h4 text-semibold">Email:</div>
+                                        <div class="h5 text-semibold">Email:</div>
                                         <span>email@email.com</span>
-                                        <div class="h4 text-semibold">Website:</div>
+                                        <div class="h5 text-semibold">Website:</div>
                                         <span>www.website.com</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Main Contact</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Main Contact Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <div class="h4 text-semibold">Main Contact:</div>
+                                        <div class="h5 text-semibold">Main Contact:</div>
                                         <span>Joe Contact</span>
-                                        <div class="h4 text-semibold">Main Contact Email:</div>
+                                        <div class="h5 text-semibold">Main Contact Email:</div>
                                         <span>JoeContact@email.com</span>
-                                        <div class="h4 text-semibold">Main Contact Phone:</div>
+                                        <div class="h5 text-semibold">Main Contact Phone:</div>
                                         <span>555-555-5555</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Account Information</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Account Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <div class="h4 text-semibold">Account Type:</div>
+                                        <div class="h5 text-semibold">Account Type:</div>
                                         <span>Contract</span>
-                                        <div class="h4 text-semibold">Disposition:</div>
+                                        <div class="h5 text-semibold">Disposition:</div>
                                         <span>Good</span>
                                     </md-card-content>
                                 </md-card>
@@ -85,7 +132,6 @@
                         </div>
                     </md-content>
                 </md-tab>
-
                 <!-----------------Contacts Tab-------------------->
                 <md-tab label="Contacts">
                     <md-content class="md-padding">
@@ -96,46 +142,80 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table=""  datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Location</th>
-                                            <th>Phone</th>
-                                            <th>Contact Email</th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">First Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Last Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Location</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Phone</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Contact Email</span>
+                                                </div>
+                                            </th>
+                                            <th></th>  
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>Joe</td>
-                                            <td>Contact</td>
-                                            <td>Location Name</td>
-                                            <td>555-555-5555</td>
-                                            <td>email@email.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Joe</td>
-                                            <td>Contact</td>
-                                            <td>Location Name</td>
-                                            <td>555-555-5555</td>
-                                            <td>email@email.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6"><a href="">Add New</a></td>                                                
-                                        </tr> 
+                                        <tr ng-repeat="contact in ::vm.contacts">
+                                            <td>{{contact.firstname}}</td>
+                                            <td>{{contact.lastname}}</td>
+                                            <td>{{contact.location}}</td>
+                                            <td>{{contact.phone}}</td>
+                                            <td>{{contact.email}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Edit Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Delete Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Set As Main Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
+                                    </tr>                                   
                                     </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
                                 </table>
                             </div>
                         </div>
                     </md-content>
                 </md-tab>
-
                 <!-----------------Locations Tab-------------------->
                 <md-tab label="Locations">
                     <md-content class="md-padding">
@@ -146,84 +226,91 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table=""  datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>Street Address</th>
-                                            <th>City</th>
-                                            <th>State</th>
-                                            <th>Zipcode</th>
-                                            <th>Location Type</th>
-                                            <th></th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Street Address</span>
+                                                </div>
+                                            </th>                                            
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">City</span>
+                                                </div>
+                                            </th>                                            
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">State</span>
+                                                </div>
+                                            </th>                                            
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Zipcode</span>
+                                                </div>
+                                            </th>                                            
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Location Type</span>
+                                                </div>
+                                            </th>                                            
+                                            <th></th>                                               
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>123 1st</td>
-                                            <td>Chicago</td>
-                                            <td>IL</td>
-                                            <td>60611</td>
-                                            <td>Shipping</td>
-                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                            
+                                                                        <tbody>
+                                        <tr ng-repeat="location in ::vm.locations">
+                                            <td>{{location.streetAddress}}</td>
+                                            <td>{{location.city}}</td>
+                                            <td>{{location.State}}</td>
+                                            <td>{{location.zipcode}}</td>
+                                            <td>{{location.locationType}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Location Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Location Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu></td>
+                                        </tr>                                
+                                        </tbody>
+                                </table>
+                                <table> 
                                     <tr>
-                                        <td>123 1st</td>
-                                        <td>Chicago</td>
-                                        <td>IL</td>
-                                        <td>60611</td>
-                                        <td>Physical</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                            
-                                    <tr>
-                                        <td>123 1st</td>
-                                        <td>Chicago</td>
-                                        <td>IL</td>
-                                        <td>60611</td>
-                                        <td>Main</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                            
-                                    <tr>
-                                        <td>123 1st</td>
-                                        <td>Chicago</td>
-                                        <td>IL</td>
-                                        <td>60611</td>
-                                        <td>Billing</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                            
-                                    <tr>
-                                        <td>123 1st</td>
-                                        <td>Chicago</td>
-                                        <td>IL</td>
-                                        <td>60611</td>
-                                        <td>Physical</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                            
-                                    <tr>
-                                        <td colspan="6"><a href="">Add New</a></td>                                                
-                                    </tr>                                            
-                                    </tbody>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
                                 </table>
                             </div>
                         </div>   
                     </md-content>
                 </md-tab>
-
                 <!-----------------Sales Detail Tab-------------------->
                 <md-tab label="Sales Detail">
                     <md-content class="md-padding">
                         <div layout="row" layout-wrap="nowrap" class="client-live-nation">
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Web</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Web" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Web Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-title>
                                         <md-card-title-text>
@@ -235,11 +322,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Anniversary Date</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Anniversary Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Anniversary Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                         <span>2/20/2013</span>
@@ -248,11 +346,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Sales Person</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Sales Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Sales Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                         <span>Salesperson Name</span>                                 
@@ -261,11 +370,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Default Price Grid</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Price Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Price Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                         <span>CS 2011 Supplied Garments </span>
@@ -276,18 +396,28 @@
                         </div>
                     </md-content>
                 </md-tab>
-
                 <!-----------------Tax Tab-------------------->
                 <md-tab label="Tax">
                     <md-content class="md-padding">
                         <div layout="row" layout-wrap="nowrap" class="client-live-nation">
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax ID</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="ID Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        ID Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                         <span>123456789 </span>
@@ -296,11 +426,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax Rate Percentage</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Rate Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Rate Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                         <span>10.75%</span>
@@ -309,11 +450,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax Exempt</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Tax Exempt Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Tax Exempt Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                         <span>No</span>                                 
@@ -322,11 +474,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax ID Document</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Document Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Document Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                         <span>taxdoc.pdf </span>
@@ -336,7 +499,6 @@
                         </div>
                     </md-content>
                 </md-tab>
-
                 <!-----------------Documents Tab-------------------->
                 <md-tab label="Documents">
                     <md-content class="md-padding">                        
@@ -347,61 +509,58 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>File Name</th>
-                                            <th>Description</th>
-                                            <th>Date Added</th>                                               
-                                            <th></th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">File Name</span>
+                                                </div>
+                                            </th> 
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Description</span>
+                                                </div>
+                                            </th> 
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Date Added</span>
+                                                </div>
+                                            </th> 
+                                            <th></th>                                               
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>doc.pdf</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                            <td>2/2/2016</td>
-                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                                                                      
+                                        <tr ng-repeat="document in ::vm.documents">
+                                            <td>{{document.fileName}}</td>
+                                            <td>{{document.description}}</td>
+                                            <td>{{document.dateAdded}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Document Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Document Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
+                                    </tr>      
+                                     </tbody>
+                                </table>
+                                <table> 
                                     <tr>
-                                        <td>doc.pdf</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                                                                      
-                                    <tr>
-                                        <td>doc.pdf</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                                                                      
-                                    <tr>
-                                        <td>doc.pdf</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                                                                      
-                                    <tr>
-                                        <td>doc.pdf</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>                                                                                      
-                                    <tr>
-                                        <td colspan="6"><a href="">Add New</a></td>                                                
-                                    </tr>                                            
-                                    </tbody>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
                                 </table>
                             </div>
                         </div>
                     </md-content>
                 </md-tab>
-
                 <!-----------------Notes Tab-------------------->
                 <md-tab label="Notes">
                     <md-content class="md-padding">
@@ -412,61 +571,58 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>Created By</th>
-                                            <th>Note</th>
-                                            <th>Date Added</th>                                               
-                                            <th></th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Created By</span>
+                                                </div>
+                                            </th>  
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Note</span>
+                                                </div>
+                                            </th>  
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Date Added</span>
+                                                </div>
+                                            </th>  
+                                            <th></th>                                               
                                         </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
+                                    </thead>                                   
                                     <tbody>
-                                        <tr>
-                                            <td>Jon Smith</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                            <td>2/2/2016</td>
-                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                        <tr ng-repeat="note in ::vm.notes">
+                                            <td>{{note.createdBy}}</td>
+                                            <td>{{note.notes}}</td>
+                                            <td>{{note.dateAdded}}</td>
+                                            <td class="text-right">
+                                    <md-menu>
+                                        <md-button aria-label="Notes Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Notes Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
                                     </tr>
+                                     </tbody>
+                                </table>
+                                <table> 
                                     <tr>
-                                        <td>Jon Smith</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
                                     </tr>
-                                    <tr>
-                                        <td>Jon Smith</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jon Smith</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jon Smith</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6"><a href="">Add New</a></td>                                                
-                                    </tr>                                            
-                                    </tbody>
                                 </table>
                             </div>
                         </div> 
                     </md-content>
                 </md-tab>
-
                 <!-----------------Orders Tab-------------------->
                 <md-tab label="Orders">
                     <md-content class="md-padding">
@@ -477,67 +633,64 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>Order ID</th>
-                                            <th>Order Name</th>
-                                            <th>Date Created</th>                                               
-                                            <th>Approval Status</th>
-                                            <th></th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Order ID</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Order Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Date Created</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Approval Status</span>
+                                                </div>
+                                            </th>
+                                            <th></th>                                             
                                         </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
+                                    </thead>                                  
                                     <tbody>
-                                        <tr>
-                                            <td>31</td>
-                                            <td>Shirts</td>
-                                            <td>2/2/2016</td>
-                                            <td>Order-estimate</td>
-                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
+                                        <tr ng-repeat="order in ::vm.orders">
+                                            <td>{{order.orderId}}</td>
+                                            <td>{{order.orderName}}</td>
+                                            <td>{{order.dateCreated}}</td>
+                                            <td>{{order.approvalStatus}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Orders Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Order Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
                                     </tr>
-                                    <tr>
-                                        <td>32</td>
-                                        <td>Shirts</td>
-                                        <td>2/2/2016</td>
-                                        <td>Sales Review</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>33</td>
-                                        <td>Shirts</td>
-                                        <td>2/2/2016</td>
-                                        <td>Production Dept</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>34</td>
-                                        <td>Shirts</td>
-                                        <td>2/2/2016</td>
-                                        <td>Ready to Ship</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>35</td>
-                                        <td>Shirts</td>
-                                        <td>2/2/2016</td>
-                                        <td>DTG Department</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6"><a href="">Add New</a></td>                                                
-                                    </tr>                                            
                                     </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
                                 </table>
                             </div>
                         </div> 
                     </md-content>
                 </md-tab>
-
                 <!-----------------Distribution Addresses Tab-------------------->
                 <md-tab label="Distribution Addresses">
                     <md-content class="md-padding">
@@ -548,67 +701,52 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>Description</th>
-                                            <th>Street Address</th>
-                                            <th>City</th>                                               
-                                            <th>State</th>
-                                            <th>Zipcode</th>
-                                            <th></th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Description</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Street Address</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">City</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">State</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">State</span>
+                                                </div>
+                                            </th>
+                                            <th></th>                                            
                                         </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
+                                    </thead>                                    
                                     <tbody>
-                                        <tr>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
-                                            <td>123 1st St</td>
-                                            <td>Chicago</td>
-                                            <td>IL</td>
-                                            <td>60611</td>
+                                        <tr ng-repeat="address in ::vm.distributedAddress">
+                                            <td>{{address.description}}</td>
+                                            <td>{{address.streetAddress}}</td>
+                                            <td>{{address.city}}</td>
+                                            <td>{{address.state}}</td>
+                                            <td>{{address.zipcode}}</td>
                                             <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
-                                            <td>123 1st St</td>
-                                            <td>Chicago</td>
-                                            <td>IL</td>
-                                            <td>60611</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
-                                            <td>123 1st St</td>
-                                            <td>Chicago</td>
-                                            <td>IL</td>
-                                            <td>60611</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
-                                            <td>123 1st St</td>
-                                            <td>Chicago</td>
-                                            <td>IL</td>
-                                            <td>60611</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipisci.</td>
-                                            <td>123 1st St</td>
-                                            <td>Chicago</td>
-                                            <td>IL</td>
-                                            <td>60611</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="6"><a href="">Add New</a></td>                                                
-                                        </tr>                                            
+                                        </tr>                                             
                                     </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
                                 </table>
                             </div>
                         </div> 
@@ -625,53 +763,58 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>Description</th>
-                                            <th>Graphic Size</th>
-                                            <th>Image</th>                                               
-                                            <th></th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Description</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Graphic Size</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Image</span>
+                                                </div>
+                                            </th>
+                                            <th></th>                                             
                                         </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
+                                    </thead>                                    
                                     <tbody>
-                                        <tr>
-                                            <td>1-25152</td>
-                                            <td>Oversized 25" x 36"</td>
-                                            <td>Chicago</td>
-                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1-25152</td>
-                                        <td>Oversized 25" x 36"</td>
-                                        <td>Chicago</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>1-25152</td>
-                                        <td>Oversized 25" x 36"</td>
-                                        <td>Chicago</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1-25152</td>
-                                        <td>Oversized 25" x 36"</td>
-                                        <td>Chicago</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
+                                        <tr ng-repeat="screenSet in ::vm.screenSets">
+                                            <td>{{screenSet.description}}</td>
+                                            <td>{{screenSet.graphicSize}}</td>
+                                            <td>{{screenSet.images}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Scrren Set Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Screen Set Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
+                                    </tr>                                    
                                     </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
                                 </table>
                             </div>
                         </div> 
                     </md-content>
                 </md-tab>
-
                 <!-----------------Web Portal Tab-------------------->
                 <md-tab label="Web Portal">
                     <md-content class="md-padding">
@@ -705,17 +848,27 @@
                         </div>
                     </md-content>
                 </md-tab>
-
                 <!-----------------Logos Tab-------------------->
                 <md-tab label="Logos">
                     <md-content class="md-padding">
                         <div flex-xs flex-gt-xs="100" layout="column">
                             <md-card>
-                                <md-card-header layout-align="space-between start">
+                                <md-card-header layout-align="space-between center">
                                     <md-card-header-text>
                                         <span class="md-title">Blind Approval Text</span>
                                     </md-card-header-text>
-                                    <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    <md-menu>
+                                        <md-button aria-label="Blind Text Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Blind Text Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
                                 </md-card-header>
                                 <md-card-content>
                                     <span>" Please review and advise(action may be required): " & "¶¶" & "Please reply to this email with APPROVED, NAME, AND DATE. "& "¶¶" & "Dear  Valued Customer, "& "¶¶" &
@@ -727,11 +880,22 @@
                         <div layout="row" layout-wrap="nowrap" class="client-live-nation">
                             <div flex-xs flex-gt-xs="33" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Color Logo</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Color Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                     </md-card-content>
@@ -739,12 +903,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="33" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">B/W Logo</span>
-
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="B/W Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        B/W Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                     </md-card-content>
@@ -752,11 +926,22 @@
                             </div>
                             <div flex-xs flex-gt-xs="33" layout="column">
                                 <md-card>
-                                    <md-card-header layout-align="space-between start">
+                                    <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Shipping Logo</span>
                                         </md-card-header-text>
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                        <md-menu>
+                                            <md-button aria-label="Shipping Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Shipping Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
                                     </md-card-header>
                                     <md-card-content>
                                     </md-card-content>
@@ -765,7 +950,6 @@
                         </div>
                     </md-content>
                 </md-tab>
-
                 <!-----------------Art Tab-------------------->
                 <md-tab label="Art">
                     <md-content class="md-padding">
@@ -776,55 +960,53 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
-                                            <th>File name</th>
-                                            <th>Description</th>
-                                            <th>Date Added</th>
-                                            <th></th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">File name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Description</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Date Added</span>
+                                                </div>
+                                            </th>
+                                            <th></th>                                           
                                         </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
+                                    </thead>                                   
                                     <tbody>
-                                        <tr>
-                                            <td>screen1.png</td>
-                                            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
-                                            <td>2/2/2016</td>
-                                            <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>screen1.png</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
-                                        <td>2/2/2016</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>screen1.png</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>screen1.png</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td>screen1.png</td>
-                                        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.</td>
-                                        <td>2/2/2016</td>
-                                        <td class="text-right"><md-icon md-font-icon="icon-dots-vertical"></md-icon></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6"><a href="">Add New</a></td>                                                
-                                    </tr>   
+                                        <tr ng-repeat="art in ::vm.arts">
+                                            <td>{{art.fileName}}</td>
+                                            <td>{{art.description}}</td>
+                                            <td>{{art.dateAdded}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Art Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Art Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
+                                    </tr> 
                                     </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
                                 </table>
                             </div>
                         </div>
