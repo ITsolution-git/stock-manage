@@ -43,7 +43,7 @@
 
         // Api
         // msApiProvider.register('client', ['app/data/client/client.json']);
-        msApiProvider.register('client',['app/data/api/public/client/ListClient',null, {post:{method:'post'}}]);
+        msApiProvider.register('client',['api/public/client/ListClient',null, {post:{method:'post'}}]);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
