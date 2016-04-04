@@ -263,9 +263,3 @@ Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Clie
 Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
 Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
 
-// PRODUCT CONTROLLER
-Route::get('payment/MerchantAuthentication', 'PaymentController@MerchantAuthentication');
-
-Route::get('qbo/oauth','QuickBookController@qboOauth');
-Route::get('qbo/success','QuickBookController@qboSuccess');
-Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
