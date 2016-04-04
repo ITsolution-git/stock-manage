@@ -41,11 +41,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="client in ::vm.clients" ui-sref="app.client.profile({id:client.id})">
-                        <td >{{ client.name}}</td>
-                        <td>{{ client.contact}}</td>
-                        <td>{{ client.phone}}</td>
-                        <td>{{ client.email}}</td>
+
+                    <tr ng-repeat="client in ::vm.clients">
+                        <td>{{ client.client_company }}</td>
+                        <td>{{ client.client_id }}</td>
+                        <td>{{ client.client_id }}</td>
+                        <td>{{ client.client_id }}</td>
                     </tr>
                 </tbody>
             </table>
