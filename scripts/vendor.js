@@ -101873,7 +101873,7 @@ module.exports = function (element) {
 }));
 
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -102285,14 +102285,17 @@ function dtColumnDefBuilder(DTColumnBuilder) {
 }
 dtColumnDefBuilder.$inject = ['DTColumnBuilder'];
 
-function dtLoadingTemplate($compile, DTDefaultOptions) {
+function dtLoadingTemplate($compile, DTDefaultOptions, DT_LOADING_CLASS) {
     return {
         compileHtml: function($scope) {
-            return $compile(angular.element(DTDefaultOptions.loadingTemplate))($scope);
+            return $compile(angular.element('<div class="' + DT_LOADING_CLASS + '">' + DTDefaultOptions.loadingTemplate + '</div>'))($scope);
+        },
+        isLoading: function(elem) {
+            return elem.hasClass(DT_LOADING_CLASS);
         }
     };
 }
-dtLoadingTemplate.$inject = ['$compile', 'DTDefaultOptions'];
+dtLoadingTemplate.$inject = ['$compile', 'DTDefaultOptions', 'DT_LOADING_CLASS'];
 
 'use strict';
 
@@ -102473,11 +102476,12 @@ angular.module('datatables.options', [])
         // Set default columns (used when none are provided)
         aoColumns: []
     })
+    .constant('DT_LOADING_CLASS', 'dt-loading')
     .service('DTDefaultOptions', dtDefaultOptions);
 
 function dtDefaultOptions() {
     var options = {
-        loadingTemplate: '<h3 class="dt-loading">Loading...</h3>',
+        loadingTemplate: '<h3>Loading...</h3>',
         bootstrapOptions: {},
         setLoadingTemplate: setLoadingTemplate,
         setLanguageSource: setLanguageSource,
@@ -102588,7 +102592,10 @@ function dtRendererService(DTLoadingTemplate) {
 
     function hideLoading($elem) {
         $elem.show();
-        $elem.next().remove();
+        var next = $elem.next();
+        if (DTLoadingTemplate.isLoading(next)) {
+            next.remove();
+        }
     }
 
     function renderDataTable($elem, options) {
@@ -102769,6 +102776,9 @@ function dtNGRenderer($log, $q, $compile, $timeout, DTRenderer, DTRendererServic
         function rerender() {
             _destroyAndCompile();
             DTRendererService.showLoading(_$elem, _parentScope);
+            // Ensure that prerender is called after loadData from promise
+            // See https://github.com/l-lin/angular-datatables/issues/563
+            DTRendererService.preRender(options);
             $timeout(function() {
                 var result = DTRendererService.hideLoadingAndRenderDataTable(_$elem, renderer.options);
                 _oTable = result.DataTable;
@@ -102858,6 +102868,9 @@ function dtPromiseRenderer($q, $timeout, $log, DTRenderer, DTRendererService, DT
         function rerender() {
             _oTable.destroy();
             DTRendererService.showLoading(_$elem, _$scope);
+            // Ensure that prerender is called after loadData from promise
+            // See https://github.com/l-lin/angular-datatables/issues/563
+            DTRendererService.preRender(options);
             render(_$elem, _$scope);
         }
 
@@ -102990,6 +103003,9 @@ function dtAjaxRenderer($q, $timeout, DTRenderer, DTRendererService, DT_DEFAULT_
         }
 
         function rerender() {
+            // Ensure that prerender is called after loadData from promise
+            // See https://github.com/l-lin/angular-datatables/issues/563
+            DTRendererService.preRender(options);
             render(_$elem, _$scope);
         }
 
@@ -103181,7 +103197,7 @@ dtPropertyUtil.$inject = ['$q'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -103699,7 +103715,7 @@ dtBootstrapTableTools.$inject = ['DTPropertyUtil', 'DTBootstrapDefaultOptions'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -103805,7 +103821,7 @@ dtColReorderConfig.$inject = ['$provide', 'DT_DEFAULT_OPTIONS'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -103883,7 +103899,7 @@ initColumnFilterPlugin.$inject = ['DTRendererService'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -103961,7 +103977,7 @@ initLightColumnFilterPlugin.$inject = ['DTRendererService'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -104055,7 +104071,7 @@ dtColVisConfig.$inject = ['$provide', 'DT_DEFAULT_OPTIONS'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -104117,7 +104133,7 @@ dtFixedColumnsConfig.$inject = ['$provide'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -104195,7 +104211,7 @@ initFixedHeaderPlugin.$inject = ['DTRendererService'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -104257,7 +104273,7 @@ dtScrollerConfig.$inject = ['$provide', 'DT_DEFAULT_OPTIONS'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -104353,7 +104369,7 @@ dtTableToolsConfig.$inject = ['$provide', 'DT_DEFAULT_OPTIONS'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */
@@ -104448,7 +104464,7 @@ initButtonsPlugin.$inject = ['DTRendererService'];
 
 })(window, document, jQuery, angular);
 /*!
- * angular-datatables - v0.5.2
+ * angular-datatables - v0.5.3
  * https://github.com/l-lin/angular-datatables
  * License: MIT
  */

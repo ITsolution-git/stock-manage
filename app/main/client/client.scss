@@ -1,18 +1,84 @@
-.simple-table-container .table-title { padding: 0 24px;border-bottom: 1px solid #ddd;}
-.table-title-text{font-weight: 600;}
-.search-block {font-size: 14px;}
-.search-block md-input-container {
-    margin-bottom: 0;
-}
-.client-modal-title {
-    text-align: right;
-    font-size: 14px;
-    color: #74B0F4;
-}
-.client-list-page .simple-table-container {
-    background: #FFFFFF;
-    margin: 20px;
-}
-.search-block md-input-container .md-errors-spacer{min-height: 10px;}
-.client-live-nation md-card{min-height: 300px}
+.client-list-page{
+    .simple-table-container { 
 
+        background: #FFFFFF;
+        margin: 20px;
+
+        .table-title {
+
+            padding: 0 24px;border-bottom: 1px solid #ddd;
+
+            .client-modal-title {
+                display:flex;
+                justify-content:flex-end;
+
+                span{
+                    text-align: right;
+                    font-size: 14px;
+                    color: #74B0F4;
+                }
+            }
+
+            .table-title-text{
+                font-weight: 600;
+
+                md-input-container {
+                    margin-bottom: 0;
+                }
+            }
+
+            .search-block {
+                font-size: 14px;
+
+                .md-errors-spacer{
+                    min-height: 10px;}
+            }
+        }
+    }
+    .dataTables_wrapper{
+
+        .dataTables_filter input{
+            margin-left: 0.5em;
+            border-top: none;
+            height: 24px;
+            padding: 4px 8px;
+            border-right: none;
+            border-left: none;
+            border-bottom: 1px solid #ccc;
+        }
+        .top {
+            padding: 0;
+        }
+        .dataTable{
+            tbody{
+                td{
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+}
+
+
+
+.client-live-nation {
+    md-card{
+        min-height: 300px
+    }
+}
+
+.ms-theme-options{
+    display: none
+}
+
+[md-theme="default"] {
+    div
+    { md-sidenav{
+          &.md-primary-bg{
+              background-color: #fff;
+              color: #000;
+          }
+      }
+    }
+}

@@ -22,6 +22,5 @@
 
             // Client
             'app.client'
-      
         ]);
 })();

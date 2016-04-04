@@ -25,6 +25,14 @@
                         return msApi.resolve('client@get');
                     }
                 }
+            }).state('app.client.profile', {
+                url  : '/profile/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/client/views/profile/profile-view.html',
+                        controller : 'ProfileViewController as vm'
+                    }
+                }
             });
 
         // Translation
@@ -35,14 +43,14 @@
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
-            title : 'Clients',
+            title : '',
             group : true,
             weight: 1
         });
 
         msNavigationServiceProvider.saveItem('fuse.client', {
             title    : 'Clients',
-            icon     : 'icon-tile-four',
+            icon     : 'icon-account-multiple',
             state    : 'app.client',
             /*stateParams: {
                 'param1': 'page'
