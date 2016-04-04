@@ -12,7 +12,7 @@
         // State
         $stateProvider
             .state('app.client', {
-                url    : '/kavi',
+                url    : '/client',
                 views  : {
                     'content@app': {
                         templateUrl: 'app/main/client/client.html',
