@@ -12,8 +12,8 @@
         var vm = this;
 
         // Data
-        vm.clients = ClientData.data;
-
+        vm.clients = ClientData.data.records;
+       // console.log(vm.clients);
          vm.dtOptions = {
             dom       : '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             pagingType: 'simple',

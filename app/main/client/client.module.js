@@ -12,7 +12,7 @@
         // State
         $stateProvider
             .state('app.client', {
-                url    : '/client',
+                url    : '/kavi',
                 views  : {
                     'content@app': {
                         templateUrl: 'app/main/client/client.html',
@@ -22,7 +22,10 @@
                 resolve: {
                     ClientData: function (msApi)
                     {
-                        return msApi.resolve('client@get');
+                       var price_list_data = {};
+                       price_list_data.cond ={company_id :'28'};
+
+                       return msApi.resolve('client@post',price_list_data);
                     }
                 }
             });
@@ -31,7 +34,8 @@
         $translatePartialLoaderProvider.addPart('app/main/client');
 
         // Api
-        msApiProvider.register('client', ['app/data/client/client.json']);
+        // msApiProvider.register('client', ['app/data/client/client.json']);
+        msApiProvider.register('client',['app/data/api/public/client/ListClient',null, {post:{method:'post'}}]);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
