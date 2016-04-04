@@ -1,12 +1,17 @@
 md-dialog {
 
     &.task-dialog {
-        max-width: 720px;
+        max-width: 520px;
         width: 720px;
 
         md-dialog-content {
             display: block;
             position: relative;
+
+            md-input-container label:not(.md-no-float):not(.md-container-ignore){
+                   padding-left: 11px;
+            }
+            
         }
 
         md-toolbar {
@@ -20,6 +25,10 @@ md-dialog {
 
             textarea {
                 min-height: 150px;
+            }
+
+            label {
+                color: rgba(0,0,0,0.60);
             }
         }
 
@@ -100,10 +109,13 @@ md-dialog {
             position: relative;
             overflow-y: hidden;
             overflow-x: auto;
-            justify-content: space-between;
+            justify-content: flex-end;
             background-color: rgba(0, 0, 0, 0.03);
             border-top: 1px solid rgba(0, 0, 0, 0.12);
         }
+    }
+    md-select .md-select-value.md-select-placeholder {
+        color: rgba(0,0,0,0.6);
     }
 }
 
@@ -139,13 +151,23 @@ md-input-container.md-block.first-box.flex-gt-sm {
     margin-top: 18px;
 }
 .upload{bottom: 25px;
-    position: absolute;
-    right: 0;}
-.upload-rel{position: relative}
-.height-image{height: 216px;background: #f5f5f5}
-.client-add-modal{background: #fff}
-md-card.card md-card-title md-card-title-text{flex-direction: row}
-md-card.card md-button{flex-direction: row}
+        position: absolute;
+        right: 0;}
+.upload-rel{
+    position: relative
+}
+.height-image{
+    height: 216px;background: #f5f5f5
+}
+.client-add-modal{
+    background: #fff
+}
+md-card.card md-card-title md-card-title-text{
+    flex-direction: row
+}
+md-card.card md-button{
+    flex-direction: row
+}
 md-card.card md-card-title{height: 100%}
 .first-box.md-icon-float.md-default-theme {
     margin-top: 18px;
@@ -155,5 +177,14 @@ md-input-container.first-box.md-icon-float {
 }
 .btn-small{width:50px}
 .c-white{color:#fff !important}
-.m-b-20{margin-bottom: 20px !important}
+.m-b-30{margin-bottom: 30px !important}
+.p-t-30{
+    padding-top: 30px
+}
 .cursor-p{cursor:pointer}
+md-dialog.task-dialog md-dialog-content {
+    padding: 2px 24px 24px 24px;
+}
+md-dialog form {
+    font-size: 1.3rem;
+}

@@ -55,16 +55,14 @@
         //////////
 
         /**
-         * Add new task
+         * Add new client
          */
         function addNewClient()
         {
             vm.clients.unshift(vm.client);
 
             closeDialog();
-        }
-
-     
+        }    
 
         /**
          * Close dialog
