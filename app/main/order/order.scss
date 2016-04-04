@@ -1,0 +1,65 @@
+.ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button {
+    color: #000000;
+}
+.ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button .icon {
+    color: #000000;
+    margin: 0 16px 0 0;
+}
+.order-list-page{
+    .dataTables_wrapper .top {
+        padding: 0;
+    }
+    .simple-table-container{ 
+        background: #ffffff none repeat scroll 0 0;
+        margin: 20px;
+        .table-title {
+            border-bottom: 1px solid #dddddd;
+            padding: 0 24px;
+            .search-block {
+                .md-errors-spacer {
+                    min-height: 10px;
+                }
+            }
+            .layout-row{
+
+            }
+
+            .order-modal-title {
+                span {
+                    color: #74b0f4;
+                    font-size: 14px;
+                    text-align: right;
+                }
+            }
+        }
+    }
+}
+md-icon.margin-intial{
+    margin: initial;
+}
+.table-desc{
+    .collpas {
+        padding: 0 !important;
+        th{background: #ccc; padding: 5px 10px 5px 24px !important}
+    }
+    td{background: #eee;padding: 0 24px!important}
+    
+
+}
+md-slider.blue-color.md-default-theme .md-track, md-slider.blue-color .md-track {
+    background-color: #aed7f2;
+}
+md-slider.blue-color.md-default-theme.md-primary .md-track.md-track-fill, md-slider.blue-color.md-primary .md-track.md-track-fill {
+    background-color: #039be5;
+}
+md-slider.blue-color.md-default-theme.md-primary .md-thumb::after, md-slider.blue-color.md-primary .md-thumb::after {
+    background-color: #039be5;
+    border-color: #039be5;
+}
+
+md-slider.blue-color .md-track-container {
+    height: 7px;
+}
+md-slider.blue-color .md-thumb::after{
+    top:7px;
+}

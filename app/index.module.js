@@ -21,6 +21,9 @@
             'app.quick-panel',
 
             // Client
-            'app.client'
+            'app.client',
+            
+            //Order
+            'app.order'
         ]);
 })();
