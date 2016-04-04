@@ -19,7 +19,7 @@
                     <tr>
                         <th class="secondary-text">
                             <div class="table-header">
-                                <span class="column-title">Client Name</span>
+                                <span class="column-title">Name</span>
                             </div>
                         </th>
                         <th class="secondary-text">
@@ -42,11 +42,11 @@
                 </thead>
                 <tbody>
 
-                    <tr ng-repeat="client in ::vm.clients">
+                    <tr ng-repeat="client in ::vm.clients" ui-sref="app.client.profile({id:client.id})">
                         <td>{{ client.client_company }}</td>
-                        <td>{{ client.client_id }}</td>
-                        <td>{{ client.last_name }}</td>
-                        <td>{{ client.status }}</td>
+                        <td>{{ client.first_name }} {{client.last_name}}</td>
+                        <td>{{ client.phone }}</td>
+                        <td>{{ client.email }}</td>
                     </tr>
                 </tbody>
             </table>
