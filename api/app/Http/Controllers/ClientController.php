@@ -136,7 +136,7 @@ class ClientController extends Controller {
 
     public function ListClient()
     {
-    	z$post = Input::all();
+    	$post = Input::all();
     	$result = $this->client->getClientdata($post);
     	return $this->return_response($result);
     }
