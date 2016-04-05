@@ -65,11 +65,12 @@
 @import "navigation/layouts/horizontal-navigation/navigation.scss";
 @import "navigation/layouts/vertical-navigation/navigation.scss";
 @import "quick-panel/tabs/activity/activity-tab.scss";
-@import "quick-panel/tabs/today/today-tab.scss";
 @import "quick-panel/tabs/chat/chat-tab.scss";
+@import "quick-panel/tabs/today/today-tab.scss";
 @import "toolbar/layouts/content-with-toolbar/toolbar.scss";
 @import "toolbar/layouts/horizontal-navigation/toolbar.scss";
 @import "main/client/dialogs/client/client-dialog.scss";
 @import "main/client/views/profile/profile-view.scss";
 @import "main/order/dialogs/order/order-dialog.scss";
+@import "main/order/views/order-info/order-info.scss";
 // endinjector

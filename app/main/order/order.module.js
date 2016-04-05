@@ -25,6 +25,14 @@
                         return msApi.resolve('order@get');
                     }
                 }
+            }).state('app.order.order-info', {
+                url  : '/order-info/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/order-info/order-info.html',
+                        controller : 'OrderInfoController as vm'
+                    }
+                }
             });
 
         // Translation

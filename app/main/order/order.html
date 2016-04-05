@@ -10,12 +10,157 @@
                     <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
                 </md-input-container>
             </div>
-            <div class=""  flex=20 layout="row"layout-align="end center">
-                <md-icon md-font-icon="icon-filter-variant" class="margin-intial">
-                </md-icon>
+            <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant"></md-icon>   
+            <!---------------------------------Filter Sidebar Start------------------------------------------------------>
+            <div class="filter-menu" >
+                <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
+                    <md-toolbar class=" filter-title">
+                        <h1 class="md-toolbar-tools">Filter By</h1>
+                    </md-toolbar>
+                    <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+                        <div class="contant-filter" >
+                            <div layout="column" class="f-box-1">
+                                <div class="f-header">
+                                    <span>
+                                        SALES REP 
+                                        <button ng-if="vm.toggle" ng-click="vm.toggle = false">
+                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                        </button>
+                                        <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                        </button>
+                                    </span>
+                                    <md-divider ></md-divider>
+                                </div>
+                                <div ng-if="vm.toggle" class="f-body scrollable"  ms-scroll>
+                                    <div layout="column" >
+                                        <md-checkbox ng-repeat="check in ::vm.salesCheck" ng-model="check.v" aria-label="check.name">
+                                            {{check.name}}
+                                        </md-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="column" class="f-box-2">
+                                <div class="f-header">
+                                    <span>
+                                        SHIP DATE 
+                                        <button ng-if="vm.shipdate" ng-click="vm.shipdate = false">
+                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                        </button>
+                                        <button ng-if="!vm.shipdate" ng-click="vm.shipdate = true">
+                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                        </button>
+                                    </span>
+                                    <md-divider ></md-divider>
+                                </div>
+                                <div class="f-body"  ng-if="vm.shipdate">
+                                    <div layout="column">
+                                        <md-datepicker ng-model="vm.shipDate" md-placeholder="Date"></md-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="column" class="f-box-2">
+                                <div class="f-header">
+                                    <span>
+                                        CREATE DATE  
+                                        <button ng-if="vm.createdate" ng-click="vm.createdate = false">
+                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                        </button>
+                                        <button ng-if="!vm.createdate" ng-click="vm.createdate = true">
+                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                        </button>
+                                    </span>
+                                    <md-divider ></md-divider>
+                                </div>
+                                <div class="f-body" ng-if="vm.createdate">
+                                    <div layout="column" >
+                                        <md-datepicker ng-model="vm.createDate" md-placeholder="Date"></md-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="column" class="f-box-1">
+                                <div class="f-header">
+                                    <span>
+                                        COMPANY  
+                                        <button ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
+                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                        </button>
+                                        <button ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
+                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                        </button>
+                                    </span>
+                                    <md-divider ></md-divider>
+                                </div>
+                                <div class="f-body scrollable"  ms-scroll ng-if="vm.companyfilter">
+                                    <div layout="column" >
+                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.v" aria-label="check.name">
+                                            {{check.name}}
+                                        </md-checkbox>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="column" class="f-box-1">
+                                <div class="f-header">
+                                    <span>
+                                        ORDER ID  
+                                        <button ng-if="vm.orderfilter" ng-click="vm.orderfilter = false">
+                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                        </button>
+                                        <button ng-if="!vm.orderfilter" ng-click="vm.orderfilter = true">
+                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                        </button>
+                                    </span>
+                                    <md-divider ></md-divider>
+                                </div>
+                                <div class="f-body scrollable"  ms-scroll ng-if="vm.orderfilter">
+                                    <div layout="column" >
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <label>
+                                                <md-icon md-font-icon="icon-magnify"></md-icon>
+                                            </label>
+                                            <input ng-model="vm.searchOrder" >
+                                        </md-input-container>
+                                        <md-button  ng-repeat="orderId in ::vm.ordersId">
+                                            {{orderId.id}}
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="column" class="f-box-2">
+                                <div class="f-header">
+                                    <span>
+                                        DATE RANGE 
+                                        <button ng-if="vm.datefilter" ng-click="vm.datefilter = false">
+                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                        </button>
+                                        <button ng-if="!vm.datefilter" ng-click="vm.datefilter = true">
+                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                        </button>
+                                    </span>
+                                    <md-divider ></md-divider>
+                                </div>
+                                <div class="f-body" ng-if="vm.datefilter">
+                                    <div layout="column" >
+                                        <label class="f-14">FROM</label>
+                                        <md-datepicker ng-model="vm.rangeFrom" md-placeholder="Date"></md-datepicker>
+                                    </div>
+                                    <label class="f-14">TO</label>
+                                    <md-datepicker ng-model="vm.rangeTo" md-placeholder="Date"></md-datepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </md-content>
+                    <div class="filter-footer">
+                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple" >                                      
+                            APPLY FILTERS
+                        </md-button>
+                    </div>
+                </md-sidenav>
             </div>
+             <!---------------------------------Filter Sidebar End------------------------------------------------------------->
             <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
-                <span class="cursor-p" >ADD NEW ORDER</span>
+                <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >ADD NEW ORDER</span>
             </div>
         </div>
         <div class="ms-responsive-table-wrapper">
@@ -61,7 +206,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat-start="order in ::vm.orders" >
+                    <tr ng-repeat-start="order in ::vm.orders"  >
                         <td>{{ order.orderid}}</td>
                         <td>{{ order.ordername}}</td>
                         <td>{{ order.company}}</td>
@@ -84,30 +229,25 @@
                                 <th>Product Name</th>
                                 <th>Ship Date</th>
                                 <th>Status</th>
-                               
                                 </thead>
                                 <tbody>
-                                    <tr >
-                                        
-                                        <td>{{ order.desc.DesignName}}</td>
-                                        <td>{{ order.desc.PostionName}}  <md-tooltip md-direction="bottom">Front & Back</md-tooltip></td>
-                                        <td>{{ order.desc.SKU}}</td>
-                                        <td>{{ order.desc.ProductName}}</td>
-                                        <td>{{ order.desc.ShipDate}}</td>
-                                        <td colspan="3">{{ order.desc.Status}} 
-                                              <md-slider flex ng-model="color.blue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color">
-      </md-slider>
-      </md-slider>
-                                       
-                            </td>                        
-                                        
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    <tr>
+                                        <td></td>
+                                        <td>
                         </td>
-                    </tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td colspan="3">{{ order.desc.Status}} 
+                <md-slider flex ng-model="order.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
+                </md-slider>
+                </td>                        
+                </tr>
                 </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
             </table>
         </div>
     </div>
