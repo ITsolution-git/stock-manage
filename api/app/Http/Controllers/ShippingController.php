@@ -25,6 +25,48 @@ class ShippingController extends Controller {
         $this->common = $common;
     }
 
+    public function addressValidate()
+    {
+        $address = new \Ups\Entity\Address();
+        $address->setAttentionName('Test Test');
+        $address->setBuildingName('Test');
+        $address->setAddressLine1('Address Line 1');
+        $address->setAddressLine2('Address Line 2');
+        $address->setAddressLine3('Address Line 3');
+        $address->setStateProvinceCode('NY');
+        $address->setCity('New York');
+        $address->setCountryCode('US');
+        $address->setPostalCode('10000');
+
+        $xav = new \Ups\AddressValidation('2D084297048602C5', 'Codal', 'Mobile1357');
+        $xav->activateReturnObjectOnValidate(); //This is optional
+        try {
+            $response = $xav->validate($address, $requestOption = \Ups\AddressValidation::REQUEST_OPTION_ADDRESS_VALIDATION, $maxSuggestion = 15);
+        } catch (Exception $e) {
+            var_dump($e);
+        }
+        if ($response->noCandidates()) {
+            echo "noCandidates";
+            //Do something clever and helpful to let the use know the address is invalid
+        }
+        if ($response->isAmbiguous()) {
+            echo "isAmbiguous";
+            $candidateAddresses = $response->getCandidateAddressList();
+            foreach($candidateAddresses as $address) {
+                //Present user with list of candidate addresses so they can pick the correct one        
+            }
+        }
+        if ($response->isValid()) {
+            echo "isValid";
+            $validAddress = $response->getValidatedAddress();
+            print_r($validAddress);exit;
+            //Show user validated address or update their address with the 'official' address
+            //Or do something else helpful...
+        }
+
+        exit;
+    }
+
     /**
     * Get Array List of All Shipping details
     * @return json data
