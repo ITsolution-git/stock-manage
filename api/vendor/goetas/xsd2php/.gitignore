@@ -1,0 +1,7 @@
+/.buildpath
+/.project
+/.settings
+./lib/Symfony
+composer.lock
+vendor/
+
