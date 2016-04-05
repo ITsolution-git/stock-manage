@@ -20,6 +20,7 @@
             // Quick panel
             /*'app.quick-panel',*/
 
+            'app.login',
             // Client
             'app.client'
         ]);

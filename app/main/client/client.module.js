@@ -28,7 +28,8 @@
                        return msApi.resolve('client@post',price_list_data);
                     }
                 }
-            }).state('app.client.profile', {
+            })
+            .state('app.client.profile', {
                 url  : '/profile/:id',
                 views: {
                     'content@app': {
