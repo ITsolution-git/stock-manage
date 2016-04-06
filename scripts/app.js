@@ -2,111 +2,6 @@
 {
     'use strict';
 
-    config.$inject = ["$stateProvider", "$translatePartialLoaderProvider", "msApiProvider", "msNavigationServiceProvider"];
-    angular
-        .module('app.client', [])
-        .config(config);
-
-    /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
-    {
-        // State
-        $stateProvider
-            .state('app.client', {
-                url    : '/client',
-                views  : {
-                    'content@app': {
-                        templateUrl: 'app/main/client/client.html',
-                        controller : 'ClientController as vm'
-                    }
-                },
-                resolve: {
-                    ClientData: ["msApi", function (msApi)
-                    {
-                        return msApi.resolve('client@get');
-                    }]
-                }
-            });
-
-        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/client');
-
-        // Api
-        msApiProvider.register('client', ['app/data/client/client.json']);
-
-        // Navigation
-        msNavigationServiceProvider.saveItem('fuse', {
-            title : 'Client',
-            group : true,
-            weight: 1
-        });
-
-        msNavigationServiceProvider.saveItem('fuse.client', {
-            title    : 'Client',
-            icon     : 'icon-tile-four',
-            state    : 'app.client',
-            /*stateParams: {
-                'param1': 'page'
-             },*/
-            translate: 'CLIENT.CLIENT_NAV',
-            weight   : 1
-        });
-    }
-})();
-(function ()
-{
-    'use strict';
-
-    ClientDialogController.$inject = ["$mdDialog", "Client", "Clients", "event"];
-    angular
-        .module('app.client')
-        .controller('ClientDialogController', ClientDialogController);
-
-    /** @ngInject */
-    function ClientDialogController($mdDialog, Client, Clients, event)
-    {
-        var vm = this;
-
-        // Data
-        vm.title = 'Edit Client';
-        vm.client = angular.copy(Client);
-        vm.clients = Clients;
-        vm.newClient = false;
-
-
-
-        // Methods
-        vm.addNewClient = addNewClient;
-
-        vm.closeDialog = closeDialog;
-
-        //////////
-
-        /**
-         * Add new task
-         */
-        function addNewClient()
-        {
-            vm.clients.unshift(vm.client);
-
-            closeDialog();
-        }
-
-     
-
-        /**
-         * Close dialog
-         */
-        function closeDialog()
-        {
-            $mdDialog.hide();
-        }
-    }
-})();
-(function ()
-{
-    'use strict';
-
     config.$inject = ["$translatePartialLoaderProvider", "msApiProvider"];
     angular
         .module('app.quick-panel', [])
@@ -116,13 +11,13 @@
     function config($translatePartialLoaderProvider, msApiProvider)
     {
         // Translation
-        $translatePartialLoaderProvider.addPart('app/quick-panel');
+        //$translatePartialLoaderProvider.addPart('app/quick-panel');
 
         // Api
-        msApiProvider.register('quickPanel.activities', ['app/data/quick-panel/activities.json']);
-        msApiProvider.register('quickPanel.contacts', ['app/data/quick-panel/contacts.json']);
-        msApiProvider.register('quickPanel.events', ['app/data/quick-panel/events.json']);
-        msApiProvider.register('quickPanel.notes', ['app/data/quick-panel/notes.json']);
+        //msApiProvider.register('quickPanel.activities', ['app/data/quick-panel/activities.json']);
+        //msApiProvider.register('quickPanel.contacts', ['app/data/quick-panel/contacts.json']);
+        //msApiProvider.register('quickPanel.events', ['app/data/quick-panel/events.json']);
+        //msApiProvider.register('quickPanel.notes', ['app/data/quick-panel/notes.json']);
     }
 })();
 

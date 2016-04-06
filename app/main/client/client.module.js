@@ -22,10 +22,14 @@
                 resolve: {
                     ClientData: function (msApi)
                     {
-                        return msApi.resolve('client@get');
+                       var price_list_data = {};
+                       price_list_data.cond ={company_id :'28'};
+
+                       return msApi.resolve('client@post',price_list_data);
                     }
                 }
-            }).state('app.client.profile', {
+            })
+            .state('app.client.profile', {
                 url  : '/profile/:id',
                 views: {
                     'content@app': {
@@ -39,7 +43,8 @@
         $translatePartialLoaderProvider.addPart('app/main/client');
 
         // Api
-        msApiProvider.register('client', ['app/data/client/client.json']);
+        // msApiProvider.register('client', ['app/data/client/client.json']);
+        msApiProvider.register('client',['api/public/client/ListClient',null, {post:{method:'post'}}]);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

@@ -2,7 +2,7 @@
 {
     'use strict';
 
-    angular
+    var core = angular
         .module('app.core')
         .factory('msUtils', msUtils);
 
@@ -265,5 +265,48 @@
                 array.splice(array.indexOf(item), 1);
             }
         }
+
+    };
+
+core.factory('notifyService', msNotify);
+    /** @ngInject */
+    function msNotify($mdToast, $document) {
+        /**
+        * List of service
+        **/
+        var service = {
+            notify: notify
+        };
+
+        return service;
+
+        /**
+        * Used for displaying notification
+        * 
+        * @param string status (error, success),
+        * @param string message message to display
+        **/
+        function notify(status, message) {               
+            $mdToast.show({
+                     template : getTemplate(status,message),   
+                     position : "bottom right",
+                     parent : $document.body,
+                     hideDelay : 5000
+                });
+        };
+
+        /**
+        * Get template for displaying in notification
+        *
+        * @param string status (error, success),
+        * @param string message message to display
+        **/
+        function getTemplate(status,message) {            
+            var strTemplate = "<md-toast id='notify-"+status+"'>" +
+                                "<div flex>" + message + "</div>"+
+                                "</md-toast>";
+            return strTemplate;
+        };
+
     }
 }());
