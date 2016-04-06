@@ -30,27 +30,28 @@
                             var data = {"status": "error", "message": "Please signin first."}
                             notifyService.notify(data.status, data.message);
                             //console.log(234);
-                           // $state.go('app.login');
+                            // $state.go('app.login');
                             //return false;
                         } 
                         else 
                         {
                             $rootScope.email = result.data.email;
-                           // sessionService.set('role_slug',result.data.role_session);
-                           // sessionService.set('user_id',result.data.user_id);
+                             sessionService.set('role_slug',result.data.role_session);
+                             sessionService.set('user_id',result.data.user_id);
                             $rootScope.company_profile =  result.data.company;
 
                             var role = result.data.role_session;
-                           // console.log('Permission Allow for Role - '+role);
-                           // if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
+                            // console.log('Permission Allow for Role - '+role);
+                            // if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
                             //{
                             //   // console.log('error');
                             //    var data = {"status": "error", "message": "You are Not authorized, Please wait"}
-                             //   notifyService.notify(data.status, data.message);
-                               // $location.url('/app/dashboard');
-                               // setTimeout(function(){ window.location.reload(); }, 200);
-                                //return false;
-                           // }
+                            //   notifyService.notify(data.status, data.message);
+                            // $location.url('/app/dashboard');
+                            // setTimeout(function(){ window.location.reload(); }, 200);
+                            //return false;
+                            // 
+                            //}
                         }
                     
             });
