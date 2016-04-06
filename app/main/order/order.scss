@@ -34,6 +34,10 @@
 
         }
     }
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        display: none;
+    }
 }
 .filter-title {
     background: rgba(158, 158, 158, 0.2) !important;
@@ -50,8 +54,8 @@
     }
 }
 .f-body {
-    height: 173px;
-    overflow-y: scroll;
+/*    height: 173px;
+    overflow-y: scroll;*/
     padding: 10px 20px;
     width: 95%;
 
@@ -141,6 +145,6 @@ md-slider.blue-color .md-thumb::after{
 }
 .md-btn-block { margin: 0; width: 100%; border-radius: 0;}
 .flex-fix-bottom{
- flex: 1   
+    flex: 1   
 }
 .f-14{font-size: 14px}

@@ -7,7 +7,7 @@
 
 
     /** @ngInject */
-    function OrderController(OrderData, $mdDialog, $document, $mdSidenav) {
+    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder) {
         var vm = this;
 
         // Data
@@ -19,6 +19,7 @@
             autoWidth: false,
             responsive: true
         };
+        
         vm.searchQuery = "";
 
         // Methods
@@ -71,6 +72,19 @@
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
+            jQuery('.dev-rdetail').on('click', function () {
+                var $tr = $(this).closest('tr');
+                var row = datatableObj.row($tr);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    $tr.removeClass('shown');
+                } else {
+                    var rowHtml=$tr.find("div.dev-rdetail-data").html();
+                    row.child(rowHtml).show();
+                    $tr.addClass('shown').next('tr').addClass('table-desc').children('td').addClass('collpas');
+                }
+            });
         }
         function searchTable() {
             var query = vm.searchQuery;
@@ -78,7 +92,5 @@
         }
 
     }
-
-
 
 })();
