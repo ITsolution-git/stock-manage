@@ -20,6 +20,7 @@
                     }
                 },
                 resolve: {
+
                     ClientData: function (msApi)
                     {
                        var price_list_data = {};

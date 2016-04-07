@@ -4,5 +4,5 @@
     # it's a directory or a file that actually exists
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.html [L]
+    RewriteRule ^ index.php [L]
 </IfModule>
