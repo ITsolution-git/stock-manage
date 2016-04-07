@@ -6,7 +6,7 @@
         .module('fuse')
         .run(runBlock);
 
-   function runBlock($rootScope, $timeout, $state,  $resource,sessionService,notifyService)
+   function runBlock($rootScope, $timeout, $state,  $resource,sessionService,notifyService,$q)
     {
         // Store state in the root scope for easy access
         
@@ -17,45 +17,39 @@
                 method : 'get'
             }
         });
-
+        
+        funCheckSession();
+       
         // Activate loading indicator
         var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function ($stateChangeStart, $next)
-        {
-            $rootScope.loadingProgress = true;
-            
-            checkSession.get(null,function(result) {
-
-                        if(result.data.success == '0') 
-                        {
-                            var data = {"status": "error", "message": "Please signin first."}
-                            notifyService.notify(data.status, data.message);
-                            //console.log(234);
-                            // $state.go('app.login');
-                            //return false;
-                        } 
-                        else 
-                        {
-                            $rootScope.email = result.data.email;
-                             sessionService.set('role_slug',result.data.role_session);
-                             sessionService.set('user_id',result.data.user_id);
-                            $rootScope.company_profile =  result.data.company;
-
-                            var role = result.data.role_session;
-                            // console.log('Permission Allow for Role - '+role);
-                            // if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
-                            //{
-                            //   // console.log('error');
-                            //    var data = {"status": "error", "message": "You are Not authorized, Please wait"}
-                            //   notifyService.notify(data.status, data.message);
-                            // $location.url('/app/dashboard');
-                            // setTimeout(function(){ window.location.reload(); }, 200);
-                            //return false;
-                            // 
-                            //}
-                        }
-                    
-            });
+        {   
+            $rootScope.loadingProgress = true;      
+            funCheckSession();      
+            var userId = sessionService.get('uid');            
+            if(userId === '' || userId === null) 
+            {                    
+                if($next.name !== 'app.login' && $state.current.name !== 'app.login') 
+                {                                        
+                    $state.go('app.login');
+                    notifyService.notify("error", "Please signin first.");
+                    $stateChangeStart.preventDefault();
+                }
+            }
         });
+
+        // CHECK SESSION FUNCITON ON EACH CALL
+        function funCheckSession() 
+        {
+            checkSession.post(null,function(result) 
+            {                
+                $rootScope.email = result.data.email;
+                sessionService.set('role_slug',result.data.role_session);
+                sessionService.set('user_id',result.data.user_id);
+                $rootScope.company_profile =  result.data.company;
+                var role = result.data.role_session;
+            });
+        }
+
 
         // De-activate loading indicator
         var stateChangeSuccessEvent = $rootScope.$on('$stateChangeSuccess', function ()
