@@ -1,0 +1,12 @@
+[2016-03-31 06:11:11] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\QuickBooks_IPP_Service_Customer' not found' in /var/www/html/stokkup_old/api/app/Http/Controllers/StaffController.php:77
+Stack trace:
+#0 {main}  
+[2016-03-31 06:17:05] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\QuickBooks_IPP_Service_Customer' not found' in /var/www/html/stokkup_old/api/app/Http/Controllers/StaffController.php:80
+Stack trace:
+#0 {main}  
+[2016-03-31 06:30:05] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\QuickBooks_IPP_Service_Customer' not found' in /var/www/html/stokkup_old/api/app/Http/Controllers/StaffController.php:81
+Stack trace:
+#0 {main}  
+[2016-03-31 06:37:59] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'App\Http\Controllers\QuickBooks_IPP_Service_Customer' not found' in /var/www/html/stokkup_old/api/app/Http/Controllers/StaffController.php:82
+Stack trace:
+#0 {main}  

@@ -7,11 +7,11 @@
 
 
     /** @ngInject */
-    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder) {
+    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource) {
         var vm = this;
 
         // Data
-        vm.orders = OrderData.data;
+        vm.orders = OrderData.data.records;
         //Datatable
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -91,6 +91,28 @@
             vm.tableInstance.search(query).draw();
         }
 
+        function OrderDialogController() {
+
+            var popup_open = $resource('api/public/common/GetTableRecords', null, 
+                    {
+                        post : {
+                            method : 'post'
+                        }
+                    });
+
+            var order_list_data = {};
+            order_list_data.cond ={company_id :'28',is_delete :'1',status :'1'};
+            order_list_data.table ='client';
+
+                popup_open.post(order_list_data, function(response) {
+                   
+                },function(response) {
+
+                });
     }
+
+    }
+
+    
 
 })();

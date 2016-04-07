@@ -158,7 +158,7 @@
                     </div>
                 </md-sidenav>
             </div>
-            <!---------------------------------Filter Sidebar End------------------------------------------------------------->
+            <!----------Filter Sidebar End-------->
             <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
                 <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >ADD NEW ORDER</span>
             </div>
@@ -207,13 +207,13 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="order in ::vm.orders"  >
-                        <td ui-sref="app.order.order-info({id:order.orderid})">{{ order.orderid}}</td>
-                        <td>{{ order.ordername}}</td>
-                        <td>{{ order.company}}</td>
+                        <td ui-sref="app.order.order-info({id:order.orderid})">{{ order.id}}</td>
+                        <td>{{ order.job_name}}</td>
+                        <td>{{ order.client_company}}</td>
                         <td>{{ order.approval}}</td>
-                        <td>{{ order.dateCreated}}</td>
-                        <td>{{order.salesRep}}</td>
-                        <td>{{ order.shipDate}}</td>
+                        <td>{{ order.created_date}}</td>
+                        <td>Hardik Deliwala</td>
+                        <td>{{ order.shipping_by}}</td>
                         <td class="accor details-control" >
                             <button class="dev-rdetail" ng-click="order.expanded = !order.expanded">
                                 <md-icon ng-if="!order.expanded" md-font-icon="icon-plus"></md-icon>
