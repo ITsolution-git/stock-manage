@@ -20,11 +20,15 @@
                     }
                 },
                 resolve: {
-
-                    ClientData: function (msApi)
+                    checksession : function (sessionService)
+                    {
+                       //return sessionService.AccessService('ALL');
+                    },
+                    ClientData: function (msApi,sessionService,$rootScope)
                     {
                        var price_list_data = {};
-                       price_list_data.cond ={company_id :'28'};
+                      // console.log(sessionService.get('user_id'));
+                       price_list_data.cond ={company_id :sessionService.get('user_id')};
 
                        return msApi.resolve('client@post',price_list_data);
                     }

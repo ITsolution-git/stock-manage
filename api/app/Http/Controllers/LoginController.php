@@ -98,7 +98,9 @@ class LoginController extends Controller {
                     $token = $this->login->getToken(10);
                     $token .= $token.time();
                     DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'date'=>date('Y-m-d H:i:s')]);
+                    $company = $this->common->CompanyService(Session::get("user_id"));
 
+                   // echo "<pre>"; print_r($company); echo "</pre>"; die;
                     Session::put('username',$result[0]->user_name);
                     Session::put('password', md5($password));
                     Session::put('useremail', $result[0]->email);
@@ -108,7 +110,7 @@ class LoginController extends Controller {
                     Session::put('user_id', $result[0]->id);
                     $loginid = $this->login->loginRecord($result[0]->id);
                     Session::put('login_id', $loginid);
-                    
+                    Session::put('company_id',  $company[0]->company_id);
                     $session = array();
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
@@ -119,6 +121,7 @@ class LoginController extends Controller {
                     $session['login_id'] = $loginid;
                     $session['user_id'] = $result[0]->id;
                     $session['token'] = $token;
+                    $session['company_id'] = $company[0]->company_id;
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
                 }

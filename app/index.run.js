@@ -25,7 +25,7 @@
         {   
             $rootScope.loadingProgress = true;      
             funCheckSession();      
-            var userId = sessionService.get('uid');            
+            var userId = sessionService.get('user_id');            
             if(userId === '' || userId === null) 
             {                    
                 if($next.name !== 'app.login' && $state.current.name !== 'app.login') 
@@ -42,9 +42,10 @@
         {
             checkSession.post(null,function(result) 
             {                
-                $rootScope.email = result.data.email;
+                sessionService.set('email',result.data.email);
                 sessionService.set('role_slug',result.data.role_session);
                 sessionService.set('user_id',result.data.user_id);
+                sessionService.set('company_id',result.data.company_id);
                 $rootScope.company_profile =  result.data.company;
                 var role = result.data.role_session;
             });
