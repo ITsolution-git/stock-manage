@@ -30,9 +30,9 @@
             {                    
                 if($next.name !== 'app.login' && $state.current.name !== 'app.login') 
                 {                                        
-                    $state.go('app.login');
+                    //$state.go('app.login');
                     notifyService.notify("error", "Please signin first.");
-                    $stateChangeStart.preventDefault();
+                   // $stateChangeStart.preventDefault();
                 }
             }
         });
