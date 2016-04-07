@@ -24,6 +24,7 @@
 
         // Methods
         vm.openOrderDialog = openOrderDialog;
+        vm.openaddDesignDialog = openaddDesignDialog;
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
 
@@ -59,6 +60,22 @@
                 controller: 'OrderDialogController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/order/dialogs/order/order-dialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Order: order,
+                    Orders: vm.orders,
+                    event: ev
+                }
+            });
+        }
+        function openaddDesignDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'AddDesignController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/addDesign/addDesign.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
