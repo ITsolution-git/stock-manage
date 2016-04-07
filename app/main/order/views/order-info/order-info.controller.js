@@ -18,11 +18,48 @@
         ];
         vm.purchases = [
             {"poid": "27", "potype": "Purchase Order", "clientName": "kensville", "vendor": "SNS", "dateCreated": "xx/xx/xxxx"},
-            {"poid": "28", "potype": "Purchase Order", "clientName": "Design T-shirt", "vendor": "Nike", "dateCreated": "xx/xx/xxxx"}
+            {"poid": "28", "potype": "Purchase Order", "clientName": "Design T-shirt", "vendor": "Nike", "dateCreated": "xx/xx/xxxx"},
+       
 
         ];
-
-
+        vm.receives = [
+            {"roid": "27", "clientName": "kensville", "vendor": "SNS", "dateCreated": "xx/xx/xxxx"},
+            {"roid": "28", "clientName": "Design T-shirt", "vendor": "Nike", "dateCreated": "xx/xx/xxxx"},
+           
+            
+        ];
+        vm.affiliateOrders = [
+            {"Company": "Company Name", "units": "150", "designs": "1"},
+            {"Company": "Company Name", "units": "10,000", "designs": "2"},
+          
+           
+            
+        ];
+        vm.packageInformation = [
+            {"pid": "Foil", "pvalue": "4"},
+            {"pid": "Over Size Screens", "pvalue": "5"},
+            {"pid": "SKU", "pvalue": "2"},
+            {"pid": "Poly Bagging", "pvalue": "5"},
+            {"pid": "Hang Tag", "pvalue": "1"},
+            {"pid": "Inside Tagging", "pvalue": "4"},
+            
+            
+        ];
+        vm.orderecap = [
+            {"rid": "Screens", "rvalue": "54"},
+            {"rid": "Press Setup", "rvalue": "0"},
+            {"rid": "Lines Total", "rvalue": "2"},
+            {"rid": "Order Total", "rvalue": "$325.00"},
+            {"rid": "Tax Rate", "rvalue": ""},
+            {"rid": "Tax", "rvalue": "4"},
+            {"rid": "Grand Total", "rvalue": "$5,976.81"},
+            {"rid": "Total Payments", "rvalue": "5"},
+            {"rid": "Balance Due", "rvalue": "$2,500.98"},
+            
+            
+        ];
+             
+      
 
 
         vm.dtOptions = {

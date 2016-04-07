@@ -1,4 +1,4 @@
-<div class="order-info-page">
+<div class="order-info-page m-r-15 m-l-20 m-b-20">
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
 
@@ -8,7 +8,7 @@
             </md-input-container>
         </div>
         <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="80">
+            <div class="info-order" flex="75">
                 <div class="title" layout-padding><span class="h4 text-semibold">Information</span></div>
                 <md-card layout="row">
 
@@ -39,7 +39,7 @@
                                 <div>Price Grid</div>
                                 <span>ABC Grid</span>
                             </div>
-                            
+
                         </div>
                     </md-card-content>
                     <div layout-align="end start"  flex="20" layout="row">
@@ -61,189 +61,430 @@
                 </md-card>
 
             </div>
-            <div classs="" flex="20">
-                <md-button  class="bg-grey" >
+            <div classs="" flex="25" layout-align="end end" layout="column">
+                <md-button  class="bg-grey right-m-0 " >
                     CONFIRM PRICING
-                               
-                            </md-button>
-                <md-button  class="bg-grey" >
+
+                </md-button>
+                <md-button  class="bg-grey right-m-0 " >
                     EMAIL
-                               
-                            </md-button>
-                <md-button  class="bg-grey" >
+
+                </md-button>
+                <md-button  class="bg-grey right-m-0 " >
                     PRINT
-                               
-                            </md-button>
-                <md-button  class="bg-grey" >
-                   ASSIGN/SPLIT AFFILIATE
-                               
-                            </md-button>
+
+                </md-button>
+                <md-button  class="bg-grey right-m-0" >
+                    ASSIGN/SPLIT AFFILIATE
+
+                </md-button>
             </div>
 
         </div>
     </div>
-    
-    
-    <div class="content order-info-page">
-    <div class="simple-table-container md-whiteframe-4dp">
-        <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20>
-                Design
+
+
+    <div class="content order-info-page m-b-20">
+        <div class="simple-table-container md-whiteframe-4dp">
+            <div class="table-title " layout="row" layout-align="space-between center">
+                <div class="table-title-text" flex=20>
+                    Design
+                </div>
+
+
+                <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+                    <md-button class="dark-bg">
+                        CONFIRM PRICING
+                    </md-button>
+                </div>
             </div>
-           
+            <div class="ms-responsive-table-wrapper">
+                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+
+                    <thead>
+                    <th>ID</th>
+                    <th>Design Name</th>
+                    <th>Total Qty</th>
+                    <th>Total # of Colors</th>
+                    <th>Status</th>
+                    <th></th>
+
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="design in ::vm.designs">
+                            <td>{{ design.id}}</td>
+                            <td>{{ design.designName}}  
+                    
+                    </td>
+                    <td>{{ design.total}}</td>
+                    <td>{{ design.totalcolor}}</td>
+
+                    <td>{{ design.status}}
+                    <md-slider flex ng-model="color.blue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color">
+                    </md-slider>
+
+                    </td> 
+                    <td class="text-right"> 
+                    <md-menu>
+                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                        </md-button>
+                        <md-menu-content width="4">
+                            <md-menu-item>
+                                <md-button>
+                                    Edit Contact
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>
+                                    Delete Contact
+                                </md-button>
+                            </md-menu-item>
+                            <md-menu-item>
+                                <md-button>
+                                    Set As Main Contact
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    </td>
+                    </tr>
+                   
+                    
+                    </tbody> 
+                </table>
+            </div>
+        </div>
+    </div>
+    <div  layout="row" class="margin">
+        <div flex="75" layout="column" class="">
+            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
+                <div class="table-title " layout="row" layout-align="space-between center">
+                    <div class="table-title-text" >
+                        Purchase Order
+                    </div>
+                </div>
+                <div class="ms-responsive-table-wrapper">
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+
+                        <thead>
+                        <th>PO #</th>
+                        <th>PO Type</th>
+                        <th>Client Name</th>
+                        <th>Vendor/Affiliate</th>
+                        <th>Date Created</th>
+                        <th></th>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="puchase in ::vm.purchases">
+                                <td>{{ puchase.poid}}</td>
+                                <td>{{ puchase.potype}}  
+
+                                </td>
+                                <td>{{ puchase.clientName}}</td>
+                                <td>{{ puchase.vendor}}</td>
+
+                                <td>{{ puchase.dateCreated}}
+
+                                </td> 
+                                <td class="text-right"> 
+                                    <a>VIEW PO</a>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </tbody> 
+                    </table>
+                </div>
+
+            </div> 
+            <div class="simple-table-container md-whiteframe-4dp m-b-20">
+                <div class="table-title " layout="row" layout-align="space-between center">
+                    <div class="table-title-text" >
+                        Receiving Order
+                    </div>
+                </div>
+                <div class="ms-responsive-table-wrapper">
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+
+                        <thead>
+                        <th>RO #</th>
+
+                        <th>Client Name</th>
+                        <th>Vendor/Affiliate</th>
+                        <th>Date Created</th>
+                        <th></th>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="receive in ::vm.receives">
+                                <td>{{ receive.roid}}</td>
+                                <td>{{ puchase.clientName}}  
+
+                                <td>{{ receive.vendor}}</td>
+
+                                <td>{{ receive.dateCreated}}
+
+                                </td> 
+                                <td class="text-right"> 
+                                    <a>RECIEVE PO</a>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </tbody> 
+                    </table>
+                </div>
+            </div>
+            <div class="simple-table-container md-whiteframe-4dp m-b-20">
+                <div class="table-title " layout="row" layout-align="space-between center">
+                    <div class="table-title-text" >
+                        Affiliate Orders
+                    </div>
+                </div>
+                <div class="ms-responsive-table-wrapper">
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+
+                        <thead>
+                        <th>Company</th>
+
+                        <th>Total # of Units</th>
+                        <th># of Designs</th>
+                        
+                        <th></th>
+
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="affiliateOrder in ::vm.affiliateOrders">
+                                <td>{{ affiliateOrder.Company}}</td>
+                                <td>{{ affiliateOrder.units}}  
+
+                                <td>{{ affiliateOrder.designs}}</td>
+
+                                <td class="text-right"> 
+                                    <a>VIEW </a>
+                                </td>
+                            </tr>
+                            <tr></tr>
+                        </tbody> 
+                    </table>
+                </div>
+            </div>
+            <md-card class="m-b-20">
+
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                         Order Info
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column">
+                   <div layout="row" layout-wrap>
+                            <div class="trans-box">
+                                <div>Separations</div>
+                                <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Rush</div>
+                               <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Distribution</div>
+                                <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Digitize</div>
+                                <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+                            <div class="trans-box">
+
+                                <div>Shipping</div>
+                                <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Set Up</div>
+                                <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Artwork</div>
+                                <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Discount</div>
+                               <span><md-input-container md-no-float class="md-block">
+          <input  placeholder="$">
+        </md-input-container></span>
+                            </div>
+
+                        </div>
+
+                </md-card-content>
+            </md-card>
+            <md-card class="m-b-20">
+
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+           Shipping
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column" layout-padding>
+                   <div layout="row" layout-wrap layout-align="center center" flex="60">
+                       <span class="h2 semibold f-52">800 / 1000</span>
+
+                        </div>
+                    
+
+                </md-card-content>
+                <md-divider ></md-divider>
+                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                       <a>VIEW SHIPPING</a>
+
+                        </div>
+            </md-card>
+            <div layout="row">
+               
+                <md-card class="m-b-20 m-r-15" flex="33">
+
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+           Distribution
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column" layout-padding>
+                   <div layout="row" layout-wrap layout-align="center center" flex="60">
+                       <span class="h2 semibold f-52">231</span><br/>
+                      
+
+                        </div>
+                    <div class="text-center"> <span>Location</span></div>
+                    
+
+                </md-card-content>
+                
+                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                        <a>&nbsp;</a>
+
+                        </div>
+            </md-card>
+                <md-card class="m-b-20 m-r-15" flex="33">
+
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+           Notes
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column" layout-padding>
+                   <div layout="row" layout-wrap layout-align="center center" flex="60">
+                       <span class="h2 semibold f-52">5</span><br/>
+                       
+
+                        </div>
+                    <div class="text-center"><span>Total Notes</span></div>
+                    
+
+                </md-card-content>
+                <md-divider ></md-divider>
+                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                       <a>VIEW NOTES</a>
+
+                        </div>
+            </md-card>
+                <md-card class="m-b-20" flex="33">
+
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+           Artwork
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column" layout-padding>
+                   <div layout="row" layout-wrap layout-align="center center" flex="60">
+                       <span class="h2 semibold f-52">Approved</span>
+
+                        </div>
+                    <div class="text-center"> <span>&nbsp:</span></div>
+                    
+
+                </md-card-content>
+                <md-divider ></md-divider>
+                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                       <a>EDIT</a>
+
+                        </div>
+            </md-card>
+            </div>
             
-            <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
-                <md-button class="dark-bg">
-                    CONFIRM PRICING
-            </md-button>
-            </div>
+            
         </div>
-        <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
-                
-               <thead>
-                                <th>ID</th>
-                                <th>Design Name</th>
-                                <th>Total Qty</th>
-                                <th>Total # of Colors</th>
-                                <th>Status</th>
-                                <th></th>
-                                
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="design in ::vm.designs">
-                                        <td>{{ design.id}}</td>
-                                        <td>{{ design.designName}}  
-                                <md-tooltip md-direction="bottom">
-                                    Front & Back
-                                </md-tooltip>
-                        </td>
-                        <td>{{ design.total}}</td>
-                        <td>{{ design.totalcolor}}</td>
-                       
-                        <td>{{ design.status}}
-                <md-slider flex ng-model="color.blue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color">
-                </md-slider>
-             
-                </td> 
-                <td class="text-right"> 
-                                    <md-menu>
-                                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                        </md-button>
-                                        <md-menu-content width="4">
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Edit Contact
-                                                </md-button>
-                                            </md-menu-item>
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Delete Contact
-                                                </md-button>
-                                            </md-menu-item>
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Set As Main Contact
-                                                </md-button>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu>
-                                    </td>
-                </tr>
-                </tbody> 
-            </table>
-        </div>
-    </div>
-</div>
-    <div class="content order-info-page page-2" layout="row">
-    <div class="simple-table-container md-whiteframe-4dp" flex="80">
-        <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20>
-                Purchase Order
-            </div>
-                         </div>
-        <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
-                
-               <thead>
-                                <th>PO #</th>
-                                <th>PO Type</th>
-                                <th>Client Name</th>
-                                <th>Vendor/Affiliate</th>
-                                <th>Date Created</th>
-                                <th></th>
-                                
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="puchase in ::vm.purchases">
-                                        <td>{{ puchase.poid}}</td>
-                                        <td>{{ puchase.potype}}  
-                               
-                        </td>
-                        <td>{{ puchase.clientName}}</td>
-                        <td>{{ puchase.vendor}}</td>
-                       
-                        <td>{{ puchase.dateCreated}}
-                
-                </td> 
-                <td class="text-right"> 
-                    <a>VIEW PO</a>
-                                    </td>
-                </tr>
-                </tbody> 
-            </table>
-        </div>
-    </div>
-        <div class="" flex="20">
+
+
+        <div class="m-l-20" flex="25" layout="column">
+            <md-card class="m-b-20">
+
+                <md-card-title>
+                    <md-card-title-text>
+                        Package Information
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="info in ::vm.packageInformation">
+                        <div>{{ info.pid}}</div>
+                        <span>{{ info.pvalue}}</span>
+                    </div>
+
+                </md-card-content>
+            </md-card>
             <md-card>
-                                    
-                                    <md-card-title>
-                                        <md-card-title-text>
-                                            Package Information
-                                        </md-card-title-text>
-                                    </md-card-title>
-                                    <md-card-content>
-                                        <div class="card-box" layout="row" layout-align="space-between center">
-                                <div>Foil</div>
-                                <span>4</span>
-                            </div>
-                                        <div class="card-box" layout="row" layout-align="space-between center">
-                                <div>Over Size Screens</div>
-                                <span>5</span>
-                            </div>
-                                        <div class="card-box" layout="row" layout-align="space-between center">
-                                <div>SKU</div>
-                                <span>2</span>
-                            </div>
-                                        <div class="card-box" layout="row" layout-align="space-between center">
-                                <div>Poly Bagging</div>
-                                <span>5</span>
-                            </div>
-                                        <div class="card-box" layout="row" layout-align="space-between center">
-                                <div>Hang Tag</div>
-                                <span>1</span>
-                            </div>
-                                        <div class="card-box" layout="row" layout-align="space-between center">
-                                <div>Inside Tagging</div>
-                                <span>4</span>
-                            </div>
-                                    </md-card-content>
-                                </md-card>
+
+                <md-card-title>
+                    <md-card-title-text>
+                        Order Recap
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="recap in ::vm.orderecap">
+                        <div>{{ recap.rid}}</div>
+                        <span>{{ recap.rvalue}}</span>
+                    </div>
+
+                </md-card-content>
+            </md-card>
         </div>
+    </div>
+    
 </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
+<div class="footer" layout-padding layout="row">
+    <div flex="25">
+        <span class="h4 text-semibold">Order Total</span>
+    </div>
+    <div flex="15"><span>Order Line</span></div>
+    <div flex="15"><span>$500.00</span></div>
+    <div flex="15"><span>Order Charges</span></div>
+    <div flex="15"><span>Order Line</span></div>
+    <div flex="20"><span>Order Line</span></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

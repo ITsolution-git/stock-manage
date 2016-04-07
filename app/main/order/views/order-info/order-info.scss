@@ -1,4 +1,7 @@
 .trans-box {
+    md-input-container{
+        margin: 0
+    }
     padding: 13px;
     width: 25%;
     > div {
@@ -22,7 +25,10 @@
 .layout-row.md-default-theme {
     margin: 0;
 }
-
+.f-52 {
+    font-size: 39px !important; 
+}
+.m-r-0{margin-right: 0 !important}
     
 }
 .order-info-page {
@@ -33,14 +39,14 @@
         display: none
     }
     .bottom{
-        display: none;
+        .left{display: none;}
+        .right{display: none;}
+        
     }
     .top{
         display: none;
     }
-    td{
-        padding: 0 24px !important;
-    }
+   
 }
 button.dark-bg {
     background: #999;
@@ -50,19 +56,48 @@ button.dark-bg {
     }
 }
 .content.order-info-page {
-    margin: 10px;
-}
-.page-2{
-    td{
-        padding: 16px 24px !important;
+     margin: 10px;
+     td{
+        padding: 0 24px !important;
     }
-    md-card{
+   
+}
+.margin{margin: 10px}
+
+
+  
+
+
+.m-l-20{margin-left:  20px !important;
+        md-card{
         margin: 0 8px;
-    }
-}
-.card-box {
+        .card-box {
     padding: 10px 0;
 }
-.page-2 {
-    margin: 21px 12px!important;
+        
+    }
+ 
+       
 }
+  .m-l-20 md-card-title {
+    background: #eeeeee none repeat scroll 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+     padding: 10px 6px;
+}
+.text-left {
+    text-align: left !important;
+}
+.m-r-15{margin-right: 15px !important}
+.m-b-20{margin-bottom: 20px !important}
+.h2.semibold.f-52 {
+    font-size: 39px;
+}
+.m-l-20 md-card {
+    margin: 0;
+}
+.right-m-0{
+    margin-right: 0!important
+}
+.footer{background: #fff}
