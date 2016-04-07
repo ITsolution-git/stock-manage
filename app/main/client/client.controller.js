@@ -3,8 +3,8 @@
 
     angular
             .module('app.client')
-            .controller('ClientController', ClientController)
-            .controller('AngularWayCtrl', AngularWayCtrl);
+            .controller('ClientController', ClientController);
+            //.controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
     function ClientController(ClientData, $mdDialog, $document) {
