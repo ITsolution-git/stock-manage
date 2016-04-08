@@ -1,0 +1,79 @@
+<md-dialog class="task-dialog designadd-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">{{vm.title}}</span>
+                <md-button  ng-click="vm.closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                <md-input-container class="md-block first-box" flex-gt-sm>
+                    <input placeholder="Design Name" flex="80" ng-model="vm.addDesign.compnayName">
+                </md-input-container>
+                <div class="content-heading">
+                    <span class="md-title">Colors</span>
+                </div>
+                <div layout="row" layout-wrap layout-align="space-between center">
+                    <div flex="30">  
+                        <md-input-container md-no-float class="md-block b-m-0">
+                            <input  placeholder="Front" ng-model="vm.addDesign.front">
+                        </md-input-container>
+                    </div>
+                    <div flex="30">
+                        <md-input-container md-no-float class="md-block b-m-0">
+                            <input placeholder="Side Right" ng-model="vm.addDesign.sideRight">
+                        </md-input-container>
+                    </div>
+                    <div flex="30">
+                        <md-input-container md-no-float class="md-block b-m-0">
+                            <input placeholder="Top" ng-model="vm.addDesign.top" >
+                        </md-input-container>
+                    </div>
+                    <div flex="30">
+                        <md-input-container md-no-float class="md-block b-m-0">
+                            <input placeholder="Back" ng-model="vm.addDesign.back">
+                        </md-input-container>
+                    </div>
+                    <div flex="30">
+                        <md-input-container md-no-float class="md-block b-m-0">
+                            <input placeholder="Side Left" ng-model="vm.addDesign.sideLeft" >
+                        </md-input-container>
+                    </div>
+                    <div flex="30">
+                        <md-input-container md-no-float class="md-block b-m-0">
+                            <input placeholder="Bottom" ng-model="vm.addDesign.bottom" >
+                        </md-input-container>
+                    </div>
+                </div>
+                <div class="content-heading">
+                    <span class="md-title">Dates</span>
+                </div>
+                <div>
+                    <span class="grey-color">
+                        In Hans By
+                    </span>
+                </div>
+                <md-datepicker flex="80" class="widthfull" ng-model="vm.createDate" md-placeholder="Date"></md-datepicker>
+                <div>
+                    <span class="grey-color">
+                        Shipped Date
+                    </span>
+                </div>
+                <md-datepicker flex="80" class="widthfull" ng-model="vm.createDate" md-placeholder="Date"></md-datepicker>
+                <div>
+                    <span class="grey-color">
+                        Start Date
+                    </span>
+                </div>
+                <md-datepicker flex="80" class="widthfull" ng-model="vm.createDate" md-placeholder="Date"></md-datepicker>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised ">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

@@ -1,0 +1,52 @@
+<md-dialog class="task-dialog designadd-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Add Custom Product</span>
+                <md-button  ng-click="vm.closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                <md-input-container class="md-block mp-b-0" flex-gt-sm>
+                    <label class="font-14"></label>
+                    <input placeholder="Product Name" ng-model="vm.addProduct.productName">
+                </md-input-container>
+                <div layout="row">
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">S</label>
+                        <input placeholder="" ng-model="vm.addProduct.s">
+                    </md-input-container>
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">M</label>
+                        <input placeholder="" ng-model="vm.addProduct.m" >
+                    </md-input-container>
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">L</label>
+                        <input placeholder="" ng-model="vm.addProduct.l">
+                    </md-input-container>
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">XL</label>
+                        <input placeholder="" ng-model="vm.addProduct.xl">
+                    </md-input-container>                    
+                </div>
+                <md-input-container class="md-block mp-b-0">
+                    <label>Notes</label>
+                    <textarea ng-model="vm.addProduct.notes" md-maxlength="150" rows="2" md-select-on-focus class="text-height"></textarea>
+                </md-input-container>
+                <md-checkbox  aria-label="Checkbox 1">
+                    These products are supplied garments
+                </md-checkbox>
+                <div class="" layout-padding>
+                    #PO
+                </div>                
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised ">ADD</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

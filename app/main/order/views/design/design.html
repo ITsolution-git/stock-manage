@@ -1,0 +1,425 @@
+<div class="main-design-page m-r-15 m-l-20 m-b-20">
+    <div class="header"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <h1 flex="4">Design Name </h1>
+        </div>
+        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+            <div class="info-order" flex="100">
+                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
+                <md-card layout="row">
+                    <md-card-content flex="80" layout="column">
+                        <div layout="row" layout-wrap>
+                            <div class="trans-box">
+                                <div>Front</div>
+                                <span>######</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Sales</div>
+                                <span>In Hand By</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Start Date</div>
+                                <span>Yes</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Back</div>
+                                <span>Nancy McPhee</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Shipped Date</div>
+                                <span>Joshi Goodman</span>
+                            </div>
+                        </div>
+                    </md-card-content>
+                    <div layout-align="end start"  flex="20" layout="row">
+                        <md-menu>
+                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Main Design Options
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </md-card>
+            </div>
+        </div>
+        <div class="design-positions md-whiteframe-1dp m-b-20" layout="column" layout-align="start" layout-padding>
+            <div class="title" ><span class="h2 text-semibold">Positions</span></div>
+            <div class="design-positions-box border-grey m-b-20" layout="column" layout-align="start">
+                <div class="box-toolbar" layout="row" layout-align="end center">
+                    <button  ng-click="position1.expanded = !position1.expanded">
+                        <md-icon ng-if="position1.expanded" md-font-icon="icon-plus"></md-icon>
+                        <md-icon ng-if="!position1.expanded" md-font-icon="icon-minus"></md-icon>
+                    </button>
+                    <md-menu>
+                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                        </md-button>
+                        <md-menu-content width="4">
+                            <md-menu-item>
+                                <md-button>
+                                    Main Design Options
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </div>
+                <div ng-if="!position1.expanded" class="box-content" layout="column" layout-padding>
+                    <div layout="row" class="postion-details" layout-align="space between">
+                        <div flex="20">
+                            <md-input-container class="width100">
+                                <label>Front</label>
+                                <md-select ng-model="vm.positionSelect.front.id" >
+                                    <md-option  ng-repeat="options in vm.positionOptions" value="{{options.abbrev}}">
+                                        {{options.abbrev}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex="20">
+                            <md-input-container class="width100">
+                                <label>Placement Type</label>
+                                <md-select ng-model="vm.positionSelect.placement.id" >
+                                    <md-option  ng-repeat="options in vm.positionOptions" value="{{options.abbrev}}">
+                                        {{options.abbrev}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex="20">
+                            <md-input-container class="width100">
+                                <label>DtG Size</label>
+                                <md-select ng-model="vm.positionSelect.dtgSize.id" >
+                                    <md-option  ng-repeat="options in vm.positionOptions" value="{{options.abbrev}}">
+                                        {{options.abbrev}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div flex="20">
+                            <md-input-container class="width100">
+                                <label>DtG on </label>
+                                <md-select ng-model="vm.positionSelect.dtgOn.id" >
+                                    <md-option  ng-repeat="options in vm.positionOptions" value="{{options.abbrev}}">
+                                        {{options.abbrev}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="space-between">
+                        <div layout="column" flex="20" layout-align="space between">
+                            <div >
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Description</label>
+                                    <input ng-model="vm.positionInput.description">
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>Notes</label>
+                                    <textarea ng-model="vm.positionInput.notes" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div layout="row" flex="73" layout-align="spacebetween start" layout-wrap>
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Stitch/Color Count</label>
+                                    <input ng-model="vm.positionInput.colorCount">
+                                </md-input-container>
+                            </div>
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Foil</label>
+                                    <input ng-model="vm.positionInput.foil">
+                                </md-input-container>
+                            </div>
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Numer On Dark</label>
+                                    <input ng-model="vm.positionInput.numdesk">
+                                </md-input-container>
+                            </div>
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Oversize Screen(s)</label>
+                                    <input ng-model="vm.positionInput.oversizeSecrren">
+                                </md-input-container>
+                            </div> 
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Qnty</label>
+                                    <input ng-model="vm.positionInput.qunty">
+                                </md-input-container>
+                            </div> 
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Ink Change</label>
+                                    <input ng-model="vm.positionInput.linkChange">
+                                </md-input-container>
+                            </div> 
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Number on Light</label>
+                                    <input ng-model="vm.positionInput.Numlight">
+                                </md-input-container>
+                            </div> 
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Press Setup</label>
+                                    <input ng-model="vm.positionInput.pressSetup">
+                                </md-input-container>
+                            </div> 
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Discharge</label>
+                                    <input ng-model="vm.positionInput.discharge">
+                                </md-input-container>
+                            </div>
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Speciality</label>
+                                    <input ng-model="vm.positionInput.speciality">
+                                </md-input-container>
+                            </div>
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Oversize</label>
+                                    <input ng-model="vm.positionInput.oversize">
+                                </md-input-container>
+                            </div>
+                            <div flex="25" class="pad-r">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Screen Fee</label>
+                                    <input ng-model="vm.positionInput.screenFree">
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div layout="column">
+                        <div class=""><h3>Upload Artwork</h3></div>
+                        <div layout="row" layout-align="space between" layout-wrap>
+                            <div flex="24" class="border-grey dot div-height" layout-padding layout="column" layout-align="center stretch">
+
+                                <div class="text-center"><md-icon md-font-icon="icon-plus" class="fontsize"></md-icon></div>
+                            </div>
+                            <div flex="24" class="border-grey div-height" layout-padding>
+                                <div class="text-right pad0"><md-icon md-font-icon="icon-close"></md-icon></div>
+                            </div>
+                            <div flex="24" class="border-grey div-height" layout-padding>
+                                <div class="text-right pad0"><md-icon md-font-icon="icon-close"></md-icon></div>
+                            </div>
+                            <div flex="24" class="border-grey div-height" layout-padding>
+                                <div class="text-right pad0"><md-icon md-font-icon="icon-close"></md-icon></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="design-positions-box border-grey " layout="column" layout-align="start">
+                <div class="box-toolbar" layout="row" >
+                    <div flex="20" layout="row" layout-align="start center">
+                        <span class="h2 text-semibold">Back</span>
+                    </div>
+                    <div flex="80" layout-align="end center" layout="row">
+                        <button  ng-click="position2.expanded = !position2.expanded">
+                            <md-icon ng-if="!position2.expanded" md-font-icon="icon-plus"></md-icon>
+                            <md-icon ng-if="position2.expanded" md-font-icon="icon-minus"></md-icon>
+                        </button>
+                        <md-menu>
+                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Main Design Options
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </div>
+                <div ng-if="position2.expanded" class="box-content" layout="column" layout-padding>
+                </div>
+            </div>
+            <div class="text-right">
+                <md-button  class="bg-grey md-raised" ng-click="vm.openaddDesignDialog($event)">
+                            ADD New Position
+                        </md-button>
+            </div>
+            <div class="design-positions-box">
+            </div>
+        </div>
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
+            <div class="title"><span class="h2 text-semibold">Positions</span></div>
+            <div class="design-positions-box " layout="column" layout-align="start">
+                <div class="design-search-section" layout-align="space-between-center" layout="row">
+                    <md-input-container class="md-block" flex="30">
+                        <label>Search</label>
+                        <input ng-model="vm.productSearch">
+                    </md-input-container>
+                    <div layout="row">
+                        <md-button class="md-accent md-raised ">Serach</md-button>
+                        <md-button  class="bg-grey md-raised" ng-click="vm.openAddProductDialog($event)">
+                            ADD A CUSTOM PRODUCT
+                        </md-button>
+                    </div>
+                </div>
+                <div class="design-browse-product p-b-20" layout="column">
+                    <div class="h4 p-b-10" >Browse Products</div>
+                    <div class="design-product-slider" layout="row" layout-align="space-between">
+                        <div layout="column" layout-align="center-center">
+                            <md-icon md-font-icon="icon-arrow-left"></md-icon>
+                        </div>
+                        <div ng-repeat="product in ::vm.productVendorLogo" class="md-whiteframe-1dp design-vendor-logo" layout="column" layout-align="center center" flex="10" >
+                            {{product.name}}
+                        </div>
+                        <div layout="column" layout-align="center-center">
+                            <md-icon md-font-icon="icon-arrow-right" ></md-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <md-divider></md-divider>
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
+            <div class="title"><span class="h2 text-semibold">Added Products</span></div>
+            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start">
+                <div layout="row" layout-align="space-between center" class="margin-bootom15">
+                    <div layout="column" >
+                        <div class="h4">Product Name</div>
+                        <div class="h5  grey-color">American Apparel Crew Neck</div>
+                    </div>
+                    <div class="box-toolbar" layout="row" >
+                        <button  ng-click="product.expanded = !product.expanded">
+                            <md-icon ng-if="product.expanded" md-font-icon="icon-plus"></md-icon>
+                            <md-icon ng-if="!product.expanded" md-font-icon="icon-minus"></md-icon>
+                        </button>
+                        <md-menu>
+                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Position Options
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </div>
+                <div class="box-content" layout="column" >
+                    <div layout="row " layout-align="space-between" class="p-b-20">
+                        <div layout="row" layout-align="space-between start" flex="35">
+                            <div class="ad-product-img md-whiteframe-1dp">
+                                <div class="h5"></div>
+                            </div>  
+                            <div layout="column">
+                                <div class="h4">Vendor</div>
+                                <div class="h5 p-b-10  grey-color">American Apparel</div>
+                                <div class="h4">Item Number</div>
+                                <div class="h5  grey-color">######</div>
+                            </div>  
+                        </div>    
+                        <div layout="row" flex="55">
+                            <div layout="column" flex="100">
+                                <div class="h4 p-b-10">Size / Quantity</div>
+                                <div layout="row">
+                                    <div layout="column" flex="20">
+                                        <div class="h4 color font-19">S</div>
+                                        <div class="h4 text-semibold font-19">{{vm.size.s}}</div>
+                                    </div>
+                                    <div layout="column" flex="20">
+                                        <div class="h4 color font-19">M</div>
+                                        <div class="h4 text-semibold font-19">{{vm.size.m}}</div>
+                                    </div>
+                                    <div layout="column" flex="20">
+                                        <div class="h4 color font-19">L</div>
+                                        <div class="h4 text-semibold font-19">{{vm.size.l}}</div>
+                                    </div>
+                                    <div layout="column" flex="20">
+                                        <div class="h4 color font-19">XL</div>
+                                        <div class="h4 text-semibold font-19">{{vm.size.xl}}</div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                    <div ng-if="!product.expanded" layout="row" layout-align="space-between start" >
+                        <div layout="row" layout-align="space-between start" flex="35">
+                            <div layout="column">
+                                <div class="h4 p-b-10">Description</div>
+                                <p class="grey-color">Lorem spunm text that describe the product.</p>
+                                <p class="grey-color">Lorem spunm text that describe the product.</p>
+                                <p class="grey-color">Lorem spunm text that describe the product.</p>
+                            </div>   
+                                                    </div>
+                        <div layout="row" flex="65"  layout-align="space-between start" layout-padding>
+                            <div layout="column" flex="10">
+                                <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
+                            </div>
+                            <div layout="column" flex="38">
+                                <div layout="row" layout-align="space-between start" class="p-b-10">
+                                    <div class="h4">Average Garment Cost</div>
+                                    <div class="h5 grey-color font-14 ">{{vm.garmentCost.averageGarmentCost}}</div>
+                                </div>
+                                <div layout="row" layout-align="space-between start" class="p-b-10">
+                                    <div class="h4">Markup Default 70%</div>
+                                    <div class="h5 grey-color font-14">{{vm.garmentCost.markupDefault}}</div>
+                                </div>
+                                <div layout="row" layout-align="space-between start" class="">
+                                    <div class="h4">Average Garment Price</div>
+                                    <div class="h5 grey-color font-14">{{vm.garmentCost.averageGarmentPrice}}</div>
+                                </div>
+                                <div layout="row" layout-align="space-between start" class="">
+                                    <div class="h5">+</div>
+                                </div>
+                                <div layout="row" layout-align="space-between start" class="">
+                                    <div class="h4">Print Charges</div>
+                                    <div class="h5 grey-color font-14">{{vm.garmentCost.PrintCharges}}</div>
+                                </div>
+                                <div layout="row" layout-align="space-between start" class="">
+                                    <div class="h5">=</div>
+                                </div>
+                                <div layout="row" layout-align="space-between start" class="p-b-10">
+                                    <div class="h4">Total Line Charge</div>
+                                    <div class="h5 grey-color font-14">{{vm.garmentCost.totalLineCharge}}</div>
+                                </div>
+                            </div> 
+                            <div layout="column" flex="40">
+                                <div layout="column">
+                                    <div layout="row" layout-align="space-between start" class="p-b-10">
+                                        <div class="h4">Markup %</div>
+                                        <div class="h5 grey-color font-14">{{vm.garmentCost.markup}}</div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between start" class="">
+                                        <div class="h4">Overide</div>
+                                        <div class="h5 grey-color font-14">{{vm.garmentCost.overide}}</div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between start" class="">
+
+                                        <div class="h5">---</div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between start" class="p-b-10">
+                                        <div class="h4">Per Item</div>
+                                        <div class="h5 grey-color font-14">{{vm.garmentCost.overide}}</div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between start" class="p-b-10">
+                                        <div class="h4">Sale Total</div>
+                                        <div class="h5 grey-color font-14">{{vm.garmentCost.saleTotal}}</div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
