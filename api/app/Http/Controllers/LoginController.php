@@ -110,7 +110,11 @@ class LoginController extends Controller {
                     Session::put('user_id', $result[0]->id);
                     $loginid = $this->login->loginRecord($result[0]->id);
                     Session::put('login_id', $loginid);
-                    Session::put('company_id',  $company[0]->company_id);
+                    if(count($company)>0)
+                    {
+                        Session::put('company_id',  $company[0]->company_id);
+                        $session['company_id'] = $company[0]->company_id;
+                    }
                     $session = array();
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
@@ -121,7 +125,7 @@ class LoginController extends Controller {
                     $session['login_id'] = $loginid;
                     $session['user_id'] = $result[0]->id;
                     $session['token'] = $token;
-                    $session['company_id'] = $company[0]->company_id;
+                    
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
                 }

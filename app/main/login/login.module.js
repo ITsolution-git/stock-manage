@@ -23,7 +23,16 @@
                 }
             },
             bodyClass: 'login'
-        });
+        })
+        .state('app.logout', {
+                url  : '/logout',
+                views: {
+                    'content@app': {
+                        controller : 'LogoutController as vm'
+                    }
+                }
+            });
+        ;
 
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/login');

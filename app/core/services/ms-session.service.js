@@ -29,18 +29,26 @@
 		}
 
 		function destroy() {
-			var logout = $resource($state.ENV.apiEndpoint + 'auth/logout', null, 
+			var logout = $resource('api/public/auth/logout', null, 
 				{
 					post : {
-						method : 'post'
+						method : 'get'
 					}
 				});
 			logout.post(null, function(response) {
-				notifyService.notify('success',response.message);				
-				sessionStorage.removeItem('uid');
-				$state.go('app.pages_login');
+				notifyService.notify('success',response.data.message);				
+				remove('useremail');
+                remove('role_slug');
+                remove('login_id');
+                remove('name');
+                remove('user_id');
+                remove('role_title');
+                remove('username');
+                remove('password');
+                remove('company_id');
+                $state.go('app.login');
 			},function(response) {
-
+				notifyService.notify('error',response.data.message);
 			});
 		}	
 

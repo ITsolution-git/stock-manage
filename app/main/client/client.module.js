@@ -28,7 +28,7 @@
                     {
                        var price_list_data = {};
                       // console.log(sessionService.get('user_id'));
-                       price_list_data.cond ={company_id :sessionService.get('user_id')};
+                       price_list_data.cond ={company_id :sessionService.get('company_id')};
 
                        return msApi.resolve('client@post',price_list_data);
                     }

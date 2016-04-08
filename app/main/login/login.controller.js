@@ -4,7 +4,8 @@
 
     angular
         .module('app.login')
-        .controller('LoginController', LoginController);
+        .controller('LoginController', LoginController)
+        .controller('LogoutController', LogoutController);
 
     /** @ngInject */
     function LoginController(sessionService,$rootScope,$resource,notifyService,$state)
@@ -58,5 +59,10 @@
         // Methods
 
         //////////
+    }
+    function LogoutController(sessionService)
+    {
+        sessionService.destroy();
+        return false;
     }
 })();
