@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">{{vm.title}}</span>
-                <md-button  ng-click="vm.closeDialog()">
+                <md-button  ng-click="cancel()">
                     <span>Cancel</span>
                 </md-button>
             </div>
@@ -11,16 +11,21 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
                 <md-input-container class="md-block first-box" flex-gt-sm>
-                    <input placeholder="Company Name" ng-model="vm.addOrder.companyName">
+                <label>Company</label>
+                    <md-select ng-model="order.client_id">
+                        <md-option ng-repeat="data in allCompany" value="{{data.client_id}}">
+                            {{data.client_company}}
+                        </md-option>
+                    </md-select>
                 </md-input-container>
                 <md-input-container class="first-box">
-                    <input placeholder="Job Name" ng-model="vm.addOrder.jobName">
+                    <input placeholder="Job Name" ng-model="order.job_name">
                 </md-input-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-                    <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-                    <md-button class="md-accent md-raised ">Save</md-button>
+                    <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+                    <md-button class="md-accent md-raised " ng-click="save(order)">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
