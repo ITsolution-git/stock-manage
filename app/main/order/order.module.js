@@ -22,7 +22,11 @@
                 resolve: {
                     OrderData: function (msApi)
                     {
-                        return msApi.resolve('order@get');
+                       
+                         var order_list_data = {};
+                         order_list_data.cond ={company_id :'28'};
+
+                       return msApi.resolve('order@post',order_list_data);
                     }
                 }
             }).state('app.order.order-info', {
@@ -39,7 +43,8 @@
         $translatePartialLoaderProvider.addPart('app/main/order');
 
         // Api
-        msApiProvider.register('order', ['app/data/order/order.json']);
+      //  msApiProvider.register('order', ['app/data/order/order.json']);
+      msApiProvider.register('order',['api/public/order/listOrder',null, {post:{method:'post'}}]);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

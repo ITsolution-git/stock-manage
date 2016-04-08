@@ -3,15 +3,16 @@
 
     angular
             .module('app.order')
-            .controller('OrderController', OrderController);
+            .controller('OrderController', OrderController)
+            .controller('OrderDialogController', OrderDialogController);
 
 
     /** @ngInject */
-    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder) {
+    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource) {
         var vm = this;
 
         // Data
-        vm.orders = OrderData.data;
+        vm.orders = OrderData.data.records;
         //Datatable
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -55,7 +56,7 @@
 
         function openOrderDialog(ev, order)
         {
-            $mdDialog.show({
+            $mdDialog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .show({
                 controller: 'OrderDialogController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/order/dialogs/order/order-dialog.html',
@@ -91,6 +92,70 @@
             vm.tableInstance.search(query).draw();
         }
 
+        
+
     }
+
+
+    function OrderDialogController($scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state) {
+
+            var companyData = {};
+            companyData.cond ={company_id :'28',is_delete :'1',status :'1'};
+            companyData.table ='client';
+
+                $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
+        
+                        if(result.data.success == '1') 
+                        {
+                            $scope.allCompany =result.data.records;
+                        } 
+                        else
+                        {
+                            $scope.allCompany=[];
+                        }
+                });
+
+
+                 $scope.save = function (orderData) {
+ 
+          
+                   if(orderData == undefined) {
+
+                      var data = {"status": "error", "message": "Company and Job Name should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+                    } else if(orderData.job_name == undefined) {
+
+                      var data = {"status": "error", "message": "Job Name should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+                    } else if(orderData.client_id == undefined) {
+
+                      var data = {"status": "error", "message": "Company should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+                    }
+
+              var combine_array_id = {};
+             
+              combine_array_id.orderData = orderData;
+              combine_array_id.company_id = '28';
+              combine_array_id.login_id = '28';
+
+              $http.post('api/public/order/addOrder',combine_array_id).success(function(result) 
+                {
+                    $mdDialog.hide();
+                    $state.go('app.order.order-info',{id: result.data.id});
+                    return false;
+                    
+                });
+        };
+
+        $scope.cancel = function () {
+            $mdDialog.hide();
+        };
+    }
+
+    
 
 })();
