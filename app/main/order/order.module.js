@@ -37,6 +37,14 @@
                         controller : 'OrderInfoController as vm'
                     }
                 }
+            }).state('app.order.design', {
+                url  : '/design/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/design/design.html',
+                        controller : 'DesignController as vm'
+                    }
+                }
             });
 
         // Translation

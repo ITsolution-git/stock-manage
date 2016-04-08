@@ -1,7 +1,7 @@
 <div class="content order-list-page">
     <div class="simple-table-container md-whiteframe-4dp">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20>
+            <div class="table-title-text" flex=20 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
                 Orders
             </div>
             <div class="search-block" flex=40>
@@ -206,7 +206,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="order in ::vm.orders"  >
+                    <tr ng-repeat="order in ::vm.orders" class="cursor-p" >
                         <td ui-sref="app.order.order-info({id:order.orderid})">{{ order.id}}</td>
                         <td>{{ order.job_name}}</td>
                         <td>{{ order.client_company}}</td>
@@ -236,7 +236,7 @@
                                         <td>{{ order.desc.SKU}}</td>
                                         <td>{{ order.desc.ProductName}}</td>
                                         <td>{{ order.desc.ShipDate}}</td>
-                                        <td colspan="3">{{ order.desc.Status}} 
+                                        <td colspan="3" class="text-center font-small mdslider"><label class="slider">{{ order.desc.Status}} </label>
                                 <md-slider flex ng-model="order.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
                                 </md-slider>
                         </td>                        
