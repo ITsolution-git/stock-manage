@@ -42,6 +42,7 @@
                                    sessionService.set('role_title',result.data.records.role_title);
                                    sessionService.set('username',result.data.records.username);
                                    sessionService.set('password',result.data.records.password);
+                                   sessionService.set('company_id',result.data.records.company_id);
                                     var data = {"status": "success", "message": "Login Successful, Please wait..."}
                                     notifyService.notify(data.status, data.message);
                                     //window.location = '#/app/client';
