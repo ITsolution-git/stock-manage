@@ -1,0 +1,218 @@
+<div class="main-distribution-page m-r-15 m-l-20 m-b-20">
+    <div class="header"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
+
+            <h1 flex="4">Demo Job #1234 for Company </h1>
+
+        </div>
+        <div class="distribution-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+            <div class="info-disribution m-b-20" flex="100" >
+                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
+                <md-card layout="row">
+
+                    <md-card-content flex="90" layout="column">
+                        <div layout="row" layout-wrap>
+                            <div class="trans-box">
+                                <div>Customer PO</div>
+                                <span>{{vm.distInfo.customerPO}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Sales</div>
+                                <span>{{vm.distInfo.sales}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Blind</div>
+                                <span>{{vm.distInfo.blind}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Account Manager</div>
+                                <span>{{vm.distInfo.accountManager}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Main Contact</div>
+                                <span>{{vm.distInfo.mainContact}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Price Grid</div>
+                                <span>{{vm.distInfo.priceGrid}}</span>
+                            </div>
+                        </div>
+                    </md-card-content>
+                    <div layout-align="end start"  flex="10" layout="row">
+                        <md-menu>
+                            <md-button aria-label="Main Contact Options" class="md-icon-button"  ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Main Design Options
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </md-card>
+            </div>
+            <div layout="row" flex="100" class="m-b-20">
+                <div flex="70">
+                    <md-card class="m-b-20" >
+                        <md-card-title>
+                            <md-card-title-text class="text-left">
+                                Distributed
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content  layout="column" layout-padding>
+                            <div layout="row" layout-wrap layout-align="center center" flex="60" class="p-t-30">
+                                <div layout="row">
+                                    <div layout="column">
+                                        <span class="h2 semibold f-52">{{ vm.distributionDistributed.productshipped}}</span>
+                                        <span class="m-r-15">Product shipped</span>
+                                    </div>
+                                </div>
+                                <div layout="row">
+                                    <span class="h2 semibold f-52 mr-top m-r-15"> / </span>
+                                </div>
+                                <div layout="row">
+                                    <div layout="column">
+                                        <span class="h2 semibold f-52">{{ vm.distributionDistributed.Total}}</span>
+                                        <span class="m-l-20">Total</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-card-content>
+                        <md-divider ></md-divider>
+                        <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                            <a>&nbsp;</a>
+                        </div>
+                    </md-card>
+                </div>
+                <div flex="30">
+                    <md-card class="m-b-20 m-l-20" >
+                        <md-card-title>
+                            <md-card-title-text class="text-left">
+                                Number Of Locations
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content  layout="column" layout-padding>
+                            <div layout="row" layout-wrap layout-align="center center" flex="60">
+                                <span class="h2 semibold f-52">{{ vm.distributionLocation.location}}</span><br/>
+                            </div>
+                            <div class="text-center"> <span class="font-18">Location</span></div>
+                        </md-card-content>
+                        <md-divider ></md-divider>
+                        <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                            <a>Add New</a>
+                        </div>
+                    </md-card>
+                </div>
+            </div>
+            <md-content flex="100" class="trans">
+                <md-tabs md-dynamic-height md-border-bottom>
+                    <md-tab label="Products">
+                        <md-content class="trans m-t-20">
+                            <div class="simple-table-container md-whiteframe-4dp m-b-20">
+                                <div class="table-title " layout="row" layout-align="space-between center">
+                                    <div class="table-title-text h2 text-semibold " Flex="55" >
+                                        Products
+                                    </div>
+                                    <div flex="45">
+                                        <md-button  class="bg-grey bg-green right-m-0 " >
+                                            DISTRIBUTE EVENLY
+                                        </md-button>
+                                        <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" >
+                                            ADD NEW LOCATION
+                                        </md-button>
+                                    </div>
+                                </div>
+                                <div class="ms-responsive-table-wrapper table-disrtri">
+                                    <table class="dataTable row-border hover" datatable="ng"  dt-options="vm.dtOptions"  >
+                                        <thead>
+                                        <th>Product Name</th>
+                                        <th>Job Name</th>
+                                        <th>Job #</th>
+                                        <th>Total Allocated</th>
+                                        <th></th>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="distProduct in ::vm.distProducts" class="cursor-p">
+                                                <td>{{ distProduct.productName}}</td>
+                                                <td>{{ distProduct.jobName}}  
+                                                <td>{{ distProduct.job}}</td>
+                                                <td>{{ distProduct.totalAllocated}}</td>
+                                                <td class="text-right"> 
+                                        <md-button  class="bg-grey  dark-bg  right-m-0 " >
+                                            {{distProduct.buttn}}
+                                        </md-button>
+                                        </td>
+                                        </tr>
+                                      
+                                        </tbody> 
+                                    </table>
+                                    <div class="p-23 border-t-grey">
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Locations">
+                        <md-content class="trans m-t-20">
+                            <div class="simple-table-container md-whiteframe-4dp m-b-20">
+                                <div class="table-title " layout="row" layout-align="space-between center">
+                                    <div class="table-title-text h2 text-semibold " Flex="55" >
+                                        Products
+                                    </div>
+                                    <div flex="45">
+                                        <md-button  class="bg-grey bg-green right-m-0 " >
+                                            DISTRIBUTE EVENLY
+                                        </md-button>
+                                        <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" >
+                                            ADD NEW LOCATION
+                                        </md-button>
+                                    </div>
+                                </div>
+                                <div class="ms-responsive-table-wrapper table-disrtri">
+                                    <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions" >
+                                        <thead>
+                                        <th>Product Name</th>
+                                        <th>Job Name</th>
+                                        <th>Job #</th>
+                                        <th>Total Allocated</th>
+                                        <th></th>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="distlocation in ::vm.distlocations" class="cursor-p">
+                                                <td>{{ distlocation.loactionName}}</td>
+                                                <td>{{ distlocation.ATTN}}  
+                                                <td>{{ distlocation.Address}}</td>
+                                                <td>{{ distlocation.Phone}}</td>
+                                                <td class="text-right"> 
+                                        <md-button  class="bg-grey  dark-bg  right-m-0 blue-btn " >
+                                            DISTRIBUTE
+                                        </md-button>
+                                        </td>
+                                        </tr>
+                                       
+                                        </tbody> 
+                                    </table>
+                                    <div class="p-23 border-t-grey">
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+            <div layout-align="end center" layout="row" flex="100">
+                <md-button  class="bg-grey bg-green right-m-0 text-center line-hei " >
+                    VIEW ALLOCATED </br>PRODUCT
+                </md-button>
+            </div>
+        </div>
+        <md-dialog-actions layout="row" layout-align="end center">
+
+            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised ">Save</md-button>
+        </md-dialog-actions>
+    </div>
+</div>

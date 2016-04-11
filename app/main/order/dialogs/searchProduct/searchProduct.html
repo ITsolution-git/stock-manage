@@ -1,0 +1,156 @@
+<md-dialog class="task-dialog search-product-dialog" aria-label="New order" flex="80">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Add Product</span>
+                <md-button  ng-click="vm.closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                <div layout="row" layout-align="space-between start">
+                    <div class="h3">Filters</div>
+                    <md-input-container class="md-block m-0" md-no-float flex="30">
+
+                        <input ng-model="vm.filterDialog.search" placeholder="fl" >
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-align="space-between start">
+                    <div layout="column" flex="20">
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>PRODUCT CATEGORY</span>
+                                    <button ng-if="vm.toggle" ng-click="vm.toggle = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-if="vm.toggle" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::vm.filterDialog.productCategory" class="h6 f-body-options-item" >
+                                        {{product.category}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>COLOR</span>
+                                    <button ng-if="vm.color" ng-click="vm.color = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!vm.color" ng-click="vm.color = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+
+                            </div>
+                            <div ng-if="vm.color" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::vm.filterDialog.color" class="h6 f-body-options-item" >
+                                        {{product.colorName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>VENDOR</span>
+                                    <button ng-if="vm.vendor" ng-click="vm.vendor = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!vm.vendor" ng-click="vm.vendor = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-if="vm.vendor" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::vm.filterDialog.vendor" class="h6 f-body-options-item" >
+                                        {{product.vendorName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>FIT</span>
+                                    <button ng-if="vm.fit" ng-click="vm.fit = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!vm.fit" ng-click="vm.fit = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-if="vm.fit" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::vm.filterDialog.fit" class="h6 f-body-options-item" >
+                                        {{product.fitNo}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>FABRIC</span>
+                                    <button ng-if="vm.fabric" ng-click="vm.fabric = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!vm.fabric" ng-click="vm.fabric = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-if="vm.fabric" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::vm.filterDialog.fabric" class="h6 f-body-options-item" >
+                                        {{product.fabricName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>SIZES</span>
+                                    <button ng-if="vm.size" ng-click="vm.size = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!vm.size" ng-click="vm.size = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+
+                            </div>
+                            <div ng-if="vm.size" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::vm.filterDialog.sizes" class="h6 f-body-options-item" >
+                                        {{product.size}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start">
+                        <div  ng-repeat="product in ::vm.filterDialog.productsImages" class="filter-product-image-wrap" flex="20">
+                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="vm.openSearchProductViewDialog($event)" layout="row" layout-align="center center">
+                                {{product.productName}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog> 

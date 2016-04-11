@@ -1,0 +1,68 @@
+<md-dialog class="task-dialog search-product-view-dialog" aria-label="New order" flex="70">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Product Name</span>
+                <md-button  ng-click="vm.closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="row" layout-wrap="nowrap"  layout-padding layout-align="space-between start">
+                <div layout="column" flex="30">
+                    <div class="md-whiteframe-1dp filter-product-image " layout="row" layout-align="center center">
+                        {{vm.productViewDialog.productImage}}
+                    </div>
+                    <div class="h5 p-t-30">Colors</div>
+                    <div layout="row">
+                        <div ng-repeat="box in ::vm.productViewDialog.colors" class="product-color-box"></div>
+                    </div>
+                </div>
+                <div layout="column" flex="65" layout-padding>
+                    <div layout="row" layout-align="space-between start" class="p-b-20">
+                        <div layout="column" flex="45">
+                            <div class="h4">Vendor</div>
+                            <div class="h5 p-b-10  grey-color">{{vm.productViewDialog.vendor}}</div>
+                            <div class="h4">Item Number</div>
+                            <div class="h5  grey-color">{{vm.productViewDialog.itemNo}}</div>
+                        </div>    
+                        <div layout="column" flex="45">
+                            <div class="h4">Description</div>
+                            <div class="h5  grey-color p-b-10">{{vm.productViewDialog.description}}</div>
+                            <div class="h5  grey-color p-b-10">{{vm.productViewDialog.description}}</div>
+                            <div class="h5  grey-color">{{vm.productViewDialog.description}}</div>
+                        </div>    
+                    </div>
+                    <div layout="column">
+                        <div layout="row" layout-align="space-between center" flex="100">
+                            <div layout="colunm" flex="20">
+                                <div class="h4">Inventory Level</div>
+                            </div>
+                            <div ng-repeat="ISize in ::vm.productViewDialog.inventorySize" layout="column" flex="15">
+                                <div class="h4 color font-19">{{ISize.size}}</div>
+                                <div class="h4 text-semibold font-19">{{ISize.value}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" layout-align="space-between center" flex="100">
+                            <div layout="colunm" flex="20">
+                                <div class="h4">Select Qty</div>
+                            </div>
+                            <div ng-repeat="ISize in ::vm.productViewDialog.selectSize" layout="column" flex="15">
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>{{ISize.name}}</label>
+                                    <input ng-model="ISize.qty">
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised ">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

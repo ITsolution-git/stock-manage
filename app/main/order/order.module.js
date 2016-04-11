@@ -45,7 +45,24 @@
                         controller : 'DesignController as vm'
                     }
                 }
-            });
+            }).state('app.order.distribution', {
+                url  : '/distribution/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/distribution/distribution.html',
+                        controller : 'DistributionController as vm'
+                    }
+                }
+            }).state('app.order.distributionProduct', {
+                url  : '/distributionProduct/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/distributionProduct/distributionProduct.html',
+                        controller : 'DistributionProductController as vm'
+                    }
+                }
+            })
+            ;
 
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/order');

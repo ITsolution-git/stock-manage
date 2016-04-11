@@ -11,6 +11,15 @@
     {
         var vm = this;
         //Dummy models data
+        vm.designInforamtion={
+            front:"######",
+            sales:"In Hand By",
+            startDate:"Yes",
+            back:"Nancy McPhee",
+            shippedDate:"Joshi Goodman"
+            
+        };
+        
         vm.positionSelect = [{
                 front: {id: "type1"}
             },
@@ -93,6 +102,7 @@
         vm.dtInstanceCB = dtInstanceCB;
          vm.openAddProductDialog = openAddProductDialog;
           vm.openaddDesignDialog = openaddDesignDialog;
+          vm.openSearchProductDialog = openSearchProductDialog;
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
@@ -129,6 +139,18 @@
                     Orders: vm.orders,
                     event: ev
                 }
+            });
+        }
+          function openSearchProductDialog(ev)
+        {
+            $mdDialog.show({
+                controller: 'SearchProductController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/searchProduct/searchProduct.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+
             });
         }
 
