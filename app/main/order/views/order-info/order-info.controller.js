@@ -10,6 +10,7 @@
     function OrderInfoController($document, $window, $timeout, $mdDialog)
     {
         var vm = this;
+         vm.openaddDesignDialog = openaddDesignDialog;
         //Dummy models data
         vm.orderInformation = {
             "customerPo": "######",
@@ -104,6 +105,22 @@
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
+        }
+         function openaddDesignDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'AddDesignController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/addDesign/addDesign.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Order: order,
+                    Orders: vm.orders,
+                    event: ev
+    }
+            });
         }
     }
 })();
