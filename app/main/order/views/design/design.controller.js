@@ -12,11 +12,11 @@
         var vm = this;
         //Dummy models data
         vm.designInforamtion={
-            front:"######",
-            sales:"In Hand By",
-            startDate:"Yes",
-            back:"Nancy McPhee",
-            shippedDate:"Joshi Goodman"
+            front:"###",
+            sales:"xx/xx/xxxx",
+            startDate:"xx/xx/xxxx",
+            back:"##",
+            shippedDate:"xx/xx/xxxx"
             
         };
         

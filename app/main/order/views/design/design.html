@@ -1,7 +1,7 @@
 <div class="main-design-page m-r-15 m-l-20 m-b-20">
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <h1 flex="4">Design Name </h1>
+            <h1 flex="4">Design Name -</h1>
         </div>
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-order" flex="100">
@@ -14,7 +14,7 @@
                                 <span>{{vm.designInforamtion.front}}</span>
                             </div>
                             <div class="trans-box">
-                                <div>Sales</div>
+                                <div>In Hand By</div>
                                 <span>{{vm.designInforamtion.sales}}</span>
                             </div>
                             <div class="trans-box">
@@ -256,7 +256,7 @@
             </div>
         </div>
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
-            <div class="title"><span class="h2 text-semibold">Positions</span></div>
+            <div class="title"><span class="h2 text-semibold">Positions</span>&nbsp;<span class="font-10 grey-color">-select Vendor to add</span></div>
             <div class="design-positions-box " layout="column" layout-align="start">
                 <div class="design-search-section" layout-align="space-between-center" layout="row">
                     <md-input-container class="md-block" flex="30">
@@ -553,4 +553,8 @@
             </div>
         </div>
     </div>
+    <md-dialog-actions layout="row" layout-align="end center" class="m-b-20 m-t-20">
+            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised" ui-sref="app.order.distribution({id:distribution.distributionid})" >Next</md-button>
+        </md-dialog-actions>
 </div>

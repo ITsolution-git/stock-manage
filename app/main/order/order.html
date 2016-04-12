@@ -10,7 +10,9 @@
                     <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
                 </md-input-container>
             </div>
-            <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant"></md-icon>   
+            <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
+              Filter By
+            </md-tooltip></md-icon>   
             <!---------------------------------Filter Sidebar Start------------------------------------------------------>
             <div class="filter-menu" >
                 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
@@ -143,10 +145,10 @@
                                 <div class="f-body" ng-if="vm.datefilter">
                                     <div layout="column" >
                                         <label class="f-14">FROM</label>
-                                        <md-datepicker ng-model="vm.rangeFrom" md-placeholder="Date"></md-datepicker>
+                                        <md-datepicker ng-model="vm.rangeFrom" md-placeholder="Date" class="mar-left"></md-datepicker>
                                     </div>
                                     <label class="f-14">TO</label>
-                                    <md-datepicker ng-model="vm.rangeTo" md-placeholder="Date"></md-datepicker>
+                                    <md-datepicker ng-model="vm.rangeTo" md-placeholder="Date" class="mar-left"></md-datepicker>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +162,7 @@
             </div>
             <!----------Filter Sidebar End-------->
             <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
-                <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >ADD NEW ORDER</span>
+                <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >CREATE NEW ORDER</span>
             </div>
         </div>
         <div class="ms-responsive-table-wrapper">
