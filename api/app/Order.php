@@ -34,11 +34,12 @@ class Order extends Model {
      $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['cond']['company_id']];
        $listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_by','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
-                      'order.status','order.f_approval','client.client_company','misc_type.value as approval'];
+                      'order.status','order.f_approval','client.client_company','misc_type.value as approval','order.sales_id','staff.first_name','staff.last_name'];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('misc_type as misc_type','order.f_approval','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['cond']['company_id']))
+                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
                          ->select($listArray)
                          ->where($whereConditions);
 
