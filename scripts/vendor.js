@@ -53864,7 +53864,7 @@ function iosScrollFix(node) {
           '<div class="md-datepicker-input-container" ' +
               'ng-class="{\'md-datepicker-focused\': ctrl.isFocused}">' +
             '<input class="md-datepicker-input" aria-haspopup="true" ' +
-                'ng-focus="ctrl.setFocused(true)" ng-blur="ctrl.setFocused(false)">' +
+                'ng-focus="ctrl.setFocused(true)" ng-blur="ctrl.setFocused(false)" ng-click="ctrl.openCalendarPane($event)">' +
             '<md-button type="button" md-no-ink ' +
                 'class="md-datepicker-triangle-button md-icon-button" ' +
                 'ng-click="ctrl.openCalendarPane($event)" ' +
