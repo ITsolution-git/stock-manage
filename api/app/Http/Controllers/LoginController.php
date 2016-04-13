@@ -95,12 +95,14 @@ class LoginController extends Controller {
                 }
                 else
                 {
+                    $session = array();
                     $token = $this->login->getToken(10);
                     $token .= $token.time();
                     DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'date'=>date('Y-m-d H:i:s')]);
-                    $company = $this->common->CompanyService(Session::get("user_id"));
+                    
+                    $company = $this->common->CompanyService($result[0]->id);
 
-                   // echo "<pre>"; print_r($company); echo "</pre>"; die;
+                    //echo "<pre>"; print_r($company); echo "</pre>"; die;
                     Session::put('username',$result[0]->user_name);
                     Session::put('password', md5($password));
                     Session::put('useremail', $result[0]->email);
@@ -110,12 +112,8 @@ class LoginController extends Controller {
                     Session::put('user_id', $result[0]->id);
                     $loginid = $this->login->loginRecord($result[0]->id);
                     Session::put('login_id', $loginid);
-                    if(count($company)>0)
-                    {
-                        Session::put('company_id',  $company[0]->company_id);
-                        $session['company_id'] = $company[0]->company_id;
-                    }
-                    $session = array();
+                    Session::put('company_id',  $company[0]->company_id);
+                    
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
                     //$session['password'] = md5($password);
@@ -125,6 +123,7 @@ class LoginController extends Controller {
                     $session['login_id'] = $loginid;
                     $session['user_id'] = $result[0]->id;
                     $session['token'] = $token;
+                    $session['company_id'] = $company[0]->company_id;
                     
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
@@ -192,9 +191,9 @@ class LoginController extends Controller {
         {
             $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }*/
-             if (!empty(Session::get("useremail"))) {
-                $result = $this->common->CompanyService(Session::get("user_id"));
-            $response = array('success' => 1, 'message' => "session there","user_id"=>Session::get("user_id"),"email" => Session::get("useremail"),"role_session"=>Session::get("role_slug"),"company"=>$result[0],"token"=>$token);
+            if (!empty(Session::get("useremail"))) {
+                //$result = $this->common->CompanyService(Session::get("user_id"));
+            $response = array('success' => 1, 'message' => "session there","user_id"=>Session::get("user_id"),"email" => Session::get("useremail"),"role_session"=>Session::get("role_slug"),"company_id"=>Session::get("company_id"),"token"=>$token);
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }

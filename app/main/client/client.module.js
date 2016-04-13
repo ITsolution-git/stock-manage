@@ -27,7 +27,7 @@
                     ClientData: function (msApi,sessionService,$rootScope)
                     {
                        var price_list_data = {};
-                      // console.log(sessionService.get('user_id'));
+                        console.log(sessionService.get('company_id'));
                        price_list_data.cond ={company_id :sessionService.get('company_id')};
 
                        return msApi.resolve('client@post',price_list_data);
@@ -45,7 +45,7 @@
             });
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/client');
+        //$translatePartialLoaderProvider.addPart('app/main/client');
 
         // Api
         // msApiProvider.register('client', ['app/data/client/client.json']);
@@ -65,7 +65,7 @@
             /*stateParams: {
                 'param1': 'page'
              },*/
-            translate: 'CLIENT.CLIENT_NAV',
+            translate: 'Clients',
             weight   : 1
         });
     }

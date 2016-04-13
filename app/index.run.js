@@ -30,9 +30,9 @@
             {                    
                 if($next.name !== 'app.login' && $state.current.name !== 'app.login') 
                 {                                        
-                    //$state.go('app.login');
+                    $state.go('app.login');
                     notifyService.notify("error", "Please signin first.");
-                   // $stateChangeStart.preventDefault();
+                    $stateChangeStart.preventDefault();
                 }
             }
         });
@@ -48,7 +48,7 @@
                     sessionService.set('email',result.data.email);
                     sessionService.set('role_slug',result.data.role_session);
                     sessionService.set('user_id',result.data.user_id);
-                    sessionService.set('company_id',result.data.company.company_id);
+                    sessionService.set('company_id',result.data.company_id);
                     $rootScope.company_profile =  result.data.company;
                     var role = result.data.role_session;
                 }
