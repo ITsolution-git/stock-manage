@@ -8,11 +8,13 @@
 
 
     /** @ngInject */
-    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource) {
+    function OrderController(OrderData,OrderUserData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource) {
         var vm = this;
 
         // Data
         vm.orders = OrderData.data.records;
+        vm.salesCheck = OrderUserData.data.records;
+        vm.companyCheck = OrderCompanyData.data.records;
         //Datatable
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -36,7 +38,7 @@
             $mdSidenav('right').toggle();
         };
         //1. sales rep
-        vm.salesCheck = [{"v": true, "name": "Nick Santo"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Nick Santo"}, {"v": false, "name": "Nick Santo"}, ];
+      //  vm.salesCheck = [{"v": true, "name": "Nick Santo"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Nick Santo"}, {"v": false, "name": "Nick Santo"}, ];
         //2. ship date
         vm.shipDate;
         vm.shipdate = false;
@@ -44,7 +46,7 @@
         vm.createDate;
         vm.createdate = false;
         //4. company
-        vm.companyCheck = [{"v": false, "name": "Checkbox 1"}, {"v": true, "name": "Checkbox 2"}, {"v": false, "name": "Checkbox 3"}, {"v": false, "name": "Checkbox 4"}, {"v": false, "name": "Checkbox 5"}, {"v": false, "name": "Checkbox 6"}, {"v": false, "name": "Checkbox 7"}, ];
+      //  vm.companyCheck = [{"v": false, "name": "Checkbox 1"}, {"v": true, "name": "Checkbox 2"}, {"v": false, "name": "Checkbox 3"}, {"v": false, "name": "Checkbox 4"}, {"v": false, "name": "Checkbox 5"}, {"v": false, "name": "Checkbox 6"}, {"v": false, "name": "Checkbox 7"}, ];
         vm.companyfilter = false;
         //5. order id
         vm.searchOrder;
