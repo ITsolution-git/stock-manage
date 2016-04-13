@@ -116,10 +116,11 @@
     }
 
 
-    function OrderDialogController($scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state) {
+    function OrderDialogController($scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService) {
+
 
             var companyData = {};
-            companyData.cond ={company_id :'28',is_delete :'1',status :'1'};
+            companyData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
             companyData.table ='client';
 
                 $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
@@ -158,8 +159,8 @@
               var combine_array_id = {};
              
               combine_array_id.orderData = orderData;
-              combine_array_id.company_id = '28';
-              combine_array_id.login_id = '28';
+              combine_array_id.company_id = sessionService.get('company_id');
+              combine_array_id.login_id = sessionService.get('user_id');
 
               $http.post('api/public/order/addOrder',combine_array_id).success(function(result) 
                 {
