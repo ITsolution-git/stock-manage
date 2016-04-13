@@ -25,6 +25,7 @@
             'app.client',
             
             //Order
-            'app.order'
+            'app.order',
+            'ngTasty'
         ]);
 })();

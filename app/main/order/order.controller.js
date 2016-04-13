@@ -8,11 +8,70 @@
 
 
     /** @ngInject */
-    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource) {
+    function OrderController(OrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http) {
         var vm = this;
 
         // Data
-        vm.orders = OrderData.data.records;
+       // vm.orders = OrderData.rows;
+
+        $scope.getResource = function (params, paramsObj) {
+            var res = params.split("/");
+            if(res.length == 2)
+            {
+                var page = res[0];
+                var range = res[1];
+                var sortBy = 'order.id';
+                var sortOrder = 'desc';
+            }
+            else
+            {
+                var sortBy = res[0];
+                var sortOrder = res[1];
+                var page = res[2];
+                var range = res[3];
+            }
+            var orderData = {};
+            orderData.cond ={company_id :'28',is_delete :'1',status :'1','sortBy' :sortBy, 'sortOrder' :sortOrder, 'page' :page, 'range' :range};
+
+              return $http.post('api/public/order/listOrder',orderData).success(function(response) {
+                return {
+                  'rows': response.rows,
+                  'header': [
+                            {
+                              "key": "id",
+                              "name": "Order ID"
+                            },
+                            {
+                              "key": "job_name",
+                              "name": "Job Name"
+                            },
+                            {
+                              "key": "client_company",
+                              "name": "SF Location"
+                            },
+                            {
+                              "key": "approval",
+                              "name": "SF Location"
+                            },
+                            {
+                              "key": "created_date",
+                              "name": "SF Location"
+                            },
+                            {
+                              "key": "seller",
+                              "name": "Sales Rep"
+                            },
+                            {
+                              "key": "shipping_by",
+                              "name": "Ship Date"
+                            }
+                          ],
+                  'pagination': response.pagination,
+                  'sortBy': response.sortBy,
+                  'sortOrder': response.sortOrder
+                }
+              });
+        }
         //Datatable
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.order', [])
+        .module('app.order', ['ngTasty'])
         .config(config);
 
     /** @ngInject */
@@ -26,7 +26,7 @@
                          var order_list_data = {};
                          order_list_data.cond ={company_id :'28'};
 
-                       return msApi.resolve('order@post',order_list_data);
+                       //return msApi.resolve('order@post',order_list_data);
                     }
                 }
             }).state('app.order.order-info', {
