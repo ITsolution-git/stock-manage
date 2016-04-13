@@ -78,8 +78,30 @@ class OrderController extends Controller {
     public function listOrder()
     {
         $post = Input::all();
+        $post['cond']['range'] = RECORDS_PER_PAGE;
+        $post['cond']['start'] = ($post['cond']['page'] - 1) * $post['cond']['range'];
+        $post['cond']['limit'] = $post['cond']['range'];
+        
         $result = $this->order->getOrderdata($post);
-        return $this->return_response($result);
+
+        $records = $result['allData'];
+        $pagination = array('count' => $post['cond']['range'],'page' => $post['cond']['page'],'pages' => 7,'size' => $result['count']);
+        $sort_by = $post['cond']['sortBy'];
+        $sort_order = $post['cond']['sortOrder'];
+
+        $header = array(
+                        0=>array('key' => 'order.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'order.job_name', 'name' => 'Job Name'),
+                        2=>array('key' => 'client.client_company', 'name' => 'Company'),
+                        3=>array('key' => 'order.f_approval', 'name' => 'Approval'),
+                        4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
+                        5=>array('key' => '', 'name' => 'Sales Rep'),
+                        6=>array('key' => 'order.shipping_by', 'name' => 'Ship Date')
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
+        
+        return $this->return_response($data);
     }
     /**
      * Delete Data
@@ -853,17 +875,19 @@ class OrderController extends Controller {
     * Get Array
     * @return json data
     */
-    public function return_response($result)
+    public function return_response($data)
     {
-        if (count($result) > 0) 
+        
+
+        if (count($data) > 0) 
         {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
+            $response = $data;
         } 
         else 
         {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
-        return  response()->json(["data" => $response]);
+        return  response()->json($response);
     }
 
     /** 

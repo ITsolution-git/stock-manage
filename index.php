@@ -15,7 +15,8 @@
       
         <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
               rel='stylesheet' type='text/css'>
-
+        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.css">
     </head>
 
     <!--[if lt IE 10]>
@@ -102,6 +103,7 @@
     <script src="app/core/services/ms-api.provider.js"></script>
     <script src="app/core/services/api-resolver.service.js"></script>
     <script src="app/core/services/ms-session.service.js"></script>
+    <script src="app/core/services/ng-tasty-tpls.min.js"></script>
     <script src="app/core/filters/tag.filter.js"></script>
     <script src="app/core/filters/basic.filter.js"></script>
     <script src="app/core/directives/highlight.directive.js"></script>
