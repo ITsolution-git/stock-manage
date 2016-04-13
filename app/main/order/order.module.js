@@ -69,7 +69,7 @@
             ;
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/order');
+       // $translatePartialLoaderProvider.addPart('app/main/order');
 
         // Api
       //  msApiProvider.register('order', ['app/data/order/order.json']);
