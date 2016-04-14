@@ -17,12 +17,41 @@
         vm.salesCheck = OrderUserData.data.records;
         vm.companyCheck = OrderCompanyData.data.records;
 
-        $scope.getResource = function (params, paramsObj) {
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'order.id',
+          'sortOrder': 'dsc'
+        };
+
+        $scope.reloadCallback = function () { console.log(123); };
+
+        $scope.filterBy = {
+          'name': ''
+        };
+
+        $scope.search = function () {
+          $scope.reloadCallback();
+        };
+
+        $scope.getResource = function (params, paramsObj, search) {
+            $scope.params = params;
+            $scope.paramsObj = paramsObj;
+            console.log($scope.params);
+            console.log($scope.paramsObj);
             var res = params.split("/");
             if(res.length == 2)
             {
                 var page = res[0];
                 var range = res[1];
+                var sortBy = 'order.id';
+                var sortOrder = 'desc';
+            }
+            else if(res.length == 3)
+            {
+                var page = res[0];
+                var range = res[1];
+                var search = res[2];
                 var sortBy = 'order.id';
                 var sortOrder = 'desc';
             }
@@ -33,19 +62,33 @@
                 var page = res[2];
                 var range = res[3];
             }
+
+            if(search == undefined)
+            {
+                search = '';
+            }
+
             var orderData = {};
-            orderData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1','sortBy' :sortBy, 'sortOrder' :sortOrder, 'page' :page, 'range' :range};
+            orderData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1','sortBy' :sortBy, 'sortOrder' :sortOrder, 'page' :page, 'range' :range, 'search' :search};
 
               return $http.post('api/public/order/listOrder',orderData).success(function(response) {
+                var header = response.header;
                 return {
                   'rows': response.rows,
-                  'header': response.header,
+                  'header': header,
                   'pagination': response.pagination,
                   'sortBy': response.sortBy,
                   'sortOrder': response.sortOrder
                 }
               });
         }
+        $scope.removeItem = function (item) {
+          $http.post('table-delete-row.json', {
+            'name': item.name
+          }).then(function (response) {
+            $scope.reloadCallback();
+          })
+        };
 
         //Datatable
         vm.dtOptions = {
@@ -138,9 +181,8 @@
                 }
             });
         }
-        function searchTable() {
-            var query = vm.searchQuery;
-            vm.tableInstance.search(query).draw();
+        function searchTable(query) {
+            $scope.reloadCallback();
         }
 
         

@@ -29,6 +29,7 @@ class OrderController extends Controller {
         $this->common = $common;
         $this->product = $product;
         $this->client = $client;
+        DB::enableQueryLog();
     }
 
 /** 
@@ -100,7 +101,6 @@ class OrderController extends Controller {
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
-        
         return $this->return_response($data);
     }
     /**
