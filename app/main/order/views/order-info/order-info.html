@@ -1,6 +1,7 @@
 <div class="order-info-page m-r-15 m-l-20 m-b-20">
-    <div class="header"  layout="column">
-        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
+    <div class="header "  layout="column">
+        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <a class="link-back">BACK TO ORDERS</a>
             <h1 flex="4" class="text-semibold">Demo Order  548 for Company: </h1>
             <md-input-container md-no-float class="md-block" flex="3">
                 <input placeholder="">
@@ -85,21 +86,47 @@
             <div class="ms-responsive-table-wrapper">
                 <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
                     <thead>
-                    <th>ID</th>
-                    <th>Design Name</th>
-                    <th>Total Qty</th>
-                    <th>Total # of Colors</th>
-                    <th>Status</th>
-                    <th></th>
+
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">ID</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Design Name</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Total Qty</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Total # of Colors</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Status</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="design in ::vm.designs" class="cursor-p">
                             <td>{{ design.id}}</td>
-                            <td>{{ design.designName}}  
+                            <td ui-sref="app.order.design" >{{ design.designName}}  
                             </td>
                             <td>{{ design.total}}</td>
                             <td>{{ design.totalcolor}}</td>
-                            <td class="text-center font-small mdslider"><label class="slider">{{ design.status}}</label>
+                            <td class="text-center font-small mdslider pad-0 "><label class="slider">{{ design.status}}</label>
                     <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color">
                     </md-slider>
                     </td> 
@@ -135,14 +162,37 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  >
                         <thead>
-                        <th>PO #</th>
-                        <th>PO Type</th>
-                        <th>Client Name</th>
-                        <th>Vendor/Affiliate</th>
-                        <th>Date Created</th>
-                        <th></th>
+                            <tr>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">PO #</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">PO Type</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Client Name</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Total # of Colors</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Date Created</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="puchase in ::vm.purchases" class="cursor-p">
@@ -157,7 +207,6 @@
                                     <a>VIEW PO</a>
                                 </td>
                             </tr>
-                            <tr></tr>
                         </tbody> 
                     </table>
                     <div class="p-23 border-t-grey">
@@ -171,13 +220,32 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  >
                         <thead>
-                        <th>RO #</th>
-                        <th>Client Name</th>
-                        <th>Vendor/Affiliate</th>
-                        <th>Date Created</th>
-                        <th></th>
+                            <tr>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">RO #</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Client Name</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Vendor/Affiliate</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Date Created</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="receive in ::vm.receives" class="cursor-p">
@@ -190,7 +258,6 @@
                                     <a>RECIEVE PO</a>
                                 </td>
                             </tr>
-                            <tr></tr>
                         </tbody> 
                     </table>
                     <div class="p-23 border-t-grey">
@@ -204,7 +271,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  >
                         <thead>
                         <th>Company</th>
                         <th>Total # of Units</th>
@@ -220,7 +287,6 @@
                                     <a>VIEW </a>
                                 </td>
                             </tr>
-                            <tr></tr>
                         </tbody> 
                     </table>
                     <div class="p-23 border-t-grey">
@@ -416,10 +482,9 @@
         </div>
     </div>
 </div>
-
 <div class="footer border-t-grey" layout-padding layout="row">
     <md-button  class="close-btn border-t-grey" >
-                    X
+       <md-icon md-font-icon="icon-close"></md-icon>
                 </md-button>
     <div flex="25">
         <span class="h4 text-semibold">Order Total</span>
