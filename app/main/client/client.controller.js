@@ -3,7 +3,9 @@
 
     angular
             .module('app.client')
-            .controller('ClientController', ClientController);
+            .controller('ClientController', ClientController)
+            .controller('ClientMainController', ClientMainController);
+            
             //.controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
@@ -65,6 +67,14 @@
         $resource('i18n/data.json').query().$promise.then(function (persons) {
             vmn.persons = persons;
         });
+    }
+    function ClientMainController($state)
+    {
+        //console.log($state.current.name);
+        if($state.current.name == 'app.client')
+        {
+            $state.go('app.client.list');
+        }
     }
 
 
