@@ -31,8 +31,19 @@
                         controller : 'LogoutController as vm'
                     }
                 }
+            })
+        .state('app.dashboard', {
+                url  : '/dashboard',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/login/dashboard.html',
+                        controller : 'DashboardController as vm'
+                    }
+                }
             });
         ;
+        
+
 
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/login');
@@ -44,11 +55,12 @@
             weight: 1
         });*/
 
-/*        msNavigationServiceProvider.saveItem('login', {
-            title : 'Login',
-            state : 'app.login',
+        msNavigationServiceProvider.saveItem('fuse.dashboard', {
+            title : 'Dashboard',
+            state : 'app.dashboard',
+            icon  : 'icon-bank',
             weight: 1
-        });*/
+        });
     }
 
 })();

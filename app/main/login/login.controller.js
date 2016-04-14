@@ -5,7 +5,8 @@
     angular
         .module('app.login')
         .controller('LoginController', LoginController)
-        .controller('LogoutController', LogoutController);
+        .controller('LogoutController', LogoutController)
+        .controller('DashboardController', DashboardController);
 
     /** @ngInject */
     function LoginController(sessionService,$rootScope,$resource,notifyService,$state)
@@ -44,6 +45,7 @@
                                    sessionService.set('username',result.data.records.username);
                                    sessionService.set('password',result.data.records.password);
                                    sessionService.set('company_id',result.data.records.company_id);
+                                   sessionService.set('company',result.data.records.company);
                                    var data = {"status": "success", "message": "Login Successful, Please wait..."}
                                    notifyService.notify(data.status, data.message);
                                    
@@ -51,7 +53,7 @@
                                     //$state.go('app.client');
                                     
                                    setTimeout(function(){ 
-                                        window.open('client', '_self'); }, 1000);
+                                        window.open('dashboard', '_self'); }, 1000);
                                    // 
                                     //window.location.reload();
                                     return false;
@@ -70,5 +72,11 @@
     {
         sessionService.destroy();
         return false;
+    }
+    function DashboardController(sessionService)
+    {
+        var vm = this;
+        //console.log(sessionService.get('company_name'));
+        vm.company_name = sessionService.get('company_name');
     }
 })();
