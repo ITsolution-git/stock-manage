@@ -36,8 +36,8 @@
                                 </div>
                                 <div ng-if="vm.toggle" class="f-body scrollable"  ms-scroll>
                                     <div layout="column" >
-                                        <md-checkbox ng-repeat="check in ::vm.salesCheck" ng-model="check.v" aria-label="check.name">
-                                            {{check.name}}
+                                        <md-checkbox ng-repeat="check in ::vm.salesCheck" ng-model="check.id" aria-label="check.name">
+                                            {{check.first_name}}&nbsp;{{check.last_name}}
                                         </md-checkbox>
                                     </div>
                                 </div>
@@ -95,8 +95,8 @@
                                 </div>
                                 <div class="f-body scrollable"  ms-scroll ng-if="vm.companyfilter">
                                     <div layout="column" >
-                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.v" aria-label="check.name">
-                                            {{check.name}}
+                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.client_id" aria-label="check.name">
+                                            {{check.client_company}}
                                         </md-checkbox>
 
                                     </div>
@@ -214,7 +214,7 @@
                         <td>{{ order.client_company}}</td>
                         <td>{{ order.approval}}</td>
                         <td>{{ order.created_date}}</td>
-                        <td>Hardik Deliwala</td>
+                        <td>{{ order.first_name}}&nbsp;{{order.last_name}}</td>
                         <td>{{ order.shipping_by}}</td>
                         <td class="accor details-control" >
                             <button class="dev-rdetail" ng-click="order.expanded = !order.expanded">

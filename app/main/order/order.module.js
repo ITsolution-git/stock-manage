@@ -27,6 +27,18 @@
                          order_list_data.cond ={company_id :'28'};
 
                        return msApi.resolve('order@post',order_list_data);
+                    },OrderUserData: function (msApi)
+                    {
+                       
+                       return msApi.resolve('orderUser@get');
+                    },OrderCompanyData: function (msApi)
+                    {
+                       
+                         var order_comp_data = {};
+                         order_comp_data.cond ={company_id :'28',is_delete :'1',status :'1'};
+                         order_comp_data.table ="client";
+
+                         return msApi.resolve('orderClient@post',order_comp_data);
                     }
                 }
             }).state('app.order.order-info', {
@@ -65,11 +77,15 @@
             ;
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/order');
+       // $translatePartialLoaderProvider.addPart('app/main/order');
 
         // Api
       //  msApiProvider.register('order', ['app/data/order/order.json']);
       msApiProvider.register('order',['api/public/order/listOrder',null, {post:{method:'post'}}]);
+      msApiProvider.register('orderUser',['api/public/common/getStaffList/:id',{id: '28'}, {get:{method:'get'}}]);
+      msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
+   //   msApiProvider.register('api/public/common/getStaffList/:id', {id: '28'});
+
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
