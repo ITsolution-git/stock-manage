@@ -9,7 +9,7 @@
 
     /** @ngInject */
 
-    function OrderController(OrderData,OrderUserData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http) {
+    function OrderController(OrderData,OrderUserData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
 
         // Data
@@ -34,7 +34,7 @@
                 var range = res[3];
             }
             var orderData = {};
-            orderData.cond ={company_id :'28',is_delete :'1',status :'1','sortBy' :sortBy, 'sortOrder' :sortOrder, 'page' :page, 'range' :range};
+            orderData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1','sortBy' :sortBy, 'sortOrder' :sortOrder, 'page' :page, 'range' :range};
 
               return $http.post('api/public/order/listOrder',orderData).success(function(response) {
                 return {
