@@ -113,6 +113,7 @@ class LoginController extends Controller {
                     $loginid = $this->login->loginRecord($result[0]->id);
                     Session::put('login_id', $loginid);
                     Session::put('company_id',  $company[0]->company_id);
+                    Session::put('company_name',  $company[0]->company_name);
                     
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
@@ -124,6 +125,7 @@ class LoginController extends Controller {
                     $session['user_id'] = $result[0]->id;
                     $session['token'] = $token;
                     $session['company_id'] = $company[0]->company_id;
+                    $session['company_name'] = $company[0]->company_name;
                     
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
@@ -193,7 +195,7 @@ class LoginController extends Controller {
         }*/
             if (!empty(Session::get("useremail"))) {
                 //$result = $this->common->CompanyService(Session::get("user_id"));
-            $response = array('success' => 1, 'message' => "session there","user_id"=>Session::get("user_id"),"email" => Session::get("useremail"),"role_session"=>Session::get("role_slug"),"company_id"=>Session::get("company_id"),"token"=>$token);
+            $response = array('success' => 1, 'message' => "session there","user_id"=>Session::get("user_id"),"company_name"=>Session::get('company_name'),"email" => Session::get("useremail"),"role_session"=>Session::get("role_slug"),"company_id"=>Session::get("company_id"),"token"=>$token);
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }

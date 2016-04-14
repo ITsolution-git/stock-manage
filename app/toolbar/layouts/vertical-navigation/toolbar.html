@@ -29,22 +29,25 @@
                                      class="icon status s16">
                             </md-icon>
                         </div>
-                        <span class="username" hide-xs>John Doe</span>
+                        <span class="username" hide-xs>{{vm.useremail}}</span>
                         <md-icon md-font-icon="icon-chevron-down"
                                  class="icon s16" hide-xs></md-icon>
                     </div>
                 </md-button>
 
-                <md-menu-content width="3">
+                <md-menu-content width="4">
                     <md-menu-item class="md-indent" ui-sref="app.pages_profile">
                         <md-icon md-font-icon="icon-cog" class="icon"></md-icon>
-                        <md-button>Settings</md-button>
+                        <md-button>Profile</md-button>
                     </md-menu-item>
                     <md-menu-divider></md-menu-divider>
-
+                    <md-menu-item class="md-indent">
+                        <md-icon md-font-icon="icon-account-alert" class="icon"></md-icon>
+                        <md-button>{{vm.role_title}}</md-button>
+                    </md-menu-item>
                     <md-menu-item class="md-indent">
                         <md-icon md-font-icon="icon-logout" class="icon"></md-icon>
-                        <md-button ui-sref="app.logout">Logout</md-button>
+                        <md-button ng-click="vm.logout()">Logout</md-button>
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>

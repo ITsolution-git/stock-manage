@@ -7,7 +7,7 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController($rootScope, $mdSidenav, $translate, $mdToast)
+    function ToolbarController($rootScope, $mdSidenav, $translate, $mdToast,sessionService)
     {
         var vm = this;
 
@@ -71,7 +71,10 @@
         vm.changeLanguage = changeLanguage;
         vm.setUserStatus = setUserStatus;
         vm.toggleHorizontalMobileMenu = toggleHorizontalMobileMenu;
-
+        vm.useremail= sessionService.get('name');
+        vm.role_title= sessionService.get('role_title');
+        vm.company = sessionService.set('company');
+        
         //////////
 
         init();
@@ -113,7 +116,8 @@
          */
         function logout()
         {
-            // Do logout here..
+            sessionService.destroy();
+            return false;
         }
 
         /**

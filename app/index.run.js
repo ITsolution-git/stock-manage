@@ -49,8 +49,8 @@
                     sessionService.set('role_slug',result.data.role_session);
                     sessionService.set('user_id',result.data.user_id);
                     sessionService.set('company_id',result.data.company_id);
-                    $rootScope.company_profile =  result.data.company;
-                    var role = result.data.role_session;
+                    sessionService.set('company_name',result.data.company_name);
+                    //console.log(sessionService.get('company_name'));
                 }
             });
         }
