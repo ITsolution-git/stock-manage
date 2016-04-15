@@ -37,8 +37,6 @@
         $scope.getResource = function (params, paramsObj, search) {
             $scope.params = params;
             $scope.paramsObj = paramsObj;
-            console.log($scope.params);
-            console.log($scope.paramsObj);
             var res = params.split("/");
             if(res.length == 2)
             {
@@ -61,6 +59,7 @@
                 var sortOrder = res[1];
                 var page = res[2];
                 var range = res[3];
+                var search = res[4];
             }
 
             if(search == undefined)
@@ -104,7 +103,7 @@
         vm.openOrderDialog = openOrderDialog;
         vm.openaddDesignDialog = openaddDesignDialog;
         vm.dtInstanceCB = dtInstanceCB;
-        vm.searchTable = searchTable;
+//        vm.searchTable = searchTable;
 
 
         // -> Filter menu
@@ -181,12 +180,6 @@
                 }
             });
         }
-        function searchTable(query) {
-            $scope.reloadCallback();
-        }
-
-        
-
     }
 
 

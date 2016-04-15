@@ -7,13 +7,13 @@
             <div class="search-block" flex=40>
                 <md-input-container class="md-block" flex-gt-sm>
                     <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                    <input ng-model="filterBy.name" ng-blur="search()" placeholder="Search by Job name or Company">
+                    <input ng-model="filterBy.name" placeholder="Search by Job name or Company">
                 </md-input-container>
             </div>
             <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
             </md-tooltip></md-icon>   
-            <!---------------------------------Filter Sidebar Start------------------------------------------------------>
+            <!--Filter Sidebar Start-->
             <div class="filter-menu" >
                 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
                     <md-toolbar class=" filter-title">
