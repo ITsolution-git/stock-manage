@@ -60,6 +60,7 @@
     
 <!-- inject:js -->
     <script src="app/main/order/order.module.js"></script>
+    <script src="app/main/order/views/spiltAffiliate/spiltAffiliate.controller.js"></script>
     <script src="app/main/order/views/order-info/order-info.controller.js"></script>
     <script src="app/main/order/views/distributionProduct/distributionProduct.controller.js"></script>
     <script src="app/main/order/views/distribution/distribution.controller.js"></script>
@@ -67,6 +68,8 @@
     <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
     <script src="app/main/order/dialogs/searchProductView/searchProductView.controller.js"></script>
     <script src="app/main/order/dialogs/searchProduct/searchProduct.controller.js"></script>
+    <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
+    <script src="app/main/order/dialogs/addSplitAffiliate/addSplitAffiliate.controller.js"></script>
     <script src="app/main/order/dialogs/addProduct/addProduct.controller.js"></script>
     <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
     <script src="app/main/client/client.module.js"></script>

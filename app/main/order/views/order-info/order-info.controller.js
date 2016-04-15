@@ -11,6 +11,7 @@
     {
         var vm = this;
          vm.openaddDesignDialog = openaddDesignDialog;
+          vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
         //Dummy models data
         vm.orderInformation = {
             "customerPo": "######",
@@ -112,6 +113,22 @@
                 controller: 'AddDesignController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/order/dialogs/addDesign/addDesign.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Order: order,
+                    Orders: vm.orders,
+                    event: ev
+    }
+            });
+        }
+        function openaddSplitAffiliateDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'AddSplitAffiliateController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/addSplitAffiliate/addSplitAffiliate.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
