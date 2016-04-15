@@ -8,13 +8,87 @@
 
 
     /** @ngInject */
-    function OrderController(OrderData,OrderUserData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource) {
+
+    function OrderController(OrderData,OrderUserData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
 
         // Data
-        vm.orders = OrderData.data.records;
+
         vm.salesCheck = OrderUserData.data.records;
         vm.companyCheck = OrderCompanyData.data.records;
+
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'order.id',
+          'sortOrder': 'dsc'
+        };
+
+        $scope.reloadCallback = function () { console.log(123); };
+
+        $scope.filterBy = {
+          'name': ''
+        };
+
+        $scope.search = function () {
+          $scope.reloadCallback();
+        };
+
+        $scope.getResource = function (params, paramsObj, search) {
+            $scope.params = params;
+            $scope.paramsObj = paramsObj;
+            var res = params.split("/");
+            if(res.length == 2)
+            {
+                var page = res[0];
+                var range = res[1];
+                var sortBy = 'order.id';
+                var sortOrder = 'desc';
+            }
+            else if(res.length == 3)
+            {
+                var page = res[0];
+                var range = res[1];
+                var search = res[2];
+                var sortBy = 'order.id';
+                var sortOrder = 'desc';
+            }
+            else
+            {
+                var sortBy = res[0];
+                var sortOrder = res[1];
+                var page = res[2];
+                var range = res[3];
+                var search = res[4];
+            }
+
+            if(search == undefined)
+            {
+                search = '';
+            }
+
+            var orderData = {};
+            orderData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1','sortBy' :sortBy, 'sortOrder' :sortOrder, 'page' :page, 'range' :range, 'search' :search};
+
+              return $http.post('api/public/order/listOrder',orderData).success(function(response) {
+                var header = response.header;
+                return {
+                  'rows': response.rows,
+                  'header': header,
+                  'pagination': response.pagination,
+                  'sortBy': response.sortBy,
+                  'sortOrder': response.sortOrder
+                }
+              });
+        }
+        $scope.removeItem = function (item) {
+          $http.post('table-delete-row.json', {
+            'name': item.name
+          }).then(function (response) {
+            $scope.reloadCallback();
+          })
+        };
+
         //Datatable
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -29,7 +103,7 @@
         vm.openOrderDialog = openOrderDialog;
         vm.openaddDesignDialog = openaddDesignDialog;
         vm.dtInstanceCB = dtInstanceCB;
-        vm.searchTable = searchTable;
+//        vm.searchTable = searchTable;
 
 
         // -> Filter menu
@@ -89,6 +163,23 @@
                 }
             });
         }
+        function openaddSplitAffiliateDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'AddSplitAffiliateController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/addSplitAffiliate/addSplitAffiliate.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Order: order,
+                    Orders: vm.orders,
+                    event: ev
+                }
+            });
+        }
+       
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
@@ -106,20 +197,14 @@
                 }
             });
         }
-        function searchTable() {
-            var query = vm.searchQuery;
-            vm.tableInstance.search(query).draw();
-        }
-
-        
-
     }
 
 
-    function OrderDialogController($scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state) {
+    function OrderDialogController($scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService) {
+
 
             var companyData = {};
-            companyData.cond ={company_id :'28',is_delete :'1',status :'1'};
+            companyData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
             companyData.table ='client';
 
                 $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
@@ -158,8 +243,8 @@
               var combine_array_id = {};
              
               combine_array_id.orderData = orderData;
-              combine_array_id.company_id = '28';
-              combine_array_id.login_id = '28';
+              combine_array_id.company_id = sessionService.get('company_id');
+              combine_array_id.login_id = sessionService.get('user_id');
 
               $http.post('api/public/order/addOrder',combine_array_id).success(function(result) 
                 {

@@ -7,13 +7,13 @@
             <div class="search-block" flex=40>
                 <md-input-container class="md-block" flex-gt-sm>
                     <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                    <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
+                    <input ng-model="filterBy.name" placeholder="Search by Job name or Company">
                 </md-input-container>
             </div>
             <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
             </md-tooltip></md-icon>   
-            <!---------------------------------Filter Sidebar Start------------------------------------------------------>
+            <!--Filter Sidebar Start-->
             <div class="filter-menu" >
                 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
                     <md-toolbar class=" filter-title">
@@ -166,90 +166,94 @@
             </div>
         </div>
         <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
-                <thead>
-                    <tr>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Order ID</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Order Name</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Company</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Approval</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Date Created</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Sales Rep</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Ship Date</span>
-                            </div>
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="order in ::vm.orders" class="cursor-p" >
-                        <td ui-sref="app.order.order-info({id:order.orderid})">{{ order.id}}</td>
-                        <td>{{ order.job_name}}</td>
-                        <td>{{ order.client_company}}</td>
-                        <td>{{ order.approval}}</td>
-                        <td>{{ order.created_date}}</td>
-                        <td>{{ order.first_name}}&nbsp;{{order.last_name}}</td>
-                        <td>{{ order.shipping_by}}</td>
-                        <td class="accor details-control" >
-                            <button class="dev-rdetail" ng-click="order.expanded = !order.expanded">
-                                <md-icon ng-if="!order.expanded" md-font-icon="icon-plus"></md-icon>
-                                <md-icon ng-if="order.expanded" md-font-icon="icon-minus"></md-icon>
-                            </button>
-                            <div class="dev-rdetail-data" style="display: none;">
-                                <table class="dataTable row-border hover" >
-                                <thead>
-                                <th>Design Name</th>
-                                <th>Postion Name</th>
-                                <th>SKU</th>
-                                <th>Product Name</th>
-                                <th>Ship Date</th>
-                                <th>Status</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>{{order.desc.DesignName}}</td>
-                                        <td>{{ order.desc.PostionName}}<md-tooltip md-direction="bottom">Front & Back</md-tooltip></td>
-                                        <td>{{ order.desc.SKU}}</td>
-                                        <td>{{ order.desc.ProductName}}</td>
-                                        <td>{{ order.desc.ShipDate}}</td>
-                                        <td colspan="3" class="text-center font-small mdslider"><label class="slider">{{ order.desc.Status}} </label>
-                                <md-slider flex ng-model="order.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
-                                </md-slider>
-                        </td>                        
-                    </tr>
-                </tbody>
-            </table>
-                            </div>
-                        </td>
-                    </tr>                    
-                </tbody>
-            </table>
+            <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
+                <table class="dataTable row-border hover">
+                    <!-- <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Order ID</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Order Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Company</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Approval</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Date Created</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Sales Rep</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Ship Date</span>
+                                </div>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead> -->
+                    <thead tasty-thead></thead>
+                    <tbody>
+                        <tr ng-repeat="row in rows" class="cursor-p" >
+                            <td ui-sref="app.order.order-info({id:row.orderid})">{{ row.id}}</td>
+                            <td>{{ row.job_name}}</td>
+                            <td>{{ row.client_company}}</td>
+                            <td>{{ row.approval}}</td>
+                            <td>{{ row.created_date}}</td>
+                            <td>Hardik Deliwala</td>
+                            <td>{{ row.shipping_by}}</td>
+                            <td class="accor details-control" >
+                                <button class="dev-rdetail" ng-click="row.expanded = !row.expanded">
+                                    <md-icon ng-if="!row.expanded" md-font-icon="icon-plus"></md-icon>
+                                    <md-icon ng-if="row.expanded" md-font-icon="icon-minus"></md-icon>
+                                </button>
+                                <div class="dev-rdetail-data" style="display: none;">
+                                    <table class="dataTable row-border hover" >
+                                        <thead>
+                                            <th>Design Name</th>
+                                            <th>Postion Name</th>
+                                            <th>SKU</th>
+                                            <th>Product Name</th>
+                                            <th>Ship Date</th>
+                                            <th>Status</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{row.desc.DesignName}}</td>
+                                                <td>{{ row.desc.PostionName}}<md-tooltip md-direction="bottom">Front & Back</md-tooltip></td>
+                                                <td>{{ row.desc.SKU}}</td>
+                                                <td>{{ row.desc.ProductName}}</td>
+                                                <td>{{ row.desc.ShipDate}}</td>
+                                                <td colspan="3" class="text-center font-small mdslider"><label class="slider">{{ row.desc.Status}} </label>
+                                                    <md-slider flex ng-model="row.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
+                                                    </md-slider>
+                                                </td>                        
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>                    
+                    </tbody>
+                </table>
+                <div tasty-pagination class="tasty-page"></div>
+            </div>
         </div>
     </div>
 </div>
