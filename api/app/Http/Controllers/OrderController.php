@@ -96,8 +96,9 @@ class OrderController extends Controller {
                         2=>array('key' => 'client.client_company', 'name' => 'Company'),
                         3=>array('key' => 'order.f_approval', 'name' => 'Approval'),
                         4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
-                        5=>array('key' => '', 'name' => 'Sales Rep'),
-                        6=>array('key' => 'order.shipping_by', 'name' => 'Ship Date')
+                        5=>array('key' => 'null', 'name' => 'Sales Rep', 'sortable' => false),
+                        6=>array('key' => 'order.shipping_by', 'name' => 'Ship Date'),
+                        7=>array('key' => 'null', 'name' => 'Opeations', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
