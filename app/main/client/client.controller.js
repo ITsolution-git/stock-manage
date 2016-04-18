@@ -9,11 +9,11 @@
             //.controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
-    function ClientController(ClientData, $mdDialog, $document) {
+    function ClientController(ClientData, $mdDialog, $document,sessionService,$resource) {
         var vm = this;
         // Data
-
-        vm.clients = ClientData.data.records;
+        //console.log(sessionService.get('company_id'));
+        
        // console.log(vm.clients);
          vm.dtOptions = {
             dom       : '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -29,7 +29,28 @@
         vm.openClientDialog = openClientDialog;
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
+        vm.getClientData = getClientData;
+
+         vm.getClientData();
         //////////
+        function getClientData()
+        {
+            var price_list_data = {};
+            price_list_data.cond ={company_id :sessionService.get('company_id')};
+
+            var checkSession = $resource('api/public/client/ListClient',price_list_data,{
+                post : {
+                       method : 'post'
+                       }
+            });
+            checkSession.post(price_list_data,function(result) 
+            {   
+                if(result.data.success=='1')
+                {   
+                    vm.clients = result.data.records;
+                }
+            });
+        }
         function openClientDialog(ev, client)
         {
             $mdDialog.show({

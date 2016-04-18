@@ -34,11 +34,11 @@
                     },
                     ClientData: function (msApi,sessionService,$rootScope)
                     {
-                       var price_list_data = {};
-                        //console.log(sessionService.get('company_id'));
-                       price_list_data.cond ={company_id :sessionService.get('company_id')};
+                      /* var price_list_data = {};
+                       console.log(sessionStorage.getItem('company_id'));
+                       price_list_data.cond ={company_id :sessionStorage.getItem('company_id')};
 
-                       return msApi.resolve('client@post',price_list_data);
+                       return msApi.resolve('client@post',price_list_data);*/
                     }
                 },
                 url    : '/list',
@@ -71,8 +71,8 @@
 
         // Api
         // msApiProvider.register('client', ['app/data/client/client.json']);
-        msApiProvider.register('client',['api/public/client/ListClient',null, {post:{method:'post'}}]);
-
+/*        msApiProvider.register('client',['api/public/client/ListClient',null, {post:{method:'post'}}]);
+*/
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',

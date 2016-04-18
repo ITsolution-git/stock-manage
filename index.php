@@ -59,23 +59,7 @@
     <script src="scripts/vendor.js"></script>
     
 <!-- inject:js -->
-    <script src="app/main/order/order.module.js"></script>
-    <script src="app/main/order/views/spiltAffiliate/spiltAffiliate.controller.js"></script>
-    <script src="app/main/order/views/order-info/order-info.controller.js"></script>
-    <script src="app/main/order/views/distributionProduct/distributionProduct.controller.js"></script>
-    <script src="app/main/order/views/distribution/distribution.controller.js"></script>
-    <script src="app/main/order/views/design/design.controller.js"></script>
-    <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
-    <script src="app/main/order/dialogs/searchProductView/searchProductView.controller.js"></script>
-    <script src="app/main/order/dialogs/searchProduct/searchProduct.controller.js"></script>
-    <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
-    <script src="app/main/order/dialogs/addSplitAffiliate/addSplitAffiliate.controller.js"></script>
-    <script src="app/main/order/dialogs/addProduct/addProduct.controller.js"></script>
-    <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
-    <script src="app/main/client/client.module.js"></script>
-    <script src="app/main/client/views/profile/profile-view.controller.js"></script>
-    <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
-    <script src="app/main/client/dialogs/client/client-dialog.controller.js"></script>
+
     <script src="app/quick-panel/quick-panel.module.js"></script>
     <script src="app/quick-panel/tabs/chat/chat-tab.controller.js"></script>
     <script src="app/core/core.module.js"></script>
@@ -94,8 +78,8 @@
     <script src="app/core/directives/ms-form-wizard/ms-form-wizard.directive.js"></script>
     <script src="app/core/directives/ms-datepicker-fix/ms-datepicker-fix.directive.js"></script>
     <script src="app/core/directives/ms-card/ms-card.directive.js"></script>
-    <script src="app/main/order/order.controller.js"></script>
-    <script src="app/main/client/client.controller.js"></script>
+
+
     <script src="app/core/theming/fuse-theming.provider.js"></script>
     <script src="app/core/theming/fuse-theming.config.js"></script>
     <script src="app/core/theming/fuse-themes.constant.js"></script>
@@ -111,8 +95,7 @@
     <script src="app/core/filters/basic.filter.js"></script>
     <script src="app/core/directives/highlight.directive.js"></script>
     <script src="app/core/config/fuse-config.provider.js"></script>
-    <script src="app/toolbar/toolbar.module.js"></script>
-    <script src="app/toolbar/toolbar.controller.js"></script>
+
     <script src="app/quick-panel/quick-panel.controller.js"></script>
     <script src="app/navigation/navigation.module.js"></script>
     <script src="app/navigation/navigation.controller.js"></script>
@@ -126,11 +109,38 @@
     <script src="app/index.constants.js"></script>
     <script src="app/index.config.js"></script>
     <script src="app/index.api.js"></script>
+    <script src="app/toolbar/toolbar.module.js"></script>
+    <script src="app/toolbar/toolbar.controller.js"></script>
 <!-- endinject -->
+
 <!-- LOGIN FILES START-->
     <script src="app/main/login/login.module.js"></script>
     <script src="app/main/login/login.controller.js"></script>
-<!-- LOGIN FILES END -->
-    
+
+<!-- ORDER FILES START -->
+    <script src="app/main/order/order.module.js"></script>
+    <script src="app/main/order/views/spiltAffiliate/spiltAffiliate.controller.js"></script>
+    <script src="app/main/order/views/order-info/order-info.controller.js"></script>
+    <script src="app/main/order/views/distributionProduct/distributionProduct.controller.js"></script>
+    <script src="app/main/order/views/distribution/distribution.controller.js"></script>
+    <script src="app/main/order/views/design/design.controller.js"></script>
+    <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
+    <script src="app/main/order/dialogs/searchProductView/searchProductView.controller.js"></script>
+    <script src="app/main/order/dialogs/searchProduct/searchProduct.controller.js"></script>
+    <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
+    <script src="app/main/order/dialogs/addSplitAffiliate/addSplitAffiliate.controller.js"></script>
+    <script src="app/main/order/dialogs/addProduct/addProduct.controller.js"></script>
+    <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
+    <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
+    <script src="app/main/order/order.controller.js"></script>
+
+<!-- CLIENT FILES START -->
+    <script src="app/main/client/client.module.js"></script>
+    <script src="app/main/client/views/profile/profile-view.controller.js"></script>
+    <script src="app/main/client/dialogs/client/client-dialog.controller.js"></script>
+    <script src="app/main/client/client.controller.js"></script>
+    <!--Purchase Order-->
+<script src="app/main/purchaseOrder/purchaseOrder.module.js"></script>
+<script src="app/main/purchaseOrder/purchaseOrder.controller.js"></script>
 </body>
 </html>

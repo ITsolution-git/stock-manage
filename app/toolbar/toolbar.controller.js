@@ -10,7 +10,11 @@
     function ToolbarController($rootScope, $mdSidenav, $translate, $mdToast,sessionService)
     {
         var vm = this;
-
+        //console.log(sessionService.get('name'));
+        vm.useremail= sessionService.get('name');
+        vm.role_title= sessionService.get('role_title');
+        vm.company = sessionService.set('company');
+        
         // Data
         $rootScope.global = {
             search: ''
@@ -71,10 +75,7 @@
         vm.changeLanguage = changeLanguage;
         vm.setUserStatus = setUserStatus;
         vm.toggleHorizontalMobileMenu = toggleHorizontalMobileMenu;
-        vm.useremail= sessionService.get('name');
-        vm.role_title= sessionService.get('role_title');
-        vm.company = sessionService.set('company');
-        
+
         //////////
 
         init();

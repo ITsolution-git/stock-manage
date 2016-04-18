@@ -26,6 +26,9 @@
             
             //Order
             'app.order',
+             //puchase order
+            'app.purchaseOrder',
+            
             'ngTasty'
         ]);
 })();

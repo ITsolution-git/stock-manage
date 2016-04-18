@@ -195,7 +195,17 @@ class LoginController extends Controller {
         }*/
             if (!empty(Session::get("useremail"))) {
                 //$result = $this->common->CompanyService(Session::get("user_id"));
-            $response = array('success' => 1, 'message' => "session there","user_id"=>Session::get("user_id"),"company_name"=>Session::get('company_name'),"email" => Session::get("useremail"),"role_session"=>Session::get("role_slug"),"company_id"=>Session::get("company_id"),"token"=>$token);
+            $response = array('success' => 1, 
+                              'message' => "session there",
+                              "user_id"=>Session::get("user_id"),
+                              'role_title'=>Session::get('role_title'),
+                              "name"=>Session::get("name"),
+                              "company_name"=>Session::get('company_name'),
+                              "email" => Session::get("useremail"),
+                              "role_session"=>Session::get("role_slug"),
+                              "company_id"=>Session::get("company_id"),
+                              "token"=>$token
+                              );
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
         }
