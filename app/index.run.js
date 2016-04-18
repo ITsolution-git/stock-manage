@@ -18,29 +18,19 @@
             }
         });
         
-        funCheckSession();
+        //funCheckSession();
        
         // Activate loading indicator
         var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function ($stateChangeStart, $next)
         {   
             $rootScope.loadingProgress = true;      
             funCheckSession();      
-            var userId = sessionService.get('user_id');            
-            if(userId === '' || userId === null) 
-            {                    
-                if($next.name !== 'app.login' && $state.current.name !== 'app.login') 
-                {                                        
-                    $state.go('app.login');
-                    notifyService.notify("error", "Please signin first.");
-                    $stateChangeStart.preventDefault();
-                }
-            }
+
         });
 
         // CHECK SESSION FUNCITON ON EACH CALL
         function funCheckSession() 
         {
-
             checkSession.post(null,function(result) 
             {   
                 if(result.data.success=='1')
@@ -50,7 +40,18 @@
                     sessionService.set('user_id',result.data.user_id);
                     sessionService.set('company_id',result.data.company_id);
                     sessionService.set('company_name',result.data.company_name);
-                    //console.log(sessionService.get('company_name'));
+                    sessionService.set('name',result.data.name);
+                   // console.log(sessionService.get('company_id'));
+                    var userId = result.data.user_id;            
+                    if(userId === '' || userId === null) 
+                    {                    
+                        if($state.current.name !== 'app.login') 
+                        {                                        
+                            //$state.go('app.login');
+                            notifyService.notify("error", "Please signin first.");
+                            $stateChangeStart.preventDefault();
+                        }
+                    }
                 }
             });
         }
