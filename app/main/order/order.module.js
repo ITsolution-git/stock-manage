@@ -79,6 +79,14 @@
                         controller : 'DistributionProductController as vm'
                     }
                 }
+            }).state('app.order.spiltAffiliate', {
+                url  : '/spiltAffiliate/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/spiltAffiliate/spiltAffiliate.html',
+                        controller : 'SpiltAffiliateController as vm'
+                    }
+                }
             })
             ;
 

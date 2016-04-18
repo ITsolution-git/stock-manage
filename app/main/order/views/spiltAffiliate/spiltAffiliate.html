@@ -1,0 +1,170 @@
+<div class="split-affliate m-r-15 m-l-20 m-b-20">
+    <div class="header "  layout="column">
+        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <a class="link-back cursor-p" ui-sref="app.order.order-info" >BACK TO ORDER INFO</a>
+            <h1 flex="4" class="font-500">Split Affiliate for Demo Job #1234 for Company:</h1>
+            <md-input-container md-no-float class="md-block" flex="3">
+                <input placeholder="">
+            </md-input-container>
+        </div>
+        
+            <div class="info-order m-b-20" flex="100">
+                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
+                <md-card layout="row">
+                    <md-card-content flex="95" layout="column">
+                        <div layout="row" layout-wrap>
+                            <div class="trans-box">
+                                <div>Customer PO</div>
+                                <span class=" font-14 chrome-weight">{{vm.spiltOrderInformation.customerPo}}</span>
+                            </div>
+                           <div class="trans-box">
+                        <div>Sales</div>
+                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.sales}}</span>
+                    </div>
+                    <div class="trans-box">
+                        <div>Blind</div>
+                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.blind}}</span>
+                    </div>
+                    <div class="trans-box">
+                        <div>Account Manager</div>
+                        <span class=" font-14 chrome-weight">{{vm.spiltOrderInformation.accountManger}}</span>
+                    </div>
+                    <div class="trans-box text-right">
+                        <div>Main Contact</div>
+                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.mainContact}}</span>
+                    </div>
+                    <div class="trans-box text-right">
+                        <div>Price Grid</div>
+                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.priceGrid}}</span>
+                    </div>
+                        </div>
+                    </md-card-content>
+                    <div layout-align="end start"  flex="5" layout="row">
+                        <md-menu>
+                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Main Contact Options
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </md-card>
+            </div> 
+        <div flex="100" class="m-b-20" >
+            <md-card >
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                        Assigned Products
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column" class="pad0 chrome-pad">
+                    <div layout="row" layout-wrap layout-align="center center" flex="60" class="p-t-17">
+                        <div layout="row">
+                            <div layout="column">
+                                <span class="h2 semibold font-56">{{ vm.spiltOrderInformation.assign}}</span>
+                                <span class="p-l-20 m-neg-14">Assigned</span>
+                            </div>
+                        </div>
+                        <div layout="row">
+                            <span class="h2 semibold font-56 m-neg-14 m-r-15 m-l-15"> / </span>
+                        </div>
+                        <div layout="row">
+                            <div layout="column">
+                                <span class="h2 semibold font-56">{{ vm.spiltOrderInformation.total}}</span>
+                                <span class="m-l-20 p-l-20 m-neg-14">Total</span>
+                            </div>
+                        </div>
+                    </div>
+                </md-card-content>
+                <md-divider ></md-divider>
+                <div layout="row" layout-wrap class="text-right pad-10-15" layout-align="end end" >
+                    <a>&nbsp;</a>
+                </div>
+            </md-card>
+        </div>
+        <div class="design-product spilit-affilate-sec1 md-whiteframe-1dp back-white" layout="column" layout-align="start" layout-padding>
+            <div layout="row">
+                <div class="title" flex="50"><span class="h2 text-semibold">Affiliates</span></div>
+                <div class="title text-right" flex="50"><md-button  class="right-m-0 bg-grey md-raised md-button md-ink-ripple md-default-theme font-weight" ng-click="vm.openaddSplitAffiliateDialog($event)">
+                        ADD AFFILIATE
+                    </md-button></div>
+            </div>
+            <div layout="column" layout-align="space-between" class="p-b-20 border-grey m-l-20 m-r-10 m-b-20">
+                <div layout="row" flex="100">
+                    <md-card-content flex="90" layout="column">
+                        <span class="font-14 m-l-20">Affiliates Name</span>
+                        <span class="font-14 grey-color m-l-20 chrome-weight">Name of Affiliate</span>
+                    </md-card-content>
+                    <div layout-align="end start"  flex="10" layout="row">
+                        <md-menu>
+                            <md-button aria-label="Main Contact Options" class="md-icon-button"  ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Main Design Options
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </div>
+                <div layout="row"  class="pad-30" layout-align="space-between start">
+                    <div layout="row" layout-align="space-between start" flex="30">
+                        <div class="ad-product-img md-whiteframe-1dp" layout-align="center center" layout="row">
+                            <div class="h5 grey-color font-14">Product Image</div>
+                        </div>  
+                    </div>    
+                    <div layout="column" flex="75">
+                        <div layout="row">
+                            <div layout="column" flex="60">
+                                <div class="h4">Design</div>
+                                <div class="h5 p-b-10  grey-color font-14 m-b-20 chrome-weight">{{vm.affilateProductSize.design}}</div>
+                                <div class="h4">Product</div>
+                                <div class="h5  grey-color font-14 m-b-20 chrome-weight">{{vm.affilateProductSize.product}}</div>
+                            </div> 
+                            <div layout="column" flex="100">
+                                <div class="h4 p-b-10">Size / Quantity</div>
+                                <div layout="row">
+                                    <div layout="column" flex="25">
+                                        <div class="h4 color font-14">S</div>
+                                        <div class="h4 font-14color-black">{{vm.affilateProductSize.s}}</div>
+                                    </div>
+                                    <div layout="column" flex="25">
+                                        <div class="h4 color font-14">M</div>
+                                        <div class="h4 font-14 color-black">{{vm.affilateProductSize.m}}</div>
+                                    </div>
+                                    <div layout="column" flex="25">
+                                        <div class="h4 color font-14">L</div>
+                                        <div class="h4 font-14color-black">{{vm.affilateProductSize.l}}</div>
+                                    </div>
+                                    <div layout="column" flex="25">
+                                        <div class="h4 color font-14">XL</div>
+                                        <div class="h4  font-14color-black">{{vm.affilateProductSize.xl}}</div>
+                                    </div>
+                                    <div layout="column" flex="10">
+                                        <div class="h4 color font-14">Total</div>
+                                        <div class="h4 font-14 color-black">{{vm.affilateProductSize.total}}</div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                        <div layout="row" layout-align="center center">
+                            <div flex="45">
+                                <div class="h4">Notes</div>
+                                <div class="h5  grey-color font-14 m-b-20 ">{{vm.affilateProductSize.notes}}</div>
+                            </div>
+                            <div class="text-right" flex="60"><a class="font-16 chrome-weight">VIEW</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

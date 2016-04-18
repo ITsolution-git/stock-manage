@@ -1,8 +1,8 @@
 <div class="order-info-page m-r-15 m-l-20 m-b-20">
     <div class="header "  layout="column">
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back">BACK TO ORDERS</a>
-            <h1 flex="4" class="text-semibold">Demo Order  548 for Company: </h1>
+            <a class="link-back cursor-p" ui-sref="app.order">BACK TO ORDERS</a>
+            <h1 flex="4" class="font-500">Demo Order  548 for Company: </h1>
             <md-input-container md-no-float class="md-block" flex="3">
                 <input placeholder="">
             </md-input-container>
@@ -15,27 +15,27 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Customer PO</div>
-                                <span>{{vm.orderInformation.customerPo}}</span>
+                                <span class="font-14 chrome-weight">{{vm.orderInformation.customerPo}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Sales</div>
-                                <span>{{vm.orderInformation.sales}}</span>
+                                <span class="font-14 chrome-weight">{{vm.orderInformation.sales}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Blind</div>
-                                <span>{{vm.orderInformation.blind}}</span>
+                                <span class="font-14 chrome-weight">{{vm.orderInformation.blind}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Account Manager</div>
-                                <span>{{vm.orderInformation.accountManger}}</span>
+                                <span class="font-14 chrome-weight">{{vm.orderInformation.accountManger}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Main Contact</div>
-                                <span>{{vm.orderInformation.mainContact}}</span>
+                                <span class="font-14 chrome-weight">{{vm.orderInformation.mainContact}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Price Grid</div>
-                                <span>{{vm.orderInformation.priceGrid}}</span>
+                                <span class="font-14 chrome-weight">{{vm.orderInformation.priceGrid}}</span>
                             </div>
                         </div>
                     </md-card-content>
@@ -65,7 +65,7 @@
                 <md-button  class="bg-grey right-m-0 " >
                     PRINT
                 </md-button>
-                <md-button  class="bg-grey right-m-0" >
+                <md-button ui-sref="app.order.spiltAffiliate" class="bg-grey right-m-0 color-white" >
                     ASSIGN/SPLIT AFFILIATE
                 </md-button>
             </div>
@@ -204,7 +204,7 @@
                                 <td>{{ puchase.dateCreated}}
                                 </td> 
                                 <td class="text-right"> 
-                                    <a>VIEW PO</a>
+                                    <a  href="#">VIEW PO</a>
                                 </td>
                             </tr>
                         </tbody> 

@@ -1,0 +1,186 @@
+md-dialog {
+
+    &.task-dialog {
+        max-width: 520px;
+        width: 720px;
+
+        md-dialog-content {
+            display: block;
+            position: relative;
+
+            md-input-container label:not(.md-no-float):not(.md-container-ignore){
+                padding-left: 11px;
+            }
+
+        }
+
+        md-toolbar {
+
+            .title {
+                font-size: 17px;
+            }
+        }
+
+        md-input-container {
+
+            textarea {
+                min-height: 150px;
+            }
+
+            label {
+                color: rgba(0,0,0,0.60);
+            }
+        }
+
+        .date-container {
+            padding: 16px 0 24px 0;
+        }
+
+        .notes {
+
+            > label {
+                color: rgba(0, 0, 0, 0.54);
+            }
+
+            .mce-tinymce {
+                margin-top: 8px;
+            }
+        }
+
+        .tags {
+            margin: 8px 0;
+
+            label {
+                font-size: 11px;
+                color: rgba(0, 0, 0, 0.54);
+            }
+
+            .md-chips {
+                font-size: 13px;
+
+                .md-chip {
+
+                    md-chip-template {
+
+                        .color {
+                            display: inline-block;
+                            position: relative;
+                            width: 8px;
+                            height: 8px;
+                            top: -1px;
+                            border-radius: 50%;
+                            margin: -2px 4px 0 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        .attachment-list {
+            font-size: 13px;
+            padding-top: 16px;
+
+            .attachment {
+                background-color: rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(0, 0, 0, 0.12);
+                padding-left: 16px;
+                margin-top: 8px;
+                border-radius: 2px;
+
+                .filename {
+                    font-weight: 500;
+                }
+
+                .size {
+
+                }
+
+                .md-button {
+                    margin: 0;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        md-dialog-actions {
+            position: relative;
+            overflow-y: hidden;
+            overflow-x: auto;
+            justify-content: flex-end;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-top: 1px solid rgba(0, 0, 0, 0.12);
+        }
+    }
+    md-select .md-select-value.md-select-placeholder {
+        color: rgba(0,0,0,0.6);
+    }
+}
+
+// RESPONSIVE
+@media screen and (max-width: $layout-breakpoint-md) {
+
+    md-dialog {
+
+        &.task-dialog {
+            width: 80%;
+        }
+    }
+}
+
+@media screen and (max-width: $layout-breakpoint-sm) {
+
+    md-dialog {
+
+        &.task-dialog {
+            width: 90%;
+        }
+    }
+}
+
+.design-add-modal {
+    .md-datepicker-button{display: none;}
+    .widthfull{
+        .md-datepicker-input-container{width: 80% !important }
+    }
+    .grey-color{color: #dedede;
+                font-size: 16px;}
+    .widthfull{margin-bottom: 12px;}
+    input.md-datepicker-input::-webkit-input-placeholder {
+        color: #000 !important;
+        font-size: 15px !important;
+    }
+    input.md-datepicker-input{
+        ::-moz-placeholder { 
+            color: #000 !important;
+        }
+        ::-moz-placeholder { 
+            color: #000 !important; 
+        }
+        ::-ms-input-placeholder {  
+            color: #000 !important; 
+        }
+    }
+
+    .b-m-0{
+        margin-bottom: 0px !important;
+    }
+    md-input-container .md-errors-spacer{
+        height: 9px
+    }
+
+}
+.affiliate-dialog .grey-color {
+   
+    font-size: 16px;
+    
+}
+.font-12{font-size: 12px !important}
+md-dialog.task-dialog.affiliate-dialog md-input-container textarea {
+    min-height: 68px !important;
+}
+.affiliate-dialog md-select-value > span{color: #ccc}
+
+
