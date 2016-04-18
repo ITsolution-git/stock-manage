@@ -139,6 +139,8 @@
     <script src="app/main/client/views/profile/profile-view.controller.js"></script>
     <script src="app/main/client/dialogs/client/client-dialog.controller.js"></script>
     <script src="app/main/client/client.controller.js"></script>
-    
+    <!--Purchase Order-->
+<script src="app/main/purchaseOrder/purchaseOrder.module.js"></script>
+<script src="app/main/purchaseOrder/purchaseOrder.controller.js"></script>
 </body>
 </html>
