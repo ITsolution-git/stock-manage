@@ -14,7 +14,10 @@ class Order extends Model {
         $whereConditions_clientid = [];
         $whereConditions_salesid = [];
 
-        $search = $post["cond"]["search"];
+        $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
       
         if (array_key_exists("data",$post)) {
           
@@ -27,7 +30,7 @@ class Order extends Model {
             }
         }
 
-        $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['cond']['company_id']];
+        $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['company_id']];
         /*$listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_by','order.approved_date','order.needs_garment',
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];*/
@@ -38,7 +41,7 @@ class Order extends Model {
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('misc_type as misc_type','order.f_approval','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['cond']['company_id']))
+                         ->leftJoin('misc_type as misc_type','order.f_approval','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                          ->select($listArray)
                          ->where($whereConditions);
 
@@ -57,9 +60,13 @@ class Order extends Model {
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
                           });
                         }
-                        $orderData = $orderData->orderBy($post['cond']['sortBy'], $post['cond']['sortOrder'])
-                        ->skip($post['cond']['start'])
-                        ->take($post['cond']['range'])
+                        if(isset($post['filter']['seller']))
+                        {
+                          $orderData = $orderData->whereIn('order.sales_id', $post['filter']['seller']);
+                        }
+                        $orderData = $orderData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                        ->skip($post['start'])
+                        ->take($post['range'])
                         ->get();
 
         $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
