@@ -1,4 +1,4 @@
-<md-dialog class="task-dialog" aria-label="New Client">
+<md-dialog class="task-dialog" >
     <form name="clientForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
@@ -105,7 +105,7 @@
         <md-dialog-actions layout="row" layout-align="end center">
             
                     <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-                    <md-button class="md-accent md-raised ">Save</md-button>
+                    <md-button class="md-accent md-raised " ng-click="vm.addNewClient(vm.client)">Save</md-button>
              
         </md-dialog-actions>
     </form>

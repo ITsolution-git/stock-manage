@@ -57,11 +57,11 @@
         /**
          * Add new client
          */
-        function addNewClient()
+        function addNewClient(client_data)
         {
             vm.clients.unshift(vm.client);
-
-            closeDialog();
+            console.log('Client Add call');
+            //closeDialog();
         }    
 
         /**
