@@ -142,5 +142,9 @@
     <!--Purchase Order-->
 <script src="app/main/purchaseOrder/purchaseOrder.module.js"></script>
 <script src="app/main/purchaseOrder/purchaseOrder.controller.js"></script>
+<script src="app/main/purchaseOrder/views/companyPO/companyPO.controller.js"></script>
+<script src="app/main/purchaseOrder/views/viewNote/viewNote.controller.js"></script>
+<script src="app/main/purchaseOrder/dialogs/editNote/editNote.controller.js"></script>
+<script src="app/main/purchaseOrder/dialogs/addNote/addNote.controller.js"></script>
 </body>
 </html>

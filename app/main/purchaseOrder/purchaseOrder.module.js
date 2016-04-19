@@ -50,6 +50,10 @@
                     }
                 }
             })
+             function searchTable() {
+            var query = vm.searchQuery;
+            vm.tableInstance.search(query).draw();
+        }
             ;
 
         // Translation
