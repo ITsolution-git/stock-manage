@@ -36,7 +36,7 @@
                                 </div>
                                 <div ng-if="vm.toggle" class="f-body scrollable"  ms-scroll>
                                     <div layout="column" >
-                                        <md-checkbox ng-repeat="check in ::vm.salesCheck" ng-model="check.id" aria-label="check.name">
+                                        <md-checkbox ng-repeat="check in ::vm.salesCheck" ng-model="check.name" aria-label="check.name">
                                             {{check.first_name}}&nbsp;{{check.last_name}}
                                         </md-checkbox>
                                     </div>
@@ -154,7 +154,7 @@
                         </div>
                     </md-content>
                     <div class="filter-footer">
-                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple" >                                      
+                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple" ng-click="filterOrders()">                                      
                             APPLY FILTERS
                         </md-button>
                     </div>

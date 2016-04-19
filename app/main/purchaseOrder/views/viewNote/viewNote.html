@@ -1,0 +1,46 @@
+<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page view-notes">
+    <div class="header "  layout="column" >
+        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <a class="link-back" ui-sref="app.purchaseOrder">BACK TO PO</a>
+            <h2 flex="4" class="font-500">Notes for Purchase Order #1234 for Client: </h2>
+            <md-input-container md-no-float class="md-block" flex="3">
+                <input placeholder="">
+            </md-input-container>
+        </div>
+    </div>
+    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15" >
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text h2 text-semibold" flex=20>
+                Notes
+            </div>
+            <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+                <md-button class="dark-bg chrome-weight" ng-click="vm.openaddNoteDialog($event)">
+                    ADD NEW
+                </md-button>
+            </div>
+        </div>
+        <div class="ms-responsive-table-wrapper">
+            <table class="dataTable row-border hover" >
+                <thead>
+                    <tr>
+                        <th>Date Created</th>
+                        <th>Note Name</th>
+                        <th>Note Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="notes in ::vm.notes" class="cursor-p">
+                        <td>{{ notes.dateCreated}}</td>
+                        <td>{{ notes.noteName}} </td>
+                        <td ui-sref="app.order.design" class="width-500">{{ notes.noteDescription}}</td>
+                        <td><a class="font-12" ng-click="vm.openeditNoteDialog($event)">EDIT</a></td> 
+                    </tr>
+                </tbody> 
+            </table>
+            <div class="p-23 border-t-grey">
+            </div>
+        </div>
+    </div>
+</div>
+

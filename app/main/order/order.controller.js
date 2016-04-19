@@ -26,9 +26,24 @@
 
         $scope.reloadCallback = function () { console.log(123); };
 
+
         $scope.filterBy = {
-          'name': ''
+          'search': '',
+          'seller': ''
         };
+
+        $scope.filterOrders = function(){
+            $scope.albumNameArray = [];
+            angular.forEach(vm.salesCheck, function(check){
+                if (check.name == true){
+                    $scope.albumNameArray.push(check.id);
+                }
+            })
+            if($scope.albumNameArray.length > 0)
+            {
+                $scope.filterBy.seller = angular.copy($scope.albumNameArray);
+            }
+        }
 
         $scope.search = function () {
           $scope.reloadCallback();
@@ -37,38 +52,9 @@
         $scope.getResource = function (params, paramsObj, search) {
             $scope.params = params;
             $scope.paramsObj = paramsObj;
-            var res = params.split("/");
-            if(res.length == 2)
-            {
-                var page = res[0];
-                var range = res[1];
-                var sortBy = 'order.id';
-                var sortOrder = 'desc';
-            }
-            else if(res.length == 3)
-            {
-                var page = res[0];
-                var range = res[1];
-                var search = res[2];
-                var sortBy = 'order.id';
-                var sortOrder = 'desc';
-            }
-            else
-            {
-                var sortBy = res[0];
-                var sortOrder = res[1];
-                var page = res[2];
-                var range = res[3];
-                var search = res[4];
-            }
-
-            if(search == undefined)
-            {
-                search = '';
-            }
-
+ 
             var orderData = {};
-            orderData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1','sortBy' :sortBy, 'sortOrder' :sortOrder, 'page' :page, 'range' :range, 'search' :search};
+            orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
 
               return $http.post('api/public/order/listOrder',orderData).success(function(response) {
                 var header = response.header;

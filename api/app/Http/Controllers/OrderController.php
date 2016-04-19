@@ -78,17 +78,28 @@ class OrderController extends Controller {
 
     public function listOrder()
     {
-        $post = Input::all();
-        $post['cond']['range'] = RECORDS_PER_PAGE;
-        $post['cond']['start'] = ($post['cond']['page'] - 1) * $post['cond']['range'];
-        $post['cond']['limit'] = $post['cond']['range'];
-        
-        $result = $this->order->getOrderdata($post);
+        $post_all = Input::all();
 
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'order.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'order.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
+        $result = $this->order->getOrderdata($post);
         $records = $result['allData'];
-        $pagination = array('count' => $post['cond']['range'],'page' => $post['cond']['page'],'pages' => 7,'size' => $result['count']);
-        $sort_by = $post['cond']['sortBy'];
-        $sort_order = $post['cond']['sortOrder'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
                         0=>array('key' => 'order.id', 'name' => 'Order ID'),
