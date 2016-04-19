@@ -32,19 +32,19 @@ class Order extends Model {
                       'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
                       'order.status','order.f_approval','client.client_company','misc_type.value as approval'];*/
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.job_name,order.created_date,order.in_hands_by,order.approved_date,order.needs_garment,
-                      order.in_art_done,order.third_party_from,order.in_production,order.in_finish_done,order.shipping_by,
-                      order.status,order.f_approval,client.client_company,misc_type.value as approval')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.name,order.created_date,order.approved_date,order.date_shipped,
+                      order.status,order.approval_id,client.client_company,misc_type.value as approval,staff.first_name,staff.last_name')];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('misc_type as misc_type','order.f_approval','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['cond']['company_id']))
+                         ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['cond']['company_id']))
+                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
                          ->select($listArray)
                          ->where($whereConditions);
 
                         if (array_key_exists("data",$post)) {
                             if(isset($post['data']['f_approval']) && $post['data']['f_approval'] != '0' && (count($post['data']['f_approval']) > 1 || $post['data']['f_approval'][0] != 0)) {
-                                     $orderData = $orderData->whereIn('order.f_approval',$post['data']['f_approval']);
+                                     $orderData = $orderData->whereIn('order.approval_id',$post['data']['approval_id']);
                             }
                         }          
                         $orderData = $orderData->where($whereConditions_clientid)
