@@ -2013,8 +2013,8 @@ class OrderController extends Controller {
               }
         }
 
-         $post['orderdata']['job_name'] = $post['orderData']['job_name'];
-         $post['orderdata']['f_approval'] = $estimation_id;
+         $post['orderdata']['name'] = $post['orderData']['name'];
+         $post['orderdata']['approval_id'] = $estimation_id;
          $post['orderdata']['login_id'] = $post['login_id'];
          $post['orderdata']['company_id'] = $post['company_id'];
          $post['orderdata']['client_id'] = $post['orderData']['client_id'];

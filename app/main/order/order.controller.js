@@ -226,9 +226,9 @@
                       var data = {"status": "error", "message": "Company and Job Name should not be blank"}
                               notifyService.notify(data.status, data.message);
                               return false;
-                    } else if(orderData.job_name == undefined) {
+                    } else if(orderData.name == undefined) {
 
-                      var data = {"status": "error", "message": "Job Name should not be blank"}
+                      var data = {"status": "error", "message": "Name should not be blank"}
                               notifyService.notify(data.status, data.message);
                               return false;
                     } else if(orderData.client_id == undefined) {

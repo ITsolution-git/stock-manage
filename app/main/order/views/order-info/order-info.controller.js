@@ -7,11 +7,16 @@
             .controller('OrderInfoController', OrderInfoController);
 
     /** @ngInject */
-    function OrderInfoController($document, $window, $timeout, $mdDialog)
+    function OrderInfoController(OrderDataDetail,$document, $window, $timeout, $mdDialog)
     {
         var vm = this;
          vm.openaddDesignDialog = openaddDesignDialog;
+
+         vm.orderDetails = OrderDataDetail.data.records;
+         console.log(vm.orderDetails);
+
           vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
+
         //Dummy models data
         vm.orderInformation = {
             "customerPo": "######",

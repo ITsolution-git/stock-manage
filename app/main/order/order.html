@@ -211,13 +211,13 @@
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr ng-repeat="row in rows" class="cursor-p" >
-                            <td ui-sref="app.order.order-info({id:row.orderid})">{{ row.id}}</td>
-                            <td>{{ row.job_name}}</td>
+                            <td ui-sref="app.order.order-info({id:row.id})">{{ row.id}}</td>
+                            <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>
                             <td>{{ row.created_date}}</td>
-                            <td>Hardik Deliwala</td>
-                            <td>{{ row.shipping_by}}</td>
+                            <td>{{ row.first_name}} &nbsp; {{ row.last_name}}</td>
+                            <td>{{ row.date_shipped}}</td>
                             <td class="accor details-control" >
                                 <button class="dev-rdetail" ng-click="row.expanded = !row.expanded">
                                     <md-icon ng-if="!row.expanded" md-font-icon="icon-plus"></md-icon>
