@@ -55,7 +55,7 @@ return [
 		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => env('DB_HOST', 'localhost'),
-			'database'  => env('DB_DATABASE', 'stokkup'),
+			'database'  => env('DB_DATABASE', 'stokkup_new'),
 			'username'  => env('DB_USERNAME', 'root'),
 			'password'  => env('DB_PASSWORD', 'stokkdb@1357'),
 			'charset'   => 'utf8',
