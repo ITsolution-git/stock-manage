@@ -64,6 +64,10 @@ class Order extends Model {
                         {
                           $orderData = $orderData->whereIn('order.sales_id', $post['filter']['seller']);
                         }
+                        if(isset($post['filter']['client']))
+                        {
+                          $orderData = $orderData->whereIn('order.client_id', $post['filter']['client']);
+                        }
                         $orderData = $orderData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                         ->skip($post['start'])
                         ->take($post['range'])

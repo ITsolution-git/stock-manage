@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div layout="column" class="f-box-2">
+                            <!-- <div layout="column" class="f-box-2">
                                 <div class="f-header">
                                     <span>
                                         SHIP DATE 
@@ -60,7 +60,7 @@
                                         <md-datepicker ng-model="vm.shipDate" md-placeholder="Date"></md-datepicker>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div layout="column" class="f-box-2">
                                 <div class="f-header">
                                     <span>
@@ -95,14 +95,14 @@
                                 </div>
                                 <div class="f-body scrollable"  ms-scroll ng-if="vm.companyfilter">
                                     <div layout="column" >
-                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.client_id" aria-label="check.name">
+                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.client_company" aria-label="check.name">
                                             {{check.client_company}}
                                         </md-checkbox>
 
                                     </div>
                                 </div>
                             </div>
-                            <div layout="column" class="f-box-1">
+                            <!-- <div layout="column" class="f-box-1">
                                 <div class="f-header">
                                     <span>
                                         ORDER ID  
@@ -150,7 +150,7 @@
                                     <label class="f-14">TO</label>
                                     <md-datepicker ng-model="vm.rangeTo" md-placeholder="Date" class="mar-left"></md-datepicker>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </md-content>
                     <div class="filter-footer">
