@@ -29,19 +29,31 @@
 
         $scope.filterBy = {
           'search': '',
-          'seller': ''
+          'seller': '',
+          'client': ''
         };
 
         $scope.filterOrders = function(){
-            $scope.albumNameArray = [];
+            $scope.sellerArray = [];
             angular.forEach(vm.salesCheck, function(check){
                 if (check.name == true){
-                    $scope.albumNameArray.push(check.id);
+                    $scope.sellerArray.push(check.id);
                 }
             })
-            if($scope.albumNameArray.length > 0)
+            if($scope.sellerArray.length > 0)
             {
-                $scope.filterBy.seller = angular.copy($scope.albumNameArray);
+                $scope.filterBy.seller = angular.copy($scope.sellerArray);
+            }
+
+            $scope.clientArray = [];
+            angular.forEach(vm.companyCheck, function(company){
+                if (company.client_company == true){
+                    $scope.clientArray.push(company.client_id);
+                }
+            })
+            if($scope.clientArray.length > 0)
+            {
+                $scope.filterBy.client = angular.copy($scope.clientArray);
             }
         }
 
