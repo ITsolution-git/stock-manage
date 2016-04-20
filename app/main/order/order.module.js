@@ -48,12 +48,7 @@
                         controller : 'OrderInfoController as vm'
                     }
                 },resolve: {
-                    OrderDataDetail: function (msApi,$stateParams)
-                    {
-                       var order_detail = {};
-                       order_detail ={company_id :'28',id:$stateParams.id};
-                       return msApi.resolve('orderDetail@post',order_detail);
-                    }
+                   
                 }
             }).state('app.order.design', {
                 url  : '/design/:id',
@@ -93,13 +88,11 @@
         // Translation
        // $translatePartialLoaderProvider.addPart('app/main/order');
 
-        // Api
-      //  msApiProvider.register('order', ['app/data/order/order.json']);
-      msApiProvider.register('order',['api/public/order/listOrder',null, {post:{method:'post'}}]);
+      // Api
       msApiProvider.register('orderUser',['api/public/common/getStaffList/:id',null, {get:{method:'get'}}]);
       msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
-   //   msApiProvider.register('api/public/common/getStaffList/:id', {id: '28'});
-      msApiProvider.register('orderDetail',['api/public/order/orderDetail',null, {post:{method:'post'}}]);
+  
+     
 
 
         // Navigation
