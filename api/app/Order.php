@@ -74,22 +74,27 @@ class Order extends Model {
 
     public function orderDetail($data) {
 
-
-        $whereOrderConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
-        $orderData = DB::table('orders')->where($whereOrderConditions)->get();
+      
+         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
-        $clientMainData = array();
-        if($orderData) {
-        $whereClientMainContactConditions = ['client_id' => $orderData[0]->client_id];
-        $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
-          } 
+
+        $listArray = ['order.*','client.client_company','misc_type.value as approval','staff.first_name',
+                      'staff.last_name','users.name','client_contact.first_name as client_first_name',
+                      'client_contact.last_name as client_last_name','price_grid.name as price_grid_name'];
+
+        $orderDetailData = DB::table('orders as order')
+                         ->Join('client as client', 'order.client_id', '=', 'client.client_id')
+                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
+                         ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
+                         ->leftJoin('client_contact as client_contact','order.client_id','=', 'client_contact.client_id')
+                         ->leftJoin('price_grid as price_grid','order.price_id','=', 'price_grid.id')
+                         ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
 
         $combine_array = array();
-
-        $combine_array['order'] = $orderData;
-        
-        $combine_array['client_main_data'] = $clientMainData;
-
+        $combine_array['order'] = $orderDetailData;
         return $combine_array;
     }
 
