@@ -15,6 +15,10 @@ class Order extends Model {
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
+        $created_date = '';
+        if(isset($post['filter']['created_date']) && $post['filter']['created_date'] != '') {
+            $created_date = $post['filter']['created_date'];
+        }
 
         $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['company_id']];
 
@@ -43,6 +47,10 @@ class Order extends Model {
                         if(isset($post['filter']['client']))
                         {
                           $orderData = $orderData->whereIn('order.client_id', $post['filter']['client']);
+                        }
+                        if($created_date != '')
+                        {
+                          $orderData = $orderData->where('order.created_date', $created_date);
                         }
                         $orderData = $orderData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                         ->skip($post['start'])
