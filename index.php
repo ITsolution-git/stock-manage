@@ -8,11 +8,11 @@
         <title>STOKKUP</title>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="stylesheet" href="styles/vendor.css">
 
         <link rel="stylesheet" href="styles/app.css">
-      
+
         <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
               rel='stylesheet' type='text/css'>
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
@@ -57,8 +57,8 @@
     <!-- <ms-theme-options></ms-theme-options> -->
 
     <script src="scripts/vendor.js"></script>
-    
-<!-- inject:js -->
+
+    <!-- inject:js -->
 
     <script src="app/quick-panel/quick-panel.module.js"></script>
     <script src="app/quick-panel/tabs/chat/chat-tab.controller.js"></script>
@@ -78,6 +78,7 @@
     <script src="app/core/directives/ms-form-wizard/ms-form-wizard.directive.js"></script>
     <script src="app/core/directives/ms-datepicker-fix/ms-datepicker-fix.directive.js"></script>
     <script src="app/core/directives/ms-card/ms-card.directive.js"></script>
+
 
 
     <script src="app/core/theming/fuse-theming.provider.js"></script>
@@ -111,13 +112,13 @@
     <script src="app/index.api.js"></script>
     <script src="app/toolbar/toolbar.module.js"></script>
     <script src="app/toolbar/toolbar.controller.js"></script>
-<!-- endinject -->
+    <!-- endinject -->
 
-<!-- LOGIN FILES START-->
+    <!-- LOGIN FILES START-->
     <script src="app/main/login/login.module.js"></script>
     <script src="app/main/login/login.controller.js"></script>
 
-<!-- ORDER FILES START -->
+    <!-- ORDER FILES START -->
     <script src="app/main/order/order.module.js"></script>
     <script src="app/main/order/views/spiltAffiliate/spiltAffiliate.controller.js"></script>
     <script src="app/main/order/views/order-info/order-info.controller.js"></script>
@@ -134,17 +135,18 @@
     <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
     <script src="app/main/order/order.controller.js"></script>
 
-<!-- CLIENT FILES START -->
+    <!-- CLIENT FILES START -->
     <script src="app/main/client/client.module.js"></script>
     <script src="app/main/client/views/profile/profile-view.controller.js"></script>
     <script src="app/main/client/dialogs/client/client-dialog.controller.js"></script>
     <script src="app/main/client/client.controller.js"></script>
     <!--Purchase Order-->
-<script src="app/main/purchaseOrder/purchaseOrder.module.js"></script>
-<script src="app/main/purchaseOrder/purchaseOrder.controller.js"></script>
-<script src="app/main/purchaseOrder/views/companyPO/companyPO.controller.js"></script>
-<script src="app/main/purchaseOrder/views/viewNote/viewNote.controller.js"></script>
-<script src="app/main/purchaseOrder/dialogs/editNote/editNote.controller.js"></script>
-<script src="app/main/purchaseOrder/dialogs/addNote/addNote.controller.js"></script>
+    <script src="app/main/purchaseOrder/purchaseOrder.module.js"></script>
+    <script src="app/main/purchaseOrder/purchaseOrder.controller.js"></script>
+    <script src="app/main/purchaseOrder/views/companyPO/companyPO.controller.js"></script>
+    <script src="app/main/purchaseOrder/views/viewNote/viewNote.controller.js"></script>
+    <script src="app/main/purchaseOrder/dialogs/editNote/editNote.controller.js"></script>
+    <script src="app/main/purchaseOrder/dialogs/addNote/addNote.controller.js"></script>
+    <script src="app/main/purchaseOrder/views/affiliatePO/affiliatePO.controller.js"></script>
 </body>
 </html>

@@ -1,0 +1,409 @@
+<div class="order-info-page m-r-15 m-l-20 m-b-20 affilaite-po">
+    <div class="header "  layout="column">
+        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <a class="link-back">BACK </a>
+            <h1 flex="4" class="font-500">Affiliate Order #1234 for Company: </h1>
+            <md-input-container md-no-float class="md-block" flex="3">
+                <input placeholder="">
+            </md-input-container>
+        </div>
+        <div class=" m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <div class="info-order" flex="75">
+                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
+                <md-card layout="row">
+                    <md-card-content flex="95" layout="column">
+                        <div layout="row" layout-wrap>
+                            <div class="trans-box">
+                                <div>Customer PO</div>
+                                <span class="chrome-weight font-14">{{vm.orderInformationPO.customerPo}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Sales</div>
+                                <span class="chrome-weight font-14">{{vm.orderInformationPO.sales}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Blind</div>
+                                <span class="chrome-weight font-14">{{vm.orderInformationPO.blind}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Account Manager</div>
+                                <span class="chrome-weight font-14">{{vm.orderInformationPO.accountManger}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Main Contact</div>
+                                <span class="chrome-weight font-14">{{vm.orderInformationPO.mainContact}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Price Grid</div>
+                                <span class="chrome-weight font-14">{{vm.orderInformationPO.priceGrid}}</span>
+                            </div>
+                        </div>
+                    </md-card-content>
+                    <div layout-align="end start"  flex="5" layout="row">
+                        <md-menu>
+                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Main Contact Options
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </div>
+                </md-card>
+            </div>
+            <div classs="m-t-neg" flex="25" layout-align="center center" layout="column">
+                <md-button  class="m-t-neg bg-grey right-m-0 " >
+                    EMAIL
+                </md-button>
+                <md-button  class="bg-grey right-m-0 " >
+                    PRINT
+                </md-button>
+            </div>
+        </div>
+    </div>
+    <div class="content m-b-20">
+        <div class="simple-table-container md-whiteframe-4dp">
+            <div class="table-title " layout="row" layout-align="space-between center">
+                <div class="table-title-text h2 text-semibold" flex=20>
+                    Designs
+                </div>
+            </div>
+            <div class="ms-responsive-table-wrapper">
+                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions"  >
+                    <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="">ID</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Design Name</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="">Total Qty</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="">Total # of Colors</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="">Status</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="design in ::vm.designsAffilatePO" class="cursor-p">
+                            <td>{{ design.id}}</td>
+                            <td>{{ design.designName}}  
+                            </td>
+                            <td>{{ design.total}}</td>
+                            <td>{{ design.totalcolor}}</td>
+                            <td class="text-left font-small mdslider pad0"><label class="slider font-10  m-l-20">{{ design.status}}</label>
+                    <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color">
+                    </md-slider>
+                    </td> 
+                    <td class="text-left"> 
+                        <a class=" chrome-weight font-12">EDIT</a>
+                    </td>
+                    </tr>
+                    </tbody> 
+                </table>
+                <div class="p-16 text-right m-r-15">
+                    <span class="h2 text-semibold">Total Units {{ vm.affiliatePO.total}}</span> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  layout="row" class="">
+        <div flex="75" layout="column" class="">
+            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
+                <div class="table-title " layout="row" layout-align="space-between center">
+                    <div class="table-title-text h2 text-semibold" >
+                        Purchase Orders
+                    </div>
+                </div>
+                <div class="ms-responsive-table-wrapper">
+                    <table class="dataTable row-border hover" >
+                        <thead>
+                            <tr>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">ID</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">ID</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">ID</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="puchase in ::vm.purchases" class="cursor-p">
+                                <td>{{ puchase.poid}}</td>
+                                <td>{{ puchase.potype}}  
+                                </td>
+                                <td>{{ puchase.clientName}}</td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                    <div class="p-23 border-t-grey">
+                    </div>
+                </div>
+            </div> 
+            <div class="simple-table-container md-whiteframe-4dp m-b-20">
+                <div class="table-title " layout="row" layout-align="space-between center">
+                    <div class="table-title-text h2 text-semibold" >
+                        Receiving Orders
+                    </div>
+                </div>
+                <div class="ms-responsive-table-wrapper">
+                    <table class="dataTable row-border hover" >
+                        <thead>
+                            <tr>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">ID</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">ID</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">ID</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="receive in ::vm.receives" class="cursor-p">
+                                <td>{{ receive.roid}}</td>
+                                <td>{{ receive.clientName}}</td>  
+                                <td>{{ receive.vendor}}</td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                    <div class="p-23 border-t-grey">
+                    </div>
+                </div>
+            </div>
+            <md-card class="m-b-20">
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                        Order Info
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column">
+                    <div layout="row" layout-wrap>
+                        <div class="trans-box">
+                            <div>Separations</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input ng-model="vm.orderInformation.separations" placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Rush</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input  ng-model="vm.orderInformation.Rush" placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Distribution</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input ng-model="vm.orderInformation.Distribution" placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Digitize</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input ng-model="vm.orderInformation.Digitize"  placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Shipping</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input ng-model="vm.orderInformation.Shipping" placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Set Up</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input ng-model="vm.orderInformation.SetUp" placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Artwork</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input ng-model="vm.orderInformation.Artwork" placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Discount</div>
+                            <span><md-input-container md-no-float class="md-block">
+                                    <input ng-model="vm.orderInformation.Discount" placeholder="$">
+                                </md-input-container></span>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+            <md-card class="m-b-20">
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                        Shipping
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column" class="pad0 chrome-pad">
+                    <div layout="row" layout-wrap layout-align="center center" flex="60" class="p-t-17">
+                        <div layout="row">
+                            <div layout="column">
+                                <span class="h2 semibold font-56">{{ vm.affiliatePO.productshipped}}</span>
+                                <span class="m-neg-14">Product shipped</span>
+                            </div>
+                        </div>
+                        <div layout="row">
+                            <span class="h2 semibold font-56 m-neg-14 m-r-15 m-l-15"> / </span>
+                        </div>
+                        <div layout="row">
+                            <div layout="column">
+                                <span class="h2 semibold font-56">{{ vm.affiliatePO.Total}}</span>
+                                <span class="m-l-20 p-l-20 m-neg-14">Total</span>
+                            </div>
+                        </div>
+                    </div>
+                </md-card-content>
+                <md-divider ></md-divider>
+                <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                    <a class="font-14">VIEW SHIPPING</a>
+                </div>
+            </md-card>
+            <div layout="row">
+                <md-card class="m-b-20 m-r-15" flex="33">
+                    <md-card-title>
+                        <md-card-title-text class="text-left">
+                            Distribution
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content  layout="column" layout-padding class="min-height">
+                        <div layout="row" layout-wrap layout-align="center center" flex="60">
+                            <span class="h2 semibold font-56 ">{{ vm.affiliatePO.location}}</span><br/>
+                        </div>
+                        <div class="text-center"> <span class="font-18">Location</span></div>
+                    </md-card-content>
+                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                        <a>&nbsp;</a>
+                    </div>
+                </md-card>
+                <md-card class="m-b-20 m-r-15" flex="33">
+                    <md-card-title>
+                        <md-card-title-text class="text-left">
+                            Notes
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content  layout="column" layout-padding class="min-height">
+                        <div layout="row" layout-wrap layout-align="center center" flex="60">
+                            <span class="h2 semibold f-52">{{ vm.affiliatePO.notes}}</span><br/>
+                        </div>
+                        <div class="text-center"><span class="font-18">Total Notes</span></div>
+                    </md-card-content>
+                    <md-divider ></md-divider>
+                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                        <a class="font-14" ui-sref="app.purchaseOrder.viewNote">VIEW</a>
+                    </div>
+                </md-card>
+            </div>
+        </div>
+        <div class="m-l-30 side-bar" flex="25" layout="column">
+            <md-card class="m-b-20">
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                        Packing Information
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content class="min-height">
+                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="info in ::vm.packageInformation">
+                        <div>{{ info.pid}}</div>
+                        <span>{{ info.pvalue}}</span>
+                    </div>
+                </md-card-content>
+            </md-card>
+            <md-card class="m-b-20 " >
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                        Finishing
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="row" layout-padding>
+                    <div layout="row" layout-wrap layout-align="end end" flex="60">
+                        <label class="h2 semibold f-52">{{ vm.affiliatePO.finish}}</label>
+                    </div>
+                </md-card-content>
+                <md-divider ></md-divider>
+                <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                    <a>VIEW </a>
+                </div>
+            </md-card>
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                        Order Recap
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content class="recap">
+                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="recap in ::vm.orderecap">
+                        <div>{{ recap.rid}}</div>
+                        <span>{{ recap.rvalue}}</span>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+</div>
+<div class="footer border-t-grey" layout-padding layout="row">
+    <md-button  class="close-btn border-t-grey" >
+        <md-icon md-font-icon="icon-close"></md-icon>
+    </md-button>
+    <div flex="25">
+        <span class="h4 text-semibold">Order Total</span>
+    </div>
+    <div flex="15">
+        <span>Order Line</span>
+    </div>
+    <div flex="15">
+        <span class="color-b-grey">{{ vm.ordertotal.orderline}}</span>
+    </div>
+    <div flex="15">
+        <span>Order Charges</span>
+    </div>
+    <div flex="15">
+        <span class="color-b-grey">{{ vm.ordertotal.ordercharges}}</span>
+    </div>
+    <div flex="20">
+        <span>Order Sales</span>
+    </div>
+    <div flex="20">
+        <span class="color-b-grey">{{ vm.ordertotal.ordersales}}</span>
+    </div>
+</div>
