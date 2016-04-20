@@ -103,12 +103,12 @@ class OrderController extends Controller {
 
         $header = array(
                         0=>array('key' => 'order.id', 'name' => 'Order ID'),
-                        1=>array('key' => 'order.job_name', 'name' => 'Job Name'),
+                        1=>array('key' => 'order.name', 'name' => 'Job Name'),
                         2=>array('key' => 'client.client_company', 'name' => 'Company'),
-                        3=>array('key' => 'order.f_approval', 'name' => 'Approval'),
+                        3=>array('key' => 'order.approval_id', 'name' => 'Approval'),
                         4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
                         5=>array('key' => 'null', 'name' => 'Sales Rep', 'sortable' => false),
-                        6=>array('key' => 'order.shipping_by', 'name' => 'Ship Date'),
+                        6=>array('key' => 'order.date_shipped', 'name' => 'Ship Date'),
                         7=>array('key' => 'null', 'name' => 'Opeations', 'sortable' => false)
                         );
 
