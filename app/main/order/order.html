@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div layout="column" class="f-box-2">
+                            <!-- <div layout="column" class="f-box-2">
                                 <div class="f-header">
                                     <span>
                                         SHIP DATE 
@@ -60,7 +60,7 @@
                                         <md-datepicker ng-model="vm.shipDate" md-placeholder="Date"></md-datepicker>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div layout="column" class="f-box-2">
                                 <div class="f-header">
                                     <span>
@@ -95,14 +95,14 @@
                                 </div>
                                 <div class="f-body scrollable"  ms-scroll ng-if="vm.companyfilter">
                                     <div layout="column" >
-                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.client_id" aria-label="check.name">
+                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.client_company" aria-label="check.name">
                                             {{check.client_company}}
                                         </md-checkbox>
 
                                     </div>
                                 </div>
                             </div>
-                            <div layout="column" class="f-box-1">
+                            <!-- <div layout="column" class="f-box-1">
                                 <div class="f-header">
                                     <span>
                                         ORDER ID  
@@ -150,7 +150,7 @@
                                     <label class="f-14">TO</label>
                                     <md-datepicker ng-model="vm.rangeTo" md-placeholder="Date" class="mar-left"></md-datepicker>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </md-content>
                     <div class="filter-footer">
@@ -211,13 +211,13 @@
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr ng-repeat="row in rows" class="cursor-p" >
-                            <td ui-sref="app.order.order-info({id:row.orderid})">{{ row.id}}</td>
-                            <td>{{ row.job_name}}</td>
+                            <td ui-sref="app.order.order-info({id:row.id})">{{ row.id}}</td>
+                            <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>
-                            <td>{{ row.created_date}}</td>
-                            <td>Hardik Deliwala</td>
-                            <td>{{ row.shipping_by}}</td>
+                            <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
+                            <td>{{ row.first_name}} &nbsp; {{ row.last_name}}</td>
+                            <td>{{ row.date_shipped}}</td>
                             <td class="accor details-control" >
                                 <button class="dev-rdetail" ng-click="row.expanded = !row.expanded">
                                     <md-icon ng-if="!row.expanded" md-font-icon="icon-plus"></md-icon>

@@ -17,6 +17,19 @@
         vm.salesCheck = OrderUserData.data.records;
         vm.companyCheck = OrderCompanyData.data.records;
 
+        vm.shipDate;
+        vm.shipdate = false;
+        //3. create date
+        vm.createDate;
+        vm.createdate = false;
+        vm.companyfilter = false;
+        vm.searchOrder;
+        vm.ordersId = [{"id": "27"}, {"id": "35"}, {"id": "12"}];
+        vm.orderfilter = false;
+        vm.rangeFrom;
+        vm.rangeTo;
+        vm.datefilter = false;
+
         $scope.init = {
           'count': 10,
           'page': 1,
@@ -28,25 +41,72 @@
 
 
         $scope.filterBy = {
+          'temp':'',
           'search': '',
-          'seller': ''
+          'seller': '',
+          'client': '',
+          'created_date': ''
         };
 
+        /**
+         * Returns the formatted date 
+         * @returns {date}
+         */
+        function get_formated_date(unixdate)
+        {
+            var date = ("0" + unixdate.getDate()).slice(-2);
+            var month = unixdate.getMonth() + 1;
+            month = ("0" + month).slice(-2);
+            var year = unixdate.getFullYear();
+
+            var new_date = year + "-" + month + "-" + date;
+            return new_date;
+        }
+
         $scope.filterOrders = function(){
-            $scope.albumNameArray = [];
+            var flag = true;
+            $scope.filterBy.seller = '';
+            $scope.filterBy.client = '';
+            $scope.filterBy.created_date = '';
+            $scope.filterBy.temp = '';
+            $scope.sellerArray = [];
+
             angular.forEach(vm.salesCheck, function(check){
                 if (check.name == true){
-                    $scope.albumNameArray.push(check.id);
+                    $scope.sellerArray.push(check.id);
                 }
             })
-            if($scope.albumNameArray.length > 0)
+            if($scope.sellerArray.length > 0)
             {
-                $scope.filterBy.seller = angular.copy($scope.albumNameArray);
+                flag = false;
+                $scope.filterBy.seller = angular.copy($scope.sellerArray);
+            }
+
+            $scope.clientArray = [];
+            angular.forEach(vm.companyCheck, function(company){
+                if (company.client_company == true){
+                    $scope.clientArray.push(company.client_id);
+                }
+            })
+            if($scope.clientArray.length > 0)
+            {
+                flag = false;
+                $scope.filterBy.client = angular.copy($scope.clientArray);
+            }
+
+            if(vm.createDate != '' && vm.createDate != undefined)
+            {
+                flag = false;
+                $scope.filterBy.created_date = get_formated_date(vm.createDate);
+            }
+            if(flag == true)
+            {
+                $scope.filterBy.temp = angular.copy(1);
             }
         }
 
         $scope.search = function () {
-          $scope.reloadCallback();
+            $scope.reloadCallback();
         };
 
         $scope.getResource = function (params, paramsObj, search) {
@@ -97,25 +157,6 @@
         vm.openRightMenu = function () {
             $mdSidenav('right').toggle();
         };
-        //1. sales rep
-      //  vm.salesCheck = [{"v": true, "name": "Nick Santo"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Kemal Baxi"}, {"v": false, "name": "Nick Santo"}, {"v": false, "name": "Nick Santo"}, ];
-        //2. ship date
-        vm.shipDate;
-        vm.shipdate = false;
-        //3. create date
-        vm.createDate;
-        vm.createdate = false;
-        //4. company
-      //  vm.companyCheck = [{"v": false, "name": "Checkbox 1"}, {"v": true, "name": "Checkbox 2"}, {"v": false, "name": "Checkbox 3"}, {"v": false, "name": "Checkbox 4"}, {"v": false, "name": "Checkbox 5"}, {"v": false, "name": "Checkbox 6"}, {"v": false, "name": "Checkbox 7"}, ];
-        vm.companyfilter = false;
-        //5. order id
-        vm.searchOrder;
-        vm.ordersId = [{"id": "27"}, {"id": "35"}, {"id": "12"}];
-        vm.orderfilter = false;
-        //6. data range
-        vm.rangeFrom;
-        vm.rangeTo;
-        vm.datefilter = false;
 
         function openOrderDialog(ev, order)
         {
@@ -214,9 +255,9 @@
                       var data = {"status": "error", "message": "Company and Job Name should not be blank"}
                               notifyService.notify(data.status, data.message);
                               return false;
-                    } else if(orderData.job_name == undefined) {
+                    } else if(orderData.name == undefined) {
 
-                      var data = {"status": "error", "message": "Job Name should not be blank"}
+                      var data = {"status": "error", "message": "Name should not be blank"}
                               notifyService.notify(data.status, data.message);
                               return false;
                     } else if(orderData.client_id == undefined) {

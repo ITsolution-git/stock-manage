@@ -103,12 +103,12 @@ class OrderController extends Controller {
 
         $header = array(
                         0=>array('key' => 'order.id', 'name' => 'Order ID'),
-                        1=>array('key' => 'order.job_name', 'name' => 'Job Name'),
+                        1=>array('key' => 'order.name', 'name' => 'Job Name'),
                         2=>array('key' => 'client.client_company', 'name' => 'Company'),
-                        3=>array('key' => 'order.f_approval', 'name' => 'Approval'),
+                        3=>array('key' => 'order.approval_id', 'name' => 'Approval'),
                         4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
                         5=>array('key' => 'null', 'name' => 'Sales Rep', 'sortable' => false),
-                        6=>array('key' => 'order.shipping_by', 'name' => 'Ship Date'),
+                        6=>array('key' => 'order.date_shipped', 'name' => 'Ship Date'),
                         7=>array('key' => 'null', 'name' => 'Opeations', 'sortable' => false)
                         );
 
@@ -185,21 +185,7 @@ class OrderController extends Controller {
     public function orderDetail() {
  
         $data = Input::all();
-
-
         $result = $this->order->orderDetail($data);
-
-        if(empty($result['order']))
-        {
-
-           $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
-           return response()->json(["data" => $response]);
-        }
-
-        
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
 
         if(!empty($order_items))
@@ -234,64 +220,20 @@ class OrderController extends Controller {
             $result['order_item'] = array();
         }
 
-        $price_id = $result['order'][0]->price_id;
-        $client_id = $result['order'][0]->client_id;
-
-        
-        $price_garment_mackup = array();
-        $price_screen_primary = array();
-        $price_screen_secondary = array();
-        $price_direct_garment = array();
-        $embroidery_switch_count = array();
-
-       // Remove price id condition and add company id condition.
-       // $price_grid = $this->common->GetTableRecords('price_grid',array('id' => $price_id,'is_delete' => '1','status' => '1','company_id' => $data['company_id']),array());
-          $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','company_id' => $data['company_id']),array());
-        if($price_id > 0)
-        {
-            $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
-            $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
-            $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
-            $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
-            $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
-        }
-
-        $client = $this->common->GetTableRecords('client',array('status' => '1','is_delete' => '1','company_id' => $data['company_id']),array());
-
-        $vendors = $this->common->getAllVendors($data['company_id']);
-        $staff = $this->common->getStaffList($data['company_id']);
-        $brandCo = $this->common->getBrandCordinator($data['company_id']);
-
         if (count($result) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['order'],
-                                'client_main_data' => $result['client_main_data'],
-                                'order_item' => $result['order_item'],
-                                'price_grid' => $price_grid,
-                                'price_garment_mackup' => $price_garment_mackup,
-                                'price_screen_primary' => $price_screen_primary,
-                                'price_screen_secondary' => $price_screen_secondary,
-                                'price_direct_garment' => $price_direct_garment,
-                                'embroidery_switch_count' => $embroidery_switch_count,
-                                'vendors' => $vendors,
-                                'client' => $client,
-                                'staff' => $staff,
-                                'brandCo' => $brandCo
+                                'order_item' => $result['order_item']
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'records' => $result['order'],
-                                'client_data' => $result['client_data'],
-                                'client_main_data' => $result['client_main_data'],
-                                'order_item' => $result['order_item'],
-                                'order_po_data' => $result['order_po_data']);
-
+                                'order_item' => $result['order_item']);
         } 
-        
         return response()->json(["data" => $response]);
 
     }
@@ -2013,8 +1955,8 @@ class OrderController extends Controller {
               }
         }
 
-         $post['orderdata']['job_name'] = $post['orderData']['job_name'];
-         $post['orderdata']['f_approval'] = $estimation_id;
+         $post['orderdata']['name'] = $post['orderData']['name'];
+         $post['orderdata']['approval_id'] = $estimation_id;
          $post['orderdata']['login_id'] = $post['login_id'];
          $post['orderdata']['company_id'] = $post['company_id'];
          $post['orderdata']['client_id'] = $post['orderData']['client_id'];

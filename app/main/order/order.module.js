@@ -47,6 +47,8 @@
                         templateUrl: 'app/main/order/views/order-info/order-info.html',
                         controller : 'OrderInfoController as vm'
                     }
+                },resolve: {
+                   
                 }
             }).state('app.order.design', {
                 url  : '/design/:id',
@@ -86,12 +88,11 @@
         // Translation
        // $translatePartialLoaderProvider.addPart('app/main/order');
 
-        // Api
-      //  msApiProvider.register('order', ['app/data/order/order.json']);
-      msApiProvider.register('order',['api/public/order/listOrder',null, {post:{method:'post'}}]);
+      // Api
       msApiProvider.register('orderUser',['api/public/common/getStaffList/:id',null, {get:{method:'get'}}]);
       msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
-   //   msApiProvider.register('api/public/common/getStaffList/:id', {id: '28'});
+  
+     
 
 
         // Navigation

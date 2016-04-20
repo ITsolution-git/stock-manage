@@ -7,20 +7,36 @@
             .controller('OrderInfoController', OrderInfoController);
 
     /** @ngInject */
-    function OrderInfoController($document, $window, $timeout, $mdDialog)
+    function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope)
     {
+
+
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+            
+            
+
+            $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                   $scope.order = result.data.records[0];
+                   $scope.order_items = result.data.order_item;
+                }
+                else {
+                    $state.go('order.list');
+                }
+                $("#ajax_loader").hide();
+            });
+       
         var vm = this;
          vm.openaddDesignDialog = openaddDesignDialog;
+
+        /* vm.orderDetails = OrderDataDetail.data.records;
+         console.log(vm.orderDetails);*/
+
           vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
-        //Dummy models data
-        vm.orderInformation = {
-            "customerPo": "######",
-            "sales": "keval Baxi",
-            "blind": "Yes",
-            "accountManger": "Nancy McPhee",
-            "mainContact": "Joshi Goodman",
-            "priceGrid": "ABC Grid"
-        };
+
         vm.designs = [
             {"id": "1", "designName": "Spring Shirts", "total": "70", "totalcolor": "3", "status": "In Producation xx/xx/xxxx", "statusValue": "60"},
             {"id": "2", "designName": "Spring Shirts 2", "total": "25", "totalcolor": "2", "status": "In Producation xx/xx/xxxx", "statusValue": "60"},
@@ -38,37 +54,11 @@
             {"Company": "Company Name", "units": "150", "designs": "1"},
             {"Company": "Company Name", "units": "10,000", "designs": "2"},
         ];
-        vm.packageInformation = [
-            {"pid": "Foil", "pvalue": "4"},
-            {"pid": "Over Size Screens", "pvalue": "5"},
-            {"pid": "SKU", "pvalue": "2"},
-            {"pid": "Poly Bagging", "pvalue": "5"},
-            {"pid": "Hang Tag", "pvalue": "1"},
-            {"pid": "Inside Tagging", "pvalue": "4"},
-        ];
-        vm.orderecap = [
-            {"rid": "Screens", "rvalue": "54"},
-            {"rid": "Press Setup", "rvalue": "0"},
-            {"rid": "Lines Total", "rvalue": "2"},
-            {"rid": "Order Total", "rvalue": "$325.00"},
-            {"rid": "Tax Rate", "rvalue": ""},
-            {"rid": "Tax", "rvalue": "4"},
-            {"rid": "Grand Total", "rvalue": "$5,976.81"},
-            {"rid": "Total Payments", "rvalue": "5"},
-            {"rid": "Balance Due", "rvalue": "$2,500.98"},
-        ];
+       
+       
         vm.designTotal = {total: "160"};
         vm.finishing = {finish: "5"};
-        vm.orderInfo = {
-            "separations": "",
-            "Rush": "",
-            "Distribution": "",
-            "Digitize": "",
-            "Shipping": "",
-            "SetUp": "",
-            "Artwork": "",
-            "Discount": ""
-        };
+        
         vm.shipping = {
             "productshipped": "800",
             "Total": "100",

@@ -19,23 +19,23 @@
                             </div>
                             <div class="trans-box">
                                 <div>Sales</div>
-                                <span class="font-14 chrome-weight">{{vm.orderInformation.sales}}</span>
+                                <span class="font-14 chrome-weight">{{order.first_name}} &nbsp; {{ order.last_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Blind</div>
-                                <span class="font-14 chrome-weight">{{vm.orderInformation.blind}}</span>
+                                <span class="font-14 chrome-weight">{{order.is_blind == '1'? 'Yes' : 'No'}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Account Manager</div>
-                                <span class="font-14 chrome-weight">{{vm.orderInformation.accountManger}}</span>
+                                <span class="font-14 chrome-weight">{{order.name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Main Contact</div>
-                                <span class="font-14 chrome-weight">{{vm.orderInformation.mainContact}}</span>
+                                <span class="font-14 chrome-weight">{{order.client_first_name}} &nbsp; {{ order.client_last_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Price Grid</div>
-                                <span class="font-14 chrome-weight">{{vm.orderInformation.priceGrid}}</span>
+                                <span class="font-14 chrome-weight">{{order.price_grid_name}}</span>
                             </div>
                         </div>
                     </md-card-content>
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="ms-responsive-table-wrapper">
-                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  dt-columns="showCase.dtColumns">
+                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions"  >
                     <thead>
 
                         <tr>
@@ -204,7 +204,7 @@
                                 <td>{{ puchase.dateCreated}}
                                 </td> 
                                 <td class="text-right"> 
-                                    <a  href="#">VIEW PO</a>
+                                    <a  href="#" ui-sref="app.purchaseOrder.companyPO">VIEW PO</a>
                                 </td>
                             </tr>
                         </tbody> 
@@ -284,7 +284,7 @@
                                 <td>{{ affiliateOrder.units}}  
                                 <td>{{ affiliateOrder.designs}}</td>
                                 <td class="text-right"> 
-                                    <a>VIEW </a>
+                                    <a href="#" ui-sref="app.purchaseOrder.affiliatePO">VIEW </a>
                                 </td>
                             </tr>
                         </tbody> 
@@ -304,50 +304,50 @@
                         <div class="trans-box">
                             <div>Separations</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="vm.orderInformation.separations" placeholder="$">
+                                    <input ng-model="order.separations_charge" placeholder="$">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Rush</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input  ng-model="vm.orderInformation.Rush" placeholder="$">
+                                    <input  ng-model="order.rush_charge" placeholder="$">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Distribution</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="vm.orderInformation.Distribution" placeholder="$">
+                                    <input ng-model="order.distribution_charge" placeholder="$">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Digitize</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="vm.orderInformation.Digitize"  placeholder="$">
+                                    <input ng-model="order.digitize_charge"  placeholder="$">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
 
                             <div>Shipping</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="vm.orderInformation.Shipping" placeholder="$">
+                                    <input ng-model="order.shipping_charge" placeholder="$">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Set Up</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="vm.orderInformation.SetUp" placeholder="$">
+                                    <input ng-model="order.setup_charge" placeholder="$">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Artwork</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="vm.orderInformation.Artwork" placeholder="$">
+                                    <input ng-model="order.artwork_charge" placeholder="$">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Discount</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="vm.orderInformation.Discount" placeholder="$">
+                                    <input ng-model="order.discount" placeholder="$">
                                 </md-input-container></span>
                         </div>
                     </div>
@@ -444,9 +444,9 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content>
-                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="info in ::vm.packageInformation">
-                        <div>{{ info.pid}}</div>
-                        <span>{{ info.pvalue}}</span>
+                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="order_item in order_items">
+                        <div>{{order_item.item}}</div>
+                        <span>{{order_item.charge}}</span>
                     </div>
                 </md-card-content>
             </md-card>
@@ -473,10 +473,52 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content class="recap">
-                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="recap in ::vm.orderecap">
-                        <div>{{ recap.rid}}</div>
-                        <span>{{ recap.rvalue}}</span>
+
+                   <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Screens</div>
+                        <span class="ng-binding">{{order.screen_charge}}</span>
                     </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Press Setup</div>
+                        <span class="ng-binding">{{order.press_setup_charge}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Lines Total</div>
+                        <span class="ng-binding">{{order.order_line_total}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Order Total</div>
+                        <span class="ng-binding">${{order.screen_charge}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Tax Rate</div>
+                        <span class="ng-binding">{{order.tax_rate}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Tax</div>
+                        <span class="ng-binding">{{order.tax}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Grand Total</div>
+                        <span class="ng-binding">${{order.grand_total}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Total Payments</div>
+                        <span class="ng-binding">{{order.total_payments}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Balance Due</div>
+                        <span class="ng-binding">${{order.balance_due}}</span>
+                    </div>
+
                 </md-card-content>
             </md-card>
         </div>

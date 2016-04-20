@@ -11,58 +11,46 @@ class Order extends Model {
 	
 	public function getOrderdata($post)
 	{
-        $whereConditions_clientid = [];
-        $whereConditions_salesid = [];
-
         $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
-      
-        if (array_key_exists("data",$post)) {
-          
-            if(isset($post['data']['client_id']) && $post['data']['client_id'] != '0') {
-              $whereConditions_clientid = ['order.client_id' => $post['data']['client_id']];
-            }
-
-            if(isset($post['data']['sales_id']) && $post['data']['sales_id'] != '0') {
-              $whereConditions_salesid = ['order.sales_id' => $post['data']['sales_id']];
-            }
+        $created_date = '';
+        if(isset($post['filter']['created_date']) && $post['filter']['created_date'] != '') {
+            $created_date = $post['filter']['created_date'];
         }
 
         $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['company_id']];
-        /*$listArray = ['order.client_id','order.id','order.job_name','order.created_date','order.in_hands_by','order.approved_date','order.needs_garment',
-                      'order.in_art_done','order.third_party_from','order.in_production','order.in_finish_done','order.shipping_by',
-                      'order.status','order.f_approval','client.client_company','misc_type.value as approval'];*/
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.job_name,order.created_date,order.in_hands_by,order.approved_date,order.needs_garment,
-                      order.in_art_done,order.third_party_from,order.in_production,order.in_finish_done,order.shipping_by,
-                      order.status,order.f_approval,client.client_company,misc_type.value as approval')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.name,order.created_date,order.approved_date,order.date_shipped,
+                      order.status,order.approval_id,client.client_company,misc_type.value as approval,staff.first_name,staff.last_name')];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('misc_type as misc_type','order.f_approval','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
+                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
+                         ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                          ->select($listArray)
                          ->where($whereConditions);
-
-                        if (array_key_exists("data",$post)) {
-                            if(isset($post['data']['f_approval']) && $post['data']['f_approval'] != '0' && (count($post['data']['f_approval']) > 1 || $post['data']['f_approval'][0] != 0)) {
-                                     $orderData = $orderData->whereIn('order.f_approval',$post['data']['f_approval']);
-                            }
-                        }          
-                        $orderData = $orderData->where($whereConditions_clientid)
-                        ->where($whereConditions_salesid);
+                        
                         if($search != '')
                         {
                           $orderData = $orderData->Where(function($query) use($search)
                           {
-                              $query->orWhere('order.job_name', 'LIKE', '%'.$search.'%')
+                              $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
                           });
                         }
                         if(isset($post['filter']['seller']))
                         {
                           $orderData = $orderData->whereIn('order.sales_id', $post['filter']['seller']);
+                        }
+                        if(isset($post['filter']['client']))
+                        {
+                          $orderData = $orderData->whereIn('order.client_id', $post['filter']['client']);
+                        }
+                        if($created_date != '')
+                        {
+                          $orderData = $orderData->where('order.created_date', $created_date);
                         }
                         $orderData = $orderData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                         ->skip($post['start'])
@@ -86,22 +74,27 @@ class Order extends Model {
 
     public function orderDetail($data) {
 
-
-        $whereOrderConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
-        $orderData = DB::table('orders')->where($whereOrderConditions)->get();
+      
+         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
-        $clientMainData = array();
-        if($orderData) {
-        $whereClientMainContactConditions = ['client_id' => $orderData[0]->client_id];
-        $clientMainData = DB::table('client_contact')->where($whereClientMainContactConditions)->get();
-          } 
+
+        $listArray = ['order.*','client.client_company','misc_type.value as approval','staff.first_name',
+                      'staff.last_name','users.name','client_contact.first_name as client_first_name',
+                      'client_contact.last_name as client_last_name','price_grid.name as price_grid_name'];
+
+        $orderDetailData = DB::table('orders as order')
+                         ->Join('client as client', 'order.client_id', '=', 'client.client_id')
+                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
+                         ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
+                         ->leftJoin('client_contact as client_contact','order.client_id','=', 'client_contact.client_id')
+                         ->leftJoin('price_grid as price_grid','order.price_id','=', 'price_grid.id')
+                         ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
 
         $combine_array = array();
-
-        $combine_array['order'] = $orderData;
-        
-        $combine_array['client_main_data'] = $clientMainData;
-
+        $combine_array['order'] = $orderDetailData;
         return $combine_array;
     }
 
