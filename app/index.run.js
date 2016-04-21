@@ -18,19 +18,11 @@
             }
         });
         
-        //funCheckSession();
        
         // Activate loading indicator
         var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function ($stateChangeStart, $next)
         {   
             $rootScope.loadingProgress = true;      
-            funCheckSession();      
-
-        });
-
-        // CHECK SESSION FUNCITON ON EACH CALL
-        function funCheckSession() 
-        {
             checkSession.post(null,function(result) 
             {   
                 if(result.data.success=='1')
@@ -41,20 +33,32 @@
                     sessionService.set('company_id',result.data.company_id);
                     sessionService.set('company_name',result.data.company_name);
                     sessionService.set('name',result.data.name);
-                   // console.log(sessionService.get('company_id'));
+                    // console.log(sessionService.get('company_id'));
                     var userId = result.data.user_id;            
                     if(userId === '' || userId === null) 
                     {                    
-                        if($state.current.name !== 'app.login') 
+                        if($next.name.indexOf('login') === -1) 
                         {                                        
-                            //$state.go('app.login');
+                            $state.go('app.login');
                             notifyService.notify("error", "Please signin first.");
                             $stateChangeStart.preventDefault();
                         }
                     }
                 }
-            });
-        }
+                else
+                {
+                    if($next.name.indexOf('login') === -1) 
+                    {                                        
+                        $state.go('app.login');
+                        notifyService.notify("error", "Please signin first.");
+                        $stateChangeStart.preventDefault();
+                    }
+                }
+
+            });     
+
+        });
+
 
 
         // De-activate loading indicator

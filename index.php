@@ -29,12 +29,12 @@
           class="{{state.current.bodyClass|| ''}}">
 
         <!-- SPLASH SCREEN -->
-    <ms-splash-screen id="splash-screen">
+<!--     <ms-splash-screen id="splash-screen">
         <div class="center">
             <div class="logo" style="width:15%">
                 <span>Stokkup</span>
             </div>
-            <!-- Material Design Spinner -->
+            <!-- Material Design Spinner
             <div class="spinner-wrapper">
                 <div class="spinner">
                     <div class="inner">
@@ -48,9 +48,9 @@
                     </div>
                 </div>
             </div>
-            <!-- / Material Design Spinner -->
+         / Material Design Spinner 
         </div>
-    </ms-splash-screen>
+    </ms-splash-screen> -->
     <!-- / SPLASH SCREEN -->
 
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
