@@ -147,7 +147,7 @@ Route::get('client/getDocumentDetailbyId/{id}', 'ClientController@getDocumentDet
 Route::post('client/updateDoc', 'ClientController@updateDoc');
 Route::post('client/saveDoc', 'ClientController@saveDoc');
 Route::get('client/deleteClientDoc/{id}', 'ClientController@deleteClientDoc');
-
+Route::get('client/SelectionData/{id}', 'ClientController@SelectionData');
 
 
 
