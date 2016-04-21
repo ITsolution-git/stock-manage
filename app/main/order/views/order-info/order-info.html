@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="ms-responsive-table-wrapper">
-                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions"  >
+                <table class="dataTable row-border hover"  dt-options="vm.dtOptions"  >
                     <thead>
 
                         <tr>
@@ -120,13 +120,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="design in ::vm.designs" class="cursor-p">
+                        <tr ng-repeat="design in designs" class="cursor-p">
                             <td>{{ design.id}}</td>
-                            <td ui-sref="app.order.design" >{{ design.designName}}  
-                            </td>
-                            <td>{{ design.total}}</td>
-                            <td>{{ design.totalcolor}}</td>
-                            <td class="text-center font-small mdslider pad-0 "><label class="slider">{{ design.status}}</label>
+                            <td ui-sref="app.order.design" >{{ design.design_name}}</td>
+                            <td>123</td>
+                            <td>123</td>
+                            <td class="text-center font-small mdslider pad-0 "><label class="slider">60</label>
                     <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color">
                     </md-slider>
                     </td> 

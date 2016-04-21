@@ -852,4 +852,44 @@ class CommonController extends Controller {
         return response()->json(['data'=>$data]);
      }
 
+
+       /**
+    * Get record for any single table.
+    * @params Table name, Condition array
+    * @return json data
+    */
+     public function allColor()
+     {
+        $post = Input::all();
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+        if(empty($post['cond'])){
+            $post['cond'] = array();
+        }
+
+        if(empty($post['notcond'])){
+            $post['notcond'] = array();
+        }
+        
+       
+        if(!empty($post['table']))
+        {
+             $allcolors = $this->common->GetTableRecords($post['table'],$post['cond'],$post['notcond']);
+
+              foreach ($allcolors as $key => $value) 
+            {
+                $color_array[$value->id]= $value->name;
+                $allcolors[$key]->name = strtolower($value->name);
+            }
+            
+             return $this->return_response($allcolors);
+        }
+        else
+        {
+
+            $data = array("success"=>0,"message"=>MISSING_PARAMS);
+            return response()->json(['data'=>$data]);
+        }
+     }
+
+
 }

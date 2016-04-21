@@ -187,6 +187,7 @@ class OrderController extends Controller {
         $data = Input::all();
         $result = $this->order->orderDetail($data);
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
+        $order_design = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
 
         if(!empty($order_items))
         {
@@ -225,6 +226,7 @@ class OrderController extends Controller {
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['order'],
+                                 'order_design' => $order_design,
                                 'order_item' => $result['order_item']
                                 );
         } else {
@@ -232,6 +234,7 @@ class OrderController extends Controller {
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'records' => $result['order'],
+                                'order_design' => $order_design,
                                 'order_item' => $result['order_item']);
         } 
         return response()->json(["data" => $response]);
@@ -1976,6 +1979,18 @@ class OrderController extends Controller {
 
            $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
            return response()->json(['data'=>$data]);
+
+    }
+
+
+     public function addDesign()
+    {
+        $post = Input::all();
+       
+        $design_id = $this->common->InsertRecords('order_design',$post['designData']);
+
+       $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$design_id);
+       return response()->json(['data'=>$data]);
 
     }
 
