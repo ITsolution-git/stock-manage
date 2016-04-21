@@ -37,7 +37,7 @@
           'sortOrder': 'dsc'
         };
 
-        $scope.reloadCallback = function () { console.log(123); };
+        $scope.reloadCallback = function () { };
 
 
         $scope.filterBy = {
@@ -114,7 +114,12 @@
             $scope.paramsObj = paramsObj;
  
             var orderData = {};
-            orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
+
+            if($scope.params.page.page!=0)
+            {
+              $scope.params.page.page=1;
+            }
+              orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
 
               return $http.post('api/public/order/listOrder',orderData).success(function(response) {
                 var header = response.header;
@@ -126,6 +131,8 @@
                   'sortOrder': response.sortOrder
                 }
               });
+
+
         }
         $scope.removeItem = function (item) {
           $http.post('table-delete-row.json', {
