@@ -228,3 +228,15 @@ table thead th{
 }
 
 .safari .table-title{padding: 8px;}
+.filter-detail mdp-date-picker md-input-container .md-errors-spacer {
+    float: right;
+    min-height: 0;
+    min-width: 1px;
+}
+.filter-detail mdp-date-picker md-input-container {
+    width: 100%;
+    margin-bottom: 0;
+}
+.filter-detail mdp-date-picker md-input-container.md-default-theme .md-input{
+    cursor: pointer;
+}

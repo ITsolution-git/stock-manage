@@ -20,7 +20,7 @@
                         <h1 class="md-toolbar-tools">Filter By</h1>
                     </md-toolbar>
                     <md-content class="flex-fix-bottom scrollable"  ms-scroll>
-                        <div class="contant-filter" >
+                        <div class="contant-filter filter-detail" >
                             <div layout="column" class="f-box-1">
                                 <div class="f-header">
                                     <span>
@@ -76,7 +76,8 @@
                                 </div>
                                 <div class="f-body" ng-if="vm.createdate">
                                     <div layout="column" >
-                                        <md-datepicker ng-model="vm.createDate" md-placeholder="Date"></md-datepicker>
+                                        <mdp-date-picker mdp-open-on-click name="dateFormat" mdp-placeholder="Date" mdp-format="DD/MM/YYYY" ng-model="vm.createDate" class="cursor-p">
+                                        </mdp-date-picker>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +103,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div layout="column" class="f-box-1">
+                            <div layout="column" class="f-box-1">
                                 <div class="f-header">
                                     <span>
                                         ORDER ID  
@@ -145,18 +146,24 @@
                                 <div class="f-body" ng-if="vm.datefilter">
                                     <div layout="column" >
                                         <label class="f-14">FROM</label>
-                                        <md-datepicker ng-model="vm.rangeFrom" md-placeholder="Date" class="mar-left"></md-datepicker>
+                                        <mdp-date-picker mdp-open-on-click  name="dateFormat" mdp-placeholder="Date" mdp-format="DD/MM/YYYY" ng-model="vm.rangeFrom">
+                                        </mdp-date-picker>
                                     </div>
                                     <label class="f-14">TO</label>
-                                    <md-datepicker ng-model="vm.rangeTo" md-placeholder="Date" class="mar-left"></md-datepicker>
+                                    <mdp-date-picker mdp-open-on-click  name="dateFormat" mdp-placeholder="Date" mdp-format="DD/MM/YYYY" ng-model="vm.rangeTo">
+                                    </mdp-date-picker>
                                 </div>
-                            </div> -->
+                        </div>
                         </div>
                     </md-content>
-                    <div class="filter-footer">
-                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple" ng-click="filterOrders()">                                      
+                    <div class="filter-footer" layout="row">
+                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50">                                      
                             APPLY FILTERS
                         </md-button>
+                        <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50">                                      
+                            RESET FILTERS
+                        </md-button>
+
                     </div>
                 </md-sidenav>
             </div>
