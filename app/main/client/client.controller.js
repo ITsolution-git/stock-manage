@@ -9,7 +9,7 @@
             //.controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
-    function ClientController(ClientData, $mdDialog, $document,sessionService,$resource) {
+    function ClientController($mdDialog, $document,sessionService,$resource,$scope) {
         var vm = this;
         // Data
         //console.log(sessionService.get('company_id'));
@@ -30,15 +30,15 @@
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
         vm.getClientData = getClientData;
-
-         vm.getClientData();
+        $scope.company_id = sessionService.get('company_id');
+        vm.getClientData();
         //////////
         function getClientData()
         {
             var price_list_data = {};
-            price_list_data.cond ={company_id :sessionService.get('company_id')};
+            price_list_data.cond ={company_id :$scope.company_id};
 
-            var checkSession = $resource('api/public/client/ListClient',price_list_data,{
+            var checkSession = $resource('api/public/client/ListClient',null,{
                 post : {
                        method : 'post'
                        }
@@ -49,6 +49,7 @@
                 {   
                     vm.clients = result.data.records;
                 }
+                vm.success = result.data.success;
             });
         }
         function openClientDialog(ev, client)
@@ -59,7 +60,7 @@
                 templateUrl: 'app/main/client/dialogs/client/client-dialog.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 locals: {
                     Client: client,
                     Clients: vm.clients,

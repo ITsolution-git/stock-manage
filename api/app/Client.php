@@ -8,12 +8,12 @@ use DateTime;
  
 class Client extends Model {
 
-	public function addclient($client)
+	public function addclient($client,$contact)
 	{
 
 		$result = DB::table('client')->insert($client);
 		$client_id = DB::getPdo()->lastInsertId();
-    $contact = array(); $address = array();
+    $address = array();
 		if(!empty($client_id))
 		{
 			$contact['client_id']=$client_id;
