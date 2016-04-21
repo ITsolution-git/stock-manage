@@ -32,14 +32,6 @@
                     {
                        return sessionService.AccessService('ALL');
                     },
-                    ClientData: function (msApi,sessionService,$rootScope)
-                    {
-                      /* var price_list_data = {};
-                       console.log(sessionStorage.getItem('company_id'));
-                       price_list_data.cond ={company_id :sessionStorage.getItem('company_id')};
-
-                       return msApi.resolve('client@post',price_list_data);*/
-                    }
                 },
                 url    : '/list',
                 views  : {
@@ -66,13 +58,6 @@
                 }
             });
 
-        // Translation
-        //$translatePartialLoaderProvider.addPart('app/main/client');
-
-        // Api
-        // msApiProvider.register('client', ['app/data/client/client.json']);
-/*        msApiProvider.register('client',['api/public/client/ListClient',null, {post:{method:'post'}}]);
-*/
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',
