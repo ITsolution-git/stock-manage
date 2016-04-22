@@ -32,25 +32,42 @@ class ClientController extends Controller {
 		$client = array(); $contact = array(); $address = array();
 		$post = Input::all();
 		
+		//echo "<pre>"; print_r($post); echo "</pre>"; die;
 		if(!empty($post['company_id']) && !empty($post['client_company']) && !empty($post['billing_email']))
 		{
 			$company_data = $this->common->GetTableRecords('staff',array('user_id' => $post['company_id']),array());
 
 		/* SEPARATE CLIENT DATA IN TO ARRAY */
-		    $client['company_id'] = $post['company_id'];
-			$client['client_company'] = $post['client_company'];
-			$client['billing_email'] = $post['billing_email'];
-			$client['salespricegrid']=$post['salespricegrid'];
-			$client['anniversarydate'] = CURRENT_DATETIME; 
+		    $client['company_id'] = (!empty($post['company_id']))?$post['company_id']:'';
+			$client['client_company'] = (!empty($post['client_company']))?$post['client_company']:'';
+			$client['billing_email'] = (!empty($post['billing_email']))?$post['billing_email']:'';
+			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
+			 
 			$client['client_companytype'] = !empty($post['client_companytype'])? $post['client_companytype'] : '';
+			$client['company_url'] = !empty($post['company_url'])? $post['company_url'] : '';
 			$client['created_date']=CURRENT_DATETIME;
+			$client['anniversarydate'] = CURRENT_DATETIME;
 			$client['status']='1';
 			$client['tax_rate']=$company_data[0]->tax_rate;
+
+			$client['pl_address']=(!empty($post['pl_address']))?$post['pl_address']:'';
+			$client['pl_pincode']=(!empty($post['pl_pincode']))?$post['pl_pincode']:'';
+			$client['pl_state']=(!empty($post['pl_state']))?$post['pl_state']:'';
+			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
+
+
+
+			$contact['first_name']=!empty($post['first_name'])? $post['first_name'] : '';
+			$contact['last_name']=!empty($post['last_name'])? $post['last_name'] : '';
+			$contact['phone']=!empty($post['phone'])? $post['phone'] : '';
+			$contact['email']=!empty($post['email'])? $post['email'] : '';
+			$contact['contact_main']='1';	// SET ACTIVE CONDITION
+
 		/* FINISH CLIENT DATA IN TO ARRAY */
+		//echo "<pre>"; print_r($contact); print_r($client); echo "</pre>"; die;
+			
 
-		$contact['contact_main']='1';	// SET ACTIVE CONDITION
-
-		$result = $this->client->addclient($client);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
+		$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
 
 		if($result)
 			{
@@ -648,6 +665,29 @@ class ClientController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
+    public function SelectionData($company_id)
+    {
+    	if($company_id)
+    	{
+			$StaffList = $this->common->getStaffList($company_id);
+			$ArrCleintType=$this->common->TypeList('company');
+			$AddrTypeData = $this->common->GetMicType('address_type',$company_id);
+			$Arrdisposition = $this->common->GetMicType('disposition',$company_id);
+			$state = $this->common->GetTableRecords('state',array(),array());
+
+			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state);
+			$message = GET_RECORDS;
+			$success = 1;
+		}
+		else
+        {
+        	$result  = array();
+            $message = MISSING_PARAMS." - company_id";
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message,'result'=>$result);
+        return response()->json(['data'=>$data]);
+    }
 
 
 

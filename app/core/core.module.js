@@ -14,6 +14,7 @@
                 'ngMaterial',
                 'pascalprecht.translate',
                 'datatables',
+               'mdPickers',
                 'ui.router'
                 
             ]);

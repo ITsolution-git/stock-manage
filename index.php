@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="styles/vendor.css">
 
         <link rel="stylesheet" href="styles/app.css">
+        <link rel="stylesheet" href="styles/mdPickers.min.css">
 
         <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
               rel='stylesheet' type='text/css'>
@@ -28,12 +29,12 @@
           class="{{state.current.bodyClass|| ''}}">
 
         <!-- SPLASH SCREEN -->
-    <ms-splash-screen id="splash-screen">
+<!--     <ms-splash-screen id="splash-screen">
         <div class="center">
             <div class="logo" style="width:15%">
                 <span>Stokkup</span>
             </div>
-            <!-- Material Design Spinner -->
+            <!-- Material Design Spinner
             <div class="spinner-wrapper">
                 <div class="spinner">
                     <div class="inner">
@@ -47,9 +48,9 @@
                     </div>
                 </div>
             </div>
-            <!-- / Material Design Spinner -->
+         / Material Design Spinner 
         </div>
-    </ms-splash-screen>
+    </ms-splash-screen> -->
     <!-- / SPLASH SCREEN -->
 
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
@@ -57,6 +58,7 @@
     <!-- <ms-theme-options></ms-theme-options> -->
 
     <script src="scripts/vendor.js"></script>
+    <script src="scripts/mdPickers.min.js"></script>
 
     <!-- inject:js -->
 

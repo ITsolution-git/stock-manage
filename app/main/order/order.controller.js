@@ -10,7 +10,8 @@
 
     function OrderController(OrderData,OrderUserData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
-
+vm.resetFilter = resetFilter;
+vm.showDatePicker = showDatePicker;
         // Data
 
         vm.salesCheck = OrderUserData.data.records;
@@ -28,7 +29,44 @@
         vm.rangeFrom;
         vm.rangeTo;
         vm.datefilter = false;
+  function resetFilter() {
 
+            for (var i = 0; i < this.salesCheck.length; i++) {
+                this.salesCheck[i].name = false;
+            }
+            for (var i = 0; i < this.companyCheck.length; i++) {
+                this.companyCheck[i].name = false;
+            }
+            vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = false;
+            this.searchOrder = null;
+            jQuery('.dateFilter').prop("value", " ");
+           
+
+
+        }
+         function showDatePicker(ev) {
+            $mdpDatePicker(vm.createDate, {
+                targetEvent: ev
+            }).then(function (selectedDate) {
+                vm.createDate = selectedDate;
+            });
+            $mdpDatePicker(vm.shipDate, {
+                targetEvent: ev
+            }).then(function (selectedDate) {
+                vm.shipDate = selectedDate;
+            });
+            $mdpDatePicker(vm.rangeFrom, {
+                targetEvent: ev
+            }).then(function (selectedDate) {
+                vm.rangeFrom = selectedDate;
+            });
+            $mdpDatePicker(vm.rangeTo, {
+                targetEvent: ev
+            }).then(function (selectedDate) {
+                vm.rangeTo = selectedDate;
+            });
+            
+        };
         $scope.init = {
           'count': 10,
           'page': 1,
@@ -36,7 +74,7 @@
           'sortOrder': 'dsc'
         };
 
-        $scope.reloadCallback = function () { console.log(123); };
+        $scope.reloadCallback = function () { };
 
 
         $scope.filterBy = {
@@ -93,7 +131,7 @@
                 $scope.filterBy.client = angular.copy($scope.clientArray);
             }
 
-            if(vm.createDate != '' && vm.createDate != undefined)
+            if(vm.createDate != '' && vm.createDate != undefined && vm.createDate != false)
             {
                 flag = false;
                 $scope.filterBy.created_date = get_formated_date(vm.createDate);
@@ -113,7 +151,12 @@
             $scope.paramsObj = paramsObj;
  
             var orderData = {};
-            orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
+
+            if($scope.params.page.page!=0)
+            {
+              $scope.params.page.page=1;
+            }
+              orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
 
               return $http.post('api/public/order/listOrder',orderData).success(function(response) {
                 var header = response.header;
@@ -125,6 +168,8 @@
                   'sortOrder': response.sortOrder
                 }
               });
+
+
         }
         $scope.removeItem = function (item) {
           $http.post('table-delete-row.json', {

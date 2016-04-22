@@ -79,6 +79,7 @@ class OrderController extends Controller {
     public function listOrder()
     {
         $post_all = Input::all();
+        $records = array();
 
         $post = $post_all['cond']['params'];
         $post['company_id'] = $post_all['cond']['company_id'];
@@ -99,6 +100,8 @@ class OrderController extends Controller {
 
         $result = $this->order->getOrderdata($post);
         $records = $result['allData'];
+
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
@@ -111,6 +114,11 @@ class OrderController extends Controller {
                         6=>array('key' => 'order.date_shipped', 'name' => 'Ship Date'),
                         7=>array('key' => 'null', 'name' => 'Opeations', 'sortable' => false)
                         );
+
+        if(empty($records))
+        {
+            $records = array('No Records found');
+        }
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
         return $this->return_response($data);
