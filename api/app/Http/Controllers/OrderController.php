@@ -187,8 +187,7 @@ class OrderController extends Controller {
         $data = Input::all();
         $result = $this->order->orderDetail($data);
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
-        $order_design = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
-
+      
         if(!empty($order_items))
         {
             $items = $this->order->getItemsByOrder($data['id']);
@@ -226,7 +225,6 @@ class OrderController extends Controller {
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['order'],
-                                 'order_design' => $order_design,
                                 'order_item' => $result['order_item']
                                 );
         } else {
@@ -234,7 +232,6 @@ class OrderController extends Controller {
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'records' => $result['order'],
-                                'order_design' => $order_design,
                                 'order_item' => $result['order_item']);
         } 
         return response()->json(["data" => $response]);
@@ -1560,15 +1557,15 @@ class OrderController extends Controller {
      *          property="orderline_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="product_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="color_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="order_id",
      *          type="integer"
      *      )
@@ -1759,11 +1756,11 @@ class OrderController extends Controller {
      *          property="email",
      *          type="string"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="product_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+        *    @SWG\Property(
      *          property="order_id",
      *          type="integer"
      *      )
@@ -1833,11 +1830,11 @@ class OrderController extends Controller {
      *      definition="orderImageDetail",
      *      type="object",
      *      required={"id","company_id"},
-            @SWG\Property(
+       *     @SWG\Property(
      *          property="id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+       *     @SWG\Property(
      *          property="company_id",
      *          type="integer"
      *      )
@@ -1986,10 +1983,80 @@ class OrderController extends Controller {
      public function addDesign()
     {
         $post = Input::all();
+        unset($post['designData']['back_color_name']);
+        unset($post['designData']['bottom_color_name']);
+        unset($post['designData']['front_color_name']);
+        unset($post['designData']['side_left_color_name']);
+        unset($post['designData']['side_right_color_name']);
+        unset($post['designData']['top_color_name']);
        
         $design_id = $this->common->InsertRecords('order_design',$post['designData']);
 
        $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$design_id);
+       return response()->json(['data'=>$data]);
+
+    }
+
+    public function designListing() {
+ 
+        $data = Input::all();
+       
+        $order_design = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
+
+       
+        if (count($order_design) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $order_design
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'records' => $order_design);
+        } 
+        return response()->json(["data" => $response]);
+
+    }
+
+    public function designDetail() {
+ 
+        $data = Input::all();
+        $result = $this->order->designDetail($data);
+        
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $result['design']
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'records' => $result['design']);
+        } 
+        return response()->json(["data" => $response]);
+
+    }
+
+     public function editDesign()
+    {
+        $post = Input::all();
+        unset($post['designData']['back_color_name']);
+        unset($post['designData']['bottom_color_name']);
+        unset($post['designData']['front_color_name']);
+        unset($post['designData']['side_left_color_name']);
+        unset($post['designData']['side_right_color_name']);
+        unset($post['designData']['top_color_name']);
+       
+
+       $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['designData']);
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+            return response()->json(['data'=>$data]);
+
+       $data = array("success"=>1,"message"=>INSERT_RECORD);
        return response()->json(['data'=>$data]);
 
     }

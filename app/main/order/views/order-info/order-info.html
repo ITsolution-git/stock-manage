@@ -78,7 +78,7 @@
                     Designs
                 </div>
                 <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
-                    <md-button class="dark-bg" ng-click="vm.openaddDesignDialog($event)">
+                    <md-button class="dark-bg" ng-click="vm.openaddDesignDialog($event,0)">
                         ADD NEW
                     </md-button>
                 </div>
@@ -136,7 +136,7 @@
                         </md-button>
                         <md-menu-content width="4">
                             <md-menu-item>
-                                <md-button>
+                                <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
                                     Edit Design
                                 </md-button>
                             </md-menu-item>

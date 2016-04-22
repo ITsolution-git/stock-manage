@@ -25,8 +25,29 @@
                 if(result.data.success == '1') {
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
-                   $scope.designs = result.data.order_design;
+                  
+                }
+                else {
+                    $state.go('order.list');
+                }
+                $("#ajax_loader").hide();
+            });
 
+          }
+
+
+           $scope.designDetail = function(){
+
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+            
+            
+
+            $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                   $scope.designs = result.data.records;
                 }
                 else {
                     $state.go('order.list');
@@ -37,6 +58,7 @@
           }
 
       $scope.orderDetail();
+      $scope.designDetail();
             
        
         var vm = this;
@@ -103,7 +125,7 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
-         function openaddDesignDialog(ev, order)
+         function openaddDesignDialog(ev, event_id)
         {
             $mdDialog.show({
                 controller: 'AddDesignController',
@@ -111,15 +133,16 @@
                 templateUrl: 'app/main/order/dialogs/addDesign/addDesign.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    event_id: event_id,
                     event: ev
                  },
-                 onRemoving : $scope.orderDetail
+                 onRemoving : $scope.designDetail
             });
         }
+
+       
         
         function openaddSplitAffiliateDialog(ev, order)
         {

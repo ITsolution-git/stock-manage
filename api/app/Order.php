@@ -819,5 +819,39 @@ public function saveColorSize($post)
     }
 
 
+    /**
+* Order Detail           
+* @access public designDetail
+* @param  int $orderId and $clientId
+* @return array $combine_array
+*/  
+
+    public function designDetail($data) {
+
+      
+         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
+        
+
+        $listArray = ['od.*','cf.name as front_color_name','bci.name as back_color_name','sr.name as side_right_color_name',
+                        'sl.name as side_left_color_name','tc.name as top_color_name','bc.name as bottom_color_name'];
+
+        $designDetailData = DB::table('order_design as od')
+                         
+                         ->leftJoin('color as cf','od.front_color_id','=', 'cf.id')
+                         ->leftJoin('color as bci','od.back_color_id','=', 'bci.id')
+                         ->leftJoin('color as sr','od.side_right_color_id','=', 'sr.id')
+                         ->leftJoin('color as sl','od.side_left_color_id','=', 'sl.id')
+                         ->leftJoin('color as tc','od.top_color_id','=', 'tc.id')
+                         ->leftJoin('color as bc','od.bottom_color_id','=', 'bc.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $combine_array = array();
+        $combine_array['design'] = $designDetailData;
+        return $combine_array;
+    }
+
+
     
 }

@@ -22,83 +22,135 @@
 
                 <div layout="row" layout-wrap layout-align="space-between center">
                     
- <div flex="30">  
-                    <md-autocomplete
-                                            ng-disabled="isDisabled"
-                                            md-no-cache="noCache"
-                                            md-selected-item=""
-                                            md-search-text-change=""
-                                            md-search-text="allcolor.color_name"
-                                            md-selected-item-change="change_color('item.id','front_color_id')"
-                                            md-items="item in querySearch(allcolor.color_name)"
-                                            md-item-text="item.name"
-                                            md-min-length="1"
-                                            <md-item-template>
-                                                <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
-                                            </md-item-template>
-                                            <md-not-found>
-                                                No Color found.
-                                            </md-not-found>
-                                        </md-autocomplete>
-      </div>
+                    <div flex="30">  
+                        <md-autocomplete
+                            ng-disabled="isDisabled"
+                            md-no-cache="noCache"
+                            md-selected-item=""
+                            md-search-text-change=""
+                            md-search-text="design.front_color_name"
+                            md-selected-item-change="change_color(item.id,'front_color_id')"
+                            md-items="item in querySearch(design.front_color_name)"
+                            md-item-text="item.name"
+                            md-min-length="1"
+                            placeholder="Search Front Color"
+                            <md-item-template>
+                            <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                            No Color found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                    <div flex="30">  
+                        <md-autocomplete
+                            ng-disabled="isDisabled"
+                            md-no-cache="noCache"
+                            md-selected-item=""
+                            md-search-text-change=""
+                            md-search-text="design.side_right_color_name"
+                            md-selected-item-change="change_color(item.id,'side_right_color_id')"
+                            md-items="item in querySearch(design.side_right_color_name)"
+                            md-item-text="item.name"
+                            md-min-length="1"
+                            placeholder="Search Side Right Color"
+                            <md-item-template>
+                            <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                            No Color found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                    <div flex="30">  
+                        <md-autocomplete
+                            ng-disabled="isDisabled"
+                            md-no-cache="noCache"
+                            md-selected-item=""
+                            md-search-text-change=""
+                            md-search-text="design.top_color_name"
+                            md-selected-item-change="change_color(item.id,'top_color_id')"
+                            md-items="item in querySearch(design.top_color_name)"
+                            md-item-text="item.name"
+                            md-min-length="1"
+                            placeholder="Search Top Color"
+                            <md-item-template>
+                            <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                            No Color found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                    <div flex="30">  
+                        <md-autocomplete
+                            ng-disabled="isDisabled"
+                            md-no-cache="noCache"
+                            md-selected-item=""
+                            md-search-text-change=""
+                            md-search-text="design.back_color_name"
+                            md-selected-item-change="change_color(item.id,'back_color_id')"
+                            md-items="item in querySearch(design.back_color_name)"
+                            md-item-text="item.name"
+                            md-min-length="1"
+                            placeholder="Search Back Color"
+                            <md-item-template>
+                            <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                            No Color found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+
+                    <div flex="30">  
+                        <md-autocomplete
+                            ng-disabled="isDisabled"
+                            md-no-cache="noCache"
+                            md-selected-item=""
+                            md-search-text-change=""
+                            md-search-text="design.side_left_color_name"
+                            md-selected-item-change="change_color(item.id,'side_left_color_id')"
+                            md-items="item in querySearch(design.side_left_color_name)"
+                            md-item-text="item.name"
+                            md-min-length="1"
+                            placeholder="Search Side Left Color"
+                            <md-item-template>
+                            <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                            No Color found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
+
+                     <div flex="30">  
+                        <md-autocomplete
+                            ng-disabled="isDisabled"
+                            md-no-cache="noCache"
+                            md-selected-item=""
+                            md-search-text-change=""
+                            md-search-text="design.bottom_color_name"
+                            md-selected-item-change="change_color(item.id,'bottom_color_id')"
+                            md-items="item in querySearch(design.bottom_color_name)"
+                            md-item-text="item.name"
+                            md-min-length="1"
+                            placeholder="Search Bottom Color"
+                            <md-item-template>
+                            <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                            </md-item-template>
+                            <md-not-found>
+                            No Color found.
+                            </md-not-found>
+                        </md-autocomplete>
+                    </div>
   <!--
-                    <div flex="30">  
-                        <md-input-container class="md-block first-box" flex-gt-sm>
-                            <label>Front</label>
-                                <md-select ng-model="design.front_color_id">
-                                    <md-option ng-repeat="color in allColor" value="{{color.id}}">
-                                        {{color.name}}
-                                    </md-option>
-                                </md-select>
-                        </md-input-container>
-                    </div>
+                   
 
-                    <div flex="30">  
-                        <md-input-container class="md-block first-box" flex-gt-sm>
-                            <label>Side Right</label>
-                                <md-select ng-model="design.side_right_color_id  ">
-                                    <md-option ng-repeat="color in allColor" value="{{color.id}}">
-                                        {{color.name}}
-                                    </md-option>
-                                </md-select>
-                        </md-input-container>
-                    </div>
-
-
-                     <div flex="30">  
-                        <md-input-container class="md-block first-box" flex-gt-sm>
-                            <label>Top</label>
-                                <md-select ng-model="design.top_color_id">
-                                    <md-option ng-repeat="color in allColor" value="{{color.id}}">
-                                        {{color.name}}
-                                    </md-option>
-                                </md-select>
-                        </md-input-container>
-                    </div>
-
-
-                     <div flex="30">  
-                        <md-input-container class="md-block first-box" flex-gt-sm>
-                            <label>Back</label>
-                                <md-select ng-model="design.back_color_id">
-                                    <md-option ng-repeat="color in allColor" value="{{color.id}}">
-                                        {{color.name}}
-                                    </md-option>
-                                </md-select>
-                        </md-input-container>
-                    </div>
-
-
-                     <div flex="30">  
-                        <md-input-container class="md-block first-box" flex-gt-sm>
-                            <label>Side Left</label>
-                                <md-select ng-model="design.side_left_color_id">
-                                    <md-option ng-repeat="color in allColor" value="{{color.id}}">
-                                        {{color.name}}
-                                    </md-option>
-                                </md-select>
-                        </md-input-container>
-                    </div>
 
 
                      <div flex="30">  
@@ -121,19 +173,19 @@
                         In Hans By
                     </span>
                 </div>
-                <md-datepicker flex="80" class="widthfull" ng-model="design.hands_date" md-placeholder="Date"></md-datepicker>
+                <md-datepicker flex="80" class="widthfull" ng-model="design.hands_date" md-placeholder="In Hans By"></md-datepicker>
                 <div>
                     <span class="grey-color">
                         Shipped Date
                     </span>
                 </div>
-                <md-datepicker flex="80" class="widthfull" ng-model="design.shipping_date" md-placeholder="Date"></md-datepicker>
+                <md-datepicker flex="80" class="widthfull" ng-model="design.shipping_date" md-placeholder="Shipped Date"></md-datepicker>
                 <div>
                     <span class="grey-color">
                         Start Date
                     </span>
                 </div>
-                <md-datepicker flex="80" class="widthfull" ng-model="design.start_date" md-placeholder="Date"></md-datepicker>
+                <md-datepicker flex="80" class="widthfull" ng-model="design.start_date" md-placeholder="Start Date"></md-datepicker>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">

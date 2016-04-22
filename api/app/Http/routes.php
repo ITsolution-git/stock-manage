@@ -214,7 +214,9 @@ Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
 Route::post('order/orderImageDetail', 'OrderController@orderImageDetail');
 Route::post('order/addOrder', 'OrderController@addOrder');
 Route::post('order/addDesign', 'OrderController@addDesign');
-
+Route::post('order/designListing', 'OrderController@designListing');
+Route::post('order/designDetail', 'OrderController@designDetail');
+Route::post('order/editDesign', 'OrderController@editDesign');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
