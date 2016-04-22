@@ -173,19 +173,25 @@
                         In Hans By
                     </span>
                 </div>
-                <md-datepicker flex="80" class="widthfull" ng-model="design.hands_date" md-placeholder="In Hans By"></md-datepicker>
+                <!--<md-datepicker flex="80" class="widthfull" ng-model="design.hands_date" md-placeholder="In Hans By"></md-datepicker>-->
+                <mdp-date-picker mdp-open-on-click name="dateFormat" class="widthfull" mdp-placeholder="In Hans By" mdp-format="DD/MM/YYYY" ng-model="design.hands_date">
+                                        </mdp-date-picker>
                 <div>
                     <span class="grey-color">
                         Shipped Date
                     </span>
                 </div>
-                <md-datepicker flex="80" class="widthfull" ng-model="design.shipping_date" md-placeholder="Shipped Date"></md-datepicker>
+                <!--<md-datepicker flex="80" class="widthfull" ng-model="design.shipping_date" md-placeholder="Shipped Date"></md-datepicker>-->
+                <mdp-date-picker mdp-open-on-click name="dateFormat" class="widthfull"  mdp-placeholder="Shipped Date" mdp-format="DD/MM/YYYY" ng-model="design.shipping_date">
+                                        </mdp-date-picker>
                 <div>
                     <span class="grey-color">
                         Start Date
                     </span>
                 </div>
-                <md-datepicker flex="80" class="widthfull" ng-model="design.start_date" md-placeholder="Start Date"></md-datepicker>
+                <!--<md-datepicker flex="80" class="widthfull" ng-model="design.start_date" md-placeholder="Start Date"></md-datepicker>-->
+                <mdp-date-picker mdp-open-on-click name="dateFormat" class="widthfull" mdp-placeholder="Date" mdp-format="DD/MM/YYYY" ng-model="design.start_date">
+                                        </mdp-date-picker>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
