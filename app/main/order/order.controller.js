@@ -132,7 +132,7 @@ vm.showDatePicker = showDatePicker;
                 $scope.filterBy.client = angular.copy($scope.clientArray);
             }
 
-            if(vm.createDate != '' && vm.createDate != undefined)
+            if(vm.createDate != '' && vm.createDate != undefined && vm.createDate != false)
             {
                 flag = false;
                 $scope.filterBy.created_date = get_formated_date(vm.createDate);
