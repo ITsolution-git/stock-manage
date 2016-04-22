@@ -151,5 +151,8 @@
     <script src="app/main/purchaseOrder/dialogs/editNote/editNote.controller.js"></script>
     <script src="app/main/purchaseOrder/dialogs/addNote/addNote.controller.js"></script>
     <script src="app/main/purchaseOrder/views/affiliatePO/affiliatePO.controller.js"></script>
+    <!--Receiving--> 
+    <script src="app/main/receiving/receiving.module.js"></script>
+    <script src="app/main/receiving/receiving.controller.js"></script>
 </body>
 </html>
