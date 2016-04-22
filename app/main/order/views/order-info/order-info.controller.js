@@ -5,11 +5,14 @@
     angular
             .module('app.order')
             .controller('OrderInfoController', OrderInfoController);
+            
 
     /** @ngInject */
     function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope)
     {
 
+          
+          $scope.orderDetail = function(){
 
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
@@ -22,12 +25,41 @@
                 if(result.data.success == '1') {
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
+                  
                 }
                 else {
                     $state.go('order.list');
                 }
                 $("#ajax_loader").hide();
             });
+
+          }
+
+
+           $scope.designDetail = function(){
+
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+            
+            
+
+            $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                   $scope.designs = result.data.records;
+                }
+                else {
+                    $state.go('order.list');
+                }
+                $("#ajax_loader").hide();
+            });
+
+          }
+
+      $scope.orderDetail();
+      $scope.designDetail();
+            
        
         var vm = this;
          vm.openaddDesignDialog = openaddDesignDialog;
@@ -37,11 +69,7 @@
 
           vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
 
-        vm.designs = [
-            {"id": "1", "designName": "Spring Shirts", "total": "70", "totalcolor": "3", "status": "In Producation xx/xx/xxxx", "statusValue": "60"},
-            {"id": "2", "designName": "Spring Shirts 2", "total": "25", "totalcolor": "2", "status": "In Producation xx/xx/xxxx", "statusValue": "60"},
-            {"id": "3", "designName": "Hat FAN", "total": "20", "totalcolor": "63", "status": "In Producation xx/xx/xxxx", "statusValue": "60"}
-        ];
+      
         vm.purchases = [
             {"poid": "27", "potype": "Purchase Order", "clientName": "kensville", "vendor": "SNS", "dateCreated": "xx/xx/xxxx"},
             {"poid": "28", "potype": "Purchase Order", "clientName": "Design T-shirt", "vendor": "Nike", "dateCreated": "xx/xx/xxxx"},
@@ -97,7 +125,7 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
-         function openaddDesignDialog(ev, order)
+         function openaddDesignDialog(ev, event_id)
         {
             $mdDialog.show({
                 controller: 'AddDesignController',
@@ -105,14 +133,17 @@
                 templateUrl: 'app/main/order/dialogs/addDesign/addDesign.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    event_id: event_id,
                     event: ev
-    }
+                 },
+                 onRemoving : $scope.designDetail
             });
         }
+
+       
+        
         function openaddSplitAffiliateDialog(ev, order)
         {
             $mdDialog.show({
@@ -126,8 +157,13 @@
                     Order: order,
                     Orders: vm.orders,
                     event: ev
-    }
+                  }
             });
         }
     }
+
+
+
+
+    
 })();

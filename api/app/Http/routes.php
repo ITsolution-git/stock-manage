@@ -127,6 +127,7 @@ Route::post('common/InsertUserRecords', 'CommonController@InsertUserRecords'); /
 Route::post('common/deleteImage', 'CommonController@deleteImage'); //Update Image
 Route::post('common/updateRecordsEmailVal', 'CommonController@updateRecordsEmailVal'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('common/insertRecordsEmail', 'CommonController@insertRecordsEmail'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
+Route::post('common/allColor', 'CommonController@allColor'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
@@ -212,7 +213,10 @@ Route::post('order/getOrderPositionDetail', 'OrderController@getOrderPositionDet
 Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
 Route::post('order/orderImageDetail', 'OrderController@orderImageDetail');
 Route::post('order/addOrder', 'OrderController@addOrder');
-
+Route::post('order/addDesign', 'OrderController@addDesign');
+Route::post('order/designListing', 'OrderController@designListing');
+Route::post('order/designDetail', 'OrderController@designDetail');
+Route::post('order/editDesign', 'OrderController@editDesign');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

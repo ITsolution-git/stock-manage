@@ -122,6 +122,7 @@
 
     <!-- ORDER FILES START -->
     <script src="app/main/order/order.module.js"></script>
+    <script src="app/main/order/order.controller.js"></script>
     <script src="app/main/order/views/spiltAffiliate/spiltAffiliate.controller.js"></script>
     <script src="app/main/order/views/order-info/order-info.controller.js"></script>
     <script src="app/main/order/views/distributionProduct/distributionProduct.controller.js"></script>
@@ -135,7 +136,7 @@
     <script src="app/main/order/dialogs/addProduct/addProduct.controller.js"></script>
     <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
     <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
-    <script src="app/main/order/order.controller.js"></script>
+    
 
     <!-- CLIENT FILES START -->
     <script src="app/main/client/client.module.js"></script>
@@ -150,5 +151,8 @@
     <script src="app/main/purchaseOrder/dialogs/editNote/editNote.controller.js"></script>
     <script src="app/main/purchaseOrder/dialogs/addNote/addNote.controller.js"></script>
     <script src="app/main/purchaseOrder/views/affiliatePO/affiliatePO.controller.js"></script>
+    <!--Receiving--> 
+    <script src="app/main/receiving/receiving.module.js"></script>
+    <script src="app/main/receiving/receiving.controller.js"></script>
 </body>
 </html>

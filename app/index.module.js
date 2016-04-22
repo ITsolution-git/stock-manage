@@ -26,8 +26,12 @@
             
             //Order
             'app.order',
+            
              //puchase order
             'app.purchaseOrder',
+            
+            // Receiving
+            'app.receiving',
             
             'ngTasty'
         ]);
