@@ -152,10 +152,6 @@ vm.showDatePicker = showDatePicker;
  
             var orderData = {};
 
-            if($scope.params.page.page!=0)
-            {
-              $scope.params.page.page=1;
-            }
               orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
 
               return $http.post('api/public/order/listOrder',orderData).success(function(response) {
