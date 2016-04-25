@@ -40,18 +40,9 @@
                         </div>
                     </md-card-content>
                     <div layout-align="end start"  flex="20" layout="row">
-                        <md-menu>
-                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
-                            <md-menu-content width="4">
-                                <md-menu-item>
-                                    <md-button>
-                                        Main Contact Options
-                                    </md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
                     </div>
                 </md-card>
             </div>
@@ -161,7 +152,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  >
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
                         <thead>
                             <tr>
                                 <th class="secondary-text">
@@ -208,7 +199,7 @@
                             </tr>
                         </tbody> 
                     </table>
-                    <div class="p-23 border-t-grey">
+                    <div class="p-23">
                     </div>
                 </div>
             </div> 
@@ -219,7 +210,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  >
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
                         <thead>
                             <tr>
                                 <th class="secondary-text">
@@ -259,7 +250,7 @@
                             </tr>
                         </tbody> 
                     </table>
-                    <div class="p-23 border-t-grey">
+                    <div class="p-23">
                     </div>
                 </div>
             </div>
@@ -270,7 +261,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions"  >
+                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
                         <thead>
                         <th>Company</th>
                         <th>Total # of Units</th>
@@ -288,7 +279,7 @@
                             </tr>
                         </tbody> 
                     </table>
-                    <div class="p-23 border-t-grey">
+                    <div class="p-23 ">
                     </div>
                 </div>
             </div>
@@ -442,8 +433,8 @@
                         Packing Information
                     </md-card-title-text>
                 </md-card-title>
-                <md-card-content>
-                    <div class="card-box" layout="row" layout-align="space-between center" ng-repeat="order_item in order_items">
+                <md-card-content class="pad0">
+                    <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in order_items"  ng-class="{active : vm.activeMenu === info.pid}" ng-click="vm.setActive(info.pid)" >
                         <div>{{order_item.item}}</div>
                         <span>{{order_item.charge}}</span>
                     </div>

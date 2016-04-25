@@ -1,0 +1,70 @@
+<md-dialog class="task-dialog affiliate-dialog information-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">{{vm.title}}</span>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll class="m-t-10">
+            <md-input-container class="md-block m-r-15 m-t-20 mp-b-0" flex-gt-sm ">
+                <label class="font-14 p-l-0">Customer PO</label>
+                <input placeholder="" ng-model="vm.customerPO">
+            </md-input-container>
+            <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Sales</label>
+                    <md-select ng-model="vm.infodialog.salesSelect.location" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="options in vm.salesSelect.salesOption" value="{{options.option}}">
+                            {{options.option}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Blind</label>
+                    <md-select ng-model="vm.blindSelect.location" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="options in vm.blindSelect.blindOption" value="{{options.option}}">
+                            {{options.option}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Account Manager</label>
+                    <md-select ng-model="vm.accountSelect.location" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="options in vm.accountSelect.accountOption" value="{{options.option}}">
+                            {{options.option}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Main Contact</label>
+                    <md-select ng-model="vm.contactSelect.location" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="options in vm.contactSelect.contactOption" value="{{options.option}}">
+                            {{options.option}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Price Grid</label>
+                    <md-select ng-model="vm.priceSelect.location" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="options in vm.priceSelect.priceOption" value="{{options.option}}">
+                            {{options.option}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised" ui-sref="app.spiltAffiliate">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

@@ -68,6 +68,7 @@
          console.log(vm.orderDetails);*/
 
           vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
+          vm.openinformationDialog = openinformationDialog;
 
       
         vm.purchases = [
@@ -82,7 +83,23 @@
             {"Company": "Company Name", "units": "150", "designs": "1"},
             {"Company": "Company Name", "units": "10,000", "designs": "2"},
         ];
-       
+        vm.packageInformation = [
+            {"pid": "Foil", "pvalue": "4"},
+            {"pid": "Over Size Screens", "pvalue": "5"},
+            {"pid": "SKU", "pvalue": "2"},
+            {"pid": "Poly Bagging", "pvalue": "5"},
+            {"pid": "Hang Tag", "pvalue": "1"},
+            {"pid": "Inside Tagging", "pvalue": "4"},
+        ];
+        vm.activeMenu = vm.packageInformation[0].pid;
+        console.log("-----------------------------------" + vm.packageInformation[0].pid)
+        vm.setActive = function (menuItem) {
+            if(menuItem == vm.activeMenu){
+                vm.activeMenu = null;
+            }
+            else
+            vm.activeMenu = menuItem
+        }
        
         vm.designTotal = {total: "160"};
         vm.finishing = {finish: "5"};
@@ -112,7 +129,15 @@
             dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             pagingType: 'simple',
             autoWidth: false,
-            responsive: true
+            responsive: true,
+            scrollY:171
+        };
+        vm.dtOptionsPurchase = {
+            dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
+            pagingType: 'simple',
+            autoWidth: false,
+            responsive: true,
+            scrollY:103
         };
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
@@ -142,8 +167,22 @@
             });
         }
 
-       
-        
+        function openinformationDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'InformationController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/information/information.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Order: order,
+                    Orders: vm.orders,
+                    event: ev
+                }
+            });
+        }
         function openaddSplitAffiliateDialog(ev, order)
         {
             $mdDialog.show({

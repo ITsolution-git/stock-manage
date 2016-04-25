@@ -136,6 +136,7 @@
     <script src="app/main/order/dialogs/addProduct/addProduct.controller.js"></script>
     <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
     <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
+    <script src="app/main/order/dialogs/information/information.controller.js"></script>
     
 
     <!-- CLIENT FILES START -->
@@ -154,5 +155,8 @@
     <!--Receiving--> 
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
+    <!--Datatable Scrolling-->
+    <script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
+    <link href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css" rel="stylesheet">
 </body>
 </html>
