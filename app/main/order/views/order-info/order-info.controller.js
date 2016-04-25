@@ -175,7 +175,7 @@
                 templateUrl: 'app/main/order/dialogs/information/information.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 locals: {
                     Order: order,
                     Orders: vm.orders,
