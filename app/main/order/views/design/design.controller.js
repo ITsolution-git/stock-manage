@@ -11,6 +11,8 @@
     {
 
      
+       $scope.designDetail = function(){
+
         var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             
@@ -28,50 +30,40 @@
                 }
                 
             });
+        }
+
+        $scope.designPosition = function(){
+
+        var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            
+            $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
+               
+                if(result.data.success == '1') {
+                    $scope.order_design_position = result.data.order_design_position;
+                }
+                
+            });
+        }
+
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                  $scope.miscData = result.data.records;
+        });
+
+
+        $scope.designDetail();
+        $scope.designPosition();
 
         var vm = this;
         //Dummy models data
         
-        vm.positionSelect = [{
-                front: {id: "type1"}
-            },
-            {
-                placement: {id: "type2"}
-            },
-            {
-                dtgSize: {id: "type3"}
-            },
-            {
-                dtgOn: {id: "type4"}
-            }
-
-        ];
-        vm.positionOptions = [
-            {abbrev: "Option-1"},
-            {abbrev: "Option-2"}
-        ];
-        vm.positionInput = {
-            "description": "",
-            "colorCount": "",
-            "foil": "",
-            "numdesk": "",
-            "oversizeSecrren": "",
-            "qunty": "",
-            "linkChange": "",
-            "Numlight": "",
-            "pressSetup": "",
-            "discharge": "",
-            "speciality": "",
-            "oversize": "",
-            "screenFree": "",
-            "notes": ""
-        };
-        vm.size={
-            s:"80",
-            m:"100",
-            l:"75",
-            xl:"90"
-        };
+      
         vm.garmentCost={
             averageGarmentCost:"$2.25",
             markupDefault:"0%",
@@ -85,20 +77,7 @@
           
         };
         
-        vm.position = [{
-                "front": {
-                    "desc": "Description", "notes": ""
-                },
-                "placementType": {
-                    "colorCount": "", "qnty": '', "discharge": "", "foil": "", "inkChange": '', "speciality": ""
-                },
-                "dtgSize": {
-                    "numberOnDark": '', "Number on Light": '', "Oversize": ''
-                },
-                "dtgOn": {
-                    "oversizeScreen": "", "pressSetup": "", "screenFee": ""
-                }
-            }];
+       
         vm.dtOptions = {
             dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             pagingType: 'simple',
