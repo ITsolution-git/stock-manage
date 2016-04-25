@@ -11,27 +11,27 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Front</div>
-                                <span>{{vm.designInforamtion.front}}</span>
+                                <span>{{designInforamtion.front_color_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>In Hand By</div>
-                                <span>{{vm.designInforamtion.sales}}</span>
+                                <span>{{designInforamtion.hands_date | date:"M/d/yyyy"}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Start Date</div>
-                                <span>{{vm.designInforamtion.startDate}}</span>
+                                <span>{{designInforamtion.start_date | date:"M/d/yyyy"}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Back</div>
-                                <span>{{vm.designInforamtion.back}}</span>
+                                <span>{{designInforamtion.back_color_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Shipped Date</div>
-                                <span>{{vm.designInforamtion.shippedDate}}</span>
+                                <span>{{designInforamtion.shipping_date | date:"M/d/yyyy"}}</span>
                             </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="20" layout="row">
+                    <!-- <div layout-align="end start"  flex="20" layout="row">
                         <md-menu>
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -44,14 +44,21 @@
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
-                    </div>
+                    </div> -->
                 </md-card>
             </div>
         </div>
+
+
         <div class="design-positions md-whiteframe-1dp m-b-20" layout="column" layout-align="start" layout-padding>
             <div class="title" ><span class="h2 text-semibold">Positions</span></div>
             <div class="design-positions-box border-grey m-b-20" layout="column" layout-align="start">
                 <div class="box-toolbar" layout="row" layout-align="end center">
+
+                     <div flex="20" layout="row" layout-align="start center">
+                        <span class="h2 text-semibold">Front</span>
+                    </div>
+                  <div flex="80" layout-align="end center" layout="row">
                     <button  ng-click="position1.expanded = !position1.expanded">
                         <md-icon ng-if="position1.expanded" md-font-icon="icon-plus"></md-icon>
                         <md-icon ng-if="!position1.expanded" md-font-icon="icon-minus"></md-icon>
@@ -68,6 +75,7 @@
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
+                   </div>
                 </div>
                 <div ng-if="!position1.expanded" class="box-content" layout="column" layout-padding>
                     <div layout="row" class="postion-details" layout-align="space between">
@@ -220,33 +228,7 @@
                     </div>
                 </div>
             </div>
-            <div class="design-positions-box border-grey " layout="column" layout-align="start">
-                <div class="box-toolbar" layout="row" >
-                    <div flex="20" layout="row" layout-align="start center">
-                        <span class="h2 text-semibold">Back</span>
-                    </div>
-                    <div flex="80" layout-align="end center" layout="row">
-                        <button  ng-click="position2.expanded = !position2.expanded">
-                            <md-icon ng-if="!position2.expanded" md-font-icon="icon-plus"></md-icon>
-                            <md-icon ng-if="position2.expanded" md-font-icon="icon-minus"></md-icon>
-                        </button>
-                        <md-menu>
-                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                            </md-button>
-                            <md-menu-content width="4">
-                                <md-menu-item>
-                                    <md-button>
-                                        Main Design Options
-                                    </md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
-                    </div>
-                </div>
-                <div ng-if="position2.expanded" class="box-content" layout="column" layout-padding>
-                </div>
-            </div>
+            
             <div class="text-right">
                 <md-button  class="bg-grey md-raised" ng-click="vm.openaddDesignDialog($event)">
                             ADD New Position

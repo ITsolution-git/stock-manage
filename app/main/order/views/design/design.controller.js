@@ -7,18 +7,30 @@
             .controller('DesignController', DesignController);
 
     /** @ngInject */
-    function DesignController($document, $window, $timeout, $mdDialog)
+    function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
+
+     
+        var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            
+            $http.post('api/public/order/designDetail',combine_array_id).success(function(result, status, headers, config) {
+               
+                if(result.data.success == '1') {
+                    
+                    
+                    result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
+                    result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
+                    result.data.records[0].start_date = new Date(result.data.records[0].start_date);
+
+                    $scope.designInforamtion = result.data.records[0];
+
+                }
+                
+            });
+
         var vm = this;
         //Dummy models data
-        vm.designInforamtion={
-            front:"###",
-            sales:"xx/xx/xxxx",
-            startDate:"xx/xx/xxxx",
-            back:"##",
-            shippedDate:"xx/xx/xxxx"
-            
-        };
         
         vm.positionSelect = [{
                 front: {id: "type1"}
