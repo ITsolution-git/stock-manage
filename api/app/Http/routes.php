@@ -217,6 +217,7 @@ Route::post('order/addDesign', 'OrderController@addDesign');
 Route::post('order/designListing', 'OrderController@designListing');
 Route::post('order/designDetail', 'OrderController@designDetail');
 Route::post('order/editDesign', 'OrderController@editDesign');
+Route::post('order/getDesignPositionDetail', 'OrderController@getDesignPositionDetail');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

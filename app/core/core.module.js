@@ -15,7 +15,8 @@
                 'pascalprecht.translate',
                 'datatables',
                'mdPickers',
-                'ui.router'
+                'ui.router',
+                'jmApp'
                 
             ]);
 })();

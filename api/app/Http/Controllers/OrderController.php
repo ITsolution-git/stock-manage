@@ -2069,4 +2069,25 @@ class OrderController extends Controller {
 
     }
 
+    public function getDesignPositionDetail()
+    {
+        $data = Input::all();
+        $result = $this->order->getDesignPositionDetail($data);
+        
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'order_design_position' => $result['order_design_position']
+                            );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'order_design_position' => $result['order_design_position']
+                            );
+        }
+        return response()->json(["data" => $response]);
+    }
+
 }

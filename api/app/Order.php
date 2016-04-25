@@ -853,5 +853,22 @@ public function saveColorSize($post)
     }
 
 
+    public function getDesignPositionDetail($data)
+    {
+
+        $whereOrderPositionConditions = ['odp.design_id' => $data['id']];
+
+        $listArray = ['odp.*','m.value as position_name'];
+
+        $orderPositionData = DB::table('order_design_position as odp')
+                            ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
+                            ->where($whereOrderPositionConditions)
+                            ->get();
+        $combine_array['order_design_position'] = $orderPositionData;
+
+        return $combine_array;
+    }
+
+
     
 }

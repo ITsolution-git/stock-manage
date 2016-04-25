@@ -80,6 +80,7 @@
     <script src="app/core/directives/ms-form-wizard/ms-form-wizard.directive.js"></script>
     <script src="app/core/directives/ms-datepicker-fix/ms-datepicker-fix.directive.js"></script>
     <script src="app/core/directives/ms-card/ms-card.directive.js"></script>
+     <script src="app/core/directives/validation.js"></script>
 
 
 
