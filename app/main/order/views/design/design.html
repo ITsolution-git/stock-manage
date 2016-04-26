@@ -56,7 +56,7 @@
                 <div class="box-toolbar" layout="row" layout-align="end center">
 
                      <div flex="20" layout="row" layout-align="start center">
-                        <span class="h2 text-semibold">{{order_design_position.value}}</span>
+                        <span class="h2 text-semibold">{{order_design_position.position_name}}</span>
                     </div>
                   <div flex="80" layout-align="end center" layout="row">
                     <button  ng-click="position1.expanded = !position1.expanded">
@@ -82,7 +82,7 @@
                         <div flex="20">
                             <md-input-container class="width100">
                                 <label>Position</label>
-                                <md-select ng-model="order_design_position.position_id" >
+                                <md-select ng-model="order_design_position.position_id" ng-change="updateDesignPosition('position_id',order_design_position.id,order_design_position.position_id,'order_design_position','id')" >
                                     <md-option   ng-repeat="misc_pos in miscData.position" value="{{misc_pos.id}}">
                                         {{misc_pos.value}}
                                     </md-option>
@@ -92,7 +92,7 @@
                         <div flex="20">
                             <md-input-container class="width100">
                                 <label>Placement Type</label>
-                                <md-select ng-model="order_design_position.placement_type" >
+                                <md-select ng-model="order_design_position.placement_type" ng-change="updateDesignPosition('placement_type',order_design_position.id,order_design_position.placement_type,'order_design_position','id')">
                                     <md-option  ng-repeat="misc_placement in miscData.placement_type" value="{{misc_placement.id}}">
                                         {{misc_placement.value}}
                                     </md-option>
@@ -102,7 +102,7 @@
                         <div flex="20">
                             <md-input-container class="width100">
                                 <label>DtG Size</label>
-                                <md-select ng-model="order_design_position.dtg_size" >
+                                <md-select ng-model="order_design_position.dtg_size" ng-change="updateDesignPosition('dtg_size',order_design_position.id,order_design_position.dtg_size,'order_design_position','id')">
                                     <md-option  ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value="{{misc_dtgsize.id}}">
                                         {{misc_dtgsize.value}}
                                     </md-option>
@@ -112,7 +112,7 @@
                         <div flex="20">
                             <md-input-container class="width100">
                                 <label>DtG on </label>
-                                <md-select ng-model="order_design_position.dtg_on" >
+                                <md-select ng-model="order_design_position.dtg_on" ng-change="updateDesignPosition('dtg_on',order_design_position.id,order_design_position.dtg_on,'order_design_position','id')">
                                     <md-option  ng-repeat="misc_dtg_on in miscData.direct_to_garment" value="{{misc_dtg_on.id}}">
                                         {{misc_dtg_on.value}}
                                     </md-option>
@@ -125,11 +125,11 @@
                             <div >
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Description</label>
-                                    <input ng-model="order_design_position.description">
+                                    <input ng-model="order_design_position.description" ng-blur="updateDesignPosition('description',order_design_position.id,order_design_position.description,'order_design_position','id')">
                                 </md-input-container>
                                 <md-input-container class="md-block">
                                     <label>Notes</label>
-                                    <textarea ng-model="order_design_position.note" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+                                    <textarea ng-model="order_design_position.note" md-maxlength="150" rows="5" md-select-on-focus ng-blur="updateDesignPosition('note',order_design_position.id,order_design_position.note,'order_design_position','id')"></textarea>
                                 </md-input-container>
                             </div>
                         </div>
@@ -137,73 +137,73 @@
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Stitch/Color Count</label>
-                                    <input ng-model="order_design_position.color_stitch_count" valid-number>
+                                    <input ng-model="order_design_position.color_stitch_count" valid-number ng-blur="updateDesignPosition('color_stitch_count',order_design_position.id,order_design_position.color_stitch_count,'order_design_position','id')">
                                 </md-input-container>
                             </div>
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Foil</label>
-                                    <input ng-model="order_design_position.foil_qnty" valid-number>
+                                    <input ng-model="order_design_position.foil_qnty" valid-number ng-blur="updateDesignPosition('foil_qnty',order_design_position.id,order_design_position.foil_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div>
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Numer On Dark</label>
-                                    <input ng-model="order_design_position.number_on_dark_qnty" valid-number>
+                                    <input ng-model="order_design_position.number_on_dark_qnty" valid-number ng-blur="updateDesignPosition('number_on_dark_qnty',order_design_position.id,order_design_position.number_on_dark_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div>
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Oversize Screen(s)</label>
-                                    <input ng-model="order_design_position.oversize_screens_qnty" valid-number>
+                                    <input ng-model="order_design_position.oversize_screens_qnty" valid-number ng-blur="updateDesignPosition('oversize_screens_qnty',order_design_position.id,order_design_position.oversize_screens_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div> 
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Qnty</label>
-                                    <input ng-model="order_design_position.qnty" valid-number>
+                                    <input ng-model="order_design_position.qnty" valid-number ng-blur="updateDesignPosition('qnty',order_design_position.id,order_design_position.qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div> 
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Ink Change</label>
-                                    <input ng-model="order_design_position.ink_charge_qnty" valid-number>
+                                    <input ng-model="order_design_position.ink_charge_qnty" valid-number ng-blur="updateDesignPosition('ink_charge_qnty',order_design_position.id,order_design_position.ink_charge_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div> 
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Number on Light</label>
-                                    <input ng-model="order_design_position.number_on_light_qnty" valid-number>
+                                    <input ng-model="order_design_position.number_on_light_qnty" valid-number ng-blur="updateDesignPosition('number_on_light_qnty',order_design_position.id,order_design_position.number_on_light_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div> 
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Press Setup</label>
-                                    <input ng-model="order_design_position.press_setup_qnty" valid-number>
+                                    <input ng-model="order_design_position.press_setup_qnty" valid-number ng-blur="updateDesignPosition('press_setup_qnty',order_design_position.id,order_design_position.press_setup_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div> 
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Discharge</label>
-                                    <input ng-model="order_design_position.discharge_qnty" valid-number>
+                                    <input ng-model="order_design_position.discharge_qnty" valid-number ng-blur="updateDesignPosition('discharge_qnty',order_design_position.id,order_design_position.discharge_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div>
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Speciality</label>
-                                    <input ng-model="order_design_position.speciality_qnty" valid-number>
+                                    <input ng-model="order_design_position.speciality_qnty" valid-number ng-blur="updateDesignPosition('speciality_qnty',order_design_position.id,order_design_position.speciality_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div>
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Oversize</label>
-                                    <input ng-model="order_design_position.oversize" valid-number>
+                                    <input ng-model="order_design_position.oversize" valid-number ng-blur="updateDesignPosition('oversize',order_design_position.id,order_design_position.oversize,'order_design_position','id')">
                                 </md-input-container>
                             </div>
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Screen Fee</label>
-                                    <input ng-model="order_design_position.screen_fees_qnty" valid-number>
+                                    <input ng-model="order_design_position.screen_fees_qnty" valid-number ng-blur="updateDesignPosition('screen_fees_qnty',order_design_position.id,order_design_position.screen_fees_qnty,'order_design_position','id')">
                                 </md-input-container>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
             </div>
             
             <div class="text-right">
-                <md-button  class="bg-grey md-raised" ng-click="vm.openaddDesignDialog($event)">
+                <md-button  class="bg-grey md-raised" ng-click="addPosition()">
                             ADD New Position
                         </md-button>
             </div>
