@@ -1,0 +1,102 @@
+
+                    <md-content class="md-padding">
+                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax ID</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="ID Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        ID Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span><span>{{vm.tax.id}}</span></span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax Rate Percentage</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="Rate Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Rate Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>{{vm.tax.ratePercentage}}</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax Exempt</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="Tax Exempt Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Tax Exempt Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>{{vm.tax.exempt}}</span>                                 
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Tax ID Document</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="Document Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Document Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>{{vm.tax.idDocument}}</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-content>
+                

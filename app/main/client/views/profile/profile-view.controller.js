@@ -7,11 +7,12 @@
             .controller('ProfileViewController', ProfileViewController);
 
     /** @ngInject */
-    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams)
+    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService)
     {
         var vm = this;
         //Dummy models data
         vm.client_id = $stateParams.id
+        vm.company_id = sessionService.get('company_id');
         vm.clientName="Live Nation"        
         vm.compInfo={
           "logo":"",
@@ -123,6 +124,46 @@
         };
         
          vm.dtInstanceCB = dtInstanceCB;
+        
+        getClientProfile();
+        function getClientProfile()
+        {
+            var combine_array_id = {};
+            combine_array_id.client_id = vm.client_id;
+            combine_array_id.company_id = vm.company_id;
+
+            var checkSession = $resource('api/public/client/GetclientDetail',null,{
+                post : {
+                       method : 'post'
+                       }
+            });
+            checkSession.post(combine_array_id,function(result) 
+            {   
+                if(result.data.success=='1')
+                {   
+                    vm.Response = result.data.records;
+                    vm.mainaddress = vm.Response.clientDetail.address;
+                    vm.salesDetails =vm.Response.clientDetail.sales;
+                    vm.maincompcontact =vm.Response.clientDetail.contact;
+                    vm.company_info =vm.Response.clientDetail.main;
+                    vm.client_tax =vm.Response.clientDetail.tax;
+                    vm.pl_imp =vm.Response.clientDetail.pl_imp;
+                    vm.AddrTypeData =vm.Response.AddrTypeData;
+                    vm.StaffList =vm.Response.StaffList;
+                    vm.ArrCleintType =vm.Response.ArrCleintType;
+                  //  vm.PriceGrid = vm.Response.PriceGrid;
+                    vm.allContacts = vm.Response.allContacts;
+                    vm.allclientnotes = vm.Response.allclientnotes;
+                    vm.Arrdisposition = vm.Response.Arrdisposition;
+                    vm.Client_orders = vm.Response.Client_orders;
+                    vm.art_detail = vm.Response.art_detail;
+
+
+                    //vm.currentProjectUrl = $sce.trustAsResourceUrl(vm.main.salesweb);
+                }
+            });
+        }
+
          
         //methods
         function dtInstanceCB(dt) {

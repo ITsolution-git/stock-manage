@@ -1,0 +1,106 @@
+
+                    <md-content class="md-padding">
+                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Web</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="Web" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Web Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                    <md-card-content>
+                                        <span>{{vm.salesDetail.web}}</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Anniversary Date</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="Anniversary Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Anniversary Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>{{vm.salesDetail.anniversaryDate}}</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Sales Person</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="Sales Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Sales Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>{{vm.salesDetail.salesPerson}}</span>                                 
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div flex-xs flex-gt-xs="25" layout="column">
+                                <md-card>
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Default Price Grid</span>
+                                        </md-card-header-text>
+                                        <md-menu>
+                                            <md-button aria-label="Price Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item>
+                                                    <md-button>
+                                                        Price Options
+                                                    </md-button>
+                                                </md-menu-item>
+                                            </md-menu-content>
+                                        </md-menu>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <span>{{vm.salesDetail.defaultPriceGrid}}</span>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-content>
+                

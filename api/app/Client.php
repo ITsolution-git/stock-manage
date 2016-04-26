@@ -122,7 +122,14 @@ class Client extends Model {
           $result['main']['b_w_logo'] = $value->b_w_logo;
           $result['main']['shipping_logo'] = $value->shipping_logo;
           $result['main']['blind_text'] = $value->blind_text;
-          $result['main']['contact_mainid'] = $value->contact_mainid;
+          $result['main']['company_url'] = $value->company_url;
+
+          $result['main']['client_address']  = !empty($value->pl_address)?$value->pl_address.",":'' ; 
+          $result['main']['client_address'] .= !empty($value->pl_city)?$value->pl_city.", ":''; 
+          $result['main']['client_address'] .= !empty($value->pl_suite)?$value->pl_suite.", ":''; 
+          $result['main']['client_address'] .= !empty($value->pl_state)?$value->pl_state.", ":'';
+          $result['main']['client_address'] .= !empty($value->pl_pincode)?$value->pl_pincode:'' ;
+
           $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']:'';
           $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']:'';
           $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']:'';

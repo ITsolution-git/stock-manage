@@ -1,0 +1,67 @@
+
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Orders
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
+                                    <thead>
+                                        <tr>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Order ID</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Order Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Date Created</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Approval Status</span>
+                                                </div>
+                                            </th>
+                                            <th></th>                                             
+                                        </tr>
+                                    </thead>                                  
+                                    <tbody>
+                                        <tr ng-repeat="order in ::vm.orders">
+                                            <td>{{order.orderId}}</td>
+                                            <td>{{order.orderName}}</td>
+                                            <td>{{order.dateCreated}}</td>
+                                            <td>{{order.approvalStatus}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Orders Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Order Options
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
+                                </table>
+                            </div>
+                        </div> 
+                    </md-content>
+                
