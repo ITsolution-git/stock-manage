@@ -16,13 +16,19 @@ vm.showDatePicker = showDatePicker;
 
         vm.salesCheck = OrderUserData.data.records;
         vm.companyCheck = OrderCompanyData.data.records;
-
+//1. sales rep
+       vm.salesCheckModal = [];
+        vm.salesCheckData = [{id: 1, "label": "Nick Santo"}, {id: 2, "label": "Kemal Baxi"}, {id: 3, "label": "Kemal Baxi"}, {id: 4, "label": "Kemal Baxi"}, {id: 5, "label": "Kemal Baxi"}, {id: 6, "label": "Nick Santo"}, {id: 7, "label": "Nick Santo"}, ];
+        
         vm.shipDate;
         vm.shipdate = false;
         //3. create date
         vm.createDate;
         vm.createdate = false;
         vm.companyfilter = false;
+         //4. company
+         vm.companyCheckModal = [];
+        vm.companyCheckData = [{id: 1, "label": "Checkbox 1"}, {id: 2, "label": "Checkbox 2"}, {id: 3, "label": "Checkbox 3"}, {id: 4, "label": "Checkbox 4"}, {id: 5,  "label": "Checkbox 5"}, {id: 6, "label": "Checkbox 6"}, {id: 7, "label": "Checkbox 7"}, ];
         vm.searchOrder;
         vm.ordersId = [{"id": "27"}, {"id": "35"}, {"id": "12"}];
         vm.orderfilter = false;

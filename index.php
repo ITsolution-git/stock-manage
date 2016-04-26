@@ -59,6 +59,8 @@
 
     <script src="scripts/vendor.js"></script>
     <script src="scripts/mdPickers.min.js"></script>
+    <script src="scripts/multiselect/lodash.js"></script>
+    <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
 
     <!-- inject:js -->
 

@@ -34,11 +34,9 @@
                                     </span>
                                     <md-divider ></md-divider>
                                 </div>
-                                <div ng-if="vm.toggle" class="f-body scrollable"  ms-scroll>
+                                <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
                                     <div layout="column" >
-                                        <md-checkbox ng-repeat="check in ::vm.salesCheck" ng-model="check.name" aria-label="check.name">
-                                            {{check.first_name}}&nbsp;{{check.last_name}}
-                                        </md-checkbox>
+                                        <div ng-dropdown-multiselect="" options="vm.salesCheckData" selected-model="vm.salesCheckModal" checkboxes="true" class="cheak-box-class"></div>
                                     </div>
                                 </div>
                             </div>
@@ -94,12 +92,9 @@
                                     </span>
                                     <md-divider ></md-divider>
                                 </div>
-                                <div class="f-body scrollable"  ms-scroll ng-if="vm.companyfilter">
+                                <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.companyfilter">
                                     <div layout="column" >
-                                        <md-checkbox ng-repeat="check in ::vm.companyCheck" ng-model="check.client_company" aria-label="check.name">
-                                            {{check.client_company}}
-                                        </md-checkbox>
-
+                                         <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" checkboxes="true" class="cheak-box-class"></div>
                                     </div>
                                 </div>
                             </div>

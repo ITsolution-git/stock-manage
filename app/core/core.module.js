@@ -15,6 +15,7 @@
                 'pascalprecht.translate',
                 'datatables',
                'mdPickers',
+               'angularjs-dropdown-multiselect',
                 'ui.router',
                 'jmApp'
                 
