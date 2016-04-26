@@ -5,11 +5,21 @@
             .module('app.order')
             .controller('SearchProductController', SearchProductController);
     /** @ngInject */
-    function SearchProductController($mdDialog,$document)
+    function SearchProductController(productSearch,$mdDialog,$document,$scope,$http)
     {
-        var vm = this;
+        $scope.productSearch = productSearch;
+        
+        $scope.getProducts = function()
+        {
+            var vendor_arr = {'vendor_id' : 1, 'search' : $scope.productSearch};
+            $http.post('api/public/product/getProductByVendor',vendor_arr).success(function(result, status, headers, config) {
+                $scope.products = result.data.records;
+            });
+        }
+
+        $scope.getProducts();
         // Data
-        vm.filterDialog = {
+        $scope.filterDialog = {
             "search": "",
             "productCategory": [
                 {"category": "PRODUCT CATEGORY"},
@@ -66,7 +76,7 @@
             ]
         };
         // Methods
-        vm.openSearchProductViewDialog = openSearchProductViewDialog;
+        $scope.openSearchProductViewDialog = openSearchProductViewDialog;
               function openSearchProductViewDialog(ev)
         {
             $mdDialog.show({
@@ -80,7 +90,7 @@
             });
         }
 
-        vm.closeDialog = closeDialog;
+        $scope.closeDialog = closeDialog;
         /**
          * Close dialog
          */

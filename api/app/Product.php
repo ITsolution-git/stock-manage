@@ -71,6 +71,7 @@ class Product extends Model {
 
     public function getVendorProducts($data)
     {
+        //print_r($data);exit;
         if(empty($data['fields']))
         {
             $listArray = ['id','name'];
@@ -83,8 +84,13 @@ class Product extends Model {
 
         $orderData = DB::table('products')
                         ->select($listArray)
-                        ->where($data['where'])
-                        ->get();
+                        ->where('vendor_id' , '=', $data['where']['vendor_id']);
+                        if(isset($data['where']['search']))
+                        {
+                            $search = $data['where']['search'];
+                            $orderData = $orderData->where('name', 'LIKE', '%'.$search.'%');
+                        }
+                        $orderData = $orderData->get();
 
         if(!empty($data['fields']))
         {
