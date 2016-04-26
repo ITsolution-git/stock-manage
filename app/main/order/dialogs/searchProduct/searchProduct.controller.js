@@ -5,13 +5,15 @@
             .module('app.order')
             .controller('SearchProductController', SearchProductController);
     /** @ngInject */
-    function SearchProductController(productSearch,$mdDialog,$document,$scope,$http)
+    function SearchProductController(data,$mdDialog,$document,$scope,$http)
     {
-        $scope.productSearch = productSearch;
+        $scope.productSearch = data.productSearch;
+        $scope.vendor_id = data.vendor_id;
         
         $scope.getProducts = function()
         {
-            var vendor_arr = {'vendor_id' : 1, 'search' : $scope.productSearch};
+            var vendor_arr = {'vendor_id' : $scope.vendor_id, 'search' : $scope.productSearch};
+            $scope.allVendors = data['vendors'];
             $http.post('api/public/product/getProductByVendor',vendor_arr).success(function(result, status, headers, config) {
                 $scope.products = result.data.records;
             });
