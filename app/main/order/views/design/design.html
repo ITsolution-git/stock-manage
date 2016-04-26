@@ -239,11 +239,21 @@
         </div>
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
             <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
+            <div flex="20">
+                <md-input-container class="md-block" flex="30">
+                    <label>Vendor</label>
+                    <md-select ng-model="vendor_id">
+                        <md-option ng-repeat="vendor in allVendors" value="{{vendor.id}}">
+                            {{vendor.name_company}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
             <div class="design-positions-box " layout="column" layout-align="start">
                 <div class="design-search-section" layout-align="space-between-center" layout="row">
                     <md-input-container class="md-block" flex="30">
                         <label>Search</label>
-                        <input ng-model="productSearch">
+                        <input ng-model="productSearch" ng-focus="checkVendor()">
                     </md-input-container>
                     <div layout="row">
                         <md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button>

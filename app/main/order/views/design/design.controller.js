@@ -10,6 +10,8 @@
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
         $scope.productSearch = '';
+        $scope.vendor_id = 0;
+
        $scope.designDetail = function(){
 
         var combine_array_id = {};
@@ -53,6 +55,21 @@
 
         $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
                   $scope.miscData = result.data.records;
+        });
+
+        var vendor_data = {};
+        vendor_data.table ='vendors';
+        vendor_data.cond ={'company_id':condition_obj['company_id']}
+        $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.allVendors =result.data.records;
+            } 
+            else
+            {
+                $scope.allVendors=[];
+            }
         });
 
 
@@ -174,18 +191,37 @@
         }
         function openSearchProductDialog(ev)
         {
-            $mdDialog.show({
-                controller: 'SearchProductController',
-                controllerAs: $scope,
-                templateUrl: 'app/main/order/dialogs/searchProduct/searchProduct.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    productSearch: $scope.productSearch,
-                    event: ev
-                }
-            });
+            if($scope.vendor_id > 0)
+            {
+                var data = {'productSearch': $scope.productSearch,'vendor_id': $scope.vendor_id, 'vendors': $scope.allVendors};
+
+                $mdDialog.show({
+                    controller: 'SearchProductController',
+                    controllerAs: $scope,
+                    templateUrl: 'app/main/order/dialogs/searchProduct/searchProduct.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        data: data,
+                        event: ev
+                    }
+                });
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please select vendor"}
+                notifyService.notify(data.status, data.message);
+            }
+        }
+
+        $scope.checkVendor = function()
+        {
+            if($scope.vendor_id == '0')
+            {
+                var data = {"status": "error", "message": "Please select vendor"}
+                notifyService.notify(data.status, data.message);
+            }
         }
 
         $scope.productVendorLogo = [{"id": "1", "name": "Vendor Logo"},
