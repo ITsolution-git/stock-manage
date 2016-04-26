@@ -15,7 +15,7 @@
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
-                       return sessionService.AccessService('ALL');
+                       return sessionService.AccessService('BC,CA');
                     },
                 },
                 url    : '/client',
@@ -30,7 +30,7 @@
                 resolve: {
                     checksession : function (sessionService)
                     {
-                       return sessionService.AccessService('ALL');
+                       return sessionService.AccessService('BC,CA');
                     },
                 },
                 url    : '/list',
@@ -44,9 +44,9 @@
             })
             .state('app.client.profile', {
                 resolve: {
-                        checksession : function (sessionService)
+                        checksession : function (sessionService,$stateParams,$state)
                         {
-                           return sessionService.AccessService('ALL');
+                           return sessionService.AccessService('BC,CA');
                         }
                     },
                 url  : '/profile/:id',
