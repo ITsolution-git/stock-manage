@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add Product</span>
-                <md-button  ng-click="vm.closeDialog()">
+                <md-button  ng-click="closeDialog()">
                     <span>Cancel</span>
                 </md-button>
             </div>
@@ -14,8 +14,9 @@
                     <div class="h3">Filters</div>
                     <md-input-container class="md-block m-0" md-no-float flex="30">
 
-                        <input ng-model="vm.filterDialog.search" placeholder="fl" >
+                        <input ng-model="productSearch">
                     </md-input-container>
+                    <md-button class="md-accent md-raised" ng-click="getProducts()" ng-disabled="productSearch == ''">Search</md-button>
                 </div>
                 <div layout="row" layout-align="space-between start">
                     <div layout="column" flex="20">
@@ -23,17 +24,17 @@
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
                                     <span>PRODUCT CATEGORY</span>
-                                    <button ng-if="vm.toggle" ng-click="vm.toggle = false">
+                                    <button ng-if="toggle" ng-click="toggle = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
                                     </button>
-                                    <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                    <button ng-if="!toggle" ng-click="toggle = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
                                     </button>
                                 </span>
                             </div>
-                            <div ng-if="vm.toggle" class="f-body scrollable"  ms-scroll>
+                            <div ng-if="toggle" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="product in ::vm.filterDialog.productCategory" class="h6 f-body-options-item" >
+                                    <div ng-repeat="product in ::filterDialog.productCategory" class="h6 f-body-options-item" >
                                         {{product.category}}
                                     </div>
                                 </div>
@@ -43,18 +44,18 @@
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
                                     <span>COLOR</span>
-                                    <button ng-if="vm.color" ng-click="vm.color = false">
+                                    <button ng-if="color" ng-click="color = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
                                     </button>
-                                    <button ng-if="!vm.color" ng-click="vm.color = true">
+                                    <button ng-if="!color" ng-click="color = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
                                     </button>
                                 </span>
 
                             </div>
-                            <div ng-if="vm.color" class="f-body scrollable"  ms-scroll>
+                            <div ng-if="color" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="product in ::vm.filterDialog.color" class="h6 f-body-options-item" >
+                                    <div ng-repeat="product in ::filterDialog.color" class="h6 f-body-options-item" >
                                         {{product.colorName}}
                                     </div>
                                 </div>
@@ -64,17 +65,17 @@
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
                                     <span>VENDOR</span>
-                                    <button ng-if="vm.vendor" ng-click="vm.vendor = false">
+                                    <button ng-if="vendor" ng-click="vendor = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
                                     </button>
-                                    <button ng-if="!vm.vendor" ng-click="vm.vendor = true">
+                                    <button ng-if="!vendor" ng-click="vendor = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
                                     </button>
                                 </span>
                             </div>
-                            <div ng-if="vm.vendor" class="f-body scrollable"  ms-scroll>
+                            <div ng-if="vendor" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="product in ::vm.filterDialog.vendor" class="h6 f-body-options-item" >
+                                    <div ng-repeat="product in ::filterDialog.vendor" class="h6 f-body-options-item" >
                                         {{product.vendorName}}
                                     </div>
                                 </div>
@@ -84,17 +85,17 @@
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
                                     <span>FIT</span>
-                                    <button ng-if="vm.fit" ng-click="vm.fit = false">
+                                    <button ng-if="fit" ng-click="fit = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
                                     </button>
-                                    <button ng-if="!vm.fit" ng-click="vm.fit = true">
+                                    <button ng-if="!fit" ng-click="fit = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
                                     </button>
                                 </span>
                             </div>
-                            <div ng-if="vm.fit" class="f-body scrollable"  ms-scroll>
+                            <div ng-if="fit" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="product in ::vm.filterDialog.fit" class="h6 f-body-options-item" >
+                                    <div ng-repeat="product in ::filterDialog.fit" class="h6 f-body-options-item" >
                                         {{product.fitNo}}
                                     </div>
                                 </div>
@@ -104,17 +105,17 @@
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
                                     <span>FABRIC</span>
-                                    <button ng-if="vm.fabric" ng-click="vm.fabric = false">
+                                    <button ng-if="fabric" ng-click="fabric = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
                                     </button>
-                                    <button ng-if="!vm.fabric" ng-click="vm.fabric = true">
+                                    <button ng-if="!fabric" ng-click="fabric = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
                                     </button>
                                 </span>
                             </div>
-                            <div ng-if="vm.fabric" class="f-body scrollable"  ms-scroll>
+                            <div ng-if="fabric" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="product in ::vm.filterDialog.fabric" class="h6 f-body-options-item" >
+                                    <div ng-repeat="product in ::filterDialog.fabric" class="h6 f-body-options-item" >
                                         {{product.fabricName}}
                                     </div>
                                 </div>
@@ -124,18 +125,18 @@
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
                                     <span>SIZES</span>
-                                    <button ng-if="vm.size" ng-click="vm.size = false">
+                                    <button ng-if="size" ng-click="size = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
                                     </button>
-                                    <button ng-if="!vm.size" ng-click="vm.size = true">
+                                    <button ng-if="!size" ng-click="size = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
                                     </button>
                                 </span>
 
                             </div>
-                            <div ng-if="vm.size" class="f-body scrollable"  ms-scroll>
+                            <div ng-if="size" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="product in ::vm.filterDialog.sizes" class="h6 f-body-options-item" >
+                                    <div ng-repeat="product in ::filterDialog.sizes" class="h6 f-body-options-item" >
                                         {{product.size}}
                                     </div>
                                 </div>
@@ -143,9 +144,9 @@
                         </div>
                     </div>
                     <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start">
-                        <div  ng-repeat="product in ::vm.filterDialog.productsImages" class="filter-product-image-wrap" flex="20">
-                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="vm.openSearchProductViewDialog($event)" layout="row" layout-align="center center">
-                                {{product.productName}}
+                        <div  ng-repeat="product in products" class="filter-product-image-wrap" flex="20">
+                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event)" layout="row" layout-align="center center">
+                                {{product.name}}
                             </div>
                         </div>
                     </div>

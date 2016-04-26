@@ -9,7 +9,7 @@
     /** @ngInject */
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
-
+        $scope.productSearch = '';
      
        $scope.designDetail = function(){
 
@@ -91,63 +91,65 @@
         };
 
         vm.dtInstanceCB = dtInstanceCB;
-         vm.openAddProductDialog = openAddProductDialog;
-          vm.openaddDesignDialog = openaddDesignDialog;
-          vm.openSearchProductDialog = openSearchProductDialog;
+        $scope.openAddProductDialog = openAddProductDialog;
+        $scope.openaddDesignDialog = openaddDesignDialog;
+        $scope.openSearchProductDialog = openSearchProductDialog;
+
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
         
-          function openAddProductDialog(ev, order)
+        function openAddProductDialog(ev, order)
         {
             $mdDialog.show({
                 controller: 'AddProductController',
-                controllerAs: 'vm',
+                controllerAs: $scope,
                 templateUrl: 'app/main/order/dialogs/addProduct/addProduct.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
                     Order: order,
-                    Orders: vm.orders,
+                    Orders: $scope.orders,
                     event: ev
                 }
             });
         }
-          function openaddDesignDialog(ev, order)
+        function openaddDesignDialog(ev, order)
         {
             $mdDialog.show({
                 controller: 'AddDesignController',
-                controllerAs: 'vm',
+                controllerAs: $scope,
                 templateUrl: 'app/main/order/dialogs/addDesign/addDesign.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
                     Order: order,
-                    Orders: vm.orders,
+                    Orders: $scope.orders,
                     event: ev
                 }
             });
         }
-          function openSearchProductDialog(ev)
+        function openSearchProductDialog(ev)
         {
             $mdDialog.show({
                 controller: 'SearchProductController',
-                controllerAs: 'vm',
+                controllerAs: $scope,
                 templateUrl: 'app/main/order/dialogs/searchProduct/searchProduct.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
-
+                locals: {
+                    productSearch: $scope.productSearch,
+                    event: ev
+                }
             });
         }
 
-
-        vm.productSearch = null;
-        vm.productVendorLogo = [{"id": "1", "name": "Vendor Logo"},
+        $scope.productVendorLogo = [{"id": "1", "name": "Vendor Logo"},
             {"id": "1", "name": "Vendor Logo"},
             {"id": "1", "name": "Vendor Logo"},
             {"id": "1", "name": "Vendor Logo"},

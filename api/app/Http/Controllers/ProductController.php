@@ -170,8 +170,16 @@ public function create_dir($dir_path) {
     public function getProductByVendor()
     {
         $post = Input::all();
-        $data['where'] = $post;
-        $data['fields'] = array('product_name');
+        $whereData = array();
+        
+        $whereData['vendor_id'] = $post['vendor_id'];
+        if($post['vendor_id'] != '')
+        {
+            $whereData['search'] = $post['search'];
+        }
+        $data['where'] = $whereData;
+        $data['fields'] = array();
+        
         $result = $this->product->getVendorProducts($data);
         
         if (count($result) > 0) {
@@ -183,5 +191,4 @@ public function create_dir($dir_path) {
         
         return response()->json(["data" => $response]);
     }
-
 }
