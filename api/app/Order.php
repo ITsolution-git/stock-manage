@@ -862,6 +862,7 @@ public function saveColorSize($post)
 
         $orderPositionData = DB::table('order_design_position as odp')
                             ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
+                            ->select($listArray)
                             ->where($whereOrderPositionConditions)
                             ->get();
         $combine_array['order_design_position'] = $orderPositionData;

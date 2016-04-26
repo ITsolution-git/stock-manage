@@ -10,7 +10,7 @@
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
 
-     
+        
        $scope.designDetail = function(){
 
         var combine_array_id = {};
@@ -55,6 +55,46 @@
         $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
                   $scope.miscData = result.data.records;
         });
+
+
+        $scope.addPosition = function(){
+
+            var position_data_insert = {};
+            position_data_insert.table ='order_design_position'
+            position_data_insert.data ={design_id:$stateParams.id}
+
+            $http.post('api/public/common/InsertRecords',position_data_insert).success(function(result) {
+                
+               $scope.designPosition();
+               
+            });
+        }
+
+
+          $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition)
+        {
+           
+          var position_main_data = {};
+          position_main_data.table =table_name;
+          $scope.name_filed = column_name;
+          
+          var obj = {};
+          obj[$scope.name_filed] =  value;
+          position_main_data.data = angular.copy(obj);
+
+
+          var condition_obj = {};
+          condition_obj[match_condition] =  id;
+          position_main_data.cond = angular.copy(condition_obj);
+          
+
+            $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+                if($scope.name_filed == 'position_id') {
+                    $scope.designPosition();
+                }
+            });
+      
+        }
 
 
         $scope.designDetail();
