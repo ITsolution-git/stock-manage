@@ -42,7 +42,7 @@ class ClientController extends Controller {
 			$client['client_company'] = (!empty($post['client_company']))?$post['client_company']:'';
 			$client['billing_email'] = (!empty($post['billing_email']))?$post['billing_email']:'';
 			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
-			 
+			$client['company_phone']=(!empty($post['company_phone']))?$post['company_phone']:'';
 			$client['client_companytype'] = !empty($post['client_companytype'])? $post['client_companytype'] : '';
 			$client['company_url'] = !empty($post['company_url'])? $post['company_url'] : '';
 			$client['created_date']=CURRENT_DATETIME;
@@ -53,6 +53,7 @@ class ClientController extends Controller {
 			$client['pl_address']=(!empty($post['pl_address']))?$post['pl_address']:'';
 			$client['pl_pincode']=(!empty($post['pl_pincode']))?$post['pl_pincode']:'';
 			$client['pl_state']=(!empty($post['pl_state']))?$post['pl_state']:'';
+			$client['pl_suite']=(!empty($post['pl_suite']))?$post['pl_suite']:'';
 			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
 
 
@@ -288,8 +289,8 @@ class ClientController extends Controller {
 				$Arrdisposition = $this->common->GetMicType('disposition',$post['company_id']);
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
-				$Client_orders = $this->client->ListClientOrder($id);
-				$art_detail = $this->art->Client_art_screen($post['client_id'],$post['company_id']);
+				$Client_orders = '';//$this->client->ListClientOrder($id);
+				$art_detail = '';//$this->art->Client_art_screen($post['client_id'],$post['company_id']);
 				
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,

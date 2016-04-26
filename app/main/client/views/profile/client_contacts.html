@@ -1,0 +1,83 @@
+
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Contacts
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple"  ms-responsive-table=""  datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
+                                    <thead>
+                                        <tr>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">First Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Last Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Location</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Phone</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Contact Email</span>
+                                                </div>
+                                            </th>
+                                            <th></th>  
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="contact in ::vm.contacts">
+                                            <td>{{contact.firstname}}</td>
+                                            <td>{{contact.lastname}}</td>
+                                            <td>{{contact.location}}</td>
+                                            <td>{{contact.phone}}</td>
+                                            <td>{{contact.email}}</td>
+                                            <td class="text-right"> 
+                                    <md-menu>
+                                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Edit Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Delete Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button>
+                                                    Set As Main Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
+                                    </tr>                                   
+                                    </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </md-content>
+                
