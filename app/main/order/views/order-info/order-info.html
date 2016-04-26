@@ -434,7 +434,7 @@
                     </md-card-title-text>
                 </md-card-title>
                 <md-card-content class="pad0">
-                    <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in vm.order_items"  ng-class="{active : vm.activeMenu === order_item.item}" ng-click="vm.setActive(order_item.item)" >
+                    <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in order_items"  ng-class="{active : $scope.activeMenu === order_item.item}" ng-click="vm.setActive(order_item.item)" >
                         <div>{{order_item.item}}</div>
                         <span>{{order_item.charge}}</span>
                     </div>

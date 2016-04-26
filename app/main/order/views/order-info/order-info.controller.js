@@ -100,22 +100,8 @@
             {"Company": "Company Name", "units": "10,000", "designs": "2"},
             {"Company": "Company Name", "units": "10,000", "designs": "2"},
         ];
-        vm.order_items = [
-            {"item": "Foil", "charge": "4"},
-            {"item": "Over Size Screens", "charge": "5"},
-            {"item": "SKU", "charge": "2"},
-            {"item": "Poly Bagging", "charge": "5"},
-            {"item": "Hang Tag", "charge": "1"},
-            {"item": "Inside Tagging", "charge": "4"},
-        ];
-        vm.activeMenu = vm.order_items[0].item;
-        vm.setActive = function (menuItem) {
-            if(menuItem == vm.activeMenu){
-                vm.activeMenu = null;
-            }
-            else
-            vm.activeMenu = menuItem
-        }
+        
+       
        
         vm.designTotal = {total: "160"};
         vm.finishing = {finish: "5"};
