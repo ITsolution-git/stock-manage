@@ -238,21 +238,21 @@
             </div>
         </div>
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
-            <div class="title"><span class="h2 text-semibold">Positions</span>&nbsp;<span class="font-10 grey-color">-select Vendor to add</span></div>
+            <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
             <div class="design-positions-box " layout="column" layout-align="start">
                 <div class="design-search-section" layout-align="space-between-center" layout="row">
                     <md-input-container class="md-block" flex="30">
                         <label>Search</label>
-                        <input ng-model="vm.productSearch">
+                        <input ng-model="productSearch">
                     </md-input-container>
                     <div layout="row">
-                        <md-button class="md-accent md-raised" ng-click="vm.openSearchProductDialog($event)"  >Search</md-button>
-                        <md-button  class="bg-grey md-raised" ng-click="vm.openAddProductDialog($event)">
+                        <md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button>
+                        <md-button  class="bg-grey md-raised" ng-click="openAddProductDialog($event)">
                             ADD A CUSTOM PRODUCT
                         </md-button>
                     </div>
                 </div>
-                <div class="design-browse-product p-b-20" layout="column">
+                <!-- <div class="design-browse-product p-b-20" layout="column">
                     <div class="h4 p-b-10" >Browse Products</div>
                     <div class="design-product-slider" layout="row" layout-align="space-between">
                         <div layout="column" layout-align="center-center">
@@ -265,7 +265,7 @@
                             <md-icon md-font-icon="icon-arrow-right" ></md-icon>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <md-divider></md-divider>
