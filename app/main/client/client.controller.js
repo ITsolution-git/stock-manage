@@ -9,7 +9,7 @@
             //.controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
-    function ClientController($mdDialog, $document,sessionService,$resource,$scope) {
+    function ClientController($mdDialog, $document,sessionService,$resource,$scope,$stateParams) {
         var vm = this;
         // Data
         //console.log(sessionService.get('company_id'));
@@ -26,6 +26,7 @@
         };
         vm.searchQuery = "";
         // Methods
+
         vm.openClientDialog = openClientDialog;
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
@@ -33,6 +34,7 @@
         $scope.company_id = sessionService.get('company_id');
         vm.getClientData();
         //////////
+
         function getClientData()
         {
             var price_list_data = {};
@@ -92,7 +94,6 @@
     }
     function ClientMainController($state)
     {
-        //console.log($state.current.name);
         if($state.current.name == 'app.client')
         {
             $state.go('app.client.list');
