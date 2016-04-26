@@ -42,7 +42,7 @@
                 </thead>
                 <tbody>
 
-                    <tr ng-repeat="client in ::vm.clients" ui-sref="app.client.profile({id:client.id})">
+                    <tr ng-repeat="client in ::vm.clients" ui-sref="app.client.profile({id:client.client_id})">
                         <td>{{ client.client_company }}</td>
                         <td>{{ client.first_name }} {{client.last_name}}</td>
                         <td>{{ client.phone }}</td>

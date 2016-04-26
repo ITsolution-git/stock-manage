@@ -1,0 +1,43 @@
+<md-dialog class="task-dialog" >
+    <form name="imageform" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Upload Image</span>
+                <md-button  ng-click="vm.closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
+                <div class="content-heading" layout-padding>
+                    <span class="md-title">Image Upload</span>
+                </div>
+                <md-input-container class="md-block first-box"></md-input-container>
+               <md-input-container class="upload-rel">
+                    <input placeholder="">
+                    <md-button class="md-primary md-hue-1 md-accent upload">Upload</md-button>
+                </md-input-container>
+                <div layout-wrap="nowrap" flex="50">
+                    <md-card flex="50" class="card ">
+                        <div class="height-image">
+                            <md-card-title>
+                                <md-card-title-text layout-align="start end">
+                                    <span class="md-headline">Logo Preview</span>
+                                </md-card-title-text>
+                            </md-card-title>
+                        </div>
+                        <md-button class="md-primary md-hue-1 md-accent btn-small">Delete</md-button>
+                    </md-card>
+
+                </div>
+             </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            
+                    <md-button ng-click="vm.closeImage()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+                    <md-button class="md-accent md-raised" ng-click="vm.Save">Save</md-button>
+             
+        </md-dialog-actions>
+    </form>
+</md-dialog>

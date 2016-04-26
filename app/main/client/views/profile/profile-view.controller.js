@@ -7,10 +7,11 @@
             .controller('ProfileViewController', ProfileViewController);
 
     /** @ngInject */
-    function ProfileViewController($document, $window, $timeout, $mdDialog)
+    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams)
     {
         var vm = this;
         //Dummy models data
+        vm.client_id = $stateParams.id
         vm.clientName="Live Nation"        
         vm.compInfo={
           "logo":"",

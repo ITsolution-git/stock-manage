@@ -56,7 +56,7 @@ class ClientController extends Controller {
 			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
 
 
-
+		/* SEPARATE CLIENT CONTACT DATA IN TO ARRAY */
 			$contact['first_name']=!empty($post['first_name'])? $post['first_name'] : '';
 			$contact['last_name']=!empty($post['last_name'])? $post['last_name'] : '';
 			$contact['phone']=!empty($post['phone'])? $post['phone'] : '';
