@@ -83,16 +83,15 @@
             {"Company": "Company Name", "units": "150", "designs": "1"},
             {"Company": "Company Name", "units": "10,000", "designs": "2"},
         ];
-        vm.packageInformation = [
-            {"pid": "Foil", "pvalue": "4"},
-            {"pid": "Over Size Screens", "pvalue": "5"},
-            {"pid": "SKU", "pvalue": "2"},
-            {"pid": "Poly Bagging", "pvalue": "5"},
-            {"pid": "Hang Tag", "pvalue": "1"},
-            {"pid": "Inside Tagging", "pvalue": "4"},
+        vm.order_items = [
+            {"item": "Foil", "charge": "4"},
+            {"item": "Over Size Screens", "charge": "5"},
+            {"item": "SKU", "charge": "2"},
+            {"item": "Poly Bagging", "charge": "5"},
+            {"item": "Hang Tag", "charge": "1"},
+            {"item": "Inside Tagging", "charge": "4"},
         ];
-        vm.activeMenu = vm.packageInformation[0].pid;
-        console.log("-----------------------------------" + vm.packageInformation[0].pid)
+        vm.activeMenu = vm.order_items[0].item;
         vm.setActive = function (menuItem) {
             if(menuItem == vm.activeMenu){
                 vm.activeMenu = null;
