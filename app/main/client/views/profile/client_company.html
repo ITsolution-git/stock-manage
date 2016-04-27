@@ -40,7 +40,7 @@
                                             <md-menu-content width="4">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Contact Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
@@ -79,11 +79,11 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="h5 text-semibold">Main Contact:</div>
-                                        <span>{{vm.compInfo.mainContact.contact}}</span>
+                                        <span>{{vm.maincompcontact.first_name}} {{vm.maincompcontact.last_name}}</span>
                                         <div class="h5 text-semibold">Main Contact Email:</div>
-                                        <span>{{vm.compInfo.mainContact.email}}</span>
+                                        <span>{{vm.maincompcontact.email}}</span>
                                         <div class="h5 text-semibold">Main Contact Phone:</div>
-                                        <span>{{vm.compInfo.mainContact.phone}}</span>
+                                        <span>{{vm.maincompcontact.phone}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -100,7 +100,7 @@
                                             <md-menu-content width="4">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Account Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
@@ -108,9 +108,9 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="h5 text-semibold">Account Type:</div>
-                                        <span>{{vm.compInfo.accountInfo.type}}</span>
+                                        <span>{{vm.company_info.client_type}}</span>
                                         <div class="h5 text-semibold">Disposition:</div>
-                                        <span>{{vm.compInfo.accountInfo.disposition}}</span>
+                                        <span>{{vm.company_info.client_desposition}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
