@@ -28,6 +28,8 @@
 
                     $scope.designInforamtion = result.data.records[0];
 
+                } else {
+                    $state.go('app.order');
                 }
                 
             });

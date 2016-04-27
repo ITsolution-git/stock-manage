@@ -8,7 +8,7 @@
             
 
     /** @ngInject */
-    function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope)
+    function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state)
     {
 
           
@@ -25,6 +25,9 @@
                 if(result.data.success == '1') {
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
+
+                } else {
+                    $state.go('app.order');
                 }
                
             });
