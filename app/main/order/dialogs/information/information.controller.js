@@ -44,6 +44,8 @@
             
                 $http.post('api/public/order/editOrder',order_data).success(function(result) {
                      $mdDialog.hide();
+                     var data = {"status": "success", "message": "Data Updated Successfully."}
+                     notifyService.notify(data.status, data.message);
                 });
 
 

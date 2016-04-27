@@ -62,6 +62,8 @@
             
                 $http.post('api/public/order/editDesign',order_data).success(function(result) {
                      $mdDialog.hide();
+                      var data = {"status": "success", "message": "Design Updated Successfully."}
+                     notifyService.notify(data.status, data.message);
                 });
 
 
@@ -74,6 +76,8 @@
                 $http.post('api/public/order/addDesign',combine_array_id).success(function(result) 
                 {
                     $mdDialog.hide();
+                    var data = {"status": "success", "message": "Design Added Successfully."}
+                     notifyService.notify(data.status, data.message);
                 });
 
             }
