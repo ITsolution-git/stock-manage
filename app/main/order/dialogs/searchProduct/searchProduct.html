@@ -153,7 +153,7 @@
                     </div>
                     <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start">
                         <div  ng-repeat="product in products" class="filter-product-image-wrap" flex="20">
-                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event)" layout="row" layout-align="center center">
+                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id)" layout="row" layout-align="center center">
                                 {{product.name}}
                             </div>
                         </div>
