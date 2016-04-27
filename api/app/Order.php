@@ -79,14 +79,14 @@ class Order extends Model {
         
 
         $listArray = ['order.*','client.client_company','misc_type.value as approval','staff.first_name',
-                      'staff.last_name','users.name','client_contact.first_name as client_first_name',
-                      'client_contact.last_name as client_last_name','price_grid.name as price_grid_name'];
+                      'staff.last_name','users.name','cc.first_name as client_first_name',
+                      'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
 
         $orderDetailData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
-                         ->leftJoin('client_contact as client_contact','order.client_id','=', 'client_contact.client_id')
+                         ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
                          ->leftJoin('price_grid as price_grid','order.price_id','=', 'price_grid.id')
                          ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
                          ->select($listArray)
@@ -889,6 +889,28 @@ public function saveColorSize($post)
         }
 
         return $allData;
+    }
+
+    /**
+* Order Detail           
+* @access public orderDetail
+* @param  int $orderId and $clientId
+* @return array $combine_array
+*/  
+
+    public function orderDetailInfo($data) {
+      
+        $whereConditions = ['is_delete' => "1",'id' => $data['id'],'company_id' => $data['company_id']];
+        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id'];
+
+        $orderDetailData = DB::table('orders')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $combine_array = array();
+        $combine_array['order'] = $orderDetailData;
+        return $combine_array;
     }
 
 

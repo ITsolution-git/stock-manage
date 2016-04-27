@@ -219,7 +219,7 @@ class OrderController extends Controller {
         $data = Input::all();
         $result = $this->order->orderDetail($data);
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
-      
+       
         if(!empty($order_items))
         {
             $items = $this->order->getItemsByOrder($data['id']);
@@ -2112,6 +2112,48 @@ class OrderController extends Controller {
                             );
         }
         return response()->json(["data" => $response]);
+    }
+
+     public function editOrder()
+    {
+        $post = Input::all();
+       $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+            return response()->json(['data'=>$data]);
+
+       $data = array("success"=>1,"message"=>INSERT_RECORD);
+       return response()->json(['data'=>$data]);
+
+    }
+
+    public function orderDetailInfo() {
+ 
+        $data = Input::all();
+        $result = $this->order->orderDetailInfo($data);
+        $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','company_id' =>$result['order'][0]->company_id),array());
+        $staff = $this->common->getStaffList($result['order'][0]->company_id);
+        $brandCo = $this->common->getBrandCordinator($result['order'][0]->company_id);
+
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $result['order'],
+                                'price_grid' => $price_grid,
+                                'staff' => $staff,
+                                'brandCo' => $brandCo
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'records' => $result['order'],
+                                'price_grid' => $price_grid,
+                                'staff' => $staff,
+                                'brandCo' => $brandCo);
+        } 
+        return response()->json(["data" => $response]);
+
     }
 
 }

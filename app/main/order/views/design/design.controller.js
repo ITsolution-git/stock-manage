@@ -81,9 +81,7 @@
           
 
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
-                if($scope.name_filed == 'position_id') {
-                    $scope.designPosition();
-                }
+               
             });
       
         }

@@ -25,12 +25,8 @@
                 if(result.data.success == '1') {
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
-                  
                 }
-                else {
-                    $state.go('order.list');
-                }
-                $("#ajax_loader").hide();
+               
             });
 
           }
@@ -152,7 +148,7 @@
             });
         }
 
-        function openinformationDialog(ev, order)
+        function openinformationDialog(ev,order_id)
         {
             $mdDialog.show({
                 controller: 'InformationController',
@@ -162,10 +158,10 @@
                 targetEvent: ev,
                 clickOutsideToClose: false,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    order_id: order_id,
                     event: ev
-                }
+                },
+                onRemoving : $scope.orderDetail
             });
         }
         function openaddSplitAffiliateDialog(ev, order)
@@ -183,6 +179,29 @@
                     event: ev
                   }
             });
+        }
+
+        $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
+        {
+           
+          var position_main_data = {};
+          position_main_data.table =table_name;
+          $scope.name_filed = column_name;
+          
+          var obj = {};
+          obj[$scope.name_filed] =  value;
+          position_main_data.data = angular.copy(obj);
+
+
+          var condition_obj = {};
+          condition_obj[match_condition] =  id;
+          position_main_data.cond = angular.copy(condition_obj);
+          
+
+            $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+               
+            });
+      
         }
     }
 
