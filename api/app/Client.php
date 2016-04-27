@@ -96,11 +96,12 @@ class Client extends Model {
     {
 
     	$retArray = DB::table('client as c')
-    				->select('tp.*','mt.*','ca.*','cc.*','c.*')
-    				->leftJoin('client_contact as cc','c.contact_mainid','=',"cc.id")
+    				->select('st.name as state_name','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value','ca.*','cc.*','c.*')
+    				->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
     				->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
     				->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
     				->leftJoin('type as tp','tp.id','=',"c.client_type")
+            ->leftJoin('state as st','st.id','=',"c.pl_state")
     				->where('c.client_id','=',$id)
     				->get();
     	$result = array();
@@ -116,8 +117,8 @@ class Client extends Model {
     			$result['main']['billing_email'] = $value->billing_email;
     			$result['main']['company_phone'] = $value->company_phone;
     			$result['main']['salesweb'] = $value->salesweb;
-    			$result['main']['client_type'] = $value->client_type;
-    			$result['main']['client_desposition'] = $value->client_desposition;
+    			$result['main']['client_type'] = $value->type_name;
+    			$result['main']['client_desposition'] = $value->misc_value;
           $result['main']['color_logo'] = $value->color_logo;
           $result['main']['b_w_logo'] = $value->b_w_logo;
           $result['main']['shipping_logo'] = $value->shipping_logo;
@@ -127,7 +128,7 @@ class Client extends Model {
           $result['main']['client_address']  = !empty($value->pl_address)?$value->pl_address.",":'' ; 
           $result['main']['client_address'] .= !empty($value->pl_city)?$value->pl_city.", ":''; 
           $result['main']['client_address'] .= !empty($value->pl_suite)?$value->pl_suite.", ":''; 
-          $result['main']['client_address'] .= !empty($value->pl_state)?$value->pl_state.", ":'';
+          $result['main']['client_address'] .= !empty($value->state_name)?$value->state_name.", ":'';
           $result['main']['client_address'] .= !empty($value->pl_pincode)?$value->pl_pincode:'' ;
 
           $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']:'';
@@ -135,7 +136,6 @@ class Client extends Model {
           $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']:'';
 
     			$result['contact']['email'] = $value->email;
-    			$result['contact']['first_name'] = $value->email;
     			$result['contact']['first_name'] = $value->first_name;
     			$result['contact']['last_name'] = $value->last_name;
     			$result['contact']['location'] = $value->location;

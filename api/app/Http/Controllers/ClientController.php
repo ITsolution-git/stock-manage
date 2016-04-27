@@ -44,18 +44,21 @@ class ClientController extends Controller {
 			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
 			$client['company_phone']=(!empty($post['company_phone']))?$post['company_phone']:'';
 			$client['client_companytype'] = !empty($post['client_companytype'])? $post['client_companytype'] : '';
+			$client['client_desposition'] = !empty($post['client_desposition'])? $post['client_desposition'] : '';
 			$client['company_url'] = !empty($post['company_url'])? $post['company_url'] : '';
 			$client['created_date']=CURRENT_DATETIME;
 			$client['anniversarydate'] = CURRENT_DATETIME;
 			$client['status']='1';
 			$client['tax_rate']=$company_data[0]->tax_rate;
 
-			$client['pl_address']=(!empty($post['pl_address']))?$post['pl_address']:'';
-			$client['pl_pincode']=(!empty($post['pl_pincode']))?$post['pl_pincode']:'';
-			$client['pl_state']=(!empty($post['pl_state']))?$post['pl_state']:'';
-			$client['pl_suite']=(!empty($post['pl_suite']))?$post['pl_suite']:'';
-			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
 
+
+			$client['pl_address']=(!empty($post['pl_address']))?$post['pl_address']:'';
+			$client['pl_suite']=(!empty($post['pl_suite']))?$post['pl_suite']:'';
+			$client['pl_city']=(!empty($post['pl_city']))?$post['pl_city']:'';
+			$client['pl_state']=(!empty($post['pl_state']))?$post['pl_state']:'';
+			$client['pl_pincode']=(!empty($post['pl_pincode']))?$post['pl_pincode']:'';
+			
 
 		/* SEPARATE CLIENT CONTACT DATA IN TO ARRAY */
 			$contact['first_name']=!empty($post['first_name'])? $post['first_name'] : '';
@@ -671,7 +674,7 @@ class ClientController extends Controller {
     	if($company_id)
     	{
 			$StaffList = $this->common->getStaffList($company_id);
-			$ArrCleintType=$this->common->TypeList('company');
+			$ArrCleintType=$this->common->TypeList('client');
 			$AddrTypeData = $this->common->GetMicType('address_type',$company_id);
 			$Arrdisposition = $this->common->GetMicType('disposition',$company_id);
 			$state = $this->common->GetTableRecords('state',array(),array());
