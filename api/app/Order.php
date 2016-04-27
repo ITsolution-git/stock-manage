@@ -870,6 +870,28 @@ public function saveColorSize($post)
         return $combine_array;
     }
 
+    public function getAllDesigndata()
+    {
+
+        $whereConditions = ['od.status' => '1','od.is_delete' => '1'];
+        $listArray = ['od.shipping_date','od.id','od.order_id','odp.position_id','od.design_name',DB::raw('group_concat(m.value) as position_name'),DB::raw('count(odp.position_id) as count_position')];
+        $designData = DB::table('order_design as od')
+                        ->Join('order_design_position as odp','odp.design_id','=', 'od.id')
+                        ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
+                        ->select($listArray)
+                        ->GroupBy('odp.design_id')
+                        ->where($whereConditions)->get();
+
+        $allData = array ();
+        foreach($designData as $data) {
+          
+            $allData[$data->order_id][] = $data;
+
+        }
+
+        return $allData;
+    }
+
 
     
 }
