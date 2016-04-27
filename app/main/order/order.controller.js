@@ -47,7 +47,14 @@ vm.showDatePicker = showDatePicker;
             this.searchOrder = null;
             jQuery('.dateFilter').prop("value", " ");
            
-
+vm.companyChecksettings = {externalIdProp: myCustomPropertyForTheObject()}
+            function myCustomPropertyForTheObject(){
+                vm.companyCheckModal = [];
+            }
+            vm.salesChecksettings = {externalIdProp: myCustomPropertyForTheObjectSale()}
+            function myCustomPropertyForTheObjectSale(){
+                vm.salesCheckModal = [];
+            }
 
         }
          function showDatePicker(ev) {

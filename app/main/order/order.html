@@ -36,7 +36,7 @@
                                 </div>
                                 <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
                                     <div layout="column" >
-                                        <div ng-dropdown-multiselect="" options="vm.salesCheckData" selected-model="vm.salesCheckModal" checkboxes="true" class="cheak-box-class"></div>
+                                        <div ng-dropdown-multiselect="" options="vm.salesCheckData" selected-model="vm.salesCheckModal" class="cheak-box-class" extra-settings="vm.salesChecksettings"></div>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.companyfilter">
                                     <div layout="column" >
-                                         <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" checkboxes="true" class="cheak-box-class"></div>
+                                         <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings"  class="cheak-box-class"></div>
                                     </div>
                                 </div>
                             </div>
