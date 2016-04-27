@@ -218,6 +218,18 @@ class OrderController extends Controller {
  
         $data = Input::all();
         $result = $this->order->orderDetail($data);
+
+         if(empty($result['order']))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
        
         if(!empty($order_items))
@@ -2057,18 +2069,24 @@ class OrderController extends Controller {
         $data = Input::all();
         $result = $this->order->designDetail($data);
         
-        if (count($result) > 0) {
+
+        if(empty($result['design']))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+       
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['design']
                                 );
-        } else {
-            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS,
-                                'records' => $result['design']);
-        } 
+        
         return response()->json(["data" => $response]);
 
     }
