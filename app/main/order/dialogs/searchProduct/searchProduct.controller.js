@@ -78,8 +78,9 @@
             ]
         };
         // Methods
-        $scope.openSearchProductViewDialog = openSearchProductViewDialog;
-              function openSearchProductViewDialog(ev)
+        //$scope.openSearchProductViewDialog = openSearchProductViewDialog;
+        
+        $scope.openSearchProductViewDialog = function(ev,product_id)
         {
             $mdDialog.show({
                 controller: 'SearchProductViewController',
