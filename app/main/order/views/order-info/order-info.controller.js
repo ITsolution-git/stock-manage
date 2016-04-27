@@ -117,6 +117,14 @@
             responsive: true,
             scrollY:103
         };
+        vm.activeClass = activeClass;
+        function activeClass(item){
+            if(item == 0){
+               return item=1;
+            }
+            else
+                return item=0;
+        }
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
