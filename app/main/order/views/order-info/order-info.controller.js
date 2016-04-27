@@ -184,6 +184,29 @@
                   }
             });
         }
+
+        $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
+        {
+           
+          var position_main_data = {};
+          position_main_data.table =table_name;
+          $scope.name_filed = column_name;
+          
+          var obj = {};
+          obj[$scope.name_filed] =  value;
+          position_main_data.data = angular.copy(obj);
+
+
+          var condition_obj = {};
+          condition_obj[match_condition] =  id;
+          position_main_data.cond = angular.copy(condition_obj);
+          
+
+            $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+               
+            });
+      
+        }
     }
 
 
