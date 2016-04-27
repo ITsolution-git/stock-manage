@@ -434,7 +434,7 @@
                         Packing Information
                     </md-card-title-text>
                 </md-card-title>
-                <md-card-content class="pad0">
+                <md-card-content class="pad0 package-height scrollable" ms-scroll>
                     <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in order_items"  ng-class="{active :  order_item.selected == 1}" ng-click="order_item.selected = vm.activeClass(order_item.selected)" >
                         <div>{{order_item.item}}</div>
                         <span>{{order_item.charge}}</span>
