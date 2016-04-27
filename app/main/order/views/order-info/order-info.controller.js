@@ -25,12 +25,8 @@
                 if(result.data.success == '1') {
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
-                  
                 }
-                else {
-                    $state.go('order.list');
-                }
-                $("#ajax_loader").hide();
+               
             });
 
           }
@@ -152,7 +148,7 @@
             });
         }
 
-        function openinformationDialog(ev, order)
+        function openinformationDialog(ev,order_id)
         {
             $mdDialog.show({
                 controller: 'InformationController',
@@ -162,10 +158,10 @@
                 targetEvent: ev,
                 clickOutsideToClose: false,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    order_id: order_id,
                     event: ev
-                }
+                },
+                onRemoving : $scope.orderDetail
             });
         }
         function openaddSplitAffiliateDialog(ev, order)

@@ -891,6 +891,28 @@ public function saveColorSize($post)
         return $allData;
     }
 
+    /**
+* Order Detail           
+* @access public orderDetail
+* @param  int $orderId and $clientId
+* @return array $combine_array
+*/  
+
+    public function orderDetailInfo($data) {
+      
+        $whereConditions = ['is_delete' => "1",'id' => $data['id'],'company_id' => $data['company_id']];
+        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id'];
+
+        $orderDetailData = DB::table('orders')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $combine_array = array();
+        $combine_array['order'] = $orderDetailData;
+        return $combine_array;
+    }
+
 
     
 }

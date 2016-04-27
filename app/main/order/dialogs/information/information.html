@@ -2,20 +2,17 @@
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">{{vm.title}}</span>
+                <span class="title">Informatio</span>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll class="m-t-10">
-            <md-input-container class="md-block m-r-15 m-t-20 mp-b-0" flex-gt-sm ">
-                <label class="font-14 p-l-0">Customer PO</label>
-                <input placeholder="" ng-model="vm.customerPO">
-            </md-input-container>
+            
             <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Sales</label>
-                    <md-select ng-model="vm.infodialog.salesSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.salesSelect.salesOption" value="{{options.option}}">
-                            {{options.option}}
+                    <md-select ng-model="order_data.sales_id" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="staff in staffList" value="{{staff.id}}">
+                            {{staff.first_name}}&nbsp;{{staff.last_name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -23,39 +20,30 @@
             <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Blind</label>
-                    <md-select ng-model="vm.blindSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.blindSelect.blindOption" value="{{options.option}}">
-                            {{options.option}}
-                        </md-option>
+                    <md-select ng-model="order_data.is_blind" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option value="0">No</md-option>
+                        <md-option value="1">Yes</md-option>
                     </md-select>
                 </md-input-container>
             </div>
+
             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Account Manager</label>
-                    <md-select ng-model="vm.accountSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.accountSelect.accountOption" value="{{options.option}}">
-                            {{options.option}}
+                    <md-select ng-model="order_data.account_manager_id" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="user in brandCoList" value="{{user.id}}">
+                            {{user.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
             </div>
-            <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">Main Contact</label>
-                    <md-select ng-model="vm.contactSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.contactSelect.contactOption" value="{{options.option}}">
-                            {{options.option}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
+            
             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Price Grid</label>
-                    <md-select ng-model="vm.priceSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.priceSelect.priceOption" value="{{options.option}}">
-                            {{options.option}}
+                    <md-select ng-model="order_data.price_id" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="data in allGrid" value="{{data.id}}">
+                            {{data.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -63,8 +51,8 @@
             
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button ng-click="vm.closeDialog()" class="md-accent md-raised" ui-sref="app.spiltAffiliate">Save</md-button>
+            <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

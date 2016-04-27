@@ -218,7 +218,8 @@ Route::post('order/designListing', 'OrderController@designListing');
 Route::post('order/designDetail', 'OrderController@designDetail');
 Route::post('order/editDesign', 'OrderController@editDesign');
 Route::post('order/getDesignPositionDetail', 'OrderController@getDesignPositionDetail');
-
+Route::post('order/editOrder', 'OrderController@editOrder');
+Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
@@ -268,4 +269,5 @@ Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkpro
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');
 Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
 Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
+
 
