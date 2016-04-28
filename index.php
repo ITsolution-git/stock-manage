@@ -59,7 +59,11 @@
 
     <script src="scripts/vendor.js"></script>
     <!--<script src="scripts/mdPickers.min.js"></script>-->
-    <script src="scripts/multiselect/lodash.js"></script>
+    <!--<script src="scripts/multiselect/lodash.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>
+    <script>
+     _.contains = _.includes;
+    </script>
     <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
 
     <!-- inject:js -->
