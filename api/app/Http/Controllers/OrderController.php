@@ -124,25 +124,16 @@ class OrderController extends Controller {
         {
             $records = array('No Records found');
         }
-
-       
-        foreach($records as $data) {
-          
-          //$new_record[] = $data;
-
-            if(array_key_exists($data->id, $getAllDesigndata)) {
-                $data->design_pos = $getAllDesigndata[$data->id];
-            } else {
-                $data->design_pos = array();
+        else
+        {
+            foreach($records as $data) {
+                if(array_key_exists($data->id, $getAllDesigndata)) {
+                    $data->design_pos = $getAllDesigndata[$data->id];
+                } else {
+                    $data->design_pos = array();
+                }
             }
-            
-           // $data->desc = $getAllDesigndata[$data->id];
-        //  $new_recorde[]['desc'] = $getAllDesigndata[$data->id];
-     //      $data['desc'][$getAllDesigndata->]
-
         }
-
-       
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
         return $this->return_response($data);
