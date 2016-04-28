@@ -9,6 +9,8 @@
    
     function AddDesignController(event_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
+        var vm = this;
+          vm.title = 'Add New Design';
 
         
         if(event_id != 0) {
@@ -136,7 +138,19 @@
                 return (state.name.indexOf(lowercaseQuery) === 0);
             };
         }
-
+  vm.createDate1="",
+        vm.createDate2="",
+        vm.createDate3="",
+        vm.monthSelectorOptions = {
+            start: "year",
+            depth: "year"
+          };
+          vm.getType = function(x) {
+            return typeof x;
+          };
+          vm.isDate = function(x) {
+            return x instanceof Date;
+          };
         $scope.change_color = function(id,param){
            
              if(param == 'front_color_id')

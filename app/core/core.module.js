@@ -14,9 +14,10 @@
                 'ngMaterial',
                 'pascalprecht.translate',
                 'datatables',
-               'mdPickers',
+//               'mdPickers',
                'angularjs-dropdown-multiselect',
                 'ui.router',
+                'kendo.directives',
                 'jmApp'
                 
             ]);

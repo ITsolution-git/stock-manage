@@ -74,10 +74,11 @@
                                 </div>
                                 <div class="f-body" ng-if="vm.createdate">
                                     <div layout="column" >
-                                        <mdp-date-picker mdp-open-on-click name="dateFormat" mdp-placeholder="Date" mdp-format="DD/MM/YYYY" ng-model="vm.createDate" class="cursor-p">
-                                        </mdp-date-picker>
+                                        <div class="date-input width100">
+                                            <input kendo-date-picker ng-model="vm.createDate" k-ng-model="dateObject6" placeholder="Dates"/>
                                     </div>
                                 </div>
+                            </div>
                             </div>
                             <div layout="column" class="f-box-1">
                                 <div class="f-header">
@@ -141,13 +142,15 @@
                                 <div class="f-body" ng-if="vm.datefilter">
                                     <div layout="column" >
                                         <label class="f-14">FROM</label>
-                                        <mdp-date-picker mdp-open-on-click  name="dateFormat" mdp-placeholder="Date" mdp-format="DD/MM/YYYY" ng-model="vm.rangeFrom">
-                                        </mdp-date-picker>
+                                        <div class="date-input width100">
+                                            <input kendo-date-picker ng-model="vm.rangeFrom" k-ng-model="dateObject5" placeholder="Dates"/>
+                                    </div>
                                     </div>
                                     <label class="f-14">TO</label>
-                                    <mdp-date-picker mdp-open-on-click  name="dateFormat" mdp-placeholder="Date" mdp-format="DD/MM/YYYY" ng-model="vm.rangeTo">
-                                    </mdp-date-picker>
+                                    <div class="date-input width100">
+                                        <input kendo-date-picker ng-model="vm.rangeTo" k-ng-model="dateObject4" placeholder="Dates"/>
                                 </div>
+                        </div>
                         </div>
                         </div>
                     </md-content>

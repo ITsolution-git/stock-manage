@@ -55,8 +55,19 @@ vm.companyChecksettings = {externalIdProp: myCustomPropertyForTheObject()}
             function myCustomPropertyForTheObjectSale(){
                 vm.salesCheckModal = [];
             }
+//            for (var i = 0; i < this.salesCheckModal.length; i++) {
+//                this.salesCheckModal[i].id = null;
+//            }
+            for (var i = 0; i < vm.companyCheckModal.length; i++) {
+                vm.companyCheckModal[i].id = null;
 
         }
+            vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = null;
+            this.searchOrder = null;
+            jQuery('.dateFilter').prop("value", " ");
+
+        }
+
          function showDatePicker(ev) {
             $mdpDatePicker(vm.createDate, {
                 targetEvent: ev

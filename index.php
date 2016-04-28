@@ -58,7 +58,7 @@
     <!-- <ms-theme-options></ms-theme-options> -->
 
     <script src="scripts/vendor.js"></script>
-    <script src="scripts/mdPickers.min.js"></script>
+    <!--<script src="scripts/mdPickers.min.js"></script>-->
     <script src="scripts/multiselect/lodash.js"></script>
     <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
 
@@ -161,5 +161,10 @@
     <!--Datatable Scrolling-->
     <script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
     <link href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css" rel="stylesheet">
+    <!--Kindo DatePicker-->
+    <script src="//cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"></script>
+    <script src="//cdn.kendostatic.com/2014.2.716/js/kendo.angular.min.js"></script>
+    <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.common.min.css" rel = "stylesheet" / >
+    <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css" rel = "stylesheet" / >
 </body>
 </html>
