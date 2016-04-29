@@ -287,19 +287,19 @@
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
-            jQuery('.dev-rdetail').on('click', function () {
-                var $tr = $(this).closest('tr');
-                var row = datatableObj.row($tr);
-
-                if (row.child.isShown()) {
-                    row.child.hide();
-                    $tr.removeClass('shown');
-                } else {
-                    var rowHtml=$tr.find("div.dev-rdetail-data").html();
-                    row.child(rowHtml).show();
-                    $tr.addClass('shown').next('tr').addClass('table-desc').children('td').addClass('collpas');
-                }
-            });
+//            jQuery('.dev-rdetail').on('click', function () {
+//                var $tr = $(this).closest('tr');
+//                var row = datatableObj.row($tr);
+//
+//                if (row.child.isShown()) {
+//                    row.child.hide();
+//                    $tr.removeClass('shown');
+//                } else {
+//                    var rowHtml=$tr.find("div.dev-rdetail-data").html();
+//                    row.child(rowHtml).show();
+//                    $tr.addClass('shown').next('tr').addClass('table-desc').children('td').addClass('collpas');
+//                }
+//            });
         }
     }
 

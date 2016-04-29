@@ -215,7 +215,7 @@
                     </thead> -->
                     <thead tasty-thead></thead>
                     <tbody>
-                        <tr ng-repeat="row in rows" class="cursor-p" >
+                        <tr  ng-repeat-start="row in rows" class="cursor-p" >
                             <td ui-sref="app.order.order-info({id:row.id})">{{ row.id}}</td>
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
@@ -223,12 +223,13 @@
                             <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
                             <td>{{ row.first_name}} &nbsp; {{ row.last_name}}</td>
                             <td>{{ row.date_shipped}}</td>
-                            <td class="accor details-control" >
-                                <button class="dev-rdetail" ng-click="row.expanded = !row.expanded">
-                                    <md-icon ng-if="!row.expanded" md-font-icon="icon-plus"></md-icon>
-                                    <md-icon ng-if="row.expanded" md-font-icon="icon-minus"></md-icon>
-                                </button>
-                                 <div ng-if="row.expanded" class="dev-rdetail-data">
+                                 <td class="accor" >
+                            <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                            <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                        </td>
+                        </tr>
+                                <tr class="table-desc dev-rdetail-data" ng-if="row.expanded"ng-repeat-end="">
+                                    <td colspan="8" class="collpas">
                                     <table class="dataTable row-border hover" >
                                         <thead>
                                             <th>Design Name</th>
@@ -252,7 +253,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                               
                             </td>
                         </tr>                    
                     </tbody>
