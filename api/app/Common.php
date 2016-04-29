@@ -131,7 +131,7 @@ class Common extends Model {
 
 
         $whereConditions = ['misc.status' => '1','misc.is_delete' => '1','staff.is_delete' => '1','misc.type' => 'staff_type','staff.company_id' => $company_id];
-        $listArray = ['staff.id','staff.first_name','staff.last_name'];
+        $listArray = ['staff.id','staff.first_name','staff.last_name',DB::raw('CONCAT(staff.first_name, " ", staff.last_name) AS label')];
 
         $staffData = DB::table('staff as staff')
                          ->Join('misc_type as misc','staff.staff_type','=',DB::raw("misc.id AND misc.company_id = ".$company_id))

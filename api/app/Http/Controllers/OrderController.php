@@ -101,9 +101,6 @@ class OrderController extends Controller {
         $result = $this->order->getOrderdata($post);
         $getAllDesigndata = $this->order->getAllDesigndata();
 
-
-
-
         $records = $result['allData'];
 
         $result['count'] = (empty($result['count']))?'1':$result['count'];

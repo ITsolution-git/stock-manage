@@ -17,7 +17,8 @@ class Order extends Model {
         }
         $created_date = '';
         if(isset($post['filter']['created_date']) && $post['filter']['created_date'] != '') {
-            $created_date = $post['filter']['created_date'];
+            //$created_date = $post['filter']['created_date'];
+            $created_date = date("Y-m-d", strtotime($post['filter']['created_date']));
         }
 
         $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['company_id']];

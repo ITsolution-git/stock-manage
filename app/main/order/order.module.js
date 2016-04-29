@@ -23,8 +23,8 @@
                     OrderData: function (msApi,sessionService)
                     {
                        
-                         var order_list_data = {};
-                         order_list_data.cond ={company_id :sessionService.get('company_id')};
+                         /*var order_list_data = {};
+                         order_list_data.cond ={company_id :sessionService.get('company_id')};*/
                         //    return msApi.resolve('order@post',order_list_data);
                     },OrderUserData: function (msApi,sessionService)
                     {
@@ -36,7 +36,7 @@
                          order_comp_data.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
                          order_comp_data.table ="client";
 
-                         return msApi.resolve('orderClient@post',order_comp_data);
+                         //return msApi.resolve('orderClient@post',order_comp_data);
                        //return msApi.resolve('order@post',order_list_data);
                     }
                 }
@@ -90,7 +90,7 @@
 
       // Api
       msApiProvider.register('orderUser',['api/public/common/getStaffList/:id',null, {get:{method:'get'}}]);
-      msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
+      //msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
   
      
 
