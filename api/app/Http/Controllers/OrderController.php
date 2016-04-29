@@ -2021,6 +2021,10 @@ class OrderController extends Controller {
         unset($post['designData']['side_left_color_name']);
         unset($post['designData']['side_right_color_name']);
         unset($post['designData']['top_color_name']);
+
+      $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
+      $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
+      $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
        
         $design_id = $this->common->InsertRecords('order_design',$post['designData']);
 
@@ -2056,7 +2060,11 @@ class OrderController extends Controller {
  
         $data = Input::all();
         $result = $this->order->designDetail($data);
-        
+
+         $result['design'][0]->hands_date = date("n/d/Y", strtotime($result['design'][0]->hands_date));
+         $result['design'][0]->shipping_date = date("n/d/Y", strtotime($result['design'][0]->shipping_date));
+         $result['design'][0]->start_date = date("n/d/Y", strtotime($result['design'][0]->start_date));
+              
 
         if(empty($result['design']))
         {
@@ -2089,6 +2097,10 @@ class OrderController extends Controller {
         unset($post['designData']['side_right_color_name']);
         unset($post['designData']['top_color_name']);
        
+      
+      $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
+      $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
+      $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
 
        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['designData']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);

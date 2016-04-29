@@ -47,6 +47,7 @@
             
                 if(result.data.success == '1') {
                    $scope.designs = result.data.records;
+                   
                 }
                 
             });

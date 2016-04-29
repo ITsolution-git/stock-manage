@@ -21,14 +21,7 @@
             $http.post('api/public/order/designDetail',combine_array_id).success(function(result, status, headers, config) {
                
                 if(result.data.success == '1') {
-                    
-                    
-                    result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
-                    result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
-                    result.data.records[0].start_date = new Date(result.data.records[0].start_date);
-
                     $scope.design = result.data.records[0];
-
                 }
                 
             });
