@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Edit Company Info</span>
-                <md-button  ng-click="vm.closeDialog()">
+                <md-button  ng-click="closeDialog()">
                     <span>Cancel</span>
                 </md-button>
             </div>
@@ -14,50 +14,55 @@
                     <span class="md-title">Company Information</span>
                 </div>
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Company Name *" name="client_company" required ng-model="vm.client.client_company">
+                    <input placeholder="Company Name *" name="client_company" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }"  required ng-model="client.client_company">
                     <div ng-messages="clientForm.client_company.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>This field is required</span>
                         </div>
                     </div>
                 </md-input-container>
+
+                <!---------      CLIENT TYPE      ---------------->
                 <md-input-container class="m-b-30">
                     <label>Type</label>
-                    <md-select ng-model="vm.client.client_companytype">
+                    <md-select ng-model="client.client_companytype" name="client_companytype"  ng-change='UpdateTableField("client_companytype",client.client_companytype,"client","client_id",client.client_id,"address")'>
                         <md-option value="0">
                             Select Type
                         </md-option>
-                        <md-option ng-repeat="type in vm.ArrCleintType" value="{{type.id}}">
-                            {{type.value}}
+                        <md-option ng-repeat="type in ArrCleintType" ng-selected="{{client.type_id==type.id}}" value="{{type.id}}">
+                            {{type.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
+
                 <md-input-container>
-                    <input placeholder="Street Address" ng-model="vm.client.pl_address">
+                    <input placeholder="Street Address" name="pl_address"  ng-model="client.pl_address"ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Suite" ng-model="vm.client.pl_suite">
+                    <input placeholder="Suite" name="pl_suite"  ng-model="client.pl_suite" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="City" ng-model="vm.client.pl_city">
+                    <input placeholder="City"  name="pl_city" ng-model="client.pl_city" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
                 </md-input-container>
+
+                <!---------      STATE      ---------------->
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                     <md-input-container flex=45 class="m-b-20">
                         <label>State</label>
-                        <md-select ng-model="vm.client.pl_state">
-                            <md-option ng-repeat="state_val in vm.states_all" value="{{state_val.id}}">
+                        <md-select ng-model="client.pl_state"  name="pl_state"  ng-change='UpdateTableField("pl_state",client.pl_state,"client","client_id",client.client_id,"address")'>
+                            <md-option ng-repeat="state_val in states_all" ng-selected='{{state_val.id==client.state_id}}' value="{{state_val.id}}">
                                 {{state_val.name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container flex="45">
-                        <input placeholder="Zip Code" ng-model="vm.client.pl_pincode">
+                        <input placeholder="Zip Code" name="pl_pincode"  ng-model="client.pl_pincode" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
                     </md-input-container>
                 </div>
 
                 <md-input-container>
                     <label>Billing Email *</label>
-                    <input requiredname="email" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="vm.client.billing_email">
+                    <input requiredname="email" type="email" name="billing_email" required ng-pattern="/^.+@.+\..+$/" ng-model="client.billing_email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
                     
                     <div ng-messages="clientForm.email.$error" role="alert" multiple>
                         <div ng-message="required">
@@ -68,50 +73,31 @@
                         </div>
                     </div>
                 </md-input-container>
+                <md-input-container>
+                    <input placeholder="Company Phone"  name="company_phone" ng-model="client.company_phone" 
+                        ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Company Website URL"  name="company_url" ng-model="client.company_url" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                </md-input-container>
 
-                <md-input-container>
-                    <input placeholder="Company Phone" ng-model="vm.client.company_phone">
-                </md-input-container>
-                <md-input-container>
-                    <input placeholder="Company Website URL" ng-model="vm.client.company_url">
-                </md-input-container>
+                <!---------      DISPOSITIONS      ---------------->
                 <md-input-container class="m-b-30">
                     <label>Disposition</label>
-                    <md-select ng-model="vm.client.client_desposition">
-                        <md-option ng-repeat="disp in vm.Arrdisposition" value="{{disp.id}}">
+                    <md-select ng-model="client.client_desposition" name="client_desposition"  ng-change='UpdateTableField("client_desposition",client.client_desposition,"client","client_id",client.client_id,"address")'>
+                        <md-option ng-repeat="disp in Arrdisposition" ng-selected='{{client.misc_id==disp.id}}' value="{{disp.id}}">
                             {{disp.value}}
                         </md-option>
                     </md-select>
-                </md-input-container>
-                <div class="content-heading p-t-30" layout-padding >
-                    <span class="md-title">Main Contact Information</span>
-                </div>
-                <md-input-container class="first-box">
-                    <input placeholder="First Name" ng-model="vm.client.first_name">
-                </md-input-container>
-                <md-input-container>
-                    <input placeholder="Last Name" ng-model="vm.client.last_name">
-                </md-input-container>
-                <md-input-container>
-                    <input placeholder="Phone " ng-model="vm.client.phone">
-                </md-input-container>
-                <md-input-container>
-                    <input placeholder="Email" ng-pattern="/^.+@.+\..+$/" name="email_main" ng-model="vm.client.email">
+                </md-input-container>  
 
-                    <div ng-messages="clientForm.email_main.$error" role="alert" multiple>
-                        <div ng-message="pattern">
-                            <span >Must be a valid e-mail address</span>
-                        </div>
-                    </div>
-                </md-input-container>
-               
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             
-                    <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-                    <md-button class="md-accent md-raised " ng-disabled="clientForm.$invalid || clientForm.$pristine" ng-click="vm.addNewClient(vm.client)">Save</md-button>
-             
+                   <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Close</md-button>
+<!--                    <md-button class="md-accent md-raised " ng-click="UpdateTableField(client)">Save</md-button>
+ -->             
         </md-dialog-actions>
     </form>
 </md-dialog>

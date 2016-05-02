@@ -4,46 +4,17 @@
 
     angular
             .module('app.client')
-            .controller('ProfileViewController', ProfileViewController);
+            .controller('ProfileViewController', ProfileViewController)
+            .controller('CompanyInfo', CompanyInfo);
 
     /** @ngInject */
-    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService)
+    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService)
     {
         var vm = this;
         //Dummy models data
         vm.client_id = $stateParams.id
         vm.company_id = sessionService.get('company_id');
-        vm.clientName="Live Nation"        
-        vm.compInfo={
-          "logo":"",
-          "compContact":{
-              "address":"123 1st St. #500 Chicago IL, 60611",
-              "phone":"555-555-5555",
-              "email":"email@email.com",
-              "website":"www.website.com",
-          },
-          "mainContact":{
-              "contact":"Joe Contact",
-              "email":"JoeContact@email.com",
-              "phone":"555-555-5555",
-          },
-          "accountInfo":{
-              "type":"Contract",
-              "disposition":"Good",
-          }
-        };
-        vm.contacts = [
-            {"firstname": "joe", "lastname": "contact", "location": "Location Name", "phone": "555-555-5555", "email": "email@email.com"},
-            {"firstname": "joe", "lastname": "contact", "location": "Location Name", "phone": "555-555-5555", "email": "email@email.com"}
-        ];
-        vm.locations = [
-            {"streetAddress": "123 1st", "city": "chicago", "State": "IL", "zipcode": "60611", "locationType": "Shipping"},
-            {"streetAddress": "123 1st", "city": "chicago", "State": "IL", "zipcode": "60611", "locationType": "Physical"},
-            {"streetAddress": "123 1st", "city": "chicago", "State": "IL", "zipcode": "60611", "locationType": "Main"},
-            {"streetAddress": "123 1st", "city": "chicago", "State": "IL", "zipcode": "60611", "locationType": "Billing"},
-            {"streetAddress": "123 1st", "city": "chicago", "State": "IL", "zipcode": "60611", "locationType": "Physical"}
 
-        ];
         vm.salesDetail={
             "web":"www.website.com",
             "anniversaryDate":"2/20/2013",
@@ -123,10 +94,11 @@
             $mdOpenMenu(ev);
         };
         
-         vm.dtInstanceCB = dtInstanceCB;
+        vm.dtInstanceCB = dtInstanceCB;
+        //vm.closeDialog = closeDialog;
         
-        getClientProfile();
-        function getClientProfile()
+
+        $scope.getClientProfile = function()
         {
             var combine_array_id = {};
             combine_array_id.client_id = vm.client_id;
@@ -142,33 +114,193 @@
                 if(result.data.success=='1')
                 {   
                     vm.Response = result.data.records;
-                    vm.mainaddress = vm.Response.clientDetail.address;
+                    $scope.mainaddress = vm.Response.clientDetail.address;
                     vm.salesDetails =vm.Response.clientDetail.sales;
-                    vm.maincompcontact =vm.Response.clientDetail.contact;
-                    vm.company_info =vm.Response.clientDetail.main;
+                    $scope.maincompcontact =vm.Response.clientDetail.contact;
+                    $scope.company_info =vm.Response.clientDetail.main;
                     vm.client_tax =vm.Response.clientDetail.tax;
                     vm.pl_imp =vm.Response.clientDetail.pl_imp;
                     vm.AddrTypeData =vm.Response.AddrTypeData;
                     vm.StaffList =vm.Response.StaffList;
-                    vm.ArrCleintType =vm.Response.ArrCleintType;
-                  //  vm.PriceGrid = vm.Response.PriceGrid;
-                    vm.allContacts = vm.Response.allContacts;
+                    $scope.ArrCleintType =vm.Response.ArrCleintType;
+                    //  vm.PriceGrid = vm.Response.PriceGrid;
+                    $scope.allContacts = vm.Response.allContacts;
                     vm.allclientnotes = vm.Response.allclientnotes;
-                    vm.Arrdisposition = vm.Response.Arrdisposition;
+                    $scope.Arrdisposition = vm.Response.Arrdisposition;
                     vm.Client_orders = vm.Response.Client_orders;
                     vm.art_detail = vm.Response.art_detail;
+                    vm.addressAll=vm.Response.addressAll.result;
 
 
                     //vm.currentProjectUrl = $sce.trustAsResourceUrl(vm.main.salesweb);
                 }
             });
         }
+        $scope.getClientProfile();
+        var checkSession = $resource('api/public/client/SelectionData/'+vm.company_id,null,{
+        AjaxCall : {
+           method : 'get'
+           }
+        });
+        checkSession.AjaxCall(null,function(Response) 
+        {   
+            if(Response.data.success=='1')
+            {   
+                $scope.states_all  = Response.data.result.state;
+            }
+        });
+        vm.editCompanyInfo = editCompanyInfo;
+        vm.editCompanyConatct=editCompanyConatct;
+        vm.formPopup = 'app/main/client/views/forms';
+        function editCompanyInfo(ev)
+        {
+             var params = {};
+             params = { states_all:$scope.states_all,
+                        client: $scope.company_info,
+                        Arrdisposition:$scope.Arrdisposition,
+                        ArrCleintType:$scope.ArrCleintType,};
 
-         
+            open_popup(ev,params,'CompanyInfo','company_form');
+        }
+        function editCompanyConatct(ev,cond)
+        {
+            if(cond=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
+            {
+
+                var InserArray = {}; // INSERT RECORD ARRAY
+                InserArray.data = {client_id:vm.client_id};
+                InserArray.table ='client_contact'            
+
+                // INSERT API CALL
+                $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
+                {   
+                    if(Response.data.success=='1')
+                    {   
+                        // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
+                        var companyData = {};
+                        companyData.table ='client_contact'
+                        companyData.cond ={id:Response.data.id}
+                        // GET CLIENT TABLE CALL
+                        $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+                        {   
+                            if(result.data.success=='1')
+                            {   
+                                var params = {};
+                                params = { contact_arr: result.data.records[0]};
+                                open_popup(ev,params,'CompanyInfo','contact_form'); // OPEN POPUP FOR CONTACT
+                            }
+                        });
+                    }
+                });
+            }
+            else
+            {
+                // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
+                var companyData = {};
+                companyData.table ='client_contact';
+                companyData.cond ={id:cond};
+                // GET CLIENT TABLE CALL
+                $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+                {   
+                    if(result.data.success=='1')
+                    {  
+                        var params = {};
+                        params = { contact_arr: result.data.records[0]};                     
+                        open_popup(ev,params,'CompanyInfo','contact_form'); // OPEN POPUP FOR CONTACT
+                    }
+                });
+            }
+            
+
+
+        }
+        function open_popup(ev,params,controller,page)
+        {
+            $mdDialog.show({
+                controllerAs: $scope,
+                controller:controller,
+                templateUrl: vm.formPopup+'/'+page+'.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                    locals: {
+                        Params:params,
+                        event: ev
+                    },
+                onRemoving : $scope.getClientProfile
+            });
+        }
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
-        }       
+        } 
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
+            
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                       notifyService.notify('success', "Record Updated Successfully!");
+                       if(extra=='contact_main')
+                       {
+                            $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
+                            $scope.getClientProfile();
+                       }
+                    }
+                   });
+        }      
+    }
+    function CompanyInfo($mdDialog, $stateParams,$resource,sessionService,$scope,Params,$http,$controller,$state,notifyService)
+    {
+        $scope.client = Params.client;
+        $scope.ArrCleintType = Params.ArrCleintType;
+        $scope.Arrdisposition = Params.Arrdisposition;
+        $scope.states_all = Params.states_all;
+        $scope.contact_arr=Params.contact_arr;
+
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
+            
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                       notifyService.notify('success', "Record Updated Successfully!");
+                       if(extra=='contact_main')
+                       {
+                            $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
+                       }
+                    }
+                   });
+        }
+        $scope.closeDialog = function() 
+        {
+            //$state.go($state.current, $stateParams, {reload: true, inherit: false});
+            $mdDialog.hide();
+        }
     }
 })();

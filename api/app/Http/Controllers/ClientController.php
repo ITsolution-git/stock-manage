@@ -294,10 +294,10 @@ class ClientController extends Controller {
 				$allclientnotes = $this->client->GetNoteDetails($id);
 				$Client_orders = '';//$this->client->ListClientOrder($id);
 				$art_detail = '';//$this->art->Client_art_screen($post['client_id'],$post['company_id']);
-				
+				$addressAll = $this->client->getAddress($id);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else

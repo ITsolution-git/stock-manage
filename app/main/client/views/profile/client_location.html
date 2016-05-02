@@ -38,28 +38,29 @@
                                             <th></th>                                               
                                         </tr>
                                     </thead>
-                                                                        <tbody>
-                                        <tr ng-repeat="location in ::vm.locations">
-                                            <td>{{location.streetAddress}}</td>
+                                    <tbody>
+                                        <tr ng-repeat="location in ::vm.addressAll">
+                                            <td>{{location.address}}</td>
                                             <td>{{location.city}}</td>
-                                            <td>{{location.State}}</td>
-                                            <td>{{location.zipcode}}</td>
-                                            <td>{{location.locationType}}</td>
+                                            <td>{{location.state}}</td>
+                                            <td>{{location.postal_code}}</td>
+                                            <td>{{location.type}}</td>
                                             <td class="text-right"> 
-                                    <md-menu>
-                                        <md-button aria-label="Location Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                        </md-button>
-                                        <md-menu-content width="4">
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Location Options
-                                                </md-button>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu></td>
+                                                <md-menu>
+                                                    <md-button aria-label="Location Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                                    </md-button>
+                                                    <md-menu-content width="4">
+                                                        <md-menu-item>
+                                                            <md-button>
+                                                                Location Options
+                                                            </md-button>
+                                                        </md-menu-item>
+                                                    </md-menu-content>
+                                                </md-menu>
+                                            </td>
                                         </tr>                                
-                                        </tbody>
+                                    </tbody>
                                 </table>
                                 <table> 
                                     <tr>

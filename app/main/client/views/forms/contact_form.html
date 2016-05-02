@@ -1,0 +1,43 @@
+<md-dialog class="task-dialog" >
+    <form name="clientForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit Company Contact</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
+
+                <md-input-container class="md-block first-box">
+                    <input placeholder="First name *" name="first_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }"  required ng-model="contact_arr.first_name">
+                    <div ng-messages="clientForm.first_name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Last Name" name="last_name" ng-model="contact_arr.last_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Location" name="location"  ng-model="contact_arr.location" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Phone"  name="phone" ng-model="contact_arr.phone" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Email"  name="email" ng-model="contact_arr.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
+                </md-input-container>
+              </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            
+                   <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Close</md-button>
+<!--                    <md-button class="md-accent md-raised " ng-click="UpdateTableField(client)">Save</md-button>
+ -->             
+        </md-dialog-actions>
+    </form>
+</md-dialog>

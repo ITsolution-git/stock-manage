@@ -97,6 +97,7 @@
     <script src="app/core/services/api-resolver.service.js"></script>
     <script src="app/core/services/ms-session.service.js"></script>
     <script src="app/core/services/ng-tasty-tpls.min.js"></script>
+    <script src="app/core/services/ui-event.js"></script>
     <script src="app/core/filters/tag.filter.js"></script>
     <script src="app/core/filters/basic.filter.js"></script>
     <script src="app/core/directives/highlight.directive.js"></script>

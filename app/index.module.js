@@ -11,6 +11,9 @@
             // Core
             'app.core',
 
+            //ui event
+            'ui.event',
+
             // Navigation
             'app.navigation',
 
