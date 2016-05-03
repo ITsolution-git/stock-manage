@@ -1475,108 +1475,26 @@ class OrderController extends Controller {
     public function savePDF()
     {
 
-        $all_company['all_company'] = json_decode($_POST['all_company']);
-        $client_main_data['client_main_data'] = json_decode($_POST['client_main_data']);
-        $staff_list['staff_list'] = json_decode($_POST['staff_list']);
-        $company_detail['company_detail'] = json_decode($_POST['company_detail']);
-        $embroidery_switch_count['embroidery_switch_count'] = json_decode($_POST['embroidery_switch_count']);
-        $price_screen_primary['price_screen_primary'] = json_decode($_POST['price_screen_primary']);
-        $price_grid['price_grid'] = json_decode($_POST['price_grid']);
-        $total_qty['total_qty'] = json_decode($_POST['total_qty']);
-        $order_item['order_item'] = json_decode($_POST['order_item']);
-        $order_position['order_position'] = json_decode($_POST['order_position']);
-        $order_line['order_line'] = json_decode($_POST['order_line']);
         $order['order'] = json_decode($_POST['order']);
-
-        $order_image['order_image'] = json_decode($_POST['order_image']);
-
-       
-        if($company_detail['company_detail'][0]->photo != '') {
-            $company_detail['company_detail'][0]->photo = UPLOAD_PATH.$company_detail['company_detail'][0]->id.'/'.'staff/'.$company_detail['company_detail'][0]->id.'/'.$company_detail['company_detail'][0]->photo;
-        }
-
-        
-        $uploaddirfirst = '';
-        $uploaddirsecond = '';
-        $uploaddirthird = '';
-        $uploaddirfourth = '';
-
-        if($order_image['order_image']->first_logo != '') {
-        $uploaddirfirst = base_path() . "/public/uploads/".$company_detail['company_detail'][0]->id."/order/".$order['order']->id.'/'.$order_image['order_image']->first_logo;
-
-        }
-        if($order_image['order_image']->second_logo != '') {
-            $uploaddirsecond = base_path() . "/public/uploads/".$company_detail['company_detail'][0]->id."/order/".$order['order']->id.'/'.$order_image['order_image']->second_logo;
-        }
-        if($order_image['order_image']->third_logo != '') {
-             $uploaddirthird = base_path() . "/public/uploads/".$company_detail['company_detail'][0]->id."/order/".$order['order']->id.'/'.$order_image['order_image']->third_logo;
-        }
-        if($order_image['order_image']->fourth_logo != '') {
-             $uploaddirfourth = base_path() . "/public/uploads/".$company_detail['company_detail'][0]->id."/order/".$order['order']->id.'/'.$order_image['order_image']->fourth_logo;
-        }
-
-       $counter = 0;
-       $order_image_pdf = array();
-       if (file_exists($uploaddirfirst) && $counter < 2) {
-        $counter++;
-        $order_image_pdf[] = $order_image['order_image']->first_url_photo;
-
-
-       } 
-
-       if (file_exists($uploaddirsecond) && $counter < 2) {
-          $counter++;
-        $order_image_pdf[] = $order_image['order_image']->second_url_photo;
-          
-       }
-
-       if (file_exists($uploaddirthird) && $counter < 2) {
-          $counter++;
-        $order_image_pdf[] = $order_image['order_image']->third_url_photo;
-           
-       }
-
-       if (file_exists($uploaddirfourth) && $counter < 2) {
-          $counter++;
-        $order_image_pdf[] = $order_image['order_image']->fourth_url_photo;
-          
-       }
-
-     $order_image_pdf_data['order_image_pdf'] = $order_image_pdf;
-     
-
-     
-        $array3 = array('ia.order_id' => $order['order']->id);
-        $distributed_address['distributed_address'] = $this->order->getDistributedAddress($array3);
-
-        
+        $company_detail['company_detail'] = json_decode($_POST['company_detail']);
 
         $order['order']->created_date = date('m/d/Y',strtotime($order['order']->created_date));
-       
 
-        if($order['order']->shipping_by != '' && $order['order']->shipping_by != '0000-00-00'){
-           $order['order']->shipping_by = date('m/d/Y',strtotime($order['order']->shipping_by));
+        if($order['order']->date_shipped != '' && $order['order']->date_shipped != '0000-00-00'){
+           $order['order']->date_shipped = date('m/d/Y',strtotime($order['order']->date_shipped));
         } else {
-              $order['order']->shipping_by ='';
+              $order['order']->date_shipped ='';
         }
-
-        if($order['order']->in_hands_by != '' && $order['order']->in_hands_by != '0000-00-00'){
-            $order['order']->in_hands_by = date('m/d/Y',strtotime($order['order']->in_hands_by));
-        } else {
-            $order['order']->in_hands_by ='';
-        }
-        $order_misc['order_misc'] = json_decode($_POST['order_misc']);
-        $combine_array = array_merge($order_position,$order_line,$order,$order_misc,$order_item,$order_misc,$total_qty,$price_grid,$price_screen_primary,$embroidery_switch_count,$company_detail,$staff_list,$all_company,$client_main_data,$distributed_address,$order_image_pdf_data);
-     
+      
+        $combine_array = array_merge($order,$company_detail);
+        
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.order',array('data'=>$combine_array))->render());
-     //   PDF::Output('order.pdf');
-
-      $pdf_url = "order-".$order['order']->id.".pdf";         
-      $filename = base_path() . "/public/uploads/".$company_detail['company_detail'][0]->id."/pdf/". $pdf_url;
-     
-      PDF::Output($filename, 'F');
-      return Response::download($filename);
+   
+        $pdf_url = "order-".$order['order']->id.".pdf";         
+        $filename = base_path() . "/public/uploads/".$company_detail['company_detail'][0]->id."/pdf/". $pdf_url;
+        PDF::Output($filename, 'F');
+        return Response::download($filename);
 
     }
 

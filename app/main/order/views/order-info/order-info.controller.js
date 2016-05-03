@@ -212,10 +212,45 @@
             });
       
         }
+
+        $http.post('api/public/common/getCompanyDetail',sessionService.get('company_id')).success(function(result) {
+                    
+                    if(result.data.success == '1') 
+                    {
+                        $scope.allCompanyDetail =result.data.records;
+                        $scope.oversize = $scope.allCompanyDetail[0].oversize_value;
+                    } 
+                    else
+                    {
+                        $scope.allCompanyDetail=[];
+                    }
+                });
+
+
+        $scope.printPdf=function()
+        {
+
+               
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/order/savePDF';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var input_order = document.createElement('input');
+            input_order.name = 'order';
+            input_order.setAttribute('value', JSON.stringify($scope.order));
+            form.appendChild(input_order);
+
+            var input_company_detail = document.createElement('input');
+            input_company_detail.name = 'company_detail';
+            input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
+            form.appendChild(input_company_detail);
+
+            document.body.appendChild(form);
+            form.submit();  
+        };    
     }
-
-
-
-
     
 })();
