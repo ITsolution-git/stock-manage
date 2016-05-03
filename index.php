@@ -28,8 +28,8 @@
     <body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm"
           class="{{state.current.bodyClass|| ''}}">
 
-        <!-- SPLASH SCREEN -->
-<!--     <ms-splash-screen id="splash-screen">
+        <!-- SPLASH SCREEN 
+    <ms-splash-screen id="splash-screen">
         <div class="center">
             <div class="logo" style="width:15%">
                 <span>Stokkup</span>
@@ -48,9 +48,8 @@
                     </div>
                 </div>
             </div>
-         / Material Design Spinner 
         </div>
-    </ms-splash-screen> -->
+    </ms-splash-screen>
     <!-- / SPLASH SCREEN -->
 
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
