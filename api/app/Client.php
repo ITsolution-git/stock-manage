@@ -96,7 +96,7 @@ class Client extends Model {
     {
 
     	$retArray = DB::table('client as c')
-    				->select('st.name as state_name','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value','ca.*','cc.*','c.*')
+    				->select('st.name as state_name','st.id as state_id','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*')
     				->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
     				->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
     				->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
@@ -111,14 +111,19 @@ class Client extends Model {
     	{
     		foreach ($retArray as $key => $value) 
     		{
-    			//$result['main']['client_id'] = $value->client_id;
+    			$result['main']['client_id'] = $value->client_id;
     			$result['main']['client_company'] = $value->client_company;
     			//$result['main']['created_date'] = $value->created_date;
     			$result['main']['billing_email'] = $value->billing_email;
     			$result['main']['company_phone'] = $value->company_phone;
     			$result['main']['salesweb'] = $value->salesweb;
+
+          $result['main']['type_id'] = $value->type_id;
     			$result['main']['client_type'] = $value->type_name;
-    			$result['main']['client_desposition'] = $value->misc_value;
+
+    			$result['main']['misc_id'] = $value->misc_id;
+          $result['main']['client_desposition'] = $value->misc_value_p;
+          
           $result['main']['color_logo'] = $value->color_logo;
           $result['main']['b_w_logo'] = $value->b_w_logo;
           $result['main']['shipping_logo'] = $value->shipping_logo;
@@ -131,10 +136,18 @@ class Client extends Model {
           $result['main']['client_address'] .= !empty($value->state_name)?$value->state_name.", ":'';
           $result['main']['client_address'] .= !empty($value->pl_pincode)?$value->pl_pincode:'' ;
 
+          $result['main']['pl_address'] = !empty($value->pl_address)?$value->pl_address:'' ;
+          $result['main']['pl_city']    = !empty($value->pl_city)?$value->pl_city:'' ;
+          $result['main']['pl_suite']   = !empty($value->pl_suite)?$value->pl_suite:'' ;
+          $result['main']['state_name'] = !empty($value->state_name)?$value->state_name:'' ;
+          $result['main']['pl_pincode'] = !empty($value->pl_pincode)?$value->pl_pincode:'' ;
+          $result['main']['state_id']   = !empty($value->state_id)?$value->state_id:'' ;
+
           $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']:'';
           $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']:'';
           $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']:'';
 
+          $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
     			$result['contact']['email'] = $value->email;
     			$result['contact']['first_name'] = $value->first_name;
     			$result['contact']['last_name'] = $value->last_name;

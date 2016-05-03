@@ -37,7 +37,7 @@
                                             <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event)">
                                                 <md-menu-item>
                                                     <md-button>
                                                         Edit
@@ -47,14 +47,16 @@
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
+                                        <div class="h5 text-semibold">Company</div>
+                                        <span>{{company_info.client_company}}</span>
                                         <div class="h5 text-semibold">Address:</div>
-                                        <span>{{vm.company_info.client_address}}</span>
+                                        <span>{{company_info.client_address}}</span>
                                         <div class="h5 text-semibold">Company Phone:</div>
-                                        <span>{{vm.company_info.company_phone}}</span>
+                                        <span>{{company_info.company_phone}}</span>
                                         <div class="h5 text-semibold">Email:</div>
-                                        <span>{{vm.company_info.billing_email}}</span>
+                                        <span>{{company_info.billing_email}}</span>
                                         <div class="h5 text-semibold">Website:</div>
-                                        <span>{{vm.company_info.company_url}}</span>
+                                        <span>{{company_info.company_url}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -64,14 +66,14 @@
                                         <md-card-header-text>
                                             <span class="md-title">Main Contact</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu ng-if="maincompcontact.contact_id != '0'">
                                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4"  ng-click="vm.editCompanyConatct($event,maincompcontact.contact_id)">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Main Contact Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
@@ -79,11 +81,13 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="h5 text-semibold">Main Contact:</div>
-                                        <span>{{vm.maincompcontact.first_name}} {{vm.maincompcontact.last_name}}</span>
+                                        <span>{{maincompcontact.first_name}} {{maincompcontact.last_name}}</span>
+                                        <div class="h5 text-semibold">Main Location:</div>
+                                        <span>{{maincompcontact.location}}</span>                                        
                                         <div class="h5 text-semibold">Main Contact Email:</div>
-                                        <span>{{vm.maincompcontact.email}}</span>
+                                        <span>{{maincompcontact.email}}</span>
                                         <div class="h5 text-semibold">Main Contact Phone:</div>
-                                        <span>{{vm.maincompcontact.phone}}</span>
+                                        <span>{{maincompcontact.phone}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -97,7 +101,7 @@
                                             <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event)">
                                                 <md-menu-item>
                                                     <md-button>
                                                         Edit
@@ -108,9 +112,9 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="h5 text-semibold">Account Type:</div>
-                                        <span>{{vm.company_info.client_type}}</span>
+                                        <span>{{company_info.client_type}}</span>
                                         <div class="h5 text-semibold">Disposition:</div>
-                                        <span>{{vm.company_info.client_desposition}}</span>
+                                        <span>{{company_info.client_desposition}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
