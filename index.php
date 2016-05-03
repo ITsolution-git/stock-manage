@@ -133,6 +133,7 @@
     <script src="app/main/order/order.controller.js"></script>
     <script src="app/main/order/views/spiltAffiliate/spiltAffiliate.controller.js"></script>
     <script src="app/main/order/views/order-info/order-info.controller.js"></script>
+    <script src="app/main/order/views/order-info/send-email.controller.js"></script>
     <script src="app/main/order/views/distributionProduct/distributionProduct.controller.js"></script>
     <script src="app/main/order/views/distribution/distribution.controller.js"></script>
     <script src="app/main/order/views/design/design.controller.js"></script>

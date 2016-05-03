@@ -1,0 +1,24 @@
+<md-dialog class="task-dialog order-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Sent Mail!</span>
+                <md-button  ng-click="cancel()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
+               
+                <md-input-container class="first-box">
+                    <input placeholder="Email" ng-model="allCompany[0].billing_email">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+                    <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+                    <md-button class="md-accent md-raised " ng-click="save(allCompany[0].billing_email)">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
