@@ -129,7 +129,7 @@
                     $scope.Arrdisposition = vm.Response.Arrdisposition;
                     vm.Client_orders = vm.Response.Client_orders;
                     vm.art_detail = vm.Response.art_detail;
-                    vm.addressAll=vm.Response.addressAll.result;
+                    $scope.addressAll=vm.Response.addressAll.result;
 
 
                     //vm.currentProjectUrl = $sce.trustAsResourceUrl(vm.main.salesweb);
@@ -162,14 +162,14 @@
 
             open_popup(ev,params,'CompanyInfo','company_form');
         }
-        function editCompanyConatct(ev,cond)
+        function editCompanyConatct(ev,cond,table,popup_page)
         {
             if(cond=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
             {
 
                 var InserArray = {}; // INSERT RECORD ARRAY
                 InserArray.data = {client_id:vm.client_id};
-                InserArray.table ='client_contact'            
+                InserArray.table =table;            
 
                 // INSERT API CALL
                 $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
@@ -178,7 +178,7 @@
                     {   
                         // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                         var companyData = {};
-                        companyData.table ='client_contact'
+                        companyData.table =table;
                         companyData.cond ={id:Response.data.id}
                         // GET CLIENT TABLE CALL
                         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
@@ -187,7 +187,7 @@
                             {   
                                 var params = {};
                                 params = { contact_arr: result.data.records[0]};
-                                open_popup(ev,params,'CompanyInfo','contact_form'); // OPEN POPUP FOR CONTACT
+                                open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                             }
                         });
                     }
@@ -197,7 +197,7 @@
             {
                 // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                 var companyData = {};
-                companyData.table ='client_contact';
+                companyData.table =table;
                 companyData.cond ={id:cond};
                 // GET CLIENT TABLE CALL
                 $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
@@ -206,14 +206,12 @@
                     {  
                         var params = {};
                         params = { contact_arr: result.data.records[0]};                     
-                        open_popup(ev,params,'CompanyInfo','contact_form'); // OPEN POPUP FOR CONTACT
+                        open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                     }
                 });
             }
-            
-
-
         }
+
         function open_popup(ev,params,controller,page)
         {
             $mdDialog.show({
@@ -259,9 +257,25 @@
                        notifyService.notify('success', "Record Updated Successfully!");
                        if(extra=='contact_main') // SECOND CALL CONDITION WITH EXTRA PARAMS
                        {
-                            $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
+                            $scope.UpdateTableField('contact_main','1',table_name,'id',param,'','');
                             $scope.getClientProfile();
                        }
+                       if(extra=='address_main') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.UpdateTableField('address_main','1',table_name,'id',param,'','');
+                            $scope.getClientProfile();
+                       }
+                       if(extra=='address_shipping') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.UpdateTableField('address_shipping','1',table_name,'id',param,'','');
+                            $scope.getClientProfile();
+                       }
+                       if(extra=='address_billing') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.UpdateTableField('address_billing','1',table_name,'id',param,'','');
+                            $scope.getClientProfile();
+                       }
+
                     }
                    });
         }
