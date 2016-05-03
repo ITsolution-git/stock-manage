@@ -235,6 +235,9 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         } 
+
+
+        // ============= UPDATE TABLE RECORD WITH CONDITION ============= // 
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
             var vm = this;
@@ -254,14 +257,41 @@
                     if(result.data.success=='1')
                     {
                        notifyService.notify('success', "Record Updated Successfully!");
-                       if(extra=='contact_main')
+                       if(extra=='contact_main') // SECOND CALL CONDITION WITH EXTRA PARAMS
                        {
                             $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
                             $scope.getClientProfile();
                        }
                     }
                    });
-        }      
+        }
+        
+        // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
+        $scope.RemoveFields = function(table,cond_field,cond_value){
+              
+                var delete_data = {};
+                
+                $scope.name_filed = cond_field;
+                var obj = {};
+                obj[$scope.name_filed] =  cond_value;
+                delete_data.cond = angular.copy(obj);
+                
+                delete_data.table =table;
+                var permission = confirm("Are you sure to delete this Record ?");
+                if (permission == true) 
+                {
+                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                    {
+                        if(result.data.success=='1')
+                        {
+                            $scope.getClientProfile();
+                        }
+                    });
+                }
+      }
+                       
+
+
     }
     function CompanyInfo($mdDialog, $stateParams,$resource,sessionService,$scope,Params,$http,$controller,$state,notifyService)
     {
@@ -295,7 +325,7 @@
                             $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
                        }
                     }
-                   });
+                });
         }
         $scope.closeDialog = function() 
         {
