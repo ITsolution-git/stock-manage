@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
+                    <table class="scrol table3 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
                         <thead>
                             <tr>
                                 <th class="secondary-text">
@@ -185,7 +185,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="scrollable" ms-scroll>
                             <tr ng-repeat="puchase in ::vm.purchases" class="cursor-p">
                                 <td>{{ puchase.poid}}</td>
                                 <td>{{ puchase.potype}}  
@@ -211,7 +211,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
+                    <table class="scrol table4 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
                         <thead>
                             <tr>
                                 <th class="secondary-text">
@@ -238,7 +238,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="scrollable" ms-scroll>
                             <tr ng-repeat="receive in ::vm.receives" class="cursor-p">
                                 <td>{{ receive.roid}}</td>
                                 <td>{{ receive.clientName}}  
@@ -262,14 +262,14 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
+                    <table class="scrol table5 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
                         <thead>
                         <th>Company</th>
                         <th>Total # of Units</th>
                         <th># of Designs</th>
                         <th></th>
                         </thead>
-                        <tbody>
+                        <tbody class="scrollable" ms-scroll>
                             <tr ng-repeat="affiliateOrder in ::vm.affiliateOrders" class="cursor-p">
                                 <td>{{ affiliateOrder.Company}}</td>
                                 <td>{{ affiliateOrder.units}}  

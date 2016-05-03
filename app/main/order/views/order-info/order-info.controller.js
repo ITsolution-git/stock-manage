@@ -112,14 +112,14 @@
             pagingType: 'simple',
             autoWidth: false,
             responsive: true,
-            scrollY:171
+//            scrollY:171
         };
         vm.dtOptionsPurchase = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
             pagingType: 'simple',
             autoWidth: false,
             responsive: true,
-            scrollY:103
+//            scrollY:103
         };
         vm.activeClass = activeClass;
         function activeClass(item){
@@ -213,7 +213,57 @@
       
         }
     }
+//Purchase
+        var timeoutID = window.setTimeout(function zx() {
+            var $table = $('table.scrol.table3'),
+                    $bodyCells = $table.find('tbody tr:first').children(),
+                    colWidth;
+            $(window).resize(function () {
+                // Get the tbody columns width array
+                colWidth = $bodyCells.map(function () {
+                    return $(this).width();
+                }).get();
 
+                // Set the width of thead columns
+                $table.find('thead tr').children().each(function (i, v) {
+                    $(v).width(colWidth[i]);
+                });
+            }).resize();
+        }, 200);
+        //Received
+        var timeoutID = window.setTimeout(function yx() {
+            var $table = $('table.scrol.table4'),
+                    $bodyCells = $table.find('tbody tr:first').children(),
+                    colWidth;
+            $(window).resize(function () {
+                // Get the tbody columns width array
+                colWidth = $bodyCells.map(function () {
+                    return $(this).width();
+                }).get();
+
+                // Set the width of thead columns
+                $table.find('thead tr').children().each(function (i, v) {
+                    $(v).width(colWidth[i]);
+                });
+            }).resize();
+        }, 300);
+        //Affiliate
+        var timeoutID = window.setTimeout(function yz() {
+            var $table = $('table.scrol.table5'),
+                    $bodyCells = $table.find('tbody tr:first').children(),
+                    colWidth;
+            $(window).resize(function () {
+                // Get the tbody columns width array
+                colWidth = $bodyCells.map(function () {
+                    return $(this).width();
+                }).get();
+
+                // Set the width of thead columns
+                $table.find('thead tr').children().each(function (i, v) {
+                    $(v).width(colWidth[i]);
+                });
+            }).resize();
+        }, 340);
 
 
 
