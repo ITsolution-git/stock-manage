@@ -227,7 +227,7 @@
                     }
                 });
 
-    }
+    
 //Purchase
         var timeoutID = window.setTimeout(function zx() {
             var $table = $('table.scrol.table3'),
