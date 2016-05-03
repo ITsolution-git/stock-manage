@@ -72,7 +72,7 @@
             </div>
             <div class="ms-responsive-table-wrapper">
                 
-                <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions"  >
+                <table class="scrol table3 row-border hover"  dt-options="vm.dtOptions"  >
                     <thead>
 
                         <tr>
@@ -107,7 +107,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                   <tbody class="scrollable" ms-scroll>
                         <tr ng-repeat="design in designs" class="cursor-p">
                             <td ui-sref="app.order.design({id:design.id})" >{{ design.id}} </td>
                             <td>{{ design.design_name}}</td>
@@ -131,6 +131,7 @@
                         </md-menu-content>
                     </md-menu>
                     </td>
+                            
                     </tr>
                     </tbody> 
                 </table>
