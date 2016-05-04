@@ -11,19 +11,20 @@
                                             <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4" ng-click="ImagePopup('color_logo','client','client',company_info.color_url_photo,'client_id',company_info.client_id)">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Logo Options
+                                                        Change Logo
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <div class="md-card-title" padding-layout="" layout-align="center center" layout="row" >
-                                            <span class="text-uppercase">Logo preview</span>
-                                        </div>
+                                            
+                                        <div class="form-group  m-b panel panel-default"  >
+                                              <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}"  style="width:100%; height: 100%;"   alt="" class="img-responsive" />
+                                          </div>
                                     </md-card-content>
                                 </md-card>
                             </div>

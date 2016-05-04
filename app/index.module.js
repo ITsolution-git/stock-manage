@@ -36,6 +36,9 @@
             // Receiving
             'app.receiving',
             
-            'ngTasty'
+            'ngTasty',
+
+            // image uploading module
+            'naif.base64'
         ]);
 })();
