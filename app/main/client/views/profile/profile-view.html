@@ -1,10 +1,11 @@
-<!-------------------------------------Client profile page------------------------------------------->
 <div class="client-profile-page">
     <div class="header md-accent-bg"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
-            <div class="client-logo">
-                Logo
-            </div>
+            
+               
+                   <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" style="width:90px; height: 60px; padding: 3px;"  alt="" class="img-responsive" />
+               
+           
             <h1>{{vm.clientName}}</h1>
         </div>
     </div>

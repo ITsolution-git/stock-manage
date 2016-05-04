@@ -28,8 +28,8 @@
     <body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm"
           class="{{state.current.bodyClass|| ''}}">
 
-        <!-- SPLASH SCREEN -->
-<!--     <ms-splash-screen id="splash-screen">
+        <!-- SPLASH SCREEN 
+    <ms-splash-screen id="splash-screen">
         <div class="center">
             <div class="logo" style="width:15%">
                 <span>Stokkup</span>
@@ -48,9 +48,8 @@
                     </div>
                 </div>
             </div>
-         / Material Design Spinner 
         </div>
-    </ms-splash-screen> -->
+    </ms-splash-screen>
     <!-- / SPLASH SCREEN -->
 
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
@@ -102,6 +101,7 @@
     <script src="app/core/services/ms-session.service.js"></script>
     <script src="app/core/services/ng-tasty-tpls.min.js"></script>
     <script src="app/core/services/ui-event.js"></script>
+    <script src="app/core/services/angular-base64-upload.js"></script>    
     <script src="app/core/filters/tag.filter.js"></script>
     <script src="app/core/filters/basic.filter.js"></script>
     <script src="app/core/directives/highlight.directive.js"></script>

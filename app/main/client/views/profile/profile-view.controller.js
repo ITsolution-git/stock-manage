@@ -14,6 +14,9 @@
         //Dummy models data
         vm.client_id = $stateParams.id
         vm.company_id = sessionService.get('company_id');
+        $scope.company_id = sessionService.get('company_id');
+        $scope.client_id = vm.client_id ;
+
 
         vm.salesDetail={
             "web":"www.website.com",
@@ -129,7 +132,7 @@
                     $scope.Arrdisposition = vm.Response.Arrdisposition;
                     vm.Client_orders = vm.Response.Client_orders;
                     vm.art_detail = vm.Response.art_detail;
-                    vm.addressAll=vm.Response.addressAll.result;
+                    $scope.addressAll=vm.Response.addressAll.result;
 
 
                     //vm.currentProjectUrl = $sce.trustAsResourceUrl(vm.main.salesweb);
@@ -162,14 +165,14 @@
 
             open_popup(ev,params,'CompanyInfo','company_form');
         }
-        function editCompanyConatct(ev,cond)
+        function editCompanyConatct(ev,cond,table,popup_page)
         {
             if(cond=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
             {
 
                 var InserArray = {}; // INSERT RECORD ARRAY
                 InserArray.data = {client_id:vm.client_id};
-                InserArray.table ='client_contact'            
+                InserArray.table =table;            
 
                 // INSERT API CALL
                 $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
@@ -178,7 +181,7 @@
                     {   
                         // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                         var companyData = {};
-                        companyData.table ='client_contact'
+                        companyData.table =table;
                         companyData.cond ={id:Response.data.id}
                         // GET CLIENT TABLE CALL
                         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
@@ -187,7 +190,7 @@
                             {   
                                 var params = {};
                                 params = { contact_arr: result.data.records[0]};
-                                open_popup(ev,params,'CompanyInfo','contact_form'); // OPEN POPUP FOR CONTACT
+                                open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                             }
                         });
                     }
@@ -197,7 +200,7 @@
             {
                 // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                 var companyData = {};
-                companyData.table ='client_contact';
+                companyData.table =table;
                 companyData.cond ={id:cond};
                 // GET CLIENT TABLE CALL
                 $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
@@ -206,14 +209,12 @@
                     {  
                         var params = {};
                         params = { contact_arr: result.data.records[0]};                     
-                        open_popup(ev,params,'CompanyInfo','contact_form'); // OPEN POPUP FOR CONTACT
+                        open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                     }
                 });
             }
-            
-
-
         }
+
         function open_popup(ev,params,controller,page)
         {
             $mdDialog.show({
@@ -235,6 +236,9 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         } 
+
+
+        // ============= UPDATE TABLE RECORD WITH CONDITION ============= // 
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
             var vm = this;
@@ -254,15 +258,121 @@
                     if(result.data.success=='1')
                     {
                        notifyService.notify('success', "Record Updated Successfully!");
-                       if(extra=='contact_main')
+                       if(extra=='contact_main') // SECOND CALL CONDITION WITH EXTRA PARAMS
                        {
-                            $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
+                            $scope.UpdateTableField('contact_main','1',table_name,'id',param,'','');
                             $scope.getClientProfile();
                        }
+                       if(extra=='address_main') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.UpdateTableField('address_main','1',table_name,'id',param,'','');
+                            $scope.getClientProfile();
+                       }
+                       if(extra=='address_shipping') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.UpdateTableField('address_shipping','1',table_name,'id',param,'','');
+                            $scope.getClientProfile();
+                       }
+                       if(extra=='address_billing') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.UpdateTableField('address_billing','1',table_name,'id',param,'','');
+                            $scope.getClientProfile();
+                       }
+
                     }
                    });
-        }      
+        }
+        
+// ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
+        $scope.RemoveFields = function(table,cond_field,cond_value){
+              
+                var delete_data = {};
+                
+                $scope.name_filed = cond_field;
+                var obj = {};
+                obj[$scope.name_filed] =  cond_value;
+                delete_data.cond = angular.copy(obj);
+                
+                delete_data.table =table;
+                var permission = confirm("Are you sure to delete this Record ?");
+                if (permission == true) 
+                {
+                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                    {
+                        if(result.data.success=='1')
+                        {
+                            $scope.getClientProfile();
+                        }
+                    });
+                }
+      }
+
+// ============= UPLOAD IMAGE ============= // 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value) 
+        {
+
+                $scope.column_name=column_name;
+                $scope.table_name=table_name;
+                $scope.folder_name=folder_name;
+                $scope.primary_key_name=primary_key_name;
+                $scope.primary_key_value=primary_key_value;
+                $scope.default_image=default_image;
+
+                $mdDialog.show({
+                   //controllerAs: $scope,
+                    controller: function($scope,params){
+                            $scope.params = params;
+                            $scope.SaveImageAll=function(image_array)
+                            {
+                                var Image_data = {};
+                                Image_data.image_array = image_array;
+                                Image_data.field = params.column_name;
+                                Image_data.table = params.table_name;
+                                Image_data.image_name = params.table_name+"-logo";
+                                Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.primary_key_value;
+                                Image_data.cond = params.primary_key_name;
+                                Image_data.value = params.primary_key_value;
+                                Image_data.unlink_url = params.default_image;
+
+                                $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
+                                    if(result.data.success=='1')
+                                    {
+                                        notifyService.notify("success", result.data.message);
+                                        $mdDialog.hide();
+                                    }
+                                    else
+                                    {
+                                        notifyService.notify("error", result.data.message); 
+                                    }
+                                });
+                            };
+                            $scope.showtcprofileimg = false;
+                            $scope.onLoad=function()
+                                {
+                                    $scope.showtcprofileimg = true;
+                                }; 
+                            $scope.removeProfileImage=function()
+                                {
+                                    $scope.showtcprofileimg = false;
+                                }; 
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                        },
+                    templateUrl: 'app/main/image/image.html',
+                    parent: angular.element($document.body),
+                    clickOutsideToClose: false,
+                        locals: {
+                            params:$scope
+                        },
+                    onRemoving : $scope.getClientProfile
+                });
+
+        };
     }
+
+
     function CompanyInfo($mdDialog, $stateParams,$resource,sessionService,$scope,Params,$http,$controller,$state,notifyService)
     {
         $scope.client = Params.client;
@@ -295,7 +405,7 @@
                             $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
                        }
                     }
-                   });
+                });
         }
         $scope.closeDialog = function() 
         {
