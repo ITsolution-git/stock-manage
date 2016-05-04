@@ -322,64 +322,12 @@
                 clickOutsideToClose: true,
                 locals: {
                     client_id: $scope.order.client_id,
+                    order_id: $stateParams.id,
                     event: ev
                   }
             });
 
-        /*get_company_data_selected($scope.order.client_id);
-
-        var modalInstance = $modal.open({
-                                        animation: $scope.animationsEnabled,
-                                        templateUrl: 'views/front/order/email.html',
-                                        scope: $scope,
-                                        size: 'sm'
-                            });
-
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        });
-
-        $scope.ok = function (email) {
- 
-           
-           if(email == undefined) {
-
-              var data = {"status": "error", "message": "Email should not be blank"}
-                      notifyService.notify(data.status, data.message);
-                      return false;
-            } 
-
-
-            
-              var combine_array = {};
-             
-              combine_array.email = email;
-              combine_array.order_id = $stateParams.id;
-              combine_array.company_id = sessionService.get('company_id');
-             
-            $http.post('api/public/order/sendEmail',combine_array).success(function(result) 
-            {
-                if(result.data.success == '1') 
-                {
-                    
-                } else {
-
-                    var data = {"status": "error", "message": "Please print the pdf before send an email."}
-                      notifyService.notify(data.status, data.message);
-                      
-                }
-                modalInstance.dismiss('cancel');
-                
-            });
-
-            
-        };
-
-        $scope.cancel = function () {
-            modalInstance.dismiss('cancel');
-        };*/
+       
     }; 
     }
     

@@ -1751,13 +1751,71 @@ class OrderController extends Controller {
         return response()->json(["data" => $response]);
         exit;
        }
-        
- 
-        Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
+
+
+      /* Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
         {
              $message->to($email_array)->subject('Order Acknowledgement #'.$post['order_id']);
              $message->attach($attached_url);
-        });
+        });*/
+
+
+        /* $to = "hdeliwala@codal.com";
+         $subject = "This is subject";
+         
+         $message = "<b>This is HTML message.</b>";
+         $message .= "<h1>This is headline.</h1>";
+         
+         $header = "From:abc@somedomain.com \r\n";
+         $header .= "Cc:afgh@somedomain.com \r\n";
+         $header .= "MIME-Version: 1.0\r\n";
+         $header .= "Content-type: text/html\r\n";
+         
+         $retval = mail ($to,$subject,$message,$header);
+         
+         if( $retval == true ) {
+            echo "Message sent successfully...";
+         }else {
+            echo "Message could not be sent...";
+         }*/
+
+
+
+//PHPMailer Object
+$mail = new PHPMailer;
+
+//From email address and name
+$mail->From = "from@yourdomain.com";
+$mail->FromName = "Full Name";
+
+//To address and name
+$mail->addAddress("hdeliwala@codal.com", "Recepient Name");
+$mail->addAddress("recepient1@example.com"); //Recipient name is optional
+
+//Address to which recipient will reply
+$mail->addReplyTo("reply@yourdomain.com", "Reply");
+
+//CC and BCC
+$mail->addCC("cc@example.com");
+$mail->addBCC("bcc@example.com");
+
+//Send HTML or Plain Text email
+$mail->isHTML(true);
+
+$mail->Subject = "Subject Text";
+$mail->Body = "<i>Mail body in HTML</i>";
+$mail->AltBody = "This is the plain text version of the email content";
+
+if(!$mail->send()) 
+{
+    echo "Mailer Error: " . $mail->ErrorInfo;
+} 
+else 
+{
+    echo "Message has been sent successfully";
+}
+
+
 
         $response = array('success' => 1, 'message' => MAIL_SEND);
           
