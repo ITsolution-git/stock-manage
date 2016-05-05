@@ -8,8 +8,10 @@
             .controller('CompanyInfo', CompanyInfo);
 
     /** @ngInject */
-    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService)
+    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant)
     {
+        $scope.NoImage = AllConstant.NoImage;
+       // console.log($scope.NoImage);
         var vm = this;
         //Dummy models data
         vm.client_id = $stateParams.id
@@ -371,6 +373,50 @@
                 });
 
         };
+
+        $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
+        {
+            if(default_image == '') 
+            {
+
+                var data = {"status": "error", "message": "Please upload image first."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+            }
+              var permission = confirm("Are you sure to delete this Image ?");
+
+            if (permission == true) {
+
+                var image_data = {};
+                image_data.table =table_name
+
+                var obj = {};
+                obj[column_name] =  '';
+                image_data.data = angular.copy(obj);
+
+                var cond_arr = {};
+                cond_arr[primary_key_name] =  primary_key_value;
+                image_data.cond =angular.copy(cond_arr);
+
+
+                image_data.image_delete =  $scope.company_id+'/'+folder_name+'/' + primary_key_value +'/'+default_image;
+            
+                $http.post('api/public/common/deleteImage',image_data).success(function(result) 
+                {
+
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify("success", result.data.message);
+                        $scope.getClientProfile();
+                    }
+                    else
+                    {
+                        notifyService.notify("error", result.data.message); 
+                    }
+ 
+                });
+            }
+        }
     }
 
 
