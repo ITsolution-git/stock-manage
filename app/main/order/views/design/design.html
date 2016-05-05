@@ -217,7 +217,11 @@
                                     <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_1','order_design_position','order_design_position',order_design_position.image_1,'id',order_design_position.id)"></md-icon>
                                 </div> 
 
-                                <img  ng-if="order_design_position.image_1" ng-src="{{order_design_position.image_1_url_photo}}"  style="width:100%; height: 100%;"   alt="" class="img-responsive" />
+                                <img  ng-if="order_design_position.image_1" ng-src="{{order_design_position.image_1_url_photo}}" class="popup-image" />
+                                <img  ng-if="order_design_position.image_1 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+
+
+                                
 
                             </div>
 
@@ -226,7 +230,8 @@
                                     <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_2','order_design_position','order_design_position',order_design_position.image_2,'id',order_design_position.id)"></md-icon>
                                 </div> 
 
-                                <img  ng-if="order_design_position.image_2" ng-src="{{order_design_position.image_2_url_photo}}"  style="width:100%; height: 100%;"   alt="" class="img-responsive" />
+                               <img  ng-if="order_design_position.image_2" ng-src="{{order_design_position.image_2_url_photo}}" class="popup-image" />
+                               <img  ng-if="order_design_position.image_2 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
 
                             </div>
 
@@ -235,8 +240,8 @@
                                     <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_3','order_design_position','order_design_position',order_design_position.image_3,'id',order_design_position.id)"></md-icon>
                                 </div> 
 
-                                <img  ng-if="order_design_position.image_3" ng-src="{{order_design_position.image_3_url_photo}}"  style="width:100%; height: 100%;"   alt="" class="img-responsive" />
-
+                                <img  ng-if="order_design_position.image_3" ng-src="{{order_design_position.image_3_url_photo}}" class="popup-image" />
+                                <img  ng-if="order_design_position.image_3 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
                             </div>
 
 
@@ -245,7 +250,8 @@
                                     <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_4','order_design_position','order_design_position',order_design_position.image_4,'id',order_design_position.id)"></md-icon>
                                 </div> 
 
-                                <img  ng-if="order_design_position.image_4" ng-src="{{order_design_position.image_4_url_photo}}"  style="width:100%; height: 100%;"   alt="" class="img-responsive" />
+                                <img  ng-if="order_design_position.image_4" ng-src="{{order_design_position.image_4_url_photo}}" class="popup-image" />
+                                <img  ng-if="order_design_position.image_4 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
 
                             </div>
 
