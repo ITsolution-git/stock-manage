@@ -10,7 +10,7 @@
                                         <md-button aria-label="Blind Text Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
-                                        <md-menu-content width="4" ng-click="vm.editCompanyConatct($event,company_info.client_id,'client_contact','bindtext_form','client_id',company_info.client_id)">
+                                        <md-menu-content width="4" ng-click="vm.editCompanyConatct($event,'EDIT','client','bindtext_form','client_id',company_info.client_id)">
                                             <md-menu-item>
                                                 <md-button>
                                                     Edit Blind Text
@@ -20,7 +20,7 @@
                                     </md-menu>
                                 </md-card-header>
                                 <md-card-content>
-                                    <span>{{vm.logos.blindApprovalText}}</span>
+                                    <span>{{company_info.blind_text}}</span>
                                 </md-card-content>
                             </md-card>
                         </div>

@@ -160,6 +160,8 @@
 
             open_popup(ev,params,'CompanyInfo','company_form');
         }
+
+// ====================== GLOBAL CALL FOR GET RECORD, ADD/EDIT THEN OPEN POPUP ===========//        
         function editCompanyConatct(ev,cond,table,popup_page,cond_field,cond_value)
         {
             if(cond=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
@@ -215,7 +217,7 @@
                 });
             }
         }
-
+// ====================== OPEN DYNAMIC POPUP WITH PARAMS, CONDITION AND CONTROLLER ===========//
         function open_popup(ev,params,controller,page)
         {
             $mdDialog.show({
@@ -376,7 +378,7 @@
                 });
 
         };
-
+// ============= DELETE IMAGE ============= // 
         $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
         {
             if(default_image == '') 
