@@ -39,6 +39,7 @@
 
         var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
             
             $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
                
@@ -224,6 +225,111 @@
             {
                 var data = {"status": "error", "message": "Please select vendor"}
                 notifyService.notify(data.status, data.message);
+            }
+        }
+
+
+        // ============= UPLOAD IMAGE ============= // 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
+        {
+
+                $scope.column_name=column_name;
+                $scope.table_name=table_name;
+                $scope.folder_name=folder_name;
+                $scope.primary_key_name=primary_key_name;
+                $scope.primary_key_value=primary_key_value;
+                $scope.default_image=default_image;
+                $scope.company_id = sessionService.get('company_id');
+                $scope.unlink_url = image_name;
+
+
+                $mdDialog.show({
+                   //controllerAs: $scope,
+                    controller: function($scope,params){
+                            $scope.params = params;
+                            $scope.SaveImageAll=function(image_array)
+                            {
+                                var Image_data = {};
+                                Image_data.image_array = image_array;
+                                Image_data.field = params.column_name;
+                                Image_data.table = params.table_name;
+                                Image_data.image_name = params.table_name+"-logo";
+                                Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.primary_key_value;
+                                Image_data.cond = params.primary_key_name;
+                                Image_data.value = params.primary_key_value;
+                                Image_data.unlink_url = params.unlink_url;
+
+                                $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
+                                    if(result.data.success=='1')
+                                    {
+                                        notifyService.notify("success", result.data.message);
+                                        $mdDialog.hide();
+                                    }
+                                    else
+                                    {
+                                        notifyService.notify("error", result.data.message); 
+                                    }
+                                });
+                            };
+                            $scope.showtcprofileimg = false;
+                            $scope.onLoad=function()
+                                {
+                                    $scope.showtcprofileimg = true;
+                                }; 
+                            $scope.removeProfileImage=function()
+                                {
+                                    $scope.showtcprofileimg = false;
+                                }; 
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                        },
+                    templateUrl: 'app/main/image/image.html',
+                    parent: angular.element($document.body),
+                    clickOutsideToClose: false,
+                        locals: {
+                            params:$scope
+                        },
+                    onRemoving : $scope.designPosition
+                });
+
+        };
+
+
+         $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
+         {
+
+              if(default_image == '') {
+
+                var data = {"status": "error", "message": "Please upload image first."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+              }
+
+              var permission = confirm("Are you sure want to delete this image ?");
+
+            if (permission == true) {
+
+                  var order_main_data = {};
+                  order_main_data.table =table_name
+                  $scope.name_filed = column_name;
+                  var obj = {};
+                  obj[$scope.name_filed] =  '';
+                  order_main_data.data = angular.copy(obj);
+
+                  var cond = {};
+                  cond[primary_key_name] =  primary_key_value;
+                  order_main_data.cond = angular.copy(cond);
+
+                
+                 order_main_data.image_delete =  sessionService.get('company_id')+'/'+folder_name+'/' + primary_key_value +'/'+default_image;
+            
+                $http.post('api/public/common/deleteImage',order_main_data).success(function(result) {
+                    var data = {"status": "success", "message": "Image Deleted Successfully"}
+                                            notifyService.notify(data.status, data.message); 
+                     $scope.designPosition;
+                });
             }
         }
 
