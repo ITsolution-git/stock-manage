@@ -314,7 +314,8 @@
                           return false;
               }
 
-              var permission = confirm("Are you sure want to delete this image ?");
+              
+              var permission = confirm(AllConstant.deleteImage);
 
             if (permission == true) {
 
