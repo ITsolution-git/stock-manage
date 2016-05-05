@@ -11,12 +11,19 @@
                                             <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4" ng-click="ImagePopup('color_logo','client','client',company_info.color_url_photo,'client_id',company_info.client_id,company_info.color_logo)">
-                                                <md-menu-item>
+                                            <md-menu-content width="4">
+                                                <md-menu-item ng-click="ImagePopup('color_logo','client','client',company_info.color_url_photo,'client_id',company_info.client_id,company_info.color_logo)">
                                                     <md-button>
                                                         Change Logo
                                                     </md-button>
                                                 </md-menu-item>
+
+                                                <md-menu-item ng-click="deleteImage('color_logo','client','client',company_info.color_logo,'client_id',company_info.client_id)">
+                                                    <md-button>
+                                                        Remove Logo
+                                                    </md-button>
+                                                </md-menu-item>
+
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
@@ -24,6 +31,7 @@
                                             
                                         <div class="form-group  m-b panel panel-default"  >
                                               <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
+                                              <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
                                           </div>
                                     </md-card-content>
                                 </md-card>

@@ -690,7 +690,7 @@ class CommonController extends Controller {
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
           $result = $this->common->deleteImage($post['table'],$post['cond'],$post['data'],$post['image_delete']);
-          $data = array("success"=>1,"message"=>UPDATE_RECORD);
+          $data = array("success"=>1,"message"=>DELETE_RECORD);
         }
         else
         {
