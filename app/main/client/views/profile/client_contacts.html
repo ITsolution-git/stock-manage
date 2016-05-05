@@ -65,7 +65,7 @@
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
                                         <md-menu-content width="2">
-                                            <md-menu-item  ng-click="vm.editCompanyConatct($event,contact.id,'client_contact','contact_form')">
+                                            <md-menu-item  ng-click="vm.editCompanyConatct($event,'edit','client_contact','contact_form','id',contact.id)">
                                                 <md-button>
                                                     Edit Contact
                                                 </md-button>
@@ -88,7 +88,7 @@
                                 </table>
                                 <table> 
                                     <tr>
-                                        <td class="p-16"><a href="javascript:;" ng-click="vm.editCompanyConatct($event,'add','client_contact','contact_form')">ADD NEW</a></td>                                                
+                                        <td class="p-16"><a href="javascript:;" ng-click="vm.editCompanyConatct($event,'add','client_contact','contact_form','id',contact.id)">ADD NEW</a></td>                                                
                                     </tr>
                                 </table>
                             </div>

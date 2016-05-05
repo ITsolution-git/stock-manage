@@ -69,14 +69,7 @@
         vm.webPortal={
             "clientUrl":"www.url.com"
         };
-        vm.logos={
-            "blindApprovalText":"\" Please review and advise(action may be required): \" & \"¶¶\" & \"Please reply to this email with APPROVED, NAME, AND DATE. \"& \"¶¶\" & \"Dear  Valued Customer, \"& \"¶¶\" &\n"+
-                    +"\"Please check the following carefully: size, layout, spelling, punctuation, colors, etc.  Changes if required should be noted on the proof when sent back.    Customer assumes full responsibility once proof is signed as approved.  Colors will be printed as close to proof as possible.  Graphics will be sized according to industry standard unless indicated by customer. \"  & \"¶¶\" &"
-                    +"\n\"Please note that the JPEG proofs are for layout purposes. It is only to show how the artwork will be positioned on the garment and its size. It will not be legible to indicate on how colors, overprints, knock outs and/or transparency images will or will not appear on the prints. Any JPEG proofs we sent to you can be in low resolution to transfer the file(s) smoothly during the email process but please also check the original file(s) if they are in a good minimum of 300 dpi resolution or Vector images.\" & \"¶¶\" &",
-            "colorLogo":"",
-            "bwLogo":"",
-            "shippingLogo":""
-        }
+
         vm.arts = [
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
@@ -120,20 +113,20 @@
                 {   
                     vm.Response = result.data.records;
                     $scope.mainaddress = vm.Response.clientDetail.address;
-                    vm.salesDetails =vm.Response.clientDetail.sales;
+                    $scope.salesDetails =vm.Response.clientDetail.sales;
                     $scope.maincompcontact =vm.Response.clientDetail.contact;
                     $scope.company_info =vm.Response.clientDetail.main;
-                    vm.client_tax =vm.Response.clientDetail.tax;
-                    vm.pl_imp =vm.Response.clientDetail.pl_imp;
-                    vm.AddrTypeData =vm.Response.AddrTypeData;
-                    vm.StaffList =vm.Response.StaffList;
+                    $scope.client_tax =vm.Response.clientDetail.tax;
+                    $scope.pl_imp =vm.Response.clientDetail.pl_imp;
+                    $scope.AddrTypeData =vm.Response.AddrTypeData;
+                    $scope.StaffList =vm.Response.StaffList;
                     $scope.ArrCleintType =vm.Response.ArrCleintType;
                     //  vm.PriceGrid = vm.Response.PriceGrid;
                     $scope.allContacts = vm.Response.allContacts;
-                    vm.allclientnotes = vm.Response.allclientnotes;
+                    $scope.allclientnotes = vm.Response.allclientnotes;
                     $scope.Arrdisposition = vm.Response.Arrdisposition;
-                    vm.Client_orders = vm.Response.Client_orders;
-                    vm.art_detail = vm.Response.art_detail;
+                    $scope.Client_orders = vm.Response.Client_orders;
+                    $scope.art_detail = vm.Response.art_detail;
                     $scope.addressAll=vm.Response.addressAll.result;
 
 
@@ -167,7 +160,7 @@
 
             open_popup(ev,params,'CompanyInfo','company_form');
         }
-        function editCompanyConatct(ev,cond,table,popup_page)
+        function editCompanyConatct(ev,cond,table,popup_page,cond_field,cond_value)
         {
             if(cond=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
             {
@@ -185,6 +178,10 @@
                         var companyData = {};
                         companyData.table =table;
                         companyData.cond ={id:Response.data.id}
+
+                        var condition_obj = {};
+                        condition_obj[cond_field] =  cond_value;
+                        companyData.cond = angular.copy(condition_obj);
                         // GET CLIENT TABLE CALL
                         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
                         {   
@@ -203,7 +200,9 @@
                 // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                 var companyData = {};
                 companyData.table =table;
-                companyData.cond ={id:cond};
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                companyData.cond = angular.copy(condition_obj);
                 // GET CLIENT TABLE CALL
                 $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
                 {   
@@ -281,6 +280,10 @@
                             $scope.getClientProfile();
                        }
 
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
                     }
                    });
         }
