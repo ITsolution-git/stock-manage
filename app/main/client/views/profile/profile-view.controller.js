@@ -308,7 +308,7 @@
       }
 
 // ============= UPLOAD IMAGE ============= // 
-        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value) 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
         {
 
                 $scope.column_name=column_name;
@@ -317,6 +317,7 @@
                 $scope.primary_key_name=primary_key_name;
                 $scope.primary_key_value=primary_key_value;
                 $scope.default_image=default_image;
+                $scope.unlink_url = image_name;
 
                 $mdDialog.show({
                    //controllerAs: $scope,
@@ -332,7 +333,7 @@
                                 Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.primary_key_value;
                                 Image_data.cond = params.primary_key_name;
                                 Image_data.value = params.primary_key_value;
-                                Image_data.unlink_url = params.default_image;
+                                Image_data.unlink_url = params.unlink_url;
 
                                 $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
                                     if(result.data.success=='1')

@@ -19,16 +19,12 @@
                 <input type="file" style="display: none;"  onload="onLoad" ng-model="logo_image" id="myFileInput" name="logo_image" class="btn btn-default" base-sixty-four-input  accept="image/*">
 
                 <div layout-wrap="nowrap" flex="50">
-                    <md-card flex="50" class="card ">
+                    <md-card class="card ">
                         <div class="height-image">
-                            <md-card-title>
-                                <md-card-title-text layout-align="start end">
-                                    <span class="md-headline">
-                                        <img ng-if="showtcprofileimg == false" ng-src="{{params.default_image}}" alt="" class="img-responsive"><br/>
-                                        <img  ng-if="showtcprofileimg == true" ng-src="data:{{logo_image.filetype}};base64, {{logo_image.base64}}"  alt="" class="img-responsive">
-                                    </span>
-                                </md-card-title-text>
-                            </md-card-title>
+                           
+                            <img ng-if="showtcprofileimg == false" ng-src="{{params.default_image}}" alt="No Image" class="popup-image" >
+                            <img  ng-if="showtcprofileimg == true" ng-src="data:{{logo_image.filetype}};base64, {{logo_image.base64}}"   alt="Wait..." class="popup-image">
+                                  
                         </div>
                         <md-button class="md-primary md-hue-1 md-accent btn-small">Delete</md-button>
                     </md-card>

@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="styles/vendor.css">
 
         <link rel="stylesheet" href="styles/app.css">
+        <link rel="stylesheet" href="styles/stokkup-custom.css">
         <link rel="stylesheet" href="styles/mdPickers.min.css">
 
         <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
