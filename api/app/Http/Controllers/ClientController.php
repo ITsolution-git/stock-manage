@@ -678,8 +678,9 @@ class ClientController extends Controller {
 			$AddrTypeData = $this->common->GetMicType('address_type',$company_id);
 			$Arrdisposition = $this->common->GetMicType('disposition',$company_id);
 			$state = $this->common->GetTableRecords('state',array(),array());
+			$AllPriceGrid = $this->common->GetTableRecords('price_grid',array('company_id'=>$company_id),array());
 
-			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state);
+			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state,'AllPriceGrid'=>$AllPriceGrid);
 			$message = GET_RECORDS;
 			$success = 1;
 		}

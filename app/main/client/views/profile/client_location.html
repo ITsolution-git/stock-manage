@@ -59,7 +59,7 @@
                                             <td>{{location.city}}</td>
                                             <td>{{location.state}}</td>
                                             <td>{{location.postal_code}}</td>
-                                            <td>{{location.type}}</td>
+                                            <td>{{location.address_type}}</td>
 
                                             <td ng-if="location.address_main=='1'"><i class="icon icon-check s40"></i></td>
                                             <td ng-if="location.address_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
@@ -77,7 +77,7 @@
                                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                                     </md-button>
                                                     <md-menu-content width="4">
-                                                        <md-menu-item ng-click="vm.editCompanyConatct($event,'edit','client_address','location_form')">
+                                                        <md-menu-item ng-click="vm.editCompanyConatct($event,'edit','client_address','location_form','id',location.id)">
                                                             <md-button>
                                                                 Edit Location
                                                             </md-button>
