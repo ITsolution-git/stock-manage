@@ -12,11 +12,13 @@
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Sales Website" name="salesweb" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_\',\'client_id\',salesDetails.client_id,\'sales\')' }"  ng-model="salesDetails.salesweb">
+                    <input placeholder="Sales Website" name="salesweb" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_\',\'client_id\',client.client_id,\'sales\')' }"  ng-model="salesDetails.salesweb">
                 </md-input-container>
+
                 <md-input-container>
-                    <input placeholder="Anniversary date" name="anniversarydate" ng-model="salesDetails.anniversarydate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_\',\'client_id\',salesDetails.client_id,\'sales\')' }"  >
+                    <input placeholder="Anniversary date" name="anniversarydate" ng-model="salesDetails.anniversarydate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'sales\')' }"  >
                 </md-input-container>
+
                 <md-input-container class="m-b-30">
                     <label>Sales Person</label>
                     <md-select ng-model="salesDetails.salesperson" name="client_companytype"  ng-change='UpdateTableField("salesperson",salesDetails.salesperson,"client","client_id",client.client_id,"sales")'>
@@ -24,13 +26,23 @@
                             Select Person
                         </md-option>
                         <md-option ng-repeat="staff in StaffList" ng-selected="{{salesDetails.salesperson==staff.id}}" value="{{staff.id}}">
-                            {{staff.first_name}} {{staff.last_name}}
+                            {{staff.label}}
                         </md-option>
                     </md-select>
                 </md-input-container>
-                <md-input-container>
-                    <input placeholder="Price Grid"  name="salespricegrid" ng-model="salesDetails.salespricegrid" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_\',\'client_id\',salesDetails.client_id,\'sales\')' }"  >
+
+                <md-input-container class="m-b-30">
+                    <label>Default PriceGrid</label>
+                    <md-select ng-model="salesDetails.salespricegrid" name="salespricegrid"  ng-change='UpdateTableField("salespricegrid",salesDetails.salespricegrid,"client","client_id",client.client_id,"sales")'>
+                        <md-option value="0">
+                            Select Person
+                        </md-option>
+                        <md-option ng-repeat="price in AllPriceGrid" ng-selected="{{salesDetails.salespricegrid==price.id}}" value="{{price.id}}">
+                            {{price.name}}
+                        </md-option>
+                    </md-select>
                 </md-input-container>
+
               </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">

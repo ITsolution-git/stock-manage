@@ -145,6 +145,7 @@
             if(Response.data.success=='1')
             {   
                 $scope.states_all  = Response.data.result.state;
+                $scope.AllPriceGrid=Response.data.result.AllPriceGrid;
             }
         });
         vm.editCompanyInfo = editCompanyInfo;
@@ -153,24 +154,24 @@
         function editCompanyInfo(ev,popup_page)
         {
              var params = {};
-             params = { states_all:$scope.states_all,
-                        client: $scope.company_info,
-                        Arrdisposition:$scope.Arrdisposition,
-                        ArrCleintType:$scope.ArrCleintType,
-                        StaffList:$scope.StaffList,
-                        salesDetails:$scope.salesDetails };
+             params = $scope;
+             params.client = $scope.company_info;
 
             open_popup(ev,params,'CompanyInfo',popup_page);
         }
 
 // ====================== GLOBAL CALL FOR GET RECORD, ADD/EDIT THEN OPEN POPUP ===========//        
-        function editCompanyConatct(ev,operation,table,popup_page,cond_field,cond_value)
+        function editCompanyConatct(ev,operation,table,popup_page,cond_field,cond_value,extra)
         {
             if(operation=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
             {
 
                 var InserArray = {}; // INSERT RECORD ARRAY
                 InserArray.data = {client_id:vm.client_id};
+                if(extra=='notes')
+                {
+                    InserArray.data = {client_id:vm.client_id,user_id:sessionService.get('user_id')};
+                }
                 InserArray.table =table;            
 
                 // INSERT API CALL
@@ -447,6 +448,9 @@
         $scope.contact_arr=Params.contact_arr;
         $scope.StaffList = Params.StaffList
         $scope.salesDetails = Params.salesDetails
+        $scope.AllPriceGrid = Params.AllPriceGrid;
+        $scope.client_tax = Params.client_tax;
+
         //console.log($scope.salesDetails);
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
@@ -466,11 +470,15 @@
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
                     {
-                       notifyService.notify('success', "Record Updated Successfully!");
+                       notifyService.notify('success', result.data.message);
                        if(extra=='contact_main')
                        {
                             $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
                        }
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
                     }
                 });
         }
