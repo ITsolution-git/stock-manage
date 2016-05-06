@@ -150,21 +150,23 @@
         vm.editCompanyInfo = editCompanyInfo;
         vm.editCompanyConatct=editCompanyConatct;
         vm.formPopup = 'app/main/client/views/forms';
-        function editCompanyInfo(ev)
+        function editCompanyInfo(ev,popup_page)
         {
              var params = {};
              params = { states_all:$scope.states_all,
                         client: $scope.company_info,
                         Arrdisposition:$scope.Arrdisposition,
-                        ArrCleintType:$scope.ArrCleintType,};
+                        ArrCleintType:$scope.ArrCleintType,
+                        StaffList:$scope.StaffList,
+                        salesDetails:$scope.salesDetails };
 
-            open_popup(ev,params,'CompanyInfo','company_form');
+            open_popup(ev,params,'CompanyInfo',popup_page);
         }
 
 // ====================== GLOBAL CALL FOR GET RECORD, ADD/EDIT THEN OPEN POPUP ===========//        
-        function editCompanyConatct(ev,cond,table,popup_page,cond_field,cond_value)
+        function editCompanyConatct(ev,operation,table,popup_page,cond_field,cond_value)
         {
-            if(cond=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
+            if(operation=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
             {
 
                 var InserArray = {}; // INSERT RECORD ARRAY
@@ -179,10 +181,10 @@
                         // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                         var companyData = {};
                         companyData.table =table;
-                        companyData.cond ={id:Response.data.id}
+                        //companyData.cond ={id:Response.data.id}
 
                         var condition_obj = {};
-                        condition_obj[cond_field] =  cond_value;
+                        condition_obj[cond_field] =  Response.data.id;
                         companyData.cond = angular.copy(condition_obj);
                         // GET CLIENT TABLE CALL
                         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
@@ -308,7 +310,12 @@
                     {
                         if(result.data.success=='1')
                         {
+                            notifyService.notify('success',result.data.message);
                             $scope.getClientProfile();
+                        }
+                        else
+                        {
+                             notifyService.notify('error',result.data.message);
                         }
                     });
                 }
@@ -332,6 +339,12 @@
                             $scope.params = params;
                             $scope.SaveImageAll=function(image_array)
                             {
+                                if(image_array == null)
+                                {
+                                    $mdDialog.hide();
+                                    return false;
+                                }
+
                                 var Image_data = {};
                                 Image_data.image_array = image_array;
                                 Image_data.field = params.column_name;
@@ -432,7 +445,9 @@
         $scope.Arrdisposition = Params.Arrdisposition;
         $scope.states_all = Params.states_all;
         $scope.contact_arr=Params.contact_arr;
-
+        $scope.StaffList = Params.StaffList
+        $scope.salesDetails = Params.salesDetails
+        //console.log($scope.salesDetails);
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
             var vm = this;
