@@ -77,12 +77,12 @@
                                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                                     </md-button>
                                                     <md-menu-content width="4">
-                                                        <md-menu-item ng-click="vm.editCompanyConatct($event,location.id,'client_address','location_form')">
+                                                        <md-menu-item ng-click="vm.editCompanyConatct($event,'edit','client_address','location_form')">
                                                             <md-button>
                                                                 Edit Location
                                                             </md-button>
                                                         </md-menu-item>
-                                                        <md-menu-item ng-click="UpdateTableField('address_main',0,'client_address','client_id',location.client_id,'address_main',location.id)">
+                                                        <md-menu-item ng-click="UpdateTableField('address_main',0,'client_address','client_id',location.client_id,'address_main',location.id,'id',location.id)">
                                                             <md-button>
                                                                 Set as main Location
                                                             </md-button>
@@ -110,7 +110,7 @@
                                 </table>
                                 <table> 
                                     <tr>
-                                        <td class="p-16"><a href="" ng-click="vm.editCompanyConatct($event,'add','client_address','location_form')">ADD NEW</a></td>                                                
+                                        <td class="p-16"><a href="" ng-click="vm.editCompanyConatct($event,'add','client_address','location_form','id',location.id)">ADD NEW</a></td>                                                
                                     </tr>
                                 </table>
                             </div>
