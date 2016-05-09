@@ -292,12 +292,13 @@ class ClientController extends Controller {
 				$Arrdisposition = $this->common->GetMicType('disposition',$post['company_id']);
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
-				$Client_orders = '';//$this->client->ListClientOrder($id);
+				$Client_orders = $this->client->ListClientOrder($id);
 				$art_detail = '';//$this->art->Client_art_screen($post['client_id'],$post['company_id']);
 				$addressAll = $this->client->getAddress($id);
+				$Distribution_address = $this->client->GetDistributionAddress($id);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else
@@ -679,8 +680,8 @@ class ClientController extends Controller {
 			$Arrdisposition = $this->common->GetMicType('disposition',$company_id);
 			$state = $this->common->GetTableRecords('state',array(),array());
 			$AllPriceGrid = $this->common->GetTableRecords('price_grid',array('company_id'=>$company_id),array());
-
-			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state,'AllPriceGrid'=>$AllPriceGrid);
+			$approval = $this->common->GetMicType('approval',$company_id);
+			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state,'AllPriceGrid'=>$AllPriceGrid,'approval'=>$approval);
 			$message = GET_RECORDS;
 			$success = 1;
 		}

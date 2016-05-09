@@ -34,11 +34,11 @@
                                         </tr>
                                     </thead>                                  
                                     <tbody>
-                                        <tr ng-repeat="order in ::vm.orders">
-                                            <td>{{order.orderId}}</td>
-                                            <td>{{order.orderName}}</td>
-                                            <td>{{order.dateCreated}}</td>
-                                            <td>{{order.approvalStatus}}</td>
+                                        <tr ng-repeat="order in Client_orders">
+                                            <td>{{order.id}}</td>
+                                            <td>{{order.name}}</td>
+                                            <td>{{order.created_date}}</td>
+                                            <td>{{order.value}}</td>
                                             <td class="text-right"> 
                                     <md-menu>
                                         <md-button aria-label="Orders Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -47,7 +47,7 @@
                                         <md-menu-content width="4">
                                             <md-menu-item>
                                                 <md-button>
-                                                    Order Options
+                                                    Go to Order
                                                 </md-button>
                                             </md-menu-item>
                                         </md-menu-content>
@@ -56,11 +56,11 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <table> 
+                               <!--  <table> 
                                     <tr>
                                         <td class="p-16"><a href="">ADD NEW</a></td>                                                
                                     </tr>
-                                </table>
+                                </table> -->
                             </div>
                         </div> 
                     </md-content>

@@ -8,30 +8,19 @@
             .controller('CompanyInfo', CompanyInfo);
 
     /** @ngInject */
-    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant)
+    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
+
         $scope.NoImage = AllConstant.NoImage;
-       // console.log($scope.NoImage);
+        $scope.Current_date = AllConstant.currentdate;
         var vm = this;
         //Dummy models data
-        vm.client_id = $stateParams.id
+        vm.client_id = $stateParams.id;
         vm.company_id = sessionService.get('company_id');
         $scope.company_id = sessionService.get('company_id');
         $scope.client_id = vm.client_id ;
 
 
-        vm.salesDetail={
-            "web":"www.website.com",
-            "anniversaryDate":"2/20/2013",
-            "salesPerson":"Salesperson Name",
-            "defaultPriceGrid":"CS 2011 Supplied Garments Copy"
-        };
-        vm.tax={
-            "id":123456789,
-            "ratePercentage":"10.75%",
-            "exempt":"No",
-            "idDocument":"taxdoc.pdf"
-        };
         vm.documents = [
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
@@ -39,20 +28,7 @@
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"}
         ];
-        vm.notes = [
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"}
-        ];
-        vm.orders = [
-            {"orderId": "31", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Order-estimate"},
-            {"orderId": "32", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Sales Review"},
-            {"orderId": "33", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Production Dept"},
-            {"orderId": "34", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Ready to Ship"},
-            {"orderId": "35", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "DTG Department", }
-        ];
+
         vm.distributedAddress = [
             {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
             {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
@@ -128,7 +104,7 @@
                     $scope.Client_orders = vm.Response.Client_orders;
                     $scope.art_detail = vm.Response.art_detail;
                     $scope.addressAll=vm.Response.addressAll.result;
-
+                    $scope.Distribution_address= vm.Response.Distribution_address.result;
 
                     //vm.currentProjectUrl = $sce.trustAsResourceUrl(vm.main.salesweb);
                 }
@@ -146,6 +122,7 @@
             {   
                 $scope.states_all  = Response.data.result.state;
                 $scope.AllPriceGrid=Response.data.result.AllPriceGrid;
+                $scope.approval_all = Response.data.result.approval;
             }
         });
         vm.editCompanyInfo = editCompanyInfo;
@@ -165,12 +142,11 @@
         {
             if(operation=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
             {
-
                 var InserArray = {}; // INSERT RECORD ARRAY
                 InserArray.data = {client_id:vm.client_id};
                 if(extra=='notes')
                 {
-                    InserArray.data = {client_id:vm.client_id,user_id:sessionService.get('user_id')};
+                    InserArray.data = {client_id:vm.client_id,user_id:sessionService.get('user_id'),created_date:$scope.Current_date};
                 }
                 InserArray.table =table;            
 
@@ -193,7 +169,7 @@
                             if(result.data.success=='1')
                             {   
                                 var params = {};
-                                params = { contact_arr: result.data.records[0]};
+                                params = { contact_arr: result.data.records[0],states_all:$scope.states_all};
                                 open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                             }
                         });
@@ -214,7 +190,7 @@
                     if(result.data.success=='1')
                     {  
                         var params = {};
-                        params = { contact_arr: result.data.records[0]};                     
+                        params = { contact_arr: result.data.records[0],states_all:$scope.states_all};                     
                         open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                     }
                 });
@@ -446,11 +422,11 @@
         $scope.Arrdisposition = Params.Arrdisposition;
         $scope.states_all = Params.states_all;
         $scope.contact_arr=Params.contact_arr;
-        $scope.StaffList = Params.StaffList
+        $scope.StaffList = Params.StaffList;
         $scope.salesDetails = Params.salesDetails
         $scope.AllPriceGrid = Params.AllPriceGrid;
         $scope.client_tax = Params.client_tax;
-
+        $scope.Distribution_address = Params.Distribution_address;
         //console.log($scope.salesDetails);
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {

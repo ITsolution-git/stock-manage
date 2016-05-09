@@ -71,13 +71,27 @@ class Client extends Model {
     	
     	return $result;
     }
+    public function GetDistributionAddress($id)
+    {
+        $result = DB::table('client_distaddress as cd')
+                  ->leftJoin('state as st','st.id','=','cd.state')
+                  ->select('st.name as state_name','cd.*')
+                  ->where('cd.client_id','=',$id)
+                  ->get();
+
+      
+      $retArray = array('result'=>$result);
+      //echo "<pre>"; print_r($retArray); echo "</pre>"; die;
+      return $retArray;          
+    }
     public function getAddress($id)
     {
-    	$result = DB::table('client_address as ca')
-                ->leftJoin('misc_type as mt','mt.id','=','ca.type')
-                ->select('mt.value as address_type','ca.*')
-                ->where('client_id','=',$id)
-                ->get();
+    	  $result = DB::table('client_address as ca')
+                  ->leftJoin('misc_type as mt','mt.id','=','ca.type')
+                  ->leftJoin('state as st','st.id','=','ca.state')
+                  ->select('mt.value as address_type','st.name as state_name','ca.*')
+                  ->where('client_id','=',$id)
+                  ->get();
 
     	/*if(count($result)>0)
     	{
@@ -258,8 +272,8 @@ class Client extends Model {
    public function ListClientOrder($id)
    {
    		$result = DB::table('orders as ord')
-   					->leftJoin('misc_type as mt','mt.id','=','ord.f_approval')
-   					->select('mt.value','ord.id','ord.client_id','ord.job_name','ord.f_approval',DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'))
+   					->leftJoin('misc_type as mt','mt.id','=','ord.approval_id')
+   					->select('mt.value','ord.id','ord.client_id','ord.name','ord.approval_id',DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'))
    					->where('ord.client_id','=',$id)
    					->where('ord.is_delete','=','1')
    					->get();

@@ -17,9 +17,14 @@
                 <md-input-container>
                     <input placeholder="City" name="city" ng-model="contact_arr.city" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_address\',\'id\',contact_arr.id,\'location\')' }" >
                 </md-input-container>
-                <md-input-container>
-                    <input placeholder="State" name="state"  ng-model="contact_arr.state" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_address\',\'id\',contact_arr.id,\'location\')' }" >
-                </md-input-container>
+                    <md-input-container class="m-b-20">
+                        <label>State</label>
+                        <md-select ng-model="contact_arr.state"  name="state"  ng-change='UpdateTableField("state",contact_arr.state,"client_address","id",contact_arr.id,"distribution")'>
+                            <md-option ng-repeat="state_val in states_all" ng-selected='{{state_val.id==contact_arr.state}}' value="{{state_val.id}}">
+                                {{state_val.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
                 <md-input-container>
                     <input placeholder="Zip Code"  name="postal_code" ng-model="contact_arr.postal_code" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_address\',\'id\',contact_arr.id,\'location\')' }" >
                 </md-input-container>

@@ -1,0 +1,65 @@
+<md-dialog class="task-dialog" >
+    <form name="clientForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit Company Contact</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
+
+                <md-input-container class="md-block first-box">
+                    <input placeholder="Description" name="description" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }"  ng-model="contact_arr.description">
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="ATTN" name="attn" ng-model="contact_arr.attn"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }"  >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Address" name="address"  ng-model="contact_arr.address"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }"  >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="address2"  name="address2" ng-model="contact_arr.address2" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="city"  name="city" ng-model="contact_arr.city"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }" >
+                </md-input-container>
+
+                <!---------      STATE      ---------------->
+                <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                    <md-input-container flex=45 class="m-b-20">
+                        <label>State</label>
+                        <md-select ng-model="contact_arr.state"  name="state"  ng-change='UpdateTableField("state",contact_arr.state,"client_distaddress","id",contact_arr.id,"distribution")'>
+                            <md-option ng-repeat="state_val in states_all" ng-selected='{{state_val.id==contact_arr.state}}' value="{{state_val.id}}">
+                                {{state_val.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex="45">
+                        <input placeholder="Zipcode" name="zipcode"  ng-model="contact_arr.zipcode" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }"  >
+                    </md-input-container>
+                </div>
+
+                  <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                    <md-input-container flex="45">
+                        <input placeholder="Country" name="country"  ng-model="contact_arr.country" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }"  >
+                    </md-input-container>
+                    <md-input-container flex="45">
+                        <input placeholder="phone" name="phone"  ng-model="contact_arr.phone" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_distaddress\',\'id\',contact_arr.id,\'distribution\')' }"  >
+                    </md-input-container>
+                </div>
+
+
+
+              </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            
+                   <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button>
+<!--                    <md-button class="md-accent md-raised " ng-click="UpdateTableField(client)">Save</md-button>
+ -->             
+        </md-dialog-actions>
+    </form>
+</md-dialog>
