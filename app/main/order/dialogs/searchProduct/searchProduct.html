@@ -153,8 +153,8 @@
                     </div>
                     <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start">
                         <div  ng-repeat="product in products" class="filter-product-image-wrap" flex="20">
-                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id)" layout="row" layout-align="center center">
-                                {{product.name}}
+                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name)" layout="row" layout-align="center center">
+                                <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip></img>
                             </div>
                         </div>
                     </div>
