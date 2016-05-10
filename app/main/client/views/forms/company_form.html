@@ -50,6 +50,9 @@
                     <md-input-container flex=45 class="m-b-20">
                         <label>State</label>
                         <md-select ng-model="client.pl_state"  name="pl_state"  ng-change='UpdateTableField("pl_state",client.pl_state,"client","client_id",client.client_id,"address")'>
+                            <md-option value="0">
+                                Select State
+                            </md-option>
                             <md-option ng-repeat="state_val in states_all" ng-selected='{{state_val.id==client.state_id}}' value="{{state_val.id}}">
                                 {{state_val.name}}
                             </md-option>
@@ -85,6 +88,9 @@
                 <md-input-container class="m-b-30">
                     <label>Disposition</label>
                     <md-select ng-model="client.client_desposition" name="client_desposition"  ng-change='UpdateTableField("client_desposition",client.client_desposition,"client","client_id",client.client_id,"address")'>
+                        <md-option value="0">
+                            Select Disposition
+                        </md-option>
                         <md-option ng-repeat="disp in Arrdisposition" ng-selected='{{client.misc_id==disp.id}}' value="{{disp.id}}">
                             {{disp.value}}
                         </md-option>
