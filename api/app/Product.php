@@ -74,21 +74,22 @@ class Product extends Model {
         //print_r($data);exit;
         if(empty($data['fields']))
         {
-            $listArray = ['id','name'];
+            $listArray = ['p.id','p.name','p.product_image','p.description','v.name_company as vendor_name'];
         }
         else
         {
-            $listArray = ['name as product_name'];
+            $listArray = ['p.name as product_name','p.product_image','p.description','v.name_company as vendor_name'];
         }
         
 
-        $orderData = DB::table('products')
+        $orderData = DB::table('products as p')
+                        ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
                         ->select($listArray)
-                        ->where('vendor_id' , '=', $data['where']['vendor_id']);
+                        ->where('p.vendor_id' , '=', $data['where']['vendor_id']);
                         if(isset($data['where']['search']))
                         {
                             $search = $data['where']['search'];
-                            $orderData = $orderData->where('name', 'LIKE', '%'.$search.'%');
+                            $orderData = $orderData->where('p.name', 'LIKE', '%'.$search.'%');
                         }
                         $orderData = $orderData->get();
 

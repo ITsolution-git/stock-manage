@@ -5,9 +5,26 @@
             .module('app.order')
             .controller('SearchProductViewController', SearchProductViewController);
     /** @ngInject */
-    function SearchProductViewController($mdDialog)
+    function SearchProductViewController(product_id,product_image,description,vendor_name,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService)
     {
-        var vm = this;
+       var vm = this;
+
+
+       var combine_array_id = {};
+       combine_array_id.product_id = product_id;
+        product_image = "https://www.ssactivewear.com/"+product_image;
+
+       
+        $scope.product_image_display = product_image;
+        $scope.description = description;
+        $scope.vendor_name = vendor_name;
+        $scope.product_id = product_id;
+
+        $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
+           
+        });
+
+
         // Data
         vm.productViewDialog = {
             "productImage": "Product Image",

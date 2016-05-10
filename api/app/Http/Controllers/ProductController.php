@@ -191,4 +191,19 @@ public function create_dir($dir_path) {
         
         return response()->json(["data" => $response]);
     }
+
+    public function productDetailData() {
+ 
+        $data = Input::all();
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl,CURLOPT_USERPWD,"13955:d672ddc8-0cd6-4981-95e4-391b2538887e");
+        $result = curl_exec($curl);
+        curl_close($curl);
+        print_r($result);exit;
+
+        
+
+    }
 }
