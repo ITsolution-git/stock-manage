@@ -16,16 +16,15 @@
                         <img src="{{product_image_display}}" class="popup-image"></img>
                     </div>
 
-                    <div layout="row" class="layout-row">
-                        <button  type="button" class="md-accent md-raised md-button md-ink-ripple md-default-theme" ng-hide="modelDisplay == ''" 
-                        ng-click="changeModelImage(product_image_display_main)" aria-label="Model"><span class="ng-scope">Model</span><div class="md-ripple-container" style=""></div></button>
-                       
-                    </div>
-
-
-                    
+                  
 
                     <div class="h5 p-t-30">Colors</div>
+                    <div class="h5 p-t-10">
+                            <span class="image-space"><a style="outline: medium none;" ng-hide="modelDisplay == ''" ng-click="changeColorPositionData(colorName,'colorFrontImage')">Front</a></span>
+                            <span class="image-space"><a style="outline: medium none;" ng-hide="modelDisplay == ''" ng-click="changeColorPositionData(colorName,'colorSideImage')">Side</a></span>
+                            <span class="image-space"><a style="outline: medium none;" ng-hide="modelDisplay == ''" ng-click="changeColorPositionData(colorName,'colorBackImage')">Back</a></span>
+                            <span class="image-space"><a style="outline: medium none;" ng-hide="modelDisplay == ''" ng-click="changeModelImage(product_image_display_main)">Model</a></span>
+                    </div>
 
 
                     <div layout="row" flex="100" layout-wrap="nowrap" layout-align="start start">

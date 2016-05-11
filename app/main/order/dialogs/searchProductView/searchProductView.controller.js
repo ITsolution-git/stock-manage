@@ -45,6 +45,23 @@
             $scope.product_image_display = modelImage;
         }
 
+
+        $scope.changeColorPositionData = function(color,position){
+            console.log($scope.AllProductDetail[color]);
+            if(position == 'colorFrontImage') {
+                $scope.product_image_display = "https://www.ssactivewear.com/" + $scope.AllProductDetail[color].colorFrontImage;
+            }
+
+            if(position == 'colorSideImage') {
+                $scope.product_image_display = "https://www.ssactivewear.com/" + $scope.AllProductDetail[color].colorSideImage;
+            }
+
+            if(position == 'colorBackImage') {
+                $scope.product_image_display = "https://www.ssactivewear.com/" + $scope.AllProductDetail[color].colorBackImage;
+            }
+            
+        }
+
         
 
       
