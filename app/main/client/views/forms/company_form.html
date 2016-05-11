@@ -4,7 +4,7 @@
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Edit Company Info</span>
                 <md-button  ng-click="closeDialog()">
-                    <span>Cancel</span>
+                    <span>Close</span>
                 </md-button>
             </div>
         </md-toolbar>
@@ -25,7 +25,7 @@
                 <!---------      CLIENT TYPE      ---------------->
                 <md-input-container class="m-b-30">
                     <label>Type</label>
-                    <md-select ng-model="client.client_companytype" name="client_companytype"  ng-change='UpdateTableField("client_companytype",client.client_companytype,"client","client_id",client.client_id,"address")'>
+                    <md-select ng-model="client.client_type" name="client_type"  ng-change='UpdateTableField("client_type",client.client_type,"client","client_id",client.client_id,"address")'>
                         <md-option value="0">
                             Select Type
                         </md-option>
@@ -99,11 +99,11 @@
 
             </div>
         </md-dialog-content>
-        <md-dialog-actions layout="row" layout-align="end center">
+<!--         <md-dialog-actions layout="row" layout-align="end center">
             
                    <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button>
 <!--                    <md-button class="md-accent md-raised " ng-click="UpdateTableField(client)">Save</md-button>
- -->             
-        </md-dialog-actions>
+            
+        </md-dialog-actions> -->
     </form>
 </md-dialog>
