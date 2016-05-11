@@ -15,11 +15,26 @@
                     <div class="md-whiteframe-1dp filter-product-image " layout="row" layout-align="center center">
                         <img src="{{product_image_display}}" class="popup-image"></img>
                     </div>
-                    <div class="h5 p-t-30">Colors</div>
-                    <div layout="row">
 
-                         <div ng-repeat="(key,allData) in AllProductDetail"  class="product-color-box"><img src="https://www.ssactivewear.com/{{allData.colorSwatchImage}}" class="popup-image"><md-tooltip md-direction="bottom">{{key}}</md-tooltip></img>
-                        </div>
+                    <div layout="row" class="layout-row">
+                        <button  type="button" class="md-accent md-raised md-button md-ink-ripple md-default-theme" ng-hide="modelDisplay == ''" 
+                        ng-click="changeModelImage(product_image_display_main)" aria-label="Model"><span class="ng-scope">Model</span><div class="md-ripple-container" style=""></div></button>
+                       
+                    </div>
+
+
+                    
+
+                    <div class="h5 p-t-30">Colors</div>
+
+
+                    <div layout="row" flex="100" layout-wrap="nowrap" layout-align="start start">
+
+                         <div ng-repeat="(key,allData) in AllProductDetail"   flex="25">
+                            <div class="md-whiteframe-1dp image-space"  layout="row" layout-align="center center" ng-click="changeColorData(allData.colorName,allData.colorFrontImage)">
+                            <img src="https://www.ssactivewear.com/{{allData.colorSwatchImage}}"><md-tooltip md-direction="bottom">{{key}}</md-tooltip></img>
+                            </div>
+                    </div>
 
 
                     </div>
@@ -30,13 +45,18 @@
                             <div class="h4">Vendor</div>
                             <div class="h5 p-b-10  grey-color">{{vendor_name}}</div>
                             <div class="h4">Item Number</div>
+
                             <div class="h5  grey-color">{{product_id}}</div>
-                        </div>    
+                        </div> 
+                        
+
                         <div layout="column" flex="45">
                             <div class="h4">Description</div>
                             <div class="h5  grey-color p-b-10" ng-bind-html="description"></div>
                             
-                        </div>    
+                        </div>  
+
+  
                     </div>
                     <div layout="column">
                         <div layout="row" layout-align="space-between center" flex="100">

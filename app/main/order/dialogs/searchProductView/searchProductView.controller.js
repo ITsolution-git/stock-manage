@@ -11,11 +11,15 @@
 
 
        var combine_array_id = {};
+       var product_image_main;
        combine_array_id.product_id = product_id;
+       product_image_main = "https://www.ssactivewear.com/"+product_image;
         product_image = "https://www.ssactivewear.com/"+product_image;
+        
 
        
         $scope.product_image_display = product_image;
+        $scope.product_image_display_main = product_image_main;
         $scope.description = description;
         $scope.vendor_name = vendor_name;
         $scope.product_id = product_id;
@@ -23,38 +27,27 @@
         $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
            $scope.AllProductDetail = Listdata.data.colorData;
            $scope.colorName = angular.copy(Listdata.data.colorSelection);
-           console.log($scope.colorName123);
+           $scope.modelDisplay = '';
         });
 
        
 
-        // Data
-        vm.productViewDialog = {
-            "productImage": "Product Image",
-            "vendor": "American Apparel",
-            "itemNo": "######",
-            "description": "Lorem spunm text that describe the product.",
-            "colors": [
-                {"colorName": "color1", "value": ""},
-                {"colorName": "color1", "value": ""},
-                {"colorName": "color1", "value": ""},
-                {"colorName": "color1", "value": ""}
-            ],
-            "inventorySize": [
-                {"size": "S", "value": "80"},
-                {"size": "M", "value": "100"},
-                {"size": "L", "value": "75"},
-                {"size": "XL", "value": "90"}
-            ],
-            "selectSize": [
-                {"qty": "", "name": "S"},
-                {"qty": "", "name": "M"},
-                {"qty": "", "name": "L"},
-                {"qty": "", "name": "XL"}
-            ]
-        };
-        // Methods
+        $scope.changeColorData = function(colorName,colorImage)
+        {
+            $scope.colorName = colorName;
+            $scope.product_image_display ="https://www.ssactivewear.com/"+colorImage;
+            $scope.modelDisplay = 'display';
+        }
 
+        $scope.changeModelImage = function(modelImage)
+        {
+            $scope.modelDisplay = '';
+            $scope.product_image_display = modelImage;
+        }
+
+        
+
+      
         vm.closeDialog = closeDialog;
         /**
          * Close dialog
