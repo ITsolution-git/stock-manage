@@ -14,7 +14,7 @@
                     <div class="h3">Filters</div>
                     <md-input-container class="md-block m-0" md-no-float flex="30">
                         <label>Vendor</label>
-                        <md-select ng-model="vendor_id">
+                        <md-select ng-model="vendor_id" ng-disabled="true">
                             <md-option ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-selected="vendor.id == vendor_id">
                                 {{vendor.name_company}}
                             </md-option>

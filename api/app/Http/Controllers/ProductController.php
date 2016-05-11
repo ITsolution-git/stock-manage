@@ -201,8 +201,26 @@ public function create_dir($dir_path) {
         curl_setopt($curl,CURLOPT_USERPWD,"13955:d672ddc8-0cd6-4981-95e4-391b2538887e");
         $result = curl_exec($curl);
         curl_close($curl);
-        print_r($result);exit;
 
+       $all_data = json_decode($result);
+       
+        foreach($all_data as $key => $data) {
+
+           if($key == 0) {
+             $productAllData['colorSelection'] = $data->colorName;
+           }
+           
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
+            $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
+            $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;
+            $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
+            $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
+            $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
+        }
+       
+        return response()->json(["data" => $productAllData]);
         
 
     }

@@ -21,9 +21,12 @@
         $scope.product_id = product_id;
 
         $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
-           
+           $scope.AllProductDetail = Listdata.data.colorData;
+           $scope.colorName = angular.copy(Listdata.data.colorSelection);
+           console.log($scope.colorName123);
         });
 
+       
 
         // Data
         vm.productViewDialog = {
