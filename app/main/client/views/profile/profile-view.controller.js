@@ -8,30 +8,19 @@
             .controller('CompanyInfo', CompanyInfo);
 
     /** @ngInject */
-    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant)
+    function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
+
         $scope.NoImage = AllConstant.NoImage;
-       // console.log($scope.NoImage);
+        $scope.Current_date = AllConstant.currentdate;
         var vm = this;
         //Dummy models data
-        vm.client_id = $stateParams.id
+        vm.client_id = $stateParams.id;
         vm.company_id = sessionService.get('company_id');
         $scope.company_id = sessionService.get('company_id');
         $scope.client_id = vm.client_id ;
 
 
-        vm.salesDetail={
-            "web":"www.website.com",
-            "anniversaryDate":"2/20/2013",
-            "salesPerson":"Salesperson Name",
-            "defaultPriceGrid":"CS 2011 Supplied Garments Copy"
-        };
-        vm.tax={
-            "id":123456789,
-            "ratePercentage":"10.75%",
-            "exempt":"No",
-            "idDocument":"taxdoc.pdf"
-        };
         vm.documents = [
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
@@ -39,44 +28,12 @@
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"}
         ];
-        vm.notes = [
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"createdBy": "John Smith", "notes": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"}
-        ];
-        vm.orders = [
-            {"orderId": "31", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Order-estimate"},
-            {"orderId": "32", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Sales Review"},
-            {"orderId": "33", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Production Dept"},
-            {"orderId": "34", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "Ready to Ship"},
-            {"orderId": "35", "orderName": "Shirts", "dateCreated": "2/2/1016", "approvalStatus": "DTG Department", }
-        ];
-        vm.distributedAddress = [
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"}
-        ];
         vm.screenSets = [
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"}
         ];
-        vm.webPortal={
-            "clientUrl":"www.url.com"
-        };
-        vm.logos={
-            "blindApprovalText":"\" Please review and advise(action may be required): \" & \"¶¶\" & \"Please reply to this email with APPROVED, NAME, AND DATE. \"& \"¶¶\" & \"Dear  Valued Customer, \"& \"¶¶\" &\n"+
-                    +"\"Please check the following carefully: size, layout, spelling, punctuation, colors, etc.  Changes if required should be noted on the proof when sent back.    Customer assumes full responsibility once proof is signed as approved.  Colors will be printed as close to proof as possible.  Graphics will be sized according to industry standard unless indicated by customer. \"  & \"¶¶\" &"
-                    +"\n\"Please note that the JPEG proofs are for layout purposes. It is only to show how the artwork will be positioned on the garment and its size. It will not be legible to indicate on how colors, overprints, knock outs and/or transparency images will or will not appear on the prints. Any JPEG proofs we sent to you can be in low resolution to transfer the file(s) smoothly during the email process but please also check the original file(s) if they are in a good minimum of 300 dpi resolution or Vector images.\" & \"¶¶\" &",
-            "colorLogo":"",
-            "bwLogo":"",
-            "shippingLogo":""
-        }
         vm.arts = [
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
@@ -120,24 +77,21 @@
                 {   
                     vm.Response = result.data.records;
                     $scope.mainaddress = vm.Response.clientDetail.address;
-                    vm.salesDetails =vm.Response.clientDetail.sales;
+                    $scope.salesDetails =vm.Response.clientDetail.sales;
                     $scope.maincompcontact =vm.Response.clientDetail.contact;
                     $scope.company_info =vm.Response.clientDetail.main;
-                    vm.client_tax =vm.Response.clientDetail.tax;
-                    vm.pl_imp =vm.Response.clientDetail.pl_imp;
-                    vm.AddrTypeData =vm.Response.AddrTypeData;
-                    vm.StaffList =vm.Response.StaffList;
+                    $scope.client_tax =vm.Response.clientDetail.tax;
+                    $scope.pl_imp =vm.Response.clientDetail.pl_imp;
+                    $scope.AddrTypeData =vm.Response.AddrTypeData;
+                    $scope.StaffList =vm.Response.StaffList;
                     $scope.ArrCleintType =vm.Response.ArrCleintType;
-                    //  vm.PriceGrid = vm.Response.PriceGrid;
                     $scope.allContacts = vm.Response.allContacts;
-                    vm.allclientnotes = vm.Response.allclientnotes;
+                    $scope.allclientnotes = vm.Response.allclientnotes;
                     $scope.Arrdisposition = vm.Response.Arrdisposition;
-                    vm.Client_orders = vm.Response.Client_orders;
-                    vm.art_detail = vm.Response.art_detail;
+                    $scope.Client_orders = vm.Response.Client_orders;
+                    $scope.art_detail = vm.Response.art_detail;
                     $scope.addressAll=vm.Response.addressAll.result;
-
-
-                    //vm.currentProjectUrl = $sce.trustAsResourceUrl(vm.main.salesweb);
+                    $scope.Distribution_address= vm.Response.Distribution_address.result;
                 }
             });
         }
@@ -152,28 +106,33 @@
             if(Response.data.success=='1')
             {   
                 $scope.states_all  = Response.data.result.state;
+                $scope.AllPriceGrid=Response.data.result.AllPriceGrid;
+                $scope.approval_all = Response.data.result.approval;
             }
         });
         vm.editCompanyInfo = editCompanyInfo;
         vm.editCompanyConatct=editCompanyConatct;
         vm.formPopup = 'app/main/client/views/forms';
-        function editCompanyInfo(ev)
+        function editCompanyInfo(ev,popup_page)
         {
              var params = {};
-             params = { states_all:$scope.states_all,
-                        client: $scope.company_info,
-                        Arrdisposition:$scope.Arrdisposition,
-                        ArrCleintType:$scope.ArrCleintType,};
+             params = $scope;
+             params.client = $scope.company_info;
 
-            open_popup(ev,params,'CompanyInfo','company_form');
+            open_popup(ev,params,'CompanyInfo',popup_page);
         }
-        function editCompanyConatct(ev,cond,table,popup_page)
-        {
-            if(cond=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
-            {
 
+// ====================== GLOBAL CALL FOR GET RECORD, ADD/EDIT THEN OPEN POPUP ===========//        
+        function editCompanyConatct(ev,operation,table,popup_page,cond_field,cond_value,extra)
+        {
+            if(operation=='add') // CHECK CONTACT ADD/EDIT CONTIDION 
+            {
                 var InserArray = {}; // INSERT RECORD ARRAY
                 InserArray.data = {client_id:vm.client_id};
+                if(extra=='notes')
+                {
+                    InserArray.data = {client_id:vm.client_id,user_id:sessionService.get('user_id'),created_date:$scope.Current_date};
+                }
                 InserArray.table =table;            
 
                 // INSERT API CALL
@@ -184,14 +143,18 @@
                         // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                         var companyData = {};
                         companyData.table =table;
-                        companyData.cond ={id:Response.data.id}
+                        //companyData.cond ={id:Response.data.id}
+
+                        var condition_obj = {};
+                        condition_obj[cond_field] =  Response.data.id;
+                        companyData.cond = angular.copy(condition_obj);
                         // GET CLIENT TABLE CALL
                         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
                         {   
                             if(result.data.success=='1')
                             {   
                                 var params = {};
-                                params = { contact_arr: result.data.records[0]};
+                                params = { contact_arr: result.data.records[0],states_all:$scope.states_all};
                                 open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                             }
                         });
@@ -203,20 +166,22 @@
                 // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
                 var companyData = {};
                 companyData.table =table;
-                companyData.cond ={id:cond};
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                companyData.cond = angular.copy(condition_obj);
                 // GET CLIENT TABLE CALL
                 $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
                 {   
                     if(result.data.success=='1')
                     {  
                         var params = {};
-                        params = { contact_arr: result.data.records[0]};                     
+                        params = { contact_arr: result.data.records[0],states_all:$scope.states_all};                     
                         open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                     }
                 });
             }
         }
-
+// ====================== OPEN DYNAMIC POPUP WITH PARAMS, CONDITION AND CONTROLLER ===========//
         function open_popup(ev,params,controller,page)
         {
             $mdDialog.show({
@@ -282,6 +247,10 @@
                        }
 
                     }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
                    });
         }
         
@@ -303,7 +272,12 @@
                     {
                         if(result.data.success=='1')
                         {
+                            notifyService.notify('success',result.data.message);
                             $scope.getClientProfile();
+                        }
+                        else
+                        {
+                             notifyService.notify('error',result.data.message);
                         }
                     });
                 }
@@ -327,6 +301,12 @@
                             $scope.params = params;
                             $scope.SaveImageAll=function(image_array)
                             {
+                                if(image_array == null)
+                                {
+                                    $mdDialog.hide();
+                                    return false;
+                                }
+
                                 var Image_data = {};
                                 Image_data.image_array = image_array;
                                 Image_data.field = params.column_name;
@@ -373,7 +353,7 @@
                 });
 
         };
-
+// ============= DELETE IMAGE ============= // 
         $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
         {
             if(default_image == '') 
@@ -427,7 +407,12 @@
         $scope.Arrdisposition = Params.Arrdisposition;
         $scope.states_all = Params.states_all;
         $scope.contact_arr=Params.contact_arr;
-
+        $scope.StaffList = Params.StaffList;
+        $scope.salesDetails = Params.salesDetails
+        $scope.AllPriceGrid = Params.AllPriceGrid;
+        $scope.client_tax = Params.client_tax;
+        $scope.Distribution_address = Params.Distribution_address;
+        //console.log($scope.salesDetails);
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
             var vm = this;
@@ -446,11 +431,15 @@
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
                     {
-                       notifyService.notify('success', "Record Updated Successfully!");
+                       notifyService.notify('success', result.data.message);
                        if(extra=='contact_main')
                        {
                             $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
                        }
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
                     }
                 });
         }

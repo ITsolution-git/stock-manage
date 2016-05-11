@@ -32,26 +32,39 @@
                                             </th>
                                             <th class="secondary-text">
                                                 <div class="table-header">
-                                                    <span class="column-title">State</span>
+                                                    <span class="column-title">Zip Code</span>
                                                 </div>
                                             </th>
                                             <th></th>                                            
                                         </tr>
                                     </thead>                                    
                                     <tbody>
-                                        <tr ng-repeat="address in ::vm.distributedAddress">
+                                        <tr ng-repeat="address in Distribution_address">
                                             <td>{{address.description}}</td>
-                                            <td>{{address.streetAddress}}</td>
+                                            <td>{{address.address}}</td>
                                             <td>{{address.city}}</td>
-                                            <td>{{address.state}}</td>
+                                            <td>{{address.state_name}}</td>
                                             <td>{{address.zipcode}}</td>
-                                            <td></td>
+                                            <td class="text-right"> 
+                                                <md-menu>
+                                                    <md-button aria-label="Orders Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                                    </md-button>
+                                                    <md-menu-content width="4" ng-click="vm.editCompanyConatct($event,'edit','client_distaddress','distribution_form','id',address.id)">
+                                                        <md-menu-item>
+                                                            <md-button>
+                                                                Edit
+                                                            </md-button>
+                                                        </md-menu-item>
+                                                    </md-menu-content>
+                                                </md-menu>
+                                            </td>
                                         </tr>                                             
                                     </tbody>
                                 </table>
                                 <table> 
                                     <tr>
-                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                        <td class="p-16"><a href="" ng-click="vm.editCompanyConatct($event,'add','client_distaddress','distribution_form','id',address.id)">ADD NEW</a></td>                                                
                                     </tr>
                                 </table>
                             </div>

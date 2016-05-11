@@ -311,14 +311,15 @@ core.factory('notifyService', msNotify);
     }
 
 core.factory('AllConstant', AllConstant);
-    function AllConstant($browser,$location)
+    function AllConstant($browser,$location,$filter)
         {
             var base_path = "http://"+$location.host()+$browser.baseHref();
             var constatnt = {
                   deleteMessage: 'Are you sure want to delete this record ?',
                   deleteImage: 'Are you sure want to delete this image ?',
                   pagination: 15,
-                  NoImage: base_path+'api/public/images/noimage.jpg'
+                  NoImage: base_path+'api/public/images/noimage.jpg',
+                  currentdate : $filter('date')(new Date(), 'yyyy-MM-dd')
                 }
             return constatnt;
         }

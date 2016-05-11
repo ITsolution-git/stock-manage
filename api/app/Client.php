@@ -71,12 +71,29 @@ class Client extends Model {
     	
     	return $result;
     }
+    public function GetDistributionAddress($id)
+    {
+        $result = DB::table('client_distaddress as cd')
+                  ->leftJoin('state as st','st.id','=','cd.state')
+                  ->select('st.name as state_name','cd.*')
+                  ->where('cd.client_id','=',$id)
+                  ->get();
+
+      
+      $retArray = array('result'=>$result);
+      //echo "<pre>"; print_r($retArray); echo "</pre>"; die;
+      return $retArray;          
+    }
     public function getAddress($id)
     {
-    	$result = DB::table('client_address')->where('client_id','=',$id)->get();
+    	  $result = DB::table('client_address as ca')
+                  ->leftJoin('misc_type as mt','mt.id','=','ca.type')
+                  ->leftJoin('state as st','st.id','=','ca.state')
+                  ->select('mt.value as address_type','st.name as state_name','ca.*')
+                  ->where('client_id','=',$id)
+                  ->get();
 
-    	$temp = array();
-    	if(count($result)>0)
+    	/*if(count($result)>0)
     	{
     		$temp['address_main']='0'; $temp['address_shipping']='0'; $temp['address_billing']='0';
     		foreach ($result as $key => $value) {
@@ -84,10 +101,10 @@ class Client extends Model {
     			  if($value->address_shipping=='1'){$temp['address_shipping']= $value->address;}
     			  if($value->address_billing=='1'){$temp['address_billing']= $value->address;}
 
-    		}
+    		}}*/
     		
-    	}
-    	$retArray = array('result'=>$result,'address'=>$temp);
+    	
+    	$retArray = array('result'=>$result);
     	//echo "<pre>"; print_r($retArray); echo "</pre>"; die;
     	return $retArray;
     }
@@ -96,11 +113,13 @@ class Client extends Model {
     {
 
     	$retArray = DB::table('client as c')
-    				->select('st.name as state_name','st.id as state_id','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*')
+    				->select('st.name as state_name','st.id as state_id','pg.name as price_grid','stf.first_name as sales_fname','stf.last_name as sales_lname','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*')
     				->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
     				->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
     				->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
+            ->leftJoin('staff as stf','stf.id','=',"c.salesperson")
     				->leftJoin('type as tp','tp.id','=',"c.client_type")
+            ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
             ->leftJoin('state as st','st.id','=',"c.pl_state")
     				->where('c.client_id','=',$id)
     				->get();
@@ -158,7 +177,10 @@ class Client extends Model {
     			$result['sales']['salesweb'] = $value->salesweb;
     			$result['sales']['anniversarydate'] = $value->anniversarydate;
     			$result['sales']['salesperson'] = $value->salesperson;
+          $result['sales']['first_name'] = $value->sales_fname;
+          $result['sales']['last_name'] = $value->sales_lname;
     			$result['sales']['salespricegrid'] = $value->salespricegrid;
+          $result['sales']['price_grid'] = $value->price_grid;
           $result['sales']['anniversarydate'] = date('m/d/Y',strtotime($result['sales']['anniversarydate']));
 
     			$result['tax']['tax_id'] = $value->tax_id;
@@ -250,8 +272,8 @@ class Client extends Model {
    public function ListClientOrder($id)
    {
    		$result = DB::table('orders as ord')
-   					->leftJoin('misc_type as mt','mt.id','=','ord.f_approval')
-   					->select('mt.value','ord.id','ord.client_id','ord.job_name','ord.f_approval',DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'))
+   					->leftJoin('misc_type as mt','mt.id','=','ord.approval_id')
+   					->select('mt.value','ord.id','ord.client_id','ord.name','ord.approval_id',DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'))
    					->where('ord.client_id','=',$id)
    					->where('ord.is_delete','=','1')
    					->get();

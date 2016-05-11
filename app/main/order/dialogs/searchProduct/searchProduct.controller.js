@@ -80,7 +80,7 @@
         // Methods
         //$scope.openSearchProductViewDialog = openSearchProductViewDialog;
         
-        $scope.openSearchProductViewDialog = function(ev,product_id)
+        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name)
         {
             $mdDialog.show({
                 controller: 'SearchProductViewController',
@@ -89,6 +89,13 @@
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
+                locals: {
+                    product_id: product_id,
+                    product_image:product_image,
+                    description:description,
+                    vendor_name:vendor_name,
+                    event: ev
+                }
                
             });
         }

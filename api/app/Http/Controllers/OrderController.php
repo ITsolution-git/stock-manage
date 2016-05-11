@@ -1998,9 +1998,19 @@ else
         unset($post['designData']['side_right_color_name']);
         unset($post['designData']['top_color_name']);
 
-      $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
-      $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
-      $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
+     
+        if(isset($post['designData']['hands_date'])) {
+          $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
+        }
+
+        if(isset($post['designData']['shipping_date'])) {
+          $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
+        }
+ 
+        if(isset($post['designData']['start_date'])) {
+            $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
+         }
+      
        
         $design_id = $this->common->InsertRecords('order_design',$post['designData']);
 

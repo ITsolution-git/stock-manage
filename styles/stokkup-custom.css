@@ -4,3 +4,24 @@
 	width: 100%;
 	padding: 5px;
 }
+
+.mdslider md-slider {
+  margin-top: -14px; 
+}
+
+.mdsliderHeight {
+  height: 30px;
+}
+
+.table3 td {
+  height:56px; 
+}
+
+.marginLeft-58 {
+  margin-left:58%;
+}
+
+
+.paddingbottom-0 {
+	padding: 0;
+}

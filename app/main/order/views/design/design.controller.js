@@ -7,8 +7,9 @@
             .controller('DesignController', DesignController);
 
     /** @ngInject */
-    function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
+    function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
+        $scope.NoImage = AllConstant.NoImage;
         $scope.productSearch = '';
         $scope.vendor_id = 0;
 
@@ -249,6 +250,12 @@
                             $scope.params = params;
                             $scope.SaveImageAll=function(image_array)
                             {
+
+                                 if(image_array == null){
+                                    $mdDialog.hide();
+                                    return false;
+                                  }
+
                                 var Image_data = {};
                                 Image_data.image_array = image_array;
                                 Image_data.field = params.column_name;
@@ -307,7 +314,8 @@
                           return false;
               }
 
-              var permission = confirm("Are you sure want to delete this image ?");
+              
+              var permission = confirm(AllConstant.deleteImage);
 
             if (permission == true) {
 

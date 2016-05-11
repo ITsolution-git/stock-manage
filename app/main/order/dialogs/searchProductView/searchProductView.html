@@ -1,3 +1,4 @@
+
 <md-dialog class="task-dialog search-product-view-dialog" aria-label="New order" flex="70">
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
@@ -12,26 +13,29 @@
             <div layout="row" layout-wrap="nowrap"  layout-padding layout-align="space-between start">
                 <div layout="column" flex="30">
                     <div class="md-whiteframe-1dp filter-product-image " layout="row" layout-align="center center">
-                        {{vm.productViewDialog.productImage}}
+                        <img src="{{product_image_display}}" class="popup-image"></img>
                     </div>
                     <div class="h5 p-t-30">Colors</div>
                     <div layout="row">
-                        <div ng-repeat="box in ::vm.productViewDialog.colors" class="product-color-box"></div>
+
+                         <div ng-repeat="(key,allData) in AllProductDetail"  class="product-color-box"><img src="https://www.ssactivewear.com/{{allData.colorSwatchImage}}" class="popup-image"><md-tooltip md-direction="bottom">{{key}}</md-tooltip></img>
+                        </div>
+
+
                     </div>
                 </div>
                 <div layout="column" flex="65" layout-padding>
                     <div layout="row" layout-align="space-between start" class="p-b-20">
                         <div layout="column" flex="45">
                             <div class="h4">Vendor</div>
-                            <div class="h5 p-b-10  grey-color">{{vm.productViewDialog.vendor}}</div>
+                            <div class="h5 p-b-10  grey-color">{{vendor_name}}</div>
                             <div class="h4">Item Number</div>
-                            <div class="h5  grey-color">{{vm.productViewDialog.itemNo}}</div>
+                            <div class="h5  grey-color">{{product_id}}</div>
                         </div>    
                         <div layout="column" flex="45">
                             <div class="h4">Description</div>
-                            <div class="h5  grey-color p-b-10">{{vm.productViewDialog.description}}</div>
-                            <div class="h5  grey-color p-b-10">{{vm.productViewDialog.description}}</div>
-                            <div class="h5  grey-color">{{vm.productViewDialog.description}}</div>
+                            <div class="h5  grey-color p-b-10" ng-bind-html="description"></div>
+                            
                         </div>    
                     </div>
                     <div layout="column">
@@ -39,19 +43,21 @@
                             <div layout="colunm" flex="20">
                                 <div class="h4">Inventory Level</div>
                             </div>
-                            <div ng-repeat="ISize in ::vm.productViewDialog.inventorySize" layout="column" flex="15">
-                                <div class="h4 color font-19">{{ISize.size}}</div>
-                                <div class="h4 text-semibold font-19">{{ISize.value}}</div>
-                            </div>
+
+                                <div ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes" layout="column" flex="15">
+                                    <div class="h4 color font-19">{{sizedata.sizeName}}</div>
+                                    <div class="h4 text-semibold font-19">{{sizedata.caseQty}}</div>
+                                </div>
+
                         </div>
                         <div layout="row" layout-align="space-between center" flex="100">
                             <div layout="colunm" flex="20">
                                 <div class="h4">Select Qty</div>
                             </div>
-                            <div ng-repeat="ISize in ::vm.productViewDialog.selectSize" layout="column" flex="15">
+                            <div ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes" layout="column" flex="15">
 
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label>{{ISize.name}}</label>
+                                    <label>{{sizedata.sizeName}}</label>
                                     <input ng-model="ISize.qty">
                                 </md-input-container>
                             </div>

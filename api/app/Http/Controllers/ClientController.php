@@ -51,25 +51,19 @@ class ClientController extends Controller {
 			$client['status']='1';
 			$client['tax_rate']=$company_data[0]->tax_rate;
 
-
-
+		/* SEPARATE CLIENT ADDRESS DATA IN TO ARRAY */
 			$client['pl_address']=(!empty($post['pl_address']))?$post['pl_address']:'';
 			$client['pl_suite']=(!empty($post['pl_suite']))?$post['pl_suite']:'';
 			$client['pl_city']=(!empty($post['pl_city']))?$post['pl_city']:'';
 			$client['pl_state']=(!empty($post['pl_state']))?$post['pl_state']:'';
 			$client['pl_pincode']=(!empty($post['pl_pincode']))?$post['pl_pincode']:'';
 			
-
 		/* SEPARATE CLIENT CONTACT DATA IN TO ARRAY */
 			$contact['first_name']=!empty($post['first_name'])? $post['first_name'] : '';
 			$contact['last_name']=!empty($post['last_name'])? $post['last_name'] : '';
 			$contact['phone']=!empty($post['phone'])? $post['phone'] : '';
 			$contact['email']=!empty($post['email'])? $post['email'] : '';
 			$contact['contact_main']='1';	// SET ACTIVE CONDITION
-
-		/* FINISH CLIENT DATA IN TO ARRAY */
-		//echo "<pre>"; print_r($contact); print_r($client); echo "</pre>"; die;
-			
 
 		$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
 
@@ -292,12 +286,13 @@ class ClientController extends Controller {
 				$Arrdisposition = $this->common->GetMicType('disposition',$post['company_id']);
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
-				$Client_orders = '';//$this->client->ListClientOrder($id);
+				$Client_orders = $this->client->ListClientOrder($id);
 				$art_detail = '';//$this->art->Client_art_screen($post['client_id'],$post['company_id']);
 				$addressAll = $this->client->getAddress($id);
+				$Distribution_address = $this->client->GetDistributionAddress($id);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else
@@ -678,8 +673,9 @@ class ClientController extends Controller {
 			$AddrTypeData = $this->common->GetMicType('address_type',$company_id);
 			$Arrdisposition = $this->common->GetMicType('disposition',$company_id);
 			$state = $this->common->GetTableRecords('state',array(),array());
-
-			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state);
+			$AllPriceGrid = $this->common->GetTableRecords('price_grid',array('company_id'=>$company_id),array());
+			$approval = $this->common->GetMicType('approval',$company_id);
+			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state,'AllPriceGrid'=>$AllPriceGrid,'approval'=>$approval);
 			$message = GET_RECORDS;
 			$success = 1;
 		}

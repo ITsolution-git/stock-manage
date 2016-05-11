@@ -11,10 +11,10 @@
                                             <md-button aria-label="Web" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'sales_form')">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Web Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
@@ -25,7 +25,7 @@
                                         </md-card-title-text>
                                     </md-card-title>
                                     <md-card-content>
-                                        <span>{{vm.salesDetail.web}}</span>
+                                        <span>{{salesDetails.salesweb}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -39,17 +39,17 @@
                                             <md-button aria-label="Anniversary Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'sales_form')">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Anniversary Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>{{vm.salesDetail.anniversaryDate}}</span>
+                                        <span>{{salesDetails.anniversarydate}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -63,17 +63,17 @@
                                             <md-button aria-label="Sales Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'sales_form')">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Sales Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>{{vm.salesDetail.salesPerson}}</span>                                 
+                                        <span>{{salesDetails.first_name}} {{salesDetails.last_name}}</span>                                 
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -87,17 +87,17 @@
                                             <md-button aria-label="Price Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4">
+                                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'sales_form')">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Price Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>{{vm.salesDetail.defaultPriceGrid}}</span>
+                                        <span>{{salesDetails.price_grid}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>

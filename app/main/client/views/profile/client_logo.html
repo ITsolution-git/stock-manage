@@ -10,17 +10,17 @@
                                         <md-button aria-label="Blind Text Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
-                                        <md-menu-content width="4">
+                                        <md-menu-content width="4" ng-click="vm.editCompanyConatct($event,'EDIT','client','bindtext_form','client_id',company_info.client_id)">
                                             <md-menu-item>
                                                 <md-button>
-                                                    Blind Text Options
+                                                    Edit Blind Text
                                                 </md-button>
                                             </md-menu-item>
                                         </md-menu-content>
                                     </md-menu>
                                 </md-card-header>
                                 <md-card-content>
-                                    <span>{{vm.logos.blindApprovalText}}</span>
+                                    <span>{{company_info.blind_text}}</span>
                                 </md-card-content>
                             </md-card>
                         </div>
@@ -36,16 +36,26 @@
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
                                             <md-menu-content width="4">
-                                                <md-menu-item>
+                                                <md-menu-item ng-click="ImagePopup('color_logo','client','client',company_info.color_url_photo,'client_id',company_info.client_id,company_info.color_logo)">
                                                     <md-button>
-                                                        Color Options
+                                                        Change Logo
                                                     </md-button>
                                                 </md-menu-item>
+
+                                                <md-menu-item ng-click="deleteImage('color_logo','client','client',company_info.color_logo,'client_id',company_info.client_id)">
+                                                    <md-button>
+                                                        Remove Logo
+                                                    </md-button>
+                                                </md-menu-item>
+
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>{{vm.logo.colorLogo}}</span>
+                                        <div class="form-group  m-b panel panel-default"  >
+                                              <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
+                                              <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                                          </div>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -56,20 +66,30 @@
                                             <span class="md-title">B/W Logo</span>
                                         </md-card-header-text>
                                         <md-menu>
-                                            <md-button aria-label="B/W Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
                                             <md-menu-content width="4">
-                                                <md-menu-item>
+                                                <md-menu-item ng-click="ImagePopup('b_w_logo','client','client',company_info.bw_url_photo,'client_id',company_info.client_id,company_info.b_w_logo)">
                                                     <md-button>
-                                                        B/W Options
+                                                        Change Logo
                                                     </md-button>
                                                 </md-menu-item>
+
+                                                <md-menu-item ng-click="deleteImage('b_w_logo','client','client',company_info.b_w_logo,'client_id',company_info.client_id)">
+                                                    <md-button>
+                                                        Remove Logo
+                                                    </md-button>
+                                                </md-menu-item>
+
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>{{vm.logo.bwLogo}}</span>
+                                        <div class="form-group  m-b panel panel-default"  >
+                                              <img  ng-if="company_info.b_w_logo" ng-src="{{company_info.bw_url_photo}}" alt=""  class="popup-image"/>
+                                              <img ng-if="company_info.b_w_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                                          </div>
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -77,23 +97,33 @@
                                 <md-card>
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
-                                            <span class="md-title">Shipping Logo</span>
+                                            <span class="md-title">B/W Logo</span>
                                         </md-card-header-text>
                                         <md-menu>
-                                            <md-button aria-label="Shipping Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
                                             <md-menu-content width="4">
-                                                <md-menu-item>
+                                                <md-menu-item ng-click="ImagePopup('shipping_logo','client','client',company_info.shipping_url_photo,'client_id',company_info.client_id,company_info.shipping_logo)">
                                                     <md-button>
-                                                        Shipping Options
+                                                        Change Logo
                                                     </md-button>
                                                 </md-menu-item>
+
+                                                <md-menu-item ng-click="deleteImage('shipping_logo','client','client',company_info.shipping_logo,'client_id',company_info.client_id)">
+                                                    <md-button>
+                                                        Remove Logo
+                                                    </md-button>
+                                                </md-menu-item>
+
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                         <span>{{vm.logo.shippingLogo}}</span>
+                                        <div class="form-group  m-b panel panel-default"  >
+                                              <img  ng-if="company_info.shipping_logo" ng-src="{{company_info.shipping_url_photo}}" alt=""  class="popup-image"/>
+                                              <img ng-if="company_info.shipping_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                                          </div>
                                     </md-card-content>
                                 </md-card>
                             </div>

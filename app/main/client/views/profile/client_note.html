@@ -29,19 +29,19 @@
                                         </tr>
                                     </thead>                                   
                                     <tbody>
-                                        <tr ng-repeat="note in ::vm.notes">
-                                            <td>{{note.createdBy}}</td>
-                                            <td>{{note.notes}}</td>
-                                            <td>{{note.dateAdded}}</td>
+                                        <tr ng-repeat="note in allclientnotes">
+                                            <td>{{note.user_name}}</td>
+                                            <td>{{note.client_notes}}</td>
+                                            <td>{{note.created_date}}</td>
                                             <td class="text-right">
                                     <md-menu>
                                         <md-button aria-label="Notes Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
-                                        <md-menu-content width="4">
+                                        <md-menu-content width="4" ng-click="vm.editCompanyConatct($event,'edit','client_notes','notes_form','note_id',note.note_id,'notes')">
                                             <md-menu-item>
                                                 <md-button>
-                                                    Notes Options
+                                                    Edit Notes
                                                 </md-button>
                                             </md-menu-item>
                                         </md-menu-content>
@@ -52,7 +52,7 @@
                                 </table>
                                 <table> 
                                     <tr>
-                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
+                                        <td class="p-16"><a href=""  ng-click="vm.editCompanyConatct($event,'add','client_notes','notes_form','note_id',note.note_id,'notes')">ADD NEW</a></td>                                                
                                     </tr>
                                 </table>
                             </div>

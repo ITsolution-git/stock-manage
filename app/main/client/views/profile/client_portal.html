@@ -11,7 +11,12 @@
                                     <thead>
                                         <tr>
                                             <th>Client Url</th>
-                                            <th></th>
+                                            <th>
+                                                <button  ng-click="vm.editCompanyInfo($event,'webportal_form')" class="md-raised md-button md-default-theme md-ink-ripple" type="button" aria-label="Button">
+                                                    <span class="ng-scope">Edit</span>
+                                                    <div class="md-ripple-container"></div>
+                                                </button>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -21,8 +26,13 @@
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td>{{vm.webPortal.clientUrl}}</td>
-                                            <td></td>
+                                            <td>{{company_info.salesweb}}</td>
+                                            <td><a href="{{company_info.salesweb}}" target="_blank">
+                                                <button class="md-raised md-button md-default-theme md-ink-ripple" type="button" aria-label="Button">
+                                                    <span class="ng-scope">Open</span>
+                                                    <div class="md-ripple-container"></div>
+                                                </button>
+                                            </a></td>
                                         </tr>
                                     </tbody>
                                 </table>
