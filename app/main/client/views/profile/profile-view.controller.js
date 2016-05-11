@@ -28,24 +28,12 @@
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
             {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"}
         ];
-
-        vm.distributedAddress = [
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"},
-            {"description": "Lorem ipsum dolor sit amet, consectetur adipisci.", "streetAddress": "123 1st St", "city": "Chicago", "state": "IL", "zipcode": "60611"}
-        ];
         vm.screenSets = [
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
             {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"}
         ];
-        vm.webPortal={
-            "clientUrl":"www.url.com"
-        };
-
         vm.arts = [
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
             {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
@@ -97,7 +85,6 @@
                     $scope.AddrTypeData =vm.Response.AddrTypeData;
                     $scope.StaffList =vm.Response.StaffList;
                     $scope.ArrCleintType =vm.Response.ArrCleintType;
-                    //  vm.PriceGrid = vm.Response.PriceGrid;
                     $scope.allContacts = vm.Response.allContacts;
                     $scope.allclientnotes = vm.Response.allclientnotes;
                     $scope.Arrdisposition = vm.Response.Arrdisposition;
@@ -105,8 +92,6 @@
                     $scope.art_detail = vm.Response.art_detail;
                     $scope.addressAll=vm.Response.addressAll.result;
                     $scope.Distribution_address= vm.Response.Distribution_address.result;
-
-                    //vm.currentProjectUrl = $sce.trustAsResourceUrl(vm.main.salesweb);
                 }
             });
         }
