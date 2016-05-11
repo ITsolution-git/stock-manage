@@ -248,6 +248,7 @@ public function create_dir($dir_path) {
             $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
             $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
             $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
+            $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
         }
        
         return response()->json(["data" => $productAllData]);

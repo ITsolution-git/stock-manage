@@ -25,3 +25,8 @@
 .paddingbottom-0 {
 	padding: 0;
 }
+
+.image-space {
+	padding: 5px;
+	cursor: pointer;
+}
