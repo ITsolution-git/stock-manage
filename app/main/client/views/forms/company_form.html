@@ -86,10 +86,10 @@
 
                 <!---------      DISPOSITIONS      ---------------->
                 <md-input-container class="m-b-30">
-                    <label>Disposition</label>
+                    <label>Deposition</label>
                     <md-select ng-model="client.client_desposition" name="client_desposition"  ng-change='UpdateTableField("client_desposition",client.client_desposition,"client","client_id",client.client_id,"address")'>
                         <md-option value="0">
-                            Select Disposition
+                            Select Deposition
                         </md-option>
                         <md-option ng-repeat="disp in Arrdisposition" ng-selected='{{client.misc_id==disp.id}}' value="{{disp.id}}">
                             {{disp.value}}
