@@ -274,9 +274,11 @@
             <div flex="20">
                 <md-input-container class="md-block" flex="30">
                     <label>Vendor</label>
-                    <md-select ng-model="vendor_id">
-                        <md-option ng-repeat="vendor in allVendors" value="{{vendor.id}}">
+                    <md-select ng-model="vendor_id" ng-disabled="true">
+                        <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-selected="vendor.id == 1">
+                           
                             {{vendor.name_company}}
+                           
                         </md-option>
                     </md-select>
                 </md-input-container>
