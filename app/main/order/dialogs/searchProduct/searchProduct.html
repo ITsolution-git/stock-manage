@@ -24,7 +24,7 @@
                         <label>Search</label>
                         <input ng-model="productSearch">
                     </md-input-container>
-                    <md-button class="md-accent md-raised" ng-click="getProducts()" ng-disabled="productSearch == ''">Search</md-button>
+                    <md-button class="md-accent md-raised" ng-click="filterProducts()" ng-disabled="productSearch == ''">Search</md-button>
                 </div>
                 <div layout="row" layout-align="space-between start">
                     <div layout="column" flex="20">
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div layout="column" class="f-box-1">
+                        <!-- <div layout="column" class="f-box-1">
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
                                     <span>VENDOR</span>
@@ -128,7 +128,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div layout="column" class="f-box-1">
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
@@ -151,12 +151,13 @@
                             </div>
                         </div>
                     </div>
-                    <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start">
-                        <div  ng-repeat="product in products" class="filter-product-image-wrap" flex="20">
+                    <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
+                        <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20">
                             <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name)" layout="row" layout-align="center center">
                                 <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip></img>
                             </div>
                         </div>
+                        <div tasty-pagination class="tasty-page"></div>
                     </div>
                 </div>
             </div>

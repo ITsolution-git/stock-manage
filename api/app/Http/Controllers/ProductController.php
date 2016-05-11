@@ -169,18 +169,47 @@ public function create_dir($dir_path) {
 
     public function getProductByVendor()
     {
-        $post = Input::all();
+        $post_all = Input::all();
+        $records = array();
+
+        $post = $post_all['cond']['params'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = 15;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'p.name';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'p.name';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
         $whereData = array();
         
-        $whereData['vendor_id'] = $post['vendor_id'];
-        if($post['vendor_id'] != '')
+        $whereData['vendor_id'] = $post['filter']['vendor_id'];
+        if($post['filter']['vendor_id'] != '')
         {
-            $whereData['search'] = $post['search'];
+            $whereData['search'] = $post['filter']['search'];
         }
         $data['where'] = $whereData;
+        $data['paginate'] = $post;
         $data['fields'] = array();
+        $header = array();
         
+        //print_r($data);exit;
         $result = $this->product->getVendorProducts($data);
+
+        $count = $result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $count);
+
         
         if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
@@ -188,8 +217,9 @@ public function create_dir($dir_path) {
            
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
-        
-        return response()->json(["data" => $response]);
+
+        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
+        return  response()->json($data);
     }
 
     public function productDetailData() {

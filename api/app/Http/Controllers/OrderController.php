@@ -84,6 +84,10 @@ class OrderController extends Controller {
         $post = $post_all['cond']['params'];
         $post['company_id'] = $post_all['cond']['company_id'];
 
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
         $post['range'] = RECORDS_PER_PAGE;
         $post['start'] = ($post['page']['page'] - 1) * $post['range'];
         $post['limit'] = $post['range'];
