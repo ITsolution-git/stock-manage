@@ -162,4 +162,20 @@ class Product extends Model {
         }
     }
 
+    public function addProduct($post) {
+       
+        foreach($post['productData'] as $row) {
+             
+            $resul = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
+                'size'=>$row['sizeName'],
+                'price'=>$row['customerPrice'],
+                'qnty'=>$row['qnty'],
+                'color_id'=>$row['color_id'],
+                'date'=>$post['created_date']]);
+
+        }
+        return true;
+      
+    }
+
 }

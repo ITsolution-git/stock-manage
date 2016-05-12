@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
 
 use App\Product;
+use App\Common;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -21,9 +22,10 @@ class ProductController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Product $product) {
+    public function __construct(Product $product,Common $common) {
 
         $this->product = $product;
+        $this->common = $common;
        
     }
 
@@ -236,10 +238,13 @@ public function create_dir($dir_path) {
        
         foreach($all_data as $key => $data) {
 
+            $color_data = $this->common->getColorId($data->colorName);
+            
            if($key == 0) {
              $productAllData['colorSelection'] = $data->colorName;
            }
-           
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = 0;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
             $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
@@ -253,6 +258,20 @@ public function create_dir($dir_path) {
        
         return response()->json(["data" => $productAllData]);
         
+
+    }
+
+    public function addProduct() {
+
+        $post = Input::all();
+        $post['created_date']=date('Y-m-d');
+        $result = $this->product->addProduct($post);
+        $message = INSERT_RECORD;
+        $success = 1;
+       
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
 
     }
 }

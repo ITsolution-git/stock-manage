@@ -77,9 +77,9 @@
 
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>{{sizedata.sizeName}}</label>
-                                    <input ng-model="ISize.qty">
+                                    <input ng-model="sizedata.qnty">
                                 </md-input-container>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised ">Add Product</md-button>
+            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes)">Add Product</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

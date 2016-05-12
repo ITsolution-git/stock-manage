@@ -81,6 +81,7 @@ Route::post('admin/productAdd', 'ProductController@add');
 Route::post('admin/productDelete', 'ProductController@delete');
 Route::post('admin/productDetail', 'ProductController@detail');
 
+
 // ADMIN SETTING ROUTERS
 Route::post('admin/price', 'SettingController@price');
 Route::post('admin/priceDelete', 'SettingController@delete');
@@ -248,6 +249,7 @@ Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
 Route::post('product/productDetailData', 'ProductController@productDetailData');
+Route::post('product/addProduct', 'ProductController@addProduct');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
