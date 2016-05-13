@@ -178,7 +178,7 @@ class ClientController extends Controller {
     	$records = $result['allData'];
 
         $result['count'] = (empty($result['count']))?'1':$result['count'];
-        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
         $header = array(
                         0=>array('key' => 'c.client_id', 'name' => 'Client Id'),

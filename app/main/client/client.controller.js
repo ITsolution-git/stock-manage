@@ -52,7 +52,10 @@
           'client': '',
           'created_date': ''
         };
-
+        $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+            //getResource();
+        };
        $scope.getResource = function (params, paramsObj, search)
         {
             $scope.params = params;

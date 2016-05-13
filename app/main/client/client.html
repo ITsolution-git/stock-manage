@@ -6,7 +6,7 @@
             </div>
             <div class="search-block" flex=40>
                 <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="filterBy.name" placeholder="Search">
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
             <div class="client-modal-title " flex=50>
