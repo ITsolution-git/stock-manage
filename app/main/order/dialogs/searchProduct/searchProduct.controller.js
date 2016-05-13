@@ -5,16 +5,6 @@
             .module('app.order')
             .controller('SearchProductController', SearchProductController);
 
-
-    app.animation('.toggle:not(.ng-animate)', function($window) {
-       return {
-        leave: function(element, done) {
-          $window.setTimeout(done, 2000);
-        }
-      };
-    });
-            
-            $scope.toggle = false ;
     /** @ngInject */
     function SearchProductController(data,$mdDialog,$document,$scope,$http)
     {
