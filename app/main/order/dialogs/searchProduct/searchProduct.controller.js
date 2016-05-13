@@ -9,6 +9,9 @@
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
+        $scope.toggle = true;
+        $scope.color = true;
+        $scope.size = true;
         
         /*$scope.getProducts = function()
         {
@@ -31,15 +34,20 @@
 
         $scope.filterBy = {
           'vendor_id':'',
-          'search': ''
+          'search': '',
+          'category_id':''
         };
 
         $scope.filterBy.vendor_id = $scope.vendor_id;
         $scope.filterBy.search = $scope.productSearch;
 
         $scope.filterProducts = function(){
+            $scope.filterBy.category_id = '';
             $scope.filterBy.vendor_id = $scope.vendor_id;
             $scope.filterBy.search = $scope.productSearch;
+        }
+        $scope.filterByCategory = function(category_id) {
+            $scope.filterBy.category_id = category_id;
         }
 
         $scope.getResource = function (params, paramsObj, search) {
@@ -53,6 +61,9 @@
 
               return $http.post('api/public/product/getProductByVendor',orderData).success(function(response) {
                 var header = response.header;
+                $scope.category_filter = response.category_filter;
+                $scope.color_filter = response.color_filter;
+                $scope.size_filter = response.size_filter;
                 return {
                   'rows': response.rows,
                   'header': header,
