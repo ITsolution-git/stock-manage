@@ -23,7 +23,7 @@
                         <div class="height-image">
                            
                             <img ng-if="showtcprofileimg == false && params.default_image != ''" ng-src="{{params.default_image}}" alt="No Image" class="popup-image" >
-                            <img  ng-if="showtcprofileimg == true" ng-src="data:{{logo_image.filetype}};base64, {{logo_image.base64}}"   alt="Wait..." class="popup-image">
+                            <img ng-if="showtcprofileimg == true" ng-src="data:{{logo_image.filetype}};base64, {{logo_image.base64}}"   alt="Wait..." class="popup-image">
                              <img ng-if="params.default_image == '' && showtcprofileimg == false" ng-src="{{params.NoImage}}" alt="No Image" class="popup-image" >
                                   
                         </div>
