@@ -173,5 +173,6 @@
     <script src="//cdn.kendostatic.com/2014.2.716/js/kendo.angular.min.js"></script>
     <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.common.min.css" rel = "stylesheet" / >
     <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css" rel = "stylesheet" / >
+
 </body>
 </html>
