@@ -191,6 +191,13 @@ class ClientController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>'1');
         return  response()->json($data);
     }
+
+    public function getClientFilterData()
+    {
+    	$post = Input::all();
+    	$result = $this->client->getClientFilterData($post);
+    	return $this->return_response($result);
+    }
     /**
      * Delete Data
      *

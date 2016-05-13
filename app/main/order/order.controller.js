@@ -41,7 +41,7 @@
         condition_obj['company_id'] =  sessionService.get('company_id');
         company_list_data.cond = angular.copy(condition_obj);
         
-        $http.post('api/public/client/ListClient',company_list_data).success(function(Listdata) {
+        $http.post('api/public/client/getClientFilterData',company_list_data).success(function(Listdata) {
             vm.companyCheckData = Listdata.data.records;
         });
 
