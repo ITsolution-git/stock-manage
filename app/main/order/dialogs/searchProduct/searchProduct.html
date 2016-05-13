@@ -42,7 +42,7 @@
                             </div>
                             <div ng-if="toggle" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterByCategory(category.category_id)">
+                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterProducts('category_id',category.category_id)">
                                         {{category.category_name}}({{category.total}})
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                             </div>
                             <div ng-if="color" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="color in color_filter" class="h6 f-body-options-item" >
+                                    <div ng-repeat="color in color_filter" class="h6 f-body-options-item" ng-click="filterProducts('color_id',color.color_id)">
                                         {{color.color_name}}({{color.total}})
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
                             </div>
                             <div ng-if="size" class="f-body scrollable"  ms-scroll>
                                 <div layout="column" >
-                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" >
+                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" ng-click="filterProducts('size_id',size.size_id)">
                                         {{size.size_name}}({{size.total}})
                                     </div>
                                 </div>
