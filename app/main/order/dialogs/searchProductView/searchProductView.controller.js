@@ -5,7 +5,7 @@
             .module('app.order')
             .controller('SearchProductViewController', SearchProductViewController);
     /** @ngInject */
-    function SearchProductViewController(product_id,product_image,description,vendor_name,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService)
+    function SearchProductViewController(product_id,product_image,description,vendor_name,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
        var vm = this;
 
@@ -44,6 +44,40 @@
             $scope.modelDisplay = '';
             $scope.product_image_display = modelImage;
         }
+
+
+        $scope.changeColorPositionData = function(color,position){
+           
+            if(position == 'colorFrontImage') {
+                $scope.product_image_display = "https://www.ssactivewear.com/" + $scope.AllProductDetail[color].colorFrontImage;
+            }
+
+            if(position == 'colorSideImage') {
+                $scope.product_image_display = "https://www.ssactivewear.com/" + $scope.AllProductDetail[color].colorSideImage;
+            }
+
+            if(position == 'colorBackImage') {
+                $scope.product_image_display = "https://www.ssactivewear.com/" + $scope.AllProductDetail[color].colorBackImage;
+            }
+            
+        }
+
+        $scope.addProduct = function (productData) {
+            
+             var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.productData = productData;
+
+
+
+             $http.post('api/public/product/addProduct',combine_array_id).success(function(result) 
+                {
+                    $mdDialog.hide();
+                    var data = {"status": "success", "message": "Product Added Successfully."}
+                     notifyService.notify(data.status, data.message);
+                });
+
+        };
 
         
 

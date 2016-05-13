@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
 
 use App\Product;
+use App\Common;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -21,9 +22,10 @@ class ProductController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Product $product) {
+    public function __construct(Product $product,Common $common) {
 
         $this->product = $product;
+        $this->common = $common;
        
     }
 
@@ -199,12 +201,15 @@ public function create_dir($dir_path) {
         {
             $whereData['search'] = $post['filter']['search'];
         }
+        if(isset($post['filter']['category_id']))
+        {
+            $whereData['category_id'] = $post['filter']['category_id'];
+        }
         $data['where'] = $whereData;
         $data['paginate'] = $post;
         $data['fields'] = array();
         $header = array();
         
-        //print_r($data);exit;
         $result = $this->product->getVendorProducts($data);
 
         $count = $result['count'];
@@ -218,7 +223,7 @@ public function create_dir($dir_path) {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
 
-        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
+        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data']);
         return  response()->json($data);
     }
 
@@ -236,10 +241,13 @@ public function create_dir($dir_path) {
        
         foreach($all_data as $key => $data) {
 
+            $color_data = $this->common->getColorId($data->colorName);
+            
            if($key == 0) {
              $productAllData['colorSelection'] = $data->colorName;
            }
-           
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = 0;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
             $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
@@ -253,6 +261,20 @@ public function create_dir($dir_path) {
        
         return response()->json(["data" => $productAllData]);
         
+
+    }
+
+    public function addProduct() {
+
+        $post = Input::all();
+        $post['created_date']=date('Y-m-d');
+        $result = $this->product->addProduct($post);
+        $message = INSERT_RECORD;
+        $success = 1;
+       
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
 
     }
 }

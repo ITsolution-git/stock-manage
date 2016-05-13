@@ -551,7 +551,7 @@ class CommonController extends Controller {
         if(!empty($post['image_array']) && !empty($post['field']) && !empty($post['table']) && !empty($post['image_name']) && !empty($post['image_path']) && !empty($post['cond']) && !empty($post['value']))
         {
             $upload_image = $this->common->SaveImage($post);
-            $response = array('success' => 1, 'message' => UPDATE_RECORD,'records'=>$upload_image );
+            $response = array('success' => 1, 'message' => "Image Uploaded Successfully.",'records'=>$upload_image );
         }
         else 
         {

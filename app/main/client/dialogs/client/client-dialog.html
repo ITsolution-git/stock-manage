@@ -28,7 +28,7 @@
                             Select Type
                         </md-option>
                         <md-option ng-repeat="type in vm.ArrCleintType" value="{{type.id}}">
-                            {{type.value}}
+                            {{type.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -45,6 +45,9 @@
                     <md-input-container flex=45 class="m-b-20">
                         <label>State</label>
                         <md-select ng-model="vm.client.pl_state">
+                            <md-option value="0">
+                                Select State
+                            </md-option>
                             <md-option ng-repeat="state_val in vm.states_all" value="{{state_val.id}}">
                                 {{state_val.name}}
                             </md-option>
@@ -76,8 +79,11 @@
                     <input placeholder="Company Website URL" ng-model="vm.client.company_url">
                 </md-input-container>
                 <md-input-container class="m-b-30">
-                    <label>Disposition</label>
+                    <label>Desposition</label>
                     <md-select ng-model="vm.client.client_desposition">
+                        <md-option value="0">
+                            Select Desposition
+                        </md-option>
                         <md-option ng-repeat="disp in vm.Arrdisposition" value="{{disp.id}}">
                             {{disp.value}}
                         </md-option>

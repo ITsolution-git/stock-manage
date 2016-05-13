@@ -69,7 +69,7 @@
         }
 
 
-          $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition)
+          $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition,key)
         {
            
           var position_main_data = {};
@@ -80,20 +80,17 @@
           obj[$scope.name_filed] =  value;
           position_main_data.data = angular.copy(obj);
 
-
           var condition_obj = {};
           condition_obj[match_condition] =  id;
           position_main_data.cond = angular.copy(condition_obj);
           
-
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
-               
+                if(column_name == 'position_id') {
+                    $scope.order_design_position[key].position_name = $scope.miscData.position[value].value;
+                }
             });
       
         }
-
-
-
 
         var misc_list_data = {};
         var condition_obj = {};

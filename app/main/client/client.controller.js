@@ -9,7 +9,7 @@
             //.controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
-    function ClientController($mdDialog, $document,sessionService,$resource,$scope,$stateParams) {
+    function ClientController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http) {
         var vm = this;
         // Data
         //console.log(sessionService.get('company_id'));
@@ -30,28 +30,50 @@
         vm.openClientDialog = openClientDialog;
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
-        vm.getClientData = getClientData;
         $scope.company_id = sessionService.get('company_id');
-        vm.getClientData();
+
         //////////
 
-        function getClientData()
-        {
-            var price_list_data = {};
-            price_list_data.cond ={company_id :$scope.company_id};
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'client.client_id',
+          'sortOrder': 'dsc'
+        };
 
-            var checkSession = $resource('api/public/client/ListClient',null,{
-                post : {
-                       method : 'post'
-                       }
-            });
-            checkSession.post(price_list_data,function(result) 
-            {   
-                if(result.data.success=='1')
-                {   
-                    vm.clients = result.data.records;
+        $scope.reloadCallback = function () { };
+/*        $scope.search = function () {
+            $scope.reloadCallback();
+        };*/
+        $scope.filterBy = {
+          'temp':'',
+          'search': '',
+          'seller': '',
+          'client': '',
+          'created_date': ''
+        };
+        $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+            //getResource();
+        };
+       $scope.getResource = function (params, paramsObj, search)
+        {
+            $scope.params = params;
+            $scope.paramsObj = paramsObj;
+
+            var price_list_data = {};
+            price_list_data.cond ={company_id :$scope.company_id,params:$scope.params};
+
+            return $http.post('api/public/client/ListClient',price_list_data).success(function(response) {
+              
+                var header = response.header;
+                return {
+                  'rows': response.rows,
+                  'header': header,
+                  'pagination': response.pagination,
+                  'sortBy': response.sortBy,
+                  'sortOrder': response.sortOrder
                 }
-                vm.success = result.data.success;
             });
         }
         function openClientDialog(ev, client)

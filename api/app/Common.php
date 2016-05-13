@@ -393,4 +393,11 @@ class Common extends Model {
         return $data;
     }
 
+     public function getColorId($name) {
+        
+        $whereColorConditions = ['status' => '1','is_delete' => '1','name'=>$name];
+        $colorData = DB::table('color')->select('id','name')->where($whereColorConditions)->get();       
+        return $colorData;
+    }
+
 }

@@ -151,9 +151,45 @@ class ClientController extends Controller {
 
     public function ListClient()
     {
-    	$post = Input::all();
+        $post_all = Input::all();
+        $records = array();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+    	if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'c.client_id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ;
+        $sort_order = $post['sorts']['sortOrder'];
+
     	$result = $this->client->getClientdata($post);
-    	return $this->return_response($result);
+    	$records = $result['allData'];
+
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'c.client_id', 'name' => 'Client Id'),
+                        1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        2=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
+                        3=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
+                        4=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>'1');
+        return  response()->json($data);
     }
     /**
      * Delete Data
