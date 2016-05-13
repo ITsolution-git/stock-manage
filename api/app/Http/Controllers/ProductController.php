@@ -201,12 +201,15 @@ public function create_dir($dir_path) {
         {
             $whereData['search'] = $post['filter']['search'];
         }
+        if(isset($post['filter']['category_id']))
+        {
+            $whereData['category_id'] = $post['filter']['category_id'];
+        }
         $data['where'] = $whereData;
         $data['paginate'] = $post;
         $data['fields'] = array();
         $header = array();
         
-        //print_r($data);exit;
         $result = $this->product->getVendorProducts($data);
 
         $count = $result['count'];
@@ -220,7 +223,7 @@ public function create_dir($dir_path) {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
 
-        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
+        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data']);
         return  response()->json($data);
     }
 
