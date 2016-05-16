@@ -133,6 +133,7 @@ Route::post('common/allColor', 'CommonController@allColor'); // GET RECORD FOR A
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
 Route::post('client/ListClient', 'ClientController@ListClient');
+Route::post('client/getClientFilterData', 'ClientController@getClientFilterData');
 Route::post('client/DeleteClient', 'ClientController@DeleteClient');
 Route::post('client/ClientContacts', 'ClientController@ClientContacts');
 Route::post('client/getContacts', 'ClientController@getContacts');

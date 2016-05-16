@@ -66,6 +66,7 @@
             
              var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
+            combine_array_id.product_id = product_id;
             combine_array_id.productData = productData;
 
 

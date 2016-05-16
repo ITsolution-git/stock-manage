@@ -264,13 +264,17 @@ class Product extends Model {
        
         foreach($post['productData'] as $row) {
              
-            $resul = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
+            $result = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
                 'size'=>$row['sizeName'],
                 'price'=>$row['customerPrice'],
                 'qnty'=>$row['qnty'],
                 'color_id'=>$row['color_id'],
                 'date'=>$post['created_date']]);
         }
-        return true;
+
+         $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
+                'product_id'=>$post['product_id']]);
+         return true;
+
     }
 }
