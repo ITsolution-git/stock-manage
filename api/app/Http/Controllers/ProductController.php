@@ -197,6 +197,7 @@ public function create_dir($dir_path) {
         $whereData = array();
         
         $whereData['vendor_id'] = $post['filter']['vendor_id'];
+
         if($post['filter']['vendor_id'] != '')
         {
             $whereData['search'] = $post['filter']['search'];
@@ -205,6 +206,15 @@ public function create_dir($dir_path) {
         {
             $whereData['category_id'] = $post['filter']['category_id'];
         }
+        if(isset($post['filter']['color_id']))
+        {
+            $whereData['color_id'] = $post['filter']['color_id'];
+        }
+        if(isset($post['filter']['size_id']))
+        {
+            $whereData['size_id'] = $post['filter']['size_id'];
+        }
+
         $data['where'] = $whereData;
         $data['paginate'] = $post;
         $data['fields'] = array();

@@ -28,7 +28,6 @@
                 </div>
                 <div layout="row" layout-align="space-between start">
                     <div layout="column" flex="20">
-                        
                         <div layout="column" class="f-box-1">
                             <div class="f-header">
                                 <!-- Product Category Filter -->
@@ -49,24 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                                <!-- <span layout="row" layout-align="space-between center">
-                                    <span>PRODUCT CATEGORY</span>
-                                    <button ng-if="toggle" ng-click="toggle = false">
-                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                    </button>
-                                    <button ng-if="!toggle" ng-click="toggle = true">
-                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                    </button>
-                                </span>
-                            
-                            <div ng-if="toggle" class="scrollable filterWidth"  ms-scroll>
-                                <div layout="column" >
-                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterByCategory(category.category_id)">
-                                        {{category.category_name}}({{category.total}})
-                                    </div>
-                                </div>
-                            </div> -->
-                        
+
                         <div layout="column" class="f-box-1">
                             <div class="f-header padding-top-15">
                                 <!-- Product Category Filter -->
@@ -81,38 +63,12 @@
                                 </button>
 
                                 <div ng-if="elementInitializedColor" class="scrollable filterWidth"  ms-scroll ng-show="showDivColor">
-                                    <div ng-repeat="color in color_filter" class="h6 f-body-options-item" >
+                                    <div ng-repeat="color in color_filter" class="h6 f-body-options-item" ng-click="filterProducts('color_id',color.color_id)">
                                         {{color.color_name}}({{color.total}})
-                                    </div>
+                                    </div>                            
                                 </div>
                             </div>
                         </div>
-
-
-                        <div layout="column" class="f-box-1">
-                            <div class="f-header padding-top-15">
-                                <!-- Product Category Filter -->
-                                <button ng-click="showDivSizes = !showDivSizes; elementInitializedSizes = true">
-                                    <span>SIZES</span>
-                                    <button ng-if="showDivSizes" class="float-right" ng-click="showDivSizes = false">
-                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                    </button>
-                                    <button ng-if="!showDivSizes" class="float-right" ng-click="showDivSizes = true">
-                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                    </button>
-                                </button>
-
-                                <div ng-if="elementInitializedSizes" class="scrollable filterWidth"  ms-scroll ng-show="showDivSizes">
-                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" >
-                                        {{size.size_name}}({{size.total}})
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
                         <!-- <div layout="column" class="f-box-1">
                             <div class="f-header">
                                 <span layout="row" layout-align="space-between center">
@@ -173,7 +129,30 @@
                                 </div>
                             </div>
                         </div> -->
-                        
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header padding-top-15">
+                                <!-- Product Category Filter -->
+                                <button ng-click="showDivSizes = !showDivSizes; elementInitializedSizes = true">
+                                    <span>SIZES</span>
+                                    <button ng-if="showDivSizes" class="float-right" ng-click="showDivSizes = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!showDivSizes" class="float-right" ng-click="showDivSizes = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </button>
+
+                                <div ng-if="elementInitializedSizes" class="scrollable filterWidth"  ms-scroll ng-show="showDivSizes">
+                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" >
+                                        {{size.size_name}}({{size.total}})
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
                     <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                         <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20">
                             <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name)" layout="row" layout-align="center center">

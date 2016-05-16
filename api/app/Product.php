@@ -96,6 +96,18 @@ class Product extends Model {
                             $orderData = $orderData->leftJoin('product_brand_category as pbc', 'pbc.product_id', '=', 'p.id');
                             $orderData = $orderData->where('pbc.category_id' , '=', $category_id);
                         }
+                        if(isset($data['where']['color_id']))
+                        {
+                            $color_id = $data['where']['color_id'];
+                            $orderData = $orderData->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
+                            $orderData = $orderData->where('pcs.color_id' , '=', $color_id);
+                        }
+                        if(isset($data['where']['size_id']))
+                        {
+                            $size_id = $data['where']['size_id'];
+                            $orderData = $orderData->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
+                            $orderData = $orderData->where('pcs.size_id' , '=', $size_id);
+                        }
                         $orderData = $orderData->orderBy($data['paginate']['sorts']['sortBy'], $data['paginate']['sorts']['sortOrder'])
                         ->GroupBy('p.id')
                         ->skip($data['paginate']['start'])
@@ -118,6 +130,18 @@ class Product extends Model {
                             $category_id = $data['where']['category_id'];
                             $orderData2 = $orderData2->leftJoin('product_brand_category as pbc', 'pbc.product_id', '=', 'p.id');
                             $orderData2 = $orderData2->where('pbc.category_id' , '=', $category_id);
+                        }
+                        if(isset($data['where']['color_id']))
+                        {
+                            $color_id = $data['where']['color_id'];
+                            $orderData2 = $orderData2->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
+                            $orderData2 = $orderData2->where('pcs.color_id' , '=', $color_id);
+                        }
+                        if(isset($data['where']['size_id']))
+                        {
+                            $size_id = $data['where']['size_id'];
+                            $orderData2 = $orderData2->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
+                            $orderData2 = $orderData2->where('pcs.size_id' , '=', $size_id);
                         }
                         $orderData2 = $orderData2->GroupBy('p.vendor_id')->get();
         
@@ -212,13 +236,13 @@ class Product extends Model {
         return $orderData;
     }
 
-/**
-* Product Image Upload          
-* @access public productImageUpdate
-* @param  int $insertedid
-* @param  array $newfilename
-* @return array $result
-*/ 
+    /**
+    * Product Image Upload          
+    * @access public productImageUpdate
+    * @param  int $insertedid
+    * @param  array $newfilename
+    * @return array $result
+    */ 
 
      public function productImageUpdate($insertedid,$newfilename)
     {
@@ -240,16 +264,17 @@ class Product extends Model {
        
         foreach($post['productData'] as $row) {
              
-            $resul = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
+            $result = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
                 'size'=>$row['sizeName'],
                 'price'=>$row['customerPrice'],
                 'qnty'=>$row['qnty'],
                 'color_id'=>$row['color_id'],
                 'date'=>$post['created_date']]);
-
         }
-        return true;
-      
-    }
 
+         $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
+                'product_id'=>$post['product_id']]);
+         return true;
+
+    }
 }
