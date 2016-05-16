@@ -7,6 +7,8 @@
             .controller('DesignController', DesignController);
 
     /** @ngInject */
+
+
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
         $scope.NoImage = AllConstant.NoImage;
@@ -272,8 +274,7 @@
                             $scope.params = params;
                             $scope.SaveImageAll=function(image_array)
                             {
-
-                                 if(image_array == null){
+                                 if(image_array == null) {
                                     $mdDialog.hide();
                                     return false;
                                   }
@@ -323,6 +324,7 @@
                     onRemoving : $scope.designPosition
                 });
 
+
         };
 
 
@@ -344,6 +346,7 @@
                   var order_main_data = {};
                   order_main_data.table =table_name
                   $scope.name_filed = column_name;
+
                   var obj = {};
                   obj[$scope.name_filed] =  '';
                   order_main_data.data = angular.copy(obj);
@@ -356,11 +359,17 @@
                  order_main_data.image_delete =  sessionService.get('company_id')+'/'+folder_name+'/' + primary_key_value +'/'+default_image;
             
                 $http.post('api/public/common/deleteImage',order_main_data).success(function(result) {
+                    $mdDialog.hide();
+
                     var data = {"status": "success", "message": "Image Deleted Successfully"}
                                             notifyService.notify(data.status, data.message); 
                      $scope.designPosition;
                 });
+
+                
             }
+
+
         }
 
         $scope.productVendorLogo = [{"id": "1", "name": "Vendor Logo"},

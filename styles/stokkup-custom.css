@@ -30,3 +30,59 @@
 	padding: 5px;
 	cursor: pointer;
 }
+
+.img-container {
+  box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 25%;
+    -ms-flex: 1 1 25%;
+    flex: 1 1 25%;
+    max-height: 100%;
+    /* max-width: 24%; */
+    /* overflow: hidden; */
+    /* height: auto; */
+    width: auto;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.close-icon {
+    position: absolute;
+    right: 10px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.popup-image {
+  height: auto;
+  max-width: 100%;
+  padding: 5px;
+}
+
+#designTable tbody tr td {
+	padding-left: 1.2em !important;  /*or 15px*/
+}
+
+.height-image {
+  height: auto;
+}
+
+.filterWidth {
+      overflow: scroll;
+    overflow-x: hidden;
+    width: 96%;
+    height: 120px !important;
+    line-height: 2;
+    cursor: pointer;
+}
+
+.padding-top-15 {
+  padding-top: 20px ;
+}
+
+.float-right {
+  float : right;
+      margin-top: -5px;
+}
+

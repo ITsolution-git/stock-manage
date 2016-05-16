@@ -4,6 +4,7 @@
     angular
             .module('app.order')
             .controller('SearchProductController', SearchProductController);
+
     /** @ngInject */
     function SearchProductController(data,$mdDialog,$document,$scope,$http)
     {

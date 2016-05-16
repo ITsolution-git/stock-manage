@@ -212,22 +212,19 @@
                         <div class=""><h3>Upload Artwork</h3></div>
                         <div layout="row" layout-align="space between" layout-wrap>
                            
-                           <div flex="24" class="border-grey div-height" layout-padding ng-click="ImagePopup('image_1','order_design_position','order_design_position',order_design_position.image_1_url_photo,'id',order_design_position.id,order_design_position.image_1)">
-                                 <div class="text-right pad0">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_1','order_design_position','order_design_position',order_design_position.image_1,'id',order_design_position.id)"></md-icon>
+                           <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_1','order_design_position','order_design_position',order_design_position.image_1_url_photo,'id',order_design_position.id,order_design_position.image_1)">
+                                 <div class="text-right pad0 close-icon">
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_1','order_design_position','order_design_position',order_design_position.image_1,'id',order_design_position.id); "></md-icon>
                                 </div> 
 
                                 <img  ng-if="order_design_position.image_1" ng-src="{{order_design_position.image_1_url_photo}}" class="popup-image" />
                                 <img  ng-if="order_design_position.image_1 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
 
-
-                                
-
                             </div>
 
-                            <div flex="24" class="border-grey div-height" layout-padding ng-click="ImagePopup('image_2','order_design_position','order_design_position',order_design_position.image_2_url_photo,'id',order_design_position.id,order_design_position.image_2)">
-                               <div class="text-right pad0">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_2','order_design_position','order_design_position',order_design_position.image_2,'id',order_design_position.id)"></md-icon>
+                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_2','order_design_position','order_design_position',order_design_position.image_2_url_photo,'id',order_design_position.id,order_design_position.image_2)">
+                               <div class="text-right pad0 close-icon">
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_2','order_design_position','order_design_position',order_design_position.image_2,'id',order_design_position.id);"></md-icon>
                                 </div> 
 
                                <img  ng-if="order_design_position.image_2" ng-src="{{order_design_position.image_2_url_photo}}" class="popup-image" />
@@ -235,9 +232,9 @@
 
                             </div>
 
-                            <div flex="24" class="border-grey div-height" layout-padding ng-click="ImagePopup('image_3','order_design_position','order_design_position',order_design_position.image_3_url_photo,'id',order_design_position.id,order_design_position.image_3)">
-                              <div class="text-right pad0">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_3','order_design_position','order_design_position',order_design_position.image_3,'id',order_design_position.id)"></md-icon>
+                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_3','order_design_position','order_design_position',order_design_position.image_3_url_photo,'id',order_design_position.id,order_design_position.image_3)">
+                              <div class="text-right pad0 close-icon">
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_3','order_design_position','order_design_position',order_design_position.image_3,'id',order_design_position.id);"></md-icon>
                                 </div> 
 
                                 <img  ng-if="order_design_position.image_3" ng-src="{{order_design_position.image_3_url_photo}}" class="popup-image" />
@@ -245,8 +242,8 @@
                             </div>
 
 
-                            <div flex="24" class="border-grey div-height" layout-padding ng-click="ImagePopup('image_4','order_design_position','order_design_position',order_design_position.image_4_url_photo,'id',order_design_position.id,order_design_position.image_4)">
-                                 <div class="text-right pad0">
+                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_4','order_design_position','order_design_position',order_design_position.image_4_url_photo,'id',order_design_position.id,order_design_position.image_4)">
+                                 <div class="text-right pad0 close-icon">
                                     <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_4','order_design_position','order_design_position',order_design_position.image_4,'id',order_design_position.id)"></md-icon>
                                 </div> 
 
@@ -269,7 +266,13 @@
             <div class="design-positions-box">
             </div>
         </div>
+<<<<<<< HEAD
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-if="!productData.id">
+=======
+
+        
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
+>>>>>>> fuse_php
             <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
             <div flex="20">
                 <md-input-container class="md-block" flex="30">
