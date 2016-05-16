@@ -24,7 +24,7 @@
                         <label>Search</label>
                         <input ng-model="productSearch">
                     </md-input-container>
-                    <md-button class="md-accent md-raised" ng-click="filterProducts()" ng-disabled="productSearch == ''">Search</md-button>
+                    <md-button class="md-accent md-raised" ng-click="filterProducts('none','none')" ng-disabled="productSearch == ''">Search</md-button>
                 </div>
                 <div layout="row" layout-align="space-between start">
                     <div layout="column" flex="20">
@@ -42,7 +42,7 @@
                                 </button>
 
                                 <div ng-if="elementInitializedCategory" class="scrollable filterWidth"  ms-scroll ng-show="showDivCategory">
-                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterByCategory(category.category_id)">
+                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterProducts('category_id',category.category_id)">
                                             {{category.category_name}}({{category.total}})
                                     </div>
                                 </div>
@@ -143,7 +143,7 @@
                                 </button>
 
                                 <div ng-if="elementInitializedSizes" class="scrollable filterWidth"  ms-scroll ng-show="showDivSizes">
-                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" >
+                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" ng-click="filterProducts('size_id',size.size_id)">
                                         {{size.size_name}}({{size.total}})
                                     </div>
                                 </div>
