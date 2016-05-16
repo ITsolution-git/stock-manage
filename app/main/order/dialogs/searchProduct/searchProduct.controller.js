@@ -9,6 +9,9 @@
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
+        $scope.toggle = true;
+        $scope.color = true;
+        $scope.size = true;
         
         /*$scope.getProducts = function()
         {
@@ -31,15 +34,41 @@
 
         $scope.filterBy = {
           'vendor_id':'',
-          'search': ''
+          'search': '',
+          'category_id':''
         };
 
         $scope.filterBy.vendor_id = $scope.vendor_id;
         $scope.filterBy.search = $scope.productSearch;
 
-        $scope.filterProducts = function(){
+        $scope.filterProducts = function(type,value){
+            $scope.filterBy.category_id = '';
+            $scope.filterBy.color_id = '';
+            $scope.filterBy.size_id = '';
+
+            if(type == 'category_id')
+            {
+                $scope.filterBy.category_id = angular.copy(value);
+            }
+            if(type == 'color_id')
+            {
+                $scope.filterBy.color_id = angular.copy(value);
+            }
+            if(type == 'size_id')
+            {
+                $scope.filterBy.size_id = angular.copy(value);
+            }
             $scope.filterBy.vendor_id = $scope.vendor_id;
             $scope.filterBy.search = $scope.productSearch;
+        }
+        $scope.filterByCategory = function(category_id) {
+            $scope.filterBy.category_id = category_id;
+        }
+        $scope.filterByColor = function(color_id) {
+            $scope.filterBy.color_id = color_id;
+        }
+        $scope.filterBySize = function(size_id) {
+            $scope.filterBy.size_id = size_id;
         }
 
         $scope.getResource = function (params, paramsObj, search) {
@@ -53,6 +82,9 @@
 
               return $http.post('api/public/product/getProductByVendor',orderData).success(function(response) {
                 var header = response.header;
+                $scope.category_filter = response.category_filter;
+                $scope.color_filter = response.color_filter;
+                $scope.size_filter = response.size_filter;
                 return {
                   'rows': response.rows,
                   'header': header,
@@ -61,71 +93,8 @@
                   'sortOrder': response.sortOrder
                 }
               });
-
-
         }
 
-        //$scope.getProducts();
-        // Data
-        $scope.filterDialog = {
-            "search": "",
-            "productCategory": [
-                {"category": "PRODUCT CATEGORY"},
-                {"category": "PRODUCT CATEGORY"},
-                {"category": "PRODUCT CATEGORY"},
-                {"category": "PRODUCT CATEGORY"},
-                {"category": "PRODUCT CATEGORY"}
-            ],
-            "color":[
-                {"colorName":"color"},
-                {"colorName":"color"},
-                {"colorName":"color"},
-                {"colorName":"color"}
-            ],
-            "vendor":[
-                {"vendorName":"Vendor Name"},
-                {"vendorName":"Vendor Name"},
-                {"vendorName":"Vendor Name"},
-                {"vendorName":"Vendor Name"}
-            ],
-            "fit":[
-                {"fitNo":"fit"},
-                {"fitNo":"fit"},
-                {"fitNo":"fit"}
-            ],
-            "fabric":[
-                {"fabricName":"Fabric Name"},
-                {"fabricName":"Fabric Name"},
-                {"fabricName":"Fabric Name"},
-                {"fabricName":"Fabric Name"}
-            ],
-            "sizes":[
-                {"size":"Size No"},
-                {"size":"Size No"},
-                {"size":"Size No"},
-                {"size":"Size No"}
-            ],
-            "productsImages":[
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""},
-                {"productName":"Product Image", "src":""}
-            ]
-        };
-        // Methods
-        //$scope.openSearchProductViewDialog = openSearchProductViewDialog;
-        
         $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name)
         {
             $mdDialog.show({

@@ -39,3 +39,4 @@ define ('MAIL_LINK_EXPIRE','Sorry, Link has been expired. Please Try again!');
 define ('CURRENT_DATE',date('Y-m-d'));
 define ('CURRENT_DATETIME',date('Y-m-d H:i:s'));
 define ('RECORDS_PER_PAGE',10);
+define ('RECORDS_PAGE_RANGE',7);
