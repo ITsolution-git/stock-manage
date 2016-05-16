@@ -36,6 +36,30 @@
             });
         }
 
+        $scope.designProduct = function(){
+
+        var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            
+            $http.post('api/public/product/designProduct',combine_array_id).success(function(result, status, headers, config) {
+               
+                if(result.data.success == '1') {
+                  
+                    $scope.designProduct = result.data.records;
+                    $scope.productData = result.data.productData.product[0];
+                    $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
+
+
+                } else {
+                    
+                }
+                
+            });
+        }
+
+        $scope.designProduct();
+
+
        $scope.designPosition = function(){
 
         var combine_array_id = {};
@@ -46,6 +70,7 @@
                
                 if(result.data.success == '1') {
                     $scope.order_design_position = result.data.order_design_position;
+
                 }
                 
             });

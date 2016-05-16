@@ -59,8 +59,10 @@ class Product extends Model {
 
     public function productDetail($data) {
 
-        $whereProductConditions = ['id' => $data['id']];
-        $productData = DB::table('products')->where($whereProductConditions)->get();
+        $whereProductConditions = ['p.id' => $data['id']];
+        $productData = DB::table('products as p')
+                        ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                        ->where($whereProductConditions)->get();
 
         $combine_array['product'] = $productData;
         return $combine_array;
@@ -277,4 +279,37 @@ class Product extends Model {
          return true;
 
     }
+
+
+/**
+* Order Detail           
+* @access public designDetail
+* @param  int $orderId and $clientId
+* @return array $combine_array
+*/  
+
+    public function designProduct($data) {
+
+     
+        $whereConditions = ['dp.is_delete' => "1",'dp.design_id' => $data['id']];
+        $listArray = ['dp.*','pd.*'];
+
+        $designDetailData = DB::table('design_product as dp')
+                         
+                         ->leftJoin('purchase_detail as pd','dp.design_id','=', 'pd.design_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $combine_array = array();
+        
+        $combine_array['design_product'] = $designDetailData;
+
+        if($designDetailData) {
+            $combine_array['product_id'] = $designDetailData[0]->product_id;
+        }
+
+        return $combine_array;
+    }
+
 }

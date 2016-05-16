@@ -287,4 +287,41 @@ public function create_dir($dir_path) {
         return response()->json(['data'=>$data]);
 
     }
+
+     public function designProduct() {
+ 
+        $data = Input::all();
+        $result = $this->product->designProduct($data);
+
+     
+        if(empty($result['design_product']))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+   if($result['product_id']) {
+
+     $productArray = ['id' => $result['product_id']];
+     $result_product = $this->product->productDetail($productArray);
+    
+   }
+       
+       
+
+       
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $result['design_product'],
+                                'productData' => $result_product
+                                );
+        
+        return response()->json(["data" => $response]);
+
+    }
 }
