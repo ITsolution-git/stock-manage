@@ -155,7 +155,7 @@
                     
                     <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                         <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20">
-                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name)" layout="row" layout-align="center center">
+                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name,'add',product.name,'nocolor')" layout="row" layout-align="center center">
                                 <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip></img>
                             </div>
                         </div>

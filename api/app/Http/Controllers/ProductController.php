@@ -248,16 +248,30 @@ public function create_dir($dir_path) {
         curl_close($curl);
 
        $all_data = json_decode($result);
+ 
+
+       $allDetail = array();
+       if($data['design_id'] != 0) {
+        $allDetail = $this->product->getPurchaseDetail($data['design_id']);
+       }
        
         foreach($all_data as $key => $data) {
 
+           
             $color_data = $this->common->getColorId($data->colorName);
             
            if($key == 0) {
              $productAllData['colorSelection'] = $data->colorName;
            }
+
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = 0;
+
+            if(count($allDetail) > 0) {
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = $allDetail[$data->sizeName];
+            } else {
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = 0;
+            }
+            
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
             $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
@@ -278,6 +292,8 @@ public function create_dir($dir_path) {
 
         $post = Input::all();
         $post['created_date']=date('Y-m-d');
+        $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
+        $post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
         $message = INSERT_RECORD;
         $success = 1;
@@ -304,21 +320,20 @@ public function create_dir($dir_path) {
            return response()->json(["data" => $response]);
         }
 
-   if($result['product_id']) {
+       if($result['product_id']) {
 
-     $productArray = ['id' => $result['product_id']];
-     $result_product = $this->product->productDetail($productArray);
-    
-   }
+         $productArray = ['id' => $result['product_id']];
+         $result_product = $this->product->productDetail($productArray);
+        
+       }
        
-       
-
        
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['design_product'],
-                                'productData' => $result_product
+                                'productData' => $result_product,
+                                'colorName' => $result['colorName']
                                 );
         
         return response()->json(["data" => $response]);

@@ -96,7 +96,7 @@
               });
         }
 
-        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name)
+        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
         {
             $mdDialog.show({
                 controller: 'SearchProductViewController',
@@ -110,6 +110,10 @@
                     product_image:product_image,
                     description:description,
                     vendor_name:vendor_name,
+                    operation:operation,
+                    product_name:product_name,
+                    colorName:colorName,
+                    design_id:0,
                     event: ev
                 }
                

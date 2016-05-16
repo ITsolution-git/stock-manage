@@ -60,8 +60,12 @@ class Product extends Model {
     public function productDetail($data) {
 
         $whereProductConditions = ['p.id' => $data['id']];
+        $listArray = ['p.*','v.name_company'];
+
+
         $productData = DB::table('products as p')
                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                        ->select($listArray)
                         ->where($whereProductConditions)->get();
 
         $combine_array['product'] = $productData;
@@ -274,8 +278,11 @@ class Product extends Model {
                 'date'=>$post['created_date']]);
         }
 
-         $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
+         if($post['record_delete'] == 0) {
+            $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
                 'product_id'=>$post['product_id']]);
+         }
+         
          return true;
 
     }
@@ -292,11 +299,12 @@ class Product extends Model {
 
      
         $whereConditions = ['dp.is_delete' => "1",'dp.design_id' => $data['id']];
-        $listArray = ['dp.*','pd.*'];
+        $listArray = ['dp.*','pd.*','c.name as colorName'];
 
         $designDetailData = DB::table('design_product as dp')
                          
                          ->leftJoin('purchase_detail as pd','dp.design_id','=', 'pd.design_id')
+                         ->leftJoin('color as c','pd.color_id','=', 'c.id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
@@ -304,12 +312,28 @@ class Product extends Model {
         $combine_array = array();
         
         $combine_array['design_product'] = $designDetailData;
-
+       
         if($designDetailData) {
             $combine_array['product_id'] = $designDetailData[0]->product_id;
+            $combine_array['colorName'] = $designDetailData[0]->colorName;
         }
 
         return $combine_array;
+    }
+
+    public function getPurchaseDetail($designId) {
+
+    $result = DB::table('purchase_detail')->where('design_id','=',$designId)->get();
+
+        
+        $purchaseDetail = array();
+        foreach ($result as $key=>$alldata){
+          
+                 $purchaseDetail[$alldata->size] = $alldata->qnty;
+          }
+        
+        return $purchaseDetail;
+
     }
 
 }

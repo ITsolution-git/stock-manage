@@ -331,7 +331,7 @@
                             </md-button>
                             <md-menu-content width="4">
                                 <md-menu-item>
-                                    <md-button>Edit</md-button>
+                                    <md-button ng-click="openSearchProductViewDialogView($event,productData.id,productData.product_image,productData.description,productData.name_company,'Edit',productData.name,colorName)">Edit</md-button>
                                 </md-menu-item>
                                  <md-menu-item>
                                     <md-button>Delete</md-button>
@@ -351,6 +351,8 @@
                                 <div class="h5 p-b-10  grey-color">{{productData.name_company}}</div>
                                 <div class="h4">Item Number</div>
                                 <div class="h5  grey-color">{{productData.id}}</div>
+                                <div class="h4">Color</div>
+                                <div class="h5  grey-color">{{colorName}}</div>
                             </div>  
                         </div>    
                         <div layout="row" flex="55">
