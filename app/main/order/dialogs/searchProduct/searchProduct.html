@@ -31,14 +31,14 @@
                         <div layout="column" class="f-box-1">
                             <div class="f-header">
                                 <!-- Product Category Filter -->
-                                <button ng-click="showDivCategory = !showDivCategory; elementInitializedCategory = true">
+                                <button class="filterButtonWidth" ng-click="showDivCategory = !showDivCategory; elementInitializedCategory = true">
                                     <span>PRODUCT CATEGORY</span>
-                                    <button ng-if="showDivCategory" class="float-right" ng-click="showDivCategory = false">
+                                    <span ng-if="showDivCategory" class="float-right" ng-click="showDivCategory = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                    </button>
-                                    <button ng-if="!showDivCategory" class="float-right" ng-click="showDivCategory = true">
+                                    </span>
+                                    <span ng-if="!showDivCategory" class="float-right" ng-click="showDivCategory = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                    </button>
+                                    </span>
                                 </button>
 
                                 <div ng-if="elementInitializedCategory" class="scrollable filterWidth"  ms-scroll ng-show="showDivCategory">
@@ -48,18 +48,18 @@
                                 </div>
                             </div>
                         </div>
-
+ 
                         <div layout="column" class="f-box-1">
                             <div class="f-header padding-top-15">
                                 <!-- Product Category Filter -->
-                                <button ng-click="showDivColor = !showDivColor; elementInitializedColor = true">
+                                <button class="filterButtonWidth" ng-click="showDivColor = !showDivColor; elementInitializedColor = true">
                                     <span>COLOR</span>
-                                    <button ng-if="showDivColor" class="float-right" ng-click="showDivColor = false">
+                                    <span ng-if="showDivColor" class="float-right" ng-click="showDivColor = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                    </button>
-                                    <button ng-if="!showDivColor" class="float-right" ng-click="showDivColor = true">
+                                    </span>
+                                    <span ng-if="!showDivColor" class="float-right" ng-click="showDivColor = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                    </button>
+                                    </span>
                                 </button>
 
                                 <div ng-if="elementInitializedColor" class="scrollable filterWidth"  ms-scroll ng-show="showDivColor">
@@ -132,14 +132,14 @@
                         <div layout="column" class="f-box-1">
                             <div class="f-header padding-top-15">
                                 <!-- Product Category Filter -->
-                                <button ng-click="showDivSizes = !showDivSizes; elementInitializedSizes = true">
+                                <button class="filterButtonWidth" ng-click="showDivSizes = !showDivSizes; elementInitializedSizes = true">
                                     <span>SIZES</span>
-                                    <button ng-if="showDivSizes" class="float-right" ng-click="showDivSizes = false">
+                                    <span ng-if="showDivSizes" class="float-right" ng-click="showDivSizes = false">
                                         <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                    </button>
-                                    <button ng-if="!showDivSizes" class="float-right" ng-click="showDivSizes = true">
+                                    </span>
+                                    <span ng-if="!showDivSizes" class="float-right" ng-click="showDivSizes = true">
                                         <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                    </button>
+                                    </span>
                                 </button>
 
                                 <div ng-if="elementInitializedSizes" class="scrollable filterWidth"  ms-scroll ng-show="showDivSizes">
@@ -153,15 +153,21 @@
                     </div>
 
                     
-                    <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
+                    <div  layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                         <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20">
                             <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name)" layout="row" layout-align="center center">
                                 <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip></img>
                             </div>
                         </div>
+                        
                         <div tasty-pagination class="tasty-page"></div>
+
                     </div>
+
+
+
                 </div>
+
             </div>
         </md-dialog-content>
     </form>
