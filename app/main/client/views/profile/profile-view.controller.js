@@ -79,6 +79,7 @@
 
         $scope.getClientProfile = function()
         {
+            $("#ajax_loader").show();
             var combine_array_id = {};
             combine_array_id.client_id = vm.client_id;
             combine_array_id.company_id = vm.company_id;
@@ -110,6 +111,7 @@
                     $scope.addressAll=vm.Response.addressAll.result;
                     $scope.Distribution_address= vm.Response.Distribution_address.result;
                 }
+                $("#ajax_loader").hide();
             });
         }
         $scope.getClientProfile();
