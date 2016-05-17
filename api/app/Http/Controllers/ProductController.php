@@ -172,6 +172,7 @@ public function create_dir($dir_path) {
     public function getProductByVendor()
     {
         $post_all = Input::all();
+        //print_r($post_all);exit;
         $records = array();
 
         $post = $post_all['cond']['params'];
@@ -202,15 +203,15 @@ public function create_dir($dir_path) {
         {
             $whereData['search'] = $post['filter']['search'];
         }
-        if(isset($post['filter']['category_id']))
+        if(isset($post['filter']['category_id']) && !empty($post['filter']['category_id']))
         {
             $whereData['category_id'] = $post['filter']['category_id'];
         }
-        if(isset($post['filter']['color_id']))
+        if(isset($post['filter']['color_id']) && !empty($post['filter']['color_id']))
         {
             $whereData['color_id'] = $post['filter']['color_id'];
         }
-        if(isset($post['filter']['size_id']))
+        if(isset($post['filter']['size_id']) && !empty($post['filter']['size_id']))
         {
             $whereData['size_id'] = $post['filter']['size_id'];
         }
