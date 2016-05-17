@@ -44,17 +44,21 @@
 
             $scope.reloadCallback = function () { };
 
-            $scope.filterBy = {
-              'vendor_id':'',
-              'search': '',
-              'category_id':'',
-              'color_id':'',
-              'size_id':''
-            };
+            $scope.filterBy.vendor_id = 0;
+            $scope.filterBy.search = '';
 
-            $scope.filterBy.category_id = [];
-            $scope.filterBy.color_id = [];
-            $scope.filterBy.size_id = [];
+            if($scope.filterBy.category_id.length == 0)
+            {
+                $scope.filterBy.category_id = [];
+            }
+            if($scope.filterBy.color_id.length == 0)
+            {
+                $scope.filterBy.color_id = [];
+            }
+            if($scope.filterBy.size_id.length == 0)
+            {
+                $scope.filterBy.size_id = [];
+            }
 
             if(type == 'category_id')
             {
