@@ -15,7 +15,7 @@
                     <md-input-container class="md-block m-0" md-no-float flex="30">
                         <label>Vendor</label>
                         <md-select ng-model="vendor_id" ng-disabled="true">
-                            <md-option ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-selected="vendor.id == vendor_id">
+                            <md-option ng-repeat="vendor in vendors" value="{{vendor.id}}" ng-selected="vendor.id == vendor_id">
                                 {{vendor.name_company}}
                             </md-option>
                         </md-select>
@@ -25,6 +25,7 @@
                         <input ng-model="productSearch">
                     </md-input-container>
                     <md-button class="md-accent md-raised" ng-click="filterProducts('none','none')" ng-disabled="productSearch == ''">Search</md-button>
+                    <md-button class="md-accent md-raised" ng-click="resetFilter()" >Reset</md-button>
                 </div>
                 <div layout="row" layout-align="space-between start">
                     <div layout="column" flex="20">
