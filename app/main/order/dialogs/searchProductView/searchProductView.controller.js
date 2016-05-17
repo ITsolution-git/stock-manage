@@ -24,6 +24,7 @@
         $scope.description = description;
         $scope.vendor_name = vendor_name;
         $scope.product_id = product_id;
+       
 
       
       if(operation == 'Edit') {
@@ -107,6 +108,17 @@
         function closeDialog()
         {
             $mdDialog.hide();
+        }
+                                                     
+         $scope.checkSizeData = function(qnty,maxqnty)
+        {
+             $scope.checkSize =  0;
+            if(qnty > maxqnty) {
+              var data = {"status": "error", "message": "Qntity must be less then inventory"}
+                     notifyService.notify(data.status, data.message);
+                     $scope.checkSize =  1;
+
+            } 
         }
     }
 })();

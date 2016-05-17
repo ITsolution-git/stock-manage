@@ -268,9 +268,9 @@ public function create_dir($dir_path) {
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
 
             if(count($allDetail) > 0) {
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = $allDetail[$data->sizeName];
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
             } else {
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = 0;
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
             }
             
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
