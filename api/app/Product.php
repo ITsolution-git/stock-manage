@@ -175,14 +175,14 @@ class Product extends Model {
 
         $color_data = DB::table('product_color_size as pcs')
                         ->leftJoin('color as c', 'c.id', '=', 'pcs.color_id')
-                        ->select(DB::raw('COUNT(pcs.color_id) as total'),'c.name as color_name','c.id as color_id')
+                        ->select(DB::raw('COUNT(DISTINCT pcs.product_id) as total'),'c.name as color_name','c.id as color_id')
                         ->whereIn('pcs.product_id', $product_id_array)
                         ->GroupBy('pcs.color_id')
                         ->get();
 
         $size_data = DB::table('product_color_size as pcs')
                         ->leftJoin('product_size as ps', 'ps.id', '=', 'pcs.size_id')
-                        ->select(DB::raw('COUNT(pcs.size_id) as total'),'ps.name as size_name','ps.id as size_id')
+                        ->select(DB::raw('COUNT(DISTINCT pcs.product_id) as total'),'ps.name as size_name','ps.id as size_id')
                         ->whereIn('pcs.product_id', $product_id_array)
                         ->GroupBy('pcs.size_id')
                         ->get();
