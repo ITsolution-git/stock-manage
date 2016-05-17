@@ -10,19 +10,11 @@
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
+        $scope.vendors = data.vendors;
         $scope.toggle = true;
         $scope.color = true;
         $scope.size = true;
         
-        /*$scope.getProducts = function()
-        {
-            var vendor_arr = {'vendor_id' : $scope.vendor_id, 'search' : $scope.productSearch};
-            $scope.allVendors = data['vendors'];
-            $http.post('api/public/product/getProductByVendor',vendor_arr).success(function(result, status, headers, config) {
-                $scope.products = result.data.records;
-            });
-        }*/
-
         $scope.init = {
           'count': 20,
           'page': 1,
@@ -36,40 +28,67 @@
         $scope.filterBy = {
           'vendor_id':'',
           'search': '',
-          'category_id':''
+          'category_id':'',
+          'color_id':'',
+          'size_id':''
         };
 
         $scope.filterBy.vendor_id = $scope.vendor_id;
         $scope.filterBy.search = $scope.productSearch;
 
+        $scope.filterBy.category_id = [];
+        $scope.filterBy.color_id = [];
+        $scope.filterBy.size_id = [];
+
         $scope.filterProducts = function(type,value){
-            $scope.filterBy.category_id = '';
-            $scope.filterBy.color_id = '';
-            $scope.filterBy.size_id = '';
+
+            $scope.reloadCallback = function () { };
+
+            $scope.filterBy.vendor_id = 0;
+            $scope.filterBy.search = '';
+
+            if($scope.filterBy.category_id.length == 0)
+            {
+                $scope.filterBy.category_id = [];
+            }
+            if($scope.filterBy.color_id.length == 0)
+            {
+                $scope.filterBy.color_id = [];
+            }
+            if($scope.filterBy.size_id.length == 0)
+            {
+                $scope.filterBy.size_id = [];
+            }
 
             if(type == 'category_id')
             {
-                $scope.filterBy.category_id = angular.copy(value);
+                $scope.filterBy.category_id.push(value);
             }
             if(type == 'color_id')
             {
-                $scope.filterBy.color_id = angular.copy(value);
+                $scope.filterBy.color_id.push(value)
             }
             if(type == 'size_id')
             {
-                $scope.filterBy.size_id = angular.copy(value);
+                $scope.filterBy.size_id.push(value);
             }
             $scope.filterBy.vendor_id = $scope.vendor_id;
             $scope.filterBy.search = $scope.productSearch;
         }
-        $scope.filterByCategory = function(category_id) {
-            $scope.filterBy.category_id = category_id;
-        }
-        $scope.filterByColor = function(color_id) {
-            $scope.filterBy.color_id = color_id;
-        }
-        $scope.filterBySize = function(size_id) {
-            $scope.filterBy.size_id = size_id;
+
+        $scope.resetFilter = function()
+        {
+            $scope.reloadCallback = function () { };
+
+            $scope.filterBy.category_id = [];
+            $scope.filterBy.color_id = [];
+            $scope.filterBy.size_id = [];
+
+            if($scope.productSearch != '')
+            {
+                $scope.filterBy.vendor_id = $scope.vendor_id;
+                $scope.filterBy.search = $scope.productSearch;
+            }
         }
 
         $scope.getResource = function (params, paramsObj, search) {
@@ -96,7 +115,7 @@
               });
         }
 
-        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name)
+        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
         {
             $mdDialog.show({
                 controller: 'SearchProductViewController',
@@ -110,6 +129,10 @@
                     product_image:product_image,
                     description:description,
                     vendor_name:vendor_name,
+                    operation:operation,
+                    product_name:product_name,
+                    colorName:colorName,
+                    design_id:0,
                     event: ev
                 }
                

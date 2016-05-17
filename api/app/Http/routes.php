@@ -223,6 +223,7 @@ Route::post('order/getDesignPositionDetail', 'OrderController@getDesignPositionD
 Route::post('order/editOrder', 'OrderController@editOrder');
 Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
 
+
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
@@ -251,6 +252,7 @@ Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
 Route::post('product/productDetailData', 'ProductController@productDetailData');
 Route::post('product/addProduct', 'ProductController@addProduct');
+Route::post('product/designProduct', 'ProductController@designProduct');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');

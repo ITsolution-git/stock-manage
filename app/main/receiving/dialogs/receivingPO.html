@@ -1,0 +1,171 @@
+<md-dialog class="task-dialog search-product-dialog" aria-label="New order" flex="80">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Add Product</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                <div layout="row" layout-align="space-between start">
+                    <div class="h3">Filters</div>
+                    <md-input-container class="md-block m-0" md-no-float flex="30">
+                        <label>Vendor</label>
+                        <md-select ng-model="vendor_id" ng-disabled="true">
+                            <md-option ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-selected="vendor.id == vendor_id">
+                                {{vendor.name_company}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block m-0" md-no-float flex="30">
+                        <label>Search</label>
+                        <input ng-model="productSearch">
+                    </md-input-container>
+                    <md-button class="md-accent md-raised" ng-click="filterProducts()" ng-disabled="productSearch == ''">Search</md-button>
+                </div>
+                <div layout="row" layout-align="space-between start">
+                    <div layout="column" flex="20">
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <!-- Product Category Filter -->
+                                <button class="filterButtonWidth" ng-click="showDivCategory = !showDivCategory; elementInitializedCategory = true">
+                                    <span>PRODUCT CATEGORY</span>
+                                    <span ng-if="showDivCategory" class="float-right" ng-click="showDivCategory = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </span>
+                                    <span ng-if="!showDivCategory" class="float-right" ng-click="showDivCategory = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </span>
+                                </button>
+
+                                <div ng-if="elementInitializedCategory" class="scrollable filterWidth"  ms-scroll ng-show="showDivCategory">
+                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterByCategory(category.category_id)">
+                                            {{category.category_name}}({{category.total}})
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header padding-top-15">
+                                <!-- Product Category Filter -->
+                                <button class="filterButtonWidth" ng-click="showDivColor = !showDivColor; elementInitializedColor = true">
+                                    <span>COLOR</span>
+                                    <span ng-if="showDivColor" class="float-right" ng-click="showDivColor = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </span>
+                                    <span ng-if="!showDivColor" class="float-right" ng-click="showDivColor = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </span>
+                                </button>
+
+                                <div ng-if="elementInitializedColor" class="scrollable filterWidth"  ms-scroll ng-show="showDivColor">
+                                    <div ng-repeat="color in color_filter" class="h6 f-body-options-item" ng-click="filterProducts('color_id',color.color_id)">
+                                        {{color.color_name}}({{color.total}})
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>VENDOR</span>
+                                    <button ng-if="vendor" ng-click="vendor = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!vendor" ng-click="vendor = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-if="vendor" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::filterDialog.vendor" class="h6 f-body-options-item" >
+                                        {{product.vendorName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>FIT</span>
+                                    <button ng-if="fit" ng-click="fit = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!fit" ng-click="fit = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-if="fit" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::filterDialog.fit" class="h6 f-body-options-item" >
+                                        {{product.fitNo}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header">
+                                <span layout="row" layout-align="space-between center">
+                                    <span>FABRIC</span>
+                                    <button ng-if="fabric" ng-click="fabric = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </button>
+                                    <button ng-if="!fabric" ng-click="fabric = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </button>
+                                </span>
+                            </div>
+                            <div ng-if="fabric" class="f-body scrollable"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-repeat="product in ::filterDialog.fabric" class="h6 f-body-options-item" >
+                                        {{product.fabricName}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div layout="column" class="f-box-1">
+                            <div class="f-header padding-top-15">
+                                <!-- Product Category Filter -->
+                                <button class="filterButtonWidth" ng-click="showDivSizes = !showDivSizes; elementInitializedSizes = true">
+                                    <span>SIZES</span>
+                                    <span ng-if="showDivSizes" class="float-right" ng-click="showDivSizes = false">
+                                        <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                    </span>
+                                    <span ng-if="!showDivSizes" class="float-right" ng-click="showDivSizes = true">
+                                        <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                    </span>
+                                </button>
+
+                                <div ng-if="elementInitializedSizes" class="scrollable filterWidth"  ms-scroll ng-show="showDivSizes">
+                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" >
+                                        {{size.size_name}}({{size.total}})
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
+                        <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20">
+                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name)" layout="row" layout-align="center center">
+                                <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip></img>
+                            </div>
+                        </div>
+
+                        <div tasty-pagination class="tasty-page"></div>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog> 

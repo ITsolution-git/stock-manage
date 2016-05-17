@@ -15,7 +15,7 @@
                     <md-input-container class="md-block m-0" md-no-float flex="30">
                         <label>Vendor</label>
                         <md-select ng-model="vendor_id" ng-disabled="true">
-                            <md-option ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-selected="vendor.id == vendor_id">
+                            <md-option ng-repeat="vendor in vendors" value="{{vendor.id}}" ng-selected="vendor.id == vendor_id">
                                 {{vendor.name_company}}
                             </md-option>
                         </md-select>
@@ -24,7 +24,8 @@
                         <label>Search</label>
                         <input ng-model="productSearch">
                     </md-input-container>
-                    <md-button class="md-accent md-raised" ng-click="filterProducts()" ng-disabled="productSearch == ''">Search</md-button>
+                    <md-button class="md-accent md-raised" ng-click="filterProducts('none','none')" ng-disabled="productSearch == ''">Search</md-button>
+                    <md-button class="md-accent md-raised" ng-click="resetFilter()" >Reset</md-button>
                 </div>
                 <div layout="row" layout-align="space-between start">
                     <div layout="column" flex="20">
@@ -42,7 +43,7 @@
                                 </button>
 
                                 <div ng-if="elementInitializedCategory" class="scrollable filterWidth"  ms-scroll ng-show="showDivCategory">
-                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterByCategory(category.category_id)">
+                                    <div ng-repeat="category in category_filter" class="h6 f-body-options-item" ng-click="filterProducts('category_id',category.category_id)">
                                             {{category.category_name}}({{category.total}})
                                     </div>
                                 </div>
@@ -143,7 +144,7 @@
                                 </button>
 
                                 <div ng-if="elementInitializedSizes" class="scrollable filterWidth"  ms-scroll ng-show="showDivSizes">
-                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" >
+                                    <div ng-repeat="size in size_filter" class="h6 f-body-options-item" ng-click="filterProducts('size_id',size.size_id)">
                                         {{size.size_name}}({{size.total}})
                                     </div>
                                 </div>
@@ -151,20 +152,14 @@
                         </div>
 
                     </div>
-
-                    
-                    <div  layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
-                        <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20">
-                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name)" layout="row" layout-align="center center">
-                                <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip></img>
+                    <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
+                        <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20" >
+                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name,'add',product.name,'nocolor')" layout="row" layout-align="center center">
+                                <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
                             </div>
                         </div>
-                        
-                        <div tasty-pagination class="tasty-page"></div>
-
+                        <div tasty-pagination class="tasty-page" flex="100"></div>
                     </div>
-
-
 
                 </div>
 

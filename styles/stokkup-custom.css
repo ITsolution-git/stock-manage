@@ -30,7 +30,6 @@
 	padding: 5px;
 	cursor: pointer;
 }
-
 .img-container {
   box-sizing: border-box;
     -webkit-box-flex: 1;
@@ -86,5 +85,48 @@
 .filterButtonWidth {
   width: 100%;
 text-align: left;
+}
+
+/* == Inner tab Page height and scroll set == */
+.innertab-scroll
+{
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/*=====================================
+		Ajax Loader Image CSS
+=====================================*/
+.overlay-loader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+}
+
+.overlay-loader .loader-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  -webkit-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  -moz-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  -ms-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  -o-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  transition: background-color .2s 0s linear,right .2s .3s ease-out;
+}
+
+.overlay-loader .loader-icon {
+  position: absolute;
+  top: 30%;
+  left: 35%;
+  margin: -48px 0 0 -48px;
+  font-size: 96px;
+  color: #FFF;
 }
 

@@ -38,6 +38,28 @@
             });
         }
 
+        $scope.designProductData = function(){
+
+        var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            
+            $http.post('api/public/product/designProduct',combine_array_id).success(function(result, status, headers, config) {
+               
+                if(result.data.success == '1') {
+                  
+                    $scope.designProduct = result.data.records;
+                    $scope.productData = result.data.productData.product[0];
+                    $scope.colorName = result.data.colorName;
+                    $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
+
+
+                } else {
+                    
+                }
+                
+            });
+        }
+
        $scope.designPosition = function(){
 
         var combine_array_id = {};
@@ -48,6 +70,7 @@
                
                 if(result.data.success == '1') {
                     $scope.order_design_position = result.data.order_design_position;
+
                 }
                 
             });
@@ -119,6 +142,7 @@
 
         $scope.designDetail();
         $scope.designPosition();
+        $scope.designProductData();
 
         var vm = this;
         //Dummy models data
@@ -195,6 +219,7 @@
         }
         function openSearchProductDialog(ev)
         {
+             
             if($scope.vendor_id > 0)
             {
                 var data = {'productSearch': $scope.productSearch,'vendor_id': $scope.vendor_id, 'vendors': $scope.allVendors};
@@ -221,6 +246,7 @@
 
         $scope.checkVendor = function()
         {
+             
             if($scope.vendor_id == '0')
             {
                 var data = {"status": "error", "message": "Please select vendor"}
@@ -347,13 +373,32 @@
 
         }
 
-        $scope.productVendorLogo = [{"id": "1", "name": "Vendor Logo"},
-            {"id": "1", "name": "Vendor Logo"},
-            {"id": "1", "name": "Vendor Logo"},
-            {"id": "1", "name": "Vendor Logo"},
-            {"id": "1", "name": "Vendor Logo"},
-            {"id": "1", "name": "Vendor Logo"},
-            {"id": "1", "name": "Vendor Logo"}
-        ];
+          $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
+        {
+         
+            $mdDialog.show({
+                controller: 'SearchProductViewController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/searchProductView/searchProductView.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    product_id: product_id,
+                    product_image:product_image,
+                    description:description,
+                    vendor_name:vendor_name,
+                    operation:operation,
+                    product_name:product_name,
+                    colorName:colorName,
+                    design_id:$stateParams.id,
+                    event: ev
+                },
+                onRemoving : $scope.designProductData
+               
+            });
+        }
+
+       
     }
 })();

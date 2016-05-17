@@ -172,6 +172,7 @@ public function create_dir($dir_path) {
     public function getProductByVendor()
     {
         $post_all = Input::all();
+        //print_r($post_all);exit;
         $records = array();
 
         $post = $post_all['cond']['params'];
@@ -202,15 +203,15 @@ public function create_dir($dir_path) {
         {
             $whereData['search'] = $post['filter']['search'];
         }
-        if(isset($post['filter']['category_id']))
+        if(isset($post['filter']['category_id']) && !empty($post['filter']['category_id']))
         {
             $whereData['category_id'] = $post['filter']['category_id'];
         }
-        if(isset($post['filter']['color_id']))
+        if(isset($post['filter']['color_id']) && !empty($post['filter']['color_id']))
         {
             $whereData['color_id'] = $post['filter']['color_id'];
         }
-        if(isset($post['filter']['size_id']))
+        if(isset($post['filter']['size_id']) && !empty($post['filter']['size_id']))
         {
             $whereData['size_id'] = $post['filter']['size_id'];
         }
@@ -240,6 +241,7 @@ public function create_dir($dir_path) {
     public function productDetailData() {
  
         $data = Input::all();
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -248,16 +250,30 @@ public function create_dir($dir_path) {
         curl_close($curl);
 
        $all_data = json_decode($result);
-       
-        foreach($all_data as $key => $data) {
+      
 
+       $allDetail = array();
+       if($data['design_id'] != 0) {
+        $allDetail = $this->product->getPurchaseDetail($data['design_id']);
+       }
+      
+        foreach($all_data as $key => $data) {
+              
+           
             $color_data = $this->common->getColorId($data->colorName);
             
            if($key == 0) {
              $productAllData['colorSelection'] = $data->colorName;
            }
+
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = 0;
+
+            if(count($allDetail) > 0) {
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+            } else {
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
+            }
+            
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
             $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
@@ -278,6 +294,8 @@ public function create_dir($dir_path) {
 
         $post = Input::all();
         $post['created_date']=date('Y-m-d');
+        $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
+        $post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
         $message = INSERT_RECORD;
         $success = 1;
@@ -285,6 +303,42 @@ public function create_dir($dir_path) {
         
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
+
+    }
+
+     public function designProduct() {
+ 
+        $data = Input::all();
+        $result = $this->product->designProduct($data);
+
+     
+        if(empty($result['design_product']))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+       if($result['product_id']) {
+
+         $productArray = ['id' => $result['product_id']];
+         $result_product = $this->product->productDetail($productArray);
+        
+       }
+       
+       
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $result['design_product'],
+                                'productData' => $result_product,
+                                'colorName' => $result['colorName']
+                                );
+        
+        return response()->json(["data" => $response]);
 
     }
 }

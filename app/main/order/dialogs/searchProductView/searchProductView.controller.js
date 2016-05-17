@@ -5,30 +5,48 @@
             .module('app.order')
             .controller('SearchProductViewController', SearchProductViewController);
     /** @ngInject */
-    function SearchProductViewController(product_id,product_image,description,vendor_name,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
+    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
        var vm = this;
 
-
+       
        var combine_array_id = {};
        var product_image_main;
        combine_array_id.product_id = product_id;
+       combine_array_id.design_id = design_id;
        product_image_main = "https://www.ssactivewear.com/"+product_image;
-        product_image = "https://www.ssactivewear.com/"+product_image;
+       product_image = "https://www.ssactivewear.com/"+product_image;
         
 
-       
+        $scope.product_name = product_name;
         $scope.product_image_display = product_image;
         $scope.product_image_display_main = product_image_main;
         $scope.description = description;
         $scope.vendor_name = vendor_name;
         $scope.product_id = product_id;
+       
+
+      
+      if(operation == 'Edit') {
+
+        $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
+           $scope.AllProductDetail = Listdata.data.colorData;
+
+           $scope.colorName = colorName;
+
+           $scope.modelDisplay = '';
+        });
+
+      } else {
 
         $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
            $scope.AllProductDetail = Listdata.data.colorData;
            $scope.colorName = angular.copy(Listdata.data.colorSelection);
            $scope.modelDisplay = '';
         });
+
+      }
+        
 
        
 
@@ -90,6 +108,17 @@
         function closeDialog()
         {
             $mdDialog.hide();
+        }
+                                                     
+         $scope.checkSizeData = function(qnty,maxqnty)
+        {
+             $scope.checkSize =  0;
+            if(qnty > maxqnty) {
+              var data = {"status": "error", "message": "Qntity must be less then inventory"}
+                     notifyService.notify(data.status, data.message);
+                     $scope.checkSize =  1;
+
+            } 
         }
     }
 })();

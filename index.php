@@ -28,7 +28,11 @@
 
     <body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm"
           class="{{state.current.bodyClass|| ''}}">
-
+  
+  <div id="ajax_loader" class="overlay-loader">
+    <div class="loader-background"></div>
+    <img class="loader-icon spinning-cog" src="assets/images/loader/load.gif">
+  </div>
         <!-- SPLASH SCREEN 
     <ms-splash-screen id="splash-screen">
         <div class="center">

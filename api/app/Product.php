@@ -59,8 +59,14 @@ class Product extends Model {
 
     public function productDetail($data) {
 
-        $whereProductConditions = ['id' => $data['id']];
-        $productData = DB::table('products')->where($whereProductConditions)->get();
+        $whereProductConditions = ['p.id' => $data['id']];
+        $listArray = ['p.*','v.name_company'];
+
+
+        $productData = DB::table('products as p')
+                        ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                        ->select($listArray)
+                        ->where($whereProductConditions)->get();
 
         $combine_array['product'] = $productData;
         return $combine_array;
@@ -71,6 +77,77 @@ class Product extends Model {
 
     public function getVendorProducts($data)
     {
+        $product_id_array=array();
+
+        if(isset($data['where']['search']))
+        {
+            $search = $data['where']['search'];
+            $sql = DB::table('products')
+                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                        ->where('name', 'LIKE', '%'.$search.'%')
+                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
+                        ->get();
+            if(count($sql)>0)
+            {
+                $product_id_array = explode(",",$sql[0]->products);
+            }
+        }
+        if(isset($data['where']['category_id']) && !empty($data['where']['category_id']))
+        {
+            $category_id_array = $data['where']['category_id'];
+            foreach($category_id_array as $key=>$val)
+            {
+               $sql = DB::table('product_brand_category as pbc')
+                        ->select(DB::raw('GROUP_CONCAT(pbc.product_id) as products'),'pbc.category_id','c.category_name')
+                        ->leftJoin('category as c', 'c.id', '=', 'pbc.category_id')
+                        ->whereIn('pbc.product_id' ,$product_id_array )
+                        ->where('pbc.category_id','=',$val)
+                        ->get();
+
+                if(count($sql)>0)
+                {
+                   $product_id_array = explode(",",$sql[0]->products);
+                }
+            }
+        }
+        if(isset($data['where']['color_id']) && !empty($data['where']['color_id']))
+        {
+            $color_id_array = $data['where']['color_id'];
+            foreach($color_id_array as $key=>$val)
+            {
+               $sql = DB::table('product_color_size as pcs')
+                        ->select(DB::raw('GROUP_CONCAT(pcs.product_id) as products'),'pcs.color_id','c.name as color_name')
+                        ->leftJoin('color as c', 'c.id', '=', 'pcs.color_id')
+                        ->whereIn('pcs.product_id' ,$product_id_array )
+                        ->where('pcs.color_id','=',$val)
+                        ->get();
+
+                if(count($sql)>0)
+                {
+                   $product_id_array = explode(",",$sql[0]->products);
+                }
+            }
+        }
+        if(isset($data['where']['size_id']) && !empty($data['where']['size_id']))
+        {
+            $size_id_array = $data['where']['size_id'];
+            foreach($size_id_array as $key=>$val)
+            {
+               $sql = DB::table('product_color_size as pcs')
+                        ->select(DB::raw('GROUP_CONCAT(pcs.product_id) as products'),'pcs.size_id','c.name as color_name')
+                        ->leftJoin('color as c', 'c.id', '=', 'pcs.size_id')
+                        ->whereIn('pcs.product_id' ,$product_id_array )
+                        ->where('pcs.size_id','=',$val)
+                        ->get();
+
+                if(count($sql)>0)
+                {
+                   $product_id_array = explode(",",$sql[0]->products);
+                }
+            }
+        }
+
+
         if(empty($data['fields']))
         {
             $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name')];
@@ -84,31 +161,9 @@ class Product extends Model {
         $orderData = DB::table('products as p')
                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
                         ->select($listArray)
-                        ->where('p.vendor_id' , '=', $data['where']['vendor_id']);
-                        if(isset($data['where']['search']))
-                        {
-                            $search = $data['where']['search'];
-                            $orderData = $orderData->where('p.name', 'LIKE', '%'.$search.'%');
-                        }
-                        if(isset($data['where']['category_id']))
-                        {
-                            $category_id = $data['where']['category_id'];
-                            $orderData = $orderData->leftJoin('product_brand_category as pbc', 'pbc.product_id', '=', 'p.id');
-                            $orderData = $orderData->where('pbc.category_id' , '=', $category_id);
-                        }
-                        if(isset($data['where']['color_id']))
-                        {
-                            $color_id = $data['where']['color_id'];
-                            $orderData = $orderData->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
-                            $orderData = $orderData->where('pcs.color_id' , '=', $color_id);
-                        }
-                        if(isset($data['where']['size_id']))
-                        {
-                            $size_id = $data['where']['size_id'];
-                            $orderData = $orderData->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
-                            $orderData = $orderData->where('pcs.size_id' , '=', $size_id);
-                        }
-                        $orderData = $orderData->orderBy($data['paginate']['sorts']['sortBy'], $data['paginate']['sorts']['sortOrder'])
+                        ->where('p.vendor_id' , '=', $data['where']['vendor_id'])
+                        ->whereIn('p.id',$product_id_array)
+                        ->orderBy($data['paginate']['sorts']['sortBy'], $data['paginate']['sorts']['sortOrder'])
                         ->GroupBy('p.id')
                         ->skip($data['paginate']['start'])
                         ->take($data['paginate']['range'])
@@ -116,55 +171,25 @@ class Product extends Model {
 
         $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
 
-        $orderData2 = DB::table('products as p')
-                        ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
-                        ->select(DB::raw('GROUP_CONCAT(p.id) as product_id'))
-                        ->where('p.vendor_id' , '=', $data['where']['vendor_id']);
-                        if(isset($data['where']['search']))
-                        {
-                            $search = $data['where']['search'];
-                            $orderData2 = $orderData2->where('p.name', 'LIKE', '%'.$search.'%');
-                        }
-                        if(isset($data['where']['category_id']))
-                        {
-                            $category_id = $data['where']['category_id'];
-                            $orderData2 = $orderData2->leftJoin('product_brand_category as pbc', 'pbc.product_id', '=', 'p.id');
-                            $orderData2 = $orderData2->where('pbc.category_id' , '=', $category_id);
-                        }
-                        if(isset($data['where']['color_id']))
-                        {
-                            $color_id = $data['where']['color_id'];
-                            $orderData2 = $orderData2->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
-                            $orderData2 = $orderData2->where('pcs.color_id' , '=', $color_id);
-                        }
-                        if(isset($data['where']['size_id']))
-                        {
-                            $size_id = $data['where']['size_id'];
-                            $orderData2 = $orderData2->leftJoin('product_color_size as pcs', 'pcs.product_id', '=', 'p.id');
-                            $orderData2 = $orderData2->where('pcs.size_id' , '=', $size_id);
-                        }
-                        $orderData2 = $orderData2->GroupBy('p.vendor_id')->get();
-        
-        $product_ids = explode(",", $orderData2[0]->product_id);
 
         $category_data = DB::table('product_brand_category as pbc')
                         ->leftJoin('category as c', 'c.id', '=', 'pbc.category_id')
-                        ->select(DB::raw('COUNT(*) as total'),'c.category_name','pbc.category_id as category_id')
-                        ->whereIn('pbc.product_id', $product_ids)
+                        ->select(DB::raw('COUNT(pbc.category_id) as total'),'c.category_name','pbc.category_id as category_id')
+                        ->whereIn('pbc.product_id',$product_id_array)
                         ->GroupBy('pbc.category_id')
                         ->get();
 
         $color_data = DB::table('product_color_size as pcs')
                         ->leftJoin('color as c', 'c.id', '=', 'pcs.color_id')
-                        ->select(DB::raw('COUNT(*) as total'),'c.name as color_name','c.id as color_id')
-                        ->whereIn('pcs.product_id', $product_ids)
+                        ->select(DB::raw('COUNT(DISTINCT pcs.product_id) as total'),'c.name as color_name','c.id as color_id')
+                        ->whereIn('pcs.product_id', $product_id_array)
                         ->GroupBy('pcs.color_id')
                         ->get();
 
         $size_data = DB::table('product_color_size as pcs')
                         ->leftJoin('product_size as ps', 'ps.id', '=', 'pcs.size_id')
-                        ->select(DB::raw('COUNT(*) as total'),'ps.name as size_name','ps.id as size_id')
-                        ->whereIn('pcs.product_id', $product_ids)
+                        ->select(DB::raw('COUNT(DISTINCT pcs.product_id) as total'),'ps.name as size_name','ps.id as size_id')
+                        ->whereIn('pcs.product_id', $product_id_array)
                         ->GroupBy('pcs.size_id')
                         ->get();
 
@@ -272,9 +297,62 @@ class Product extends Model {
                 'date'=>$post['created_date']]);
         }
 
-         $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
+         if($post['record_delete'] == 0) {
+            $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
                 'product_id'=>$post['product_id']]);
+         }
+         
          return true;
 
     }
+
+
+/**
+* Order Detail           
+* @access public designDetail
+* @param  int $orderId and $clientId
+* @return array $combine_array
+*/  
+
+    public function designProduct($data) {
+
+     
+        $whereConditions = ['dp.is_delete' => "1",'dp.design_id' => $data['id']];
+        $listArray = ['dp.*','pd.*','c.name as colorName'];
+
+        $designDetailData = DB::table('design_product as dp')
+                         
+                         ->leftJoin('purchase_detail as pd','dp.design_id','=', 'pd.design_id')
+                         ->leftJoin('color as c','pd.color_id','=', 'c.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $combine_array = array();
+        
+        $combine_array['design_product'] = $designDetailData;
+       
+        if($designDetailData) {
+            $combine_array['product_id'] = $designDetailData[0]->product_id;
+            $combine_array['colorName'] = $designDetailData[0]->colorName;
+        }
+
+        return $combine_array;
+    }
+
+    public function getPurchaseDetail($designId) {
+
+    $result = DB::table('purchase_detail')->where('design_id','=',$designId)->get();
+
+        
+        $purchaseDetail = array();
+        foreach ($result as $key=>$alldata){
+          
+                 $purchaseDetail[$alldata->size] = $alldata->qnty;
+          }
+        
+        return $purchaseDetail;
+
+    }
+
 }

@@ -267,8 +267,8 @@
             </div>
         </div>
 
-        
-        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-show="!productData.id">
+
             <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
             <div flex="20">
                 <md-input-container class="md-block" flex="30">
@@ -314,11 +314,11 @@
         <md-divider></md-divider>
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
             <div class="title"><span class="h2 text-semibold">Added Products</span></div>
-            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start">
+            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-show="productData.id"> 
                 <div layout="row" layout-align="space-between center" class="margin-bootom15">
                     <div layout="column" >
                         <div class="h4">Product Name</div>
-                        <div class="h5  grey-color">American Apparel Crew Neck</div>
+                        <div class="h5  grey-color">{{productData.name}}</div>
                     </div>
                     <div class="box-toolbar" layout="row" >
                         <button  ng-click="product.expanded = !product.expanded">
@@ -331,9 +331,10 @@
                             </md-button>
                             <md-menu-content width="4">
                                 <md-menu-item>
-                                    <md-button>
-                                        Product Options
-                                    </md-button>
+                                    <md-button ng-click="openSearchProductViewDialogView($event,productData.id,productData.product_image,productData.description,productData.name_company,'Edit',productData.name,colorName)">Edit</md-button>
+                                </md-menu-item>
+                                 <md-menu-item>
+                                    <md-button>Delete</md-button>
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
@@ -343,34 +344,24 @@
                     <div layout="row " layout-align="space-between" class="p-b-20">
                         <div layout="row" layout-align="space-between start" flex="35">
                             <div class="ad-product-img md-whiteframe-1dp">
-                                <div class="h5"></div>
+                                <img src="{{productData.product_image_view}}" class="popup-image"></img>
                             </div>  
                             <div layout="column">
                                 <div class="h4">Vendor</div>
-                                <div class="h5 p-b-10  grey-color">American Apparel</div>
+                                <div class="h5 p-b-10  grey-color">{{productData.name_company}}</div>
                                 <div class="h4">Item Number</div>
-                                <div class="h5  grey-color">######</div>
+                                <div class="h5  grey-color">{{productData.id}}</div>
+                                <div class="h4">Color</div>
+                                <div class="h5  grey-color">{{colorName}}</div>
                             </div>  
                         </div>    
                         <div layout="row" flex="55">
                             <div layout="column" flex="100">
                                 <div class="h4 p-b-10">Size / Quantity</div>
                                 <div layout="row">
-                                    <div layout="column" flex="20">
-                                        <div class="h4 color font-19">S</div>
-                                        <div class="h4 text-semibold font-19">{{vm.size.s}}</div>
-                                    </div>
-                                    <div layout="column" flex="20">
-                                        <div class="h4 color font-19">M</div>
-                                        <div class="h4 text-semibold font-19">{{vm.size.m}}</div>
-                                    </div>
-                                    <div layout="column" flex="20">
-                                        <div class="h4 color font-19">L</div>
-                                        <div class="h4 text-semibold font-19">{{vm.size.l}}</div>
-                                    </div>
-                                    <div layout="column" flex="20">
-                                        <div class="h4 color font-19">XL</div>
-                                        <div class="h4 text-semibold font-19">{{vm.size.xl}}</div>
+                                    <div layout="column" flex="20" ng-repeat="(key,DesignProductData) in designProduct">
+                                        <div class="h4 color font-19">{{DesignProductData.size}}</div>
+                                        <div class="h4 text-semibold font-19">{{DesignProductData.qnty}}</div>
                                     </div>
                                 </div>
                             </div>    
@@ -380,9 +371,8 @@
                         <div layout="row" layout-align="space-between start" flex="35">
                             <div layout="column">
                                 <div class="h4 p-b-10">Description</div>
-                                <p class="grey-color">Lorem spunm text that describe the product.</p>
-                                <p class="grey-color">Lorem spunm text that describe the product.</p>
-                                <p class="grey-color">Lorem spunm text that describe the product.</p>
+                                <p class="grey-color" ng-bind-html="productData.description"></p>
+                                
                             </div>   
                                                     </div>
                         <div layout="row" flex="65"  layout-align="space-between start" layout-padding>
