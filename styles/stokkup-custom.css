@@ -30,7 +30,6 @@
 	padding: 5px;
 	cursor: pointer;
 }
-
 .img-container {
   box-sizing: border-box;
     -webkit-box-flex: 1;
@@ -84,5 +83,12 @@
 .float-right {
   float : right;
       margin-top: -5px;
+}
+
+/* == Inner tab Page height and scroll set == */
+.innertab-scroll
+{
+  max-height: 600px;
+  overflow-y: auto;
 }
 
