@@ -267,7 +267,7 @@
             </div>
         </div>
 
-        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-if="!productData.id">
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-show="!productData.id">
 
             <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
             <div flex="20">
@@ -314,7 +314,7 @@
         <md-divider></md-divider>
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
             <div class="title"><span class="h2 text-semibold">Added Products</span></div>
-            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-if="productData.id"> 
+            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-show="productData.id"> 
                 <div layout="row" layout-align="space-between center" class="margin-bootom15">
                     <div layout="column" >
                         <div class="h4">Product Name</div>

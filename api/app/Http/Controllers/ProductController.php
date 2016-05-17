@@ -240,6 +240,7 @@ public function create_dir($dir_path) {
     public function productDetailData() {
  
         $data = Input::all();
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -248,15 +249,15 @@ public function create_dir($dir_path) {
         curl_close($curl);
 
        $all_data = json_decode($result);
- 
+      
 
        $allDetail = array();
        if($data['design_id'] != 0) {
         $allDetail = $this->product->getPurchaseDetail($data['design_id']);
        }
-       
+      
         foreach($all_data as $key => $data) {
-
+              
            
             $color_data = $this->common->getColorId($data->colorName);
             

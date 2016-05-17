@@ -219,6 +219,7 @@
         }
         function openSearchProductDialog(ev)
         {
+             
             if($scope.vendor_id > 0)
             {
                 var data = {'productSearch': $scope.productSearch,'vendor_id': $scope.vendor_id, 'vendors': $scope.allVendors};
@@ -245,7 +246,7 @@
 
         $scope.checkVendor = function()
         {
-            
+             
             if($scope.vendor_id == '0')
             {
                 var data = {"status": "error", "message": "Please select vendor"}
