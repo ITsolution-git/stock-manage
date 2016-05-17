@@ -36,28 +36,31 @@
         $scope.filterBy = {
           'vendor_id':'',
           'search': '',
-          'category_id':''
+          'category_id':'',
+          'color_id':'',
+          'size_id':''
         };
 
         $scope.filterBy.vendor_id = $scope.vendor_id;
         $scope.filterBy.search = $scope.productSearch;
 
+        $scope.filterBy.category_id = [];
+        $scope.filterBy.color_id = [];
+        $scope.filterBy.size_id = [];
+
         $scope.filterProducts = function(type,value){
-            $scope.filterBy.category_id = '';
-            $scope.filterBy.color_id = '';
-            $scope.filterBy.size_id = '';
 
             if(type == 'category_id')
             {
-                $scope.filterBy.category_id = angular.copy(value);
+                $scope.filterBy.category_id.push(value);
             }
             if(type == 'color_id')
             {
-                $scope.filterBy.color_id = angular.copy(value);
+                $scope.filterBy.color_id.push(value)
             }
             if(type == 'size_id')
             {
-                $scope.filterBy.size_id = angular.copy(value);
+                $scope.filterBy.size_id.push(value);
             }
             $scope.filterBy.vendor_id = $scope.vendor_id;
             $scope.filterBy.search = $scope.productSearch;
