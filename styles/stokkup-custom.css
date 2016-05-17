@@ -30,3 +30,9 @@
 	padding: 5px;
 	cursor: pointer;
 }
+/* == Inner tab Page height and scroll set == */
+.innertab-scroll
+{
+  max-height: 600px;
+  overflow-y: auto;
+}
