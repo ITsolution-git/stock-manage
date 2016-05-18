@@ -203,6 +203,7 @@
 // ====================== OPEN DYNAMIC POPUP WITH PARAMS, CONDITION AND CONTROLLER ===========//
         function open_popup(ev,params,controller,page)
         {
+            $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
                 controller:controller,
@@ -421,6 +422,7 @@
 
     function CompanyInfo($mdDialog, $stateParams,$resource,sessionService,$scope,Params,$http,$controller,$state,notifyService)
     {
+        $("#ajax_loader").hide();
         $scope.client = Params.client;
         $scope.ArrCleintType = Params.ArrCleintType;
         $scope.Arrdisposition = Params.Arrdisposition;
@@ -446,6 +448,7 @@
             var condition_obj = {};
             condition_obj[cond_field] =  cond_value;
             UpdateArray.cond = angular.copy(condition_obj);
+            UpdateArray.date_field = extra;
 
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
