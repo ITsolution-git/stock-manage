@@ -87,6 +87,8 @@
             $http.post('api/public/common/InsertRecords',position_data_insert).success(function(result) {
                 
                $scope.designPosition();
+                var data = {"status": "success", "message": "Positions Added Successfully."}
+                     notifyService.notify(data.status, data.message);
                
             });
         }
@@ -110,7 +112,10 @@
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
                 if(column_name == 'position_id') {
                     $scope.order_design_position[key].position_name = $scope.miscData.position[value].value;
+
                 }
+                var data = {"status": "success", "message": "Positions Updated Successfully."}
+                     notifyService.notify(data.status, data.message);
             });
       
         }
