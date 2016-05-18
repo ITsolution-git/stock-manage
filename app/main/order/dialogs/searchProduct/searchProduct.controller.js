@@ -6,7 +6,7 @@
             .controller('SearchProductController', SearchProductController);
 
     /** @ngInject */
-    function SearchProductController(data,$mdDialog,$document,$scope,$http)
+    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state)
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
@@ -115,6 +115,12 @@
               });
         }
 
+        $scope.reloadPage = function(){
+
+         $state.reload();
+        }
+
+
         $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
         {
             $mdDialog.show({
@@ -134,7 +140,8 @@
                     colorName:colorName,
                     design_id:0,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
                
             });
         }
