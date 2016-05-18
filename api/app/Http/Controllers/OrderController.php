@@ -106,7 +106,7 @@ class OrderController extends Controller {
         $getAllDesigndata = $this->order->getAllDesigndata();
 
         $records = $result['allData'];
-
+        $success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
@@ -136,7 +136,7 @@ class OrderController extends Controller {
             }
         }
 
-        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return $this->return_response($data);
     }
     /**
