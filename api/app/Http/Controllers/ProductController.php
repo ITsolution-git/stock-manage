@@ -6,6 +6,7 @@ require_once(app_path() . '/constants.php');
 
 use App\Product;
 use App\Common;
+use App\Api;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -22,10 +23,11 @@ class ProductController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Product $product,Common $common) {
+    public function __construct(Product $product,Common $common,Api $api) {
 
         $this->product = $product;
         $this->common = $common;
+        $this->api = $api;
        
     }
 
@@ -241,16 +243,20 @@ public function create_dir($dir_path) {
     public function productDetailData() {
  
         $data = Input::all();
-
+        $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
+       
+       // print_r($result_api[0]->password);exit;
+        $credential = $result_api[0]->username.":".$result_api[0]->password;
+ 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl,CURLOPT_USERPWD,"13955:d672ddc8-0cd6-4981-95e4-391b2538887e");
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
         $result = curl_exec($curl);
         curl_close($curl);
 
        $all_data = json_decode($result);
-      
+       
 
        $allDetail = array();
        if($data['design_id'] != 0) {

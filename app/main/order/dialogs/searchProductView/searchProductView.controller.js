@@ -14,6 +14,7 @@
        var product_image_main;
        combine_array_id.product_id = product_id;
        combine_array_id.design_id = design_id;
+       combine_array_id.company_id = sessionService.get('company_id');
        product_image_main = "https://www.ssactivewear.com/"+product_image;
        product_image = "https://www.ssactivewear.com/"+product_image;
         
