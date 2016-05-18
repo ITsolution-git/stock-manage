@@ -185,12 +185,12 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev, order)
+        function openAddProductDialog(ev, order, controller, file)
         {
             $mdDialog.show({
-                controller: 'AddProductController',
+                controller: controller,
                 controllerAs: $scope,
-                templateUrl: 'app/main/order/dialogs/addProduct/addProduct.html',
+                templateUrl: file,
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
