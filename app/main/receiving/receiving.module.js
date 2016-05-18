@@ -32,7 +32,9 @@
                     templateUrl: 'app/main/receiving/views/receivingInfo/receivingInfo.html',
                     controller: 'ReceivingInfoController as vm'
                 }
-            }
+            },resolve: {
+                   
+                }
         })
             ;
 
@@ -52,7 +54,7 @@
         msNavigationServiceProvider.saveItem('fuse.receiving', {
             title: 'Receiving',
             icon: 'icon-cart',
-          state: 'app.receiving',
+            state: 'app.receiving',
             /*stateParams: {
                 'param1': 'page'
              },*/

@@ -169,6 +169,7 @@
     <!--Receiving--> 
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
+    <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
     <!--Datatable Scrolling-->
     <script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
     <link href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css" rel="stylesheet">

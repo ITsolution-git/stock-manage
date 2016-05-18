@@ -22,7 +22,7 @@
                             </div>
                         </th>
                         <th class="secondary-text">
-                            <div class="table-header">
+                            <div class="table-header" >
                                 <span class="color-b-grey">Order ID</span>
                             </div>
                         </th>
@@ -45,14 +45,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="receivings in ::vm.receiving" class="cursor-p"  >
+                    <tr ng-repeat="receivings in ::vm.receiving"  class="cursor-p"  >
                         <td>{{ receivings.rid}}</td>
                         <td>{{ receivings.orderId}}</td>
                         <td>{{ receivings.clientName}}</td>
                         <td>{{ receivings.vender}}</td>
                         <td>{{ receivings.dateCreated}}</td>
                         <td class="accor details-control text-right">
-                            <a>RECEIVE PO</a>
+                            <a ui-sref="app.receiving.receivingInfo({id:receivings.rid})">RECEIVE PO</a>
                         </td>
                     </tr>                    
                 </tbody>
