@@ -215,8 +215,8 @@
                     </thead> -->
                     <thead tasty-thead></thead>
                     <tbody>
-                        <tr  ng-repeat-start="row in rows" class="cursor-p" >
-                            <td ui-sref="app.order.order-info({id:row.id})">{{ row.id}}</td>
+                        <tr  ng-repeat-start="row in rows"  >
+                            <td ui-sref="app.order.order-info({id:row.id})" class="cursor-p">{{ row.id}}</td>
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>
