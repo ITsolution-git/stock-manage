@@ -96,11 +96,13 @@
             $scope.paramsObj = paramsObj;
  
             var orderData = {};
+            $("#ajax_loader").show();
 
               orderData.cond ={params:$scope.params};
               //var vendor_arr = {'vendor_id' : $scope.vendor_id, 'search' : $scope.productSearch};
 
               return $http.post('api/public/product/getProductByVendor',orderData).success(function(response) {
+                $("#ajax_loader").hide();
                 var header = response.header;
                 $scope.category_filter = response.category_filter;
                 $scope.color_filter = response.color_filter;
