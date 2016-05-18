@@ -2,10 +2,7 @@
     <div class="header "  layout="column">
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back cursor-p" ui-sref="app.order">BACK TO ORDERS</a>
-            <h1 flex="4" class="font-500">Demo Order  548 for Company: </h1>
-            <md-input-container md-no-float class="md-block" flex="3">
-                <input placeholder="">
-            </md-input-container>
+            <h1 flex="4" class="font-500">{{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}</h1>
         </div>
         <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75">
