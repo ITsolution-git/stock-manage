@@ -364,7 +364,9 @@ class CommonController extends Controller {
 
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
-          $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data']);
+          $date_field = (empty($post['date_field']))? '':$post['date_field']; 
+          
+          $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
         else
@@ -744,6 +746,7 @@ class CommonController extends Controller {
 
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
+           
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data']);
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
