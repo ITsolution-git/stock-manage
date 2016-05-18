@@ -105,8 +105,8 @@
                         </tr>
                     </thead>
                    <tbody class="scrollable" ms-scroll>
-                        <tr ng-repeat="design in designs" class="cursor-p">
-                            <td ui-sref="app.order.design({id:design.id})" >{{ design.id}} </td>
+                        <tr ng-repeat="design in designs">
+                            <td class="cursor-p" ui-sref="app.order.design({id:design.id})">{{ design.id}} </td>
                             <td>{{ design.design_name}}</td>
                             <td>123</td>
                             <td>123</td>

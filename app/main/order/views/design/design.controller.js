@@ -16,7 +16,7 @@
         $scope.vendor_id = 0;
 
        $scope.designDetail = function(){
-
+         $("#ajax_loader").show();
         var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             
@@ -24,7 +24,7 @@
                
                 if(result.data.success == '1') {
                     
-                    
+                     $("#ajax_loader").hide();
                     result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
                     result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
                     result.data.records[0].start_date = new Date(result.data.records[0].start_date);
