@@ -124,7 +124,9 @@
           'client': '',
           'created_date': ''
         };
-
+         $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+        };
         /**
          * Returns the formatted date 
          * @returns {date}
@@ -179,20 +181,22 @@
             }
         }
 
-        $scope.search = function () {
+        /*$scope.search = function () {
             $scope.reloadCallback();
-        };
+        };*/
 
         $scope.getResource = function (params, paramsObj, search) {
             $scope.params = params;
             $scope.paramsObj = paramsObj;
- 
+            $("#ajax_loader").show();
             var orderData = {};
 
               orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
 
               return $http.post('api/public/order/listOrder',orderData).success(function(response) {
+                $("#ajax_loader").hide();
                 var header = response.header;
+                $scope.success = response.success;
                 return {
                   'rows': response.rows,
                   'header': header,
