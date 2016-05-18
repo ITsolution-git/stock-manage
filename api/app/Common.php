@@ -195,8 +195,16 @@ class Common extends Model {
         $result=$result->get();
         return $result;
     }
-    public function UpdateTableRecords($table,$cond,$data)
+    public function UpdateTableRecords($table,$cond,$data,$date_field=1)
     {
+        if($date_field=='date')
+        {
+             foreach ($data as $key => $value) 
+            {
+                $data[$key] = date("Y-m-d", strtotime($value));
+            }
+        }
+        
         $result = DB::table($table);
         if(count($cond)>0)
         {

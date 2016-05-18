@@ -446,6 +446,7 @@
             var condition_obj = {};
             condition_obj[cond_field] =  cond_value;
             UpdateArray.cond = angular.copy(condition_obj);
+            UpdateArray.date_field = extra;
 
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')

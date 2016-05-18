@@ -12,16 +12,27 @@
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Tax ID" name="tax_id" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_\',\'client_id\',client.client_id,\'tax\')' }"  ng-model="client_tax.tax_id">
+                    <input placeholder="Tax ID" name="tax_id" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\')' }"  ng-model="client_tax.tax_id">
                 </md-input-container>
+
+                 
+
 
                 <md-input-container>
                     <input placeholder="Tax Rate" name="tax_rate" ng-model="client_tax.tax_rate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\')' }"  >
                 </md-input-container>
 
-                 <md-input-container>
-                    <input placeholder="Tax Exempt" name="tax_exempt" ng-model="client_tax.tax_exempt"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\')' }"  >
-                </md-input-container>
+                 <md-input-container flex=45 class="m-b-20">
+                        <label>Tax Rate</label>
+                        <md-select ng-model="client_tax.tax_exempt"  name="tax_exempt"  ng-change='UpdateTableField("tax_exempt",client_tax.tax_exempt,"client","client_id",client.client_id,"tax")'>
+                            <md-option ng-selected='{{client_tax.tax_exempt==1}}' value="1">
+                                Yes
+                            </md-option>
+                            <md-option ng-selected='{{client_tax.tax_exempt==0}}' value="0">
+                                No
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
 
 
               </div>
