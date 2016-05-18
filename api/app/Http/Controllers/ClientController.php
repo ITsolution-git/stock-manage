@@ -176,7 +176,7 @@ class ClientController extends Controller {
 
     	$result = $this->client->getClientdata($post);
     	$records = $result['allData'];
-
+    	$success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
@@ -188,7 +188,7 @@ class ClientController extends Controller {
                         4=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
                         );
 
-        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>'1');
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return  response()->json($data);
     }
 

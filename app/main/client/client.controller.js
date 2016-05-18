@@ -67,6 +67,7 @@
             return $http.post('api/public/client/ListClient',price_list_data).success(function(response) {
               
                 var header = response.header;
+                $scope.success = response.success;
                 return {
                   'rows': response.rows,
                   'header': header,
