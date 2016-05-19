@@ -404,6 +404,26 @@
             });
         }
 
+        $scope.deleteAddProduct = function(){
+
+            var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+
+            if (permission == true) {
+
+                var combine_array_id = {};
+                    combine_array_id.id = $stateParams.id;
+                    
+                    
+                    $http.post('api/public/product/deleteAddProduct',combine_array_id).success(function(result, status, headers, config) {
+                       
+                        if(result.data.success == '1') {
+                           $scope.productData = {};
+                        } 
+                        
+                    });
+              }
+          }
+
        
     }
 })();

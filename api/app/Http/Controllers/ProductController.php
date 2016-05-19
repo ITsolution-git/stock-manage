@@ -351,4 +351,33 @@ public function create_dir($dir_path) {
         return response()->json(["data" => $response]);
 
     }
+
+     public function deleteAddProduct()
+    {
+        $post = Input::all();
+       
+        if(!empty($post['id']))
+        {
+            $record_data = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
+            $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
+            if($record_data)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
 }
