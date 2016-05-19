@@ -173,7 +173,7 @@
                             if(result.data.success=='1')
                             {   
                                 var params = {};
-                                params = { contact_arr: result.data.records[0],states_all:$scope.states_all};
+                                params = { contact_arr: result.data.records[0],states_all:$scope.states_all,AddrTypeData:$scope.AddrTypeData};
                                 open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                             }
                         });
@@ -194,7 +194,7 @@
                     if(result.data.success=='1')
                     {  
                         var params = {};
-                        params = { contact_arr: result.data.records[0],states_all:$scope.states_all};                     
+                        params = { contact_arr: result.data.records[0],states_all:$scope.states_all,AddrTypeData:$scope.AddrTypeData};                     
                         open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                     }
                 });
@@ -426,6 +426,7 @@
         $scope.client = Params.client;
         $scope.ArrCleintType = Params.ArrCleintType;
         $scope.Arrdisposition = Params.Arrdisposition;
+        $scope.AddrTypeData = Params.AddrTypeData;
         $scope.states_all = Params.states_all;
         $scope.contact_arr=Params.contact_arr;
         $scope.StaffList = Params.StaffList;
@@ -433,7 +434,7 @@
         $scope.AllPriceGrid = Params.AllPriceGrid;
         $scope.client_tax = Params.client_tax;
         $scope.Distribution_address = Params.Distribution_address;
-        //console.log($scope.salesDetails);
+        //console.log(Params);
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
             var vm = this;

@@ -39,6 +39,7 @@ class ClientController extends Controller {
 
 		/* SEPARATE CLIENT DATA IN TO ARRAY */
 		    $client['company_id'] = (!empty($post['company_id']))?$post['company_id']:'';
+		    $client['login_id'] = Session::get("user_id");
 			$client['client_company'] = (!empty($post['client_company']))?$post['client_company']:'';
 			$client['billing_email'] = (!empty($post['billing_email']))?$post['billing_email']:'';
 			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
