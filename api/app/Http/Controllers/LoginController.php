@@ -198,6 +198,7 @@ class LoginController extends Controller {
             $response = array('success' => 1, 
                               'message' => "session there",
                               "user_id"=>Session::get("user_id"),
+                              "login_id"=>Session::get("login_id"),
                               'role_title'=>Session::get('role_title'),
                               "name"=>Session::get("name"),
                               "company_name"=>Session::get('company_name'),
