@@ -291,6 +291,7 @@ class Product extends Model {
              
             $result = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
                 'size'=>$row['sizeName'],
+                'sku'=>$row['sku'],
                 'price'=>$row['customerPrice'],
                 'qnty'=>$row['qnty'],
                 'color_id'=>$row['color_id'],

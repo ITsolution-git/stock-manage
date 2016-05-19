@@ -264,7 +264,7 @@ public function create_dir($dir_path) {
        }
 
         foreach($all_data as $key => $data) {
-              
+             
            
             $color_data = $this->common->getColorId($data->colorName);
             
@@ -285,6 +285,7 @@ public function create_dir($dir_path) {
             }
             
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
             $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
             $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
