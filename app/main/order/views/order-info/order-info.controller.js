@@ -17,7 +17,7 @@
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
-            
+            $scope.order_id = $stateParams.id;
             
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {

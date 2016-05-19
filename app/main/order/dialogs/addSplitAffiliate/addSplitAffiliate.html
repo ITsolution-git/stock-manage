@@ -2,15 +2,15 @@
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">{{vm.title}}</span>
+                <span class="title">{{$scope.title}}</span>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll class="m-t-10">
             <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Design</label>
-                    <md-select ng-model="vm.designSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.designSelect.designOption" value="{{options.option}}">
+                    <md-select ng-model="$scope.designSelect.location" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="options in $scope.designSelect.designOption" value="{{options.option}}">
                             {{options.option}}
                         </md-option>
                     </md-select>
@@ -19,8 +19,8 @@
             <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Product</label>
-                    <md-select ng-model="vm.productSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.productSelect.productOption" value="{{options.option}}">
+                    <md-select ng-model="$scope.productSelect.location" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="options in $scope.productSelect.productOption" value="{{options.option}}">
                             {{options.option}}
                         </md-option>
                     </md-select>
@@ -29,9 +29,9 @@
             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Affiliate</label>
-                    <md-select ng-model="vm.affiliateSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in vm.affiliateSelect.affiliateOption" value="{{options.option}}">
-                            {{options.option}}
+                    <md-select ng-model="affiliate" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option  ng-repeat="affiliate in allAffiliate" value="{{affiliate.id}}">
+                            {{affiliate.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -39,41 +39,41 @@
             <div layout="row" class="pad-10-15 p-l-0">
                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
                     <label class="font-14 p-l-0">S</label>
-                    <input placeholder="" ng-model="vm.splitAffiliateSize.s">
+                    <input placeholder="" ng-model="$scope.splitAffiliateSize.s">
                 </md-input-container>
                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
                     <label class="font-14 p-l-0">M</label>
-                    <input placeholder="" ng-model="vm.splitAffiliateSize.m" >
+                    <input placeholder="" ng-model="$scope.splitAffiliateSize.m" >
                 </md-input-container>
                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
                     <label class="font-14 p-l-0">L</label>
-                    <input placeholder="" ng-model="vm.splitAffiliateSize.l">
+                    <input placeholder="" ng-model="$scope.splitAffiliateSize.l">
                 </md-input-container>
                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
                     <label class="font-14 p-l-0">XL</label>
-                    <input placeholder="" ng-model="vm.splitAffiliateSize.xl">
+                    <input placeholder="" ng-model="$scope.splitAffiliateSize.xl">
                 </md-input-container>
             </div>
             <div layout="row" layout-align="space-between center">
                 <div layout="column" flex="40">
                     <div><span>Total for Affiliate Name</span></div>
-                    <div><span class="grey-color font-14">{{vm.splitAffiliateDialog.affiliateTotal}}</span></div>
+                    <div><span class="grey-color font-14">{{$scope.splitAffiliateDialog.affiliateTotal}}</span></div>
                 </div>
                 <div layout="column" flex="40">
                     <div><span>Total not assigned</span></div>
-                    <div><span class="grey-color font-14">{{vm.splitAffiliateDialog.affiliateNotTotal}}</span></div>
+                    <div><span class="grey-color font-14">{{$scope.splitAffiliateDialog.affiliateNotTotal}}</span></div>
                 </div>
             </div>
             <div class="m-t-20"><span>Additional Charges</span></div>
             <div layout="row">
                 <md-input-container md-no-float class="md-block b-m-0 mar-t-0 mar-b-0" flex="40">
-                    <input  placeholder="" ng-model="vm.splitAffiliateDialog.additionalCharges">
+                    <input  placeholder="" ng-model="$scope.splitAffiliateDialog.additionalCharges">
                 </md-input-container>
                 <md-icon md-font-icon="icon-plus" flex="50" class="m-t-10"></md-icon>
             </div>
             <md-input-container class="md-block pad0 m-b-0 margin-0">
                 <label class="p-l-0">Notes</label>
-                <textarea ng-model="vm.splitAffiliateDialog.notes" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+                <textarea ng-model="$scope.splitAffiliateDialog.notes" md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
             <div layout="column" class="m-t-20">
                 <div class="" layout="row">
@@ -83,18 +83,18 @@
                     <div flex="35" class="text-center"><span class="font-10">Total</span></div>
                 </div>
                 <div class="p-t-20 p-b-20 border border-l-r" layout="row">
-                    <div flex="40" class="text-center">{{vm.splitAffiliateDialog.shopInvoice}}</div>
+                    <div flex="40" class="text-center">{{$scope.splitAffiliateDialog.shopInvoice}}</div>
                     <div flex="5" class="text-left"><md-icon md-font-icon="icon-minus"  class="font-19"></md-icon></div>
-                    <div flex="30" class="text-center">{{vm.splitAffiliateDialog.affilateInvoice}}</div>
+                    <div flex="30" class="text-center">{{$scope.splitAffiliateDialog.affilateInvoice}}</div>
                     <div flex="10" class="text-left" ><md-icon md-font-icon="icon-plus" class="font-19"></md-icon></div>
-                    <div flex="30" class="text-right">{{vm.splitAffiliateDialog.additonalCharges}}</div>
+                    <div flex="30" class="text-right">{{$scope.splitAffiliateDialog.additonalCharges}}</div>
                     <div flex="25" class="text-center"><md-icon md-font-icon="icon-equal" class="font-19"></md-icon></div>
-                    <div flex="55" class="text-center col-green">{{vm.splitAffiliateDialog.total}}</div>
+                    <div flex="55" class="text-center col-green">{{$scope.splitAffiliateDialog.total}}</div>
                 </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button ng-click="$scope.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
             <md-button class="md-accent md-raised" ui-sref="app.spiltAffiliate">Save</md-button>
         </md-dialog-actions>
     </form>

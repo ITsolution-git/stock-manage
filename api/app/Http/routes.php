@@ -277,4 +277,11 @@ Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Clie
 Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
 Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
 
-
+// AFFILIATES ROUTERS
+Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');
+Route::post('admin/vendorDelete', 'VendorController@delete');
+Route::post('admin/vendorAdd', 'VendorController@add');
+Route::post('admin/vendorEdit', 'VendorController@edit');
+Route::post('admin/vendorDetail', 'VendorController@detail');
+Route::get('admin/VendorEdit/{id}', 'VendorController@detail');
+Route::post('admin/productVendor', 'VendorController@productVendor');

@@ -7,8 +7,9 @@
             .controller('SpiltAffiliateController', SpiltAffiliateController);
 
     /** @ngInject */
-    function SpiltAffiliateController($document, $window, $timeout, $mdDialog)
+    function SpiltAffiliateController($document, $window, $timeout, $mdDialog, $stateParams, $scope)
     {
+        $scope.order_id = $stateParams.id;
         var vm = this;
          vm.openaddDesignDialog = openaddDesignDialog;
           vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
@@ -80,7 +81,7 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Order: order,
+                    Order: $scope,
                     Orders: vm.orders,
                     event: ev
                 }
