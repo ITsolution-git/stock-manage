@@ -54,4 +54,26 @@ class AffiliateController extends Controller {
                             );
         return response()->json(["data" => $response]);
     }
+
+    public function addAffiliate()
+    {
+        $post = Input::all();
+        $insert_arr = array(
+                            'order_id' => $post['order_id'],
+                            'affiliate_id' => $post['affiliate_id'],
+                            'design_id' => $post['design_id'],
+                            'total_affiliate' => $post['total_affiliate'],
+                            'total_not_assign' => $post['total_not_assign'],
+                            'note' => $post['notes'],
+                            'shop_invoice' => $post['shop_invoice'],
+                            'additional_charges' => $post['additional_charges'],
+                            'affiliate_invoice' => $post['affiliate_invoice'],
+                            'total' => $post['total']
+                            );
+
+        $id = $this->common->InsertRecords('order_affiliate_mapping',$insert_arr);
+
+        print_r($id);exit;
+
+    }
 }

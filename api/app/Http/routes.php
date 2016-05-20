@@ -280,7 +280,7 @@ Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_
 
 // AFFILIATES ROUTERS
 Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');
-Route::post('admin/vendorDelete', 'VendorController@delete');
+Route::post('affiliate/addAffiliate', 'AffiliateController@addAffiliate');
 Route::post('admin/vendorAdd', 'VendorController@add');
 Route::post('admin/vendorEdit', 'VendorController@edit');
 Route::post('admin/vendorDetail', 'VendorController@detail');
