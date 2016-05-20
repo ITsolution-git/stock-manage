@@ -2032,6 +2032,28 @@ else
         $size_data = array();
 
         foreach ($order_design_data as $design) {
+           
+            $cnt = 0;
+            if($design->front_color_id != 0) {
+                $cnt++;
+            }
+            if($design->back_color_id != 0) {
+                $cnt++;
+            }
+            if($design->side_right_color_id != 0) {
+                $cnt++;
+            }
+            if($design->side_left_color_id != 0) {
+                $cnt++;
+            }
+            if($design->top_color_id != 0) {
+                $cnt++;
+            }
+            if($design->bottom_color_id != 0) {
+                $cnt++;
+            }
+
+
             $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
             $total_qnty = 0;
             foreach ($size_data as $size) {
@@ -2040,6 +2062,7 @@ else
             }
             $design->size_data = $size_data;
             $design->total_qnty = $total_qnty;
+            $design->cnt = $cnt;
             $order_design[] = $design;
         }
        
