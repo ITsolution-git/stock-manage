@@ -7,13 +7,40 @@
         .controller('AddSplitAffiliateController', AddSplitAffiliateController);
 
     /** @ngInject */
-    function AddSplitAffiliateController($mdDialog)
+    function AddSplitAffiliateController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant,Order)
     {
-        var vm = this;
-          vm.title = 'Split Affiliate';
+        $scope.title = 'Split Affiliate';
+
+        $scope.company_id = sessionService.get('company_id');
+        $scope.order_id = Order.order_id;
+        $scope.design = 0;
+        $scope.affiliate = 0;
+        $scope.sizes = [];
+
+        var affiliate_data = {};
+        affiliate_data.table ='affiliates';
+        affiliate_data.cond ={'company_id':$scope.company_id,'order_id':$scope.order_id}
+        $http.post('api/public/affiliate/getAffiliateDetail',affiliate_data).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.allAffiliate =result.data.records['affiliate_data'];
+                $scope.allDesign =result.data.records['design_detail'];
+            } 
+            else
+            {
+                $scope.allVendors=[];
+            }
+        });
+
+        $scope.getDesignProduct = function(design_id)
+        {
+            $scope.sizes = angular.copy($scope.allDesign[design_id].size_data);
+            console.log($scope.sizes);
+        }
 
         // Data
-        vm.designSelect = {
+        $scope.designSelect = {
             "designOption":
                     [
                         {"option": "Design 1"},
@@ -23,7 +50,7 @@
             "design": ""
 
         };
-        vm.productSelect = {
+        $scope.productSelect = {
             "productOption":
                     [
                         {"option": "Product 1"},
@@ -33,7 +60,7 @@
             "design": ""
 
         };
-        vm.affiliateSelect = {
+        $scope.affiliateSelect = {
             "affiliateOption":
                     [
                         {"option": "Affiliate 1"},
@@ -43,7 +70,7 @@
             "design": ""
 
         };
-        vm.splitAffiliateSize={
+        $scope.splitAffiliateSize={
           "s":"",
          "m":"",
          "l":"",
@@ -51,7 +78,7 @@
         
         };
        
-         vm.splitAffiliateDialog={
+         $scope.splitAffiliateDialog={
           "affiliateTotal":"200",
          "affiliateNotTotal":"800",
          "shopInvoice":"$1,000",
@@ -68,7 +95,7 @@
 
         // Methods
     
-        vm.closeDialog = closeDialog;
+        $scope.closeDialog = closeDialog;
      
         /**
          * Close dialog

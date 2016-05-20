@@ -49,7 +49,7 @@
                 <md-button  class="bg-grey right-m-0 " ng-click="printPdf()">
                     PRINT
                 </md-button>
-                <md-button ui-sref="app.order.spiltAffiliate" class="bg-grey right-m-0 color-white" >
+                <md-button ui-sref="app.order.spiltAffiliate({id:order_id})" class="bg-grey right-m-0 color-white" ng-click="checkDesign()">
                     ASSIGN/SPLIT AFFILIATE
                 </md-button>
             </div>
