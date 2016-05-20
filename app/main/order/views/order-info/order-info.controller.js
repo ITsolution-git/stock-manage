@@ -5,14 +5,11 @@
     angular
             .module('app.order')
             .controller('OrderInfoController', OrderInfoController);
-            
 
     /** @ngInject */
-    function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state)
+    function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
-
-          
-          $scope.orderDetail = function(){
+        $scope.orderDetail = function(){
 
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
@@ -21,52 +18,63 @@
             
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
-            
                 if(result.data.success == '1') {
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
-
                 } else {
                     $state.go('app.order');
                 }
-               
             });
-
           }
 
-
-           $scope.designDetail = function(){
+        $scope.designDetail = function(){
 
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
-            
-            
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.data.success == '1') {
                    $scope.designs = result.data.records;
-                   
                 }
-                
+                else {
+                    $scope.designs = [];
+                }
             });
-
           }
 
-      $scope.orderDetail();
-      $scope.designDetail();
-            
+        $scope.orderDetail();
+        $scope.designDetail();
+
+        $scope.checkDesign = function()
+        {
+            if($scope.designs.length == 0)
+            {
+                var data = {"status": "error", "message": "Please add design to split order"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            else if($scope.designs[0].size_data.length == 0)
+            {
+                var data = {"status": "error", "message": "Please add product to split order"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            else
+            {
+                $state.go('app.order.spiltAffiliate',{id: $scope.order_id});
+            }
+        }
        
         var vm = this;
-         vm.openaddDesignDialog = openaddDesignDialog;
+        vm.openaddDesignDialog = openaddDesignDialog;
 
         /* vm.orderDetails = OrderDataDetail.data.records;
          console.log(vm.orderDetails);*/
 
-          vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
-          vm.openinformationDialog = openinformationDialog;
-
+        vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
+        vm.openinformationDialog = openinformationDialog;
       
         vm.purchases = [
             {"poid": "27", "potype": "Purchase Order", "clientName": "kensville", "vendor": "SNS", "dateCreated": "xx/xx/xxxx"},
@@ -192,54 +200,44 @@
 
         $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
         {
-           
-          var position_main_data = {};
-          position_main_data.table =table_name;
-          $scope.name_filed = column_name;
+            var position_main_data = {};
+            position_main_data.table =table_name;
+            $scope.name_filed = column_name;
           
-          var obj = {};
-          obj[$scope.name_filed] =  value;
-          position_main_data.data = angular.copy(obj);
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            position_main_data.data = angular.copy(obj);
 
-
-          var condition_obj = {};
-          condition_obj[match_condition] =  id;
-          position_main_data.cond = angular.copy(condition_obj);
-          
+            var condition_obj = {};
+            condition_obj[match_condition] =  id;
+            position_main_data.cond = angular.copy(condition_obj);
 
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
-               
             });
-      
         }
 
 
         $http.post('api/public/common/getCompanyDetail',sessionService.get('company_id')).success(function(result) {
-                    
-                    if(result.data.success == '1') 
-                    {
-                        $scope.allCompanyDetail =result.data.records;
-                        $scope.oversize = $scope.allCompanyDetail[0].oversize_value;
-                    } 
-                    else
-                    {
-                        $scope.allCompanyDetail=[];
-                    }
-                });
-
-    
-
-//Purchase
+            if(result.data.success == '1') 
+            {
+                $scope.allCompanyDetail =result.data.records;
+                $scope.oversize = $scope.allCompanyDetail[0].oversize_value;
+            } 
+            else
+            {
+                $scope.allCompanyDetail=[];
+            }
+        });
+        
         var timeoutID = window.setTimeout(function zx() {
             var $table = $('table.scrol.table3'),
-                    $bodyCells = $table.find('tbody tr:first').children(),
-                    colWidth;
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
             $(window).resize(function () {
                 // Get the tbody columns width array
                 colWidth = $bodyCells.map(function () {
                     return $(this).width();
                 }).get();
-
 
                 // Set the width of thead columns
                 $table.find('thead tr').children().each(function (i, v) {
@@ -250,8 +248,8 @@
         //Received
         var timeoutID = window.setTimeout(function yx() {
             var $table = $('table.scrol.table4'),
-                    $bodyCells = $table.find('tbody tr:first').children(),
-                    colWidth;
+            $bodyCells = $table.find('tbody tr:first').children(),
+            colWidth;
             $(window).resize(function () {
                 // Get the tbody columns width array
                 colWidth = $bodyCells.map(function () {
@@ -284,8 +282,6 @@
 
         $scope.printPdf=function()
         {
-
-               
             var target;
             var form = document.createElement("form");
             form.action = 'api/public/order/savePDF';
@@ -305,15 +301,11 @@
 
             document.body.appendChild(form);
             form.submit();  
-        };   
+        };
 
-
-       
-
-     $scope.openEmailPopup = function (ev) {
-
+        $scope.openEmailPopup = function (ev) {
     
-    $mdDialog.show({
+            $mdDialog.show({
                 controller: 'openEmailController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/order/views/order-info/send-email.html',
@@ -326,9 +318,6 @@
                     event: ev
                   }
             });
-
-       
-    }; 
+        }; 
     }
-    
 })();

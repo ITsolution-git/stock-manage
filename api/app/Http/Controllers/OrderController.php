@@ -2026,9 +2026,22 @@ else
     public function designListing() {
  
         $data = Input::all();
+        $design_data = array();
        
-        $order_design = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
+        $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
+        $size_data = array();
 
+        foreach ($order_design_data as $design) {
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
+            $total_qnty = 0;
+            foreach ($size_data as $size) {
+                $total_qnty += $size->qnty;
+                $size->affiliate_qnty = 0;
+            }
+            $design->size_data = $size_data;
+            $design->total_qnty = $total_qnty;
+            $order_design[] = $design;
+        }
        
         if (count($order_design) > 0) {
             $response = array(

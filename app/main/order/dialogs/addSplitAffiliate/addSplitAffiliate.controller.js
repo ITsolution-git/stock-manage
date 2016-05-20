@@ -13,6 +13,9 @@
 
         $scope.company_id = sessionService.get('company_id');
         $scope.order_id = Order.order_id;
+        $scope.design = 0;
+        $scope.affiliate = 0;
+        $scope.sizes = [];
 
         var affiliate_data = {};
         affiliate_data.table ='affiliates';
@@ -21,13 +24,20 @@
             
             if(result.data.success == '1') 
             {
-                $scope.allAffiliate =result.data.records;
+                $scope.allAffiliate =result.data.records['affiliate_data'];
+                $scope.allDesign =result.data.records['design_detail'];
             } 
             else
             {
                 $scope.allVendors=[];
             }
         });
+
+        $scope.getDesignProduct = function(design_id)
+        {
+            $scope.sizes = angular.copy($scope.allDesign[design_id].size_data);
+            console.log($scope.sizes);
+        }
 
         // Data
         $scope.designSelect = {

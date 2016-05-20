@@ -9,14 +9,14 @@
             <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Design</label>
-                    <md-select ng-model="$scope.designSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in $scope.designSelect.designOption" value="{{options.option}}">
-                            {{options.option}}
+                    <md-select ng-model="design" flex="100"  class="select-width font-16 font-weight" ng-change="getDesignProduct(design)">
+                        <md-option  ng-repeat="design in allDesign" value="{{design.id}}">
+                            {{design.design_name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
             </div>
-            <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
+<!--             <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Product</label>
                     <md-select ng-model="$scope.productSelect.location" flex="100"  class="select-width font-16 font-weight"  >
@@ -25,7 +25,7 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
-            </div>
+            </div> -->
             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Affiliate</label>
@@ -37,11 +37,11 @@
                 </md-input-container>
             </div>
             <div layout="row" class="pad-10-15 p-l-0">
-                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                    <label class="font-14 p-l-0">S</label>
-                    <input placeholder="" ng-model="$scope.splitAffiliateSize.s">
+                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="row in sizes">
+                    <label class="font-14 p-l-0">{{row.size}}</label>
+                    <input placeholder="" ng-model="row.affiliate_qnty">
                 </md-input-container>
-                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+<!--                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
                     <label class="font-14 p-l-0">M</label>
                     <input placeholder="" ng-model="$scope.splitAffiliateSize.m" >
                 </md-input-container>
@@ -52,7 +52,7 @@
                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
                     <label class="font-14 p-l-0">XL</label>
                     <input placeholder="" ng-model="$scope.splitAffiliateSize.xl">
-                </md-input-container>
+                </md-input-container> -->
             </div>
             <div layout="row" layout-align="space-between center">
                 <div layout="column" flex="40">

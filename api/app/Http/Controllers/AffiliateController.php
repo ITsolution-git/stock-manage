@@ -31,13 +31,27 @@ class AffiliateController extends Controller {
     {
         $post = Input::all();
         $affiliate_data = $this->common->GetTableRecords('affiliates',array('company_id' => $post['cond']['company_id']),array());
-        print_r($affiliate_data);exit;
         $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $post['cond']['order_id']),array());
 
         $design_detail = array();
 
         foreach ($design_data as $design) {
-            print_r($design);exit;
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
+            foreach ($size_data as $size) {
+                $size->affiliate_qnty = 0;
+            }
+            $design->size_data = $size_data;
+            $design_detail[$design->id] = $design;
         }
+
+        $result['design_detail'] = $design_detail;
+        $result['affiliate_data'] = $affiliate_data;
+
+        $response = array(
+                            'success' => 1, 
+                            'message' => GET_RECORDS,
+                            'records' => $result
+                            );
+        return response()->json(["data" => $response]);
     }
 }
