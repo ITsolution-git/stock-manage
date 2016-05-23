@@ -228,12 +228,15 @@
                             <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
                             <td>{{ row.first_name}} &nbsp; {{ row.last_name}}</td>
                             <td>{{ row.date_shipped}}</td>
-                                 <td class="accor" >
+                                 <td class="accor" ng-show="row.design_pos.length > 0">
                             <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
                             <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
                         </td>
+                        <td  ng-show="row.design_pos.length == 0">
+                            &nbsp;
+                        </td>
                         </tr>
-                                <tr class="table-desc dev-rdetail-data" ng-if="row.expanded"ng-repeat-end="">
+                                <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded"ng-repeat-end="">
                                     <td colspan="8" class="collpas">
                                     <table class="dataTable row-border hover" >
                                         <thead>

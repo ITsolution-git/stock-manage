@@ -2030,6 +2030,7 @@ else
        
         $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
         $size_data = array();
+        $order_design = array();
 
         foreach ($order_design_data as $design) {
            
@@ -2065,7 +2066,7 @@ else
             $design->cnt = $cnt;
             $order_design[] = $design;
         }
-       
+      
         if (count($order_design) > 0) {
             $response = array(
                                 'success' => 1, 
@@ -2076,7 +2077,7 @@ else
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'records' => $order_design);
+                                'records' => '');
         } 
         return response()->json(["data" => $response]);
 
