@@ -20,7 +20,7 @@ class Client extends Model {
 			$address['client_id']=$client_id;
 
 			$result = DB::table('client_contact')->insert($contact);
-			$result = DB::table('client_address')->insert($address);
+			$result = DB::table('client_address')->insert(array('address'=>$client['pl_address'],'street'=>$client['pl_suite'],'city'=>$client['pl_city'],'state'=>$client['pl_state'],'postal_code'=>$client['pl_pincode'],'type'=>$client['client_companytype'],'client_id'=>$client_id,'address_main'=>1,'address_shipping'=>1,'address_billing'=>1));
 		}
     	return $client_id;	
 	}
