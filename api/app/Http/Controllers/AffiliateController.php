@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
 
 use App\Affiliate;
+use App\Order;
 use App\Common;
 use Input;
 use Illuminate\Support\Facades\Session;
@@ -22,9 +23,10 @@ class AffiliateController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Affiliate $affiliate,Common $common) {
+    public function __construct(Affiliate $affiliate,Common $common,Order $order) {
         $this->affiliate = $affiliate;
         $this->common = $common;
+        $this->order = $order;
     }
 
     public function getAffiliateDetail()
@@ -58,6 +60,7 @@ class AffiliateController extends Controller {
     public function addAffiliate()
     {
         $post = Input::all();
+
         $insert_arr = array(
                             'order_id' => $post['order_id'],
                             'affiliate_id' => $post['affiliate_id'],
@@ -73,7 +76,33 @@ class AffiliateController extends Controller {
 
         $id = $this->common->InsertRecords('order_affiliate_mapping',$insert_arr);
 
-        print_r($id);exit;
+        foreach ($post['sizes'] as $size) {
+            $this->common->InsertRecords('affiliate_product',array('affiliate_id' => $id,'size' => $size['size'],'qnty' => $size['affiliate_qnty']));
+        }
 
+        $response = array(
+                            'success' => 1, 
+                            'message' => INSERT_RECORD
+                            );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getAffiliateData()
+    {
+        $data = Input::all();
+        $records = array();
+
+        $result = $this->order->orderDetail($data);
+
+        $affiliateList = $this->affiliate->getAffiliateList($data);
+
+        $response = array(
+                            'success' => 1, 
+                            'message' => GET_RECORDS,
+                            'records' => $result['order'][0],
+                            'affiliateList' => $affiliateList
+                            );
+        return response()->json(["data" => $response]);
+        return $this->return_response($data);
     }
 }

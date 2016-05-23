@@ -15,33 +15,33 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Customer PO</div>
-                                <span class=" font-14 chrome-weight">{{vm.spiltOrderInformation.customerPo}}</span>
+                                <span class=" font-14 chrome-weight">{{spiltOrderInformation.customerPo}}</span>
                             </div>
                            <div class="trans-box">
                         <div>Sales</div>
-                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.sales}}</span>
+                        <span class="font-14 chrome-weight">{{spiltOrderInformation.sales}}</span>
                     </div>
                     <div class="trans-box">
                         <div>Blind</div>
-                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.blind}}</span>
+                        <span class="font-14 chrome-weight">{{spiltOrderInformation.blind}}</span>
                     </div>
                     <div class="trans-box">
                         <div>Account Manager</div>
-                        <span class=" font-14 chrome-weight">{{vm.spiltOrderInformation.accountManger}}</span>
+                        <span class=" font-14 chrome-weight">{{spiltOrderInformation.accountManger}}</span>
                     </div>
                     <div class="trans-box text-right">
                         <div>Main Contact</div>
-                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.mainContact}}</span>
+                        <span class="font-14 chrome-weight">{{spiltOrderInformation.mainContact}}</span>
                     </div>
                     <div class="trans-box text-right">
                         <div>Price Grid</div>
-                        <span class="font-14 chrome-weight">{{vm.spiltOrderInformation.priceGrid}}</span>
+                        <span class="font-14 chrome-weight">{{spiltOrderInformation.priceGrid}}</span>
                     </div>
                         </div>
                     </md-card-content>
                     <div layout-align="end start"  flex="5" layout="row">
                         <md-menu>
-                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
                             <md-menu-content width="4">
@@ -66,7 +66,7 @@
                     <div layout="row" layout-wrap layout-align="center center" flex="60" class="p-t-17">
                         <div layout="row">
                             <div layout="column">
-                                <span class="h2 semibold font-56">{{ vm.spiltOrderInformation.assign}}</span>
+                                <span class="h2 semibold font-56">{{ spiltOrderInformation.assign}}</span>
                                 <span class="p-l-20 m-neg-14">Assigned</span>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                         </div>
                         <div layout="row">
                             <div layout="column">
-                                <span class="h2 semibold font-56">{{ vm.spiltOrderInformation.total}}</span>
+                                <span class="h2 semibold font-56">{{ spiltOrderInformation.total}}</span>
                                 <span class="m-l-20 p-l-20 m-neg-14">Total</span>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
         <div class="design-product spilit-affilate-sec1 md-whiteframe-1dp back-white" layout="column" layout-align="start" layout-padding>
             <div layout="row">
                 <div class="title" flex="50"><span class="h2 text-semibold">Affiliates</span></div>
-                <div class="title text-right" flex="50"><md-button  class="right-m-0 bg-grey md-raised md-button md-ink-ripple md-default-theme font-weight" ng-click="vm.openaddSplitAffiliateDialog($event)">
+                <div class="title text-right" flex="50"><md-button  class="right-m-0 bg-grey md-raised md-button md-ink-ripple md-default-theme font-weight" ng-click="openaddSplitAffiliateDialog($event)">
                         ADD AFFILIATE
                     </md-button></div>
             </div>
@@ -102,7 +102,7 @@
                     </md-card-content>
                     <div layout-align="end start"  flex="10" layout="row">
                         <md-menu>
-                            <md-button aria-label="Main Contact Options" class="md-icon-button"  ng-click="vm.openMenu($mdOpenMenu, $event)">
+                            <md-button aria-label="Main Contact Options" class="md-icon-button"  ng-click="openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
                             <md-menu-content width="4">
@@ -125,32 +125,32 @@
                         <div layout="row">
                             <div layout="column" flex="60">
                                 <div class="h4">Design</div>
-                                <div class="h5 p-b-10  grey-color font-14 m-b-20 chrome-weight">{{vm.affilateProductSize.design}}</div>
+                                <div class="h5 p-b-10  grey-color font-14 m-b-20 chrome-weight">{{affilateProductSize.design}}</div>
                                 <div class="h4">Product</div>
-                                <div class="h5  grey-color font-14 m-b-20 chrome-weight">{{vm.affilateProductSize.product}}</div>
+                                <div class="h5  grey-color font-14 m-b-20 chrome-weight">{{affilateProductSize.product}}</div>
                             </div> 
                             <div layout="column" flex="100">
                                 <div class="h4 p-b-10">Size / Quantity</div>
                                 <div layout="row">
                                     <div layout="column" flex="25">
                                         <div class="h4 color font-14">S</div>
-                                        <div class="h4 font-14color-black">{{vm.affilateProductSize.s}}</div>
+                                        <div class="h4 font-14color-black">{{affilateProductSize.s}}</div>
                                     </div>
                                     <div layout="column" flex="25">
                                         <div class="h4 color font-14">M</div>
-                                        <div class="h4 font-14 color-black">{{vm.affilateProductSize.m}}</div>
+                                        <div class="h4 font-14 color-black">{{affilateProductSize.m}}</div>
                                     </div>
                                     <div layout="column" flex="25">
                                         <div class="h4 color font-14">L</div>
-                                        <div class="h4 font-14color-black">{{vm.affilateProductSize.l}}</div>
+                                        <div class="h4 font-14color-black">{{affilateProductSize.l}}</div>
                                     </div>
                                     <div layout="column" flex="25">
                                         <div class="h4 color font-14">XL</div>
-                                        <div class="h4  font-14color-black">{{vm.affilateProductSize.xl}}</div>
+                                        <div class="h4  font-14color-black">{{affilateProductSize.xl}}</div>
                                     </div>
                                     <div layout="column" flex="10">
                                         <div class="h4 color font-14">Total</div>
-                                        <div class="h4 font-14 color-black">{{vm.affilateProductSize.total}}</div>
+                                        <div class="h4 font-14 color-black">{{affilateProductSize.total}}</div>
                                     </div>
                                 </div>
                             </div>    
@@ -158,7 +158,7 @@
                         <div layout="row" layout-align="center center">
                             <div flex="45">
                                 <div class="h4">Notes</div>
-                                <div class="h5  grey-color font-14 m-b-20 ">{{vm.affilateProductSize.notes}}</div>
+                                <div class="h5  grey-color font-14 m-b-20 ">{{affilateProductSize.notes}}</div>
                             </div>
                             <div class="text-right" flex="60"><a class="font-16 chrome-weight" ui-sref="app.purchaseOrder.affiliatePO">VIEW</a></div>
                         </div>
