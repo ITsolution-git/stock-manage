@@ -6,7 +6,7 @@
                                     Orders
                                 </div>
                             </div>
-                            <div class="ms-responsive-table-wrapper innertab-scroll">
+                            <div class="ms-responsive-table-wrapper">
                                 <table class="simple">
                                     <thead>
                                         <tr>
@@ -35,7 +35,7 @@
                                     </thead>                                  
                                     <tbody>
                                         <tr ng-repeat="order in Client_orders">
-                                            <td>{{order.id}}</td>
+                                            <td title="Go to Order" class="cursor-p" ui-sref="app.order.order-info({id:order.id})">{{order.id}}</td>
                                             <td>{{order.name}}</td>
                                             <td>{{order.created_date}}</td>
                                             <td>{{order.value}}</td>
