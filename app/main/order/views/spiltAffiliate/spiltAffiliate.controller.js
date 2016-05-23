@@ -18,12 +18,8 @@
             
             if(result.data.success == '1') 
             {
-                $scope.allAffiliate =result.data.records['affiliate_data'];
-                $scope.allDesign =result.data.records['design_detail'];
-            } 
-            else
-            {
-                $scope.allVendors=[];
+                $scope.spiltOrderInformation = result.data.records;
+                $scope.spiltOrderList = result.data.affiliateList;
             }
         });
 

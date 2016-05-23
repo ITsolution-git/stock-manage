@@ -39,11 +39,14 @@ class AffiliateController extends Controller {
 
         foreach ($design_data as $design) {
             $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
-            foreach ($size_data as $size) {
-                $size->affiliate_qnty = 0;
+            if(!empty($size_data))
+            {
+                foreach ($size_data as $size) {
+                    $size->affiliate_qnty = 0;
+                }
+                $design->size_data = $size_data;
+                $design_detail[$design->id] = $design;
             }
-            $design->size_data = $size_data;
-            $design_detail[$design->id] = $design;
         }
 
         $result['design_detail'] = $design_detail;
@@ -95,6 +98,23 @@ class AffiliateController extends Controller {
         $result = $this->order->orderDetail($data);
 
         $affiliateList = $this->affiliate->getAffiliateList($data);
+
+        foreach($affiliateList as $list)
+        {
+            $sizes = $this->affiliate->getAffiliateSizes($list->id);
+            $total = 0;
+            foreach ($sizes as $size) {
+                $total += $size->qnty;
+            }
+            $list->total = $total;
+            $list->sizes = $sizes;
+        }
+
+        $assigned = $this->affiliate->getAssignCount($data);
+        $not_assigned = $this->affiliate->getUnassignCount($data);
+
+        $result['order'][0]->assign = $assigned[0]->total;
+        $result['order'][0]->total = $not_assigned[0]->total;
 
         $response = array(
                             'success' => 1, 
