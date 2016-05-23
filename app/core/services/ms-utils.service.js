@@ -320,7 +320,7 @@ core.factory('AllConstant', AllConstant);
                   pagination: 15,
                   NoImage: base_path+'api/public/images/noimage.jpg',
                   currentdate : $filter('date')(new Date(), 'yyyy-MM-dd'),
-                  base_path:base_path;
+                  base_path:base_path
                 }
             return constatnt;
         }
