@@ -58,12 +58,12 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            else if($scope.designs[0].size_data.length == 0)
+            /*else if($scope.designs[0].size_data.length == 0)
             {
                 var data = {"status": "error", "message": "Please add product to split order"}
                 notifyService.notify(data.status, data.message);
                 return false;
-            }
+            }*/
             else
             {
                 $state.go('app.order.spiltAffiliate',{id: $scope.order_id});
