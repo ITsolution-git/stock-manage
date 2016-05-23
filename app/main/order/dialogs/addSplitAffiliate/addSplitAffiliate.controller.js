@@ -81,8 +81,8 @@
                 $http.post('api/public/affiliate/addAffiliate',affiliate_data).success(function(result) {
                     if(result.data.success == '1') 
                     {
-                        $scope.allAffiliate =result.data.records['affiliate_data'];
-                        $scope.allDesign =result.data.records['design_detail'];
+                        $mdDialog.hide();
+                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
                     } 
                     else
                     {
