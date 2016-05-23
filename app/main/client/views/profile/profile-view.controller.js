@@ -265,6 +265,10 @@
                             $scope.UpdateTableField('address_billing','1',table_name,'id',param,'','');
                             $scope.getClientProfile();
                        }
+                       if(extra=='salesweb') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.getClientProfile();
+                       }
 
                     }
                     else
