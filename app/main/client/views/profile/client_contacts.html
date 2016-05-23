@@ -17,11 +17,6 @@
                                         <tr>
                                             <th class="secondary-text">
                                                 <div class="table-header">
-                                                    <span class="column-title">#</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
                                                     <span class="column-title">First Name</span>
                                                 </div>
                                             </th>
@@ -56,7 +51,6 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="(key,contact) in allContacts">
-                                            <td>{{key}}</td>
                                             <td>{{contact.first_name}}</td>
                                             <td>{{contact.last_name}}</td>
                                             <td>{{contact.location}}</td>
