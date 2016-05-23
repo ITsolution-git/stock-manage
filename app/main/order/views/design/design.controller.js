@@ -261,7 +261,7 @@
 
 
         // ============= UPLOAD IMAGE ============= // 
-        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,key) 
         {
 
                 $scope.column_name=column_name;
@@ -272,6 +272,7 @@
                 $scope.default_image=default_image;
                 $scope.company_id = sessionService.get('company_id');
                 $scope.unlink_url = image_name;
+                $scope.key = key;
 
 
                 $mdDialog.show({
@@ -298,6 +299,14 @@
                                 $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
                                     if(result.data.success=='1')
                                     {
+                                        var array_key = params.key;
+                                        var array_column_name = params.column_name;
+                                        var array_column_name_url = params.column_name+'_url_photo';
+                                        var image_path_url = Image_data.image_path;
+                                        var path = AllConstant.base_path;
+                                        
+                                        params.order_design_position[array_key][array_column_name] = result.data.records;
+                                        params.order_design_position[array_key][array_column_name_url] = path+'api/public/uploads/'+image_path_url+'/'+result.data.records;                                             ;
                                         notifyService.notify("success", result.data.message);
                                         $mdDialog.hide();
                                     }
@@ -326,21 +335,21 @@
                     clickOutsideToClose: false,
                         locals: {
                             params:$scope
-                        },
-                    onRemoving : $scope.designPosition
+                        }
                 });
 
 
         };
 
 
-         $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
+         $scope.deleteImage=function(e,column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,key)
          {
 
               if(default_image == '') {
 
                 var data = {"status": "error", "message": "Please upload image first."}
                           notifyService.notify(data.status, data.message);
+                           e.stopPropagation(); // Stop event from bubbling up
                           return false;
               }
 
@@ -369,13 +378,16 @@
 
                     var data = {"status": "success", "message": "Image Deleted Successfully"}
                                             notifyService.notify(data.status, data.message); 
-                     $scope.designPosition;
+                                         
+                     var column_name_url = column_name+'_url_photo';     
+                     $scope.order_design_position[key][column_name] = '';
+                     $scope.order_design_position[key][column_name_url] = '';
                 });
 
                 
             }
 
-
+          e.stopPropagation(); // Stop event from bubbling up
         }
 
           $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)

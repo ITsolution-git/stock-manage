@@ -212,9 +212,9 @@
                         <div class=""><h3>Upload Artwork</h3></div>
                         <div layout="row" layout-align="space between" layout-wrap>
                            
-                           <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_1','order_design_position','order_design_position',order_design_position.image_1_url_photo,'id',order_design_position.id,order_design_position.image_1)">
+                           <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_1','order_design_position','order_design_position',order_design_position.image_1_url_photo,'id',order_design_position.id,order_design_position.image_1,key)">
                                  <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_1','order_design_position','order_design_position',order_design_position.image_1,'id',order_design_position.id); "></md-icon>
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_1','order_design_position','order_design_position',order_design_position.image_1,'id',order_design_position.id,key); "></md-icon>
                                 </div> 
 
                                 <img  ng-if="order_design_position.image_1" ng-src="{{order_design_position.image_1_url_photo}}" class="popup-image" />
@@ -222,9 +222,9 @@
 
                             </div>
 
-                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_2','order_design_position','order_design_position',order_design_position.image_2_url_photo,'id',order_design_position.id,order_design_position.image_2)">
+                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_2','order_design_position','order_design_position',order_design_position.image_2_url_photo,'id',order_design_position.id,order_design_position.image_2,key)">
                                <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_2','order_design_position','order_design_position',order_design_position.image_2,'id',order_design_position.id);"></md-icon>
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_2','order_design_position','order_design_position',order_design_position.image_2,'id',order_design_position.id,key);"></md-icon>
                                 </div> 
 
                                <img  ng-if="order_design_position.image_2" ng-src="{{order_design_position.image_2_url_photo}}" class="popup-image" />
@@ -232,9 +232,9 @@
 
                             </div>
 
-                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_3','order_design_position','order_design_position',order_design_position.image_3_url_photo,'id',order_design_position.id,order_design_position.image_3)">
+                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_3','order_design_position','order_design_position',order_design_position.image_3_url_photo,'id',order_design_position.id,order_design_position.image_3,key)">
                               <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_3','order_design_position','order_design_position',order_design_position.image_3,'id',order_design_position.id);"></md-icon>
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_3','order_design_position','order_design_position',order_design_position.image_3,'id',order_design_position.id,key);"></md-icon>
                                 </div> 
 
                                 <img  ng-if="order_design_position.image_3" ng-src="{{order_design_position.image_3_url_photo}}" class="popup-image" />
@@ -242,9 +242,9 @@
                             </div>
 
 
-                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_4','order_design_position','order_design_position',order_design_position.image_4_url_photo,'id',order_design_position.id,order_design_position.image_4)">
+                            <div flex="24" class="border-grey div-height img-container" layout-padding ng-click="ImagePopup('image_4','order_design_position','order_design_position',order_design_position.image_4_url_photo,'id',order_design_position.id,order_design_position.image_4,key)">
                                  <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage('image_4','order_design_position','order_design_position',order_design_position.image_4,'id',order_design_position.id)"></md-icon>
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_4','order_design_position','order_design_position',order_design_position.image_4,'id',order_design_position.id,key)"></md-icon>
                                 </div> 
 
                                 <img  ng-if="order_design_position.image_4" ng-src="{{order_design_position.image_4_url_photo}}" class="popup-image" />
