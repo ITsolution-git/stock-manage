@@ -39,7 +39,14 @@ class Client extends Model {
         				 ->where($whereConditions);
                  if($search != '')               
                   {
-                     $result = $result ->Where('c.client_company', 'LIKE', '%'.$search.'%');
+                     $result = $result->Where(function($query) use($search)
+                          {
+                              $query->orWhere('c.client_company', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.first_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.last_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.email', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.phone', 'LIKE', '%'.$search.'%');
+                          });
                   }
 
                   $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])

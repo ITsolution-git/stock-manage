@@ -182,11 +182,10 @@ class ClientController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'c.client_id', 'name' => 'Client Id'),
-                        1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
-                        3=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
-                        4=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
+                        0=>array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        1=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
+                        2=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
+                        3=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
