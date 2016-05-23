@@ -319,7 +319,8 @@ core.factory('AllConstant', AllConstant);
                   deleteImage: 'Are you sure want to delete this image ?',
                   pagination: 15,
                   NoImage: base_path+'api/public/images/noimage.jpg',
-                  currentdate : $filter('date')(new Date(), 'yyyy-MM-dd')
+                  currentdate : $filter('date')(new Date(), 'yyyy-MM-dd'),
+                  base_path:base_path;
                 }
             return constatnt;
         }
