@@ -282,3 +282,4 @@ Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_
 Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');
 Route::post('affiliate/addAffiliate', 'AffiliateController@addAffiliate');
 Route::post('affiliate/getAffiliateData', 'AffiliateController@getAffiliateData');
+Route::post('affiliate/getAffiliateList', 'AffiliateController@getAffiliateList');

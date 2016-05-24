@@ -152,7 +152,7 @@ class Client extends Model {
     				->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
     				->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
             ->leftJoin('staff as stf','stf.id','=',"c.salesperson")
-    				->leftJoin('type as tp','tp.id','=',"c.client_type")
+    				->leftJoin('type as tp','tp.id','=',"c.client_companytype")
             ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
             ->leftJoin('state as st','st.id','=',"c.pl_state")
     				->where('c.client_id','=',$id)
@@ -172,7 +172,7 @@ class Client extends Model {
     			$result['main']['salesweb'] = $value->salesweb;
 
           $result['main']['type_id'] = $value->type_id;
-    			$result['main']['client_type'] = $value->type_name;
+    			$result['main']['client_companytype'] = $value->type_name;
 
     			$result['main']['misc_id'] = $value->misc_id;
           $result['main']['client_desposition'] = $value->misc_value_p;

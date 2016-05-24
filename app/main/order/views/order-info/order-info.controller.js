@@ -9,8 +9,7 @@
     /** @ngInject */
     function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
-          
-          $scope.orderDetail = function(){
+        $scope.orderDetail = function(){
             $("#ajax_loader").show();
             
             var combine_array_id = {};
@@ -46,10 +45,28 @@
                     $scope.designs = [];
                 }
             });
-          }
+        }
+
+        $scope.listAffiliate = function(){
+
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+
+            $http.post('api/public/affiliate/getAffiliateList',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                   $scope.affiliateList = result.data.records;
+                }
+                else {
+                    $scope.affiliateList = [];
+                }
+            });
+        }
 
         $scope.orderDetail();
         $scope.designDetail();
+        $scope.listAffiliate();
 
         $scope.checkDesign = function()
         {

@@ -97,7 +97,7 @@ class AffiliateController extends Controller {
 
         $result = $this->order->orderDetail($data);
 
-        $affiliateList = $this->affiliate->getAffiliateList($data);
+        $affiliateList = $this->affiliate->getAffiliateData($data);
 
         foreach($affiliateList as $list)
         {
@@ -122,6 +122,41 @@ class AffiliateController extends Controller {
                             'records' => $result['order'][0],
                             'affiliateList' => $affiliateList
                             );
+        return response()->json(["data" => $response]);
+        return $this->return_response($data);
+    }
+
+    public function getAffiliateList()
+    {
+        $data = Input::all();
+        $affiliateList = $this->affiliate->getAffiliateList($data);
+
+        foreach($affiliateList as $list)
+        {
+            $sizes = $this->affiliate->getAffiliateSizes($list->id);
+            $total = 0;
+            foreach ($sizes as $size) {
+                $total += $size->qnty;
+            }
+            $list->total = $total;
+        }
+
+        if(!empty($affiliateList))
+        {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $affiliateList
+                                );
+        }
+        else
+        {
+            $response = array(
+                                    'success' => 0,
+                                    'message' => GET_RECORDS,
+                                    'records' => $affiliateList
+                                    );
+        }
         return response()->json(["data" => $response]);
         return $this->return_response($data);
     }

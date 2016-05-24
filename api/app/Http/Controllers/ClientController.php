@@ -42,13 +42,17 @@ class ClientController extends Controller {
 		    $client['login_id'] = Session::get("user_id");
 			$client['client_company'] = (!empty($post['client_company']))?$post['client_company']:'';
 			$client['billing_email'] = (!empty($post['billing_email']))?$post['billing_email']:'';
-			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
 			$client['company_phone']=(!empty($post['company_phone']))?$post['company_phone']:'';
 			$client['client_companytype'] = !empty($post['client_companytype'])? $post['client_companytype'] : '';
 			$client['client_desposition'] = !empty($post['client_desposition'])? $post['client_desposition'] : '';
 			$client['company_url'] = !empty($post['company_url'])? $post['company_url'] : '';
 			$client['created_date']=CURRENT_DATETIME;
-			$client['anniversarydate'] = CURRENT_DATETIME;
+
+			$client['salesweb']=(!empty($post['salesweb']))?$post['salesweb']:'';
+			$client['salesperson']=(!empty($post['salesperson']))?$post['salesperson']:'';
+			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
+			$client['anniversarydate'] = (!empty($post['anniversarydate']))? date('Y-m-d',strtotime($post['anniversarydate'])):'';
+			
 			$client['status']='1';
 			$client['tax_rate']=$company_data[0]->tax_rate;
 
@@ -64,7 +68,9 @@ class ClientController extends Controller {
 			$contact['last_name']=!empty($post['last_name'])? $post['last_name'] : '';
 			$contact['phone']=!empty($post['phone'])? $post['phone'] : '';
 			$contact['email']=!empty($post['email'])? $post['email'] : '';
+			$contact['location']=!empty($post['location'])? $post['location'] : '';
 			$contact['contact_main']='1';	// SET ACTIVE CONDITION
+			
 
 		$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
 
