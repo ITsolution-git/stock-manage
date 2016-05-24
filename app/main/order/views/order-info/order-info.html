@@ -108,7 +108,7 @@
                         <tr ng-repeat="design in designs">
                             <td class="cursor-p" ui-sref="app.order.design({id:design.id})">{{ design.id}} </td>
                             <td>{{ design.design_name}}</td>
-                            <td ng-init="$parent.total = total + design.total_qnty">{{ design.total_qnty}}</td>
+                            <td>{{ design.total_qnty}}</td>
                             <td>{{ design.cnt}}</td>
                             <td class="text-center font-small mdslider pad-0 "><label class="slider">60</label>
                     <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
@@ -133,7 +133,7 @@
                     </tbody> 
                 </table>
                 <div class="p-16 text-right m-r-15">
-                    <span class="h2 text-semibold">Total Units : {{ total}}</span> 
+                    <span class="h2 text-semibold">Total Units : {{ total_unit}}</span> 
                 </div>
             </div>
         </div>

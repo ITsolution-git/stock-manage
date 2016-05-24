@@ -39,7 +39,8 @@
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.data.success == '1') {
-                   $scope.designs = result.data.records;
+                   $scope.designs = result.data.records.all_design;
+                   $scope.total_unit = result.data.records.total_unit;
                 }
                 else {
                     $scope.designs = [];
@@ -167,6 +168,7 @@
                  onRemoving : $scope.designDetail
             });
         }
+
 
         function openinformationDialog(ev,order_id)
         {

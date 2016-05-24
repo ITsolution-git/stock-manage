@@ -2031,7 +2031,7 @@ else
         $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
         $size_data = array();
         $order_design = array();
-
+         $total_unit = 0;
         foreach ($order_design_data as $design) {
            
             $cnt = 0;
@@ -2061,11 +2061,15 @@ else
                 $total_qnty += $size->qnty;
                 $size->affiliate_qnty = 0;
             }
+            $total_unit += $total_qnty;
+
             $design->size_data = $size_data;
             $design->total_qnty = $total_qnty;
             $design->cnt = $cnt;
-            $order_design[] = $design;
+            $order_design['all_design'][] = $design;
+
         }
+        $order_design['total_unit'] = $total_unit;
       
         if (count($order_design) > 0) {
             $response = array(
