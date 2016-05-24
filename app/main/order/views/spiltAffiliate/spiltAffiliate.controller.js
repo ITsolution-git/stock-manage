@@ -12,6 +12,16 @@
         $scope.order_id = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
 
+        var combine_array_id = {};
+        combine_array_id.id = $scope.order_id;
+        combine_array_id.company_id = $scope.company_id;
+
+        $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+            if(result.data.success == '1') {
+               $scope.order = result.data.records[0];
+            }
+        });
+
         var affiliate_data = {};
         affiliate_data ={'company_id':$scope.company_id,'id':$scope.order_id}
         $http.post('api/public/affiliate/getAffiliateData',affiliate_data).success(function(result) {

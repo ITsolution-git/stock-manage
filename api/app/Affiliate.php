@@ -14,7 +14,7 @@ class Affiliate extends Model {
 * @return array $staffData
 */
 
-    public function getAffiliateList($data) {
+    public function getAffiliateData($data) {
         
         $whereConditions = ['oam.order_id' => $data['id']];
         
@@ -65,6 +65,22 @@ class Affiliate extends Model {
                          ->leftJoin('order_design as od','pd.design_id','=','od.id')
                          ->select($listArray)
                          ->where($whereConditions)
+                         ->get();
+
+        return $affiliatesData;
+    }
+
+    public function getAffiliateList($data) {
+        
+        $whereConditions = ['oam.order_id' => $data['id']];
+
+        $listArray = ['a.name as affiliate_name','oam.id','a.id as affiliate_id',DB::raw('COUNT(oam.design_id) as design_total')];
+
+        $affiliatesData = DB::table('order_affiliate_mapping as oam')
+                         ->leftJoin('affiliates as a','oam.affiliate_id','=', 'a.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->GroupBy('oam.affiliate_id')
                          ->get();
 
         return $affiliatesData;
