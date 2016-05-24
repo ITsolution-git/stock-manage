@@ -306,7 +306,56 @@
                     });
                 }
       }
-
+// ============= REMOVE CLIENT LOCATION TABLE RECORD WITH NO MAIN,SHIIPING,BIllING ADDRESS CONDITION ============= // 
+        $scope.RemoveLocationFields = function(table,cond_field,cond_value,main,shipping,billing){
+              
+                var delete_data = {};
+                
+                $scope.name_filed = cond_field;
+                var obj = {};
+                obj[$scope.name_filed] =  cond_value;
+                delete_data.cond = angular.copy(obj);
+                
+                delete_data.table =table;
+                if(main==0)
+                {
+                    if(shipping==0)
+                    {
+                        if(billing==0)
+                        {
+                            var permission = confirm("Are you sure to delete this Record ?");
+                            if (permission == true) 
+                            {
+                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                                {
+                                    if(result.data.success=='1')
+                                    {
+                                        notifyService.notify('success',result.data.message);
+                                        $scope.getClientProfile();
+                                    }
+                                    else
+                                    {
+                                         notifyService.notify('error',result.data.message);
+                                    }
+                                });
+                            }
+                        }
+                        else
+                        {
+                            notifyService.notify('error','Please select another Billing Location first !');
+                        }
+                    }
+                    else
+                    {
+                        notifyService.notify('error','Please select another Shipping Location first !');
+                    }
+                }
+                else
+                {
+                    notifyService.notify('error','Please select another Main Location first !');
+                }
+                
+      }
 // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
         {

@@ -9,10 +9,16 @@
         .controller('DashboardController', DashboardController);
 
     /** @ngInject */
-    function LoginController(sessionService,$rootScope,$resource,notifyService,$state)
+    function LoginController(sessionService,$rootScope,$resource,notifyService,$state,AllConstant)
     {
         var vm = this;
         // Data
+        vm.path = AllConstant.base_path;
+
+        vm.video_image = vm.path+"assets/images/login_bg/bg_vid.jpg";
+        vm.video_1 = vm.path+"assets/images/login_bg/video1.webm";
+        vm.video_2 = vm.path+"assets/images/login_bg/video1.mp4";
+        
         vm.Login_verify = Login_verify;
         function Login_verify(data)
         {
