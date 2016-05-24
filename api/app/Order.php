@@ -81,7 +81,7 @@ class Order extends Model {
          $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
 
-        $listArray = ['order.*','client.client_company','misc_type.value as approval','staff.first_name',
+        $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','staff.first_name',
                       'staff.last_name','users.name','cc.first_name as client_first_name',
                       'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
 
