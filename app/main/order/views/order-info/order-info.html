@@ -260,14 +260,14 @@
                         <thead>
                         <th>Company</th>
                         <th>Total # of Units</th>
-                        <th># of Designs</th>
+                        <th>Total # of Designs</th>
                         <th></th>
                         </thead>
                         <tbody class="scrollable" ms-scroll>
-                            <tr ng-repeat="affiliateOrder in ::vm.affiliateOrders" class="cursor-p">
-                                <td>{{ affiliateOrder.Company}}</td>
-                                <td>{{ affiliateOrder.units}}  
-                                <td>{{ affiliateOrder.designs}}</td>
+                            <tr ng-repeat="affiliateOrder in affiliateList" class="cursor-p">
+                                <td>{{ affiliateOrder.affiliate_name}}</td>
+                                <td>{{ affiliateOrder.total}}  
+                                <td>{{ affiliateOrder.design_total}}</td>
                                 <td class="text-right"> 
                                     <a href="#" ui-sref="app.purchaseOrder.affiliatePO">VIEW </a>
                                 </td>
