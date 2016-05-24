@@ -152,7 +152,7 @@
                         </div>
 
                     </div>
-                    <div layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
+                    <div ng-show="success==1" layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                         <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20" >
                             <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name,'add',product.name,'nocolor')" layout="row" layout-align="center center">
                                 <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
@@ -160,7 +160,20 @@
                         </div>
                         <div tasty-pagination class="tasty-page" flex="100"></div>
                     </div>
-
+                    <div ng-show="success==0" layout="row" flex="80" layout-wrap="nowrap" layout-align="start start">
+                        <div class="filter-product-image-wrap" flex="50" >
+                                No Records Found
+                        </div>
+                    </div>
+                    <!-- <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+                       <table class="simple">
+                            <thead>
+                                <tr>
+                                    <th>No Records Found</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div> -->
                 </div>
 
             </div>
