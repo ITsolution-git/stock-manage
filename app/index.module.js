@@ -39,6 +39,8 @@
             'ngTasty',
 
             // image uploading module
-            'naif.base64'
+            'naif.base64',
+            //Admin settings
+            'app.settings'
         ]);
 })();

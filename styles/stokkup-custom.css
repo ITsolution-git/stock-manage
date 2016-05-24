@@ -176,3 +176,55 @@ hr .style1 {
   margin: 0 auto;
   border: 0 !important;
 }
+
+.imageLineHeight {
+  line-height: 0 :important;
+}
+
+.borderTopBottom {
+  border-top: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.marginCalender {
+  width: 98% !important ;
+}
+
+.marginTopCalender {
+  padding-top: 20px !important;
+}
+
+
+.spacingOrderNo {
+      padding: 0;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.ms-navigation .ms-navigation-node:not(.group).has-children:not(.collapsed) {
+  background-color: #ffffff;
+}
+
+.basicInfoStyle {
+  font-family: 'Helvetica Bold', 'Helvetica';
+    font-weight: 700;
+    font-style: normal;
+    text-decoration: underline;
+    font-size: 13px;
+}
+
+.settings-margin-0 {
+  margin : 10px !important;
+}
+
+.margin-top-25 {
+      margin-top: 25px !important;
+}
+
+md-input-container > label {
+  color : #000 !important;
+}
+
+[md-theme="default"] .md-accent-bg {
+    background-color: rgb(3,155,229);
+}

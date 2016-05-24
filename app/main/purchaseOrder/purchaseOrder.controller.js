@@ -8,7 +8,8 @@
     /** @ngInject */
     function PurchaseOrderController(PurchaseOrderData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder) {
         var vm = this;
-
+        vm.searchQuery = "";
+        
         // Data
         vm.purchaseOrders = PurchaseOrderData.data;
         //Datatable

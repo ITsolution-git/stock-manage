@@ -331,7 +331,7 @@
 
          $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
          {
-
+            
               if(default_image == '') {
 
                 var data = {"status": "error", "message": "Please upload image first."}

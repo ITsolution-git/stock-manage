@@ -44,9 +44,9 @@
                         </div>
                     </md-card-content>
                     <div layout-align="end start"  flex="20" layout="row">
-                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                            </md-button>
+                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openReceivingInformationDialog($event,order.id)">
+                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                        </md-button>
                     </div>
                 </md-card>
             </div>
@@ -127,7 +127,7 @@
                         </div>
                     </md-card-content>
                 </md-card>
-                <md-card layout="row">
+                <md-card layout="row" class="borderTopBottom">
                     <md-card-content flex="40" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
                             <p class="font-14 chrome-weight">Order Line Total: 500</p>
@@ -135,14 +135,20 @@
                     </md-card-content>
                     <md-card-content flex="40" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Receiveds: 500</p>
+                            <p class="font-14 chrome-weight">Order Line Received: 500</p>
                         </div>
                     </md-card-content>
                 </md-card>
 
-                <hr>
-
                 <md-card layout="row">
+                    <md-card-content flex="40" layout="column">
+                        <div layout="row" layout-wrap class="marginProduct">
+                            <p class="font-14 chrome-weight"> </p>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                
+                <md-card layout="row" >
                     <md-card-content flex="80" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
@@ -210,7 +216,7 @@
                         </div>
                     </md-card-content>
                 </md-card>
-                <md-card layout="row">
+                <md-card layout="row" class="borderTopBottom">
                     <md-card-content flex="40" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
                             <p class="font-14 chrome-weight">Order Line Total: 500</p>
@@ -218,7 +224,15 @@
                     </md-card-content>
                     <md-card-content flex="40" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Receiveds: 500</p>
+                            <p class="font-14 chrome-weight">Order Line Received: 500</p>
+                        </div>
+                    </md-card-content>
+                </md-card>
+
+                <md-card layout="row">
+                    <md-card-content flex="40" layout="column">
+                        <div layout="row" layout-wrap class="marginProduct">
+                            <p class="font-14 chrome-weight"> </p>
                         </div>
                     </md-card-content>
                 </md-card>
