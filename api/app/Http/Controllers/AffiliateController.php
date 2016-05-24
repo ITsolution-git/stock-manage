@@ -113,8 +113,8 @@ class AffiliateController extends Controller {
         $assigned = $this->affiliate->getAssignCount($data);
         $not_assigned = $this->affiliate->getUnassignCount($data);
 
-        $result['order'][0]->assign = $assigned[0]->total;
-        $result['order'][0]->total = $not_assigned[0]->total;
+        $result['order'][0]->assign = $assigned[0]->total ? $assigned[0]->total : '0';
+        $result['order'][0]->total = $not_assigned[0]->total ? $not_assigned[0]->total : '0';
 
         $response = array(
                             'success' => 1, 
