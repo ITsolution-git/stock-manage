@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'driver' => 'smtp',
+	'driver' => env('MAIL_DRIVER', 'sparkpost'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,8 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'no-reply@stokkup.com', 'name' => 'Stokkup'],
-
+	'from' => ['address' => 'sandbox@sparkpostbox.com', 'name' => 'Stokkup'],
 	/*
 	|--------------------------------------------------------------------------
 	| E-Mail Encryption Protocol
