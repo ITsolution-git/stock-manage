@@ -228,3 +228,52 @@ md-input-container > label {
 [md-theme="default"] .md-accent-bg {
     background-color: rgb(3,155,229);
 }
+
+#priceGridTable tbody tr td {
+      width: 50% !important;
+}
+
+.userManagementTableWidth {
+      width: 45% !important;
+}
+
+#priceGridTable tbody tr td, #userManagementTable tbody tr td {
+  padding-left: 1% !important;
+}
+
+.createPriceGridLink {
+  top : 40px;
+  right: 40px;
+  font-family: 'Helvetica';
+    font-style: normal;
+}
+
+#priceGridTable tbody tr td md-icon, #priceGridTable tbody tr td, #userManagementTable tbody tr td md-icon, #userManagementTable tbody tr td {
+  color: #000;
+}
+
+#priceGridTable thead tr th, #userMgmnt thead tr th {
+      margin-bottom: 15px;
+}
+
+.priceGridTableContainer,  {
+      padding-left: 25px;
+    padding-right: 25px;
+}
+
+
+#userMgmnt tr > td:first-child, .userMgmnt thead > tr > th:first-child {
+  width: 40% !important;
+}
+
+.userMgmntTdWidth {
+  width: 40% !important;
+}
+
+.userMgmntPadding {
+  padding: 20px !important;
+}
+
+#userMgmnt tr > td:first-child, #userMgmnt tr > th:first-child {
+  width: 45% !important;
+}

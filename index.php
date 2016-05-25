@@ -174,6 +174,10 @@
         <script src="app/main/settings/settings.module.js"></script>
     <script src="app/main/settings/settings.controller.js"></script>
     <script src="app/main/settings/views/userProfile/userProfile.controller.js"></script>
+    <script src="app/main/settings/views/priceGrid/priceGrid.controller.js"></script>
+    <script src="app/main/settings/views/companyProfile/companyProfile.controller.js"></script>
+    <script src="app/main/settings/views/userManagement/userManagement.controller.js"></script>
+    <script src="app/main/settings/views/affiliate/affiliate.controller.js"></script>
     <!--Datatable Scrolling-->
     <script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
     <link href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css" rel="stylesheet">

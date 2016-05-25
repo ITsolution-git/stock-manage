@@ -32,6 +32,56 @@
                 },resolve: {
                    
                 }
+            }).state('app.settings.priceGrid', {
+                url  : '/priceGrid',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/priceGrid/priceGrid.html',
+                        controller : 'PriceGridController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.companyProfile', {
+                url  : '/companyProfile',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/companyProfile/companyProfile.html',
+                        controller : 'CompanyProfileController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.userManagement', {
+                url  : '/userManagement',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/userManagement/userManagement.html',
+                        controller : 'UserManagementController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.affiliate', {
+                url  : '/affiliate',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/affiliate/affiliate.html',
+                        controller : 'AffiliateController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.support', {
+                url  : '/support',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/support/support.html',
+                        controller : 'SupportController as vm'
+                    }
+                },resolve: {
+                   
+                }
             })
             ;
 
@@ -56,9 +106,9 @@
             weight     : 1
         });
 
-        msNavigationServiceProvider.saveItem('fuse.settings.xyzw', {
+        msNavigationServiceProvider.saveItem('fuse.settings.companyProfile', {
             title      : 'Company Profile',
-            state      : 'app.settings',
+            state      : 'app.settings.companyProfile',
             stateParams: {'id': 2},
             weight     : 2
         });
@@ -70,21 +120,21 @@
             weight     : 3
         });
 
-        msNavigationServiceProvider.saveItem('fuse.settings.xyedz', {
+        msNavigationServiceProvider.saveItem('fuse.settings.userManagement', {
             title      : 'User Management',
-            state      : 'app.settings',
+            state      : 'app.settings.userManagement',
             stateParams: {'id': 4},
             weight     : 4
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.xyddez', {
+        msNavigationServiceProvider.saveItem('fuse.settings.priceGrid', {
             title      : 'Price Grid',
-            state      : 'app.settings',
+            state      : 'app.settings.priceGrid',
             stateParams: {'id': 5},
             weight     : 5
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.xyeadz', {
+        msNavigationServiceProvider.saveItem('fuse.settings.affiliate', {
             title      : 'Affiliate',
-            state      : 'app.settings',
+            state      : 'app.settings.affiliate',
             stateParams: {'id': 6},
             weight     : 6
         });
@@ -94,9 +144,9 @@
             stateParams: {'id': 7},
             weight     : 7
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.xydsz', {
+        msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',
-            state      : 'app.settings',
+            state      : 'app.settings.support',
             stateParams: {'id': 8},
             weight     : 8
         });
