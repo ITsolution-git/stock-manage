@@ -254,6 +254,8 @@ Route::post('product/productDetailData', 'ProductController@productDetailData');
 Route::post('product/addProduct', 'ProductController@addProduct');
 Route::post('product/designProduct', 'ProductController@designProduct');
 Route::post('product/deleteAddProduct', 'ProductController@deleteAddProduct');
+Route::post('product/getCustomProduct', 'ProductController@getCustomProduct');
+
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
