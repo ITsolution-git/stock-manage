@@ -6,6 +6,7 @@ require_once(app_path() . '/constants.php');
 
 use App\Product;
 use App\Common;
+use App\Order;
 use App\Api;
 use Input;
 use Illuminate\Support\Facades\Session;
@@ -23,11 +24,12 @@ class ProductController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Product $product,Common $common,Api $api) {
+    public function __construct(Product $product,Common $common,Api $api,Order $order) {
 
         $this->product = $product;
         $this->common = $common;
         $this->api = $api;
+        $this->order = $order;
        
     }
 
@@ -314,12 +316,24 @@ public function create_dir($dir_path) {
     public function addProduct() {
 
         $post = Input::all();
-        $post['created_date']=date('Y-m-d');
+        /*$post['created_date']=date('Y-m-d');
         $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
         $post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
         $message = INSERT_RECORD;
-        $success = 1;
+        $success = 1;*/
+
+        
+        $order_data = $this->order->getOrderByDesign($post['id']);
+        $price_id = $order_data[0]->price_id;
+
+        $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','id' => $price_id),array());
+
+        $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
+        $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
+        $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
+        $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
+        $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
        
         
         $data = array("success"=>$success,"message"=>$message);
