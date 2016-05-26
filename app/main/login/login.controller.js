@@ -7,7 +7,8 @@
         .controller('LoginController', LoginController)
         .controller('LogoutController', LogoutController)
         .controller('DashboardController', DashboardController)
-        .controller('ForgetController',ForgetController);
+        .controller('ForgetController',ForgetController)
+        .controller('ResetController',ResetController);
 
 
     /** @ngInject */
@@ -99,7 +100,7 @@
 
         $scope.forgot_password = function(email)
         {
-            // $("#ajax_loader").show();
+             $("#ajax_loader").show();
              var user_data = {};
              user_data = email;
              $http.post('api/public/admin/forgot_password',user_data).success(function(result,event, status, headers, config) {
@@ -121,4 +122,61 @@
         }
 
     }
+    function ResetController($document, $window, $timeout, $mdDialog,$state, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
+    {
+              var vm = this;
+        // Data
+        vm.path = AllConstant.base_path;
+        vm.video_image = vm.path+"assets/images/login_bg/bg_vid.jpg";
+        vm.video_1 = vm.path+"assets/images/login_bg/video1.webm";
+        vm.video_2 = vm.path+"assets/images/login_bg/video1.mp4";
+        
+
+           // $("#ajax_loader").show();
+            $scope.string = {};
+            //console.log(234); return false;
+            $scope.string.string = $stateParams.string;
+            $http.post('api/public/admin/check_user_password',$scope.string).success(function(result,event, status, headers, config) {
+                  if(result.data.success==0)
+                  {
+                      $("#ajax_loader").hide();
+                      var data = {"status": "error", "message": result.data.message}
+                      notifyService.notify(data.status, data.message);
+                      $state.go('app.login');
+                      return false;
+                  }
+            });
+
+
+            $scope.change_password = function($user)
+            {
+                // $("#ajax_loader").show();
+                 $scope.data = {};
+                 $scope.data.form_data = $user;
+                 $scope.data.string = $stateParams.string;
+                // console.log($scope.data); return false;
+                 $http.post('api/public/admin/change_password', $scope.data).success(function(result,event, status, headers, config) {
+
+                    if(result.data.success==0)
+                    {
+                        var data = {"status": "error", "message": result.data.message}
+                        notifyService.notify(data.status, data.message);
+                        $("#ajax_loader").hide();
+                        return false;
+                    }
+                    else
+                    {
+                        var data = {"status": "success", "message": result.data.message}
+                        notifyService.notify(data.status, data.message);
+                        $state.go('app.login');
+                        $("#ajax_loader").hide();
+                        return false;
+                    }
+
+                  });
+            }
+
+        }
+
+    
 })();
