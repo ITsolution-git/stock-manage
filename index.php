@@ -19,6 +19,16 @@
               rel='stylesheet' type='text/css'>
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.css">
+        <script>
+            var timer;
+            function loadscreen()
+            {
+                $("#ajax_loader").show();
+                setTimeout(function () {
+                    $("#ajax_loader").hide();
+                }, 3000);
+            }
+        </script>
     </head>
 
     <!--[if lt IE 10]>
@@ -27,12 +37,16 @@
     <![endif]-->
 
     <body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm"
-          class="{{state.current.bodyClass|| ''}}">
+          class="{{state.current.bodyClass|| ''}}" data-custom-background data-off-canvas-nav onload="loadscreen();">
   
-  <div id="ajax_loader" class="overlay-loader">
+<!--   <div id="ajax_loader" class="overlay-loader">
     <div class="loader-background"></div>
-    <img class="loader-icon spinning-cog" src="assets/images/loader/load.gif">
-  </div>
+    <img class="loader-icon spinning-cog" src="assets/images/loader/load2.gif">
+  </div> -->
+
+<div class="loaderouter" id="ajax_loader" style="display: hide;">
+    <div class="loader">Loading...</div>
+</div>
         <!-- SPLASH SCREEN 
     <ms-splash-screen id="splash-screen">
         <div class="center">

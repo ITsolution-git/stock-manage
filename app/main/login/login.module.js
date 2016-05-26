@@ -32,6 +32,32 @@
                     }
                 }
             })
+        .state('app.forget', {
+                url  : '/forget',
+                views: {
+                    'main@'                       : {
+                        templateUrl: 'app/core/layouts/content-only.html',
+                        controller : 'MainController as vm'
+                    },
+                    'content@app.forget': {
+                        templateUrl: 'app/main/login/forgot-password.html',
+                        controller : 'ForgetController as vm'
+                    }
+                }
+            })
+        .state('app.reset', {
+                url  : '/reset/:string',
+                views: {
+                    'main@'                       : {
+                        templateUrl: 'app/core/layouts/content-only.html',
+                        controller : 'MainController as vm'
+                    },
+                    'content@app.reset': {
+                        templateUrl: 'app/main/login/reset-password.html',
+                        controller : 'ResetController as vm'
+                    }
+                }
+            })
         .state('app.dashboard', {
                 url  : '/dashboard',
                 views: {

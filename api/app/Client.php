@@ -215,7 +215,7 @@ class Client extends Model {
           $result['sales']['last_name'] = $value->sales_lname;
     			$result['sales']['salespricegrid'] = $value->salespricegrid;
           $result['sales']['price_grid'] = $value->price_grid;
-          $result['sales']['anniversarydate'] = date('m/d/Y',strtotime($result['sales']['anniversarydate']));
+          $result['sales']['anniversarydate'] = ($result['sales']['anniversarydate']=='0000-00-00')? '': date('m/d/Y',strtotime($result['sales']['anniversarydate']));
 
     			$result['tax']['tax_id'] = $value->tax_id;
     			$result['tax']['tax_rate'] = $value->tax_rate;

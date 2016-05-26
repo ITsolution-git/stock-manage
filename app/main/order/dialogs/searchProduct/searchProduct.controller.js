@@ -107,6 +107,7 @@
                 $scope.category_filter = response.category_filter;
                 $scope.color_filter = response.color_filter;
                 $scope.size_filter = response.size_filter;
+                $scope.success = response.success;
                 return {
                   'rows': response.rows,
                   'header': header,
