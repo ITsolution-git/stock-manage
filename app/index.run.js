@@ -11,14 +11,12 @@
         // Store state in the root scope for easy access
         
         $rootScope.state = $state;
-
         var checkSession = $resource('api/public/auth/session',null,{
             post : {
                 method : 'get'
             }
         });
         
-       
         // Activate loading indicator
         var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function ($stateChangeStart, $next)
         {   
@@ -36,9 +34,13 @@
                     // console.log(sessionService.get('company_id'));
                     var userId = result.data.user_id;            
                     if(userId === '' || userId === null) 
-                    {                    
-                        if($next.name.indexOf('login') === -1) 
+                    {                   
+                        if($next.name.indexOf('login') == -1 || $next.name.indexOf('forget') == -1) 
                         {                                        
+                            
+                        }
+                        else
+                        {
                             $state.go('app.login');
                             notifyService.notify("error", "Please signin first.");
                             $stateChangeStart.preventDefault();
@@ -47,8 +49,12 @@
                 }
                 else
                 {
-                    if($next.name.indexOf('login') === -1) 
+                    if($next.name.indexOf('login') == -1 || $next.name.indexOf('forget') == -1) 
                     {                                        
+                        
+                    }
+                    else
+                    {
                         $state.go('app.login');
                         notifyService.notify("error", "Please signin first.");
                         $stateChangeStart.preventDefault();
