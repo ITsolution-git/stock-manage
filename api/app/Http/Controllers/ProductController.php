@@ -246,11 +246,8 @@ public function create_dir($dir_path) {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
 
-<<<<<<< HEAD
-        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data'],'success' => 1);
-=======
+
         $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data'],'success'=>$success);
->>>>>>> fuse_php
         return  response()->json($data);
     }
 
