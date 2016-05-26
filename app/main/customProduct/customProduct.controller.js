@@ -68,6 +68,7 @@
             responsive: true
         };
         // Methods
+        vm.openCustomProductDialog = openCustomProductDialog;
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
 
@@ -80,5 +81,24 @@
             var query = vm.searchQuery;
             vm.tableInstance.search(query).draw();
         }
+
+
+        function openCustomProductDialog(ev, product_id)
+        {
+
+            $mdDialog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .show({
+                controller: 'CustomProductDialogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/customProduct/dialogs/customProduct/customProduct-dialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    product_id: product_id,
+                    event: ev
+                }
+            });
+        }
+
     }
 })();

@@ -64,7 +64,8 @@
     <script src="scripts/vendor.js"></script>
     <!--<script src="scripts/mdPickers.min.js"></script>-->
     <!--<script src="scripts/multiselect/lodash.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>-->
+    <script src="scripts/other/lodash.js"></script>
     <script>
      _.contains = _.includes;
     </script>
@@ -145,7 +146,6 @@
     <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
     <script src="app/main/order/dialogs/searchProductView/searchProductView.controller.js"></script>
     <script src="app/main/order/dialogs/searchProduct/searchProduct.controller.js"></script>
-    <script src="app/main/order/dialogs/order/order-dialog.controller.js"></script>
     <script src="app/main/order/dialogs/addSplitAffiliate/addSplitAffiliate.controller.js"></script>
     <script src="app/main/order/dialogs/addProduct/addProduct.controller.js"></script>
     <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
@@ -170,18 +170,32 @@
     <!--Custom Product-->
     <script src="app/main/customProduct/customProduct.module.js"></script>
     <script src="app/main/customProduct/customProduct.controller.js"></script>
+    <script src="app/main/customProduct/dialogs/customProduct/customProduct-dialog.controller.js"></script>
 
     <!--Receiving--> 
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
+
+
     <!--Datatable Scrolling-->
-    <script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
-    <link href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css" rel="stylesheet">
+
+    <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
+    <link href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css" rel="stylesheet">-->
+    <script src="scripts/other/dataTables.scroller.min.js"></script>
+    <link rel="stylesheet" href="styles/other/scroller.dataTables.min.css">
     <!--Kindo DatePicker-->
-    <script src="//cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"></script>
+    <!--<script src="//cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"></script>
     <script src="//cdn.kendostatic.com/2014.2.716/js/kendo.angular.min.js"></script>
     <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.common.min.css" rel = "stylesheet" / >
-    <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css" rel = "stylesheet" / >
+    <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css" rel = "stylesheet" / >-->
+    <script src="scripts/other/kendo.all.min.js"></script>
+    <script src="scripts/other/kendo.angular.min.js"></script>
+    
+
+
+    <link rel="stylesheet" href="styles/other/kendo.common.min.css">
+    <link rel="stylesheet" href="styles/other/kendo.default.min.css">
+    
 
 </body>
 </html>
