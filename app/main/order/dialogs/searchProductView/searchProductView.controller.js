@@ -91,14 +91,28 @@
             combine_array_id.product_id = product_id;
             combine_array_id.productData = productData;
 
-
-
+            $scope.execute = 0;
+            angular.forEach(productData, function(size) {
+                if(size.qnty > 0)
+                {
+                    $scope.execute = 1;
+                }
+            });
+            
+            if($scope.execute == 0)
+            {
+                var data = {"status": "error", "message": "Please enter quantity to add product"}
+                notifyService.notify(data.status, data.message);
+            }
+            else
+            {
              $http.post('api/public/product/addProduct',combine_array_id).success(function(result) 
                 {
-                    $mdDialog.hide();
+                    //$mdDialog.hide();
                     var data = {"status": "success", "message": "Product Added Successfully."}
                      notifyService.notify(data.status, data.message);
                 });
+            }
 
         };
 
