@@ -12,23 +12,22 @@
             <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
                 <md-input-container class="md-block first-box" flex-gt-sm>
                
-                    <input placeholder="Product Name" ng-model="product.name">
+                    <input placeholder="Product Name" ng-model="productDetail.name"  ui-event="{ change : 'updateProduct(\'name\',productDetail.id,productDetail.name,\'products\',\'id\')' }">
                 </md-input-container>
-                <md-input-container class="first-box">
-                     <label>Company</label>
-                    <!-- <md-select ng-model="product.client_id">
-                        <md-option ng-repeat="data in allCompany" value="{{data.client_id}}">
-                            {{data.client_company}}
-                        </md-option>
-                    </md-select> -->
-
-                   <!--  <div class="col-md-10 nopad-form" ng-dropdown-multiselect="" options="allColor" selected-model="allProductColorSize['colorData']" extra-settings="colorsettings" translation-texts="colorcustomTexts" events="colorEvents">
-                    </div> -->
-
-                    <div ng-dropdown-multiselect="" options="example6data" selected-model="example6model" extra-settings="example6settings"></div>
-
-                </md-input-container>
+               
             </div>
+
+            <div layout-align="start center" class="item ng-scope layout-align-start-center">
+                <i class="icon icon-plus-circle s40"></i>
+                <div class="name secondary-text text-center ng-binding">Add Color</div>
+            </div>
+
+            <div layout-align="start center" class="item ng-scope layout-align-start-center">
+                <i class="icon icon-plus-circle s40"></i>
+                <div class="name secondary-text text-center ng-binding">Add Size</div>
+            </div>
+
+
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
                     <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
