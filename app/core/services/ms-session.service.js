@@ -82,16 +82,16 @@
 	                }
 	                else
 	                {
-	                    if($next.name == 'app.login' || $next.name == 'app.forget'  || $next.name == 'app.reset') 
+	                    /*if($next.name == 'app.login' || $next.name == 'app.forget'  || $next.name == 'app.reset') 
 	                    {                                        
 	                        console.log('break,else');
 	                    }
 	                    else
-	                    {
+	                    {*/
 	                        $state.go('app.login');
 	                        notifyService.notify("error", "Please signin first.");
-	                        $stateChangeStart.preventDefault();
-	                    }
+	                        //$stateChangeStart.preventDefault();
+	                    //}
 	                }
             });
 
