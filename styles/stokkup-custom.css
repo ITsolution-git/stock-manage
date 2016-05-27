@@ -187,7 +187,7 @@ text-align: left;
 }
 .box-typ2:last-child, .box-typ2:nth-child(5n) {
 	border:1px solid #ccc;
-=======
+}
 .loaderouter{
     position:fixed;
     width:100%;
@@ -261,5 +261,4 @@ text-align: left;
         box-shadow: 0 -2em #31c0be;
         height: 5em;
     }
->>>>>>> a152620fc55b8d87624fe85187593a9ad365a248
 }
