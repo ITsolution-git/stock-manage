@@ -5,18 +5,17 @@
                     <div class="title" layout-padding><span class="basicInfoStyle">COMPANY PRICE GRIDS</span></div>
                 </div>
                 <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
-                    <a class="link-back cursor-p createPriceGridLink" ui-sref="">CREATE NEW PRICE GRID</a>
+                    <a class="link-back cursor-p createPriceGridLink" ng-click="vm.openCreatePriceGridDialog($event)">CREATE NEW PRICE GRID</a>
                 </div>
             </div>
-            <div class="ms-responsive-table-wrapper priceGridTableContainer">
-                
-                <table class="scrol table3 row-border hover" id="priceGridTable" dt-options="vm.dtOptions"  >
+            <div class="ms-responsive-table-wrapper priceGridTableContainer userMgmntPadding">
+                <table class="scrol table3 row-border hover" id="userMgmnt" dt-options="vm.dtOptions"  >
                     <thead>
 
                         <tr>
-                            <th class="secondary-text">
+                            <th class="secondary-text userMgmntTdWidth">
                                 <div class="table-header">
-                                    <span class="column-title">Price Grid  Name</span>
+                                    <span class="column-title">Price Grid Name</span>
                                 </div>
                             </th>
                             <th class="secondary-text">
@@ -26,8 +25,8 @@
                     </thead>
                    <tbody class="scrollable" ms-scroll>
                         <tr class="cursor-p">
-                            <td class="priceGridTableContainer">123</td>
-                            <td class="text-right"> 
+                            <td class="">Price Grid Name</td>
+                            <td class="text-right "> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -35,12 +34,17 @@
                                     <md-menu-content width="4">
                                         <md-menu-item>
                                             <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                                Edit Price Grid
+                                                Edit User
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
                                             <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                                Delete Price Grid
+                                                Reset User Password
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Delete User
                                             </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
@@ -48,8 +52,8 @@
                             </td>
                         </tr>
                         <tr class="cursor-p">
-                            <td class="priceGridTableContainer">123</td>
-                            <td class="text-right"> 
+                            <td class="">Price Grid Name</td>
+                            <td class="text-right "> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -57,12 +61,17 @@
                                     <md-menu-content width="4">
                                         <md-menu-item>
                                             <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                                Edit Price Grid
+                                                Edit User
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
                                             <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                                Delete Price Grid
+                                                Reset User Password
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Delete User
                                             </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
@@ -70,8 +79,8 @@
                             </td>
                         </tr>
                         <tr class="cursor-p">
-                            <td>123</td>
-                            <td class="text-right"> 
+                            <td class="">Price Grid Name</td>
+                            <td class="text-right "> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -79,12 +88,71 @@
                                     <md-menu-content width="4">
                                         <md-menu-item>
                                             <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                                Edit Price Grid
+                                                Edit User
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
                                             <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                                Delete Price Grid
+                                                Reset User Password
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Delete User
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+                        </tr>
+                        <tr class="cursor-p">
+                            <td class="">Price Grid Name</td>
+                            <td class="text-right "> 
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4">
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Edit User
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Reset User Password
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Delete User
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+                        </tr>
+                        <tr class="cursor-p">
+                            <td class="">Price Grid Name</td>
+                            <td class="text-right "> 
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4">
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Edit User
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Reset User Password
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                                Delete User
                                             </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
@@ -93,6 +161,7 @@
                         </tr>
                     </tbody> 
                 </table>
+         
             </div>
         </div>
     </div>

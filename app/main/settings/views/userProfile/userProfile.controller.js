@@ -11,42 +11,39 @@
 
     function UserProfileController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
-  $scope.openFromLeft = function() {
-    $mdDialog.show(
-      $mdDialog.alert()
-        .clickOutsideToClose(true)
-        .title('Opening from the left')
-        .textContent('Closing to the right!')
-        .ariaLabel('Left to right demo')
-        .parent(angular.element(document.body))
-        .ok('Nice!')
-        // You can specify either sting with query selector
-        .openFrom('#left')
-        // or an element
-        .closeTo(angular.element(document.querySelector('#right')))
-    );
-  };
-  
-  $scope.openOffscreen = function() {
-    $mdDialog.show(
-      $mdDialog.alert()
-        .clickOutsideToClose(true)
-        .title('Opening from offscreen')
-        .textContent('Closing to offscreen')
-        .ariaLabel('Offscreen Demo')
-        .parent(angular.element(document.body))
-        .ok('Amazing!')
-        // Or you can specify the rect to do the transition from
-        .openFrom({
-          top: -50,
-          width: 30,
-          height: 80
-        })
-        .closeTo({
-          left: 1500
-        })
-    );
-  };
+      var vm = this;
+
+        vm.openChangePasswordialog = openChangePasswordialog;
+
+        $scope.cancel = function () {
+            $mdDialog.hide();
+        };
+        
+        /**
+         * Close dialog
+         */
+        function closeDialog()
+        {
+            $mdDialog.hide();
+        }
+
+        function openChangePasswordialog(ev, settings)
+        {
+            $mdDialog.show({
+                controller: 'ChangePasswordDialogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/settings/dialogs/changePassword/changePassword-dialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Settings: settings,
+                    Settings: vm.settings,
+                    event: ev
+                }
+                
+            });
+        }
 
     }
 })();

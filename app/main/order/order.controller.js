@@ -240,7 +240,7 @@
             $mdDialog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .show({
                 controller: 'OrderDialogController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/order/`dialog.html',
+                templateUrl: 'app/main/order/dialogs/order/dialog.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,

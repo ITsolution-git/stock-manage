@@ -1,0 +1,46 @@
+<md-dialog class="task-dialog createPriceGridDialog"  style="width:100% !important">
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">CREATE NEW PRICE GRID</span>
+                <md-button  ng-click="cancel()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+        <md-content>
+            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                <!-----------------Charges Tab-------------------->
+                <md-tab label="Charges">
+                    <div ng-include src="'app/main/settings/views/priceGrid/priceGrid_charges.html'"></div>
+                </md-tab>
+                <!-----------------Charges List Tab-------------------->
+                <md-tab label="Charges List">
+                    <div ng-include src="'app/main/settings/views/priceGrid/priceGrid_chargesList.html'"></div>
+                </md-tab>
+                <!-----------------Screen Printing Primary Tab-------------------->
+                <md-tab label="Screen Printing Primary">
+                    <div ng-include src="'app/main/settings/views/priceGrid/priceGrid_screenPrintingPrimary.html'"></div>
+                </md-tab>
+                <!-----------------Screen Printing Secondary Tab-------------------->
+                <md-tab label="Screen Printing Secondary">
+                    <div ng-include src="'app/main/settings/views/priceGrid/priceGrid_screenPrintingSecondary.html'"></div>
+                </md-tab>
+                <!-----------------Embroidery Tab-------------------->
+                <md-tab label="Embroidery">
+                    <div ng-include src="'app/main/settings/views/priceGrid/priceGrid_embroidery.html'"></div>
+                </md-tab>
+                <!-----------------Direct to Garment Tab-------------------->
+                <md-tab label="Direct to Garment">
+                    <div ng-include src="'app/main/settings/views/priceGrid/priceGrid_directToGarment.html'"></div>
+                </md-tab>
+                <!-----------------Garment Markup Tab-------------------->
+                <md-tab label="Garment Markup">
+                    <div ng-include src="'app/main/settings/views/priceGrid/priceGrid_garmentMarkup.html'"></div>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+</div>
+</md-dialog>

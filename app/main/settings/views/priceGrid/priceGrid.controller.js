@@ -12,15 +12,42 @@
     {
         var originatorEv;
         var vm = this ;
-        vm.openMenu = function ($mdOpenMenu, ev) {
+        /*vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
             $mdOpenMenu(ev);
+        };*/
+
+        vm.openCreatePriceGridDialog = openCreatePriceGridDialog;
+
+        $scope.cancel = function () {
+            $mdDialog.hide();
         };
-    }
+        
+        /**
+         * Close dialog
+         */
+        function closeDialog()
+        {
+            $mdDialog.hide();
+        }
 
-       
-   
+        function openCreatePriceGridDialog(ev, settings)
+        {
+            $mdDialog.show({
+                controller: 'CreatePriceGridDialogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Settings: settings,
+                    Settings: vm.settings,
+                    event: ev
+                }
+            });
+        }
 
-       
     }
-)();
+    
+})();

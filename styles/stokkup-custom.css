@@ -277,3 +277,35 @@ md-input-container > label {
 #userMgmnt tr > td:first-child, #userMgmnt tr > th:first-child {
   width: 45% !important;
 }
+
+.createPriceGridDialog {
+  max-width: 90% !important;
+  height: 90%  !important;
+  /*width: 600px  !important;*/
+}
+
+.priceGridTr {
+      font-family: 'Helvetica Bold', 'Helvetica';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 12px;
+}
+
+.box-shadow-0 {
+  box-shadow: 0 !important;
+  width: 100% ;
+}
+
+.height-75 {
+  height: 75px ;
+  overflow-y: hidden ;
+}
+
+.pricewidth-20 {
+  width: 20% !important;
+  padding: 0 !important;
+}
+
+.pricewidth-40 {
+  width: 40% !important;
+}

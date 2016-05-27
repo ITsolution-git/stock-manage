@@ -1,0 +1,102 @@
+
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title " layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=20>
+                                    Contacts
+                                </div>
+                                <div class="table-title-text" flex=70>
+                                </div>
+                                <div class="p-16" flex=10>
+                                <a title="add new contact" href="javascript:;" ng-click="vm.editCompanyConatct($event,'add','client_contact','contact_form','id',contact.id)">ADD NEW</a>
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper innertab-scroll">
+                                <table class="simple">
+                                    <thead>
+                                        <tr>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">#</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">First Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Last Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Location</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Phone</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Contact Email</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Main contact</span>
+                                                </div>
+                                            </th> 
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="(key,contact) in allContacts">
+                                            <td>{{key}}</td>
+                                            <td>{{contact.first_name}}</td>
+                                            <td>{{contact.last_name}}</td>
+                                            <td>{{contact.location}}</td>
+                                            <td>{{contact.phone}}</td>
+                                            <td>{{contact.email}}</td>
+                                            <td ng-if="contact.contact_main=='1'"><i class="icon icon-check s40"></i></td>
+                                            <td ng-if="contact.contact_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
+                                            <td class="text-left"> 
+                                    <md-menu>
+                                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="2">
+                                            <md-menu-item  ng-click="vm.editCompanyConatct($event,'edit','client_contact','contact_form','id',contact.id)">
+                                                <md-button>
+                                                    Edit Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item  ng-click="RemoveFields('client_contact','id',contact.id)" >
+                                                <md-button>
+                                                    Delete Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item ng-click="UpdateTableField('contact_main',0,'client_contact','client_id',contact.client_id,'contact_main',contact.id)">
+                                                <md-button>
+                                                    Set As Main Contact
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                    </td>
+                                    </tr>                                   
+                                    </tbody>
+                                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16"><a href="javascript:;" ng-click="vm.editCompanyConatct($event,'add','client_contact','contact_form','id',contact.id)">ADD NEW</a></td>                                                
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </md-content>
+                

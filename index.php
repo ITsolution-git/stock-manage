@@ -178,6 +178,8 @@
     <script src="app/main/settings/views/companyProfile/companyProfile.controller.js"></script>
     <script src="app/main/settings/views/userManagement/userManagement.controller.js"></script>
     <script src="app/main/settings/views/affiliate/affiliate.controller.js"></script>
+    <script src="app/main/settings/dialogs/changePassword/changePassword-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.controller.js"></script>
     <!--Datatable Scrolling-->
     <script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
     <link href="https://cdn.datatables.net/scroller/1.4.1/css/scroller.dataTables.min.css" rel="stylesheet">

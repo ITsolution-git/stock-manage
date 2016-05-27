@@ -7,6 +7,10 @@
 
     /** @ngInject */
     function SettingsController(ReceivingData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder) {
-        
+        var vm = this;
+
+        vm.openChangePasswordialog = openChangePasswordialog;
+
+
     }
 })();
