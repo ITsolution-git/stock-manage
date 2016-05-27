@@ -23,7 +23,7 @@
                 </md-input-container>
 
                  <md-input-container flex=45 class="m-b-20">
-                        <label>Tax Rate</label>
+                        <label> Tax Exempt </label>
                         <md-select ng-model="client_tax.tax_exempt"  name="tax_exempt"  ng-change='UpdateTableField("tax_exempt",client_tax.tax_exempt,"client","client_id",client.client_id,"tax")'>
                             <md-option ng-selected='{{client_tax.tax_exempt==1}}' value="1">
                                 Yes
