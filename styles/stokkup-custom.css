@@ -129,6 +129,65 @@ text-align: left;
   font-size: 96px;
   color: #FFF;
 }
+<<<<<<< HEAD
+/********************************
+**** Common css
+********************************/
+.inline-b {
+	display:inline-block;
+}
+.mrg10-R {
+	margin-right:10px;
+}
+.box-typ1 {
+	height:270px;
+	overflow-y:auto;
+	width:100%;
+	display:block;
+	margin-top:15px;
+}
+.tbl-typ1 {
+	border-collapse:collapse;
+	width:100%;
+}
+.tbl-typ1 th {
+	border:1px solid #eeeded;
+	color:#ffffff !important;
+	background:#1F8CC7;
+	padding:5px;
+}
+.tbl-typ1 td {
+	border:1px solid #eeeded;
+	padding:5px;
+}
+.tbl-typ1 td table td {
+	border:0px;
+	padding:0px;
+}
+.tbl-typ1 tr:nth-child(even) {
+	background:#f7f6f6;
+}
+.align-T {
+	vertical-align:top;
+}
+.box-typ1 md-input-container {
+	margin:0px;
+}
+.box-typ1 md-input-container .md-errors-spacer {
+	min-height:1px;
+}
+.box-typ2 {
+	border:1px solid #ccc;
+	padding:8px 5px;
+	border-right:0px;
+	margin-bottom:5px;
+}
+.box-typ2:nth-child(even){
+	background:#f8f7f7;
+}
+.box-typ2:last-child, .box-typ2:nth-child(5n) {
+	border:1px solid #ccc;
+=======
 .loaderouter{
     position:fixed;
     width:100%;
@@ -202,4 +261,5 @@ text-align: left;
         box-shadow: 0 -2em #31c0be;
         height: 5em;
     }
+>>>>>>> a152620fc55b8d87624fe85187593a9ad365a248
 }

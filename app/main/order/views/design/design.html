@@ -358,12 +358,26 @@
                         <div layout="row" flex="55">
                             <div layout="column" flex="100">
                                 <div class="h4 p-b-10">Size / Quantity</div>
-                                <div layout="row">
+                                <div layout="row" layout-wrap>
+                                    <div class="box-typ2" flex="20" ng-repeat="(key,DesignProductData) in designProduct">
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="70%" class="text-right color font-12">
+                                                    {{DesignProductData.size}} :
+                                                </td>
+                                                <td width="30%" class="text-semibold font-12">
+                                                    {{DesignProductData.qnty}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- <div layout="row">
                                     <div layout="column" flex="20" ng-repeat="(key,DesignProductData) in designProduct">
                                         <div class="h4 color font-19">{{DesignProductData.size}}</div>
                                         <div class="h4 text-semibold font-19">{{DesignProductData.qnty}}</div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>    
                         </div>
                     </div>
