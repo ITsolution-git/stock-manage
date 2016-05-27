@@ -59,6 +59,12 @@
                 }
             })
         .state('app.dashboard', {
+                resolve: {
+                        checksession : function (sessionService)
+                        {
+                           return sessionService.AccessService('ALL');
+                        }
+                    },
                 url  : '/dashboard',
                 views: {
                     'content@app': {

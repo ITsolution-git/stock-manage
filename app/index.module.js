@@ -14,8 +14,7 @@
             //ui event
             'ui.event',
 
-            // Navigation
-            'app.navigation',
+            
 
             // Toolbar
             'app.toolbar',
@@ -39,6 +38,8 @@
             'ngTasty',
 
             // image uploading module
-            'naif.base64'
+            'naif.base64',
+            // Navigation
+            'app.navigation'
         ]);
 })();

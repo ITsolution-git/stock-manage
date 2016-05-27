@@ -15,7 +15,8 @@
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
-                       return sessionService.AccessService('BC,CA');
+                      
+                       //return sessionService.AccessService('BC,CA');
                     },
                 },
                 url    : '/client',
@@ -30,6 +31,7 @@
                 resolve: {
                     checksession : function (sessionService)
                     {
+                        
                        return sessionService.AccessService('BC,CA');
                     },
                 },
@@ -46,6 +48,7 @@
                 resolve: {
                         checksession : function (sessionService,$stateParams,$state)
                         {
+                            
                            return sessionService.AccessService('BC,CA');
                         }
                     },
