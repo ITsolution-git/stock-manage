@@ -39,17 +39,22 @@ class ClientController extends Controller {
 
 		/* SEPARATE CLIENT DATA IN TO ARRAY */
 		    $client['company_id'] = (!empty($post['company_id']))?$post['company_id']:'';
+		    $client['login_id'] = Session::get("user_id");
 			$client['client_company'] = (!empty($post['client_company']))?$post['client_company']:'';
 			$client['billing_email'] = (!empty($post['billing_email']))?$post['billing_email']:'';
-			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
 			$client['company_phone']=(!empty($post['company_phone']))?$post['company_phone']:'';
 			$client['client_companytype'] = !empty($post['client_companytype'])? $post['client_companytype'] : '';
 			$client['client_desposition'] = !empty($post['client_desposition'])? $post['client_desposition'] : '';
 			$client['company_url'] = !empty($post['company_url'])? $post['company_url'] : '';
 			$client['created_date']=CURRENT_DATETIME;
-			$client['anniversarydate'] = CURRENT_DATETIME;
+
+			$client['salesweb']=(!empty($post['salesweb']))?$post['salesweb']:'';
+			$client['salesperson']=(!empty($post['salesperson']))?$post['salesperson']:'';
+			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
+			$client['anniversarydate'] = (!empty($post['anniversarydate']))? date('Y-m-d',strtotime($post['anniversarydate'])):CURRENT_DATE;
+			
 			$client['status']='1';
-			$client['tax_rate']=$company_data[0]->tax_rate;
+			$client['tax_rate']=(!empty($company_data[0]->tax_rate))?$company_data[0]->tax_rate:0;
 
 		/* SEPARATE CLIENT ADDRESS DATA IN TO ARRAY */
 			$client['pl_address']=(!empty($post['pl_address']))?$post['pl_address']:'';
@@ -63,7 +68,9 @@ class ClientController extends Controller {
 			$contact['last_name']=!empty($post['last_name'])? $post['last_name'] : '';
 			$contact['phone']=!empty($post['phone'])? $post['phone'] : '';
 			$contact['email']=!empty($post['email'])? $post['email'] : '';
+			$contact['location']=!empty($post['location'])? $post['location'] : '';
 			$contact['contact_main']='1';	// SET ACTIVE CONDITION
+			
 
 		$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
 
@@ -176,19 +183,18 @@ class ClientController extends Controller {
 
     	$result = $this->client->getClientdata($post);
     	$records = $result['allData'];
-
+    	$success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'c.client_id', 'name' => 'Client Id'),
-                        1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
-                        3=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
-                        4=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
+                        0=>array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        1=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
+                        2=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
+                        3=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
                         );
 
-        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>'1');
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return  response()->json($data);
     }
 

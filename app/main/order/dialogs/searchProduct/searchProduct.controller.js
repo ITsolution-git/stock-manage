@@ -6,7 +6,7 @@
             .controller('SearchProductController', SearchProductController);
 
     /** @ngInject */
-    function SearchProductController(data,$mdDialog,$document,$scope,$http)
+    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state)
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
@@ -96,15 +96,18 @@
             $scope.paramsObj = paramsObj;
  
             var orderData = {};
+            $("#ajax_loader").show();
 
               orderData.cond ={params:$scope.params};
               //var vendor_arr = {'vendor_id' : $scope.vendor_id, 'search' : $scope.productSearch};
 
               return $http.post('api/public/product/getProductByVendor',orderData).success(function(response) {
+                $("#ajax_loader").hide();
                 var header = response.header;
                 $scope.category_filter = response.category_filter;
                 $scope.color_filter = response.color_filter;
                 $scope.size_filter = response.size_filter;
+                $scope.success = response.success;
                 return {
                   'rows': response.rows,
                   'header': header,
@@ -114,6 +117,12 @@
                 }
               });
         }
+
+        $scope.reloadPage = function(){
+
+         $state.reload();
+        }
+
 
         $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
         {
@@ -134,7 +143,8 @@
                     colorName:colorName,
                     design_id:0,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
                
             });
         }

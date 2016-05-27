@@ -1,7 +1,7 @@
 <!-- Background video -->
-    <video autoplay  poster="http://localhost/stokkup/assets/images/login_bg/bg_vid.jpg" id="bgvid" loop controls muted> 
-        <source src="http://localhost/stokkup/assets/images/login_bg/video1.webm" type="video/webm">   
-        <source src="http://localhost/stokkup/assets/images/login_bg/video1.mp4" type="video/mp4">
+    <video autoplay  poster="{{vm.video_image}}" id="bgvid" loop controls muted> 
+        <source src="{{vm.video_1}}" type="video/webm">   
+        <source src="{{vm.video_1}}" type="video/mp4">
     </video>  
 
 <div id="login" class="flex-scrollable" layout="column" ms-scroll>
@@ -47,7 +47,7 @@
                         <span translate="LOGIN.REMEMBER_ME">Remember Me</span>
                     </md-checkbox>
 
-                    <a ui-sref="app.pages_auth_forgot-password" class="forgot-password md-accent-color"
+                    <a ui-sref="app.forget" class="forgot-password md-accent-color"
                        translate="LOGIN.FORGOT_PASSWORD">Forgot Password?</a>
                 </div>
 

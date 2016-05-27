@@ -1,0 +1,37 @@
+<md-dialog class="task-dialog order-dialog" aria-label="New Custom Product">
+    <form name="customProductForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Create New Custom Product</span>
+                <md-button  ng-click="cancel()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
+                <md-input-container class="md-block first-box" flex-gt-sm>
+               
+                    <input placeholder="Product Name" ng-model="productDetail.name"  ui-event="{ change : 'updateProduct(\'name\',productDetail.id,productDetail.name,\'products\',\'id\')' }">
+                </md-input-container>
+               
+            </div>
+
+            <div layout-align="start center" class="item ng-scope layout-align-start-center">
+                <i class="icon icon-plus-circle s40"></i>
+                <div class="name secondary-text text-center ng-binding">Add Color</div>
+            </div>
+
+            <div layout-align="start center" class="item ng-scope layout-align-start-center">
+                <i class="icon icon-plus-circle s40"></i>
+                <div class="name secondary-text text-center ng-binding">Add Size</div>
+            </div>
+
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+                    <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+                    <md-button class="md-accent md-raised " ng-click="save(product)">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

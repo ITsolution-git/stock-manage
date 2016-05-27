@@ -2,10 +2,7 @@
     <div class="header "  layout="column">
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back cursor-p" ui-sref="app.order">BACK TO ORDERS</a>
-            <h1 flex="4" class="font-500">Demo Order  548 for Company: </h1>
-            <md-input-container md-no-float class="md-block" flex="3">
-                <input placeholder="">
-            </md-input-container>
+            <h1 flex="4" class="font-500">{{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}</h1>
         </div>
         <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75">
@@ -52,7 +49,7 @@
                 <md-button  class="bg-grey right-m-0 " ng-click="printPdf()">
                     PRINT
                 </md-button>
-                <md-button ui-sref="app.order.spiltAffiliate" class="bg-grey right-m-0 color-white" >
+                <md-button class="bg-grey right-m-0 color-white" ng-click="checkDesign()">
                     ASSIGN/SPLIT AFFILIATE
                 </md-button>
             </div>
@@ -108,11 +105,11 @@
                         </tr>
                     </thead>
                    <tbody class="scrollable" ms-scroll>
-                        <tr ng-repeat="design in designs" class="cursor-p">
-                            <td ui-sref="app.order.design({id:design.id})" >{{ design.id}} </td>
+                        <tr ng-repeat="design in designs">
+                            <td class="cursor-p" ui-sref="app.order.design({id:design.id})">{{ design.id}} </td>
                             <td>{{ design.design_name}}</td>
-                            <td>123</td>
-                            <td>123</td>
+                            <td>{{ design.total_qnty}}</td>
+                            <td>{{ design.cnt}}</td>
                             <td class="text-center font-small mdslider pad-0 "><label class="slider">60</label>
                     <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
                     </md-slider>
@@ -136,7 +133,7 @@
                     </tbody> 
                 </table>
                 <div class="p-16 text-right m-r-15">
-                    <span class="h2 text-semibold">Total Units {{ vm.designTotal.total}}</span> 
+                    <span class="h2 text-semibold">Total Units : {{ total_unit}}</span> 
                 </div>
             </div>
         </div>
@@ -259,18 +256,18 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="scrol table5 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
+                    <table class="scrol table5 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="affiliateList.length > 0">
                         <thead>
                         <th>Company</th>
                         <th>Total # of Units</th>
-                        <th># of Designs</th>
+                        <th>Total # of Designs</th>
                         <th></th>
                         </thead>
                         <tbody class="scrollable" ms-scroll>
-                            <tr ng-repeat="affiliateOrder in ::vm.affiliateOrders" class="cursor-p">
-                                <td>{{ affiliateOrder.Company}}</td>
-                                <td>{{ affiliateOrder.units}}  
-                                <td>{{ affiliateOrder.designs}}</td>
+                            <tr ng-repeat="affiliateOrder in affiliateList" class="cursor-p">
+                                <td>{{ affiliateOrder.affiliate_name}}</td>
+                                <td>{{ affiliateOrder.total}}  
+                                <td>{{ affiliateOrder.design_total}}</td>
                                 <td class="text-right"> 
                                     <a href="#" ui-sref="app.purchaseOrder.affiliatePO">VIEW </a>
                                 </td>
@@ -292,50 +289,50 @@
                         <div class="trans-box">
                             <div>Separations</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.separations_charge" placeholder="$" valid-number ng-blur="updateOrderCharge('separations_charge',order.id,order.separations_charge,'orders','id')">
+                                    <input ng-model="order.separations_charge" placeholder="$" valid-number   ui-event="{ change : 'updateOrderCharge(\'separations_charge\',order.id,order.separations_charge,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Rush</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input  ng-model="order.rush_charge" placeholder="$" valid-number ng-blur="updateOrderCharge('rush_charge',order.id,order.rush_charge,'orders','id')">
+                                    <input  ng-model="order.rush_charge" placeholder="$" valid-number  ui-event="{ change : 'updateOrderCharge(\'rush_charge\',order.id,order.rush_charge,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Distribution</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.distribution_charge" placeholder="$" valid-number ng-blur="updateOrderCharge('distribution_charge',order.id,order.distribution_charge,'orders','id')">
+                                    <input ng-model="order.distribution_charge" placeholder="$" valid-number ui-event="{ change : 'updateOrderCharge(\'distribution_charge\',order.id,order.distribution_charge,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Digitize</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.digitize_charge"  placeholder="$" valid-number ng-blur="updateOrderCharge('digitize_charge',order.id,order.digitize_charge,'orders','id')">
+                                    <input ng-model="order.digitize_charge"  placeholder="$" valid-number  ui-event="{ change : 'updateOrderCharge(\'digitize_charge\',order.id,order.digitize_charge,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
 
                             <div>Shipping</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.shipping_charge" placeholder="$" valid-number ng-blur="updateOrderCharge('shipping_charge',order.id,order.shipping_charge,'orders','id')">
+                                    <input ng-model="order.shipping_charge" placeholder="$" valid-number  ui-event="{ change : 'updateOrderCharge(\'shipping_charge\',order.id,order.shipping_charge,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Set Up</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.setup_charge" placeholder="$" valid-number ng-blur="updateOrderCharge('setup_charge',order.id,order.setup_charge,'orders','id')">
+                                    <input ng-model="order.setup_charge" placeholder="$" valid-number  ui-event="{ change : 'updateOrderCharge(\'setup_charge\',order.id,order.setup_charge,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Artwork</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.artwork_charge" placeholder="$" valid-number ng-blur="updateOrderCharge('artwork_charge',order.id,order.artwork_charge,'orders','id')">
+                                    <input ng-model="order.artwork_charge" placeholder="$" valid-number  ui-event="{ change : 'updateOrderCharge(\'artwork_charge\',order.id,order.artwork_charge,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                         <div class="trans-box">
                             <div>Discount</div>
                             <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.discount" placeholder="$" valid-number ng-blur="updateOrderCharge('discount',order.id,order.discount,'orders','id')">
+                                    <input ng-model="order.discount" placeholder="$" valid-number  ui-event="{ change : 'updateOrderCharge(\'discount\',order.id,order.discount,\'orders\',\'id\')' }">
                                 </md-input-container></span>
                         </div>
                     </div>

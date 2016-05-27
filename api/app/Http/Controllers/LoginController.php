@@ -198,6 +198,7 @@ class LoginController extends Controller {
             $response = array('success' => 1, 
                               'message' => "session there",
                               "user_id"=>Session::get("user_id"),
+                              "login_id"=>Session::get("login_id"),
                               'role_title'=>Session::get('role_title'),
                               "name"=>Session::get("name"),
                               "company_name"=>Session::get('company_name'),
@@ -247,11 +248,11 @@ class LoginController extends Controller {
          $data = Input::all();
 
          //echo "<pre>"; print_r($data); echo "</pre>"; die;
-         if(!empty($data))
+         if(!empty($data['email']))
          {
             $result = $this->login->forgot_password(trim($data['email']));
             if(count($result)>0)
-            {
+            { 
                 $url = $this->login->ResetEmail($result[0]->email,$result[0]->id,$result[0]->password);
                 $email = trim($result[0]->email);
                 Mail::send('emails.send', ['url' => $url,'user'=>$result[0]->name,'email'=>trim($result[0]->email)], function($message) use ($email)

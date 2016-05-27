@@ -4,7 +4,7 @@
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Upload Image</span>
                 <md-button  ng-click="closeDialog()">
-                    <span>Cancel</span>
+                    <span>Close</span>
                 </md-button>
             </div>
         </md-toolbar>
@@ -13,7 +13,7 @@
                 <md-input-container class="md-block first-box"></md-input-container>
                <md-input-container class="upload-rel">
                     <input>
-                    <md-button class="md-primary md-hue-1 md-accent upload" onclick="document.getElementById('myFileInput').click()" > Browse Image</md-button>
+                    <md-button class="md-primary md-hue-1 md-accent upload" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
                 </md-input-container>
 
                 <input type="file" style="display: none;"  onload="onLoad" ng-model="logo_image" id="myFileInput" name="logo_image" class="btn btn-default" base-sixty-four-input  accept="image/*">
@@ -35,7 +35,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             
-                    <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+                    <!-- <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
                     <md-button class="md-accent md-raised" ng-click="SaveImageAll(logo_image);">Save</md-button>
              
         </md-dialog-actions>

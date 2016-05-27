@@ -43,5 +43,19 @@ class Api extends Model {
         $data = $data->get();
         return $data;
     }
+
+    public function getApiCredential($company_id,$page,$table)
+	{
+		$table_name = $table . ' as ad';
+		$whereApiConditions = ['a.api_page' => $page,'api.company_id' => $company_id];
+
+		$result = DB::table($table_name)
+				->select('*','api.status')
+				->Join('api_link_table as api','api.id','=','ad.link_id')
+			 	->Join('api as a','a.api_id','=','api.api_id')
+			 	->where($whereApiConditions)
+				->get();
+		return $result;
+	}
 	
 }

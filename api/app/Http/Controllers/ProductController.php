@@ -6,6 +6,7 @@ require_once(app_path() . '/constants.php');
 
 use App\Product;
 use App\Common;
+use App\Api;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -22,10 +23,11 @@ class ProductController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Product $product,Common $common) {
+    public function __construct(Product $product,Common $common,Api $api) {
 
         $this->product = $product;
         $this->common = $common;
+        $this->api = $api;
        
     }
 
@@ -222,8 +224,18 @@ public function create_dir($dir_path) {
         $header = array();
         
         $result = $this->product->getVendorProducts($data);
+        $count = (empty($result['count']))?'1':$result['count'];
 
-        $count = $result['count'];
+        if(empty($result['count']))
+        {
+            $success = 0;
+        }
+        else
+        {
+            $success = 1;
+        }
+
+        //$count = $result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $count);
 
         
@@ -234,31 +246,36 @@ public function create_dir($dir_path) {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
 
-        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data']);
+
+        $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data'],'success'=>$success);
         return  response()->json($data);
     }
 
     public function productDetailData() {
  
         $data = Input::all();
-
+        $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
+       
+       // print_r($result_api[0]->password);exit;
+        $credential = $result_api[0]->username.":".$result_api[0]->password;
+ 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl,CURLOPT_USERPWD,"13955:d672ddc8-0cd6-4981-95e4-391b2538887e");
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
         $result = curl_exec($curl);
         curl_close($curl);
 
        $all_data = json_decode($result);
-      
+       
 
        $allDetail = array();
        if($data['design_id'] != 0) {
         $allDetail = $this->product->getPurchaseDetail($data['design_id']);
        }
-      
+
         foreach($all_data as $key => $data) {
-              
+             
            
             $color_data = $this->common->getColorId($data->colorName);
             
@@ -269,12 +286,17 @@ public function create_dir($dir_path) {
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
 
             if(count($allDetail) > 0) {
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+                
+                if(isset($allDetail[$data->sizeName])){
+                     $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+                }
+               
             } else {
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
             }
             
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
             $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
             $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
@@ -287,6 +309,54 @@ public function create_dir($dir_path) {
        
         return response()->json(["data" => $productAllData]);
         
+
+    }
+    
+
+    public function getCustomProduct() {
+
+       $post_all = Input::all();
+        $records = array();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'product.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'product.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
+        $result = $this->product->getCustomProduct($post);
+        
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'product.id', 'name' => 'ID'),
+                        1=>array('key' => 'product.name', 'name' => 'Name')
+                        
+                        );
+
+
+            $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success' => $success);
+        return  response()->json($data);
+
 
     }
 
@@ -339,6 +409,35 @@ public function create_dir($dir_path) {
                                 );
         
         return response()->json(["data" => $response]);
+
+    }
+
+     public function deleteAddProduct()
+    {
+        $post = Input::all();
+       
+        if(!empty($post['id']))
+        {
+            $record_data = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
+            $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
+            if($record_data)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
 
     }
 }

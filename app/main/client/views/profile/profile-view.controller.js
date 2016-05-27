@@ -22,41 +22,12 @@
 
 
         vm.documents = [
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"},
-            {"fileName": "doc.pdf", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", "dateAdded": "2/2/2016"}
         ];
         vm.screenSets = [
-            {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
-            {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
-            {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"},
-            {"description": "1-25152", "graphicSize": "Oversized 25 x 36", "images": "chicago"}
+            
         ];
         vm.arts = [
-            {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
-            {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
-            {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
-            {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"},
-            {"fileName": "screen1.png", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at hendrerit risus.", "dateAdded": "2/2/1016"}
+           
         ];
 
 
@@ -173,7 +144,7 @@
                             if(result.data.success=='1')
                             {   
                                 var params = {};
-                                params = { contact_arr: result.data.records[0],states_all:$scope.states_all};
+                                params = { contact_arr: result.data.records[0],states_all:$scope.states_all,AddrTypeData:$scope.AddrTypeData};
                                 open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                             }
                         });
@@ -194,7 +165,7 @@
                     if(result.data.success=='1')
                     {  
                         var params = {};
-                        params = { contact_arr: result.data.records[0],states_all:$scope.states_all};                     
+                        params = { contact_arr: result.data.records[0],states_all:$scope.states_all,AddrTypeData:$scope.AddrTypeData};                     
                         open_popup(ev,params,'CompanyInfo',popup_page); // OPEN POPUP FOR CONTACT
                     }
                 });
@@ -203,6 +174,7 @@
 // ====================== OPEN DYNAMIC POPUP WITH PARAMS, CONDITION AND CONTROLLER ===========//
         function open_popup(ev,params,controller,page)
         {
+            $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
                 controller:controller,
@@ -264,6 +236,10 @@
                             $scope.UpdateTableField('address_billing','1',table_name,'id',param,'','');
                             $scope.getClientProfile();
                        }
+                       if(extra=='salesweb') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.getClientProfile();
+                       }
 
                     }
                     else
@@ -301,7 +277,56 @@
                     });
                 }
       }
-
+// ============= REMOVE CLIENT LOCATION TABLE RECORD WITH NO MAIN,SHIIPING,BIllING ADDRESS CONDITION ============= // 
+        $scope.RemoveLocationFields = function(table,cond_field,cond_value,main,shipping,billing){
+              
+                var delete_data = {};
+                
+                $scope.name_filed = cond_field;
+                var obj = {};
+                obj[$scope.name_filed] =  cond_value;
+                delete_data.cond = angular.copy(obj);
+                
+                delete_data.table =table;
+                if(main==0)
+                {
+                    if(shipping==0)
+                    {
+                        if(billing==0)
+                        {
+                            var permission = confirm("Are you sure to delete this Record ?");
+                            if (permission == true) 
+                            {
+                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                                {
+                                    if(result.data.success=='1')
+                                    {
+                                        notifyService.notify('success',result.data.message);
+                                        $scope.getClientProfile();
+                                    }
+                                    else
+                                    {
+                                         notifyService.notify('error',result.data.message);
+                                    }
+                                });
+                            }
+                        }
+                        else
+                        {
+                            notifyService.notify('error','Please select another Billing Location first !');
+                        }
+                    }
+                    else
+                    {
+                        notifyService.notify('error','Please select another Shipping Location first !');
+                    }
+                }
+                else
+                {
+                    notifyService.notify('error','Please select another Main Location first !');
+                }
+                
+      }
 // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
         {
@@ -421,9 +446,11 @@
 
     function CompanyInfo($mdDialog, $stateParams,$resource,sessionService,$scope,Params,$http,$controller,$state,notifyService)
     {
+        $("#ajax_loader").hide();
         $scope.client = Params.client;
         $scope.ArrCleintType = Params.ArrCleintType;
         $scope.Arrdisposition = Params.Arrdisposition;
+        $scope.AddrTypeData = Params.AddrTypeData;
         $scope.states_all = Params.states_all;
         $scope.contact_arr=Params.contact_arr;
         $scope.StaffList = Params.StaffList;
@@ -431,7 +458,7 @@
         $scope.AllPriceGrid = Params.AllPriceGrid;
         $scope.client_tax = Params.client_tax;
         $scope.Distribution_address = Params.Distribution_address;
-        //console.log($scope.salesDetails);
+        //console.log(Params);
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
             var vm = this;
@@ -446,6 +473,7 @@
             var condition_obj = {};
             condition_obj[cond_field] =  cond_value;
             UpdateArray.cond = angular.copy(condition_obj);
+            UpdateArray.date_field = extra;
 
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')

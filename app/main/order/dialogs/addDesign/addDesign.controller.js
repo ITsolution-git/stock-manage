@@ -146,36 +146,11 @@
           };
         $scope.change_color = function(id,param){
            
-             if(param == 'front_color_id')
-                {
-                $scope.design.front_color_id = angular.copy(id);
-                }
-
-             if(param == 'side_right_color_id')
-                {
-                $scope.design.side_right_color_id = angular.copy(id);
-                }
-
-             if(param == 'top_color_id')
-                {
-                $scope.design.top_color_id = angular.copy(id);
-                }
-
-             if(param == 'back_color_id')
-                {
-                $scope.design.back_color_id = angular.copy(id);
-                }
-
-             if(param == 'side_left_color_id')
-                {
-                $scope.design.side_left_color_id = angular.copy(id);
-                }
-
-             if(param == 'bottom_color_id')
-                {
-                $scope.design.bottom_color_id = angular.copy(id);
-                }
-            
+             if(id == undefined) {
+                $scope.design[param] = 0;
+             } else {
+                $scope.design[param] = angular.copy(id);
+             } 
         }
     }
 })();

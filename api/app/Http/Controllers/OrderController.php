@@ -106,7 +106,7 @@ class OrderController extends Controller {
         $getAllDesigndata = $this->order->getAllDesigndata();
 
         $records = $result['allData'];
-
+        $success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
@@ -136,7 +136,7 @@ class OrderController extends Controller {
             }
         }
 
-        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order);
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return $this->return_response($data);
     }
     /**
@@ -2026,10 +2026,51 @@ else
     public function designListing() {
  
         $data = Input::all();
+        $design_data = array();
        
-        $order_design = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
+        $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
+        $size_data = array();
+        $order_design = array();
+         $total_unit = 0;
+        foreach ($order_design_data as $design) {
+           
+            $cnt = 0;
+            if($design->front_color_id != 0) {
+                $cnt++;
+            }
+            if($design->back_color_id != 0) {
+                $cnt++;
+            }
+            if($design->side_right_color_id != 0) {
+                $cnt++;
+            }
+            if($design->side_left_color_id != 0) {
+                $cnt++;
+            }
+            if($design->top_color_id != 0) {
+                $cnt++;
+            }
+            if($design->bottom_color_id != 0) {
+                $cnt++;
+            }
 
-       
+
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
+            $total_qnty = 0;
+            foreach ($size_data as $size) {
+                $total_qnty += $size->qnty;
+                $size->affiliate_qnty = 0;
+            }
+            $total_unit += $total_qnty;
+
+            $design->size_data = $size_data;
+            $design->total_qnty = $total_qnty;
+            $design->cnt = $cnt;
+            $order_design['all_design'][] = $design;
+
+        }
+        $order_design['total_unit'] = $total_unit;
+      
         if (count($order_design) > 0) {
             $response = array(
                                 'success' => 1, 
@@ -2040,7 +2081,7 @@ else
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'records' => $order_design);
+                                'records' => '');
         } 
         return response()->json(["data" => $response]);
 

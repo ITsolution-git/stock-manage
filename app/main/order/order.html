@@ -4,13 +4,18 @@
             <div class="table-title-text" flex=20 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
                 Orders
             </div>
-            <div class="search-block" flex=40>
+            <!-- <div class="search-block" flex=40>
                 <md-input-container class="md-block" flex-gt-sm>
                     <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                     <input ng-model="filterBy.name" placeholder="Search by Job name or Company">
                 </md-input-container>
+            </div> -->
+            <div class="search-block" flex=40>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                </md-input-container>
             </div>
-            <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
+            <md-icon ng-show="success==1" ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
             </md-tooltip></md-icon>   
             <!--Filter Sidebar Start-->
@@ -170,7 +175,7 @@
                 <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >CREATE NEW ORDER</span>
             </div>
         </div>
-        <div class="ms-responsive-table-wrapper">
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                 <table class="dataTable row-border hover">
                     <!-- <thead>
@@ -215,36 +220,39 @@
                     </thead> -->
                     <thead tasty-thead></thead>
                     <tbody>
-                        <tr  ng-repeat-start="row in rows" class="cursor-p" >
-                            <td ui-sref="app.order.order-info({id:row.id})">{{ row.id}}</td>
+                        <tr  ng-repeat-start="row in rows"  >
+                            <td ui-sref="app.order.order-info({id:row.id})" class="cursor-p">{{ row.id}}</td>
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>
                             <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
                             <td>{{ row.first_name}} &nbsp; {{ row.last_name}}</td>
                             <td>{{ row.date_shipped}}</td>
-                                 <td class="accor" >
+                                 <td class="accor" ng-show="row.design_pos.length > 0">
                             <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
                             <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
                         </td>
+                        <td  ng-show="row.design_pos.length == 0">
+                            &nbsp;
+                        </td>
                         </tr>
-                                <tr class="table-desc dev-rdetail-data" ng-if="row.expanded"ng-repeat-end="">
+                                <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded"ng-repeat-end="">
                                     <td colspan="8" class="collpas">
                                     <table class="dataTable row-border hover" >
                                         <thead>
                                             <th>Design Name</th>
                                             <th>Postion Name</th>
-                                            <th>SKU</th>
+                                           <!--  <th>SKU</th> -->
                                             <th>Product Name</th>
                                             <th>Ship Date</th>
                                             <th>Status</th>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="design_data_all in row.design_pos">
-                                                <td>{{design_data_all.design_name}}</td>
+                                                <td class="cursor-p" ui-sref="app.order.design({id:design_data_all.id})">{{design_data_all.design_name}}</td>
                                                 <td>{{design_data_all.count_position}} Positions<md-tooltip md-direction="bottom">{{design_data_all.position_name}}</md-tooltip></td>
-                                                <td>SKU</td>
-                                                <td>Static product</td>
+                                                <!-- <td>SKU</td> -->
+                                                <td>{{design_data_all.product_name}}</td>
                                                 <td>{{design_data_all.shipping_date | date:"M/d/yyyy"  }}</td>
                                                 <td colspan="3" class="text-center font-small mdslider"><label class="slider">123</label>
                                                     <md-slider flex ng-model="row.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
@@ -260,6 +268,15 @@
                 </table>
                 <div tasty-pagination class="tasty-page"></div>
             </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
+                <thead>
+                    <tr>
+                        <th>No Records Found</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div> 
 </div>

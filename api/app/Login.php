@@ -78,7 +78,7 @@ class Login extends Model {
 
         DB::table('reset_password')->insert(['user_id'=>$user_id,'string'=>$string,'date_time'=>date('Y-m-d H:i:s'),'date_expire'=>date('Y-m-d H:i:s',strtotime('+6 hour')),'password'=>$password]);
         $link = $string."&".base64_encode($email);
-        $url = "http://".$_SERVER['HTTP_HOST']."/#/access/reset-password/".$link; // LIVE
+        $url = "http://".$_SERVER['HTTP_HOST']."/stokkup/reset/".$link; // LIVE
 
         //$url = Config::get('app.url')."/stokkup/#/access/reset-password/".$link; // LOCAL
         return $url;

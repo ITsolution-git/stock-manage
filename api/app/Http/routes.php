@@ -253,6 +253,9 @@ Route::post('product/getProductByVendor', 'ProductController@getProductByVendor'
 Route::post('product/productDetailData', 'ProductController@productDetailData');
 Route::post('product/addProduct', 'ProductController@addProduct');
 Route::post('product/designProduct', 'ProductController@designProduct');
+Route::post('product/deleteAddProduct', 'ProductController@deleteAddProduct');
+Route::post('product/getCustomProduct', 'ProductController@getCustomProduct');
+
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
@@ -277,4 +280,8 @@ Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Clie
 Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
 Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
 
-
+// AFFILIATES ROUTERS
+Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');
+Route::post('affiliate/addAffiliate', 'AffiliateController@addAffiliate');
+Route::post('affiliate/getAffiliateData', 'AffiliateController@getAffiliateData');
+Route::post('affiliate/getAffiliateList', 'AffiliateController@getAffiliateList');

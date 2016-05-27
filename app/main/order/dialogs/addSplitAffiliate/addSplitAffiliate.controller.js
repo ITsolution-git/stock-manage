@@ -7,72 +7,93 @@
         .controller('AddSplitAffiliateController', AddSplitAffiliateController);
 
     /** @ngInject */
-    function AddSplitAffiliateController($mdDialog)
+    function AddSplitAffiliateController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant,Order)
     {
-        var vm = this;
-          vm.title = 'Split Affiliate';
+        $scope.title = 'Split Affiliate';
 
-        // Data
-        vm.designSelect = {
-            "designOption":
-                    [
-                        {"option": "Design 1"},
-                        {"option": "Design 2"},
-                        {"option": "Design 3"}
-                    ],
-            "design": ""
+        $scope.company_id = sessionService.get('company_id');
+        $scope.order_id = Order.order_id;
+        $scope.design = 0;
+        $scope.affiliate = 0;
+        $scope.sizes = [];
+        $scope.total_affiliate = 0;
+        $scope.additional_charges = 0;
+        $scope.total_not_assign = 0;
+        $scope.notes = '';
+        $scope.shop_invoice = 0;
+        $scope.affiliate_invoice = 0;
+        $scope.total = 0;
 
-        };
-        vm.productSelect = {
-            "productOption":
-                    [
-                        {"option": "Product 1"},
-                        {"option": "Product 2"},
-                        {"option": "Product 3"}
-                    ],
-            "design": ""
+        var affiliate_data = {};
+        affiliate_data.table ='affiliates';
+        affiliate_data.cond ={'company_id':$scope.company_id,'order_id':$scope.order_id}
+        $http.post('api/public/affiliate/getAffiliateDetail',affiliate_data).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.allAffiliate =result.data.records['affiliate_data'];
+                $scope.allDesign =result.data.records['design_detail'];
+            } 
+            else
+            {
+                $scope.allVendors=[];
+            }
+        });
 
-        };
-        vm.affiliateSelect = {
-            "affiliateOption":
-                    [
-                        {"option": "Affiliate 1"},
-                        {"option": "Affiliate 2"},
-                        {"option": "Affiliate 3"}
-                    ],
-            "design": ""
+        $scope.getDesignProduct = function(design_id)
+        {
+            $scope.sizes = angular.copy($scope.allDesign[design_id].size_data);
+        }
 
-        };
-        vm.splitAffiliateSize={
-          "s":"",
-         "m":"",
-         "l":"",
-         "xl":"",
-        
-        };
+        $scope.save = function(total)
+        {
+            if($scope.design == '0')
+            {
+                var data = {"status": "error", "message": "Please select design"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if($scope.affiliate == '0')
+            {
+                var data = {"status": "error", "message": "Please select affiliate"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            $scope.execute = 0;
+            angular.forEach($scope.sizes, function(size) {
+                if(size.affiliate_qnty > 0)
+                {
+                    $scope.execute = 1;
+                }
+            });
+            
+            if($scope.execute == 0)
+            {
+                var data = {"status": "error", "message": "Please enter quantity to create order"}
+                notifyService.notify(data.status, data.message);
+            }
+            else
+            {
+                var affiliate_data = {'order_id':$scope.order_id,'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizes':$scope.sizes,
+                                    'total_affiliate':$scope.total_affiliate,'additional_charges':$scope.additional_charges,'total_not_assign':$scope.total_not_assign,
+                                    'notes':$scope.notes,'shop_invoice':$scope.shop_invoice,'affiliate_invoice':$scope.affiliate_invoice,'total':$scope.total};
+                
+                $http.post('api/public/affiliate/addAffiliate',affiliate_data).success(function(result) {
+                    if(result.data.success == '1') 
+                    {
+                        $mdDialog.hide();
+                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
+                    } 
+                    else
+                    {
+                        $scope.allVendors=[];
+                    }
+                });
+            }
+        }
        
-         vm.splitAffiliateDialog={
-          "affiliateTotal":"200",
-         "affiliateNotTotal":"800",
-         "shopInvoice":"$1,000",
-         "affilateInvoice":"$800",
-         "additonalCharges":"$100",
-         "total":"$200",
-         additionalCharges:"",
-         notes:"",
-         
-        
-        };
-        
-        
+        $scope.closeDialog = closeDialog;
 
-        // Methods
-    
-        vm.closeDialog = closeDialog;
-     
-        /**
-         * Close dialog
-         */
         function closeDialog()
         {
             $mdDialog.hide();

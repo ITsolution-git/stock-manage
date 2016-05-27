@@ -7,6 +7,7 @@
     /** @ngInject */
     function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
+      $("#ajax_loader").show();
        var vm = this;
 
        
@@ -14,6 +15,7 @@
        var product_image_main;
        combine_array_id.product_id = product_id;
        combine_array_id.design_id = design_id;
+       combine_array_id.company_id = sessionService.get('company_id');
        product_image_main = "https://www.ssactivewear.com/"+product_image;
        product_image = "https://www.ssactivewear.com/"+product_image;
         
@@ -35,6 +37,7 @@
            $scope.colorName = colorName;
 
            $scope.modelDisplay = '';
+           $("#ajax_loader").hide();
         });
 
       } else {
@@ -43,6 +46,7 @@
            $scope.AllProductDetail = Listdata.data.colorData;
            $scope.colorName = angular.copy(Listdata.data.colorSelection);
            $scope.modelDisplay = '';
+           $("#ajax_loader").hide();
         });
 
       }

@@ -20,7 +20,7 @@ class Client extends Model {
 			$address['client_id']=$client_id;
 
 			$result = DB::table('client_contact')->insert($contact);
-			$result = DB::table('client_address')->insert($address);
+			$result = DB::table('client_address')->insert(array('address'=>$client['pl_address'],'street'=>$client['pl_suite'],'city'=>$client['pl_city'],'state'=>$client['pl_state'],'postal_code'=>$client['pl_pincode'],'type'=>$client['client_companytype'],'client_id'=>$client_id,'address_main'=>1,'address_shipping'=>1,'address_billing'=>1));
 		}
     	return $client_id;	
 	}
@@ -39,7 +39,14 @@ class Client extends Model {
         				 ->where($whereConditions);
                  if($search != '')               
                   {
-                     $result = $result ->Where('c.client_company', 'LIKE', '%'.$search.'%');
+                     $result = $result->Where(function($query) use($search)
+                          {
+                              $query->orWhere('c.client_company', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.first_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.last_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.email', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('cc.phone', 'LIKE', '%'.$search.'%');
+                          });
                   }
 
                   $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
@@ -145,7 +152,7 @@ class Client extends Model {
     				->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
     				->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
             ->leftJoin('staff as stf','stf.id','=',"c.salesperson")
-    				->leftJoin('type as tp','tp.id','=',"c.client_type")
+    				->leftJoin('type as tp','tp.id','=',"c.client_companytype")
             ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
             ->leftJoin('state as st','st.id','=',"c.pl_state")
     				->where('c.client_id','=',$id)
@@ -165,7 +172,7 @@ class Client extends Model {
     			$result['main']['salesweb'] = $value->salesweb;
 
           $result['main']['type_id'] = $value->type_id;
-    			$result['main']['client_type'] = $value->type_name;
+    			$result['main']['client_companytype'] = $value->type_name;
 
     			$result['main']['misc_id'] = $value->misc_id;
           $result['main']['client_desposition'] = $value->misc_value_p;
@@ -208,7 +215,7 @@ class Client extends Model {
           $result['sales']['last_name'] = $value->sales_lname;
     			$result['sales']['salespricegrid'] = $value->salespricegrid;
           $result['sales']['price_grid'] = $value->price_grid;
-          $result['sales']['anniversarydate'] = date('m/d/Y',strtotime($result['sales']['anniversarydate']));
+          $result['sales']['anniversarydate'] = ($result['sales']['anniversarydate']=='0000-00-00')? '': date('m/d/Y',strtotime($result['sales']['anniversarydate']));
 
     			$result['tax']['tax_id'] = $value->tax_id;
     			$result['tax']['tax_rate'] = $value->tax_rate;

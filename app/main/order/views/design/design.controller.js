@@ -16,7 +16,7 @@
         $scope.vendor_id = 0;
 
        $scope.designDetail = function(){
-
+         $("#ajax_loader").show();
         var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             
@@ -24,7 +24,7 @@
                
                 if(result.data.success == '1') {
                     
-                    
+                     $("#ajax_loader").hide();
                     result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
                     result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
                     result.data.records[0].start_date = new Date(result.data.records[0].start_date);
@@ -87,6 +87,8 @@
             $http.post('api/public/common/InsertRecords',position_data_insert).success(function(result) {
                 
                $scope.designPosition();
+                var data = {"status": "success", "message": "Positions Added Successfully."}
+                     notifyService.notify(data.status, data.message);
                
             });
         }
@@ -110,7 +112,10 @@
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
                 if(column_name == 'position_id') {
                     $scope.order_design_position[key].position_name = $scope.miscData.position[value].value;
+
                 }
+                var data = {"status": "success", "message": "Positions Updated Successfully."}
+                     notifyService.notify(data.status, data.message);
             });
       
         }
@@ -185,12 +190,12 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev, order)
+        function openAddProductDialog(ev, order, controller, file)
         {
             $mdDialog.show({
-                controller: 'AddProductController',
+                controller: controller,
                 controllerAs: $scope,
-                templateUrl: 'app/main/order/dialogs/addProduct/addProduct.html',
+                templateUrl: file,
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -256,7 +261,7 @@
 
 
         // ============= UPLOAD IMAGE ============= // 
-        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,key) 
         {
 
                 $scope.column_name=column_name;
@@ -267,6 +272,7 @@
                 $scope.default_image=default_image;
                 $scope.company_id = sessionService.get('company_id');
                 $scope.unlink_url = image_name;
+                $scope.key = key;
 
 
                 $mdDialog.show({
@@ -293,6 +299,14 @@
                                 $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
                                     if(result.data.success=='1')
                                     {
+                                        var array_key = params.key;
+                                        var array_column_name = params.column_name;
+                                        var array_column_name_url = params.column_name+'_url_photo';
+                                        var image_path_url = Image_data.image_path;
+                                        var path = AllConstant.base_path;
+                                        
+                                        params.order_design_position[array_key][array_column_name] = result.data.records;
+                                        params.order_design_position[array_key][array_column_name_url] = path+'api/public/uploads/'+image_path_url+'/'+result.data.records;                                             ;
                                         notifyService.notify("success", result.data.message);
                                         $mdDialog.hide();
                                     }
@@ -321,21 +335,21 @@
                     clickOutsideToClose: false,
                         locals: {
                             params:$scope
-                        },
-                    onRemoving : $scope.designPosition
+                        }
                 });
 
 
         };
 
 
-         $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
+         $scope.deleteImage=function(e,column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,key)
          {
             
               if(default_image == '') {
 
                 var data = {"status": "error", "message": "Please upload image first."}
                           notifyService.notify(data.status, data.message);
+                           e.stopPropagation(); // Stop event from bubbling up
                           return false;
               }
 
@@ -364,13 +378,16 @@
 
                     var data = {"status": "success", "message": "Image Deleted Successfully"}
                                             notifyService.notify(data.status, data.message); 
-                     $scope.designPosition;
+                                         
+                     var column_name_url = column_name+'_url_photo';     
+                     $scope.order_design_position[key][column_name] = '';
+                     $scope.order_design_position[key][column_name_url] = '';
                 });
 
                 
             }
 
-
+          e.stopPropagation(); // Stop event from bubbling up
         }
 
           $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
@@ -398,6 +415,26 @@
                
             });
         }
+
+        $scope.deleteAddProduct = function(){
+
+            var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+
+            if (permission == true) {
+
+                var combine_array_id = {};
+                    combine_array_id.id = $stateParams.id;
+                    
+                    
+                    $http.post('api/public/product/deleteAddProduct',combine_array_id).success(function(result, status, headers, config) {
+                       
+                        if(result.data.success == '1') {
+                           $scope.productData = {};
+                        } 
+                        
+                    });
+              }
+          }
 
        
     }

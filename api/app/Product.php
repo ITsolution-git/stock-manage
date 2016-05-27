@@ -291,6 +291,7 @@ class Product extends Model {
              
             $result = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
                 'size'=>$row['sizeName'],
+                'sku'=>$row['sku'],
                 'price'=>$row['customerPrice'],
                 'qnty'=>$row['qnty'],
                 'color_id'=>$row['color_id'],
@@ -353,6 +354,44 @@ class Product extends Model {
         
         return $purchaseDetail;
 
+    }
+
+
+    public function getCustomProduct($post)
+    {
+        $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+       
+
+        $whereConditions = ['product.is_delete' => "1",'product.company_id' => $post['company_id']];
+
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS product.*')];
+
+        $productData = DB::table('products as product')
+                         ->select($listArray)
+                         ->where($whereConditions);
+                        
+                        if($search != '')
+                        {
+                          $productData = $productData->Where(function($query) use($search)
+                          {
+                              $query->orWhere('product.name', 'LIKE', '%'.$search.'%');
+                          });
+                        }
+                        
+                        $productData = $productData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                        ->skip($post['start'])
+                        ->take($post['range'])
+                        ->get();
+
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+
+        $returnData = array();
+        $returnData['allData'] = $productData;
+        $returnData['count'] = $count[0]->Totalcount;
+        return $returnData;
     }
 
 }

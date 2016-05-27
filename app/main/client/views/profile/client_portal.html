@@ -7,32 +7,50 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="">
+                                <table class="simple">
                                     <thead>
                                         <tr>
                                             <th>Client Url</th>
-                                            <th>
-                                                <button  ng-click="vm.editCompanyInfo($event,'webportal_form')" class="md-raised md-button md-default-theme md-ink-ripple" type="button" aria-label="Button">
-                                                    <span class="ng-scope">Edit</span>
-                                                    <div class="md-ripple-container"></div>
-                                                </button>
-                                            </th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
+<!--                                     <tfoot>
                                         <tr>
                                             <td></td>
                                         </tr>
-                                    </tfoot>
+                                    </tfoot> -->
                                     <tbody>
                                         <tr>
-                                            <td>{{company_info.salesweb}}</td>
-                                            <td><a href="{{company_info.salesweb}}" target="_blank">
+                                            <td><a href="{{company_info.company_url}}" target="_blenk">{{company_info.company_url}}</a></td>
+                                            <td class="text-right"> 
+                                                <md-menu>
+                                                    <md-button aria-label="Scrren Set Options" class="md-icon-button"   ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                                    </md-button>
+                                                    <md-menu-content width="4">
+                                                        <md-menu-item ng-click="vm.editCompanyInfo($event,'webportal_form')">
+                                                            <md-button>
+                                                                Edit
+                                                            </md-button>
+                                                        </md-menu-item>
+                                                       <!--  <md-menu-item ng-click="UpdateTableField('salesweb',' ','client','client_id',company_info.client_id,'salesweb') " >
+                                                            <md-button>
+                                                                Remove
+                                                            </md-button>
+                                                        </md-menu-item> -->
+                                                    </md-menu-content>
+                                                </md-menu>
+                                            </td>
+
+
+
+
+                                           <!--  <td><a href="{{company_info.salesweb}}" target="_blank">
                                                 <button class="md-raised md-button md-default-theme md-ink-ripple" type="button" aria-label="Button">
                                                     <span class="ng-scope">Open</span>
                                                     <div class="md-ripple-container"></div>
                                                 </button>
-                                            </a></td>
+                                            </a></td> -->
                                         </tr>
                                     </tbody>
                                 </table>

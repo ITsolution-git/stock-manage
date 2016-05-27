@@ -38,6 +38,8 @@ class Order extends Model {
                           $orderData = $orderData->Where(function($query) use($search)
                           {
                               $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('staff.first_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
                           });
                         }
@@ -79,7 +81,7 @@ class Order extends Model {
          $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
 
-        $listArray = ['order.*','client.client_company','misc_type.value as approval','staff.first_name',
+        $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','staff.first_name',
                       'staff.last_name','users.name','cc.first_name as client_first_name',
                       'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
 
@@ -888,23 +890,21 @@ public function saveColorSize($post)
 
     public function getAllDesigndata()
     {
-
         $whereConditions = ['od.status' => '1','od.is_delete' => '1'];
-        $listArray = ['od.shipping_date','od.id','od.order_id','odp.position_id','od.design_name',DB::raw('group_concat(m.value) as position_name'),DB::raw('count(odp.position_id) as count_position')];
+        $listArray = ['p.name as product_name','od.shipping_date','od.id','od.order_id','odp.position_id','od.design_name',DB::raw('group_concat(m.value) as position_name'),DB::raw('count(odp.position_id) as count_position')];
         $designData = DB::table('order_design as od')
                         ->Join('order_design_position as odp','odp.design_id','=', 'od.id')
                         ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
+                        ->leftJoin('design_product as dp','odp.design_id','=', 'dp.design_id')
+                        ->leftJoin('products as p','dp.product_id','=', 'p.id')
                         ->select($listArray)
                         ->GroupBy('odp.design_id')
                         ->where($whereConditions)->get();
-
         $allData = array ();
         foreach($designData as $data) {
           
             $allData[$data->order_id][] = $data;
-
         }
-
         return $allData;
     }
 

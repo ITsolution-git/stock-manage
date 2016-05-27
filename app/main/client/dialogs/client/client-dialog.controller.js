@@ -45,6 +45,8 @@
                     vm.ArrCleintType =Response.data.result.ArrCleintType;
                     vm.Arrdisposition  = Response.data.result.Arrdisposition;
                     vm.states_all  = Response.data.result.state;
+                    $scope.AllPriceGrid=Response.data.result.AllPriceGrid;
+                    $scope.approval_all = Response.data.result.approval;
                    // console.log(vm.states_all);
                 }
             });
@@ -68,6 +70,7 @@
                    $state.go('app.client');
                    return false;
                 }
+                closeDialog();
                 
             });
            // console.log('Client Add call');

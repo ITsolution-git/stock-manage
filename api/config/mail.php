@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'driver' => 'mandrill',
+	'driver' => "smtp",  //,env('MAIL_DRIVER', 'sparkpost'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'host' => 'smtp.mandrillapp.com',
+	'host' => 'smtp.sparkpostmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,8 +54,7 @@ return [
 	|
 	*/
 
-	'from' => ['address' => 'no-reply@stokkup.com', 'name' => 'Stokkup'],
-
+	'from' => ['address' => 'postmaster@new.stokkup.com', 'name' => 'Stokkup'],
 	/*
 	|--------------------------------------------------------------------------
 	| E-Mail Encryption Protocol
@@ -67,7 +66,7 @@ return [
 	|
 	*/
 
-	'encryption' => 'tls',
+	'encryption' => 'tls', // tls
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +79,7 @@ return [
 	|
 	*/
 
-	'username' => '',
+	'username' => 'SMTP_Injection',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +92,7 @@ return [
 	|
 	*/
 
-	'password' => '',
+	'password' => 'dd0e927150cdc85c5277fbbb55d6e8a3e20580a7',
 
 	/*
 	|--------------------------------------------------------------------------

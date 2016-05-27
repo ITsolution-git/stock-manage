@@ -58,6 +58,7 @@
         };
        $scope.getResource = function (params, paramsObj, search)
         {
+            $("#ajax_loader").show();
             $scope.params = params;
             $scope.paramsObj = paramsObj;
 
@@ -67,6 +68,8 @@
             return $http.post('api/public/client/ListClient',price_list_data).success(function(response) {
               
                 var header = response.header;
+                $scope.success = response.success;
+                $("#ajax_loader").hide();
                 return {
                   'rows': response.rows,
                   'header': header,
@@ -74,6 +77,7 @@
                   'sortBy': response.sortBy,
                   'sortOrder': response.sortOrder
                 }
+
             });
         }
         function openClientDialog(ev, client)
