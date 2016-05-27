@@ -44,8 +44,41 @@
                             <div class="h4">Vendor</div>
                             <div class="h5 p-b-10  grey-color">{{vendor_name}}</div>
                             <div class="h4">Item Number</div>
-
                             <div class="h5  grey-color">{{product_id}}</div>
+                            <div class="box-typ1 scrollable" ms-scroll>
+                                <table class="tbl-typ1">
+                                    <thead>
+                                        <tr>
+                                            <th width="60%" class="pd5">Inventory Level</th>
+                                            <th width="40%" class="pd5">Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes">
+                                            <td class="pd5">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="70%" class="text-right color font-12">{{sizedata.sizeName}} :</td>
+                                                        <td width="30%" class="text-semibold font-12">{{sizedata.caseQty}}</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td class="pd5">
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <input ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.caseQty}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
+
+                                                    <!--  <div ng-messages="orderForm.qnty_S.$error" role="alert" multiple>
+                                                        <div ng-message="max">
+                                                            <span>This field is required</span>
+                                                        </div>
+                                                    </div> -->
+
+                                                </md-input-container>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div> 
                         
 
@@ -58,7 +91,7 @@
   
                     </div>
                     <div layout="column">
-                        <div layout="row" layout-align="space-between center" flex="100">
+                        <!-- <div layout="row" layout-align="space-between center" flex="100">
                             <div layout="colunm" flex="20">
                                 <div class="h4">Inventory Level</div>
                             </div>
@@ -68,8 +101,8 @@
                                     <div class="h4 text-semibold font-19">{{sizedata.caseQty}}</div>
                                 </div>
 
-                        </div>
-                        <div layout="row" layout-align="space-between center" flex="100">
+                        </div> -->
+                        <!-- <div layout="row" layout-align="space-between center" flex="100">
                             <div layout="colunm" flex="20">
                                 <div class="h4">Select Qty</div>
                             </div>
@@ -79,16 +112,16 @@
                                     <label>{{sizedata.sizeName}}</label>
                                     <input ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.caseQty}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
 
-                                    <!--  <div ng-messages="orderForm.qnty_S.$error" role="alert" multiple>
+                                    <div ng-messages="orderForm.qnty_S.$error" role="alert" multiple>
                                         <div ng-message="max">
                                             <span>This field is required</span>
                                         </div>
-                                    </div> -->
+                                    </div>
 
                                 </md-input-container>
 
                             </div> 
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
