@@ -5,7 +5,7 @@
 	.factory('sessionService', sessionService);
 
 	/* ngInject */
-	function sessionService($state, $resource, notifyService,$rootScope) {
+	function sessionService($state, $resource, notifyService,$rootScope,$http) {
 		var service = {
 			set : set,
 			get : get,
@@ -55,17 +55,46 @@
 
 		function AccessService(ret)
 		{
-            var role = get('role_slug');
-            //console.log(ret + ' - '+role);
-            if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
-            {
-               // console.log('error');
-                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
-                notifyService.notify(data.status, data.message);
-               	//setTimeout(function(){ 
-                //window.open('dashboard', '_self'); }, 1000);
-                //return false;
-            }
+				$http.get('api/public/auth/session').success(function(result) 
+                {  
+	           		
+	                if(result.data.success=='1')
+	                {   
+	                	set('email',result.data.email);
+	                    set('role_slug',result.data.role_session);
+	                    set('user_id',result.data.user_id);
+	                    set('company_id',result.data.company_id);
+	                    set('company_name',result.data.company_name);
+	                    set('name',result.data.name);
+	                    set('role_title',result.data.role_title);
+	                    set('login_id',result.data.login_id);
+
+	                    var role = result.data.role_session;
+	                    if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
+			            {
+			               // console.log('error');
+			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
+			                notifyService.notify(data.status, data.message);
+			               	//setTimeout(function(){ 
+			                //window.open('dashboard', '_self'); }, 1000);
+			                //return false;
+			            }
+	                }
+	                else
+	                {
+	                    if($next.name == 'app.login' || $next.name == 'app.forget'  || $next.name == 'app.reset') 
+	                    {                                        
+	                        console.log('break,else');
+	                    }
+	                    else
+	                    {
+	                        $state.go('app.login');
+	                        notifyService.notify("error", "Please signin first.");
+	                        $stateChangeStart.preventDefault();
+	                    }
+	                }
+            });
+
 		}
 
 	}
