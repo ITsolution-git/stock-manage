@@ -246,6 +246,7 @@ public function create_dir($dir_path) {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
 
+
         $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data'],'success'=>$success);
         return  response()->json($data);
     }
@@ -308,6 +309,54 @@ public function create_dir($dir_path) {
        
         return response()->json(["data" => $productAllData]);
         
+
+    }
+    
+
+    public function getCustomProduct() {
+
+       $post_all = Input::all();
+        $records = array();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'product.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'product.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
+        $result = $this->product->getCustomProduct($post);
+        
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'product.id', 'name' => 'ID'),
+                        1=>array('key' => 'product.name', 'name' => 'Name')
+                        
+                        );
+
+
+            $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success' => $success);
+        return  response()->json($data);
+
 
     }
 

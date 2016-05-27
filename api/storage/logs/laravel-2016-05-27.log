@@ -1,0 +1,60 @@
+[2016-05-27 05:53:41] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:53:44] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:53:52] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:53:52] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:53:56] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:53:56] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:54:06] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:54:06] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:54:10] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:54:17] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:55:12] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:55:39] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 05:55:40] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 06:02:16] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 06:02:30] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 06:02:32] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 06:04:02] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 06:04:03] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 06:08:20] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  
+[2016-05-27 06:08:21] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
+Stack trace:
+#0 {main}  

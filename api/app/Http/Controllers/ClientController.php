@@ -51,10 +51,10 @@ class ClientController extends Controller {
 			$client['salesweb']=(!empty($post['salesweb']))?$post['salesweb']:'';
 			$client['salesperson']=(!empty($post['salesperson']))?$post['salesperson']:'';
 			$client['salespricegrid']=(!empty($post['salespricegrid']))?$post['salespricegrid']:'';
-			$client['anniversarydate'] = (!empty($post['anniversarydate']))? date('Y-m-d',strtotime($post['anniversarydate'])):'';
+			$client['anniversarydate'] = (!empty($post['anniversarydate']))? date('Y-m-d',strtotime($post['anniversarydate'])):CURRENT_DATE;
 			
 			$client['status']='1';
-			$client['tax_rate']=$company_data[0]->tax_rate;
+			$client['tax_rate']=(!empty($company_data[0]->tax_rate))?$company_data[0]->tax_rate:0;
 
 		/* SEPARATE CLIENT ADDRESS DATA IN TO ARRAY */
 			$client['pl_address']=(!empty($post['pl_address']))?$post['pl_address']:'';
