@@ -189,8 +189,22 @@
     <!--Receiving--> 
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
+<<<<<<< HEAD
+    <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
+    <!-- Settings -->
+        <script src="app/main/settings/settings.module.js"></script>
+    <script src="app/main/settings/settings.controller.js"></script>
+    <script src="app/main/settings/views/userProfile/userProfile.controller.js"></script>
+    <script src="app/main/settings/views/priceGrid/priceGrid.controller.js"></script>
+    <script src="app/main/settings/views/companyProfile/companyProfile.controller.js"></script>
+    <script src="app/main/settings/views/userManagement/userManagement.controller.js"></script>
+    <script src="app/main/settings/views/affiliate/affiliate.controller.js"></script>
+    <script src="app/main/settings/dialogs/changePassword/changePassword-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.controller.js"></script>
+=======
 
 
+>>>>>>> 9c45d127e492e6234ba0f58b144928a4cf0f804f
     <!--Datatable Scrolling-->
 
     <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
