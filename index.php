@@ -189,7 +189,6 @@
     <!--Receiving--> 
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
-<<<<<<< HEAD
     <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
     <!-- Settings -->
         <script src="app/main/settings/settings.module.js"></script>
@@ -201,10 +200,7 @@
     <script src="app/main/settings/views/affiliate/affiliate.controller.js"></script>
     <script src="app/main/settings/dialogs/changePassword/changePassword-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.controller.js"></script>
-=======
 
-
->>>>>>> 9c45d127e492e6234ba0f58b144928a4cf0f804f
     <!--Datatable Scrolling-->
 
     <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
@@ -218,9 +214,6 @@
     <link href = "//cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css" rel = "stylesheet" / >-->
     <script src="scripts/other/kendo.all.min.js"></script>
     <script src="scripts/other/kendo.angular.min.js"></script>
-    
-
-
     <link rel="stylesheet" href="styles/other/kendo.common.min.css">
     <link rel="stylesheet" href="styles/other/kendo.default.min.css">
     
