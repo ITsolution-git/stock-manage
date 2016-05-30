@@ -89,6 +89,7 @@
              var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.product_id = product_id;
+            combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
 
             $scope.execute = 0;
@@ -108,7 +109,7 @@
             {
              $http.post('api/public/product/addProduct',combine_array_id).success(function(result) 
                 {
-                    //$mdDialog.hide();
+                    $mdDialog.hide();
                     var data = {"status": "success", "message": "Product Added Successfully."}
                      notifyService.notify(data.status, data.message);
                 });
