@@ -204,6 +204,17 @@ class Common extends Model {
                 $data[$key] = date("Y-m-d", strtotime($value));
             }
         }
+        if($date_field=='web_http')
+        {
+             foreach ($data as $key => $value) 
+            {
+                if (preg_match('/http/',$value) == false) 
+                {
+                    $data[$key] = "http://".$value;
+                }
+                
+            }
+        }
         
         $result = DB::table($table);
         if(count($cond)>0)

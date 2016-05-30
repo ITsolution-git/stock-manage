@@ -135,15 +135,20 @@
                 </md-input-container>
 
                 <md-input-container class="m-b-30">
-                    <label>Default PriceGrid</label>
-                    <md-select ng-model="vm.client.salespricegrid">
-                        <md-option value="0">
+                    <label>Default PriceGrid *</label>
+                    <md-select ng-model="vm.client.salespricegrid" name="salespricegrid" required>
+                        <md-option value="">
                             Select PriceGrid
                         </md-option>
                         <md-option ng-repeat="price in AllPriceGrid" value="{{price.id}}">
                             {{price.name}}
                         </md-option>
                     </md-select>
+                     <div ng-messages="clientForm.salespricegrid.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
                 </md-input-container>
 
                

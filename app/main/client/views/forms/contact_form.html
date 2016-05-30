@@ -12,12 +12,7 @@
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
                 <md-input-container class="md-block first-box">
-                    <input placeholder="First name *" name="first_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }"  required ng-model="contact_arr.first_name">
-                    <div ng-messages="clientForm.first_name.$error" role="alert" multiple>
-                        <div ng-message="required">
-                            <span>This field is required</span>
-                        </div>
-                    </div>
+                    <input placeholder="First name" name="first_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" ng-model="contact_arr.first_name">
                 </md-input-container>
                 <md-input-container>
                     <input placeholder="Last Name" name="last_name" ng-model="contact_arr.last_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >

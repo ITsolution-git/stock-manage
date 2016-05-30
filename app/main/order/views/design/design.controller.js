@@ -50,6 +50,7 @@
                     $scope.designProduct = result.data.records;
                     $scope.productData = result.data.productData.product[0];
                     $scope.colorName = result.data.colorName;
+                    $scope.calculate_data = result.data.calculate_data[0];
                     $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
 
 

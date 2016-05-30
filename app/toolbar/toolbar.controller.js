@@ -13,7 +13,7 @@
         //console.log(sessionService.get('name'));
         vm.useremail= sessionService.get('name');
         vm.role_title= sessionService.get('role_title');
-        vm.company = sessionService.set('company');
+        vm.company = sessionService.get('company_name');
         
         // Data
         $rootScope.global = {

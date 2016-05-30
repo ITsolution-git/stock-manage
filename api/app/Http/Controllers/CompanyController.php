@@ -160,7 +160,7 @@ $this->common = $common;
 				foreach ($company_data as $company) {
 					if($company->tax_exempt == 0)
 					{
-						$this->common->UpdateTableRecords('orders',array('client_id' => $company->client_id),array('tax_rate' => $post['tax_rate']));
+						//$this->common->UpdateTableRecords('orders',array('client_id' => $company->client_id),array('tax_rate' => $post['tax_rate']));
 					}
 				}
 
@@ -199,6 +199,50 @@ $this->common = $common;
 				$message = MISSING_PARAMS;
 				$success = 0;
 			}
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+		}
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
+	public function change_password()
+	{
+		$post = Input::all();
+		if(!empty($post['password']) && !empty($post['new_password']) && !empty($post['confirm_password']) && !empty($post['user_id'])) // CHECK VALIDATION 
+		{
+			if($post['new_password']==$post['confirm_password']) // CHECK BOTH PASSWORD SAME
+			{
+				$company_data = $this->common->GetTableRecords('users',array('id' => $post['user_id']),array()); // GET USER DATA
+				if(count($company_data)>0)
+				{
+					$pass = md5($post['password']);
+					if($pass==$company_data[0]->password)
+					{
+						$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($post['new_password']) )); // SUCCESS ANDY UPDATE PASSWORD
+						$message = "Password successfully changed.";
+						$success = 1;
+					}
+					else
+					{
+						$message = "Password you provided is wrong, Please try again!";
+						$success = 0;
+					}
+				}
+				else
+				{
+					$message = MISSING_PARAMS;
+					$success = 0;
+				}
+			}
+			else 
+			{
+				$message = "New password and confirm password do not match, Please try again";
+				$success = 0;
+			}
+			
 		}
 		else
 		{

@@ -1,47 +1,31 @@
 
-    <md-content class="md-padding">
-            <!-- <div class="table-title " layout="row" layout-align="space-between center">
-                <div class="table-title-text" flex=20>
-                    Art
-                </div>
-            </div> -->
-            <div class="ms-responsive-table-wrapper innertab-scroll height-75">
-                <table class="simple">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label class="priceGridTr">Price Increase by %   </label>
-                                <md-input-container class="first-box settings-margin-0 margin-top-25">
-                                    <input placeholder="Name" name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by %   </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </md-input-container>
-                            </td>
-                            <td>
-                                <label class="priceGridTr">Price Increase by amount   </label>
-                                <md-input-container class="first-box settings-margin-0 margin-top-25">
-                                    <input placeholder="Name" name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
+                                    </md-input-container>
+                                </div>
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by %   </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </md-input-container>
-                            </td>
-                        </tr> 
-                    </tbody>
-                </table>
-            <!--     <table> 
-                    <tr>
-                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
-                    </tr>
-                </table> -->
-            </div>
-
-            <md-card layout="row">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <md-card layout="row">
     <md-card-content layout="column" class="box-shadow-0">
         <div layout="row" layout-wrap>
             <div class="trans-box">
@@ -188,9 +172,6 @@
                     </div>
                 </md-input-container>
             </div>
-            <div class="trans-box">
-                
-            </div>
             <!-- <div class="trans-box" flex="80">
                 <p class="font-14 chrome-weight" flex="40">Order Line Total: 500</p>
                 <p class="font-14 chrome-weight" flex="40">Order Line Receiveds: 500</p>
@@ -198,10 +179,25 @@
         </div>
     </md-card-content>
 </md-card>
-
-    
-    </md-content>
-<!-- <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
-        
-    </div> -->
-    <a class="link-back cursor-p createPriceGridLink" ng-click="">SAVE</a>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16">
+                                            <md-button class="bg-blue" ng-click=" ">
+                                                    ADD NEW
+                                            </md-button>
+                                        </td>  
+                                        <td class="p-16">
+                                            <md-button class="bg-blue" ng-click=" ">
+                                                    Duplicate Primary
+                                            </md-button>
+                                        </td>                                       
+                                    </tr>
+                                </table>
+                            </div>
+                    </md-content>
+                
+                <div class="float-right">
+                    <md-button class="bg-blue" ng-click=" ">
+                            SAVE
+                    </md-button>
+                </div>

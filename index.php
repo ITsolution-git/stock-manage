@@ -199,6 +199,9 @@
     <script src="app/main/settings/views/affiliate/affiliate.controller.js"></script>
     <script src="app/main/settings/dialogs/changePassword/changePassword-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.controller.js"></script>
+    <script src="app/main/settings/views/companyDetails/companyDetails.controller.js"></script>
+    <script src="app/main/settings/dialogs/addEmployee/addEmployee-dialog.controller.js"></script>
 
     <!--Datatable Scrolling-->
 
