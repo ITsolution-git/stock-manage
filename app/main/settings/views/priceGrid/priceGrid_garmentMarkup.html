@@ -1,66 +1,106 @@
 
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title " layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=20>
-                                    Notes
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by %   </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
                                 </div>
-                                <div class="table-title-text" flex=70>
-                                </div>
-                                <div class="p-16" flex=10>
-                                    <a href=""  ng-click="vm.editCompanyConatct($event,'add','client_notes','notes_form','note_id',note.note_id,'notes')">ADD NEW</a>
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by amount </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
                                 </div>
                             </div>
-                            <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
-                                    <thead>
-                                        <tr>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Created By</span>
-                                                </div>
-                                            </th>  
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Note</span>
-                                                </div>
-                                            </th>  
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Date Added</span>
-                                                </div>
-                                            </th>  
-                                            <th></th>                                               
-                                        </tr>
-                                    </thead>                                   
-                                    <tbody>
-                                        <tr ng-repeat="note in allclientnotes">
-                                            <td>{{note.user_name}}</td>
-                                            <td>{{note.client_notes}}</td>
-                                            <td>{{note.created_date}}</td>
-                                            <td class="text-right">
-                                    <md-menu>
-                                        <md-button aria-label="Notes Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                        </md-button>
-                                        <md-menu-content width="4" ng-click="vm.editCompanyConatct($event,'edit','client_notes','notes_form','note_id',note.note_id,'notes')">
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Edit Notes
-                                                </md-button>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu>
-                                    </td>
-                                    </tr>
-                                     </tbody>
-                                </table>
+                            <div class="ms-responsive-table-wrapper innertab-scroll">
+                                <table class="simple" id="garmentMarkup">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text pricewidth-10 pricePad-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">Low Range</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">High Range</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">Percentage</span>
+                                </div>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <i class="icon icon-close" ></i>
+                            </td>
+                        </tr>   
+                                           
+                    </tbody>
+                </table>
                                 <table> 
                                     <tr>
-                                        <td class="p-16"><a href=""  ng-click="vm.editCompanyConatct($event,'add','client_notes','notes_form','note_id',note.note_id,'notes')">ADD NEW</a></td>                                                
+                                        <td class="p-16">
+                                            <md-button class="bg-blue" ng-click=" ">
+                                                    ADD
+                                            </md-button>
+                                        </td>                                        
                                     </tr>
                                 </table>
                             </div>
-                        </div> 
+                        </div>
                     </md-content>
                 
+                <div class="float-right">
+                    <md-button class="bg-blue" ng-click=" ">
+                            SAVE
+                    </md-button>
+                </div>

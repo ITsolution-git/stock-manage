@@ -27,6 +27,60 @@
                             </div>
                         </md-input-container>
 
+                        <!-- <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row layout-column">
+                            
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="City" name="" ui-event="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex="" class="flex md-default-theme">
+                                <label for="select_28" class="md-placeholder">State</label>
+
+                                <md-select ng-model="vm.basicForm.state" class="ng-pristine ng-valid md-default-theme ng-empty ng-touched" tabindex="0" aria-disabled="false" role="listbox" aria-expanded="false" aria-multiselectable="false" id="select_28" aria-owns="select_container_29" aria-invalid="false" aria-label="State" style="">                                    
+                                    <md-option>AK</md-option>
+                                    <md-option>AL</md-option>
+                                    <md-option>AZ</md-option>
+                                    <md-option>CA</md-option>
+                                </md-select>
+                            </md-input-container> -->
+
+                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                
+                                <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                    <input placeholder="City" name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container flex=30 class="m-b-20 m-t-25">
+                                    <label class="state-label-color">State</label>
+                                    <md-select ng-model="vm.userState" aria-label="State">
+                                      <md-option ng-repeat="state in vm.states" >
+                                        {{state.abbrev}}
+                                       </md-option>
+                                    </md-select>
+                                    
+                                </md-input-container>
+
+                                <md-input-container flex=30 class="md-block first-box settings-margin-0 margin-top-25">
+                                    <input placeholder="Postal Code" name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                            </div>
+
                         <md-input-container class="md-block first-box settings-margin-0">
                             <input placeholder="Phone Number" name="" ui-event="">
                             <div ng-messages=" " role="alert" multiple>
@@ -45,10 +99,6 @@
                             </div>                        
                          </md-input-container>
 
-              <!--            <div class="title" layout-padding>
-                            <span class="basicInfoStyle">CHANGE PASSWORD</span>
-                        </div>       -->
-                        
                       </div>
 
                     </md-card-content>
