@@ -13,12 +13,26 @@
     {
       var vm = this;
 
-        vm.openChangePasswordialog = openChangePasswordialog;
+    vm.openChangePasswordialog = openChangePasswordialog;
+    
+    $scope.company_id =sessionService.get("company_id");
+    $scope.user_id = sessionService.get("user_id");
 
         $scope.cancel = function () {
             $mdDialog.hide();
         };
         
+
+       $http.get('api/public/client/SelectionData/'+$scope.company_id).success(function(Response) 
+        {   
+            if(Response.data.success=='1')
+            {   
+                $scope.states_all   = Response.data.result.state;
+                $scope.AllPriceGrid = Response.data.result.AllPriceGrid;
+            }
+        });
+
+
         /**
          * Close dialog
          */
@@ -27,8 +41,7 @@
             $mdDialog.hide();
         }
 
-    $scope.company_id =sessionService.get("company_id");
-    $scope.user_id = sessionService.get("user_id");
+
     //console.log($scope.app.company_roleid);
       // GET ADMIN ROLE LIST
       GetCompany();
