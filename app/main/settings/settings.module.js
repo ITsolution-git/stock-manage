@@ -23,14 +23,18 @@
                     
                 }
             }).state('app.settings.userProfile', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                       return sessionService.AccessService('ALL');
+                    },
+                },
                 url  : '/userProfile',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/userProfile/userProfile.html',
                         controller : 'UserProfileController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.priceGrid', {
                 url  : '/priceGrid',
