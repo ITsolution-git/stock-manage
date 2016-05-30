@@ -47,14 +47,18 @@
                    
                 }
             }).state('app.settings.companyProfile', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                       return sessionService.AccessService('CA');
+                    },
+                },
                 url  : '/companyProfile',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/companyProfile/companyProfile.html',
-                        controller : 'CompanyProfileController as vm'
+                        controller : 'UserProfileController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.userManagement', {
                 url  : '/userManagement',
