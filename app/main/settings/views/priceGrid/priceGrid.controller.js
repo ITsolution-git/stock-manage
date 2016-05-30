@@ -18,6 +18,7 @@
         };*/
 
         vm.openCreatePriceGridDialog = openCreatePriceGridDialog;
+        vm.uploadCSV = uploadCSV ;
 
         $scope.cancel = function () {
             $mdDialog.hide();
@@ -37,6 +38,23 @@
                 controller: 'CreatePriceGridDialogController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Settings: settings,
+                    Settings: vm.settings,
+                    event: ev
+                }
+            });
+        }
+
+        function uploadCSV(ev, settings)
+        {
+            $mdDialog.show({
+                controller: 'UploadCSVDialogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,

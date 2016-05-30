@@ -335,6 +335,7 @@ class Product extends Model {
        
         if($designDetailData) {
             $combine_array['product_id'] = $designDetailData[0]->product_id;
+            $combine_array['design_id'] = $designDetailData[0]->design_id;
             $combine_array['colorName'] = $designDetailData[0]->colorName;
         }
 

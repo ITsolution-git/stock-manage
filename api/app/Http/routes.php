@@ -33,6 +33,7 @@ Route::post('admin/company/add', 'CompanyController@addData');
 Route::get('admin/company/edit/{id}/{company_id}', 'CompanyController@GetData');
 Route::post('admin/company/save', 'CompanyController@SaveData');
 Route::post('admin/company/delete', 'CompanyController@DeleteData');
+Route::post('admin/company/change_password', 'CompanyController@change_password');
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');

@@ -129,7 +129,7 @@ text-align: left;
   font-size: 96px;
   color: #FFF;
 }
-
+<<<<<<< HEAD
 
 .sizeColor {
       color: #777777 !important;
@@ -307,6 +307,44 @@ md-input-container > label {
   padding: 0 !important;
 }
 
+.pricewidth-10 {
+  width: 10% !important;
+  padding: 0 !important;
+}
+
+.pricePad-10 {
+  padding-left: 10px !important;
+}
+
+.bg-blue {
+  background: #0288D1;
+  color: #fff ;
+}
+
+.bg-blue-save {
+  background: #0288D1;
+  color: #fff ;
+}
+
+.float-right {
+  float: right;
+  
+}
+
+#screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th, #directToGarment.simple thead tr th, #chargesList.simple thead tr th {
+  min-width: 50px !important;
+}
+
+#screenPrimary tbody tr td .icon-close, #screenSecondary tbody tr td .icon-close, #embroidary tbody tr td .icon-close, #directToGarment tbody tr td .icon-close, #garmentMarkup tbody tr td .icon-close {
+  color: red;
+  margin-left : 50px;
+}
+
+#directToGarment tbody tr td .icon-close {
+  color: red;
+  margin-left : 25px;
+}
+
 .pricewidth-40 {
   width: 40% !important;
 }
@@ -369,6 +407,67 @@ md-input-container > label {
 .box-typ2:last-child, .box-typ2:nth-child(5n) {
 	border:1px solid #ccc;
 }
+.size-attribute {
+	margin-top:8px;
+}
+.size-attribute:first-child {
+	margin-top:0px;
+}
+.width100 {
+	width:100%;
+}
+.attribute-box .tbl-typ1 {
+	margin-top:0px;
+}
+.attribute-box .tbl-typ1 td {
+	background:#fff;
+}
+.tbl-typ1 md-input-container {
+	margin:0px;
+}
+.tbl-typ1 .md-errors-spacer {
+	min-height:1px;
+}
+.tbl-typ1 th a .icon {
+	color:#fff !important;
+	font-weight:bold;
+	font-size:18px;
+}
+.tbl-typ1 td a .icon.f-red {
+	color:#ff000 !important;
+	font-weight:bold;
+	font-size:18px;
+}
+.tbl-typ1 td a.add-size, .tbl-typ1 td a.remove-size {
+	background:#0288D1;
+	display:inline-block;
+	padding:8px;
+	border-radius:5px;
+	float:right;
+	padding: 5px 5px 2px;
+}
+.tbl-typ1 td a.remove-size {
+	background:#ff0000;
+}
+.tbl-typ1 td.text-center a.remove-size {
+	float:none;
+}
+.tbl-typ1 td a.add-size .icon, .tbl-typ1 td a.remove-size .icon {
+	color:#fff;
+	font-weight:bold;
+	font-size:16px;
+	line-height:3px;
+}
+.size-txtbox {
+	max-width:100px;
+}
+.display-block {
+	display:block;
+}
+.display-none {
+	display:none;
+}
+/*****************************/	
 .loaderouter{
     position:fixed;
     width:100%;
@@ -442,5 +541,48 @@ md-input-container > label {
         box-shadow: 0 -2em #31c0be;
         height: 5em;
     }
+
 }
 
+.font-13-priceGrid {
+      font-size: 13px !important;
+}
+
+.padding-panelTitle {
+  padding : 0px 24px !important;
+}
+
+.link-back1 {
+    top: 10px;
+    right: 0px;
+    font-size: 15px;
+    z-index: 1;
+}
+
+.m-t-25 {
+  margin-top: 25px !important ;
+}
+
+.state-label-color {
+  color: #000 !important ;
+}
+
+.btn-width-315 {
+  min-width: 315px ;
+}
+
+.div-1000 {
+  width: 1000px ;
+}
+
+md-button.on {
+    background-color: lightgreen;
+}
+
+.pad-top-25 {
+  padding-top: 25px ;
+}
+
+.margin-left-15 {
+  margin-left: 15px;
+}

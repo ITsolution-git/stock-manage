@@ -23,14 +23,18 @@
                     
                 }
             }).state('app.settings.userProfile', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                       return sessionService.AccessService('ALL');
+                    },
+                },
                 url  : '/userProfile',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/userProfile/userProfile.html',
                         controller : 'UserProfileController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.priceGrid', {
                 url  : '/priceGrid',
@@ -43,11 +47,25 @@
                    
                 }
             }).state('app.settings.companyProfile', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                       return sessionService.AccessService('CA');
+                    },
+                },
                 url  : '/companyProfile',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/companyProfile/companyProfile.html',
-                        controller : 'CompanyProfileController as vm'
+                        controller : 'UserProfileController as vm'
+                    }
+                }
+            }).state('app.settings.companyDetails', {
+                url  : '/companyDetails',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/companyDetails/companyDetails.html',
+                        controller : 'CompanyDetailsController as vm'
                     }
                 },resolve: {
                    
@@ -113,9 +131,9 @@
             weight     : 2
         });
 
-        msNavigationServiceProvider.saveItem('fuse.settings.xydz', {
+        msNavigationServiceProvider.saveItem('fuse.settings.companyDetails', {
             title      : 'Company Details',
-            state      : 'app.settings',
+            state      : 'app.settings.companyDetails',
             stateParams: {'id': 3},
             weight     : 3
         });
@@ -140,7 +158,7 @@
         });
         msNavigationServiceProvider.saveItem('fuse.settings.xyadz', {
             title      : 'Integrations',
-            state      : 'app.settings',
+            state      : 'app.settings.xyadz',
             stateParams: {'id': 7},
             weight     : 7
         });
@@ -152,7 +170,7 @@
         });
         msNavigationServiceProvider.saveItem('fuse.settings.xybdz', {
             title      : 'Billing',
-            state      : 'app.settings',
+            state      : 'app.settings.xybdz',
             stateParams: {'id': 9},
             weight     : 9
         });

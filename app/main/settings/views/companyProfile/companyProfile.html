@@ -10,34 +10,39 @@
                     <md-card-content flex="50" layout="column">
                         
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Company Name" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <input placeholder="Company Name" name="name" ng-model="company.name"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }" >
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Address" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <input placeholder="Address" name="prime_address1" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
                         </md-input-container>
+                
+                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                            <md-input-container flex="30">
+                                <input placeholder="City" ng-model="company.prime_address_city" name="prime_address_city" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            </md-input-container>
+                            <md-input-container flex=30 class="m-b-20">
+                                <label>State</label>
+                                <md-select ng-model="company.prime_address_state" ng-change='UpdateTableField("prime_address_state",company.prime_address_state,"staff","id",company.staff_id,"staff")'>
+                                    <md-option value="0">
+                                        Select State
+                                    </md-option>
+                                    <md-option ng-repeat="state_val in states_all" value="{{state_val.id}}" ng-selected='{{state_val.id==company.prime_address_state}}' >
+                                        {{state_val.name}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="30">
+                                <input placeholder="Zip Code" ng-model="company.prime_address_zip" name="prime_address_zip" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            </md-input-container>
+                        </div>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Phone Number" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <input placeholder="Phone Number" name="prime_phone_main" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Email Address" name="" ui-event="">
+                            <input placeholder="Email Address" name="" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }">
                             <div ng-messages=" " role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
@@ -45,10 +50,6 @@
                             </div>                        
                          </md-input-container>
 
-              <!--            <div class="title" layout-padding>
-                            <span class="basicInfoStyle">CHANGE PASSWORD</span>
-                        </div>       -->
-                        
                       </div>
 
                     </md-card-content>

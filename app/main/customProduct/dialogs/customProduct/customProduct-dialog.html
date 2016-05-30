@@ -14,18 +14,43 @@
                
                     <input placeholder="Product Name" ng-model="productDetail.name"  ui-event="{ change : 'updateProduct(\'name\',productDetail.id,productDetail.name,\'products\',\'id\')' }">
                 </md-input-container>
-               
+               <div class="attribute-box">
+                    <table class="tbl-typ1">
+                        <tr>
+                            <th width="40%">Color</th>
+                            <th width="40%">Size</th>
+                            <th width="20%" class="text-center">
+                                <a href="#" class="add-attributes" ng-click="addAttribute()"><span class="icon icon-plus"></span></a>
+                            </th>
+                        </tr>
+                        <tr ng-repeat="rowContent in rows">
+                            <td>
+                                <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
+                                    <input type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false">
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <div class="size-attribute">
+                                    <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
+                                        <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false">
+                                        <a href="#" class="add-size" ng-click="addSize()"><span class="icon icon-plus"></span></a>
+                                    </md-input-container>
+                                </div>
+                                <div class="size-attribute display-none" ng-repeat="size in sizeElement">
+                                    <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
+                                        <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false">
+                                        <a href="#" class="remove-size" ng-click="removeSize(size)"><span class="icon icon-close"></span></a>
+                                    </md-input-container>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <a href="#" class="remove-size remove-attrribute" ng-click="removeAttribute()"><span class="icon icon-close"></span></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
-
-            <div layout-align="start center" class="item ng-scope layout-align-start-center">
-                <i class="icon icon-plus-circle s40"></i>
-                <div class="name secondary-text text-center ng-binding">Add Color</div>
-            </div>
-
-            <div layout-align="start center" class="item ng-scope layout-align-start-center">
-                <i class="icon icon-plus-circle s40"></i>
-                <div class="name secondary-text text-center ng-binding">Add Size</div>
-            </div>
+         
 
 
         </md-dialog-content>

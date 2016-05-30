@@ -74,7 +74,6 @@
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
 
     <!-- <ms-theme-options></ms-theme-options> -->
-
     <script src="scripts/vendor.js"></script>
     <!--<script src="scripts/mdPickers.min.js"></script>-->
     <!--<script src="scripts/multiselect/lodash.js"></script>-->
@@ -200,6 +199,9 @@
     <script src="app/main/settings/views/affiliate/affiliate.controller.js"></script>
     <script src="app/main/settings/dialogs/changePassword/changePassword-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.controller.js"></script>
+    <script src="app/main/settings/views/companyDetails/companyDetails.controller.js"></script>
+    <script src="app/main/settings/dialogs/addEmployee/addEmployee-dialog.controller.js"></script>
 
     <!--Datatable Scrolling-->
 
