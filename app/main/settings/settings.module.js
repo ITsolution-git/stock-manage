@@ -56,6 +56,16 @@
                 },resolve: {
                    
                 }
+            }).state('app.settings.companyDetails', {
+                url  : '/companyDetails',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/companyDetails/companyDetails.html',
+                        controller : 'CompanyDetailsController as vm'
+                    }
+                },resolve: {
+                   
+                }
             }).state('app.settings.userManagement', {
                 url  : '/userManagement',
                 views: {
@@ -117,9 +127,9 @@
             weight     : 2
         });
 
-        msNavigationServiceProvider.saveItem('fuse.settings.xydz', {
+        msNavigationServiceProvider.saveItem('fuse.settings.companyDetails', {
             title      : 'Company Details',
-            state      : 'app.settings',
+            state      : 'app.settings.companyDetails',
             stateParams: {'id': 3},
             weight     : 3
         });

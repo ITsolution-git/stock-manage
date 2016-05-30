@@ -1,18 +1,81 @@
 
-    <md-content class="md-padding">
-            <!-- <div class="table-title " layout="row" layout-align="space-between center">
-                <div class="table-title-text" flex=20>
-                    Art
-                </div>
-            </div> -->
-            <div class="ms-responsive-table-wrapper innertab-scroll height-75">
-                <table class="simple">
+                    <md-content class="md-padding">
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by %   </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by amount   </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="ms-responsive-table-wrapper innertab-scroll">
+                                <table class="simple" id="chargesList">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Item</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Charge</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Time</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Available to</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                <label class="priceGridTr">Price Increase by %   </label>
-                                <md-input-container class="first-box settings-margin-0 margin-top-25">
-                                    <input placeholder="Name" name="" ui-event="">
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
                                     <div ng-messages=" " role="alert" multiple>
                                         <div ng-message="required">
                                             <span>This field is required</span>
@@ -21,9 +84,21 @@
                                 </md-input-container>
                             </td>
                             <td>
-                                <label class="priceGridTr">Price Increase by amount   </label>
-                                <md-input-container class="first-box settings-margin-0 margin-top-25">
-                                    <input placeholder="Name" name="" ui-event="">
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Line
+                                </md-checkbox>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Order
+                                </md-checkbox>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Screen Set
+                                </md-checkbox>
+                            </td>
+                        </tr>     
+                        <tr>
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
                                     <div ng-messages=" " role="alert" multiple>
                                         <div ng-message="required">
                                             <span>This field is required</span>
@@ -31,161 +106,103 @@
                                     </div>
                                 </md-input-container>
                             </td>
-                        </tr> 
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Line
+                                </md-checkbox>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Order
+                                </md-checkbox>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Screen Set
+                                </md-checkbox>
+                            </td>
+                        </tr>     
+                        <tr>
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-20">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Line
+                                </md-checkbox>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Order
+                                </md-checkbox>
+                                <md-checkbox ng-checked="" ng-click="">
+                                    per Screen Set
+                                </md-checkbox>
+                            </td>
+                        </tr>                                   
                     </tbody>
                 </table>
-            <!--     <table> 
-                    <tr>
-                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
-                    </tr>
-                </table> -->
-            </div>
-
-            <div class="ms-responsive-table-wrapper innertab-scroll">
-                                <table class="simple">
-                                    <thead>
-                                        <tr>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Item</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Charge</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Time</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Available to</span>
-                                                </div>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                        </tr>     
-                                        <tr>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td>
-                                            
-                                            </td>
-                                        </tr>     
-                                        <tr>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td class="pricewidth-20">
-                                                <md-input-container class="md-block first-box settings-margin-0">
-                                                    <input placeholder=" " name="" ui-event="">
-                                                    <div ng-messages=" " role="alert" multiple>
-                                                        <div ng-message="required">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div>
-                                                </md-input-container>
-                                            </td>
-                                            <td>
-                                            
-                                            </td>
-                                        </tr>                                   
-                                    </tbody>
-                                </table>
                                 <table> 
                                     <tr>
-                                        <td class="p-16"><a href="javascript:;" ng-click="vm.editCompanyConatct($event,'add','client_contact','contact_form','id',contact.id)">ADD NEW</a></td>                                                
+                                        <td class="p-16">
+                                            <md-button class="bg-blue" ng-click=" ">
+                                                    ADD
+                                            </md-button>
+                                        </td>  
+                                        <td class="p-16">
+                                            <md-button class="bg-blue" ng-click=" ">
+                                                    Duplicate Primary
+                                            </md-button>
+                                        </td>                                       
                                     </tr>
                                 </table>
                             </div>
                         </div>
-
-    
-    </md-content>
-<!-- <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
-        
-    </div> -->
-    <!-- <a class="link-back cursor-p createPriceGridLink" ng-click="">SAVE</a> -->
+                    </md-content>
+                
+                <div class="float-right">
+                    <md-button class="bg-blue" ng-click=" ">
+                            SAVE
+                    </md-button>
+                </div>

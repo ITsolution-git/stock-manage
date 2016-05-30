@@ -1,132 +1,211 @@
 
                     <md-content class="md-padding">
-                        <div flex-xs flex-gt-xs="100" layout="column">
-                            <md-card>
-                                <md-card-header layout-align="space-between center">
-                                    <md-card-header-text>
-                                        <span class="md-title">Blind Approval Text</span>
-                                    </md-card-header-text>
-                                    <md-menu>
-                                        <md-button aria-label="Blind Text Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                        </md-button>
-                                        <md-menu-content width="4" ng-click="vm.editCompanyConatct($event,'EDIT','client','bindtext_form','client_id',company_info.client_id)">
-                                            <md-menu-item>
-                                                <md-button>
-                                                    Edit Blind Text
-                                                </md-button>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu>
-                                </md-card-header>
-                                <md-card-content>
-                                    <span>{{company_info.blind_text}}</span>
-                                </md-card-content>
-                            </md-card>
-                        </div>
-                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
-                            <div flex-xs flex-gt-xs="33" layout="column">
-                                <md-card>
-                                    <md-card-header layout-align="space-between center">
-                                        <md-card-header-text>
-                                            <span class="md-title">Color Logo</span>
-                                        </md-card-header-text>
-                                        <md-menu>
-                                            <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                            </md-button>
-                                            <md-menu-content width="4">
-                                                <md-menu-item ng-click="ImagePopup('color_logo','client','client',company_info.color_url_photo,'client_id',company_info.client_id,company_info.color_logo)">
-                                                    <md-button>
-                                                        Change Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                                <md-menu-item ng-click="deleteImage('color_logo','client','client',company_info.color_logo,'client_id',company_info.client_id)">
-                                                    <md-button>
-                                                        Remove Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                            </md-menu-content>
-                                        </md-menu>
-                                    </md-card-header>
-                                    <md-card-content>
-                                        <div class="form-group  m-b panel panel-default"  >
-                                              <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
-                                              <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
-                                          </div>
-                                    </md-card-content>
-                                </md-card>
+                        <div class="simple-table-container md-whiteframe-4dp">
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by %   </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                                <div class="table-title-text" flex=40>
+                                    <label class="priceGridTr">Price Increase by amount   </label>
+                                    <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
+                                        <input placeholder="" name="" ui-event="">
+                                        <div ng-messages=" " role="alert" multiple>
+                                            <div ng-message="required">
+                                                <span>This field is required</span>
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
                             </div>
-                            <div flex-xs flex-gt-xs="33" layout="column">
-                                <md-card>
-                                    <md-card-header layout-align="space-between center">
-                                        <md-card-header-text>
-                                            <span class="md-title">B/W Logo</span>
-                                        </md-card-header-text>
-                                        <md-menu>
-                                            <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            <div class="ms-responsive-table-wrapper innertab-scroll">
+                                <table class="simple" id="directToGarment">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text pricewidth-10 pricePad-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">Low Range</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">High Range</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">4*4 Light</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">4*4 Dark</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">6*6 Light</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">6*6 Dark</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">10*10 Light</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">10*10 Dark</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">12*12 Light</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text pricewidth-10 pricePad-10">
+                                <div class="table-header">
+                                    <span class="column-title">12*12 Dark</span>
+                                </div>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <md-input-container class="md-block first-box settings-margin-0">
+                                    <input placeholder=" " name="" ui-event="">
+                                    <div ng-messages=" " role="alert" multiple>
+                                        <div ng-message="required">
+                                            <span>This field is required</span>
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </td>
+                            <td class="pricewidth-10">
+                                <i class="icon icon-close" ></i>
+                            </td>
+                        </tr>   
+                                           
+                    </tbody>
+                </table>
+                                <table> 
+                                    <tr>
+                                        <td class="p-16">
+                                            <md-button class="bg-blue" ng-click=" ">
+                                                    ADD
                                             </md-button>
-                                            <md-menu-content width="4">
-                                                <md-menu-item ng-click="ImagePopup('b_w_logo','client','client',company_info.bw_url_photo,'client_id',company_info.client_id,company_info.b_w_logo)">
-                                                    <md-button>
-                                                        Change Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                                <md-menu-item ng-click="deleteImage('b_w_logo','client','client',company_info.b_w_logo,'client_id',company_info.client_id)">
-                                                    <md-button>
-                                                        Remove Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                            </md-menu-content>
-                                        </md-menu>
-                                    </md-card-header>
-                                    <md-card-content>
-                                        <div class="form-group  m-b panel panel-default"  >
-                                              <img  ng-if="company_info.b_w_logo" ng-src="{{company_info.bw_url_photo}}" alt=""  class="popup-image"/>
-                                              <img ng-if="company_info.b_w_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
-                                          </div>
-                                    </md-card-content>
-                                </md-card>
-                            </div>
-                            <div flex-xs flex-gt-xs="33" layout="column">
-                                <md-card>
-                                    <md-card-header layout-align="space-between center">
-                                        <md-card-header-text>
-                                            <span class="md-title">Shipping Logo</span>
-                                        </md-card-header-text>
-                                        <md-menu>
-                                            <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                            </md-button>
-                                            <md-menu-content width="4">
-                                                <md-menu-item ng-click="ImagePopup('shipping_logo','client','client',company_info.shipping_url_photo,'client_id',company_info.client_id,company_info.shipping_logo)">
-                                                    <md-button>
-                                                        Change Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                                <md-menu-item ng-click="deleteImage('shipping_logo','client','client',company_info.shipping_logo,'client_id',company_info.client_id)">
-                                                    <md-button>
-                                                        Remove Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                            </md-menu-content>
-                                        </md-menu>
-                                    </md-card-header>
-                                    <md-card-content>
-                                        <div class="form-group  m-b panel panel-default"  >
-                                              <img  ng-if="company_info.shipping_logo" ng-src="{{company_info.shipping_url_photo}}" alt=""  class="popup-image"/>
-                                              <img ng-if="company_info.shipping_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
-                                          </div>
-                                    </md-card-content>
-                                </md-card>
+                                        </td>                                        
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </md-content>
                 
+                <div class="float-right">
+                    <md-button class="bg-blue" ng-click=" ">
+                            SAVE
+                    </md-button>
+                </div>
