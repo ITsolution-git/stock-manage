@@ -158,7 +158,7 @@
         });
         msNavigationServiceProvider.saveItem('fuse.settings.xyadz', {
             title      : 'Integrations',
-            state      : 'app.settings',
+            state      : 'app.settings.xyadz',
             stateParams: {'id': 7},
             weight     : 7
         });
@@ -170,7 +170,7 @@
         });
         msNavigationServiceProvider.saveItem('fuse.settings.xybdz', {
             title      : 'Billing',
-            state      : 'app.settings',
+            state      : 'app.settings.xybdz',
             stateParams: {'id': 9},
             weight     : 9
         });
