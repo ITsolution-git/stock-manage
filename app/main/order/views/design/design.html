@@ -396,40 +396,40 @@
                             <div layout="column" flex="38">
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Average Garment Cost</div>
-                                    <div class="h5 grey-color font-14 ">{{vm.garmentCost.averageGarmentCost}}</div>
+                                    <div class="h5 grey-color font-14 ">${{calculate_data.avg_garment_cost}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Markup Default 70%</div>
-                                    <div class="h5 grey-color font-14">{{vm.garmentCost.markupDefault}}</div>
+                                    <div class="h5 grey-color font-14">${{calculate_data.marku-_default}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Average Garment Price</div>
-                                    <div class="h5 grey-color font-14">{{vm.garmentCost.averageGarmentPrice}}</div>
+                                    <div class="h5 grey-color font-14">${{calculate_data.avg_garment_price}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h5">+</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Print Charges</div>
-                                    <div class="h5 grey-color font-14">{{vm.garmentCost.PrintCharges}}</div>
+                                    <div class="h5 grey-color font-14">${{calculate_data.print_charges}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h5">=</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Total Line Charge</div>
-                                    <div class="h5 grey-color font-14">{{vm.garmentCost.totalLineCharge}}</div>
+                                    <div class="h5 grey-color font-14">${{calculate_data.total_line_charge}}</div>
                                 </div>
                             </div> 
                             <div layout="column" flex="40">
                                 <div layout="column">
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Markup %</div>
-                                        <div class="h5 grey-color font-14">{{vm.garmentCost.markup}}</div>
+                                        <div class="h5 grey-color font-14">${{calculate_data.markup}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="">
                                         <div class="h4">Overide</div>
-                                        <div class="h5 grey-color font-14">{{vm.garmentCost.overide}}</div>
+                                        <div class="h5 grey-color font-14">{{calculate_data.override}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="">
 
@@ -437,11 +437,11 @@
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Per Item</div>
-                                        <div class="h5 grey-color font-14">{{vm.garmentCost.overide}}</div>
+                                        <div class="h5 grey-color font-14">${{calculate_data.total_line_charge}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Sale Total</div>
-                                        <div class="h5 grey-color font-14">{{vm.garmentCost.saleTotal}}</div>
+                                        <div class="h5 grey-color font-14">${{calculate_data.sales_total}}</div>
                                     </div>
                                 </div>
                             </div> 
