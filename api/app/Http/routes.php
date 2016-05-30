@@ -255,6 +255,7 @@ Route::post('product/addProduct', 'ProductController@addProduct');
 Route::post('product/designProduct', 'ProductController@designProduct');
 Route::post('product/deleteAddProduct', 'ProductController@deleteAddProduct');
 Route::post('product/getCustomProduct', 'ProductController@getCustomProduct');
+Route::post('product/uploadCSV', 'ProductController@uploadCSV');
 
 
 // API CONTROLLER

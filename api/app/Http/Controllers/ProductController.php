@@ -440,4 +440,68 @@ public function create_dir($dir_path) {
         return response()->json(['data'=>$data]);
 
     }
+
+    public function uploadCSV()
+    {
+        $post = Input::all();
+       
+       if(isset($post["file"])){
+
+        $filename=$_FILES["file"]["tmp_name"];
+
+
+
+         if($_FILES["file"]["size"] > 0)
+         {
+            $file = fopen($filename, "r");
+            $k=1;
+            $product_arr = array();
+            
+
+            while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
+            {
+               $product_arr['product_name'] = $emapData[0];
+                
+                /*$sql = "SELECT id FROM brand WHERE brand_name = '".$emapData[2]."'";
+                $query = mysql_query($sql);
+                if(mysql_num_rows($query) > 0)
+                {
+                    while ($branddata = mysql_fetch_array($query)) {
+
+                        $brand_id = $branddata['id'];
+                    }
+                }
+                else
+                {
+                    $brand_query = "INSERT INTO brand SET brand_name = '".$emapData[2]."',brand_image = '".$emapData[12]."' ";
+                    mysql_query($brand_query);
+                    $brand_id = mysql_insert_id();
+                }
+
+                $sub_query = "INSERT INTO products SET id = '".$emapData[0]."',brand_id = '".$brand_id."',name = '".mysql_real_escape_string($emapData[4])."',description = '".$emapData[5]."',
+                                    product_image = '".$emapData[13]."' ";
+                //mysql_query($sub_query);
+
+                if($emapData[7] != '')
+                {
+                    $category_data = explode(',', $emapData[7]);
+
+                    foreach ($category_data as $category_id) {
+                        $map_query = "INSERT INTO product_brand_category SET product_id = '".$emapData[0]."',category_id = '".$category_id."' ";
+                        mysql_query($map_query);
+                    }
+                }
+                $k++;*/
+            }
+            fclose($file);
+            echo "complete";
+            exit;
+        }
+    }    
+
+
+      
+
+    }
+    
 }
