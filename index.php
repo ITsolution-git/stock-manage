@@ -202,6 +202,14 @@
     <script src="app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.controller.js"></script>
     <script src="app/main/settings/views/companyDetails/companyDetails.controller.js"></script>
     <script src="app/main/settings/dialogs/addEmployee/addEmployee-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/editEmployee/editEmployee-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/resetUserPassword/resetUserPassword-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/deleteEmployee/deleteEmployee-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/deleteAffiliate/deleteAffiliate-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/addAffiliate/addAffiliate-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/editAffiliate/editAffiliate-dialog.controller.js"></script>
+    <script src="app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.controller.js"></script>
+    <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
 
     <!--Datatable Scrolling-->
 

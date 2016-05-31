@@ -11,9 +11,10 @@
     {
         var vm = this;
 
-        //////////
+        this.permissionRole = '';
 
-
+        this.permissionRoles = ('Super_Admin Brand_Coordinator Art_Team Simple_User').split(' ').map(function (state) { return { abbrev: state }; });
+        
         $scope.cancel = function () {
             $mdDialog.hide();
         };

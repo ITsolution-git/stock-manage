@@ -9,7 +9,7 @@
     function CustomProductDialogController(product_id,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService)
     {
 
-      
+      alert(product_id);
         if(product_id == 0) {
 
             var product_data = {};
@@ -35,13 +35,9 @@
                 
             });
                        
-
-           
                  
             } else {
                  getProductDetailByIdAll(product_id);
-                // getProductDetailColorSize(value);
-
                  $scope.product_id_new  = product_id;
                 // console.log($scope.product_data);return false;
 
@@ -55,7 +51,7 @@
              
              var product_arr = {}
               product_arr = {'id':id};
-              $http.post('api/public/order/productDetail',product_arr).success(function(result) {
+              $http.post('api/public/product/productColorSize',product_arr).success(function(result) {
                       $scope.allProductColorSize =result.data;
                       $scope.productDetail =result.data.product_data[0];
                    
@@ -63,7 +59,7 @@
                         $scope.allProductColorSize.colorData = [];
                   }
                });
-              }
+          }
 
 
 

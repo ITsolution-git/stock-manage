@@ -6,12 +6,13 @@
             .controller('customProductController', customProductController);
 
     /** @ngInject */
-    function customProductController(customProductData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function customProductController(customProductData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,notifyService,sessionService) {
         var vm = this;
         
         vm.searchOrder;
         vm.rangeFrom;
         vm.rangeTo;
+        $scope.company_id = sessionService.get('company_id');
         
 
     
@@ -99,7 +100,33 @@
                 }
             });
         }
-       
+
+        
+        $scope.submitForm = function () {
+ 
+             var fileName = $("#file").val();
+            
+
+             if(fileName == ''){
+                 var data = {"status": "error", "message": "Please upload CSV file."}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+             }
+                if(fileName.lastIndexOf("csv")!=fileName.length-3) {
+
+                     var data = {"status": "error", "message": "File must be in CSV format"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+                } else {
+                    
+                    document.getElementById('uploadcsv').submit();
+                }
+                   
+
+          
+        }
+
+    
 
     }
 })();
