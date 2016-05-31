@@ -52,15 +52,15 @@
                     </md-card-content>
 
                     <md-card-content flex="50" layout="column">
-                        <md-card-content flex="50" layout="column" ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
+                        <md-card-content flex="50" layout="column" class="max-height-350"  ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
                             <img ng-if="company.company_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
                             <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="No Image" class="popup-image" >
                         </md-card-content>
 
-                         <md-card-content flex="50" layout="column" >
+                         <md-card-content flex="50" layout="column" class="min-height-300" >
                            <div ng-drag="true" flex="50" layout="column"  style="border-style: dotted;"  ng-drag-success="" ng-center-anchor="true">
                               Draggable div
-                            </div>
+                            </div>  
 
                         </md-card-content>
 

@@ -671,3 +671,39 @@ md-button.on {
 .toggle-btn {
     background-color:#039BE5;
 }
+
+.min-height-300 {
+  min-height: 300px ;
+}
+
+.max-height-350 {
+  max-height: 350px ;
+}
+
+.max-height-350 img {
+  height: 350px ;
+}
+
+
+/* CUSTOM CHECKBOX */
+#custChkboxes .customChkbox, #custChkboxes1 .customChkbox {
+  float: left;
+}
+#custChkboxes .customChkbox input, #custChkboxes1 .customChkbox input {
+  opacity: 0;
+}
+#custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label {
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 100%;
+}
+#custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
+  background: #797979;
+}
+#custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label {
+  background: #797979;
+  color: #fff;
+}
