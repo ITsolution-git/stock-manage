@@ -202,7 +202,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.settings.platformSettings', {
-            title      : 'Billing',
+            title      : 'Platform Settings',
             state      : 'app.settings.platformSettings',
             stateParams: {'id': 10},
             weight     : 10

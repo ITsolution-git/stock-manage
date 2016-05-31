@@ -8,7 +8,7 @@
                     <a class="link-back1 cursor-p createPriceGridLink" ng-click="vm.uploadCSV($event)">UPLOAD CSV</a>
                 </div>
                 <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
-                    <a class="link-back cursor-p createPriceGridLink" ui-sref="">ADD NEW AFFILIATE</a>
+                    <a class="link-back cursor-p createPriceGridLink" ng-click="vm.addAffiliate($event)">ADD NEW AFFILIATE</a>
                 </div>
             </div>
             <div class="ms-responsive-table-wrapper priceGridTableContainer userMgmntPadding">
@@ -42,12 +42,12 @@
                                     </md-button>
                                     <md-menu-content width="4">
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.editAffiliate($event,design.id)">
                                                 Edit Affiliate
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.deleteAffiliate($event,design.id)">
                                                 Delete Affiliate
                                             </md-button>
                                         </md-menu-item>
@@ -65,13 +65,13 @@
                                     </md-button>
                                     <md-menu-content width="4">
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.editAffiliate($event,design.id)">
                                                 Edit Affiliate
                                             </md-button>
                                         </md-menu-item>
                                          
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.deleteAffiliate($event,design.id)">
                                                 Delete Affiliate
                                             </md-button>
                                         </md-menu-item>
@@ -89,13 +89,13 @@
                                     </md-button>
                                     <md-menu-content width="4">
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.editAffiliate($event,design.id)">
                                                 Edit Affiliate
                                             </md-button>
                                         </md-menu-item>
                                          
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.deleteAffiliate($event,design.id)">
                                                 Delete Affiliate
                                             </md-button>
                                         </md-menu-item>
@@ -113,13 +113,13 @@
                                     </md-button>
                                     <md-menu-content width="4">
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.editAffiliate($event,design.id)">
                                                 Edit Affiliate
                                             </md-button>
                                         </md-menu-item>
                                          
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.deleteAffiliate($event,design.id)">
                                                 Delete Affiliate
                                             </md-button>
                                         </md-menu-item>
@@ -137,13 +137,13 @@
                                     </md-button>
                                     <md-menu-content width="4">
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.editAffiliate($event,design.id)">
                                                 Edit Affiliate
                                             </md-button>
                                         </md-menu-item>
                                          
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            <md-button ng-click="vm.deleteAffiliate($event,design.id)">
                                                 Delete Affiliate
                                             </md-button>
                                         </md-menu-item>

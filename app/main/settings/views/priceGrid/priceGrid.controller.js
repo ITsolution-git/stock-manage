@@ -19,6 +19,7 @@
 
         vm.openCreatePriceGridDialog = openCreatePriceGridDialog;
         vm.uploadCSV = uploadCSV ;
+        vm.deletePriceGrid = deletePriceGrid ;
 
         $scope.cancel = function () {
             $mdDialog.hide();
@@ -55,6 +56,23 @@
                 controller: 'UploadCSVDialogController',
                 controllerAs: 'vm',
                 templateUrl: 'app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Settings: settings,
+                    Settings: vm.settings,
+                    event: ev
+                }
+            });
+        }
+
+        function deletePriceGrid(ev, settings)
+        {
+            $mdDialog.show({
+                controller: 'DeletePriceGridDialogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,

@@ -279,6 +279,10 @@ md-input-container > label {
   width: 45% !important;
 }
 
+#priceGrid tr > td:first-child, #priceGrid tr > th:first-child {
+  width: 85% !important;
+}
+
 .createPriceGridDialog {
   max-width: 90% !important;
   height: 90%  !important;
@@ -563,4 +567,41 @@ md-button.on {
 
 .btn-width-200 {
   min-width: 200px ;
+}
+
+.td-500 {
+  width: 500px ;
+}
+
+.float-right {
+  float: right ;
+}
+
+.resetPasswordFont {
+  font-size: 14px ;
+}
+
+
+
+.addAffiliateDialog {
+  max-width: 100% !important ;
+  width: 75% !important ;
+}
+
+#affiliateDialog .settings-margin-0 {
+  margin: 5px !important ;
+}
+
+#affiliateDialog .m-t-25 {
+    margin-top: 5px !important;
+}
+
+
+
+#affiliateSaveBtn {
+    margin-right: 20px !important;
+  }
+
+.connectToQuickBooksBtn:hover {
+  background-color: #fff !important;
 }
