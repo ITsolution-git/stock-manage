@@ -362,18 +362,48 @@ public function create_dir($dir_path) {
     public function addProduct() {
 
         $post = Input::all();
-        /*$post['created_date']=date('Y-m-d');
+        $post['created_date']=date('Y-m-d');
         $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
         $post['record_delete']=$record_delete;
-        $result = $this->product->addProduct($post);
-        $message = INSERT_RECORD;
-        $success = 1;
 
+        $result = $this->product->addProduct($post);
+        $return = $this->orderCalculation($post);
+
+        if(is_array($return))
+        {
+            $data = array("success"=>0,"message"=>$return['message'],"status"=>$return['status']);
+            return response()->json(["data" => $data]);
+        }
+        else
+        {
+            $data = array("success"=>1);
+            return response()->json(["data" => $data]);
+        }
+
+        /*$scope.order.order_line_total = order_line_total.toFixed(2);
+
+        var sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
+        $scope.order.sales_order_total = sales_order_total.toFixed(2);
+        
+        var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.tax);
+        $scope.order.grand_total = grand_total.toFixed(2);
+
+        var order_data = {};
+        order_data.data = {'order_line_total' : $scope.order.order_line_total,'sales_order_total' : $scope.order.sales_order_total,'grand_total':$scope.order.grand_total};
+        order_data.cond = {id: $scope.order_id};
+        order_data['table'] ='orders'
+        $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
+            $scope.updateOrderLine($scope.orderLineAll,orderline_id);
+        });*/
+    }
+
+    public function orderCalculation($post=array())
+    {
         $total_qnty = 0;
         foreach ($post['productData'] as $size) {
             $total_qnty += $size['qnty'];
-        }*/
+        }
         
         $order_data = $this->order->getOrderByDesign($post['id']);
         $price_id = $order_data[0]->price_id;
@@ -418,10 +448,10 @@ public function create_dir($dir_path) {
 
                 $color_stitch_count = $position->color_stitch_count;
                 $position_qty = $position_data[0]->qnty;
-                if($position_qty == 0)
+                if($position_qty == 0 || $position_qty == '')
                 {
                     $data = array("success"=>0,"message"=>"Enter first position quantity","status"=>"error");
-                    return response()->json(['data'=>$data]);
+                    return $data;
                 }
                 $discharge_qnty = $position->discharge_qnty;
                 $speciality_qnty = $position->speciality_qnty;
@@ -558,18 +588,6 @@ public function create_dir($dir_path) {
                 }
             }
 
-            /* Add product Code */
-
-            $post['created_date']=date('Y-m-d');
-            $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
-            $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
-            $post['record_delete']=$record_delete;
-            $result = $this->product->addProduct($post);
-            $message = INSERT_RECORD;
-            $success = 1;
-
-            /*********************/
-
             $markup = 0;
             $avg_garment_cost = 0;
             $markup_default = 0;
@@ -615,13 +633,13 @@ public function create_dir($dir_path) {
             $sales_total = $per_item * $line_qty;
 
             $update_arr = array(
-                                'avg_garment_cost' => $avg_garment_cost,
-                                'avg_garment_price' => $avg_garment_price,
-                                'print_charges' => $print_charges,
+                                'avg_garment_cost' => round($avg_garment_cost,2),
+                                'avg_garment_price' => round($avg_garment_price,2),
+                                'print_charges' => round($print_charges,2),
                                 'markup' => $markup,
                                 'markup_default' => $markup_default,
-                                'sales_total' => $sales_total,
-                                'total_line_charge' => $per_item
+                                'sales_total' => round($sales_total,2),
+                                'total_line_charge' => round($per_item,2)
                                 );
 
             $this->common->UpdateTableRecords('design_product',array('product_id' => $post['product_id']),$update_arr);
@@ -643,42 +661,29 @@ public function create_dir($dir_path) {
             $grand_total = $order_total + $tax;
             $balance_due = $grand_total - $order_data[0]->total_payments;
 
+            $order_charges_total = $total_screens + $total_press_setup + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
+                                    $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
+                                    $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
+
             $update_order_arr = array(
                                     'screen_charge' => $total_screens,
                                     'press_setup_charge' => $total_press_setup,
-                                    'order_line_total' => $design_product_total,
-                                    'order_total' => $order_total,
-                                    'tax' => $tax,
-                                    'grand_total' => $grand_total,
-                                    'balance_due' => $balance_due
+                                    'order_line_total' => round($design_product_total,2),
+                                    'order_total' => round($order_total,2),
+                                    'tax' => round($tax,2),
+                                    'grand_total' => round($grand_total,2),
+                                    'balance_due' => round($balance_due,2),
+                                    'order_charges_total' => round($order_charges_total,2)
                                     );
 
             $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
-
-            $data = array("success"=>$success,"message"=>$message);
-            return response()->json(['data'=>$data]);
+            return true;
         }
         else
         {
             $data = array("success"=>0,"message"=>"Please enter atleast one position","status"=>"error");
-            return response()->json(['data'=>$data]);
+            return $data;
         }
-
-        /*$scope.order.order_line_total = order_line_total.toFixed(2);
-
-        var sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
-        $scope.order.sales_order_total = sales_order_total.toFixed(2);
-        
-        var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.tax);
-        $scope.order.grand_total = grand_total.toFixed(2);
-
-        var order_data = {};
-        order_data.data = {'order_line_total' : $scope.order.order_line_total,'sales_order_total' : $scope.order.sales_order_total,'grand_total':$scope.order.grand_total};
-        order_data.cond = {id: $scope.order_id};
-        order_data['table'] ='orders'
-        $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-            $scope.updateOrderLine($scope.orderLineAll,orderline_id);
-        });*/
     }
 
      public function designProduct() {
