@@ -1,4 +1,4 @@
-<md-dialog class="task-dialog createPriceGridDialog" >
+<md-dialog class="task-dialog addEmployeeDialog" >
     <div class="client-profile-page">
     <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
@@ -9,7 +9,32 @@
             </div>
         </md-toolbar>
     <div ng-cloak>
-        <md-content>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap>
+                <label class="priceGridTr margin-left-10">Permission Role</label>
+                <md-input-container flex=30 class="m-b-20 m-t-25">
+                    <label class="state-label-color">Permission Role</label>
+                    <!-- <md-select aria-label="Permission Role">
+                      <md-option>Super Admin</md-option>
+                      <md-option>Brand Coordinator</md-option>
+                      <md-option>Art Team</md-option>
+                      <md-option>Simple User</md-option>
+                    </md-select> -->
+                    
+                </md-input-container>
+
+                <label class="priceGridTr margin-left-10">Name</label>
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Discharge" name="" ui-event="">
+                    <div ng-messages=" " role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+        </div>
+    </md-card-content>
+        <!-- <md-content>
                 <label class="priceGridTr">Permission Role</label>
                 <md-input-container flex=30 class="m-b-20 m-t-25">
                     <label class="state-label-color">State</label>
@@ -30,7 +55,7 @@
                         </div>
                     </div>
                 </md-input-container>
-        </md-content>
+        </md-content> -->
     </div>
 </div>
 <table> 

@@ -243,7 +243,7 @@ md-input-container > label {
 }
 
 .createPriceGridLink {
-  top : 40px;
+  top : 43px;
   right: 40px;
   font-family: 'Helvetica';
     font-style: normal;
@@ -523,4 +523,44 @@ md-button.on {
 
 .margin-left-15 {
   margin-left: 15px;
+}
+
+.margin-left-10 {
+  margin: 10px;
+}
+
+.addEmployeeDialog {
+  width: 30% !important;
+}
+
+.width-400 {
+  width: 200px !important;
+}
+
+.priceGridUploadCsv {
+  width: 40% !important ;
+  height: 50% !important ;
+}
+
+#integrations tr > td:first-child, #integrations tr > th:first-child {
+    width: 15% !important;
+    height: 105px;
+}
+
+#integrations td {
+  height: 105px ;
+}
+
+.integrationsTd2 {
+  width: 65% !important;
+  height: 105px;
+  text-align: justify;
+}
+
+#integrations tr > td:last-child, #integrations tr > th:last-child {
+  width: 20% !important;
+}
+
+.btn-width-200 {
+  min-width: 200px ;
 }

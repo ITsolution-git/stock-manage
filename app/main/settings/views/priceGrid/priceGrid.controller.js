@@ -66,6 +66,11 @@
             });
         }
 
+        vm.openMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
+
     }
     
 })();

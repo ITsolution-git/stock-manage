@@ -203,6 +203,7 @@
     <script src="app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.controller.js"></script>
     <script src="app/main/settings/views/companyDetails/companyDetails.controller.js"></script>
     <script src="app/main/settings/dialogs/addEmployee/addEmployee-dialog.controller.js"></script>
+    <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
 
     <!--Datatable Scrolling-->
 
