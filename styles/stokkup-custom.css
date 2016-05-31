@@ -605,3 +605,7 @@ md-button.on {
 .connectToQuickBooksBtn:hover {
   background-color: #fff !important;
 }
+
+.toggle-btn {
+    background-color:#039BE5;
+}
