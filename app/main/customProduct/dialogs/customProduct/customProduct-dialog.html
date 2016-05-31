@@ -12,7 +12,7 @@
             <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
                 <md-input-container class="md-block first-box" flex-gt-sm>
                
-                    <input placeholder="Product Name" ng-model="productDetail.name"  ui-event="{ change : 'updateProduct(\'name\',productDetail.id,productDetail.name,\'products\',\'id\')' }">
+                    <input placeholder="Product Name" ng-model="productName"  ui-event="{ change : 'updateProduct(\'name\',productId,productName,\'products\',\'id\')' }">
                 </md-input-container>
                <div class="attribute-box">
                     <table class="tbl-typ1">
@@ -23,25 +23,21 @@
                                 <a href="#" class="add-attributes" ng-click="addAttribute()"><span class="icon icon-plus"></span></a>
                             </th>
                         </tr>
-                        <tr ng-repeat="rowContent in rows">
-                            <td>
+                        <tr ng-repeat="colorsdata in productColorSize">
+                            <td class="align-T">
                                 <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                    <input type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false">
+                                    <input type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="colorsdata.color_name">
                                 </md-input-container>
                             </td>
                             <td>
-                                <div class="size-attribute">
+                                <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
                                     <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
-                                        <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false">
-                                        <a href="#" class="add-size" ng-click="addSize()"><span class="icon icon-plus"></span></a>
+                                        <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.size">
+                                        <a href="#" class="add-size" ng-click="addSize()" ng-show="key==0"><span class="icon icon-plus"></span></a>
+                                        <a href="#" class="remove-size" ng-click="removeSize(size)" ng-show="key!=0"><span class="icon icon-close"></span></a>
                                     </md-input-container>
                                 </div>
-                                <div class="size-attribute display-none" ng-repeat="size in sizeElement">
-                                    <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
-                                        <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false">
-                                        <a href="#" class="remove-size" ng-click="removeSize(size)"><span class="icon icon-close"></span></a>
-                                    </md-input-container>
-                                </div>
+                               
                             </td>
                             <td class="text-center">
                                 <a href="#" class="remove-size remove-attrribute" ng-click="removeAttribute()"><span class="icon icon-close"></span></a>

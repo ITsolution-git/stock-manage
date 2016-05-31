@@ -844,9 +844,14 @@ public function create_dir($dir_path) {
         }
     }    
 
+  }
 
-      
 
+    public function getProductDetailColorSize()
+    {
+        $post = Input::all();
+        $result = $this->product->getProductDetailColorSize($post['id']);
+        return response()->json(["data" => $result]);
     }
     
 }

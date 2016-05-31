@@ -9,7 +9,7 @@
     function CustomProductDialogController(product_id,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService)
     {
 
-      alert(product_id);
+     
         if(product_id == 0) {
 
             var product_data = {};
@@ -51,20 +51,17 @@
              
              var product_arr = {}
               product_arr = {'id':id};
-              $http.post('api/public/product/productColorSize',product_arr).success(function(result) {
-                      $scope.allProductColorSize =result.data;
-                      $scope.productDetail =result.data.product_data[0];
+              $http.post('api/public/product/getProductDetailColorSize',product_arr).success(function(result) {
+                      
+                      
+                      $scope.productName =result.data.product_name;
+                      $scope.productId =result.data.product_id;
+                      $scope.productColorSize =result.data.productColorSizeData;
                    
-                       if($scope.allProductColorSize.colorData.length == '0'){
-                        $scope.allProductColorSize.colorData = [];
-                  }
+                      
                });
           }
 
-
-
-
-    
 
         $scope.cancel = function () {
             $mdDialog.hide();
@@ -87,6 +84,8 @@
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
             });
         }
+
+
         $scope.rows = ['Row 1'];
         $scope.counter = 2;
         $scope.addAttribute = function(){
