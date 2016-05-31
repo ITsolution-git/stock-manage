@@ -100,36 +100,6 @@
                 },resolve: {
                    
                 }
-            }).state('app.settings.integrations', {
-                url  : '/integrations',
-                views: {
-                    'content@app': {
-                        templateUrl: 'app/main/settings/views/integrations/integrations.html',
-                        controller : 'IntegrationsController as vm'
-                    }
-                },resolve: {
-                   
-                }
-            }).state('app.settings.billing', {
-                url  : '/billing',
-                views: {
-                    'content@app': {
-                        templateUrl: 'app/main/settings/views/billing/billing.html',
-                        controller : 'BillingController as vm'
-                    }
-                },resolve: {
-                   
-                }
-            }).state('app.settings.platformSettings', {
-                url  : '/platformSettings',
-                views: {
-                    'content@app': {
-                        templateUrl: 'app/main/settings/views/platformSettings/platformSettings.html',
-                        controller : 'PlatformSettingsController as vm'
-                    }
-                },resolve: {
-                   
-                }
             })
             ;
 
@@ -186,9 +156,9 @@
             stateParams: {'id': 6},
             weight     : 6
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.integrations', {
+        msNavigationServiceProvider.saveItem('fuse.settings.xyadz', {
             title      : 'Integrations',
-            state      : 'app.settings.integrations',
+            state      : 'app.settings.xyadz',
             stateParams: {'id': 7},
             weight     : 7
         });
@@ -198,18 +168,11 @@
             stateParams: {'id': 8},
             weight     : 8
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.billing', {
+        msNavigationServiceProvider.saveItem('fuse.settings.xybdz', {
             title      : 'Billing',
-            state      : 'app.settings.billing',
+            state      : 'app.settings.xybdz',
             stateParams: {'id': 9},
             weight     : 9
-        });
-
-        msNavigationServiceProvider.saveItem('fuse.settings.platformSettings', {
-            title      : 'Platform Settings',
-            state      : 'app.settings.platformSettings',
-            stateParams: {'id': 10},
-            weight     : 10
         });
 
 

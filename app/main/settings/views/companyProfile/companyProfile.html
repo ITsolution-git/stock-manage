@@ -58,6 +58,7 @@
                     </md-card-content>
 
                     <md-card-content flex="50" layout="column">
+
                         <md-card-content flex="50" layout="column" class="max-height-350 m-b-30"  ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
                             <img ng-if="company.company_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
                             <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="No Image" class="popup-image" >
