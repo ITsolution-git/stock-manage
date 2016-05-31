@@ -215,6 +215,10 @@
     <script src="app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.controller.js"></script>
     <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
 
+    <!-- Art -->
+    <script src="app/main/art/art.module.js"></script>
+    <script src="app/main/art/art.controller.js"></script>
+
     <!--Datatable Scrolling-->
 
     <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
