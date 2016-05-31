@@ -110,8 +110,16 @@
              $http.post('api/public/product/addProduct',combine_array_id).success(function(result) 
                 {
                     $mdDialog.hide();
-                    var data = {"status": "success", "message": "Product Added Successfully."}
-                     notifyService.notify(data.status, data.message);
+                    if(result.data.success == 0)
+                    {
+                        var data = {"status": result.data.status, "message": result.data.message}
+                        notifyService.notify(data.status, data.message);
+                    }
+                    else
+                    {
+                        var data = {"status": "success", "message": "Product added successfully"}
+                        notifyService.notify(data.status, data.message);
+                    }
                 });
             }
 

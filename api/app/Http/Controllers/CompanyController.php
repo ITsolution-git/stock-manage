@@ -95,8 +95,11 @@ $this->common = $common;
 			
 			if(count($getData)>0)
 			{
-				
-			$getData[0]->company_url_photo = UPLOAD_PATH.$id."/staff/".$id."/".$getData[0]->photo;
+				if(empty($getData[0]->staff_id))
+				{
+					$getData[0]->staff_id = $this->common->InsertRecords('staff',array('user_id'=>$id,'is_delete'=>1));
+				}
+			$getData[0]->company_url_photo = UPLOAD_PATH.$id."/staff/".$getData[0]->staff_id."/".$getData[0]->photo;
 			$count = count($getData);
 			if($count>0)
 				{

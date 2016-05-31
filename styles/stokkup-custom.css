@@ -129,7 +129,7 @@ text-align: left;
   font-size: 96px;
   color: #FFF;
 }
-
+<<<<<<< HEAD
 
 .sizeColor {
       color: #777777 !important;
@@ -411,6 +411,67 @@ md-input-container > label {
 .box-typ2:last-child, .box-typ2:nth-child(5n) {
 	border:1px solid #ccc;
 }
+.size-attribute {
+	margin-top:8px;
+}
+.size-attribute:first-child {
+	margin-top:0px;
+}
+.width100 {
+	width:100%;
+}
+.attribute-box .tbl-typ1 {
+	margin-top:0px;
+}
+.attribute-box .tbl-typ1 td {
+	background:#fff;
+}
+.tbl-typ1 md-input-container {
+	margin:0px;
+}
+.tbl-typ1 .md-errors-spacer {
+	min-height:1px;
+}
+.tbl-typ1 th a .icon {
+	color:#fff !important;
+	font-weight:bold;
+	font-size:18px;
+}
+.tbl-typ1 td a .icon.f-red {
+	color:#ff000 !important;
+	font-weight:bold;
+	font-size:18px;
+}
+.tbl-typ1 td a.add-size, .tbl-typ1 td a.remove-size {
+	background:#0288D1;
+	display:inline-block;
+	padding:8px;
+	border-radius:5px;
+	float:right;
+	padding: 5px 5px 2px;
+}
+.tbl-typ1 td a.remove-size {
+	background:#ff0000;
+}
+.tbl-typ1 td.text-center a.remove-size {
+	float:none;
+}
+.tbl-typ1 td a.add-size .icon, .tbl-typ1 td a.remove-size .icon {
+	color:#fff;
+	font-weight:bold;
+	font-size:16px;
+	line-height:3px;
+}
+.size-txtbox {
+	max-width:100px;
+}
+.display-block {
+	display:block;
+}
+.display-none {
+	display:none;
+}
+/*****************************/	
 .loaderouter{
     position:fixed;
     width:100%;
@@ -484,6 +545,7 @@ md-input-container > label {
         box-shadow: 0 -2em #31c0be;
         height: 5em;
     }
+
 }
 
 .font-13-priceGrid {

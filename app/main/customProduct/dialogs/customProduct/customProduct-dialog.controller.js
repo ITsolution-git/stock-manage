@@ -91,5 +91,25 @@
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
             });
         }
+        $scope.rows = ['Row 1'];
+        $scope.counter = 2;
+        $scope.addAttribute = function(){
+          $scope.rows.push('Row ' + $scope.counter);
+          $scope.counter++;
+        }
+        $scope.removeAttribute = function (rowContent) {
+          var index = $scope.rows.indexOf(rowContent);
+          $scope.rows.splice(index, 1);
+          $scope.counter--;
+        };
+        $scope.sizeElement = [{}];
+        $scope.addSize =  function(){
+          $(".size-attribute.display-none").css("display", "block");
+          $scope.sizeElement.push({});
+        };
+        $scope.removeSize =  function(size){
+          var sizeindex = $scope.sizeElement.indexOf(size);
+          $scope.sizeElement.splice(sizeindex, 1);
+        };
     }
 })();

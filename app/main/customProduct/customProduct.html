@@ -13,8 +13,19 @@
             </div>
 
              <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+
+            <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" id="file" class="input-large">
+                <md-button class="md-accent md-raised" onclick="document.getElementById('uploadcsv').submit()">Save</md-button>
+               </form>
+               
+                </div>
+
+             <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
                 <span class="cursor-p" ng-click="vm.openCustomProductDialog($event,0)" >CREATE CUSTOM PRODUCT</span>
             </div>
+
+       
 
              
 

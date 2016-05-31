@@ -74,7 +74,6 @@
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
 
     <!-- <ms-theme-options></ms-theme-options> -->
-
     <script src="scripts/vendor.js"></script>
     <!--<script src="scripts/mdPickers.min.js"></script>-->
     <!--<script src="scripts/multiselect/lodash.js"></script>-->
@@ -84,7 +83,7 @@
      _.contains = _.includes;
     </script>
     <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
-
+    <script src="scripts/other/ngDraggable.js"></script>
     <!-- inject:js -->
 
     <script src="app/quick-panel/quick-panel.module.js"></script>
@@ -227,6 +226,7 @@
     <script src="scripts/other/kendo.angular.min.js"></script>
     <link rel="stylesheet" href="styles/other/kendo.common.min.css">
     <link rel="stylesheet" href="styles/other/kendo.default.min.css">
+
     
 
 </body>

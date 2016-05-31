@@ -943,5 +943,19 @@ public function saveColorSize($post)
 
         return $orderData;
     }
+
+    public function getDesignByOrder($order_id)
+    {
+        $whereConditions = ['od.order_id' => $order_id];
+        $listArray = ['dp.*'];
+
+        $orderData = DB::table('design_product as dp')
+                         ->leftJoin('order_design as od','dp.design_id','=', 'od.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $orderData;
+    }
     
 }

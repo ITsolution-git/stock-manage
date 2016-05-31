@@ -279,35 +279,34 @@ public function create_dir($dir_path) {
         foreach($all_data as $key => $data) {
              
             $color_data = $this->common->getColorId($data->colorName);
-            if(!empty($color_data))
-            {
-                if($key == 0) {
-                    $productAllData['colorSelection'] = $data->colorName;
-                }
 
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
-
-                if(count($allDetail) > 0) {
-                
-                    if(isset($allDetail[$data->sizeName])){
-                        $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
-                    }
-               
-                } else {
-                    $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
-                }
-            
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
-                $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
-                $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;
-                $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
-                $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
-                $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
-                $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
+            if($key == 0) {
+                $productAllData['colorSelection'] = $data->colorName;
             }
+
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
+
+            if(count($allDetail) > 0) {
+            
+                if(isset($allDetail[$data->sizeName])){
+                    $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+                }
+           
+            } else {
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
+            }
+        
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
+            $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
+            $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;
+            $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
+            $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
+            $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
+            $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
+
             return response()->json(["data" => $productAllData]);
         }
     }
@@ -363,7 +362,7 @@ public function create_dir($dir_path) {
     public function addProduct() {
 
         $post = Input::all();
-        $post['created_date']=date('Y-m-d');
+        /*$post['created_date']=date('Y-m-d');
         $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
         $post['record_delete']=$record_delete;
@@ -374,10 +373,11 @@ public function create_dir($dir_path) {
         $total_qnty = 0;
         foreach ($post['productData'] as $size) {
             $total_qnty += $size['qnty'];
-        }
+        }*/
         
         $order_data = $this->order->getOrderByDesign($post['id']);
         $price_id = $order_data[0]->price_id;
+        $order_id = $order_data[0]->id;
 
         $price_grid_data = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','id' => $price_id),array());
         $price_grid = $price_grid_data[0];
@@ -409,6 +409,8 @@ public function create_dir($dir_path) {
         $print_charges = 0;
         $os = 0;
         $per_line_total = 0;
+        $total_screens = 0;
+        $total_press_setup = 0;
 
         if(count($position_data) > 0)
         {
@@ -416,6 +418,11 @@ public function create_dir($dir_path) {
 
                 $color_stitch_count = $position->color_stitch_count;
                 $position_qty = $position_data[0]->qnty;
+                if($position_qty == 0)
+                {
+                    $data = array("success"=>0,"message"=>"Enter first position quantity","status"=>"error");
+                    return response()->json(['data'=>$data]);
+                }
                 $discharge_qnty = $position->discharge_qnty;
                 $speciality_qnty = $position->speciality_qnty;
                 $foil_qnty = $position->foil_qnty;
@@ -439,6 +446,9 @@ public function create_dir($dir_path) {
                 $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
                 $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
 
+                $total_screens += $calc_screen_fees;
+                $total_press_setup += $calc_press_setup;
+
                 $calc_total = $calc_descharge + $calc_speciality + $calc_foil + $calc_ink_charge + $calc_number_on_dark + $calc_number_on_light;
                 $print_charges +=  $calc_total;
 
@@ -455,7 +465,7 @@ public function create_dir($dir_path) {
 
                             if($position_qty >= $primary->range_low && $position_qty <= $primary->range_high)
                             {
-                                if($primary->$price_field != undefined)
+                                if(isset($primary->$price_field))
                                 {
                                     $print_charges += $primary->$price_field;
                                 }
@@ -547,63 +557,112 @@ public function create_dir($dir_path) {
                     }
                 }
             }
-        }
-        
-        $markup = 0;
-        $avg_garment_cost = 0;
-        $markup_default = 0;
-        if(count($price_garment_mackup) > 0 && $position_qty > 0)
-        {
-            foreach($price_garment_mackup as $value) {
-                
-                if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
-                {
-                    $markup_default = $value->percentage;
+
+            /* Add product Code */
+
+            $post['created_date']=date('Y-m-d');
+            $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
+            $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
+            $post['record_delete']=$record_delete;
+            $result = $this->product->addProduct($post);
+            $message = INSERT_RECORD;
+            $success = 1;
+
+            /*********************/
+
+            $markup = 0;
+            $avg_garment_cost = 0;
+            $markup_default = 0;
+            if(count($price_garment_mackup) > 0 && $position_qty > 0)
+            {
+                foreach($price_garment_mackup as $value) {
+                    
+                    if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
+                    {
+                        $markup_default = $value->percentage;
+                    }
                 }
             }
-        }
 
-        $item_price = 0;
-        $line_qty = 0;
-        foreach($post['productData'] as $product) {
-            if($product['qnty'] > 0)
-            {
-                $sum = $product['customerPrice'] + $price_grid->shipping_charge;
-                $avg_garment_cost += $sum;
-                $line_qty += $product['qnty'];
+            $item_price = 0;
+            $line_qty = 0;
+            foreach($post['productData'] as $product) {
+                if($product['qnty'] > 0)
+                {
+                    $sum = $product['customerPrice'] + $price_grid->shipping_charge;
+                    $avg_garment_cost += $sum;
+                    $line_qty += $product['qnty'];
+                }
             }
-        }
 
-        if($avg_garment_cost == 0)
-        {
-            $avg_garment_cost = $price_grid->shipping_charge;
-        }
+            if($avg_garment_cost == 0)
+            {
+                $avg_garment_cost = $price_grid->shipping_charge;
+            }
 
-        if($markup > 0)
-        {
-            $garment_mackup = $markup/100;
+            if($markup > 0)
+            {
+                $garment_mackup = $markup/100;
+            }
+            else
+            {
+                $garment_mackup = $markup_default/100;
+            }
+
+            $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
+
+            $per_item = $avg_garment_price + $print_charges;
+            $sales_total = $per_item * $line_qty;
+
+            $update_arr = array(
+                                'avg_garment_cost' => $avg_garment_cost,
+                                'avg_garment_price' => $avg_garment_price,
+                                'print_charges' => $print_charges,
+                                'markup' => $markup,
+                                'markup_default' => $markup_default,
+                                'sales_total' => $sales_total,
+                                'total_line_charge' => $per_item
+                                );
+
+            $this->common->UpdateTableRecords('design_product',array('product_id' => $post['product_id']),$update_arr);
+
+            $total_qnty = 0;
+            foreach ($post['productData'] as $size) {
+                $total_qnty += $size['qnty'];
+            }
+
+            $design_data = $this->order->getDesignByOrder($order_id);
+            
+            $design_product_total = 0;
+            foreach ($design_data as $design) {
+                    $design_product_total += $design->sales_total;
+            }
+
+            $order_total = $total_screens + $total_press_setup + $design_product_total;
+            $tax = $order_total / $order_data[0]->tax_rate/100;
+            $grand_total = $order_total + $tax;
+            $balance_due = $grand_total - $order_data[0]->total_payments;
+
+            $update_order_arr = array(
+                                    'screen_charge' => $total_screens,
+                                    'press_setup_charge' => $total_press_setup,
+                                    'order_line_total' => $design_product_total,
+                                    'order_total' => $order_total,
+                                    'tax' => $tax,
+                                    'grand_total' => $grand_total,
+                                    'balance_due' => $balance_due
+                                    );
+
+            $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
+
+            $data = array("success"=>$success,"message"=>$message);
+            return response()->json(['data'=>$data]);
         }
         else
         {
-            $garment_mackup = $markup_default/100;
+            $data = array("success"=>0,"message"=>"Please enter atleast one position","status"=>"error");
+            return response()->json(['data'=>$data]);
         }
-
-        $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
-
-        $per_item = $avg_garment_price + $print_charges;
-        $sales_total = $per_item * $line_qty;
-
-        $update_arr = array(
-                            'avg_garment_cost' => $avg_garment_cost,
-                            'avg_garment_price' => $avg_garment_price,
-                            'print_charges' => $print_charges,
-                            'markup' => $markup,
-                            'markup_default' => $markup_default,
-                            'sales_total' => $sales_total,
-                            'total_line_charge' => $per_item
-                            );
-
-        $this->common->UpdateTableRecords('design_product',array('product_id' => $post['product_id']),$update_arr);
 
         /*$scope.order.order_line_total = order_line_total.toFixed(2);
 
@@ -620,10 +679,6 @@ public function create_dir($dir_path) {
         $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
             $scope.updateOrderLine($scope.orderLineAll,orderline_id);
         });*/
-
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-
     }
 
      public function designProduct() {
@@ -690,4 +745,68 @@ public function create_dir($dir_path) {
         return response()->json(['data'=>$data]);
 
     }
+
+    public function uploadCSV()
+    {
+        $post = Input::all();
+       
+       if(isset($post["file"])){
+
+        $filename=$_FILES["file"]["tmp_name"];
+
+
+
+         if($_FILES["file"]["size"] > 0)
+         {
+            $file = fopen($filename, "r");
+            $k=1;
+            $product_arr = array();
+            
+
+            while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
+            {
+               $product_arr['product_name'] = $emapData[0];
+                
+                /*$sql = "SELECT id FROM brand WHERE brand_name = '".$emapData[2]."'";
+                $query = mysql_query($sql);
+                if(mysql_num_rows($query) > 0)
+                {
+                    while ($branddata = mysql_fetch_array($query)) {
+
+                        $brand_id = $branddata['id'];
+                    }
+                }
+                else
+                {
+                    $brand_query = "INSERT INTO brand SET brand_name = '".$emapData[2]."',brand_image = '".$emapData[12]."' ";
+                    mysql_query($brand_query);
+                    $brand_id = mysql_insert_id();
+                }
+
+                $sub_query = "INSERT INTO products SET id = '".$emapData[0]."',brand_id = '".$brand_id."',name = '".mysql_real_escape_string($emapData[4])."',description = '".$emapData[5]."',
+                                    product_image = '".$emapData[13]."' ";
+                //mysql_query($sub_query);
+
+                if($emapData[7] != '')
+                {
+                    $category_data = explode(',', $emapData[7]);
+
+                    foreach ($category_data as $category_id) {
+                        $map_query = "INSERT INTO product_brand_category SET product_id = '".$emapData[0]."',category_id = '".$category_id."' ";
+                        mysql_query($map_query);
+                    }
+                }
+                $k++;*/
+            }
+            fclose($file);
+            echo "complete";
+            exit;
+        }
+    }    
+
+
+      
+
+    }
+    
 }

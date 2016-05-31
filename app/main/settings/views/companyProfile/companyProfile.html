@@ -10,97 +10,66 @@
                     <md-card-content flex="50" layout="column">
                         
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Company Name" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <input placeholder="Company Name" name="name" ng-model="company.name"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }" >
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Address" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <input placeholder="Address" name="prime_address1" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
                         </md-input-container>
-
-                        <!-- <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row layout-column">
-                            
-                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                <input placeholder="City" name="" ui-event="">
-                                <div ng-messages=" " role="alert" multiple>
-                                    <div ng-message="required">
-                                        <span>This field is required</span>
-                                    </div>
-                                </div>
+                
+                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                            <md-input-container flex="30">
+                                <input placeholder="City" ng-model="company.prime_address_city" name="prime_address_city" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
                             </md-input-container>
-
-                            <md-input-container flex="" class="flex md-default-theme">
-                                <label for="select_28" class="md-placeholder">State</label>
-
-                                <md-select ng-model="vm.basicForm.state" class="ng-pristine ng-valid md-default-theme ng-empty ng-touched" tabindex="0" aria-disabled="false" role="listbox" aria-expanded="false" aria-multiselectable="false" id="select_28" aria-owns="select_container_29" aria-invalid="false" aria-label="State" style="">                                    
-                                    <md-option>AK</md-option>
-                                    <md-option>AL</md-option>
-                                    <md-option>AZ</md-option>
-                                    <md-option>CA</md-option>
+                            <md-input-container flex=30 class="m-b-20">
+                                <label>State</label>
+                                <md-select ng-model="company.prime_address_state" ng-change='UpdateTableField("prime_address_state",company.prime_address_state,"staff","id",company.staff_id,"staff")'>
+                                    <md-option value="0">
+                                        Select State
+                                    </md-option>
+                                    <md-option ng-repeat="state_val in states_all" value="{{state_val.id}}" ng-selected='{{state_val.id==company.prime_address_state}}' >
+                                        {{state_val.name}}
+                                    </md-option>
                                 </md-select>
-                            </md-input-container> -->
-
-                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                
-                                <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                    <input placeholder="City" name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
-                                </md-input-container>
-
-                                <md-input-container flex=30 class="m-b-20 m-t-25">
-                                    <label class="state-label-color">State</label>
-                                    <md-select ng-model="vm.userState" aria-label="State">
-                                      <md-option ng-repeat="state in vm.states" >
-                                        {{state.abbrev}}
-                                       </md-option>
-                                    </md-select>
-                                    
-                                </md-input-container>
-
-                                <md-input-container flex=30 class="md-block first-box settings-margin-0 margin-top-25">
-                                    <input placeholder="Postal Code" name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
-                                </md-input-container>
-
-                            </div>
+                            </md-input-container>
+                            <md-input-container flex="30">
+                                <input placeholder="Zip Code" ng-model="company.prime_address_zip" name="prime_address_zip" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            </md-input-container>
+                        </div>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Phone Number" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <input placeholder="Phone Number" name="prime_phone_main" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Email Address" name="" ui-event="">
+                            <input placeholder="Email Address" name="" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }">
                             <div ng-messages=" " role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
                                 </div>
                             </div>                        
-                         </md-input-container>
+                        </md-input-container>
+                    </md-card-content>
 
-                      </div>
+                    <md-card-content flex="50" layout="column">
+                        <md-card-content flex="50" layout="column" ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
+                            <img ng-if="company.company_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                            <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="No Image" class="popup-image" >
+                        </md-card-content>
 
+                         <md-card-content flex="50" layout="column" >
+                           <div ng-drag="true" flex="50" layout="column"  style="border-style: dotted;"  ng-drag-success="" ng-center-anchor="true">
+                              Draggable div
+                            </div>
+
+                        </md-card-content>
+
+
+                    </md-card-content>
+
+                    
+            </md-card>
+        </div>
                     </md-card-content>
                 </md-card>
             </div>
