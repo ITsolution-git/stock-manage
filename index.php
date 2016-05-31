@@ -83,7 +83,7 @@
      _.contains = _.includes;
     </script>
     <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
-
+    <script src="scripts/other/ngDraggable.js"></script>
     <!-- inject:js -->
 
     <script src="app/quick-panel/quick-panel.module.js"></script>
@@ -218,6 +218,7 @@
     <script src="scripts/other/kendo.angular.min.js"></script>
     <link rel="stylesheet" href="styles/other/kendo.common.min.css">
     <link rel="stylesheet" href="styles/other/kendo.default.min.css">
+
     
 
 </body>

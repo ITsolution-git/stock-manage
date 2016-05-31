@@ -11,6 +11,7 @@
 
     function UserProfileController($window, $timeout,$filter,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
+        $scope.NoImage = AllConstant.NoImage;
       var vm = this;
 
     vm.openChangePasswordialog = openChangePasswordialog;
@@ -44,8 +45,8 @@
 
     //console.log($scope.app.company_roleid);
       // GET ADMIN ROLE LIST
-      GetCompany();
-      function GetCompany () {
+     
+      $scope.GetCompany =  function() {
       $("#ajax_loader").show();
       $http.get('api/public/admin/company/edit/'+$scope.user_id+'/'+$scope.company_id).success(function(Listdata) 
       {
@@ -66,7 +67,7 @@
              // console.log(Listdata); 
       });
     }
-  
+   $scope.GetCompany();
     // COMPANY EDIT TIME CALL
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
     {
@@ -163,6 +164,76 @@
                 
             });
         }
+        // ============= UPLOAD IMAGE ============= // 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
+        {
+
+                $scope.column_name=column_name;
+                $scope.table_name=table_name;
+                $scope.folder_name=folder_name;
+                $scope.primary_key_name=primary_key_name;
+                $scope.primary_key_value=primary_key_value;
+                $scope.default_image=default_image;
+                $scope.unlink_url = image_name;
+                //console.log(primary_key_value); return false;
+                $mdDialog.show({
+                   //controllerAs: $scope,
+                    controller: function($scope,params){
+                            $scope.params = params;
+                            $scope.SaveImageAll=function(image_array)
+                            {
+                                if(image_array == null)
+                                {
+                                    $mdDialog.hide();
+                                    return false;
+                                }
+
+                                var Image_data = {};
+                                Image_data.image_array = image_array;
+                                Image_data.field = params.column_name;
+                                Image_data.table = params.table_name;
+                                Image_data.image_name = params.table_name+"-logo";
+                                Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.primary_key_value;
+                                Image_data.cond = params.primary_key_name;
+                                Image_data.value = params.primary_key_value;
+                                Image_data.unlink_url = params.unlink_url;
+
+                                $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
+                                    if(result.data.success=='1')
+                                    {
+                                        notifyService.notify("success", result.data.message);
+                                        $mdDialog.hide();
+                                    }
+                                    else
+                                    {
+                                        notifyService.notify("error", result.data.message); 
+                                    }
+                                });
+                            };
+                            $scope.showtcprofileimg = false;
+                            $scope.onLoad=function()
+                                {
+                                    $scope.showtcprofileimg = true;
+                                }; 
+                            $scope.removeProfileImage=function()
+                                {
+                                    $scope.showtcprofileimg = false;
+                                }; 
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                        },
+                    templateUrl: 'app/main/image/image.html',
+                    parent: angular.element($document.body),
+                    clickOutsideToClose: false,
+                        locals: {
+                            params:$scope
+                        },
+                    onRemoving :  $scope.GetCompany
+                });
+
+        };
 
     }
 })();

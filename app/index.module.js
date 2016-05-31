@@ -47,6 +47,9 @@
             'app.customProduct',
 
             // Navigation
-            'app.navigation'
+            'app.navigation',
+
+            // DRAG AND UPLOAD
+            'ngDraggable'
         ]);
 })();
