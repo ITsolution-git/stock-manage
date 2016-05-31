@@ -688,6 +688,7 @@ md-button.on {
 /* CUSTOM CHECKBOX */
 #custChkboxes .customChkbox, #custChkboxes1 .customChkbox {
   float: left;
+  padding-right: 10px;
 }
 #custChkboxes .customChkbox input, #custChkboxes1 .customChkbox input {
   opacity: 0;
@@ -702,8 +703,17 @@ md-button.on {
 }
 #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
   background: #797979;
+  color: #fff;
 }
 #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label {
   background: #797979;
   color: #fff;
+}
+
+.ssActivewearDialog {
+  width: 25% !important ;
+}
+
+.btn-width-100 {
+  width: 100% ;
 }

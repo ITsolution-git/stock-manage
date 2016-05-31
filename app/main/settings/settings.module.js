@@ -90,22 +90,23 @@
                 },resolve: {
                    
                 }
-            }).state('app.settings.support', {
-                url  : '/support',
-                views: {
-                    'content@app': {
-                        templateUrl: 'app/main/settings/views/support/support.html',
-                        controller : 'SupportController as vm'
-                    }
-                },resolve: {
-                   
-                }
             }).state('app.settings.integrations', {
                 url  : '/integrations',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/integrations/integrations.html',
                         controller : 'IntegrationsController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            })
+            /*.state('app.settings.support', {
+                url  : '/support',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/support/support.html',
+                        controller : 'SupportController as vm'
                     }
                 },resolve: {
                    
@@ -130,7 +131,7 @@
                 },resolve: {
                    
                 }
-            })
+            })*/
             ;
 
         // Navigation
@@ -191,7 +192,7 @@
             state      : 'app.settings.integrations',
             stateParams: {'id': 7},
             weight     : 7
-        });
+        });/*
         msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',
             state      : 'app.settings.support',
@@ -210,7 +211,7 @@
             state      : 'app.settings.platformSettings',
             stateParams: {'id': 10},
             weight     : 10
-        });
+        });*/
 
 
     }
