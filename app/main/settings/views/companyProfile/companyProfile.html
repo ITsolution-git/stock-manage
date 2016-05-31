@@ -48,10 +48,28 @@
                                     <span>This field is required</span>
                                 </div>
                             </div>                        
-                         </md-input-container>
+                        </md-input-container>
+                    </md-card-content>
 
-                      </div>
+                    <md-card-content flex="50" layout="column">
+                        <md-card-content flex="50" layout="column" ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
+                            <img ng-if="company.company_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                            <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="No Image" class="popup-image" >
+                        </md-card-content>
 
+                         <md-card-content flex="50" layout="column" >
+                           <div ng-drag="true" flex="50" layout="column"  style="border-style: dotted;"  ng-drag-success="" ng-center-anchor="true">
+                              Draggable div
+                            </div>
+
+                        </md-card-content>
+
+
+                    </md-card-content>
+
+                    
+            </md-card>
+        </div>
                     </md-card-content>
                 </md-card>
             </div>

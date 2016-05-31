@@ -15,7 +15,7 @@
                         </div>
 
                         <div class="div-1000">
-                          <md-button class="md-raised btn-width-315" ng-click="toggle()" ng-class="{on:b.state}">SCREEN PRINTING</md-button>
+                          <md-button class="md-raised btn-width-315" ng-click="toggle = !toggle" ng-class="{'red' : toggle}">SCREEN PRINTING</md-button>
                           <md-button class="md-raised btn-width-315">EMBROIDERING</md-button>
                           <md-button class="md-raised btn-width-315">PACKAGING</md-button>
                           <md-button class="md-raised btn-width-315">SHIPPING</md-button>
@@ -58,6 +58,7 @@
                         </md-input-container>
 
                     </md-card-content>
+                    
                 </md-card>
             </div>
         </div>

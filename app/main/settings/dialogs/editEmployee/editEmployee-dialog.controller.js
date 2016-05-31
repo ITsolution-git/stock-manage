@@ -4,10 +4,10 @@
 
     angular
         .module('app.settings')
-        .controller('AddEmployeeDialogController', AddEmployeeDialogController);
+        .controller('EditEmployeeDialogController', EditEmployeeDialogController);
 
     /** @ngInject */
-    function AddEmployeeDialogController($mdDialog,$controller,$state, event,$scope,sessionService,$resource)
+    function EditEmployeeDialogController($mdDialog,$controller,$state, event,$scope,sessionService,$resource)
     {
         var vm = this;
 
