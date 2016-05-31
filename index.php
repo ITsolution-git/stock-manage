@@ -203,6 +203,10 @@
     <script src="app/main/settings/views/companyDetails/companyDetails.controller.js"></script>
     <script src="app/main/settings/dialogs/addEmployee/addEmployee-dialog.controller.js"></script>
 
+    <!-- Art -->
+    <script src="app/main/art/art.module.js"></script>
+    <script src="app/main/art/art.controller.js"></script>
+
     <!--Datatable Scrolling-->
 
     <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>

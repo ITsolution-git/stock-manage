@@ -467,6 +467,45 @@ md-input-container > label {
 .display-none {
 	display:none;
 }
+.pd15-TB {
+	padding-top:15px;
+	padding-bottom:15px;
+}
+.pd25-T {
+	padding-top:25px;
+}
+.text-center {
+	text-align:center;
+}
+.simple-tbl1 thead tr th {
+	line-height:16px;
+}
+.art-search-cntnr md-input-container {
+	margin:15px 0 0;
+	height:auto;
+	max-height:30px;
+}
+.art-search-cntnr {
+	border-bottom:1px solid rgba(0, 0, 0, 0.12);
+}
+.filter-box md-input-container {
+	margin:0px;
+}
+.filter-box .md-errors-spacer {
+	min-height:1px;
+}
+.select-count {
+	color:#000 !important;
+	float:left;
+	margin-left:10px;
+	text-transform:uppercase;
+	margin-top:4px;
+	display:inline-block;
+}
+.filter-cntnr {
+	height:150px;
+	padding:10px 10px 0;
+}
 /*****************************/	
 .loaderouter{
     position:fixed;
