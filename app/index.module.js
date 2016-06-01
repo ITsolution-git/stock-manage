@@ -43,6 +43,9 @@
             //Admin settings
             'app.settings',
 
+            //Finishing
+            'app.finishing',
+
             // Custom Product
             'app.customProduct',
 

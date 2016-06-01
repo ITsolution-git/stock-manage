@@ -800,3 +800,7 @@ md-dialog .tasty-page .col-xs-3 {
 md-dialog .tasty-page .col-xs-6 {
   padding: 0 ;
 }
+
+#finishing tbody tr td md-input-container {
+  margin: 0 !important;
+}
