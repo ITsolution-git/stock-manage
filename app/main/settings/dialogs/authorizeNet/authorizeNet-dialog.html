@@ -1,0 +1,50 @@
+<md-dialog class="task-dialog authorizeNetDialog" >
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">AUTHORIZE.NET API INTEGRATION</span>
+                <md-button  ng-click="cancel()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
+                <div layout="column"  flex="100">
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="API URL" name="" ui-event="">
+                        <div ng-messages=" " role="alert" multiple>
+                            <div ng-message="required">
+                                <span>This field is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="API Username" name="" ui-event="">
+                        <div ng-messages=" " role="alert" multiple>
+                            <div ng-message="required">
+                                <span>This field is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="API Key" name="" ui-event="">
+                        <div ng-messages=" " role="alert" multiple>
+                            <div ng-message="required">
+                                <span>This field is required</span>
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                </div>
+                
+            </div>
+</div>
+    <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="cancel()">
+            SAVE
+    </md-button>
+</md-dialog>

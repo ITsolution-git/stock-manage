@@ -476,7 +476,7 @@
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Order Total</div>
-                        <span class="ng-binding">${{order.screen_charge}}</span>
+                        <span class="ng-binding">${{order.order_total}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
@@ -517,9 +517,9 @@
         <span class="h4 text-semibold">Order Total</span>
     </div>
     <div flex="15"><span>Order Line</span></div>
-    <div flex="15"><span>{{ vm.ordertotal.orderline}}</span></div>
+    <div flex="15"><span>${{ order.order_line_total}}</span></div>
     <div flex="15"><span>Order Charges</span></div>
-    <div flex="15"><span>{{ vm.ordertotal.ordercharges}}</span></div>
+    <div flex="15"><span>${{ order.order_charges_total}}</span></div>
     <div flex="20"><span>Order Sales</span></div>
-    <div flex="20"><span>{{ vm.ordertotal.ordersales}}</span></div>
+    <div flex="20"><span>${{ order.order_total}}</span></div>
 </div>

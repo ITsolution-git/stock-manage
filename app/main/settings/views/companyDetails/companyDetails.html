@@ -14,12 +14,44 @@
                             </div>
                         </div>
 
-                        <div class="div-1000">
-                          <md-button class="md-raised btn-width-315" ng-click="toggle = !toggle" ng-class="{'red' : toggle}">SCREEN PRINTING</md-button>
-                          <md-button class="md-raised btn-width-315">EMBROIDERING</md-button>
-                          <md-button class="md-raised btn-width-315">PACKAGING</md-button>
-                          <md-button class="md-raised btn-width-315">SHIPPING</md-button>
-                          <md-button class="md-raised btn-width-315">ART WORK</md-button>
+
+                        <div class="div-1000" id="custChkboxes">
+                            
+                            <div class="customChkbox md-raised btn-width-315 m-b-10" >
+
+                                <input type="checkbox" id="chk1" ng-if="company_data.screen_print=='1'" ng-click="UpdateTableField('screen_print','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" />
+
+                                <input type="checkbox" id="chk1" ng-if="company_data.screen_print=='0'"  ng-click="UpdateTableField('screen_print','1','company_info','id',company_data.id,'company_info','company_info')" value="0" />
+
+                                <label for="chk1" class="form-control">SCREEN PRINTING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315 m-b-10">
+
+                                <input type="checkbox" ng-if="company_data.embroidering=='1'" ng-click="UpdateTableField('embroidering','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk2" />
+
+                                <input type="checkbox" ng-if="company_data.embroidering=='0'" ng-click="UpdateTableField('embroidering','1','company_info','id',company_data.id,'company_info','company_info')" value="0" id="chk2"  />
+
+                                <label for="chk2" class="form-control">EMBROIDERING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315 m-b-10">
+                                <input type="checkbox" ng-if="company_data.packing=='1'" ng-click="UpdateTableField('packing','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk3"  />
+
+                                <input type="checkbox" ng-if="company_data.packing=='0'" ng-click="UpdateTableField('packing','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk3" />
+
+                                <label for="chk3" class="form-control">PACKAGING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                 <input type="checkbox" ng-if="company_data.shipping=='1'" ng-click="UpdateTableField('shipping','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk4"  />
+
+                                <input type="checkbox" ng-if="company_data.shipping=='0'" ng-click="UpdateTableField('shipping','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk4"  />
+                                <label for="chk4" class="form-control">SHIPPING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" ng-if="company_data.art_work=='1'" ng-click="UpdateTableField('art_work','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk5"  />
+
+                                <input type="checkbox" ng-if="company_data.art_work=='0'" ng-click="UpdateTableField('art_work','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk5"  />
+                                <label for="chk5" class="form-control">ART WORK</label>
+                            </div>
                         </div> 
 
 
@@ -32,30 +64,37 @@
                         <label class="margin-left-15">What type of machines does your shop run?</label>
 
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
-                            <input placeholder="Company Name" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <input placeholder="Types of machine" ng-model="company_data.type_of_machine" name="type_of_machine" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
                         </md-input-container>
 
                         <label class="margin-left-15">What shifts does your shop run?</label>
-                        <div class="div-1000">
-                          <md-button class="md-raised btn-width-315" ng-click="toggle()" ng-class="{on:b.state}">FIRST SHIFT</md-button>
-                          <md-button class="md-raised btn-width-315">SECOND SHIFT</md-button>
-                          <md-button class="md-raised btn-width-315">THIRD SHIFT</md-button>
+                        <div class="div-1000" id="custChkboxes1">
+                            <div class="customChkbox md-raised btn-width-315">
+                                 <input type="checkbox" ng-if="company_data.first_shift=='1'" ng-click="UpdateTableField('first_shift','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk6"  />
+
+                                <input type="checkbox" ng-if="company_data.first_shift=='0'" ng-click="UpdateTableField('first_shift','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk6"  />
+                                <label for="chk6" class="form-control">FIRST SHIFT</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" ng-if="company_data.second_shift=='1'" ng-click="UpdateTableField('second_shift','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk7"  />
+
+                                <input type="checkbox" ng-if="company_data.second_shift=='0'" ng-click="UpdateTableField('second_shift','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk7"  />
+                                <label for="chk7" class="form-control">SECOND SHIFT</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" ng-if="company_data.third_shift=='1'" ng-click="UpdateTableField('third_shift','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk8"  />
+
+                                <input type="checkbox" ng-if="company_data.third_shift=='0'" ng-click="UpdateTableField('third_shift','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk8"  />
+                                <label for="chk8" class="form-control">THIRD SHIFT</label>
+                            </div>
+
                         </div> 
 
-                        <label class="margin-left-15 pad-top-25">What shifts does your shop run?</label>
+                        <label class="margin-left-15 pad-top-25"> How large is your team?</label>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
-                            <input placeholder="Company Name" name="" ui-event="">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
-                        </md-input-container>
+                            <input placeholder="Numbers of team members" ng-model="company_data.team" name="team" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }">
+                        </div> 
+
 
                     </md-card-content>
                     

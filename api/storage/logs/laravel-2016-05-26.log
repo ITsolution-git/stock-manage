@@ -1,3 +1,0 @@
-[2016-05-26 13:14:00] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Class 'Maatwebsite\Excel\ExcelServiceProvider' not found' in /var/www/html/stokkup/api/vendor/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php:150
-Stack trace:
-#0 {main}  

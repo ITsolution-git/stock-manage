@@ -255,4 +255,25 @@ $this->common = $common;
 		$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
 	}
+	public function getCompanyInfo($company_id)
+	{
+		if(!empty($company_id))
+		{
+			$result = $this->company->getCompanyInfo($company_id);
+			if(count($result)>0)
+			{
+				$result = $result[0];
+			}
+			$message = GET_RECORDS;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+			$result="";
+		}
+		$data = array("success"=>$success,"message"=>$message,"data"=>$result);
+		return response()->json(['data'=>$data]);
+	}
 }
