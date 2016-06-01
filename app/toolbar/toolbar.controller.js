@@ -14,7 +14,7 @@
         vm.useremail= sessionService.get('name');
         vm.role_title= sessionService.get('role_title');
         vm.company = sessionService.get('company_name');
-        
+        vm.role_slug = sessionService.get('role_slug');
         // Data
         $rootScope.global = {
             search: ''

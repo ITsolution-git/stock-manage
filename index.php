@@ -208,11 +208,16 @@
     <script src="app/main/settings/dialogs/deleteAffiliate/deleteAffiliate-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/addAffiliate/addAffiliate-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/editAffiliate/editAffiliate-dialog.controller.js"></script>
+
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/ups/ups-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.controller.js"></script>
     <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
+
+    <!-- Art -->
+    <script src="app/main/art/art.module.js"></script>
+    <script src="app/main/art/art.controller.js"></script>
 
     <!--Datatable Scrolling-->
 

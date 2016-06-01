@@ -4,10 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Common;
 use DateTime;
 
 class Company extends Model {
 
+
+        public function __construct( Common $common)
+          {
+        $this->common = $common;
+        }
     /**
      * login verify function
      *
@@ -448,6 +454,20 @@ class Company extends Model {
     	{
     		  return false;
     	}
+    }
+    public function getCompanyInfo($company_id)
+    {
+       $company_data = $this->common->GetTableRecords('company_info',array('user_id' => $company_id),array());
+       if(count($company_data)==0)
+       {
+          $this->common->InsertRecords('company_info',array('user_id'=>$company_id));
+       }
+        $result = DB::table('users as u')
+                  ->select('ci.*')
+                  ->leftJoin('company_info as ci','ci.user_id','=','u.id')
+                  ->where("u.id","=",$company_id)
+                  ->get();
+        return $result;
     }
 
 

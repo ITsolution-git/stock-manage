@@ -1,0 +1,40 @@
+{
+	"artData": {
+	    "data": [
+	            {"orderId":"44", "orderDetail":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.", "screenSet":"3", "Positions":"5"},
+	            {"orderId":"45", "orderDetail":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.", "screenSet":"4", "Positions":"6"},
+	            {"orderId":"46", "orderDetail":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.", "screenSet":"5", "Positions":"7"},
+	            {"orderId":"48", "orderDetail":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.", "screenSet":"6", "Positions":"8"},
+	            {"orderId":"49", "orderDetail":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.", "screenSet":"7", "Positions":"9"},
+	            {"orderId":"50", "orderDetail":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet.", "screenSet":"8", "Positions":"10"}
+	                         
+	        ],
+		"data1": [
+					{"setName":"3XLFront", "position":"Front", "posScreen":"3", "posColor":"3", "frameSize":"31", "lineInch":"3", "width":"45", "height":"4"},
+					{"setName":"3XLFront", "position":"Front", "posScreen":"3", "posColor":"3", "frameSize":"31", "lineInch":"3", "width":"45", "height":"4"},
+					{"setName":"3XLFront", "position":"Front", "posScreen":"3", "posColor":"3", "frameSize":"31", "lineInch":"3", "width":"45", "height":"4"},
+					{"setName":"3XLFront", "position":"Front", "posScreen":"3", "posColor":"3", "frameSize":"31", "lineInch":"3", "width":"45", "height":"4"},
+					{"setName":"3XLFront", "position":"Front", "posScreen":"3", "posColor":"3", "frameSize":"31", "lineInch":"3", "width":"45", "height":"4"}
+		]
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
