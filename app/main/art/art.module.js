@@ -25,6 +25,14 @@
                         return msApi.resolve('ArtOrder@get');
                     }
                 }
+            }).state('app.art.orderView', {
+                url  : '/artOrderView/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/art/views/orderview/orderView.html',
+                        controller : 'orderViewController as vm'
+                    }
+                }
             });
 
        // Translation
