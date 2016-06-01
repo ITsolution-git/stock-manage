@@ -10,7 +10,99 @@
     function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
     {
         
-
+        //State
+        $stateProvider
+            .state('app.settings', {
+                url    : '/settings',
+                views  : {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/settings.html',
+                        controller : 'SettingsController as vm'
+                    }
+                },
+                resolve: {
+                    
+                }
+            }).state('app.settings.userProfile', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                       return sessionService.AccessService('ALL');
+                    },
+                },
+                url  : '/userProfile',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/userProfile/userProfile.html',
+                        controller : 'UserProfileController as vm'
+                    }
+                }
+            }).state('app.settings.priceGrid', {
+                url  : '/priceGrid',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/priceGrid/priceGrid.html',
+                        controller : 'PriceGridController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.companyProfile', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                       return sessionService.AccessService('CA');
+                    },
+                },
+                url  : '/companyProfile',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/companyProfile/companyProfile.html',
+                        controller : 'UserProfileController as vm'
+                    }
+                }
+            }).state('app.settings.companyDetails', {
+                url  : '/companyDetails',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/companyDetails/companyDetails.html',
+                        controller : 'CompanyDetailsController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.userManagement', {
+                url  : '/userManagement',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/userManagement/userManagement.html',
+                        controller : 'UserManagementController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.affiliate', {
+                url  : '/affiliate',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/affiliate/affiliate.html',
+                        controller : 'AffiliateController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            }).state('app.settings.support', {
+                url  : '/support',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/support/support.html',
+                        controller : 'SupportController as vm'
+                    }
+                },resolve: {
+                   
+                }
+            })
+            ;
         // Navigation
        /* msNavigationServiceProvider.saveItem('fuse', {
             title : '',
