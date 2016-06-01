@@ -14,12 +14,29 @@
                             </div>
                         </div>
 
-                        <div class="div-1000">
-                          <md-button class="md-raised btn-width-315" ng-click="toggle()" ng-class="{on:b.state}">SCREEN PRINTING</md-button>
-                          <md-button class="md-raised btn-width-315">EMBROIDERING</md-button>
-                          <md-button class="md-raised btn-width-315">PACKAGING</md-button>
-                          <md-button class="md-raised btn-width-315">SHIPPING</md-button>
-                          <md-button class="md-raised btn-width-315">ART WORK</md-button>
+
+                        <div class="div-1000" id="custChkboxes">
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk1" value="1" />
+                                <label for="chk1" class="form-control">SCREEN PRINTING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk2" value="2" />
+                                <label for="chk2" class="form-control">EMBROIDERING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" checked="checked" id="chk3" value="3" />
+
+                                <label for="chk3" class="form-control">PACKAGING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk4" value="4" />
+                                <label for="chk4" class="form-control">SHIPPING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk5" value="5" />
+                                <label for="chk5" class="form-control">ART WORK</label>
+                            </div>
                         </div> 
 
 
@@ -32,7 +49,8 @@
                         <label class="margin-left-15">What type of machines does your shop run?</label>
 
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
-                            <input placeholder="Company Name" name="" ui-event="">
+                            <input placeholder="Types of machine" name="" ui-event="">
+
                             <div ng-messages=" " role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
@@ -41,15 +59,30 @@
                         </md-input-container>
 
                         <label class="margin-left-15">What shifts does your shop run?</label>
-                        <div class="div-1000">
-                          <md-button class="md-raised btn-width-315" ng-click="toggle()" ng-class="{on:b.state}">FIRST SHIFT</md-button>
-                          <md-button class="md-raised btn-width-315">SECOND SHIFT</md-button>
-                          <md-button class="md-raised btn-width-315">THIRD SHIFT</md-button>
+                        <div class="div-1000" id="custChkboxes1">
+                          <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk6" value="6" />
+                                <label for="chk6" class="form-control">FIRST SHIFT</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk7" value="7" />
+                                <label for="chk7" class="form-control">SECOND SHIFT</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk8" value="8" />
+                                <label for="chk8" class="form-control">THIRD SHIFT</label>
+                            </div>
+
                         </div> 
 
-                        <label class="margin-left-15 pad-top-25">What shifts does your shop run?</label>
+                        <label class="margin-left-15 pad-top-25"> How large is your team?</label>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
-                            <input placeholder="Company Name" name="" ui-event="">
+                            <input placeholder="Numbers of team members" name="" ui-event="">
+                        </div> 
+
+                        <label class="margin-left-15 pad-top-25">How large is your team?</label>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
+                            <input placeholder="Number of team members" name="" ui-event="">
                             <div ng-messages=" " role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
@@ -58,6 +91,7 @@
                         </md-input-container>
 
                     </md-card-content>
+                    
                 </md-card>
             </div>
         </div>

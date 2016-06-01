@@ -34,7 +34,7 @@
             
             // Receiving
             'app.receiving',
-            
+
             'ngTasty',
 
             // image uploading module
@@ -46,7 +46,13 @@
             // Custom Product
             'app.customProduct',
 
+            //Art
+            'app.art',
+
             // Navigation
-            'app.navigation'
+            'app.navigation',
+
+            // DRAG AND UPLOAD
+            'ngDraggable'
         ]);
 })();

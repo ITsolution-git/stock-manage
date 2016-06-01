@@ -50,14 +50,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="purchaseOrder in ::vm.purchaseOrders" class="cursor-p"  >
+                    <tr ng-repeat="purchaseOrder in ::vm.purchaseOrders" class="cursor-p">
                         <td>{{ purchaseOrder.pid}}</td>
                         <td>{{ purchaseOrder.orderId}}</td>
                         <td>{{ purchaseOrder.poType}}</td>
                         <td>{{ purchaseOrder.clientName}}</td>
                         <td>{{ purchaseOrder.vender}}</td>
                         <td>{{ purchaseOrder.dateCreated}}</td>
-                        <td class="accor details-control" ui-sref="app.purchaseOrder.companyPO"  >
+                        <td class="accor details-control" ui-sref="app.purchaseOrder.companyPO">
                             <a>VIEW PO</a>
                         </td>
                     </tr>                    

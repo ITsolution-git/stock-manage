@@ -12,16 +12,17 @@
                 </md-input-container>
             </div>
 
-             <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+             <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
 
-            <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" id="file" class="input-large">
-                <md-button class="md-accent md-raised" onclick="document.getElementById('uploadcsv').submit()">Save</md-button>
+            <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data" target="_blank">
+                <input type="file" name="file" id="file" class="input-large" ng-model="file">
+                <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                <md-button class="md-accent md-raised" ng-click="submitForm()">Upload CSV</md-button>
                </form>
                
                 </div>
 
-             <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+             <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
                 <span class="cursor-p" ng-click="vm.openCustomProductDialog($event,0)" >CREATE CUSTOM PRODUCT</span>
             </div>
 
@@ -37,7 +38,7 @@
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr  ng-repeat="row in rows"  >
-                            <td ui-sref="app.order.order-info({id:row.id})" class="cursor-p">{{ row.id}}</td>
+                            <td ng-click="vm.openCustomProductDialog($event,row.id)"  class="cursor-p">{{ row.id}}</td>
                             <td>{{ row.name}}</td>
                         </tr>                  
                     </tbody>

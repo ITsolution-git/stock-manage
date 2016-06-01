@@ -1,0 +1,143 @@
+<md-dialog class="task-dialog addAffiliateDialog" >
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit New Affiliate</span>
+                <md-button  ng-click="cancel()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
+                <div layout="column"  flex="50">
+
+                    <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+                        <div class="table-title-text h2 text-semibold" flex=40>
+                            <div class="title" layout-padding><span class="basicInfoStyle">AFFILIATE INFORMATION</span></div>
+                        </div>
+                    </div>
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Company Name" name="" ui-event="">
+                            <div ng-messages=" " role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block first-box settings-margin-0">
+                            <input placeholder="Address" name="" ui-event="">
+                            <div ng-messages=" " role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="City" name="" ui-event="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex=30 class="m-b-20 m-t-25">
+                                <label class="state-label-color">State</label>
+                                <md-select ng-model="vm.userState" aria-label="State">
+                                  <md-option ng-repeat="state in vm.states" >
+                                    {{state.abbrev}}
+                                   </md-option>
+                                </md-select>
+                                
+                            </md-input-container>
+
+                            <md-input-container flex=30 class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Postal Code" name="" ui-event="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <md-input-container class="md-block first-box settings-margin-0">
+                            <input placeholder="Phone Number" name="" ui-event="">
+                            <div ng-messages=" " role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Email Address" name="" ui-event="">
+                            <div ng-messages=" " role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>                        
+                         </md-input-container>
+                </div>
+                <div layout="column" flex="50">
+
+                        <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+                            <div class="table-title-text h2 text-semibold" flex=40>
+                                <div class="title" layout-padding><span class="basicInfoStyle">AFFILIATE PRICE GRID</span></div>
+                            </div>
+                        </div>
+
+                        <md-input-container flex=30 class="m-b-20 m-t-25">
+                            <label class="state-label-color">Price Grid</label>
+                            <md-select ng-model="vm.affilliatePriceGrid" aria-label="Price Grid">
+                              <md-option ng-repeat="state in vm.priceGrids" >
+                                {{state.abbrev1}}
+                               </md-option>
+                            </md-select>                            
+                        </md-input-container>
+
+                        <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+                            <div class="table-title-text h2 text-semibold" flex=40>
+                                <div class="title" layout-padding><span class="basicInfoStyle">AFFILIATE CAPABILITIES</span></div>
+                            </div>
+                        </div>
+
+
+                        <div class="" id="custChkboxes">
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk1" value="1" />
+                                <label for="chk1" class="form-control">SCREEN PRINTING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk2" value="2" />
+                                <label for="chk2" class="form-control">EMBROIDERING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk3" value="3" />
+                                <label for="chk3" class="form-control">PACKAGING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk4" value="4" />
+                                <label for="chk4" class="form-control">SHIPPING</label>
+                            </div>
+                            <div class="customChkbox md-raised btn-width-315">
+                                <input type="checkbox" id="chk5" value="5" />
+                                <label for="chk5" class="form-control">ART WORK</label>
+                            </div>
+                        </div> 
+
+                        
+                </div>
+                
+            </div>
+</div>
+    <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="cancel()">
+            SAVE
+    </md-button>
+</md-dialog>

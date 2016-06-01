@@ -129,7 +129,6 @@ text-align: left;
   font-size: 96px;
   color: #FFF;
 }
-<<<<<<< HEAD
 
 .sizeColor {
       color: #777777 !important;
@@ -243,7 +242,7 @@ md-input-container > label {
 }
 
 .createPriceGridLink {
-  top : 40px;
+  top : 43px;
   right: 40px;
   font-family: 'Helvetica';
     font-style: normal;
@@ -277,6 +276,10 @@ md-input-container > label {
 
 #userMgmnt tr > td:first-child, #userMgmnt tr > th:first-child {
   width: 45% !important;
+}
+
+#priceGrid tr > td:first-child, #priceGrid tr > th:first-child {
+  width: 85% !important;
 }
 
 .createPriceGridDialog {
@@ -467,6 +470,45 @@ md-input-container > label {
 .display-none {
 	display:none;
 }
+.pd15-TB {
+	padding-top:15px;
+	padding-bottom:15px;
+}
+.pd25-T {
+	padding-top:25px;
+}
+.text-center {
+	text-align:center;
+}
+.simple-tbl1 thead tr th {
+	line-height:16px;
+}
+.art-search-cntnr md-input-container {
+	margin:15px 0 0;
+	height:auto;
+	max-height:30px;
+}
+.art-search-cntnr {
+	border-bottom:1px solid rgba(0, 0, 0, 0.12);
+}
+.filter-box md-input-container {
+	margin:0px;
+}
+.filter-box .md-errors-spacer {
+	min-height:1px;
+}
+.select-count {
+	color:#000 !important;
+	float:left;
+	margin-left:10px;
+	text-transform:uppercase;
+	margin-top:4px;
+	display:inline-block;
+}
+.filter-cntnr {
+	height:150px;
+	padding:10px 10px 0;
+}
 /*****************************/	
 .loaderouter{
     position:fixed;
@@ -585,4 +627,131 @@ md-button.on {
 
 .margin-left-15 {
   margin-left: 15px;
+}
+
+.margin-left-10 {
+  margin: 10px;
+}
+
+.addEmployeeDialog {
+  width: 30% !important;
+}
+
+.width-400 {
+  width: 200px !important;
+}
+
+.priceGridUploadCsv {
+  width: 40% !important ;
+  height: 50% !important ;
+}
+
+#integrations tr > td:first-child, #integrations tr > th:first-child {
+    width: 15% !important;
+    height: 105px;
+}
+
+#integrations td {
+  height: 105px ;
+}
+
+.integrationsTd2 {
+  width: 65% !important;
+  height: 105px;
+  text-align: justify;
+}
+
+#integrations tr > td:last-child, #integrations tr > th:last-child {
+  width: 20% !important;
+}
+
+.btn-width-200 {
+  min-width: 200px ;
+}
+
+.td-500 {
+  width: 500px ;
+}
+
+.float-right {
+  float: right ;
+}
+
+.resetPasswordFont {
+  font-size: 14px ;
+}
+
+
+
+.addAffiliateDialog {
+  max-width: 100% !important ;
+  width: 75% !important ;
+}
+
+#affiliateDialog .settings-margin-0 {
+  margin: 5px !important ;
+}
+
+#affiliateDialog .m-t-25 {
+    margin-top: 5px !important;
+}
+
+
+
+#affiliateSaveBtn {
+    margin-right: 20px !important;
+  }
+
+.connectToQuickBooksBtn:hover {
+  background-color: #fff !important;
+}
+
+.toggle-btn {
+    background-color:#039BE5;
+}
+
+.min-height-300 {
+  min-height: 300px ;
+}
+
+.max-height-350 {
+  max-height: 350px ;
+}
+
+.max-height-350 img {
+  height: 350px ;
+}
+
+
+/* CUSTOM CHECKBOX */
+#custChkboxes .customChkbox, #custChkboxes1 .customChkbox {
+  float: left;
+  padding-right: 10px;
+}
+#custChkboxes .customChkbox input, #custChkboxes1 .customChkbox input {
+  opacity: 0;
+}
+#custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label {
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 100%;
+}
+#custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
+  background: #797979;
+  color: #fff;
+}
+#custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label {
+  background: #797979;
+  color: #fff;
+}
+
+.ssActivewearDialog {
+  width: 25% !important ;
+}
+
+.btn-width-100 {
+  width: 100% ;
 }
