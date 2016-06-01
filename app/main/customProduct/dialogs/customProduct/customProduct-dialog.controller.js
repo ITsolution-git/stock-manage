@@ -37,11 +37,12 @@
                        
                  
             } else {
+
                  getProductDetailByIdAll(product_id);
                  $scope.product_id_new  = product_id;
                 // console.log($scope.product_data);return false;
 
-        }
+            }
 
 
 
