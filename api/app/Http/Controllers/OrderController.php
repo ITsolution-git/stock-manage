@@ -2205,4 +2205,36 @@ else
 
     }
 
+    public function updateOrderCharge() {
+
+        $post = Input::all();
+
+        if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
+        {
+          $date_field = (empty($post['date_field']))? '':$post['date_field']; 
+          
+          $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
+          $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        else
+        {
+            $data = array("success"=>0,"message"=>MISSING_PARAMS);
+        }
+
+        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $post['cond']['id']),array());
+
+        if(!empty($design_data))
+        {
+            foreach ($design_data as $design) {
+                $item_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
+                if(!empty($item_data))
+                {
+                    $calculate_arr = array('id' => $design->id,'productData' => json_decode(json_encode($item_data), true),'company_id' => $post['company_id']);
+                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+                }
+            }
+        }
+        return response()->json(['data'=>$data]);
+    }
+
 }

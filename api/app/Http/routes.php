@@ -223,6 +223,7 @@ Route::post('order/editDesign', 'OrderController@editDesign');
 Route::post('order/getDesignPositionDetail', 'OrderController@getDesignPositionDetail');
 Route::post('order/editOrder', 'OrderController@editOrder');
 Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
+Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
 
 
 // FINISHING CONTROLLER 

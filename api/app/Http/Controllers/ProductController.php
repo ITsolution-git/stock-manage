@@ -295,7 +295,7 @@ public function create_dir($dir_path) {
             } else {
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
             }
-
+        
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
             $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
@@ -307,8 +307,8 @@ public function create_dir($dir_path) {
             $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
             $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
 
+            return response()->json(["data" => $productAllData]);
         }
-         return response()->json(["data" => $productAllData]);
     }
     
 
@@ -398,7 +398,7 @@ public function create_dir($dir_path) {
         });*/
     }
 
-    public function orderCalculation($post=array())
+    public function orderCalculation($post)
     {
         $total_qnty = 0;
         foreach ($post['productData'] as $size) {
@@ -607,7 +607,15 @@ public function create_dir($dir_path) {
             foreach($post['productData'] as $product) {
                 if($product['qnty'] > 0)
                 {
-                    $sum = $product['customerPrice'] + $price_grid->shipping_charge;
+                    if(isset($product['customerPrice']))
+                    {
+                        $price = $product['customerPrice'];
+                    }
+                    else
+                    {
+                        $price = $product['price'];
+                    }
+                    $sum = $price + $price_grid->shipping_charge;
                     $avg_garment_cost += $sum;
                     $line_qty += $product['qnty'];
                 }
@@ -642,7 +650,7 @@ public function create_dir($dir_path) {
                                 'total_line_charge' => round($per_item,2)
                                 );
 
-            $this->common->UpdateTableRecords('design_product',array('product_id' => $post['product_id']),$update_arr);
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),$update_arr);
 
             $total_qnty = 0;
             foreach ($post['productData'] as $size) {
@@ -655,9 +663,29 @@ public function create_dir($dir_path) {
             foreach ($design_data as $design) {
                     $design_product_total += $design->sales_total;
             }
+            
+
+            $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
+
+            foreach ($all_design as $design) {
+                
+                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id),array());
+                
+                foreach ($position_data as $row) {
+
+                    $press_setup_qnty = $row->press_setup_qnty;
+                    $screen_fees_qnty = $row->screen_fees_qnty;
+
+                    $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
+                    $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
+
+                    $total_screens += $calc_screen_fees;
+                    $total_press_setup += $calc_press_setup;
+                }
+            }
 
             $order_total = $total_screens + $total_press_setup + $design_product_total;
-            $tax = $order_total / $order_data[0]->tax_rate/100;
+            $tax = $order_total * $order_data[0]->tax_rate/100;
             $grand_total = $order_total + $tax;
             $balance_due = $grand_total - $order_data[0]->total_payments;
 
@@ -677,6 +705,8 @@ public function create_dir($dir_path) {
                                     );
 
             $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
+
+//            $this->common->UpdateTableRecords('orders',array('id' => $order_id),array('screen_charge' => $total_screens,'press_setup_charge' => $total_press_setup,));
             return true;
         }
         else
@@ -754,94 +784,54 @@ public function create_dir($dir_path) {
     public function uploadCSV()
     {
         $post = Input::all();
-
-      
+       
        if(isset($post["file"])){
 
         $filename=$_FILES["file"]["tmp_name"];
 
+
+
          if($_FILES["file"]["size"] > 0)
          {
             $file = fopen($filename, "r");
-           
+            $k=1;
+            $product_arr = array();
+            
+
             while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
             {
-                if($emapData[0] != '') {
-               
-                   $product_data = $this->common->GetTableRecords('products',array('name' => trim($emapData[0]),'company_id' => $post['company_id'],'vendor_id' => 0),array());
-                   
-                   if(count($product_data)>0) {
-                     $product_id = $product_data[0]->id;
-                  
-                   } else {
+               $product_arr['product_name'] = $emapData[0];
+                
+                /*$sql = "SELECT id FROM brand WHERE brand_name = '".$emapData[2]."'";
+                $query = mysql_query($sql);
+                if(mysql_num_rows($query) > 0)
+                {
+                    while ($branddata = mysql_fetch_array($query)) {
 
-                        $product_name = array(
-                            'name'=>$emapData[0],
-                            'created_date' => date('Y-m-d'),
-                            'company_id' => $post['company_id']
-                            
-                            );
-
-                          $result = $this->common->InsertRecords('products',$product_name);
-                          $product_id = $result;
-                   }
-
-                   if($emapData[1] != '') {
-
-
-                   $color_data = $this->common->GetTableRecords('color',array('name' => trim($emapData[1]),'company_id' => $post['company_id'],'is_sns' => 0),array());
-                   
-                   if(count($color_data)>0) {
-                     $color_id = $color_data[0]->id;
-                  
-                   } else {
-
-                       $color_name = array(
-                                'name'=>$emapData[1],
-                                'is_sns' => 0,
-                                'company_id' => $post['company_id']
-                                );
-
-                        $result_color = $this->common->InsertRecords('color',$color_name);
-                        $color_id = $result_color;
-                   }
-                 
-                   if($emapData[2] != '') {
-                  
-                       $size_data = $this->common->GetTableRecords('product_size',array('name' => trim($emapData[2]),'company_id' => $post['company_id'],'is_sns' => 0),array());
-                       
-                           if(count($size_data)>0) {
-                             $size_id = $size_data[0]->id;
-                          
-                           } else {
-
-                               $size_name = array(
-                                        'name'=>$emapData[2],
-                                        'is_sns' => 0,
-                                        'company_id' => $post['company_id']
-                                        );
-
-                                $result_size = $this->common->InsertRecords('product_size',$size_name);
-                                $size_id = $result_size;
-                           }
-
-                       $product_color_data = $this->common->GetTableRecords('product_color_size',array('product_id' => $product_id,'color_id' => $color_id,'size_id' => $size_id),array());
-                       
-                           if(count($product_color_data) == 0) {
-                                $product_color_size = array(
-                                            'product_id'=>$product_id,
-                                            'color_id' => $color_id,
-                                            'size_id' => $size_id
-                                            );
-                                $result_size_color = $this->common->InsertRecords('product_color_size',$product_color_size);
-                                $id = $result_size_color;
-                            }
-
+                        $brand_id = $branddata['id'];
                     }
-
                 }
-                  }
-              
+                else
+                {
+                    $brand_query = "INSERT INTO brand SET brand_name = '".$emapData[2]."',brand_image = '".$emapData[12]."' ";
+                    mysql_query($brand_query);
+                    $brand_id = mysql_insert_id();
+                }
+
+                $sub_query = "INSERT INTO products SET id = '".$emapData[0]."',brand_id = '".$brand_id."',name = '".mysql_real_escape_string($emapData[4])."',description = '".$emapData[5]."',
+                                    product_image = '".$emapData[13]."' ";
+                //mysql_query($sub_query);
+
+                if($emapData[7] != '')
+                {
+                    $category_data = explode(',', $emapData[7]);
+
+                    foreach ($category_data as $category_id) {
+                        $map_query = "INSERT INTO product_brand_category SET product_id = '".$emapData[0]."',category_id = '".$category_id."' ";
+                        mysql_query($map_query);
+                    }
+                }
+                $k++;*/
             }
             fclose($file);
             echo "complete";
