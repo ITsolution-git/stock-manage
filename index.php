@@ -190,7 +190,7 @@
     <script src="app/main/receiving/receiving.controller.js"></script>
     <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
     <!-- Settings -->
-        <script src="app/main/settings/settings.module.js"></script>
+    <script src="app/main/settings/settings.module.js"></script>
     <script src="app/main/settings/settings.controller.js"></script>
     <script src="app/main/settings/views/userProfile/userProfile.controller.js"></script>
     <script src="app/main/settings/views/priceGrid/priceGrid.controller.js"></script>

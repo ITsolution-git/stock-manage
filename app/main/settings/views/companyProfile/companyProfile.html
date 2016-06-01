@@ -57,12 +57,22 @@
                             <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="No Image" class="popup-image" >
                         </md-card-content>
 
-                         <md-card-content flex="50" layout="column" class="min-height-300" >
+                         <!-- <md-card-content flex="50" layout="column" class="min-height-300" >
                            <div ng-drag="true" flex="50" layout="column"  style="border-style: dotted;"  ng-drag-success="" ng-center-anchor="true">
-                              Draggable div
+                              <div class='button-wrapper' style='height:500px'>
+                                    <label>Tejas</label>
+                                    <input type="button" value="submit"  />
+                              </div>
                             </div>  
+                        </md-card-content> -->
 
-                        </md-card-content>
+                        <div class='container'>
+                            <div class='button-wrapper' style='height:200px'>
+                                <label class="text-center dragDropLabel">Drag & Drop your File here</label>
+                                <!-- <input class="" type="button" value="submit"  /> -->
+                                <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
+                            </div>
+                        </div>
 
 
                     </md-card-content>
