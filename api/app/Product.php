@@ -402,8 +402,8 @@ class Product extends Model {
         $listArray = ['p.id','p.product_id','p.color_id','p.size_id','c.name as color','pz.name as size'];
 
         $productColorSizeData = DB::table('product_color_size as p')
-                         ->Join('color as c', 'c.id', '=', 'p.color_id')
-                         ->Join('product_size as pz', 'pz.id', '=', 'p.size_id')
+                         ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
+                         ->leftJoin('product_size as pz', 'pz.id', '=', 'p.size_id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
@@ -425,6 +425,39 @@ class Product extends Model {
         $combine_array['product_id'] = $productName[0]->id;
 
         return $combine_array;
+    }
+
+
+    public function addcolorsize($post)
+    {
+        if(!empty($post['product_id']))
+        {
+
+            if($post['color_id'] == 0) {
+                 $result_color = DB::table('color')->insert([
+                'company_id'=>$post['company_id'],
+                'is_sns'=>0]);
+                 $colorId = DB::getPdo()->lastInsertId();
+            } else {
+                $colorId = $post['color_id'];
+            }
+
+
+             $result_size = DB::table('product_size')->insert([
+            'company_id'=>$post['company_id'],
+            'is_sns'=>0]);
+             $sizeId = DB::getPdo()->lastInsertId();
+
+             $result_color_size = DB::table('product_color_size')->insert([
+            'product_id'=>$post['product_id'],
+            'color_id'=>$colorId,
+            'size_id'=>$sizeId]);
+             return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }

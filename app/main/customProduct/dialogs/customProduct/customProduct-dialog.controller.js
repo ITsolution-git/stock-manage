@@ -20,7 +20,7 @@
            
           //  product_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
             product_data.data.vendor_id =0;
-            product_data.data.name ='Default Product';
+            product_data.data.name ='';
            
 
             product_data.table ='products'
@@ -86,25 +86,66 @@
         }
 
 
-        $scope.rows = ['Row 1'];
-        $scope.counter = 2;
-        $scope.addAttribute = function(){
-          $scope.rows.push('Row ' + $scope.counter);
-          $scope.counter++;
+        
+        $scope.addcolorsize = function(product_id,color_id,size_id){
+          
+            if(product_id !=0 && color_id == 0 && size_id ==0) {
+              var combine_array_id = {};
+
+              combine_array_id.product_id = product_id;
+              combine_array_id.color_id = color_id;
+              combine_array_id.size_id = size_id;
+              combine_array_id.company_id =sessionService.get('company_id');
+              
+              $http.post('api/public/product/addcolorsize',combine_array_id).success(function(result, status, headers, config) {
+              
+                  if(result.data.success == '1') {
+                     getProductDetailByIdAll(product_id);
+                  } 
+              });
+          } else if(product_id !=0 && color_id != 0 && size_id ==0) {
+
+              var combine_array_id = {};
+
+              combine_array_id.product_id = product_id;
+              combine_array_id.color_id = color_id;
+              combine_array_id.size_id = size_id;
+              combine_array_id.company_id =sessionService.get('company_id');
+              
+              $http.post('api/public/product/addcolorsize',combine_array_id).success(function(result, status, headers, config) {
+              
+                  if(result.data.success == '1') {
+                     getProductDetailByIdAll(product_id);
+                  } 
+              });
+          }   
+
         }
-        $scope.removeAttribute = function (rowContent) {
-          var index = $scope.rows.indexOf(rowContent);
-          $scope.rows.splice(index, 1);
-          $scope.counter--;
-        };
-        $scope.sizeElement = [{}];
-        $scope.addSize =  function(){
-          $(".size-attribute.display-none").css("display", "block");
-          $scope.sizeElement.push({});
-        };
-        $scope.removeSize =  function(size){
-          var sizeindex = $scope.sizeElement.indexOf(size);
-          $scope.sizeElement.splice(sizeindex, 1);
+
+       
+        
+        $scope.removeColorSize =  function(product_id,color_id,size_id){
+          
+          var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+
+            if (permission == true) {
+
+                var combine_array_id = {};
+                    combine_array_id.product_id = product_id;
+                    combine_array_id.color_id = color_id;
+                    combine_array_id.size_id = size_id;
+                    combine_array_id.company_id =sessionService.get('company_id');
+                    
+                    
+                    $http.post('api/public/product/deleteSizeLink',combine_array_id).success(function(result, status, headers, config) {
+                       
+                        if(result.data.success == '1') {
+                            getProductDetailByIdAll(product_id);
+                        } 
+                        
+                    });
+              }
+
         };
     }
 })();

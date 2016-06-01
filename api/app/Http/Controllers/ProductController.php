@@ -853,5 +853,68 @@ public function create_dir($dir_path) {
         $result = $this->product->getProductDetailColorSize($post['id']);
         return response()->json(["data" => $result]);
     }
+
+     public function addcolorsize()
+    {
+        $post = Input::all();
+       
+        if(!empty($post['product_id']))
+        {
+            $record_data = $this->product->addcolorsize($post);
+            
+            if($record_data)
+            {
+                $message = INSERT_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = "There is some erroe in insert";
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
+
+    public function deleteSizeLink()
+    {
+        $post = Input::all();
+       
+        if(!empty($post['product_id']))
+        {
+            if($post['size_id'] == 0) {
+                $record_data = $this->common->DeleteTableRecords('product_color_size',array('product_id' => $post['product_id'],'color_id' => $post['color_id']));
+            } else {
+                $record_data = $this->common->DeleteTableRecords('product_color_size',array('product_id' => $post['product_id'],'color_id' => $post['color_id'],'size_id' => $post['size_id']));
+            }
+            
+           
+            if($record_data)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
     
 }

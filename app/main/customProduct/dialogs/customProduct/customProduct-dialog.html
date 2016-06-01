@@ -20,27 +20,27 @@
                             <th width="40%">Color</th>
                             <th width="40%">Size</th>
                             <th width="20%" class="text-center">
-                                <a href="#" class="add-attributes" ng-click="addAttribute()"><span class="icon icon-plus"></span></a>
+                                <a href="#" class="add-attributes" ui-event="{ click : 'addcolorsize(productId,0,0)'}"><span class="icon icon-plus"></span></a>
                             </th>
                         </tr>
-                        <tr ng-repeat="colorsdata in productColorSize">
+                        <tr ng-repeat="(keyColor,colorsdata) in productColorSize">
                             <td class="align-T">
                                 <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                    <input type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="colorsdata.color_name">
+                                    <input type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="colorsdata.color_name" ui-event="{ change : 'updateProduct(\'name\',keyColor,colorsdata.color_name,\'color\',\'id\')' }">
                                 </md-input-container>
                             </td>
                             <td>
                                 <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
                                     <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
-                                        <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.size">
-                                        <a href="#" class="add-size" ng-click="addSize()" ng-show="key==0"><span class="icon icon-plus"></span></a>
-                                        <a href="#" class="remove-size" ng-click="removeSize(size)" ng-show="key!=0"><span class="icon icon-close"></span></a>
+                                        <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.size" ui-event="{ change : 'updateProduct(\'name\',all_size.size_id,all_size.size,\'product_size\',\'id\')' }">
+                                        <a href="#" class="add-size" ng-click="addcolorsize(productId,all_size.color_id,0)" ng-show="key==0"><span class="icon icon-plus"></span></a>
+                                        <a href="#" class="remove-size" ng-click="removeColorSize(productId,all_size.color_id,all_size.size_id)" ng-show="key!=0"><span class="icon icon-close"></span></a>
                                     </md-input-container>
                                 </div>
                                
                             </td>
                             <td class="text-center">
-                                <a href="#" class="remove-size remove-attrribute" ng-click="removeAttribute()"><span class="icon icon-close"></span></a>
+                                <a href="#" class="remove-size remove-attrribute" ng-click="removeColorSize(productId,keyColor,0)"><span class="icon icon-close"></span></a>
                             </td>
                         </tr>
                     </table>
@@ -52,7 +52,6 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
                     <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-                    <md-button class="md-accent md-raised " ng-click="save(product)">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
