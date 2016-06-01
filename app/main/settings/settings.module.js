@@ -23,6 +23,7 @@
             icon     : 'icon-cog',
             //state    : 'app.settings',
             class      : 'navigation-dashboards project-dashboard',
+            
             weight   : 1
         });
 
@@ -31,6 +32,7 @@
             state      : 'app.settings.userProfile',
             stateParams: {'id': 1},
             class      : 'navigation-dashboards project-dashboard',
+            
             weight     : 1
         });
 
@@ -55,6 +57,7 @@
             state      : 'app.settings.userManagement',
             stateParams: {'id': 4},
             class      : 'navigation-dashboards project-dashboard',
+            
             weight     : 4
         });
         msNavigationServiceProvider.saveItem('fuse.settings.priceGrid', {
@@ -62,6 +65,7 @@
             state      : 'app.settings.priceGrid',
             stateParams: {'id': 5},
             class      : 'navigation-dashboards project-dashboard',
+            
             weight     : 5
         });
         msNavigationServiceProvider.saveItem('fuse.settings.affiliate', {

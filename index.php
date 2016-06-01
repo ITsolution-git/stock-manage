@@ -218,6 +218,7 @@
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>
     <script src="app/main/art/art.controller.js"></script>
+    <script src="app/main/art/views/orderview/orderview.controller.js"></script>
 
     <!--Datatable Scrolling-->
 
