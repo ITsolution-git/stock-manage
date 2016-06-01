@@ -23,6 +23,7 @@
                 $mdOpenMenu(ev);
             };
 
+
             $scope.cancel = function () {
                 $mdDialog.hide();
             };
