@@ -1,0 +1,75 @@
+<md-dialog class="task-dialog editFinishingDialog" >
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit Finishing Order</span>
+                <md-button  ng-click="cancel()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap="nowrap" id="editFinishing" layout-padding layout-align="space-between start">
+                <div layout="column"  flex="100">
+
+                        <div layout="row" layout-wrap>
+                            <div class="trans-box width-33">
+                                <span class="font-11 chrome-weight">Product ID</span>
+                                <div class="font-16">27</div>
+                            </div>
+                            <div class="trans-box width-33">
+                                <span class="font-11 chrome-weight">Design</span>
+                                <div class="font-16">Spring Shirts</div>
+                            </div>
+                            <div class="trans-box width-33">
+                                <span class="font-11 chrome-weight">Finishing Task</span>
+                                <div class="font-16">Hang Tag</div>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Start Time" name="" ui-event="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Stop Time" name="" ui-event="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="EST Completion Time" name="" ui-event="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <md-input-container class="md-block first-box settings-margin-0">
+                            <input placeholder="Notes" name="" ui-event="">
+                            <div ng-messages=" " role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                </div>
+                
+            </div>
+</div>
+    <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="cancel()">
+            SAVE
+    </md-button>
+</md-dialog>

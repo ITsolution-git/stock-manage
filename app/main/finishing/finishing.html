@@ -13,7 +13,7 @@
             <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon> 
         </div>
         <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" id="finishing">
+            <table class="dataTable row-border hover" id="finishing" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                 <thead>
                     <tr>
                         <th class="secondary-text">
@@ -84,7 +84,7 @@
                             </md-input-container>
                         </td>
                         <td class="accor details-control text-right">
-                            <a>EDIT</a>
+                            <a ng-click="vm.editFinishing($event)">EDIT</a>
                         </td>
                     </tr>  
                     <tr>
@@ -106,7 +106,7 @@
                             </md-input-container>
                         </td>
                         <td class="accor details-control text-right">
-                            <a>EDIT</a>
+                            <a ng-click="vm.editFinishing($event)">EDIT</a>
                         </td>
                     </tr>  
                     <tr>
@@ -128,7 +128,7 @@
                             </md-input-container>
                         </td>
                         <td class="accor details-control text-right">
-                            <a>EDIT</a>
+                            <a ng-click="vm.editFinishing($event)">EDIT</a>
                         </td>
                     </tr>  
                     <tr>
@@ -150,7 +150,7 @@
                             </md-input-container>
                         </td>
                         <td class="accor details-control text-right">
-                            <a>EDIT</a>
+                            <a ng-click="vm.editFinishing($event)">EDIT</a>
                         </td>
                     </tr>  
                     <tr>
@@ -172,7 +172,7 @@
                             </md-input-container>
                         </td>
                         <td class="accor details-control text-right">
-                            <a>EDIT</a>
+                            <a ng-click="vm.editFinishing($event)">EDIT</a>
                         </td>
                     </tr>  
                 </tbody>

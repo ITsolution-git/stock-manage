@@ -218,7 +218,7 @@
     <!-- Finishing -->
     <script src="app/main/finishing/finishing.module.js"></script>
     <script src="app/main/finishing/finishing.controller.js"></script>
-
+    <script src="app/main/finishing/dialogs/editFinishing/editFinishing-dialog.controller.js"></script>
 
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>

@@ -688,7 +688,7 @@ md-button.on {
   width: 75% !important ;
 }
 
-#affiliateDialog .settings-margin-0 {
+#affiliateDialog .settings-margin-0, #editFinishing .settings-margin-0 {
   margin: 5px !important ;
 }
 
@@ -788,10 +788,6 @@ md-button.on {
     vertical-align: middle;
 }
 
-IF(.ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button.active) {
-
-}
-
 md-dialog .tasty-page .col-xs-3 {
   padding: 0 ;
   padding-top: 15px ;
@@ -803,4 +799,29 @@ md-dialog .tasty-page .col-xs-6 {
 
 #finishing tbody tr td md-input-container {
   margin: 0 !important;
+}
+
+.editFinishingDialog {
+  width: 40% ;
+}
+
+.width-33 {
+  width: 33% ;
+  margin-bottom: 10px ;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.font-11 {
+  font-size: 11px ;
+}
+
+.font-16 {
+  font-size: 16px !important;
+}
+
+#editFinishing md-input-container > label {
+    color: #767676 !important;
 }
