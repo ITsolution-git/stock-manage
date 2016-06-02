@@ -14,7 +14,7 @@ class Common extends Model {
 * @return array $roles
 */
     public function getAdminRoles() {
-        $roles = DB::table('roles')->where('slug','<>','SA')->get();
+        $roles = DB::table('roles')->where('slug','<>','SA')->orderby('title','asc')->get();
         return $roles;
     }
     public function checkemailExist($email,$userid)

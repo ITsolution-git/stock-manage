@@ -407,7 +407,7 @@
                           notifyService.notify(data.status, data.message);
                           return false;
             }
-              var permission = confirm("Are you sure to delete this Image ?");
+              var permission = confirm(AllConstant.deleteMessage);
 
             if (permission == true) {
 
