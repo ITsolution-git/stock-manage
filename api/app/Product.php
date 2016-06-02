@@ -319,9 +319,9 @@ class Product extends Model {
             $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id']);
           }
 
-          if($post['record_delete'] == 0) {
+         // if($post['record_delete'] == 0) {
             $result_design = DB::table('design_product')->insert($insert_array);
-          }
+         // }
          
          return true;
 
@@ -352,11 +352,13 @@ class Product extends Model {
         $combine_array = array();
         
         $combine_array['design_product'] = $designDetailData;
-       
+        
         if($designDetailData) {
             $combine_array['product_id'] = $designDetailData[0]->product_id;
             $combine_array['design_id'] = $designDetailData[0]->design_id;
             $combine_array['colorName'] = $designDetailData[0]->colorName;
+            $combine_array['colorId'] = $designDetailData[0]->color_id;
+            $combine_array['is_supply'] = $designDetailData[0]->is_supply;
         }
 
         return $combine_array;
@@ -415,10 +417,10 @@ class Product extends Model {
         return $returnData;
     }
 
-    public function getProductDetailColorSize($id)
+    public function getProductDetailColorSize($post)
     {
        
-        $whereConditions = ['p.product_id' => $id,'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
+        $whereConditions = ['p.product_id' => $post['id'],'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
         $listArray = ['p.id','p.product_id','p.color_id','p.size_id','c.name as color','pz.name as sizeName'];
 
         $productColorSizeData = DB::table('product_color_size as p')
@@ -428,13 +430,28 @@ class Product extends Model {
                          ->where($whereConditions)
                          ->get();
 
-        $whereProductData = ['id' => $id];
+        $whereProductData = ['id' => $post['id']];
         $productName = DB::table('products')->where($whereProductData)->get();
+
+        $allDetail = array();
+        if($post['design_id'] != 0) {
+            $allDetail = $this->getPurchaseDetail($post['design_id']);
+        }
+       
        
 
         $all_array = array();
 
         foreach ($productColorSizeData as $key=>$alldata){
+         $alldata->qnty =  0;
+
+            if (!empty($allDetail)) {
+
+                    if(isset($allDetail[$alldata->sizeName])){
+                        $alldata->qnty = $allDetail[$alldata->sizeName];
+                    }
+            } 
+         
           $all_array[$alldata->color_id]['color_name'] = $alldata->color;
           $all_array[$alldata->color_id]['size_data'][] = $alldata;
         }

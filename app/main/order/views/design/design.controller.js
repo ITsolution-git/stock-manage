@@ -50,6 +50,8 @@
                     $scope.designProduct = result.data.records;
                     $scope.productData = result.data.productData.product[0];
                     $scope.colorName = result.data.colorName;
+                    $scope.colorId = result.data.colorId;
+                    $scope.is_supply = result.data.is_supply;
                     $scope.calculate_data = result.data.calculate_data[0];
                     $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
 
@@ -191,8 +193,9 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev,controller, file,product_id,operation)
+        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply)
         {
+            
             $mdDialog.show({
                 controller: controller,
                 controllerAs: $scope,
@@ -204,6 +207,8 @@
                     product_id: product_id,
                     operation:operation,
                     design_id:$stateParams.id,
+                    color_id:color_id,
+                    is_supply:is_supply,
                     event: ev
                 }
             });

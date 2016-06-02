@@ -366,10 +366,10 @@ public function create_dir($dir_path) {
         $post['created_date']=date('Y-m-d');
         $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
-        $post['record_delete']=$record_delete;
+        //$post['record_delete']=$record_delete;
 
         $result = $this->product->addProduct($post);
-       // $return = $this->orderCalculation($post);
+        $return = $this->orderCalculation($post);
 
         if(is_array($return))
         {
@@ -722,6 +722,7 @@ public function create_dir($dir_path) {
         $data = Input::all();
         $result = $this->product->designProduct($data);
 
+
         if(empty($result['design_product']))
         {
 
@@ -739,14 +740,16 @@ public function create_dir($dir_path) {
             $calculate_data = $this->common->GetTableRecords('design_product',array('design_id' => $result['design_id']),array());        
        }
        
-       
+      
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['design_product'],
                                 'productData' => $result_product,
                                 'calculate_data' => $calculate_data,
-                                'colorName' => $result['colorName']
+                                'colorName' => $result['colorName'],
+                                'colorId' => $result['colorId'],
+                                'is_supply' => $result['is_supply']
                                 );
         
         return response()->json(["data" => $response]);
@@ -846,7 +849,7 @@ public function create_dir($dir_path) {
     public function getProductDetailColorSize()
     {
         $post = Input::all();
-        $result = $this->product->getProductDetailColorSize($post['id']);
+        $result = $this->product->getProductDetailColorSize($post);
         return response()->json(["data" => $result]);
     }
 

@@ -50,9 +50,11 @@
          function getProductDetailByIdAll(id)
           {
              
-             var product_arr = {}
-              product_arr = {'id':id};
-              $http.post('api/public/product/getProductDetailColorSize',product_arr).success(function(result) {
+             var combine_array_id = {}
+                     combine_array_id.id = id;
+                     combine_array_id.design_id = 0;
+
+              $http.post('api/public/product/getProductDetailColorSize',combine_array_id).success(function(result) {
                       
                       
                       $scope.productName =result.data.product_name;
