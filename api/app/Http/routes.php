@@ -35,6 +35,9 @@ Route::post('admin/company/save', 'CompanyController@SaveData');
 Route::post('admin/company/delete', 'CompanyController@DeleteData');
 Route::post('admin/company/change_password', 'CompanyController@change_password');
 Route::get('admin/company/getCompanyInfo/{company_id}', 'CompanyController@getCompanyInfo');
+Route::get('admin/company/getAffiliate/{company_id}/{affiliate_id}', 'CompanyController@getAffiliate');
+Route::post('admin/company/addAffilite', 'CompanyController@addAffilite');
+Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
