@@ -1,9 +1,11 @@
 <md-dialog class="task-dialog addEmployeeDialog" >
+<form name="employeeform" class="md-inline-form" novalidate>
+
     <div class="client-profile-page">
     <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Edit Employee</span>
-                <md-button  ng-click="cancel()">
+                <md-button  ng-click="closeDialog()">
                     <span>Cancel</span>
                 </md-button>
             </div>
@@ -13,17 +15,34 @@
         <div layout="row" layout-wrap>
                 <md-input-container flex=30 class="m-b-20 m-l-10 width-400">
                     <label class="state-label-color">Permission Role</label>
-                    <md-select ng-model="users.role_id" aria-label="Permission Role">
+                    <md-select ng-model="users.role_id" name="role" aria-label="Permission Role">
+                     <md-option value="" >
+                        Select Role
+                       </md-option>
                       <md-option ng-repeat="role in rolelist" ng-selected="{{users.role_id==role.id}}" value="{{role.id}}" >
                         {{role.title}}
                        </md-option>
-                    </md-select>                            
+                    </md-select> 
+                           
                 </md-input-container>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Name"  ng-model="users.name">
+                    <input placeholder="Name" name="name"  ng-model="users.name" required>
+                    <div ng-messages="employeeform.name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
                 </md-input-container>
                  <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Email"  ng-model="users.email">
+                    <input placeholder="Email" name="email" required ng-model="users.email">
+                    <div ng-messages="employeeform.email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span >Email must be a valid e-mail address</span>
+                        </div>
+                    </div> 
                 </md-input-container>
 
         </div>
@@ -34,10 +53,11 @@
 <table> 
     <tr>
         <td class="p-16 td-500">
-            <md-button class="bg-blue float-right" ng-click="SaveRecords(users)">
+            <md-button class="bg-blue float-right" ng-disabled="employeeform.$invalid" ng-click="SaveRecords(users)">
                     SAVE
             </md-button>
         </td>  
     </tr>
 </table>
+</form>
 </md-dialog>
