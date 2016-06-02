@@ -11,65 +11,30 @@
     <div ng-cloak>
     <md-card-content layout="column" class="box-shadow-0">
         <div layout="row" layout-wrap>
-                <label class="priceGridTr margin-left-10">Permission Role</label>
-                <md-input-container flex=30 class="m-b-20 width-400">
+                <md-input-container flex=30 class="m-b-20 m-l-10 width-400">
                     <label class="state-label-color">Permission Role</label>
-                    <md-select ng-model="vm.permissionRole" aria-label="Permission Role">
-                      <md-option ng-repeat="state in vm.permissionRoles" >
-                        {{state.abbrev}}
+                    <md-select ng-model="users.role_id" aria-label="Permission Role">
+                      <md-option ng-repeat="role in rolelist" ng-selected="{{users.role_id==role.id}}" value="{{role.id}}" >
+                        {{role.title}}
                        </md-option>
                     </md-select>                            
                 </md-input-container>
-                <!-- <md-input-container flex=30 class="m-b-20 m-t-25">
-                    <label class="state-label-color">Permission Role</label>
-                    <md-select aria-label="Permission Role">
-                      <md-option>Super Admin</md-option>
-                      <md-option>Brand Coordinator</md-option>
-                      <md-option>Art Team</md-option>
-                      <md-option>Simple User</md-option>
-                    </md-select>
-                    
-                </md-input-container> -->
-
-                <label class="priceGridTr margin-left-10">Name</label>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Name" name="" ui-event="">
-                    <div ng-messages=" " role="alert" multiple>
-                        <div ng-message="required">
-                            <span>This field is required</span>
-                        </div>
-                    </div>
+                    <input placeholder="Name"  ng-model="users.name">
                 </md-input-container>
+                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Email"  ng-model="users.email">
+                </md-input-container>
+
         </div>
     </md-card-content>
-        <!-- <md-content>
-                <label class="priceGridTr">Permission Role</label>
-                <md-input-container flex=30 class="m-b-20 m-t-25">
-                    <label class="state-label-color">State</label>
-                    <md-select ng-model="">
-                        <md-option value="0">Select Role</md-option>
-                        <md-option>Super Admin</md-option>
-                        <md-option>Brand Coordinator</md-option>
-                        <md-option>Art Team</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <label class="priceGridTr">Name</label>
-                <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
-                    <input placeholder="Name" name="" ui-event="">
-                    <div ng-messages=" " role="alert" multiple>
-                        <div ng-message="required">
-                            <span>This field is required</span>
-                        </div>
-                    </div>
-                </md-input-container>
-        </md-content> -->
+       
     </div>
 </div>
 <table> 
     <tr>
         <td class="p-16 td-500">
-            <md-button class="bg-blue float-right" ng-click=" ">
+            <md-button class="bg-blue float-right" ng-click="SaveRecords(users)">
                     SAVE
             </md-button>
         </td>  

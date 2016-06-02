@@ -8,38 +8,47 @@
                     <a class="link-back cursor-p createPriceGridLink" ng-click="vm.openAddEmployeeDialog($event)">ADD NEW EMPLOYEE</a>
                 </div>
             </div>
-            <div class="ms-responsive-table-wrapper priceGridTableContainer userMgmntPadding">
-                <table class="scrol table3 row-border hover" id="userMgmnt" dt-options="vm.dtOptions"  >
+            <div class=" ms-responsive-table-wrapper userMgmntPadding">
+                <table class="simple" >
                     <thead>
 
                         <tr>
-                            <th class="secondary-text userMgmntTdWidth">
+                            <th class="secondary-text ">
                                 <div class="table-header">
                                     <span class="column-title">Employee Name</span>
                                 </div>
                             </th>
-                            <th class="secondary-text userMgmntTdWidth">
+                            <th class="secondary-text ">
                                 <div class="table-header">
                                     <span class="column-title">Employee Permission Level</span>
                                 </div>
                             </th>
+                             <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Status</span>
+                                </div>
+                            </th>
                             <th class="secondary-text">
-
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
                             </th>
                         </tr>
                     </thead>
-                   <tbody class="scrollable" ms-scroll>
-                        <tr class="cursor-p">
-                            <td class="">Jon Smith</td>
-                            <td class="userMgmntTdWidth">Super Admin</td>
-                            <td class="text-right "> 
+                   <tbody >
+                        <tr  ng-repeat="user in users_data">
+                            <td class="">{{user.name}}</td>
+                            <td class="">{{user.title}}</td>
+                            <td ng-if="user.status==1">Active</td>
+                            <td ng-if="user.status==0">Inactive</td>
+                            <td class=""> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                     </md-button>
-                                    <md-menu-content width="4">
+                                    <md-menu-content width="4"> 
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openEditEmployeeDialog($event)">
+                                            <md-button ng-click="openEditEmployeeDialog($event,user.id)">
                                                 Edit User
                                             </md-button>
                                         </md-menu-item>
@@ -49,7 +58,7 @@
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
-                                            <md-button ng-click="vm.deleteEmployeeDialog($event,design.id)">
+                                            <md-button ng-click="RemoveFields('users','id',user.id,'users')">
                                                 Delete User
                                             </md-button>
                                         </md-menu-item>
@@ -57,118 +66,9 @@
                                 </md-menu>
                             </td>
                         </tr>
-                        <tr class="cursor-p">
-                            <td class="">Jon Smith</td>
-                            <td class="userMgmntTdWidth">Super Admin</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openEditEmployeeDialog($event,design.id)">
-                                                Edit User
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.resetUserPasswordDialog($event,design.id)">
-                                                Reset User Password
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deleteEmployeeDialog($event,design.id)">
-                                                Delete User
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                        <tr class="cursor-p">
-                            <td class="">Jon Smith</td>
-                            <td class="userMgmntTdWidth">Super Admin</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openEditEmployeeDialog($event,design.id)">
-                                                Edit User
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.resetUserPasswordDialog($event,design.id)">
-                                                Reset User Password
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deleteEmployeeDialog($event,design.id)">
-                                                Delete User
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                        <tr class="cursor-p">
-                            <td class="">Jon Smith</td>
-                            <td class="userMgmntTdWidth">Super Admin</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openEditEmployeeDialog($event,design.id)">
-                                                Edit User
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.resetUserPasswordDialog($event,design.id)">
-                                                Reset User Password
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deleteEmployeeDialog($event,design.id)">
-                                                Delete User
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                        <tr class="cursor-p">
-                            <td class="">Jon Smith</td>
-                            <td class="userMgmntTdWidth">Super Admin</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                                Edit User
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.resetUserPasswordDialog($event,design.id)">
-                                                Reset User Password
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deleteEmployeeDialog($event,design.id)">
-                                                Delete User
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
+
+
+
                     </tbody> 
                 </table>
          
