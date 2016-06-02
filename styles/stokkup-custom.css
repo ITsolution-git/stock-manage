@@ -480,6 +480,9 @@ md-input-container > label {
 .text-center {
 	text-align:center;
 }
+.text-right {
+  text-align:right;
+}
 .simple-tbl1 thead tr th {
 	line-height:16px;
 }
@@ -825,3 +828,7 @@ a:hover {
 #editFinishing md-input-container > label {
     color: #767676 !important;
 }
+.form-cntnr { margin-top:-10px; }
+.pull-right { float: right; }
+.form-cntnr md-input-container { margin: 0px; padding:0px;  }
+.form-cntnr .md-errors-spacer { min-height: 1px; }
