@@ -368,12 +368,7 @@ public function create_dir($dir_path) {
         $post['created_date']=date('Y-m-d');
         $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
-<<<<<<< HEAD
         //$post['record_delete']=$record_delete;
-=======
-        $post['record_delete'] = '0';
->>>>>>> fuse_php
-
         $result = $this->product->addProduct($post);
         $return = $this->orderCalculation($post);
 
@@ -387,22 +382,6 @@ public function create_dir($dir_path) {
             $data = array("success"=>1);
             return response()->json(["data" => $data]);
         }
-
-        /*$scope.order.order_line_total = order_line_total.toFixed(2);
-
-        var sales_order_total = parseFloat($scope.order.order_line_total) + parseFloat($scope.order.order_charges_total);
-        $scope.order.sales_order_total = sales_order_total.toFixed(2);
-        
-        var grand_total = parseFloat($scope.order.screen_charge) + parseFloat($scope.order.press_setup_charge) + parseFloat($scope.order.order_line_total) + parseFloat($scope.order.tax);
-        $scope.order.grand_total = grand_total.toFixed(2);
-
-        var order_data = {};
-        order_data.data = {'order_line_total' : $scope.order.order_line_total,'sales_order_total' : $scope.order.sales_order_total,'grand_total':$scope.order.grand_total};
-        order_data.cond = {id: $scope.order_id};
-        order_data['table'] ='orders'
-        $http.post('api/public/common/UpdateTableRecords',order_data).success(function(result) {
-            $scope.updateOrderLine($scope.orderLineAll,orderline_id);
-        });*/
     }
 
     public function orderCalculation($post)
