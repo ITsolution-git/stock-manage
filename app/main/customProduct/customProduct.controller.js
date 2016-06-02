@@ -6,7 +6,7 @@
             .controller('customProductController', customProductController);
 
     /** @ngInject */
-    function customProductController(customProductData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,notifyService,sessionService) {
+    function customProductController(customProductData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,notifyService,sessionService,$state) {
         var vm = this;
         
         vm.searchOrder;
@@ -37,7 +37,11 @@
             $scope.filterBy.name = $event.target.value;
         };
 
-      
+    
+        $scope.getReload = function () {
+          $state.go($state.current,'', {reload: true, inherit: false});
+        }
+
         $scope.getResource = function (params, paramsObj, search) {
             $scope.params = params;
             $scope.paramsObj = paramsObj;
@@ -97,7 +101,8 @@
                 locals: {
                     product_id: product_id,
                     event: ev
-                }
+                },
+                onRemoving : $scope.getReload
             });
         }
 

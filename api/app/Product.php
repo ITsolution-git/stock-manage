@@ -395,4 +395,69 @@ class Product extends Model {
         return $returnData;
     }
 
+    public function getProductDetailColorSize($id)
+    {
+       
+        $whereConditions = ['p.product_id' => $id,'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
+        $listArray = ['p.id','p.product_id','p.color_id','p.size_id','c.name as color','pz.name as size'];
+
+        $productColorSizeData = DB::table('product_color_size as p')
+                         ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
+                         ->leftJoin('product_size as pz', 'pz.id', '=', 'p.size_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $whereProductData = ['id' => $id];
+        $productName = DB::table('products')->where($whereProductData)->get();
+       
+
+        $all_array = array();
+
+        foreach ($productColorSizeData as $key=>$alldata){
+          $all_array[$alldata->color_id]['color_name'] = $alldata->color;
+          $all_array[$alldata->color_id]['size_data'][] = $alldata;
+        }
+
+
+        $combine_array['productColorSizeData'] = $all_array;
+        $combine_array['product_name'] = $productName[0]->name;
+        $combine_array['product_id'] = $productName[0]->id;
+
+        return $combine_array;
+    }
+
+
+    public function addcolorsize($post)
+    {
+        if(!empty($post['product_id']))
+        {
+
+            if($post['color_id'] == 0) {
+                 $result_color = DB::table('color')->insert([
+                'company_id'=>$post['company_id'],
+                'is_sns'=>0]);
+                 $colorId = DB::getPdo()->lastInsertId();
+            } else {
+                $colorId = $post['color_id'];
+            }
+
+
+             $result_size = DB::table('product_size')->insert([
+            'company_id'=>$post['company_id'],
+            'is_sns'=>0]);
+             $sizeId = DB::getPdo()->lastInsertId();
+
+             $result_color_size = DB::table('product_color_size')->insert([
+            'product_id'=>$post['product_id'],
+            'color_id'=>$colorId,
+            'size_id'=>$sizeId]);
+             return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

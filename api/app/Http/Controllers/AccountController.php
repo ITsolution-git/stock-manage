@@ -132,7 +132,7 @@ class AccountController extends Controller {
 	public function SaveData ()
 	{
 		$post = Input::all();
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['id']) && !empty($post['parent_id']))
+		if(!empty($post['email']) && !empty($post['id']) && !empty($post['parent_id']))
 		{
 
 			$email = $this->common->checkemailExist($post['email'],$post['id']);
@@ -143,14 +143,7 @@ class AccountController extends Controller {
 			}
 			else
 			{
-				if($post['password']=='testcodal')
-				{
-					unset($post['password']);
-				} 
-				else 
-				{
-					$post['password']=md5($post['password']);
-				}
+				
 				$post['updated_date'] = date('Y-m-d H:i:s');
 				$getData = $this->account->SaveCompanyData($post);
 				$message = UPDATE_RECORD;

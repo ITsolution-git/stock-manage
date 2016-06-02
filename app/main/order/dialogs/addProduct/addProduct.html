@@ -10,27 +10,49 @@
         </md-toolbar>
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
-                <md-input-container class="md-block mp-b-0" flex-gt-sm>
-                    <label class="font-14"></label>
-                    <input placeholder="Product Name" ng-model="vm.addProduct.productName">
-                </md-input-container>
+
+               
+                <div flex="20">
+                            <md-input-container class="width100">
+                                <label>Product</label>
+                                 <md-select ng-model="product.id" ng-change="changeProduct(product.id,0)">
+                                    <md-option ng-repeat="data in allProduct" value="{{data.id}}" >
+                                        {{data.name}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                </div>
+
+                <div flex="20">
+                            <md-input-container class="width100">
+                                <label>Color</label>
+                                 <md-select ng-model="product.color_id" ng-change="changeProduct(product.id,product.color_id)">
+                                    <md-option ng-repeat="(keyColor,colorsdata) in productColorSize" value="{{keyColor}}" >
+                                        {{colorsdata.color_name}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                </div>
+
+                <div flex="20">
+                            <md-input-container class="width100">
+                                <label>Size</label>
+                                 <md-select ng-model="product.size_id">
+                                    <md-option ng-repeat="(key,all_size) in sizeAll.size_data" value="{{all_size.size_id}}" >
+                                        {{all_size.size}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                </div>
+
+
                 <div layout="row">
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">S</label>
-                        <input placeholder="" ng-model="vm.addProduct.s">
+
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="(key,all_size) in sizeAll.size_data">
+                        <label class="font-14">{{all_size.size}}</label>
+                        <input placeholder="" ng-model="product.size">
                     </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">M</label>
-                        <input placeholder="" ng-model="vm.addProduct.m" >
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">L</label>
-                        <input placeholder="" ng-model="vm.addProduct.l">
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">XL</label>
-                        <input placeholder="" ng-model="vm.addProduct.xl">
-                    </md-input-container>                    
+                                       
                 </div>
                 <md-input-container class="md-block mp-b-0">
                     <label>Notes</label>

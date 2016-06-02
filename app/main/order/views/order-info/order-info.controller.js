@@ -233,9 +233,13 @@
             var condition_obj = {};
             condition_obj[match_condition] =  id;
             position_main_data.cond = angular.copy(condition_obj);
+            position_main_data.company_id = sessionService.get('company_id');
 
-            $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+            $http.post('api/public/order/updateOrderCharge',position_main_data).success(function(result) {
+                $scope.orderDetail();
             });
+            /*$http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+            });*/
         }
 
 

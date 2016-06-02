@@ -109,7 +109,6 @@
             {
              $http.post('api/public/product/addProduct',combine_array_id).success(function(result) 
                 {
-                    $mdDialog.hide();
                     if(result.data.success == 0)
                     {
                         var data = {"status": result.data.status, "message": result.data.message}
@@ -119,6 +118,7 @@
                     {
                         var data = {"status": "success", "message": "Product added successfully"}
                         notifyService.notify(data.status, data.message);
+                        $mdDialog.hide();
                     }
                 });
             }
