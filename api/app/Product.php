@@ -460,6 +460,7 @@ class Product extends Model {
         $combine_array['productColorSizeData'] = $all_array;
         $combine_array['product_name'] = $productName[0]->name;
         $combine_array['product_id'] = $productName[0]->id;
+        $combine_array['product_description'] = $productName[0]->description;
 
         return $combine_array;
     }

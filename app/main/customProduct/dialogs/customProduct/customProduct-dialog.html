@@ -15,6 +15,12 @@
                     <input placeholder="Product Name" ng-model="productName"  ui-event="{ change : 'updateProduct(\'name\',productId,productName,\'products\',\'id\')' }">
                 </md-input-container>
 
+
+                 <md-input-container class="md-block">
+                        <label>Description</label>
+                        <textarea ng-model="product_description"  rows="5" md-select-on-focus  ui-event="{ change : 'updateProduct(\'description\',productId,product_description,\'products\',\'id\')' }"></textarea>
+                </md-input-container>
+
                  
 
                <div class="attribute-box">

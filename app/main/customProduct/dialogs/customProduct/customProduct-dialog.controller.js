@@ -58,6 +58,7 @@
                       
                       
                       $scope.productName =result.data.product_name;
+                      $scope.product_description =result.data.product_description;
                       $scope.productId =result.data.product_id;
                       $scope.productColorSize =result.data.productColorSizeData;
                    
