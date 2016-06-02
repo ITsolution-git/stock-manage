@@ -215,6 +215,11 @@
     <script src="app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.controller.js"></script>
     <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
 
+    <!-- Finishing -->
+    <script src="app/main/finishing/finishing.module.js"></script>
+    <script src="app/main/finishing/finishing.controller.js"></script>
+    <script src="app/main/finishing/dialogs/editFinishing/editFinishing-dialog.controller.js"></script>
+
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>
     <script src="app/main/art/art.controller.js"></script>

@@ -405,7 +405,13 @@
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Markup Default 70%</div>
-                                    <div class="h5 grey-color font-14">${{calculate_data.marku-_default}}</div>
+                                    <div class="h5 grey-color font-14">
+                                        <div class="form-cntnr">
+                                            <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
+                                                <input ng-model="calculate_data.markup" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" style="">
+                                            <div class="md-errors-spacer"></div></md-input-container>
+                                         </div>
+                                    </div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Average Garment Price</div>
@@ -434,7 +440,13 @@
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="">
                                         <div class="h4">Overide</div>
-                                        <div class="h5 grey-color font-14">{{calculate_data.override}}</div>
+                                        <div class="h5 grey-color font-14">
+                                            <div class="form-cntnr">
+                                                <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
+                                                    <input ng-model="calculate_data.override" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_override(calculate_data.override)' }">
+                                                <div class="md-errors-spacer"></div></md-input-container>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="">
 

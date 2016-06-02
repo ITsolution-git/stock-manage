@@ -480,6 +480,9 @@ md-input-container > label {
 .text-center {
 	text-align:center;
 }
+.text-right {
+  text-align:right;
+}
 .simple-tbl1 thead tr th {
 	line-height:16px;
 }
@@ -688,7 +691,7 @@ md-button.on {
   width: 75% !important ;
 }
 
-#affiliateDialog .settings-margin-0 {
+#affiliateDialog .settings-margin-0, #editFinishing .settings-margin-0 {
   margin: 5px !important ;
 }
 
@@ -719,7 +722,7 @@ md-button.on {
 }
 
 .max-height-350 img {
-  height: 350px ;
+  max-height: 350px ;
 }
 
 
@@ -788,10 +791,6 @@ md-button.on {
     vertical-align: middle;
 }
 
-IF(.ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button.active) {
-
-}
-
 md-dialog .tasty-page .col-xs-3 {
   padding: 0 ;
   padding-top: 15px ;
@@ -800,3 +799,36 @@ md-dialog .tasty-page .col-xs-3 {
 md-dialog .tasty-page .col-xs-6 {
   padding: 0 ;
 }
+
+#finishing tbody tr td md-input-container {
+  margin: 0 !important;
+}
+
+.editFinishingDialog {
+  width: 40% ;
+}
+
+.width-33 {
+  width: 33% ;
+  margin-bottom: 10px ;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.font-11 {
+  font-size: 11px ;
+}
+
+.font-16 {
+  font-size: 16px !important;
+}
+
+#editFinishing md-input-container > label {
+    color: #767676 !important;
+}
+.form-cntnr { margin-top:-10px; }
+.pull-right { float: right; }
+.form-cntnr md-input-container { margin: 0px; padding:0px;  }
+.form-cntnr .md-errors-spacer { min-height: 1px; }

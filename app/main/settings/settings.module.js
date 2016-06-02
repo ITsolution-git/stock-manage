@@ -91,6 +91,16 @@
                 },resolve: {
                    
                 }
+            }).state('app.settings.integrations', {
+                url  : '/integrations',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/integrations/integrations.html',
+                        controller : 'IntegrationsController as vm'
+                    }
+                },resolve: {
+                   
+                }
             }).state('app.settings.support', {
                 url  : '/support',
                 views: {

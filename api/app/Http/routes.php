@@ -43,6 +43,7 @@ Route::post('admin/account/add', 'AccountController@addData');
 Route::get('admin/account/edit/{id}/{parent}', 'AccountController@GetData');
 Route::post('admin/account/save', 'AccountController@SaveData');
 Route::post('admin/account/delete', 'AccountController@DeleteData');
+Route::post('admin/account/ResetPasswordMail', 'AccountController@ResetPasswordMail');
 
 // ADMIN STAFF ROUTERS
 Route::post('admin/staff', 'StaffController@index');
@@ -225,6 +226,8 @@ Route::post('order/getDesignPositionDetail', 'OrderController@getDesignPositionD
 Route::post('order/editOrder', 'OrderController@editOrder');
 Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
 Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
+Route::post('order/updateMarkup', 'OrderController@updateMarkup');
+Route::post('order/updateOverride', 'OrderController@updateOverride');
 
 
 // FINISHING CONTROLLER 

@@ -27,13 +27,17 @@ class Account extends Model {
     public function InsertCompanyData($post)
     {
     	$result = DB::table('users')->insert($post);
+
+        $id = DB::getPdo()->lastInsertId();
+        DB::table('staff')->insert(array('user_id'=>$id,'created_date'=>date("Y-m-d"),'is_delete'=>1));
+
     	return $result;
     }
     public function GetCompanybyId($id,$parent_id)
     {
     	$admindata = DB::table('users as usr')
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id')
+        				 ->select('usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','usr.id','usr.role_id')
         				 ->where('usr.id','=',$id)
         				 ->where('usr.is_delete','=','1')
                          ->where('usr.parent_id','=',$parent_id)
