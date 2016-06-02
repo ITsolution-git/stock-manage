@@ -18,6 +18,11 @@
                                     <span class="column-title">Employee Name</span>
                                 </div>
                             </th>
+                             <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Employee Email</span>
+                                </div>
+                            </th>
                             <th class="secondary-text ">
                                 <div class="table-header">
                                     <span class="column-title">Employee Permission Level</span>
@@ -38,6 +43,7 @@
                    <tbody >
                         <tr  ng-repeat="user in users_data">
                             <td class="">{{user.name}}</td>
+                            <td class="">{{user.email}}</td>
                             <td class="">{{user.title}}</td>
                             <td ng-if="user.status==1">Active</td>
                             <td ng-if="user.status==0">Inactive</td>
@@ -53,7 +59,7 @@
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
-                                            <md-button ng-click="vm.resetUserPasswordDialog($event,design.id)">
+                                            <md-button ng-click="vm.resetUserPasswordDialog($event,user.id)">
                                                 Reset User Password
                                             </md-button>
                                         </md-menu-item>
