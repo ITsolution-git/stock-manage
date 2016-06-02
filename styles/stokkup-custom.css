@@ -719,7 +719,7 @@ md-button.on {
 }
 
 .max-height-350 img {
-  height: 350px ;
+  max-height: 350px ;
 }
 
 

@@ -31,7 +31,7 @@
                     $("#ajax_loader").hide();
                 });
             }
-            $http.get('api/public/common/getAdminRoles').success(function(Listdata) {
+            $http.get('api/public/common/staffRole').success(function(Listdata) {
 
                   $scope.rolelist = Listdata.data.records
                  // console.log(Listdata); 
@@ -125,12 +125,11 @@
                                     notifyService.notify( "error", result.data.message);
                                 }
                             });
+                    }
                     $scope.closeDialog = function() 
                     {
                         $mdDialog.hide();
                     } 
-                         
-                    }
 
                 },
                 controllerAs: 'vm',
