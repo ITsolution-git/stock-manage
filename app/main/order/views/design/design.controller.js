@@ -455,5 +455,18 @@
                 $scope.designProductData();
             });
         }
+
+        $scope.update_markup = function()
+        {
+            var markup_data = {};
+            markup_data['designProduct'] = $scope.designProduct;
+            markup_data['productData'] = $scope.productData;
+            markup_data['calculate_data'] = $scope.calculate_data;
+            markup_data['company_id'] = sessionService.get('company_id');
+
+            $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
+                $scope.designProductData();
+            });
+        }
     }
 })();
