@@ -15,7 +15,7 @@
                 <div flex="20">
                             <md-input-container class="width100">
                                 <label>Product</label>
-                                 <md-select ng-model="product.id" ng-change="changeProduct(product.id,0)">
+                                 <md-select ng-model="product_id" ng-change="changeProduct(product.id,0)">
                                     <md-option ng-repeat="data in allProduct" value="{{data.id}}" >
                                         {{data.name}}
                                     </md-option>
@@ -27,6 +27,7 @@
                             <md-input-container class="width100">
                                 <label>Color</label>
                                  <md-select ng-model="product.color_id" ng-change="changeProduct(product.id,product.color_id)">
+                                
                                     <md-option ng-repeat="(keyColor,colorsdata) in productColorSize" value="{{keyColor}}" >
                                         {{colorsdata.color_name}}
                                     </md-option>
@@ -34,41 +35,25 @@
                             </md-input-container>
                 </div>
 
-                <div flex="20">
-                            <md-input-container class="width100">
-                                <label>Size</label>
-                                 <md-select ng-model="product.size_id">
-                                    <md-option ng-repeat="(key,all_size) in sizeAll.size_data" value="{{all_size.size_id}}" >
-                                        {{all_size.size}}
-                                    </md-option>
-                                 </md-select>
-                            </md-input-container>
-                </div>
-
-
+               
                 <div layout="row">
 
                     <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="(key,all_size) in sizeAll.size_data">
-                        <label class="font-14">{{all_size.size}}</label>
-                        <input placeholder="" ng-model="product.size">
+                        <label class="font-14">{{all_size.sizeName}}</label>
+                        <input placeholder="" ng-init="all_size.qnty='0'" ng-model="all_size.qnty">
                     </md-input-container>
                                        
                 </div>
-                <md-input-container class="md-block mp-b-0">
-                    <label>Notes</label>
-                    <textarea ng-model="vm.addProduct.notes" md-maxlength="150" rows="2" md-select-on-focus class="text-height"></textarea>
-                </md-input-container>
-                <md-checkbox  aria-label="Checkbox 1">
+               
+                <md-checkbox  aria-label="Checkbox 1" ng-model="product.is_supply">
                     These products are supplied garments
                 </md-checkbox>
-                <div class="" layout-padding>
-                    #PO
-                </div>                
+                         
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised ">ADD</md-button>
+            <md-button class="md-accent md-raised " ng-click="addProduct(sizeAll.size_data,product.id,product.description,product.is_supply)" ng-disabled="orderForm.$invalid">ADD</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

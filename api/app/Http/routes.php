@@ -262,6 +262,7 @@ Route::post('product/uploadCSV', 'ProductController@uploadCSV');
 Route::post('product/getProductDetailColorSize', 'ProductController@getProductDetailColorSize');
 Route::post('product/addcolorsize', 'ProductController@addcolorsize');
 Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
+Route::post('product/productCustomDetailData', 'ProductController@productCustomDetailData');
 
 
 // API CONTROLLER

@@ -362,13 +362,14 @@ public function create_dir($dir_path) {
     public function addProduct() {
 
         $post = Input::all();
+
         $post['created_date']=date('Y-m-d');
         $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
         $post['record_delete']=$record_delete;
 
         $result = $this->product->addProduct($post);
-        $return = $this->orderCalculation($post);
+       // $return = $this->orderCalculation($post);
 
         if(is_array($return))
         {
@@ -910,6 +911,64 @@ public function create_dir($dir_path) {
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
 
+    }
+
+    public function productCustomDetailData() {
+ 
+        $data = Input::all();
+        $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
+       
+       // print_r($result_api[0]->password);exit;
+        $credential = $result_api[0]->username.":".$result_api[0]->password;
+ 
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+       $all_data = json_decode($result);
+       
+
+       $allDetail = array();
+       if($data['design_id'] != 0) {
+        $allDetail = $this->product->getPurchaseDetail($data['design_id']);
+       }
+
+        foreach($all_data as $key => $data) {
+             
+            $color_data = $this->common->getColorId($data->colorName);
+
+            if($key == 0) {
+                $productAllData['colorSelection'] = $data->colorName;
+            }
+
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
+
+            if(count($allDetail) > 0) {
+            
+                if(isset($allDetail[$data->sizeName])){
+                    $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+                }
+           
+            } else {
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
+            }
+        
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
+            $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
+            $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
+            $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;
+            $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
+            $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
+            $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
+            $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
+
+            return response()->json(["data" => $productAllData]);
+        }
     }
     
 }

@@ -191,7 +191,7 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev, order, controller, file)
+        function openAddProductDialog(ev,controller, file,product_id,operation)
         {
             $mdDialog.show({
                 controller: controller,
@@ -201,8 +201,9 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Order: order,
-                    Orders: $scope.orders,
+                    product_id: product_id,
+                    operation:operation,
+                    design_id:$stateParams.id,
                     event: ev
                 }
             });

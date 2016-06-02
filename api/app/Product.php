@@ -288,20 +288,40 @@ class Product extends Model {
     public function addProduct($post) {
        
         foreach($post['productData'] as $row) {
-             
-            $result = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
-                'size'=>$row['sizeName'],
-                'sku'=>$row['sku'],
-                'price'=>$row['customerPrice'],
-                'qnty'=>$row['qnty'],
-                'color_id'=>$row['color_id'],
-                'date'=>$post['created_date']]);
+
+             if(isset($post['sku'])) {
+
+                $insert_purchase_array = array('design_id'=>$post['id'],
+                    'size'=>$row['sizeName'],
+                    'sku'=>$row['sku'],
+                    'price'=>$row['customerPrice'],
+                    'qnty'=>$row['qnty'],
+                    'color_id'=>$row['color_id'],
+                    'date'=>$post['created_date']);
+
+             } else {
+
+                $insert_purchase_array = array('design_id'=>$post['id'],
+                    'size'=>$row['sizeName'],
+                    'sku'=>0,
+                    'price'=>0,
+                    'qnty'=>$row['qnty'],
+                    'color_id'=>$row['color_id'],
+                    'date'=>$post['created_date']);
+             }
+
+            $result = DB::table('purchase_detail')->insert($insert_purchase_array);
         }
 
-         if($post['record_delete'] == 0) {
-            $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
-                'product_id'=>$post['product_id']]);
-         }
+          if(isset($post['is_supply'])) {
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply']);
+          } else {
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id']);
+          }
+
+          if($post['record_delete'] == 0) {
+            $result_design = DB::table('design_product')->insert($insert_array);
+          }
          
          return true;
 
@@ -399,7 +419,7 @@ class Product extends Model {
     {
        
         $whereConditions = ['p.product_id' => $id,'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
-        $listArray = ['p.id','p.product_id','p.color_id','p.size_id','c.name as color','pz.name as size'];
+        $listArray = ['p.id','p.product_id','p.color_id','p.size_id','c.name as color','pz.name as sizeName'];
 
         $productColorSizeData = DB::table('product_color_size as p')
                          ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
