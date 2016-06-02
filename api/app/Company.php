@@ -469,6 +469,44 @@ class Company extends Model {
                   ->get();
         return $result;
     }
+    public function getAffiliate($company_id,$affilite_id)
+    {
+       $result = DB::table('affiliates as af')
+                  ->select('af.*','pg.name as price_grid','pg.id as price_id')
+                  ->leftJoin('price_grid as pg','pg.id','=','af.price_grid')
+                  ->where("af.company_id","=",$company_id);
+            
+            if(!empty($affilite_id))
+              {
+                $result=  $result->where('af.id','=',$affilite_id);
+              }
+              $result = $result->get();
+
+              if(count($result)>0)
+              {
+                  foreach ($result as $key => $value)
+                  {
+                        $result[$key]->screen_print=!empty($value->screen_print)? true:false;
+                        $result[$key]->embroidery=!empty($value->embroidery)? true:false;
+                        $result[$key]->packing=!empty($value->packing)? true:false;
+                        $result[$key]->shipping=!empty($value->shipping)? true:false;
+                        $result[$key]->art_work=!empty($value->art_work)? true:false;
+                  }
+
+              }
+              
+        return $result;
+    }
+    public function addAffilite($post)
+    {
+      $result = DB::table('affiliates')->insert($post);
+      return $result;
+    }
+    public function UpdateAffilite($post,$id)
+    {
+       $result = DB::table('affiliates')->where('id',"=",$id)->update($post);
+       return $result;
+    }
 
 
 }
