@@ -437,6 +437,17 @@
               }
           }
 
-       
+        $scope.update_override = function(override_value) {
+
+            var override_data = {};
+            override_data['designProduct'] = $scope.designProduct;
+            override_data['productData'] = $scope.productData;
+            override_data['calculate_data'] = $scope.calculate_data;
+            override_data['company_id'] = sessionService.get('company_id');
+
+            $http.post('api/public/order/updateOverride',override_data).success(function(result) {
+                $scope.designProductData();
+            });
+        }
     }
 })();

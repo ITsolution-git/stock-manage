@@ -280,35 +280,37 @@ public function create_dir($dir_path) {
              
             $color_data = $this->common->getColorId($data->colorName);
 
-            if($key == 0) {
-                $productAllData['colorSelection'] = $data->colorName;
-            }
-
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
-
-            if(count($allDetail) > 0) {
-            
-                if(isset($allDetail[$data->sizeName])){
-                    $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+            if(!empty($color_data))
+            {
+                if($key == 0) {
+                    $productAllData['colorSelection'] = $data->colorName;
                 }
-           
-            } else {
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
-            }
-        
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
-            $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
-            $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;
-            $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
-            $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
-            $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
-            $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
 
-            return response()->json(["data" => $productAllData]);
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
+
+                if(count($allDetail) > 0) {
+                
+                    if(isset($allDetail[$data->sizeName])){
+                        $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+                    }
+               
+                } else {
+                    $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
+                }
+            
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
+                $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
+                $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;
+                $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
+                $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
+                $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
+                $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
+            }
         }
+        return response()->json(["data" => $productAllData]);
     }
     
 
@@ -365,7 +367,7 @@ public function create_dir($dir_path) {
         $post['created_date']=date('Y-m-d');
         $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
-        $post['record_delete']=$record_delete;
+        $post['record_delete'] = '0';
 
         $result = $this->product->addProduct($post);
         $return = $this->orderCalculation($post);
