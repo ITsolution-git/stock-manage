@@ -590,7 +590,15 @@ public function create_dir($dir_path) {
                 }
             }
 
-            $markup = 0;
+            if(isset($post['markup']))
+            {
+                $markup = $post['markup'];
+            }
+            else
+            {
+                $markup = 0;
+            }
+
             $avg_garment_cost = 0;
             $markup_default = 0;
             if(count($price_garment_mackup) > 0 && $position_qty > 0)

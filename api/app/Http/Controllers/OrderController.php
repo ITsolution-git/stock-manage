@@ -2241,32 +2241,28 @@ else
 
         $post = Input::all();
 
-        if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
+        $markup = $post['calculate_data']['markup'];
+        if($markup > 0)
         {
-          $date_field = (empty($post['date_field']))? '':$post['date_field']; 
-          
-          $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
-          $data = array("success"=>1,"message"=>UPDATE_RECORD);
+            $garment_mackup = $markup/100;
         }
         else
         {
-            $data = array("success"=>0,"message"=>MISSING_PARAMS);
+            $garment_mackup = $post['calculate_data']['markup_default']/100;
         }
+        
+        $avg_garment_price = $post['calculate_data']['avg_garment_cost'] * $garment_mackup + $post['calculate_data']['avg_garment_cost'];
+        $avg_garment_price2 = round($avg_garment_price,2);
 
-        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $post['cond']['id']),array());
+        $total_line_charge = $post['calculate_data']['print_charges'] + $avg_garment_price2;
+        $total_line_charge2 = round($total_line_charge,2);
 
-        if(!empty($design_data))
-        {
-            foreach ($design_data as $design) {
-                $item_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
-                if(!empty($item_data))
-                {
-                    $calculate_arr = array('id' => $design->id,'productData' => json_decode(json_encode($item_data), true),'company_id' => $post['company_id']);
-                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
-                }
-            }
-        }
-        return response()->json(['data'=>$data]);
+        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['calculate_data']['design_id']),array('markup' => $markup));
+        $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id'],'markup' => $markup);
+        $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
     }
 
     public function updateOverride()
