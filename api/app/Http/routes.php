@@ -231,6 +231,7 @@ Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
 Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
 Route::post('order/updateMarkup', 'OrderController@updateMarkup');
 Route::post('order/updateOverride', 'OrderController@updateOverride');
+Route::post('order/addRemoveToFinishing', 'OrderController@addRemoveToFinishing');
 
 
 // FINISHING CONTROLLER 
