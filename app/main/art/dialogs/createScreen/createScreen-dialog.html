@@ -1,0 +1,75 @@
+<md-dialog class="task-dialog addAffiliateDialog" >
+<div class="client-profile-page">
+<md-toolbar class="md-accent md-hue-2">
+    <div class="md-toolbar-tools" layout="row" layout-align="space-between"> <span class="title">Create New Screen Set</span>
+        <md-button  ng-click="cancel()"> <span>Cancel</span> </md-button>
+    </div>
+</md-toolbar>
+<div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+    <div layout="row" layout-wrap="nowrap" id="addAffiliateDialog" layout-padding layout-align="space-between start">
+        <div layout="column"  flex="60">
+           <div layout="row">
+               <div layout="column" flex="50">
+                   <md-input-container flex=30 class="m-b-20 m-t-25">
+                        <label class="state-label-color">Position</label>
+                        <md-select ng-model="" aria-label="Frame Size">
+                            <md-option>Position</md-option>
+                            <md-option>Front</md-option>
+                            <md-option>Back</md-option>
+                        </md-select>
+                    </md-input-container>
+               </div>
+               <div layout="column" flex="50">
+                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="Screen Set Name" name="" ui-event="">
+                    </md-input-container>
+               </div>
+           </div>
+           <div layout="row">
+               <div layout="column" flex="50">
+                   <md-input-container flex=30 class="m-b-20 m-t-25">
+                        <label class="state-label-color">Frame Size</label>
+                        <md-select ng-model="" aria-label="Frame Size">
+                            <md-option>Frame Size</md-option>
+                        </md-select>
+                    </md-input-container>
+               </div>
+               <div layout="column" flex="50">
+                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="Lines Per Inch" name="" ui-event="">
+                    </md-input-container>
+               </div>
+           </div>
+           <div layout="row">
+               <div layout="column" flex="25">
+                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="Width" name="" ui-event="">
+                    </md-input-container>
+               </div>
+               <div layout="column" flex="25">
+                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="Height" name="" ui-event="">
+                    </md-input-container>
+               </div>
+           </div>
+        </div>
+        <div layout="column" flex="40">
+            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                <input placeholder="Search By Color" name="" ui-event="">
+            </md-input-container>
+            <div class="mrg10-B">Color :</div>
+            <div class="mrg5-B"><span class="gray-text">Black</span><a href="#" class="icon icon-close f-red mrg10-L"></a></div>
+            <div class="mrg5-B"><span class="gray-text">White</span><a href="#" class="icon icon-close f-red mrg10-L"></a></div>
+            <div class="mrg5-B"><span class="gray-text">Yellow</span><a href="#" class="icon icon-close f-red mrg10-L"></a></div>
+        </div>
+    </div>
+</div>
+<md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+    <button ng-transclude="" type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
+    <div class="md-ripple-container" style=""></div>
+    </button>
+    <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button>
+</md-dialog-actions>
+
+</md-dialog>

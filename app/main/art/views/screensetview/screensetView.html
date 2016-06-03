@@ -2,7 +2,7 @@
     <div class="header "  layout="column" >
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back" ui-sref="app.art">BACK TO ART</a>
-            <h2 flex="4" class="font-500">Screen Sets for Purchase Order #1234 for Client: </h2>
+            <h2 flex="4" class="font-500">Screens for Purchase Order #1234 for Client: </h2>
             <md-input-container md-no-float class="md-block" flex="3">
                 <input aria-label="Client Name">
             </md-input-container>
@@ -58,48 +58,40 @@
         </div>
     </div>
     <div layout="row" class="pd10-R">
-        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">Screen Set</span></div></div>
-        <div flex="25" class="text-right"><md-button class="md-raised md-primary" ng-click="vm.createNewScreen()">Create New Screen</md-button></div>
+        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">48750_front_8inch</span></div></div>
+        <div flex="25" class="text-right"><md-button class="md-raised md-primary" ng-click="vm.createScreenDetail()">Create New Screen</md-button></div>
     </div>
     <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15" >
-        <table class="tbl-typ2" ng-repeat="screenset in vm.screensetinfo">
+        <table class="tbl-typ2 col3-layout" ng-repeat="colorsinf in vm.colorsetinfo">
             <tr>
                 <td width="97%">
-                    <div class="header-typ1">48750_front_8inch</div>
+                    <div class="header-typ1">Color1</div>
                     <div layout="row">
                         <div flex="95" layout="column">
                             <div layout="row" layout-wrap>
                                 <div class="trans-box">
-                                    <div>Position</div>
-                                    <span class="chrome-weight font-14">{{ screenset.Position}}</span>
+                                    <div>Pantone/Thread Color</div>
+                                    <span class="chrome-weight font-14">{{ colorsinf.threadColor}}</span>
                                 </div>
                                 <div class="trans-box">
-                                    <div>Number of Colors</div>
-                                    <span class="chrome-weight font-14">{{screenset.NumberColors}}</span>
+                                    <div>Mesh/Thread Count</div>
+                                    <span class="chrome-weight font-14">{{colorsinf.threadCount}}</span>
                                 </div>
                                 <div class="trans-box">
-                                    <div>Frame Size</div>
-                                    <span class="chrome-weight font-14">{{screenset.FrameSize}}</span>
+                                    <div>Stroke</div>
+                                    <span class="chrome-weight font-14">{{colorsinf.stroke}}</span>
                                 </div>
                                 <div class="trans-box">
-                                    <div>Width</div>
-                                    <span class="chrome-weight font-14">{{screenset.Width}}</span>
+                                    <div>Ink Type</div>
+                                    <span class="chrome-weight font-14">{{colorsinf.inkType}}</span>
                                 </div>
                                 <div class="trans-box">
-                                    <div>Print Location</div>
-                                    <span class="chrome-weight font-14">{{screenset.PrintLocation}}</span>
+                                    <div>Head Location</div>
+                                    <span class="chrome-weight font-14">{{colorsinf.headLocation}}</span>
                                 </div>
                                 <div class="trans-box">
-                                    <div>Number of Screens</div>
-                                    <span class="chrome-weight font-14">{{screenset.NumberScreens}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Lines Per Inch</div>
-                                    <span class="chrome-weight font-14">{{screenset.LinesPerInch}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Height</div>
-                                    <span class="chrome-weight font-14">{{screenset.Height}}</span>
+                                    <div>Squeegee</div>
+                                    <span class="chrome-weight font-14">{{colorsinf.Squeegee}}</span>
                                 </div>
                             </div>
                         </div>
@@ -115,6 +107,35 @@
                 </td>
             </tr>
         </table>
+    </div>
+    <div layout="row" layout="nowrap" class="p-b-20 screen-bottom">
+        <md-card class="m-b-20 " flex="30">
+            <md-card-title>
+                <md-card-title-text class="text-left">Mockup Image</md-card-title-text>
+            </md-card-title>
+            <md-card-content  layout="column" layout-padding class="min-height">
+                <table class="uploadfile">
+                        <tr>
+                            <td><span class="icon icon-plus font-50"></span></td>
+                        </tr>
+                   </table>
+            </md-card-content>
+        </md-card>
+        <md-card class="m-b-20 m-l-20" flex="30">
+            <md-card-title>
+                <md-card-title-text class="text-left">Notes</md-card-title-text>
+            </md-card-title>
+            <md-card-content  layout="column" layout-padding class="min-height" layout-align="start center">
+                <div layout="row" layout-wrap flex="60" class="width-text">
+                    <span class="font-50 mrg-auto">5</span>
+                </div>
+                <div class="text-center pad0"><span class="font-18">Total Notes</span></div>
+            </md-card-content>
+            <md-divider ></md-divider>
+            <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                <a class="font-14 chrome-weight">View Notes</a>
+            </div>
+        </md-card>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
         <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>

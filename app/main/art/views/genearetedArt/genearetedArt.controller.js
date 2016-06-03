@@ -4,10 +4,10 @@
 
     angular
             .module('app.art')
-            .controller('orderViewController', orderViewController);
+            .controller('generatedArtController', generatedArtController);
 
     /** @ngInject */
-    function orderViewController($document, $window, $timeout, $mdDialog)
+    function generatedArtController($document, $window, $timeout, $mdDialog)
     {
         var vm = this;
         vm.createNewScreen = createNewScreen;

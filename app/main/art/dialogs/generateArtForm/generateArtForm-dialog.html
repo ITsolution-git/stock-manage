@@ -1,0 +1,55 @@
+<md-dialog class="task-dialog addAffiliateDialog" >
+<div class="client-profile-page">
+<md-toolbar class="md-accent md-hue-2">
+    <div class="md-toolbar-tools" layout="row" layout-align="space-between"> <span class="title">Elements to Generate on Art Approval Form</span>
+        <md-button  ng-click="cancel()"> <span>Cancel</span> </md-button>
+    </div>
+</md-toolbar>
+<div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+      <div layout="row" layout-padding flex="100">
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 1">Photo Approval</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 2">Specialty Links</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 3">Use 10" Boards</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 4">Separations</md-checkbox>
+          </div>
+        </div>
+        <div layout="row" layout-padding flex="100">
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 5">Reference Photo</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 6">1st Print Sign Off</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 7">Multiple Screen Sets</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 8">Distressing</md-checkbox>
+          </div>
+        </div>
+        <div layout="row" layout-padding flex="100">
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 9">Ink Change</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 10">Inside Tag</md-checkbox>
+          </div>
+        </div>
+      </div>
+</div>
+<md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+    <button ng-transclude="" type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
+    <div class="md-ripple-container" style=""></div>
+    </button>
+    <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate" ui-sref="app.art.generatedArt"><span class="ng-scope">Generate</span></button>
+</md-dialog-actions>
+
+</md-dialog>
