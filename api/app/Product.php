@@ -379,6 +379,21 @@ class Product extends Model {
 
     }
 
+     public function getPurchaseDetailColor($designId) {
+
+    $result = DB::table('purchase_detail')->where('design_id','=',$designId)->get();
+
+        
+        $purchaseDetail = array();
+        foreach ($result as $key=>$alldata){
+          
+                 $purchaseDetail[$alldata->color_id][$alldata->size] = $alldata->qnty;
+          }
+        
+        return $purchaseDetail;
+
+    }
+
 
     public function getCustomProduct($post)
     {
@@ -435,20 +450,19 @@ class Product extends Model {
 
         $allDetail = array();
         if($post['design_id'] != 0) {
-            $allDetail = $this->getPurchaseDetail($post['design_id']);
+            $allDetail = $this->getPurchaseDetailColor($post['design_id']);
         }
        
        
-
         $all_array = array();
 
         foreach ($productColorSizeData as $key=>$alldata){
          $alldata->qnty =  0;
 
             if (!empty($allDetail)) {
-
-                    if(isset($allDetail[$alldata->sizeName])){
-                        $alldata->qnty = $allDetail[$alldata->sizeName];
+                     
+                    if(isset($allDetail[$alldata->color_id][$alldata->sizeName])){
+                        $alldata->qnty = $allDetail[$alldata->color_id][$alldata->sizeName];
                     }
             } 
          

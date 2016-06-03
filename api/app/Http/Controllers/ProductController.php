@@ -370,7 +370,8 @@ public function create_dir($dir_path) {
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
         //$post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
-        $return = $this->orderCalculation($post);
+        $return = 1;
+        //$return = $this->orderCalculation($post);
 
         if(is_array($return))
         {

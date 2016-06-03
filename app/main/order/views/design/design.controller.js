@@ -210,7 +210,8 @@
                     color_id:color_id,
                     is_supply:is_supply,
                     event: ev
-                }
+                },
+                onRemoving : $scope.designProductData
             });
         }
         function openaddDesignDialog(ev, order)
@@ -425,7 +426,7 @@
 
         $scope.deleteAddProduct = function(){
 
-            var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+            var permission = confirm(AllConstant.deletePermanent);
 
             if (permission == true) {
 
@@ -454,6 +455,36 @@
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
             });
+        }
+
+        
+          // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
+        $scope.RemoveFields = function(table,cond_field,cond_value){
+              
+                var delete_data = {};
+                
+                $scope.name_filed = cond_field;
+                var obj = {};
+                obj[$scope.name_filed] =  cond_value;
+                delete_data.cond = angular.copy(obj);
+                
+                delete_data.table =table;
+                var permission = confirm(AllConstant.deletePermanent);
+                if (permission == true)
+                {
+                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                    {
+                        if(result.data.success=='1')
+                        {
+                            notifyService.notify('success',result.data.message);
+                            $scope.designPosition();
+                        }
+                        else
+                        {
+                             notifyService.notify('error',result.data.message);
+                        }
+                    });
+                }
         }
     }
 })();
