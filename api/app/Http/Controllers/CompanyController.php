@@ -333,7 +333,6 @@ $this->common = $common;
 		$post = Input::all();
 		if(!empty($post['name']))
 		{
-			//echo "<pre>"; print_r($post); echo "</pre>"; die;
 			$post['screen_print']=!empty($post['screen_print'])? 1:0;
 			$post['embroidery']=!empty($post['embroidery'])? 1:0;
 			$post['packing']=!empty($post['packing'])? 1:0;
@@ -355,4 +354,73 @@ $this->common = $common;
 		$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
 	}
+	public function getAuthorizeAPI($company_id)
+	{
+		if(!empty($company_id))
+		{
+			$result = $this->company->getAuthorizeAPI($company_id); // GET API DETAILS
+			if(count($result)==0)
+			{
+				$this->company->InsertAuthorizeAPI($company_id);
+				$result = $this->company->getAuthorizeAPI($company_id); // GET API DETAILS
+			}
+			$message = GET_RECORDS;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS."- company_id";
+			$success = 0;
+			$result = '';
+		}
+		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
+		return response()->json(['data'=>$data]);
+	}
+	public function getUpsAPI($company_id)
+	{
+		if(!empty($company_id))
+		{
+			$result = $this->company->getUpsAPI($company_id); // GET API DETAILS
+			if(count($result)==0)
+			{
+				$this->company->InsertUpsAPI($company_id);
+				$result = $this->company->getUpsAPI($company_id); // GET API DETAILS
+			}
+			$message = GET_RECORDS;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS."- company_id";
+			$success = 0;
+			$result = '';
+		}
+		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
+		return response()->json(['data'=>$data]);
+	}
+	public function getSnsAPI($company_id)
+	{
+		if(!empty($company_id))
+		{
+			$result = $this->company->getSnsAPI($company_id); // GET API DETAILS
+			//echo count($result);
+			if(count($result)==0)
+			{
+				$this->company->InsertSnsAPI($company_id);
+				$result = $this->company->getSnsAPI($company_id); // GET API DETAILS
+			}
+			$message = GET_RECORDS;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS."- company_id";
+			$success = 0;
+			$result = '';
+		}
+		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
+		return response()->json(['data'=>$data]);
+	}
+
+	
 }

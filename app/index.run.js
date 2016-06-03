@@ -16,6 +16,7 @@
             $timeout(function ()
             {
                 $rootScope.loadingProgress = false;
+                $(".settings-block").addClass("collapsed");
             });
         });
 

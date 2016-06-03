@@ -3,8 +3,8 @@
     <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">AUTHORIZE.NET API INTEGRATION</span>
-                <md-button  ng-click="cancel()">
-                    <span>Cancel</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Close</span>
                 </md-button>
             </div>
         </md-toolbar>
@@ -14,37 +14,36 @@
                 <div layout="column"  flex="100">
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API URL" name="" ui-event="">
-                        <div ng-messages=" " role="alert" multiple>
-                            <div ng-message="required">
-                                <span>This field is required</span>
-                            </div>
-                        </div>
+                        <input placeholder="API url" name="api" ng-model="authorize.api" ui-event="">
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API Username" name="" ui-event="">
-                        <div ng-messages=" " role="alert" multiple>
-                            <div ng-message="required">
-                                <span>This field is required</span>
-                            </div>
-                        </div>
+                        <input placeholder="API username" name="username" ng-model="authorize.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API Key" name="" ui-event="">
-                        <div ng-messages=" " role="alert" multiple>
-                            <div ng-message="required">
-                                <span>This field is required</span>
-                            </div>
-                        </div>
+                        <input placeholder="API login" name="login" ng-model="authorize.login" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
                     </md-input-container>
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="API Password" type="password" name="password" ng-model="authorize.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    </md-input-container>
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="API transactionkey" name="transactionkey" ng-model="authorize.transactionkey" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    </md-input-container>
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="API secretkey" name="secretkey" ng-model="authorize.secretkey" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    </md-input-container>
+
+                   
 
                 </div>
                 
             </div>
 </div>
-    <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="cancel()">
+<!--     <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="closeDialog()">
             SAVE
-    </md-button>
+    </md-button> -->
 </md-dialog>
