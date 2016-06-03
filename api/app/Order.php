@@ -958,4 +958,15 @@ public function saveColorSize($post)
         return $orderData;
     }
     
+    public function getTotalQntyByDesign($design_id)
+    {
+        $whereConditions = ['design_id' => $design_id];
+
+        $orderData = DB::table('purchase_detail as dp')
+                         ->select(DB::raw('sum(qnty) as total_qnty'))
+                         ->where($whereConditions)
+                         ->get();
+        
+        return $orderData[0]->total_qnty;
+    }
 }

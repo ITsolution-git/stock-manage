@@ -276,4 +276,83 @@ $this->common = $common;
 		$data = array("success"=>$success,"message"=>$message,"data"=>$result);
 		return response()->json(['data'=>$data]);
 	}
+	public function getAffiliate($company_id,$affilite_id)
+	{
+		if(!empty($company_id))
+		{
+			$result = $this->company->getAffiliate($company_id,$affilite_id); // getAffiliate DATA
+			if(count($result)>0)
+			{
+				$message = GET_RECORDS;
+				$success = 1;
+			}
+			else
+			{
+				$message = NO_RECORDS;
+				$success = 0;
+			}
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+			$result="";
+		}
+		$data = array("success"=>$success,"message"=>$message,"data"=>$result);
+		return response()->json(['data'=>$data]);
+
+	}
+	public function addAffilite()
+	{
+		$post = Input::all();
+		if(!empty($post['name']))
+		{
+			//echo "<pre>"; print_r($post); echo "</pre>"; die;
+			$post['screen_print']=!empty($post['screen_print'])? 1:0;
+			$post['embroidery']=!empty($post['embroidery'])? 1:0;
+			$post['packing']=!empty($post['packing'])? 1:0;
+			$post['shipping']=!empty($post['shipping'])? 1:0;
+			$post['art_work']=!empty($post['art_work'])? 1:0;
+
+			$post['created_date']=CURRENT_DATE;
+
+			$result = $this->company->addAffilite($post); // INSERT DATA
+			$message = INSERT_RECORD;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS."- Name";
+			$success = 0;
+		}
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
+	public function UpdateAffilite()
+	{
+		$post = Input::all();
+		if(!empty($post['name']))
+		{
+			//echo "<pre>"; print_r($post); echo "</pre>"; die;
+			$post['screen_print']=!empty($post['screen_print'])? 1:0;
+			$post['embroidery']=!empty($post['embroidery'])? 1:0;
+			$post['packing']=!empty($post['packing'])? 1:0;
+			$post['shipping']=!empty($post['shipping'])? 1:0;
+			$post['art_work']=!empty($post['art_work'])? 1:0;
+			$id = $post['id'];
+			$post['price_grid'] = $post['price_id'];
+			unset($post['id']);
+			unset($post['price_id']);
+			$result = $this->company->UpdateAffilite($post,$id); // INSERT DATA
+			$message = UPDATE_RECORD;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS."- Name";
+			$success = 0;
+		}
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
+	}
 }

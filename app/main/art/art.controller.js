@@ -11,9 +11,7 @@
         
         // Data
         vm.arts = ArtData.artData.data;
-        console.log(vm.arts);
         vm.screenset = ArtData.artData.data1;
-        console.log(vm.screenset);
         //Datatable
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
