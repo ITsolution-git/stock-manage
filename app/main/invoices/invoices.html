@@ -1,0 +1,59 @@
+<div class="content order-list-page puchase-order-page">
+    <div class="simple-table-container md-whiteframe-4dp">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=20 class="cursor-p" >Invoices</div>
+            <div class="search-block" flex=25>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
+                    <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
+                </md-input-container>
+            </div>
+        </div>
+        <div class="ms-responsive-table-wrapper">
+            <table class="simple hover simple-tbl1">
+                <thead>
+                    <tr>
+                        <th class="secondary-text" width="10%">Invoice</th>
+                        <th class="secondary-text" width="15%">Date</th>
+                        <th class="secondary-text" width="15%">Invoice $ Amount</th>
+                        <th class="secondary-text" width="15%">In Hands By</th>
+                        <th class="secondary-text" width="10%">Shipping Method</th>
+                        <th class="secondary-text text-center" width="15%">Synced with Quickbooks</th>
+                        <th class="secondary-text" width="10%">&nbsp;</th>
+                        <th class="secondary-text" width="10%">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr ng-repeat="inv in vm.invoices" class="cursor-p">
+                        <td>{{ inv.invoice}}</td>
+                        <td>{{ inv.date}}</td>
+                        <td>{{ inv.invoiceAmount}}</td>
+                        <td>{{ inv.inHandBy}}</td>
+                        <td>{{ inv.shippingMethod}}</td>
+                        <td class="text-center"><a href="#" class="icon  icon-rotate-3d font-18"></a></td>
+                        <td class="text-center" ui-sref="app.invoices.singleInvoice"><a>Pay</a></td>
+                        <td>
+                            <md-menu>
+                                <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="4"> 
+                                    <md-menu-item>
+                                        <md-button ng-click="openEditEmployeeDialog($event,user.id)">
+                                            Download PDF
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </td>
+                    </tr>                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="pd15-LR">
+        <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row pd20-R">
+            <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Download CSV"><span class="ng-scope">Download CSV</span></button>
+        </md-dialog-actions>
+    </div>
+</div>

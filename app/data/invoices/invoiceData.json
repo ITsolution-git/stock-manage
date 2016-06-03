@@ -1,0 +1,9 @@
+{
+    "data": [
+            {"invoice":"INV-27", "date":"3/26/2016", "invoiceAmount":"$120.00", "inHandBy":"7/1/2016", "shippingMethod":"UPS"},
+            {"invoice":"INV-27", "date":"3/26/2016", "invoiceAmount":"$120.00", "inHandBy":"7/1/2016", "shippingMethod":"UPS"},
+            {"invoice":"INV-27", "date":"3/26/2016", "invoiceAmount":"$120.00", "inHandBy":"7/1/2016", "shippingMethod":"UPS"},
+            {"invoice":"INV-27", "date":"3/26/2016", "invoiceAmount":"$120.00", "inHandBy":"7/1/2016", "shippingMethod":"UPS"},
+            {"invoice":"INV-27", "date":"3/26/2016", "invoiceAmount":"$120.00", "inHandBy":"7/1/2016", "shippingMethod":"UPS"}
+        ]
+}

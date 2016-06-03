@@ -534,6 +534,41 @@ md-input-container > label {
 .uploadfile { width: 150px; height: 150px; border-collapse: collapse; margin: 0 auto; margin-top:18px;}
 .uploadfile td { border: 2px dashed #ccc; text-align: center;}
 .screen-bottom md-card md-card-title { display: block; flex:0;}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #0276af;
+    padding:6px 10px;
+    background: #039BE5;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+.fileUpload span, .btn-typ-submit span {
+    color: #fff !important;
+    font-size: 15px !important;
+}
+.btn-typ-submit {
+  border: 1px solid #0276af;
+  padding:6px 10px;
+  background: #039BE5;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.pd15-LR { padding-left: 15px; padding-right: 15px;}
 /*****************************/	
 .loaderouter{
     position:fixed;
@@ -706,9 +741,6 @@ md-button.on {
 .resetPasswordFont {
   font-size: 14px ;
 }
-
-
-
 .addAffiliateDialog {
   max-width: 100% !important ;
   width: 75% !important ;
@@ -721,8 +753,6 @@ md-button.on {
 #affiliateDialog .m-t-25 {
     margin-top: 5px !important;
 }
-
-
 
 #affiliateSaveBtn {
     margin-right: 20px !important;
@@ -743,7 +773,6 @@ md-button.on {
 .max-height-350 {
   max-height: 350px ;
 }
-
 .max-height-350 img {
   max-height: 350px ;
 }

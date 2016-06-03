@@ -229,6 +229,11 @@
     <script src="app/main/art/views/screensetview/screensetView.controller.js"></script>
     <script src="app/main/art/dialogs/createScreenDetail/createScreenDetail.controller.js"></script>
 
+    <!-- Invoices -->
+    <script src="app/main/invoices/invoices.module.js"></script>
+    <script src="app/main/invoices/invoices.controller.js"></script>
+    <script src="app/main/invoices/views/singleInvoice/singleInvoice.controller.js"></script>
+
     <!--Datatable Scrolling-->
 
     <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
@@ -244,8 +249,5 @@
     <script src="scripts/other/kendo.angular.min.js"></script>
     <link rel="stylesheet" href="styles/other/kendo.common.min.css">
     <link rel="stylesheet" href="styles/other/kendo.default.min.css">
-
-    
-
 </body>
 </html>
