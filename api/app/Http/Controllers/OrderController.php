@@ -2205,4 +2205,99 @@ else
 
     }
 
+    public function updateOrderCharge() {
+
+        $post = Input::all();
+
+        if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
+        {
+          $date_field = (empty($post['date_field']))? '':$post['date_field']; 
+          
+          $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
+          $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        }
+        else
+        {
+            $data = array("success"=>0,"message"=>MISSING_PARAMS);
+        }
+
+        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $post['cond']['id']),array());
+
+        if(!empty($design_data))
+        {
+            foreach ($design_data as $design) {
+                $item_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id),array());
+                if(!empty($item_data))
+                {
+                    $calculate_arr = array('id' => $design->id,'productData' => json_decode(json_encode($item_data), true),'company_id' => $post['company_id']);
+                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+                }
+            }
+        }
+        return response()->json(['data'=>$data]);
+    }
+
+    public function updateMarkup() {
+
+        $post = Input::all();
+
+        $markup = $post['calculate_data']['markup'];
+        if($markup > 0)
+        {
+            $garment_mackup = $markup/100;
+        }
+        else
+        {
+            $garment_mackup = $post['calculate_data']['markup_default']/100;
+        }
+        
+        $avg_garment_price = $post['calculate_data']['avg_garment_cost'] * $garment_mackup + $post['calculate_data']['avg_garment_cost'];
+        $avg_garment_price2 = round($avg_garment_price,2);
+
+        $total_line_charge = $post['calculate_data']['print_charges'] + $avg_garment_price2;
+        $total_line_charge2 = round($total_line_charge,2);
+
+        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['calculate_data']['design_id']),array('markup' => $markup));
+        $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id'],'markup' => $markup);
+        $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
+    }
+
+    public function updateOverride()
+    {
+        $post = Input::all();
+        if($post['calculate_data']['override'] > '0')
+        {
+            $subtract = $post['calculate_data']['override'] - $post['calculate_data']['total_line_charge'];
+            $override_diff = round($subtract,2);
+            $total_line_charge = $post['calculate_data']['override'];
+
+            $total_qnty = 0;
+            foreach ($post['designProduct'] as $size) {
+                $total_qnty += $size['qnty'];
+            }
+
+            $mul = $total_qnty * $total_line_charge;
+            $sales_total =round($mul,2);
+
+            $update_arr = array('total_line_charge' => $total_line_charge,'override' => $post['calculate_data']['override'],'sales_total' => $sales_total,'override_diff' => $override_diff);
+        }
+        else
+        {
+            $update_arr = array('override_diff' => 0,'override' => 0);
+        }
+        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['calculate_data']['design_id']),$update_arr);
+
+        if($post['calculate_data']['override'] == 0 || $post['calculate_data']['override'] == '')
+        {
+            $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id']);
+            $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+        }
+
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
+    }
+
 }

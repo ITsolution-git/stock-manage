@@ -3,50 +3,57 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add Custom Product</span>
-                <md-button  ng-click="vm.closeDialog()">
+                <md-button  ng-click="cancel()" >
                     <span><md-icon md-font-icon="icon-close"></md-icon></span>
                 </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
-                <md-input-container class="md-block mp-b-0" flex-gt-sm>
-                    <label class="font-14"></label>
-                    <input placeholder="Product Name" ng-model="vm.addProduct.productName">
-                </md-input-container>
-                <div layout="row">
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">S</label>
-                        <input placeholder="" ng-model="vm.addProduct.s">
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">M</label>
-                        <input placeholder="" ng-model="vm.addProduct.m" >
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">L</label>
-                        <input placeholder="" ng-model="vm.addProduct.l">
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">XL</label>
-                        <input placeholder="" ng-model="vm.addProduct.xl">
-                    </md-input-container>                    
+
+               
+                <div flex="20">
+                            <md-input-container class="width100">
+                                <label>Product</label>
+                                 <md-select ng-model="product_id" ng-change="changeProduct(product_id,0)">
+                                    <md-option ng-repeat="data in allProduct" value="{{data.id}}" >
+                                        {{data.name}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
                 </div>
-                <md-input-container class="md-block mp-b-0">
-                    <label>Notes</label>
-                    <textarea ng-model="vm.addProduct.notes" md-maxlength="150" rows="2" md-select-on-focus class="text-height"></textarea>
-                </md-input-container>
-                <md-checkbox  aria-label="Checkbox 1">
+
+                <div flex="20">
+                            <md-input-container class="width100">
+                                <label>Color</label>
+                                 <md-select ng-model="color_id" ng-change="changeProduct(product_id,color_id)">
+                                
+                                    <md-option ng-repeat="(keyColor,colorsdata) in productColorSize" value="{{keyColor}}" >
+                                        {{colorsdata.color_name}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                </div>
+
+               
+                <div layout="row">
+
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="(key,all_size) in sizeAll.size_data">
+                        <label class="font-14">{{all_size.sizeName}}</label>
+                        <input placeholder=""  ng-model="all_size.qnty">
+                    </md-input-container>
+                                       
+                </div>
+               
+                <md-checkbox  aria-label="Checkbox 1" ng-model="is_supply">
                     These products are supplied garments
                 </md-checkbox>
-                <div class="" layout-padding>
-                    #PO
-                </div>                
+                         
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised ">ADD</md-button>
+            <md-button ng-click="cancel()"  class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised " ng-click="addProduct(sizeAll.size_data,product_id,is_supply)" ng-disabled="orderForm.$invalid">ADD</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

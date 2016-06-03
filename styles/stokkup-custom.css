@@ -482,6 +482,9 @@ md-input-container > label {
 .text-center {
 	text-align:center;
 }
+.text-right {
+  text-align:right;
+}
 .simple-tbl1 thead tr th {
 	line-height:16px;
 }
@@ -711,7 +714,7 @@ md-button.on {
   width: 75% !important ;
 }
 
-#affiliateDialog .settings-margin-0 {
+#affiliateDialog .settings-margin-0, #editFinishing .settings-margin-0 {
   margin: 5px !important ;
 }
 
@@ -742,7 +745,7 @@ md-button.on {
 }
 
 .max-height-350 img {
-  height: 350px ;
+  max-height: 350px ;
 }
 
 
@@ -751,9 +754,11 @@ md-button.on {
   float: left;
   padding-right: 10px;
 }
+
 #custChkboxes .customChkbox input, #custChkboxes1 .customChkbox input {
   opacity: 0;
 }
+
 #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label {
   cursor: pointer;
   display: inline-block;
@@ -762,10 +767,12 @@ md-button.on {
   text-align: center;
   width: 100%;
 }
+
 #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
   background: #797979;
   color: #fff;
 }
+
 #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label {
   background: #797979;
   color: #fff;
@@ -775,6 +782,76 @@ md-button.on {
   width: 25% !important ;
 }
 
+.authorizeNetDialog {
+  width: 30% !important ;
+}
+
 .btn-width-100 {
   width: 100% ;
 }
+
+.container {
+    display: table;
+    width:100%;
+    border: dashed 3px #797979;
+}
+    
+#chooseFile, .dragDropLabel {    
+    vertical-align: middle;
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.dragDropLabel {
+    font-size: 16px;
+    color: #797979;
+    margin-bottom: 10px;
+}
+    
+.button-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+md-dialog .tasty-page .col-xs-3 {
+  padding: 0 ;
+  padding-top: 15px ;
+}
+
+md-dialog .tasty-page .col-xs-6 {
+  padding: 0 ;
+}
+
+#finishing tbody tr td md-input-container {
+  margin: 0 !important;
+}
+
+.editFinishingDialog {
+  width: 40% ;
+}
+
+.width-33 {
+  width: 33% ;
+  margin-bottom: 10px ;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.font-11 {
+  font-size: 11px ;
+}
+
+.font-16 {
+  font-size: 16px !important;
+}
+
+#editFinishing md-input-container > label {
+    color: #767676 !important;
+}
+.form-cntnr { margin-top:-10px; }
+.pull-right { float: right; }
+.form-cntnr md-input-container { margin: 0px; padding:0px;  }
+.form-cntnr .md-errors-spacer { min-height: 1px; }

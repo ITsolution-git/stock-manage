@@ -9,16 +9,19 @@ use Illuminate\Support\Facades\Redirect;
 use App\Account;
 use App\Common;
 use DB;
+use Mail;
+
 
 use Request;
 // CREATE COMPANY AND SET RIGHTS, MANAGE BY SUPER ADMIN ONLY
 class AccountController extends Controller {  
 
 
- 	public function __construct(Account $account, Common $common) 
+ 	public function __construct(Account $account, Common $common, Login $login) 
  	{
         $this->account = $account;
         $this->common = $common;
+        $this->login = $login;
 
     }
 
@@ -132,7 +135,7 @@ class AccountController extends Controller {
 	public function SaveData ()
 	{
 		$post = Input::all();
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['id']) && !empty($post['parent_id']))
+		if(!empty($post['email']) && !empty($post['id']) && !empty($post['parent_id']))
 		{
 
 			$email = $this->common->checkemailExist($post['email'],$post['id']);
@@ -143,14 +146,7 @@ class AccountController extends Controller {
 			}
 			else
 			{
-				if($post['password']=='testcodal')
-				{
-					unset($post['password']);
-				} 
-				else 
-				{
-					$post['password']=md5($post['password']);
-				}
+				
 				$post['updated_date'] = date('Y-m-d H:i:s');
 				$getData = $this->account->SaveCompanyData($post);
 				$message = UPDATE_RECORD;
@@ -201,5 +197,38 @@ class AccountController extends Controller {
 		$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
 
+	}
+	public function ResetPasswordMail()
+	{
+		$post = Input::all();
+
+		if(!empty($post['user_id']) && !empty($post['company_id']))
+		{
+			 $result = $this->common->GetTableRecords('users',array("id"=>$post["user_id"],'parent_id'=>$post['company_id']),array());
+			 if(count($result)>0)
+			 {
+			 	$email = $result[0]->email;
+			 	$string = $this->login->getString(6);
+			 	Mail::send('emails.newpassword', ['url' =>$string,'user'=>$result[0]->name,'email'=>$email], function($message) use ($email) 
+                {
+                    $message->to($email, 'Hello, Your password has been changed, Your New Password is')->subject('New Password for Stokkup');
+                });
+				$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($string)));
+                $message = "New password send Successfully";
+				$success = 1;
+			 }
+			 else
+			 {
+			 	$message = NO_RECORDS;
+				$success = 0;
+			 }
+		}
+		else
+		{
+			$message = MISSING_PARAMS;
+			$success = 0;
+		}
+		$data = array("success"=>$success,"message"=>$message);
+		return response()->json(['data'=>$data]);
 	}
 }

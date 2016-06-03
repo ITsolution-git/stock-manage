@@ -1,7 +1,7 @@
 <div class="split-affliate m-r-15 m-l-20 m-b-20">
     <div class="header "  layout="column">
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.order.order-info" >BACK TO ORDER INFO</a>
+            <a class="link-back cursor-p" ui-sref="app.order.order-info({id:order_id})" >BACK TO ORDER INFO</a>
             <!-- <h1 flex="4" class="font-500">Split Affiliate for Demo Job #1234 for Company:</h1> -->
             <h1 flex="4" class="font-500">{{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}</h1>
             <!-- <md-input-container md-no-float class="md-block" flex="3">
@@ -40,7 +40,7 @@
                     </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="5" layout="row">
+                    <!-- <div layout-align="end start"  flex="5" layout="row">
                         <md-menu>
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -53,7 +53,7 @@
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
-                    </div>
+                    </div> -->
                 </md-card>
             </div> 
         <div flex="100" class="m-b-20" >

@@ -50,6 +50,8 @@
                     $scope.designProduct = result.data.records;
                     $scope.productData = result.data.productData.product[0];
                     $scope.colorName = result.data.colorName;
+                    $scope.colorId = result.data.colorId;
+                    $scope.is_supply = result.data.is_supply;
                     $scope.calculate_data = result.data.calculate_data[0];
                     $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
 
@@ -191,8 +193,9 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev, order, controller, file)
+        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply)
         {
+            
             $mdDialog.show({
                 controller: controller,
                 controllerAs: $scope,
@@ -201,8 +204,11 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Order: order,
-                    Orders: $scope.orders,
+                    product_id: product_id,
+                    operation:operation,
+                    design_id:$stateParams.id,
+                    color_id:color_id,
+                    is_supply:is_supply,
                     event: ev
                 }
             });
@@ -437,6 +443,30 @@
               }
           }
 
-       
+        $scope.update_override = function(override_value) {
+
+            var override_data = {};
+            override_data['designProduct'] = $scope.designProduct;
+            override_data['productData'] = $scope.productData;
+            override_data['calculate_data'] = $scope.calculate_data;
+            override_data['company_id'] = sessionService.get('company_id');
+
+            $http.post('api/public/order/updateOverride',override_data).success(function(result) {
+                $scope.designProductData();
+            });
+        }
+
+        $scope.update_markup = function()
+        {
+            var markup_data = {};
+            markup_data['designProduct'] = $scope.designProduct;
+            markup_data['productData'] = $scope.productData;
+            markup_data['calculate_data'] = $scope.calculate_data;
+            markup_data['company_id'] = sessionService.get('company_id');
+
+            $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
+                $scope.designProductData();
+            });
+        }
     }
 })();

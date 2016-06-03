@@ -290,7 +290,7 @@
                     </md-input-container>
                     <div layout="row">
                         <md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button>
-                        <md-button  class="bg-grey md-raised" ng-click="openAddProductDialog($event,'','AddProductController','app/main/order/dialogs/addProduct/addProduct.html')">
+                        <md-button  class="bg-grey md-raised" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',0,'Add',0,0)">
                             ADD A CUSTOM PRODUCT
                         </md-button>
                     </div>
@@ -331,7 +331,12 @@
                             </md-button>
                             <md-menu-content width="4">
                                 <md-menu-item>
-                                    <md-button ng-click="openSearchProductViewDialogView($event,productData.id,productData.product_image,productData.description,productData.name_company,'Edit',productData.name,colorName)">Edit</md-button>
+                                    <md-button ng-click="openSearchProductViewDialogView($event,productData.id,productData.product_image,productData.description,productData.name_company,'Edit',productData.name,colorName)" ng-show="productData.vendor_id > 0">Edit</md-button>
+
+                                     <md-button  class="bg-grey md-raised" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',productData.id,'Edit',colorId,is_supply)" ng-show="productData.vendor_id == 0">
+                                      Edit
+                                     </md-button>
+
                                 </md-menu-item>
                                  <md-menu-item>
                                     <md-button ng-click="deleteAddProduct()">Delete</md-button>
@@ -343,11 +348,11 @@
                 <div class="box-content" layout="column" >
                     <div layout="row " layout-align="space-between" class="p-b-20">
                         <div layout="row" layout-align="space-between start" flex="35">
-                            <div class="ad-product-img md-whiteframe-1dp">
+                            <div class="ad-product-img md-whiteframe-1dp" ng-show="productData.vendor_id > 0">
                                 <img src="{{productData.product_image_view}}" class="popup-image"></img>
                             </div>  
                             <div layout="column">
-                                <div class="h4">Vendor</div>
+                                <div class="h4" ng-show="productData.vendor_id > 0">Vendor</div>
                                 <div class="h5 p-b-10  grey-color">{{productData.name_company}}</div>
                                 <div class="h4">Item Number</div>
                                 <div class="h5  grey-color">{{productData.id}}</div>
@@ -400,7 +405,13 @@
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Markup Default 70%</div>
-                                    <div class="h5 grey-color font-14">${{calculate_data.marku-_default}}</div>
+                                    <div class="h5 grey-color font-14">
+                                        <div class="form-cntnr">
+                                            <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
+                                                <input ng-model="calculate_data.markup" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_markup()' }">
+                                            <div class="md-errors-spacer"></div></md-input-container>
+                                         </div>
+                                    </div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Average Garment Price</div>
@@ -429,7 +440,13 @@
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="">
                                         <div class="h4">Overide</div>
-                                        <div class="h5 grey-color font-14">{{calculate_data.override}}</div>
+                                        <div class="h5 grey-color font-14">
+                                            <div class="form-cntnr">
+                                                <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
+                                                    <input ng-model="calculate_data.override" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_override(calculate_data.override)' }">
+                                                <div class="md-errors-spacer"></div></md-input-container>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="">
 

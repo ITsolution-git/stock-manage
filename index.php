@@ -190,7 +190,7 @@
     <script src="app/main/receiving/receiving.controller.js"></script>
     <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
     <!-- Settings -->
-        <script src="app/main/settings/settings.module.js"></script>
+    <script src="app/main/settings/settings.module.js"></script>
     <script src="app/main/settings/settings.controller.js"></script>
     <script src="app/main/settings/views/userProfile/userProfile.controller.js"></script>
     <script src="app/main/settings/views/priceGrid/priceGrid.controller.js"></script>
@@ -214,6 +214,11 @@
     <script src="app/main/settings/dialogs/ups/ups-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.controller.js"></script>
     <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
+
+    <!-- Finishing -->
+    <script src="app/main/finishing/finishing.module.js"></script>
+    <script src="app/main/finishing/finishing.controller.js"></script>
+    <script src="app/main/finishing/dialogs/editFinishing/editFinishing-dialog.controller.js"></script>
 
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>

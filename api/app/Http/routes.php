@@ -35,6 +35,9 @@ Route::post('admin/company/save', 'CompanyController@SaveData');
 Route::post('admin/company/delete', 'CompanyController@DeleteData');
 Route::post('admin/company/change_password', 'CompanyController@change_password');
 Route::get('admin/company/getCompanyInfo/{company_id}', 'CompanyController@getCompanyInfo');
+Route::get('admin/company/getAffiliate/{company_id}/{affiliate_id}', 'CompanyController@getAffiliate');
+Route::post('admin/company/addAffilite', 'CompanyController@addAffilite');
+Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
@@ -43,6 +46,7 @@ Route::post('admin/account/add', 'AccountController@addData');
 Route::get('admin/account/edit/{id}/{parent}', 'AccountController@GetData');
 Route::post('admin/account/save', 'AccountController@SaveData');
 Route::post('admin/account/delete', 'AccountController@DeleteData');
+Route::post('admin/account/ResetPasswordMail', 'AccountController@ResetPasswordMail');
 
 // ADMIN STAFF ROUTERS
 Route::post('admin/staff', 'StaffController@index');
@@ -224,6 +228,9 @@ Route::post('order/editDesign', 'OrderController@editDesign');
 Route::post('order/getDesignPositionDetail', 'OrderController@getDesignPositionDetail');
 Route::post('order/editOrder', 'OrderController@editOrder');
 Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
+Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
+Route::post('order/updateMarkup', 'OrderController@updateMarkup');
+Route::post('order/updateOverride', 'OrderController@updateOverride');
 
 
 // FINISHING CONTROLLER 
@@ -258,6 +265,10 @@ Route::post('product/designProduct', 'ProductController@designProduct');
 Route::post('product/deleteAddProduct', 'ProductController@deleteAddProduct');
 Route::post('product/getCustomProduct', 'ProductController@getCustomProduct');
 Route::post('product/uploadCSV', 'ProductController@uploadCSV');
+Route::post('product/getProductDetailColorSize', 'ProductController@getProductDetailColorSize');
+Route::post('product/addcolorsize', 'ProductController@addcolorsize');
+Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
+Route::post('product/productCustomDetailData', 'ProductController@productCustomDetailData');
 
 
 // API CONTROLLER

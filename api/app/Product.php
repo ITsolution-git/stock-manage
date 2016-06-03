@@ -288,20 +288,40 @@ class Product extends Model {
     public function addProduct($post) {
        
         foreach($post['productData'] as $row) {
-             
-            $result = DB::table('purchase_detail')->insert(['design_id'=>$post['id'],
-                'size'=>$row['sizeName'],
-                'sku'=>$row['sku'],
-                'price'=>$row['customerPrice'],
-                'qnty'=>$row['qnty'],
-                'color_id'=>$row['color_id'],
-                'date'=>$post['created_date']]);
+
+             if(isset($post['sku'])) {
+
+                $insert_purchase_array = array('design_id'=>$post['id'],
+                    'size'=>$row['sizeName'],
+                    'sku'=>$row['sku'],
+                    'price'=>$row['customerPrice'],
+                    'qnty'=>$row['qnty'],
+                    'color_id'=>$row['color_id'],
+                    'date'=>$post['created_date']);
+
+             } else {
+
+                $insert_purchase_array = array('design_id'=>$post['id'],
+                    'size'=>$row['sizeName'],
+                    'sku'=>0,
+                    'price'=>0,
+                    'qnty'=>$row['qnty'],
+                    'color_id'=>$row['color_id'],
+                    'date'=>$post['created_date']);
+             }
+
+            $result = DB::table('purchase_detail')->insert($insert_purchase_array);
         }
 
-         if($post['record_delete'] == 0) {
-            $result_design = DB::table('design_product')->insert(['design_id'=>$post['id'],
-                'product_id'=>$post['product_id']]);
-         }
+          if(isset($post['is_supply'])) {
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply']);
+          } else {
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id']);
+          }
+
+         // if($post['record_delete'] == 0) {
+            $result_design = DB::table('design_product')->insert($insert_array);
+         // }
          
          return true;
 
@@ -332,11 +352,13 @@ class Product extends Model {
         $combine_array = array();
         
         $combine_array['design_product'] = $designDetailData;
-       
+        
         if($designDetailData) {
             $combine_array['product_id'] = $designDetailData[0]->product_id;
             $combine_array['design_id'] = $designDetailData[0]->design_id;
             $combine_array['colorName'] = $designDetailData[0]->colorName;
+            $combine_array['colorId'] = $designDetailData[0]->color_id;
+            $combine_array['is_supply'] = $designDetailData[0]->is_supply;
         }
 
         return $combine_array;
@@ -393,6 +415,87 @@ class Product extends Model {
         $returnData['allData'] = $productData;
         $returnData['count'] = $count[0]->Totalcount;
         return $returnData;
+    }
+
+    public function getProductDetailColorSize($post)
+    {
+       
+        $whereConditions = ['p.product_id' => $post['id'],'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
+        $listArray = ['p.id','p.product_id','p.color_id','p.size_id','c.name as color','pz.name as sizeName'];
+
+        $productColorSizeData = DB::table('product_color_size as p')
+                         ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
+                         ->leftJoin('product_size as pz', 'pz.id', '=', 'p.size_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $whereProductData = ['id' => $post['id']];
+        $productName = DB::table('products')->where($whereProductData)->get();
+
+        $allDetail = array();
+        if($post['design_id'] != 0) {
+            $allDetail = $this->getPurchaseDetail($post['design_id']);
+        }
+       
+       
+
+        $all_array = array();
+
+        foreach ($productColorSizeData as $key=>$alldata){
+         $alldata->qnty =  0;
+
+            if (!empty($allDetail)) {
+
+                    if(isset($allDetail[$alldata->sizeName])){
+                        $alldata->qnty = $allDetail[$alldata->sizeName];
+                    }
+            } 
+         
+          $all_array[$alldata->color_id]['color_name'] = $alldata->color;
+          $all_array[$alldata->color_id]['size_data'][] = $alldata;
+        }
+
+
+        $combine_array['productColorSizeData'] = $all_array;
+        $combine_array['product_name'] = $productName[0]->name;
+        $combine_array['product_id'] = $productName[0]->id;
+        $combine_array['product_description'] = $productName[0]->description;
+
+        return $combine_array;
+    }
+
+
+    public function addcolorsize($post)
+    {
+        if(!empty($post['product_id']))
+        {
+
+            if($post['color_id'] == 0) {
+                 $result_color = DB::table('color')->insert([
+                'company_id'=>$post['company_id'],
+                'is_sns'=>0]);
+                 $colorId = DB::getPdo()->lastInsertId();
+            } else {
+                $colorId = $post['color_id'];
+            }
+
+
+             $result_size = DB::table('product_size')->insert([
+            'company_id'=>$post['company_id'],
+            'is_sns'=>0]);
+             $sizeId = DB::getPdo()->lastInsertId();
+
+             $result_color_size = DB::table('product_color_size')->insert([
+            'product_id'=>$post['product_id'],
+            'color_id'=>$colorId,
+            'size_id'=>$sizeId]);
+             return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }

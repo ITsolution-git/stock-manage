@@ -432,18 +432,24 @@ class CommonController extends Controller {
 
         if(!empty($post['table'])   && !empty($post['cond']))
         {
-          $result = $this->common->DeleteTableRecords($post['table'],$post['cond']);
-          if($post['table'] == 'order_orderlines')
-          {
-            $this->common->DeleteTableRecords('purchase_detail',array('orderline_id' => $post['cond']['id']));
-          }
 
-          if($post['table'] == 'purchase_order')
-          {
-            $this->common->DeleteTableRecords('purchase_order_line',array('po_id' => $post['cond']['po_id']));
-          }
+              $post['extra'] = empty($post['extra'])?'' : $post['extra'];  
 
-          $data = array("success"=>1,"message"=>UPDATE_RECORD);
+              $result = $this->common->DeleteTableRecords($post['table'],$post['cond']);
+              if($post['table'] == 'order_orderlines')
+              {
+                $this->common->DeleteTableRecords('purchase_detail',array('orderline_id' => $post['cond']['id']));
+              }
+
+              if($post['table'] == 'purchase_order')
+              {
+                $this->common->DeleteTableRecords('purchase_order_line',array('po_id' => $post['cond']['po_id']));
+              }
+              if($post['extra'] == 'users')
+              {
+                $this->common->DeleteTableRecords('staff',array('user_id' => $post['cond']['id']));
+              }
+              $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
         else
         {

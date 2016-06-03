@@ -1,4 +1,5 @@
 <md-dialog class="task-dialog addEmployeeDialog" >
+<form name="employeeform" class="md-inline-form" novalidate>
     <div class="client-profile-page">
     <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
@@ -11,30 +12,43 @@
     <div ng-cloak>
     <md-card-content layout="column" class="box-shadow-0">
         <div layout="row" layout-wrap>
-                <label class="priceGridTr margin-left-10">Permission Role</label>
-                <md-input-container flex=30 class="m-b-20 width-400">
+                <md-input-container flex=30 class="m-b-20 m-l-10 width-400">
                     <label class="state-label-color">Permission Role</label>
-                    <md-select ng-model="vm.permissionRole" aria-label="Permission Role">
-                      <md-option ng-repeat="state in vm.permissionRoles" >
-                        {{state.abbrev}}
+                    <md-select ng-model="users.role_id" required name="role" aria-label="Permission Role">
+                      <md-option ng-repeat="role in rolelist" value="{{role.id}}" >
+                        {{role.title}}
                        </md-option>
-                    </md-select>                            
+                    </md-select>   
+                    <div ng-messages="employeeform.role.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>                         
                 </md-input-container>
-                <!-- <md-input-container flex=30 class="m-b-20 m-t-25">
-                    <label class="state-label-color">Permission Role</label>
-                    <md-select aria-label="Permission Role">
-                      <md-option>Super Admin</md-option>
-                      <md-option>Brand Coordinator</md-option>
-                      <md-option>Art Team</md-option>
-                      <md-option>Simple User</md-option>
-                    </md-select>
-                    
-                </md-input-container> -->
+               
 
-                <label class="priceGridTr margin-left-10">Name</label>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Name" name="" ui-event="">
-                    <div ng-messages=" " role="alert" multiple>
+                    <input placeholder="Name" required name="name"  ng-model="users.name">
+                     <div ng-messages="employeeform.name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Email" type="email" name="email" required ng-pattern="/^.+@.+\..+$/"  ng-model="users.email">
+                    <div ng-messages="employeeform.email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span >Email must be a valid e-mail address</span>
+                        </div>
+                    </div> 
+                </md-input-container>
+                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="password" name="password" required type="Password"  ng-model="users.password">
+                    <div ng-messages="employeeform.password.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>This field is required</span>
                         </div>
@@ -42,37 +56,17 @@
                 </md-input-container>
         </div>
     </md-card-content>
-        <!-- <md-content>
-                <label class="priceGridTr">Permission Role</label>
-                <md-input-container flex=30 class="m-b-20 m-t-25">
-                    <label class="state-label-color">State</label>
-                    <md-select ng-model="">
-                        <md-option value="0">Select Role</md-option>
-                        <md-option>Super Admin</md-option>
-                        <md-option>Brand Coordinator</md-option>
-                        <md-option>Art Team</md-option>
-                    </md-select>
-                </md-input-container>
-
-                <label class="priceGridTr">Name</label>
-                <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
-                    <input placeholder="Name" name="" ui-event="">
-                    <div ng-messages=" " role="alert" multiple>
-                        <div ng-message="required">
-                            <span>This field is required</span>
-                        </div>
-                    </div>
-                </md-input-container>
-        </md-content> -->
+       
     </div>
 </div>
 <table> 
     <tr>
         <td class="p-16 td-500">
-            <md-button class="bg-blue float-right" ng-click=" ">
+            <md-button class="bg-blue float-right"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="AddUsers(users)">
                     SAVE
             </md-button>
         </td>  
     </tr>
 </table>
+</form>
 </md-dialog>
