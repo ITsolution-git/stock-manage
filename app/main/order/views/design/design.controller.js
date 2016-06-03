@@ -486,6 +486,7 @@
                         }
                     });
                 }
+        }        
 
         $scope.update_markup = function()
         {
