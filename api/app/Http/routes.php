@@ -38,6 +38,10 @@ Route::get('admin/company/getCompanyInfo/{company_id}', 'CompanyController@getCo
 Route::get('admin/company/getAffiliate/{company_id}/{affiliate_id}', 'CompanyController@getAffiliate');
 Route::post('admin/company/addAffilite', 'CompanyController@addAffilite');
 Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
+Route::get('admin/company/getAuthorizeAPI/{company_id}', 'CompanyController@getAuthorizeAPI');
+Route::get('admin/company/getUpsAPI/{company_id}', 'CompanyController@getUpsAPI');
+Route::get('admin/company/getSnsAPI/{company_id}', 'CompanyController@getSnsAPI');
+
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
