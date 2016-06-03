@@ -2230,7 +2230,7 @@ else
                 if(!empty($item_data))
                 {
                     $calculate_arr = array('id' => $design->id,'productData' => json_decode(json_encode($item_data), true),'company_id' => $post['company_id']);
-                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
                 }
             }
         }
@@ -2259,7 +2259,7 @@ else
 
         $this->common->UpdateTableRecords('design_product',array('design_id' => $post['calculate_data']['design_id']),array('markup' => $markup));
         $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id'],'markup' => $markup);
-        $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+        $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['calculate_data']['design_id']);
 
         $data = array("success"=>1);
         return response()->json(["data" => $data]);
@@ -2293,7 +2293,7 @@ else
         if($post['calculate_data']['override'] == 0 || $post['calculate_data']['override'] == '')
         {
             $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id']);
-            $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+            $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['calculate_data']['design_id']);
         }
 
         $data = array("success"=>1);
