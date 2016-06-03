@@ -370,7 +370,10 @@ public function create_dir($dir_path) {
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
         //$post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
-        $return = $this->orderCalculation($post);
+
+        $return = 1;
+        //$return = $this->orderCalculation($post);
+
 
         if(is_array($return))
         {
@@ -384,14 +387,17 @@ public function create_dir($dir_path) {
         }
     }
 
-    public function orderCalculation($post)
+    public function orderCalculation($design_id)
     {
+        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id),array());
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id),array());
+
         $total_qnty = 0;
-        foreach ($post['productData'] as $size) {
-            $total_qnty += $size['qnty'];
+        foreach ($purchase_detail as $size) {
+            $total_qnty += $size->qnty;
         }
         
-        $order_data = $this->order->getOrderByDesign($post['id']);
+        $order_data = $this->order->getOrderByDesign($design_id);
         $price_id = $order_data[0]->price_id;
         $order_id = $order_data[0]->id;
 
@@ -404,9 +410,9 @@ public function create_dir($dir_path) {
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $post['id']),array());
+        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id),array());
         $data = array();
-        $data['cond']['company_id'] = $post['company_id'];
+        $data['cond']['company_id'] = $order_data[0]->company_id;
         $miscData = $this->common->getAllMiscDataWithoutBlank($data);
 
         $color_stitch_count = 0;
@@ -574,9 +580,9 @@ public function create_dir($dir_path) {
                 }
             }
 
-            if(isset($post['markup']))
+            if($design_product[0]->markup > 0)
             {
-                $markup = $post['markup'];
+                $markup = $design_product[0]->markup;
             }
             else
             {
@@ -598,20 +604,13 @@ public function create_dir($dir_path) {
 
             $item_price = 0;
             $line_qty = 0;
-            foreach($post['productData'] as $product) {
-                if($product['qnty'] > 0)
+            foreach($purchase_detail as $product) {
+                if($product->qnty > 0)
                 {
-                    if(isset($product['customerPrice']))
-                    {
-                        $price = $product['customerPrice'];
-                    }
-                    else
-                    {
-                        $price = $product['price'];
-                    }
+                    $price = $product->price;
                     $sum = $price + $price_grid->shipping_charge;
                     $avg_garment_cost += $sum;
-                    $line_qty += $product['qnty'];
+                    $line_qty += $product->qnty;
                 }
             }
 
@@ -644,11 +643,11 @@ public function create_dir($dir_path) {
                                 'total_line_charge' => round($per_item,2)
                                 );
 
-            $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),$update_arr);
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
 
             $total_qnty = 0;
-            foreach ($post['productData'] as $size) {
-                $total_qnty += $size['qnty'];
+            foreach ($purchase_detail as $size) {
+                $total_qnty += $size->qnty;
             }
 
             $design_data = $this->order->getDesignByOrder($order_id);
@@ -781,54 +780,81 @@ public function create_dir($dir_path) {
     public function uploadCSV()
     {
         $post = Input::all();
-       
+      
        if(isset($post["file"])){
-
         $filename=$_FILES["file"]["tmp_name"];
-
-
-
          if($_FILES["file"]["size"] > 0)
          {
             $file = fopen($filename, "r");
-            $k=1;
-            $product_arr = array();
-            
-
+           
             while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
             {
-               $product_arr['product_name'] = $emapData[0];
-                
-                /*$sql = "SELECT id FROM brand WHERE brand_name = '".$emapData[2]."'";
-                $query = mysql_query($sql);
-                if(mysql_num_rows($query) > 0)
-                {
-                    while ($branddata = mysql_fetch_array($query)) {
-
-                        $brand_id = $branddata['id'];
+                if($emapData[0] != '') {
+               
+                       $product_data = $this->common->GetTableRecords('products',array('name' => trim($emapData[0]),'company_id' => $post['company_id'],'vendor_id' => 0),array());
+                       
+                       if(count($product_data)>0) {
+                         $product_id = $product_data[0]->id;
+                      
+                       } else {
+                            $product_name = array(
+                                'name'=>$emapData[0],
+                                'description'=>$emapData[3],
+                                'created_date' => date('Y-m-d'),
+                                'company_id' => $post['company_id']
+                                
+                                );
+                              $result = $this->common->InsertRecords('products',$product_name);
+                              $product_id = $result;
+                       }
+                       if($emapData[1] != '') {
+                       $color_data = $this->common->GetTableRecords('color',array('name' => trim($emapData[1]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                       
+                       if(count($color_data)>0) {
+                         $color_id = $color_data[0]->id;
+                      
+                       } else {
+                           $color_name = array(
+                                    'name'=>$emapData[1],
+                                    'is_sns' => 0,
+                                    'company_id' => $post['company_id']
+                                    );
+                            $result_color = $this->common->InsertRecords('color',$color_name);
+                            $color_id = $result_color;
+                       }
+                     
+                       if($emapData[2] != '') {
+                      
+                               $size_data = $this->common->GetTableRecords('product_size',array('name' => trim($emapData[2]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                               
+                                   if(count($size_data)>0) {
+                                     $size_id = $size_data[0]->id;
+                                  
+                                   } else {
+                                       $size_name = array(
+                                                'name'=>$emapData[2],
+                                                'is_sns' => 0,
+                                                'company_id' => $post['company_id']
+                                                );
+                                        $result_size = $this->common->InsertRecords('product_size',$size_name);
+                                        $size_id = $result_size;
+                                   }
+                               $product_color_data = $this->common->GetTableRecords('product_color_size',array('product_id' => $product_id,'color_id' => $color_id,'size_id' => $size_id),array());
+                               
+                                   if(count($product_color_data) == 0) {
+                                        
+                                        $product_color_size = array(
+                                                    'product_id'=>$product_id,
+                                                    'color_id' => $color_id,
+                                                    'size_id' => $size_id
+                                                    );
+                                        $result_size_color = $this->common->InsertRecords('product_color_size',$product_color_size);
+                                        $id = $result_size_color;
+                                    }
+                        }
                     }
-                }
-                else
-                {
-                    $brand_query = "INSERT INTO brand SET brand_name = '".$emapData[2]."',brand_image = '".$emapData[12]."' ";
-                    mysql_query($brand_query);
-                    $brand_id = mysql_insert_id();
-                }
-
-                $sub_query = "INSERT INTO products SET id = '".$emapData[0]."',brand_id = '".$brand_id."',name = '".mysql_real_escape_string($emapData[4])."',description = '".$emapData[5]."',
-                                    product_image = '".$emapData[13]."' ";
-                //mysql_query($sub_query);
-
-                if($emapData[7] != '')
-                {
-                    $category_data = explode(',', $emapData[7]);
-
-                    foreach ($category_data as $category_id) {
-                        $map_query = "INSERT INTO product_brand_category SET product_id = '".$emapData[0]."',category_id = '".$category_id."' ";
-                        mysql_query($map_query);
-                    }
-                }
-                $k++;*/
+                  }
+              
             }
             fclose($file);
             echo "complete";
@@ -907,64 +933,6 @@ public function create_dir($dir_path) {
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
 
-    }
-
-    public function productCustomDetailData() {
- 
-        $data = Input::all();
-        $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
-       
-       // print_r($result_api[0]->password);exit;
-        $credential = $result_api[0]->username.":".$result_api[0]->password;
- 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl,CURLOPT_USERPWD,$credential);
-        $result = curl_exec($curl);
-        curl_close($curl);
-
-       $all_data = json_decode($result);
-       
-
-       $allDetail = array();
-       if($data['design_id'] != 0) {
-        $allDetail = $this->product->getPurchaseDetail($data['design_id']);
-       }
-
-        foreach($all_data as $key => $data) {
-             
-            $color_data = $this->common->getColorId($data->colorName);
-
-            if($key == 0) {
-                $productAllData['colorSelection'] = $data->colorName;
-            }
-
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
-
-            if(count($allDetail) > 0) {
-            
-                if(isset($allDetail[$data->sizeName])){
-                    $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
-                }
-           
-            } else {
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
-            }
-        
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
-            $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
-            $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
-            $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;
-            $productAllData['colorData'][$data->colorName]['colorFrontImage'] = $data->colorFrontImage;
-            $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
-            $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
-            $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
-
-            return response()->json(["data" => $productAllData]);
-        }
     }
     
 }

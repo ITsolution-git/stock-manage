@@ -150,10 +150,17 @@
             responsive: true,
 //            scrollY:103
         };
-        vm.activeClass = activeClass;
-        function activeClass(item){
+        vm.assign_item = assign_item;
+        function assign_item(item,item_name,item_charge,item_id){
+            
+            var item_array = {'item':item,'item_name':item_name,'item_charge':item_charge,'item_id':item_id,'order_id':$scope.order_id};
+
+            $http.post('api/public/order/addRemoveToFinishing',item_array).success(function(result) {
+                
+            });
+
             if(item == 0){
-               return item=1;
+                return item=1;
             }
             else
                 return item=0;

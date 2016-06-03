@@ -63,18 +63,18 @@
                         <md-icon ng-if="position1.expanded" md-font-icon="icon-minus"></md-icon>
                         <md-icon ng-if="!position1.expanded" md-font-icon="icon-plus"></md-icon>
                     </button>
-                    <!-- <md-menu>
+                     <md-menu>
                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                         </md-button>
                         <md-menu-content width="4">
                             <md-menu-item>
-                                <md-button>
-                                    Main Design Options
+                                <md-button ng-click="RemoveFields('order_design_position','id',order_design_position.id)">
+                                    Delete
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
-                    </md-menu> -->
+                    </md-menu> 
                    </div>
                 </div>
                 <div ng-if="position1.expanded" class="box-content" layout="column" layout-padding>
@@ -408,7 +408,7 @@
                                     <div class="h5 grey-color font-14">
                                         <div class="form-cntnr">
                                             <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
-                                                <input ng-model="calculate_data.markup" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_markup()' }">
+                                                <input aria-label="Markup Default" ng-model="calculate_data.markup" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_markup()' }">
                                             <div class="md-errors-spacer"></div></md-input-container>
                                          </div>
                                     </div>
@@ -443,7 +443,7 @@
                                         <div class="h5 grey-color font-14">
                                             <div class="form-cntnr">
                                                 <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
-                                                    <input ng-model="calculate_data.override" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_override(calculate_data.override)' }">
+                                                    <input aria-label="Override" ng-model="calculate_data.override" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_override(calculate_data.override)' }">
                                                 <div class="md-errors-spacer"></div></md-input-container>
                                             </div>
                                         </div>

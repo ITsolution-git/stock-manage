@@ -2230,7 +2230,7 @@ else
                 if(!empty($item_data))
                 {
                     $calculate_arr = array('id' => $design->id,'productData' => json_decode(json_encode($item_data), true),'company_id' => $post['company_id']);
-                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
                 }
             }
         }
@@ -2259,7 +2259,7 @@ else
 
         $this->common->UpdateTableRecords('design_product',array('design_id' => $post['calculate_data']['design_id']),array('markup' => $markup));
         $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id'],'markup' => $markup);
-        $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+        $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['calculate_data']['design_id']);
 
         $data = array("success"=>1);
         return response()->json(["data" => $data]);
@@ -2293,11 +2293,69 @@ else
         if($post['calculate_data']['override'] == 0 || $post['calculate_data']['override'] == '')
         {
             $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id']);
-            $return = app('App\Http\Controllers\ProductController')->orderCalculation($calculate_arr);
+            $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['calculate_data']['design_id']);
         }
 
         $data = array("success"=>1);
         return response()->json(["data" => $data]);
     }
 
+    public function addRemoveToFinishing()
+    {
+        $post = Input::all();
+
+        if($post['item_name'] == 'Inside Tagging')
+        {
+            $post['item_name'] = 'Inside Tag';
+        }
+
+        $design_data = $this->order->getDesignByOrder($post['order_id']);
+
+        if($post['item'] == 1)
+        {
+            foreach($design_data as $design) {
+                
+                $total_qnty = $this->order->getTotalQntyByDesign($design->id);
+
+                if($total_qnty > 0 && $post['item_charge'] <= $design->sales_total)
+                {
+                    $extra_charges = $design->extra_charges - $post['item_charge'];
+                    $subtract = $design->sales_total - $post['item_charge'];
+                    $sales_total = round($subtract,2);
+                    
+                    $update_arr = array('sales_total' => $sales_total, 'extra_charges' => $extra_charges);
+                    $this->common->UpdateTableRecords('design_product',array('design_id' => $design->id),$update_arr);
+                }
+            }
+
+            $this->common->DeleteTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'item_id' => $post['item_id']));
+
+            $item_data = array('item_name' => $post['item_name'], 'order_id' => $post['order_id']);
+            $return = app('App\Http\Controllers\FinishingController')->removeFinishingItem($item_data);
+        }
+        else
+        {
+            foreach($design_data as $design) {
+                
+                $total_qnty = $this->order->getTotalQntyByDesign($design->id);
+                
+                if($total_qnty > 0)
+                {
+                    $extra_charges = $design->extra_charges + $post['item_charge'];
+                    $sum = $design->sales_total + $post['item_charge'];
+                    $sales_total = round($sum,2);
+
+                    $update_arr = array('sales_total' => $sales_total, 'extra_charges' => $extra_charges);
+                    $this->common->UpdateTableRecords('design_product',array('design_id' => $design->id),$update_arr);
+                }
+            }
+            $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
+            $shipping_id = $this->common->InsertRecords('order_item_mapping',$insert_arr);
+
+            $item_data = array('item_name' => $post['item_name'],'order_id' => $post['order_id'],'total_qnty' => $total_qnty);
+            $return = app('App\Http\Controllers\FinishingController')->addFinishingItem($item_data);
+        }
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
+    }
 }

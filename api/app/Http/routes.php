@@ -231,6 +231,7 @@ Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
 Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
 Route::post('order/updateMarkup', 'OrderController@updateMarkup');
 Route::post('order/updateOverride', 'OrderController@updateOverride');
+Route::post('order/addRemoveToFinishing', 'OrderController@addRemoveToFinishing');
 
 
 // FINISHING CONTROLLER 
@@ -268,7 +269,6 @@ Route::post('product/uploadCSV', 'ProductController@uploadCSV');
 Route::post('product/getProductDetailColorSize', 'ProductController@getProductDetailColorSize');
 Route::post('product/addcolorsize', 'ProductController@addcolorsize');
 Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
-Route::post('product/productCustomDetailData', 'ProductController@productCustomDetailData');
 
 
 // API CONTROLLER
