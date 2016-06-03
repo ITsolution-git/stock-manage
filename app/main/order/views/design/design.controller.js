@@ -457,7 +457,7 @@
             });
         }
 
-<<<<<<< HEAD
+
         
           // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
         $scope.RemoveFields = function(table,cond_field,cond_value){
@@ -486,7 +486,7 @@
                         }
                     });
                 }
-=======
+
         $scope.update_markup = function()
         {
             var markup_data = {};
@@ -498,7 +498,7 @@
             $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
                 $scope.designProductData();
             });
->>>>>>> fuse_php
+
         }
     }
 })();
