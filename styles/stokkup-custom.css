@@ -442,6 +442,7 @@ md-input-container > label {
 	font-weight:bold;
 	font-size:18px;
 }
+.f-red { color:#ff0000 !important; }
 .tbl-typ1 td a.add-size, .tbl-typ1 td a.remove-size {
 	background:#0288D1;
 	display:inline-block;
@@ -471,6 +472,7 @@ md-input-container > label {
 .display-none {
 	display:none;
 }
+.pd15 { padding:15px; }
 .pd15-TB {
 	padding-top:15px;
 	padding-bottom:15px;
@@ -510,6 +512,26 @@ md-input-container > label {
 	height:150px;
 	padding:10px 10px 0;
 }
+.mrg10-TB { margin-bottom:10px; margin-top:10px; }
+.mrg10-B { margin-bottom:10px;}
+.pd10-R { padding-right:10px; }
+.mrg5-B { margin-bottom:5px; }
+.mrg10-L { margin-left:10px; }
+.gray-text {
+	color:#999999;
+	opacity: 0.537255;
+	font-size:14px;
+}
+.tbl-typ2 { width: 100%; border-collapse:collapse; margin-bottom:20px;}
+.tbl-typ2:last-child { margin-bottom: 0px;}
+.tbl-typ2 td { border: 1px solid #ccc;}
+.header-typ1 { padding: 4px 10px; background: #F2F2F2; color: #000; font-size: 16px; font-weight: bold; width: 100%;}
+.col3-layout .trans-box { width: 33.333%;}
+.font-50 { font-size: 50px;}
+.mrg-auto { margin: 0 auto;}
+.uploadfile { width: 150px; height: 150px; border-collapse: collapse; margin: 0 auto; margin-top:18px;}
+.uploadfile td { border: 2px dashed #ccc; text-align: center;}
+.screen-bottom md-card md-card-title { display: block; flex:0;}
 /*****************************/	
 .loaderouter{
     position:fixed;
@@ -560,7 +582,8 @@ md-input-container > label {
 }
 .loader:after {
     left: 1.5em;
-}  
+}
+.fs22 { font-size: 22px;}  
 @-webkit-keyframes load1 {
     0%,
     80%,

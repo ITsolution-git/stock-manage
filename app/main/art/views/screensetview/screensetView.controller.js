@@ -4,14 +4,13 @@
 
     angular
             .module('app.art')
-            .controller('orderViewController', orderViewController);
+            .controller('screenSetViewController', screenSetViewController);
 
     /** @ngInject */
-    function orderViewController($document, $window, $timeout, $mdDialog)
+    function screenSetViewController($document, $window, $timeout, $mdDialog)
     {
         var vm = this;
-        vm.createNewScreen = createNewScreen;
-        vm.generateArtForm = generateArtForm;
+        vm.createScreenDetail = createScreenDetail;
         //Dummy models data
         vm.screensetPOinfo = {
             "client": "Client Name",
@@ -22,29 +21,16 @@
             "affiliateArrival": "xx/xx/xxxx",
             "affiliateDeadline": "xx/xx/xxxx"
         };
-        vm.screensetinfo = [
-            {"Position": "Front", "NumberColors": "30", "FrameSize": "32", "Width": "10", "PrintLocation": "Top", "NumberScreens": "10", "LinesPerInch": "10", "Height": "20"},
-            {"Position": "Front", "NumberColors": "30", "FrameSize": "32", "Width": "10", "PrintLocation": "Top", "NumberScreens": "10", "LinesPerInch": "10", "Height": "20"},
-            {"Position": "Front", "NumberColors": "30", "FrameSize": "32", "Width": "10", "PrintLocation": "Top", "NumberScreens": "10", "LinesPerInch": "10", "Height": "20"}
+        vm.colorsetinfo = [
+            {"threadColor": "Black", "threadCount": "30", "stroke": "3", "inkType": "Type1", "headLocation": "Top", "Squeegee": "Type"},
+            {"threadColor": "Black", "threadCount": "30", "stroke": "3", "inkType": "Type1", "headLocation": "Top", "Squeegee": "Type"},
+            {"threadColor": "Black", "threadCount": "30", "stroke": "3", "inkType": "Type1", "headLocation": "Top", "Squeegee": "Type"}
         ];
-        function createNewScreen(ev, settings) {
+        function createScreenDetail(ev, settings) {
             $mdDialog.show({
                 controller: 'createNewScreenController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/art/dialogs/createScreen/createScreen-dialog.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    event: ev
-                }
-            });
-        }
-        function generateArtForm(ev, settings) {
-            $mdDialog.show({
-                controller: 'generateArtController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/art/dialogs/generateArtForm/generateArtForm-dialog.html',
+                templateUrl: 'app/main/art/dialogs/createScreenDetail/createScreenDetail.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,

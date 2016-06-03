@@ -33,6 +33,14 @@
                         controller : 'orderViewController as vm'
                     }
                 }
+            }).state('app.art.screensetView', {
+                url  : '/screensetView',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/art/views/screensetview/screensetView.html',
+                        controller : 'screenSetViewController as vm'
+                    }
+                }
             });
 
        // Translation
