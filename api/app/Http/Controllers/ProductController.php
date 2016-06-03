@@ -370,8 +370,10 @@ public function create_dir($dir_path) {
         $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
         //$post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
+
         $return = 1;
         //$return = $this->orderCalculation($post);
+
 
         if(is_array($return))
         {
@@ -385,14 +387,17 @@ public function create_dir($dir_path) {
         }
     }
 
-    public function orderCalculation($post)
+    public function orderCalculation($design_id)
     {
+        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id),array());
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id),array());
+
         $total_qnty = 0;
-        foreach ($post['productData'] as $size) {
-            $total_qnty += $size['qnty'];
+        foreach ($purchase_detail as $size) {
+            $total_qnty += $size->qnty;
         }
         
-        $order_data = $this->order->getOrderByDesign($post['id']);
+        $order_data = $this->order->getOrderByDesign($design_id);
         $price_id = $order_data[0]->price_id;
         $order_id = $order_data[0]->id;
 
@@ -405,9 +410,9 @@ public function create_dir($dir_path) {
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $post['id']),array());
+        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id),array());
         $data = array();
-        $data['cond']['company_id'] = $post['company_id'];
+        $data['cond']['company_id'] = $order_data[0]->company_id;
         $miscData = $this->common->getAllMiscDataWithoutBlank($data);
 
         $color_stitch_count = 0;
@@ -575,9 +580,9 @@ public function create_dir($dir_path) {
                 }
             }
 
-            if(isset($post['markup']))
+            if($design_product[0]->markup > 0)
             {
-                $markup = $post['markup'];
+                $markup = $design_product[0]->markup;
             }
             else
             {
@@ -599,20 +604,13 @@ public function create_dir($dir_path) {
 
             $item_price = 0;
             $line_qty = 0;
-            foreach($post['productData'] as $product) {
-                if($product['qnty'] > 0)
+            foreach($purchase_detail as $product) {
+                if($product->qnty > 0)
                 {
-                    if(isset($product['customerPrice']))
-                    {
-                        $price = $product['customerPrice'];
-                    }
-                    else
-                    {
-                        $price = $product['price'];
-                    }
+                    $price = $product->price;
                     $sum = $price + $price_grid->shipping_charge;
                     $avg_garment_cost += $sum;
-                    $line_qty += $product['qnty'];
+                    $line_qty += $product->qnty;
                 }
             }
 
@@ -645,11 +643,11 @@ public function create_dir($dir_path) {
                                 'total_line_charge' => round($per_item,2)
                                 );
 
-            $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),$update_arr);
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
 
             $total_qnty = 0;
-            foreach ($post['productData'] as $size) {
-                $total_qnty += $size['qnty'];
+            foreach ($purchase_detail as $size) {
+                $total_qnty += $size->qnty;
             }
 
             $design_data = $this->order->getDesignByOrder($order_id);
