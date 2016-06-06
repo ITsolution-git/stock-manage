@@ -75,9 +75,9 @@
 			               // console.log('error');
 			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
 			                notifyService.notify(data.status, data.message);
-			               	//setTimeout(function(){ 
-			                //window.open('dashboard', '_self'); }, 1000);
-			                //return false;
+			               	setTimeout(function(){ 
+			                window.open('dashboard', '_self'); }, 1000);
+			                return false;
 			            }
 	                }
 	                else

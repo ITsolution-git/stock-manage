@@ -31,7 +31,7 @@ class Company extends Model {
     }
     public function InsertCompanyData($post)
     {
-
+ 
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
    
     	$result = DB::table('users')->insert(array('name'=>$post['name'],'email'=>$post['email'],'password'=>$post['password'],'oversize_value' => '0.50','role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));

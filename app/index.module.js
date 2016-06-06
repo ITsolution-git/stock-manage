@@ -22,7 +22,14 @@
             // Quick panel
             /*'app.quick-panel',*/
 
+            // LOGIN and DASHBOARD
             'app.login',
+
+
+            //Admin settings
+            'app.admin',
+
+
             // Client
             'app.client',
             
@@ -43,7 +50,7 @@
             // image uploading module
             'naif.base64',
 
-            //Admin settings
+            //Company settings
             'app.settings',
 
             //Finishing

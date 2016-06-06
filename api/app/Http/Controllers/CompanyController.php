@@ -31,7 +31,7 @@ $this->common = $common;
 			$success = 1;
 			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
 			$data = array("records" => $getData,"success"=>$success,"message"=>$message);
-		return response()->json(['data'=>$data]);
+		return response()->json(['data'=>$data]); 
 	}
 	/**
 * Get All account list data
