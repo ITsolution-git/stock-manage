@@ -366,8 +366,12 @@ public function create_dir($dir_path) {
         $post = Input::all();
 
         $post['created_date']=date('Y-m-d');
-        $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
-        $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
+        // $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
+        // $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
+
+        $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
+        $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));
+
         //$post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
 
@@ -754,8 +758,10 @@ public function create_dir($dir_path) {
        
         if(!empty($post['id']))
         {
-            $record_data = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
-            $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
+           
+            $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
+            $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));
+
             if($record_data)
             {
                 $message = DELETE_RECORD;

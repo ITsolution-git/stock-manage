@@ -426,7 +426,7 @@
 
         $scope.deleteAddProduct = function(){
 
-            var permission = confirm(AllConstant.deletePermanent);
+            var permission = confirm(AllConstant.deleteMessage);
 
             if (permission == true) {
 
@@ -454,40 +454,46 @@
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
+                notifyService.notify('success',result.data.message);
+                     
             });
         }
 
 
-        
-          // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
-        $scope.RemoveFields = function(table,cond_field,cond_value){
-              
-                var delete_data = {};
-                
-                $scope.name_filed = cond_field;
-                var obj = {};
-                obj[$scope.name_filed] =  cond_value;
-                delete_data.cond = angular.copy(obj);
-                
-                delete_data.table =table;
-                var permission = confirm(AllConstant.deletePermanent);
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
+            
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+
+            var permission = confirm(AllConstant.deleteMessage);
                 if (permission == true)
                 {
-                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
-                    {
-                        if(result.data.success=='1')
-                        {
-                            notifyService.notify('success',result.data.message);
-                            $scope.designPosition();
-                        }
-                        else
-                        {
-                             notifyService.notify('error',result.data.message);
-                        }
-                    });
-                }
-        }        
 
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                       notifyService.notify('success','Record Deleted Successfully.');
+                       $scope.designPosition();
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                   });
+                 }
+        } 
+        
+       
         $scope.update_markup = function()
         {
             var markup_data = {};
