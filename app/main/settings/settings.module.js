@@ -13,21 +13,29 @@
         //State
         $stateProvider
             .state('app.settings', {
+                resolve: {
+                    checksession : function (sessionService)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                    },
+                },
                 url    : '/settings',
                 views  : {
                     'content@app': {
                         templateUrl: 'app/main/settings/settings.html',
                         controller : 'SettingsController as vm'
                     }
-                },
-                resolve: {
-                    
                 }
             }).state('app.settings.userProfile', {
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
-                       return sessionService.AccessService('ALL');
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('ALL');
                     },
                 },
                 url  : '/userProfile',
@@ -38,21 +46,31 @@
                     }
                 }
             }).state('app.settings.priceGrid', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('ALL');
+                    }
+                },
                 url  : '/priceGrid',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/priceGrid/priceGrid.html',
                         controller : 'PriceGridController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.companyProfile', {
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
-                       return sessionService.AccessService('CA');
-                    },
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
                 },
                 url  : '/companyProfile',
                 views: {
@@ -62,6 +80,15 @@
                     }
                 }
             }).state('app.settings.companyDetails', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
                 url  : '/companyDetails',
                 views: {
                     'content@app': {
@@ -72,6 +99,15 @@
                    
                 }
             }).state('app.settings.userManagement', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
                 url  : '/userManagement',
                 views: {
                     'content@app': {
@@ -82,6 +118,15 @@
                    
                 }
             }).state('app.settings.affiliate', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
                 url  : '/affiliate',
                 views: {
                     'content@app': {
@@ -92,6 +137,15 @@
                    
                 }
             }).state('app.settings.integrations', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
                 url  : '/integrations',
                 views: {
                     'content@app': {
@@ -102,6 +156,15 @@
                    
                 }
             }).state('app.settings.support', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
                 url  : '/support',
                 views: {
                     'content@app': {
@@ -124,7 +187,7 @@
             title    : 'Settings',
             icon     : 'icon-cog',
             //state    : 'app.settings',
-            class      : 'navigation-dashboards project-dashboard',
+            class      : 'navigation-dashboards project-dashboard settings-block',
             
             weight   : 1
         });

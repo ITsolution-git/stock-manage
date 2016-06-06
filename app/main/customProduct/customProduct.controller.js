@@ -126,12 +126,7 @@
                     
                     document.getElementById('uploadcsv').submit();
                 }
-                   
-
-          
         }
-
-    
 
     }
 })();

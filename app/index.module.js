@@ -28,6 +28,9 @@
             
             //Order
             'app.order',
+
+            //Order
+            'app.invoices',
             
              //puchase order
             'app.purchaseOrder',

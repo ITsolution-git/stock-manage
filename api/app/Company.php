@@ -507,6 +507,62 @@ class Company extends Model {
        $result = DB::table('affiliates')->where('id',"=",$id)->update($post);
        return $result;
     }
+     public function getAuthorizeAPI($company_id)
+    {
+        $result = DB::table('api_link_table as alt')
+            ->select('ad.*')
+            ->Join('authorize_detail as ad','ad.link_id','=','alt.id')
+            ->where("alt.company_id","=",$company_id)
+            ->where("alt.api_id","=",AUTHORIZED_ID)
+            ->get();
+        return $result;
+    }
+    public function InsertAuthorizeAPI($company_id)
+    {
+      $result  = DB::table('api_link_table')->insert(array("api_id"=>AUTHORIZED_ID,"company_id"=>$company_id));
+      $link_id = DB::getPdo()->lastInsertId();
+      $result  = DB::table('authorize_detail')->insert(array("link_id"=>$link_id));
 
+      return $result;
+    }
+     public function getUpsAPI($company_id)
+    {
+        $result = DB::table('api_link_table as alt')
+            ->select('ad.*')
+            ->Join('ups_detail as ad','ad.link_id','=','alt.id')
+            ->where("alt.company_id","=",$company_id)
+            ->where("alt.api_id","=",UPS_ID)
+            ->get();
+        return $result;
+    }
+    public function InsertUpsAPI($company_id)
+    {
+      $result  = DB::table('api_link_table')->insert(array("api_id"=>UPS_ID,"company_id"=>$company_id));
+      $link_id = DB::getPdo()->lastInsertId();
+      $result  = DB::table('ups_detail')->insert(array("link_id"=>$link_id));
+
+      return $result;
+    }
+     public function getSnsAPI($company_id)
+    {
+        $result = DB::table('api_link_table as alt')
+            ->select('ad.*')
+            ->Join('ss_detail as ad','ad.link_id','=','alt.id')
+            ->where("alt.company_id","=",$company_id)
+            ->where("alt.api_id","=",SNS_ID)
+            ->get();
+        return $result;
+    }
+    public function InsertSnsAPI($company_id)
+    {
+      $result  = DB::table('api_link_table')->insert(array("api_id"=>SNS_ID,"company_id"=>$company_id));
+      $link_id = DB::getPdo()->lastInsertId();
+      $result  = DB::table('ss_detail')->insert(array("link_id"=>$link_id));
+
+      return $result;
+    }
+    
+    
+    
 
 }

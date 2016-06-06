@@ -6,7 +6,7 @@
             </div>
            
 
-            <div class="search-block" flex=40>
+            <div class="search-block" flex=30>
                 <md-input-container class="md-block" flex-gt-sm>
                     <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
@@ -15,9 +15,15 @@
              <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
 
             <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data" target="_blank">
-                <input type="file" name="file" id="file" class="input-large" ng-model="file">
-                <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
-                <md-button class="md-accent md-raised" ng-click="submitForm()">Upload CSV</md-button>
+                <div class="fileUpload">
+                    <input type="file" name="file" id="file" class="upload" ng-model="file">
+                    <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
+                    <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                    <span>Upload CSV</span>
+                </div>
+                <a href="#" class="btn-typ-submit" ng-click="submitForm()">
+                    <span class="icon icon-upload"></span>
+                </a>
                </form>
                
                 </div>
@@ -25,11 +31,6 @@
              <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
                 <span class="cursor-p" ng-click="vm.openCustomProductDialog($event,0)" >CREATE CUSTOM PRODUCT</span>
             </div>
-
-       
-
-             
-
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
