@@ -579,6 +579,7 @@ md-input-container > label {
     filter: alpha(opacity=0);
 }
 .pd15-LR { padding-left: 15px; padding-right: 15px;}
+.pd15-L { padding-left: 15px; }
 .m-l-20 md-card .recap.pd0 .card-box { padding:8px 10px !important;}
 .header-typ2 { padding: 10px 15px; border-bottom:1px solid #ccc; }
 .font-20 { font-size: 20px;}

@@ -46,14 +46,17 @@
             //Admin settings
             'app.settings',
 
+            //Art
+            'app.art',
+
             //Finishing
             'app.finishing',
 
             // Custom Product
             'app.customProduct',
 
-            //Art
-            'app.art',
+            //shipping
+            'app.shipping',
 
             // Navigation
             'app.navigation',

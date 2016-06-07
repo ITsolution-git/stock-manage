@@ -236,6 +236,10 @@
     <script src="app/main/invoices/dialogs/linktopay/linktopay-dialog.controller.js"></script>
     <script src="app/main/invoices/views/linktopay/linktopay.controller.js"></script>
 
+    <!-- Shipping -->
+    <script src="app/main/shipping/shipping.module.js"></script>
+    <script src="app/main/shipping/shipping.controller.js"></script>
+
     <!--Datatable Scrolling-->
 
     <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>
