@@ -1,0 +1,6 @@
+{
+	"data": [
+	            {"date":"xx/xx/xxxx", "amountPaid":"$50.00", "methodPaid":"Cash"},
+            	{"date":"xx/xx/xxxx", "amountPaid":"$50.00", "methodPaid":"Credit Card"}
+	        ]
+}

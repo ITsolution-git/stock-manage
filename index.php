@@ -233,6 +233,8 @@
     <script src="app/main/invoices/invoices.module.js"></script>
     <script src="app/main/invoices/invoices.controller.js"></script>
     <script src="app/main/invoices/views/singleInvoice/singleInvoice.controller.js"></script>
+    <script src="app/main/invoices/dialogs/linktopay/linktopay-dialog.controller.js"></script>
+    <script src="app/main/invoices/views/linktopay/linktopay.controller.js"></script>
 
     <!--Datatable Scrolling-->
 
