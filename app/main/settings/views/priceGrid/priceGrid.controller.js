@@ -12,10 +12,17 @@
     {
         var originatorEv;
         var vm = this ;
-        /*vm.openMenu = function ($mdOpenMenu, ev) {
-            originatorEv = ev;
-            $mdOpenMenu(ev);
-        };*/
+     
+
+        var company_id = sessionService.get('company_id');
+        var price_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  company_id;
+        price_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/admin/price',price_list_data).success(function(result, status, headers, config) {
+            $scope.price = result.data.records;                     
+        });
 
         vm.openCreatePriceGridDialog = openCreatePriceGridDialog;
         vm.uploadCSV = uploadCSV ;
