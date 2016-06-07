@@ -112,6 +112,7 @@
 				msNavigationService.deleteItem('fuse.finishing');
 				msNavigationService.deleteItem('fuse.customProduct');
 				msNavigationService.deleteItem('fuse.customProduct');
+				msNavigationService.deleteItem('fuse.shipping');
 
 			}
 			if(role=='CA')
