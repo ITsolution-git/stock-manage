@@ -338,7 +338,7 @@ class Product extends Model {
     public function designProduct($data) {
 
      
-        $whereConditions = ['dp.is_delete' => "1",'dp.design_id' => $data['id']];
+        $whereConditions = ['pd.is_delete' => "1",'dp.is_delete' => "1",'dp.design_id' => $data['id']];
         $listArray = ['dp.*','pd.*','c.name as colorName'];
 
         $designDetailData = DB::table('design_product as dp')
@@ -366,7 +366,9 @@ class Product extends Model {
 
     public function getPurchaseDetail($designId) {
 
-    $result = DB::table('purchase_detail')->where('design_id','=',$designId)->get();
+    $whereConditions = ['is_delete' => "1",'design_id' => $designId];
+
+    $result = DB::table('purchase_detail')->where($whereConditions)->get();
 
         
         $purchaseDetail = array();
@@ -381,7 +383,8 @@ class Product extends Model {
 
      public function getPurchaseDetailColor($designId) {
 
-    $result = DB::table('purchase_detail')->where('design_id','=',$designId)->get();
+    $whereConditions = ['is_delete' => "1",'design_id' => $designId];
+    $result = DB::table('purchase_detail')->where($whereConditions)->get();
 
         
         $purchaseDetail = array();

@@ -358,8 +358,15 @@ md-input-container > label {
 .inline-b {
 	display:inline-block;
 }
+.pd0 { padding: 0px; }
 .mrg10-R {
 	margin-right:10px;
+}
+.mrg15-R {
+  margin-right: 15px;
+}
+.mrg75-T {
+  margin-top: 75px;
 }
 .box-typ1 {
 	height:270px;
@@ -514,6 +521,8 @@ md-input-container > label {
 	height:150px;
 	padding:10px 10px 0;
 }
+.mrg15-T { margin-top: 15px;}
+.mrg10-T { margin-top: 10px;}
 .mrg10-TB { margin-bottom:10px; margin-top:10px; }
 .mrg10-B { margin-bottom:10px;}
 .pd10-R { padding-right:10px; }
@@ -524,6 +533,7 @@ md-input-container > label {
 	opacity: 0.537255;
 	font-size:14px;
 }
+[md-theme="default"] a.f-black, .f-black { color: #000;}
 .tbl-typ2 { width: 100%; border-collapse:collapse; margin-bottom:20px;}
 .tbl-typ2:last-child { margin-bottom: 0px;}
 .tbl-typ2 td { border: 1px solid #ccc;}
@@ -569,6 +579,10 @@ md-input-container > label {
     filter: alpha(opacity=0);
 }
 .pd15-LR { padding-left: 15px; padding-right: 15px;}
+.pd15-L { padding-left: 15px; }
+.m-l-20 md-card .recap.pd0 .card-box { padding:8px 10px !important;}
+.header-typ2 { padding: 10px 15px; border-bottom:1px solid #ccc; }
+.font-20 { font-size: 20px;}
 /*****************************/	
 .loaderouter{
     position:fixed;

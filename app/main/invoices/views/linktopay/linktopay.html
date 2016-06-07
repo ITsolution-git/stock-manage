@@ -1,0 +1,99 @@
+<div class="main-design-page m-r-15 m-l-20 m-b-20">
+    <div class="header"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
+        </div>
+        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+            <div class="info-order mrg-auto" flex="70">
+                <md-card layout="row">
+                    <md-content>
+                        <div class="ms-responsive-table-wrapper">
+                            <div class="header-typ2">
+                                    <div layout="row">
+                                        <div layout="column" flex="50">
+                                            <span class="font-20 mrg10-T">Link to Pay - INV-27</span>
+                                        </div>
+                                        <div layout="column" flex="50" class="text-right">
+                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                                <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Download"><span class="ng-scope">Download</span></button>
+                                            </md-dialog-actions>
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="pd15">
+                                   <div layout="row">
+                                       <div layout="column" flex="45">
+                                            <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                <md-input-container flex="100">
+                                                     <input placeholder="Name On Card" name="Name On Card">
+                                                </md-input-container>
+                                                <md-input-container flex="100">
+                                                    <input placeholder="Credit Card Number" name="Credit Card Number">
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                <md-input-container flex="30">
+                                                    <md-select ng-model="company.prime_address_state" placeholder="MM">
+                                                        <md-option value="0">MM</md-option>
+                                                        <md-option>JAN</md-option>
+                                                        <md-option>FEB</md-option>
+                                                        <md-option>MAR</md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                <md-input-container flex=30 class="m-b-20">
+                                                   <md-select ng-model="company.prime_address_state" placeholder="YY">
+                                                        <md-option value="0">YY</md-option>
+                                                        <md-option>12</md-option>
+                                                        <md-option>13</md-option>
+                                                        <md-option>14</md-option>
+                                                        <md-option>15</md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                <md-input-container flex="30">
+                                                    <input placeholder="CVV" name="CVV">
+                                                </md-input-container>
+                                            </div>
+                                            <md-checkbox  aria-label="Checkbox 1">Store Credit Card for Future Payments</md-checkbox>
+                                       </div>
+                                       <div flex="10">&nbsp;</div>
+                                       <div layout="column" flex="45">
+                                            <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                <md-input-container flex="75">
+                                                    <input placeholder="Street Address" name="Street Address">
+                                                </md-input-container>
+                                                <md-input-container flex="25">
+                                                    <input placeholder="Suite" name="Suite">
+                                                </md-input-container>
+                                            </div>
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                <md-input-container flex="40">
+                                                    <input placeholder="City" name="City">
+                                                </md-input-container>
+                                                <md-input-container flex="30">
+                                                    <md-select ng-model="company.prime_address_state" placeholder="State">
+                                                        <md-option value="0">State1</md-option>
+                                                        <md-option>State2</md-option>
+                                                        <md-option>State3</md-option>
+                                                        <md-option>State4</md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                <md-input-container flex="30">
+                                                    <input placeholder="Zip" name="Zip">
+                                                </md-input-container>
+                                            </div>
+                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
+                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
+                                                </button>
+                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
+                                            </md-dialog-actions>
+                                       </div>
+                                   </div>
+                               </div>
+                            </div>
+                    </md-content>
+                </md-card>
+            </div>
+        </div>
+    </div>
+</div>

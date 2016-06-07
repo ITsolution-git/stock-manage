@@ -28,6 +28,7 @@
                     result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
                     result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
                     result.data.records[0].start_date = new Date(result.data.records[0].start_date);
+                    $scope.order_id = result.data.records[0].order_id;
 
                     $scope.designInforamtion = result.data.records[0];
 
@@ -97,30 +98,30 @@
         }
 
 
-          $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition,key)
+        $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition,key)
         {
-           
-          var position_main_data = {};
-          position_main_data.table =table_name;
-          $scope.name_filed = column_name;
-          
-          var obj = {};
-          obj[$scope.name_filed] =  value;
-          position_main_data.data = angular.copy(obj);
+            var position_main_data = {};
+            position_main_data.table =table_name;
+            $scope.name_filed = column_name;
 
-          var condition_obj = {};
-          condition_obj[match_condition] =  id;
-          position_main_data.cond = angular.copy(condition_obj);
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            position_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[match_condition] =  id;
+            position_main_data.cond = angular.copy(condition_obj);
+            position_main_data.order_id = $scope.order_id;
+            position_main_data.company_id = sessionService.get('company_id');
           
-            $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+            $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
                 if(column_name == 'position_id') {
                     $scope.order_design_position[key].position_name = $scope.miscData.position[value].value;
-
                 }
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
-                     notifyService.notify(data.status, data.message);
+                notifyService.notify(data.status, data.message);
+                $scope.designProductData();
             });
-      
         }
 
         var misc_list_data = {};
@@ -426,7 +427,7 @@
 
         $scope.deleteAddProduct = function(){
 
-            var permission = confirm(AllConstant.deletePermanent);
+            var permission = confirm(AllConstant.deleteMessage);
 
             if (permission == true) {
 
@@ -454,40 +455,46 @@
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
+                notifyService.notify('success',result.data.message);
+                     
             });
         }
 
 
-        
-          // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
-        $scope.RemoveFields = function(table,cond_field,cond_value){
-              
-                var delete_data = {};
-                
-                $scope.name_filed = cond_field;
-                var obj = {};
-                obj[$scope.name_filed] =  cond_value;
-                delete_data.cond = angular.copy(obj);
-                
-                delete_data.table =table;
-                var permission = confirm(AllConstant.deletePermanent);
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
+            
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+
+            var permission = confirm(AllConstant.deleteMessage);
                 if (permission == true)
                 {
-                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
-                    {
-                        if(result.data.success=='1')
-                        {
-                            notifyService.notify('success',result.data.message);
-                            $scope.designPosition();
-                        }
-                        else
-                        {
-                             notifyService.notify('error',result.data.message);
-                        }
-                    });
-                }
-        }        
 
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                       notifyService.notify('success','Record Deleted Successfully.');
+                       $scope.designPosition();
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                   });
+                 }
+        } 
+        
+       
         $scope.update_markup = function()
         {
             var markup_data = {};

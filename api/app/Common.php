@@ -171,7 +171,7 @@ class Common extends Model {
 
         return $id;
     }
-    public function GetTableRecords($table,$cond,$notcond)
+    public function GetTableRecords($table,$cond,$notcond,$sort=0,$sortBy=0)
     {
         $result = DB::table($table);
         if(count($cond)>0)
@@ -190,6 +190,11 @@ class Common extends Model {
                 
                     $result =$result ->where($key,'!=',$value);
             }
+        }
+
+         if(!empty($sort) && !empty($sortBy))
+        {
+            $result =$result ->orderBy($sort, $sortBy);
         }
 
         $result=$result->get();

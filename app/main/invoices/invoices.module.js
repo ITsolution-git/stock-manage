@@ -23,6 +23,14 @@
                     invoiceData: function (msApi)
                     {
                         return msApi.resolve('invoicesDetail@get');
+                    },
+                    singleInvoiceData: function (msApi)
+                    {
+                        return msApi.resolve('singleInvoicesDetail@get');
+                    },
+                    purchaseOrderData: function (msApi)
+                    {
+                        return msApi.resolve('purchaseDetail@get');
                     }
                 }
             }).state('app.invoices.singleInvoice', {
@@ -33,6 +41,14 @@
                         controller : 'singleInvoiceController as vm'
                     }
                 }
+            }).state('app.invoices.linktopay', {
+                url  : '/linktopay',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/invoices/views/linktopay/linktopay.html',
+                        controller : 'linktoPayController as vm'
+                    }
+                }
             });
 
        // Translation
@@ -40,6 +56,9 @@
 
         // Api
         msApiProvider.register('invoicesDetail', ['app/data/invoices/invoiceData.json']);
+        msApiProvider.register('singleInvoicesDetail', ['app/data/invoices/singleInvoiceData.json']);
+        msApiProvider.register('purchaseDetail', ['app/data/invoices/paymenthistry.json']);
+
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',
@@ -56,6 +75,14 @@
              },*/
             
             weight   : 1
+        });
+
+        msNavigationServiceProvider.saveItem('fuse.invoices.linktopay', {
+            title      : 'Link To Pay',
+            state      : 'app.invoices.linktopay',
+            stateParams: {'id': 1},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 1
         });
     }
 })();
