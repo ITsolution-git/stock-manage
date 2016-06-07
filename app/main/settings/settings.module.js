@@ -62,6 +62,16 @@
                         controller : 'PriceGridController as vm'
                     }
                 }
+            }).state('app.settings.price-info', {
+                url  : '/price-info/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/priceGrid/createPriceGrid.html',
+                        controller : 'CreatePriceGridDialogController as vm'
+                    }
+                },resolve: {
+                   
+                }
             }).state('app.settings.companyProfile', {
                 resolve: {
                     checksession : function (sessionService,$state)

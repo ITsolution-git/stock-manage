@@ -5,23 +5,13 @@
                                 <div class="table-title-text" flex=40>
                                     <label class="priceGridTr">Price Increase by %   </label>
                                     <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="">
-                                        <div ng-messages=" " role="alert" multiple>
-                                            <div ng-message="required">
-                                                <span>This field is required</span>
-                                            </div>
-                                        </div>
+                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                                 <div class="table-title-text" flex=40>
                                     <label class="priceGridTr">Price Increase by amount </label>
                                     <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="">
-                                        <div ng-messages=" " role="alert" multiple>
-                                            <div ng-message="required">
-                                                <span>This field is required</span>
-                                            </div>
-                                        </div>
+                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -48,35 +38,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr ng-repeat="garment_mackup in allGarmentMackup">
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="garment_mackup.range_low">
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="garment_mackup.range_high">
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="garment_mackup.percentage">
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">

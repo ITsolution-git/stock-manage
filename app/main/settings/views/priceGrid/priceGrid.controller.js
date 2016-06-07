@@ -12,6 +12,7 @@
     {
         var originatorEv;
         var vm = this ;
+        $scope.company_id = sessionService.get('company_id');
      
 
         var company_id = sessionService.get('company_id');
@@ -40,7 +41,7 @@
             $mdDialog.hide();
         }
 
-        function openCreatePriceGridDialog(ev, settings)
+        function openCreatePriceGridDialog(ev, price_id)
         {
             $mdDialog.show({
                 controller: 'CreatePriceGridDialogController',
@@ -50,8 +51,7 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Settings: settings,
-                    Settings: vm.settings,
+                    price_id: price_id,
                     event: ev
                 }
             });

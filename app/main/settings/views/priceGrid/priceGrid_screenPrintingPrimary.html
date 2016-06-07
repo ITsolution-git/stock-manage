@@ -5,23 +5,15 @@
                                 <div class="table-title-text" flex=40>
                                     <label class="priceGridTr">Price Increase by %   </label>
                                     <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="">
-                                        <div ng-messages=" " role="alert" multiple>
-                                            <div ng-message="required">
-                                                <span>This field is required</span>
-                                            </div>
-                                        </div>
+                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
+                                        
                                     </md-input-container>
                                 </div>
                                 <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by amount   </label>
+                                    <label class="priceGridTr">Price Increase by amount </label>
                                     <md-input-container class="first-box settings-margin-0 margin-top-25 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="">
-                                        <div ng-messages=" " role="alert" multiple>
-                                            <div ng-message="required">
-                                                <span>This field is required</span>
-                                            </div>
-                                        </div>
+                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
+                                       
                                     </md-input-container>
                                 </div>
                             </div>
@@ -78,95 +70,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr ng-repeat="price_primary in allScreenPrimary">
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.range_low">
+                                    
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.range_high">
+                                    
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.pricing_1c">
+                                   
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.pricing_2c">
+                                   
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.pricing_3c">
+                                    
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.pricing_4c">
+                                   
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.pricing_5c">
+                                    
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.pricing_6c">
+                                   
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
                                 <md-input-container class="md-block first-box settings-margin-0">
-                                    <input placeholder=" " name="" ui-event="">
-                                    <div ng-messages=" " role="alert" multiple>
-                                        <div ng-message="required">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
+                                    <input placeholder=" " name="" ui-event="" valid-number aria-label="a" ng-model="price_primary.pricing_7c">
+                                    
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
