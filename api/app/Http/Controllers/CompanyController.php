@@ -43,8 +43,9 @@ $this->common = $common;
 	{
 		$post = Input::all();
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['role_id']) )
+		if(!empty($post['email']) && !empty($post['password']))
 		{
+			$post['role_id'] = 17;
 			$email = $this->common->checkemailExist($post['email'],0); // CHECK EMAIL EXIST, FOR ALL USERS
 			if(count($email)>0)
 			{

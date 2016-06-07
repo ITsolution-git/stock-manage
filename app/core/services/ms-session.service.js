@@ -5,7 +5,7 @@
 	.factory('sessionService', sessionService);
 
 	/* ngInject */
-	function sessionService($state, $resource, notifyService,$rootScope,$http) {
+	function sessionService($state, $resource, notifyService,$rootScope,$http,msNavigationService) {
 		var service = {
 			set : set,
 			get : get,
@@ -70,15 +70,16 @@
 	                    set('login_id',result.data.login_id);
 
 	                    var role = result.data.role_session;
+	                    checkRollMenu(result.data.role_session);
 	                    if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
 			            {
 			               // console.log('error');
 			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
 			                notifyService.notify(data.status, data.message);
-			               	setTimeout(function(){ 
-			                window.open('dashboard', '_self'); }, 1000);
+			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
 			                return false;
 			            }
+
 	                }
 	                else
 	                {
@@ -95,6 +96,38 @@
 	                }
             });
 
+		}
+		function checkRollMenu(role)
+		{
+			//console.log(role);
+			if(role=='SA')
+			{
+				msNavigationService.deleteItem('fuse.settings');
+				msNavigationService.deleteItem('fuse.art');
+				msNavigationService.deleteItem('fuse.client');
+				msNavigationService.deleteItem('fuse.order');
+				msNavigationService.deleteItem('fuse.invoices');
+				msNavigationService.deleteItem('fuse.purchaseOrder');
+				msNavigationService.deleteItem('fuse.receiving');
+				msNavigationService.deleteItem('fuse.finishing');
+				msNavigationService.deleteItem('fuse.customProduct');
+				msNavigationService.deleteItem('fuse.customProduct');
+
+			}
+			if(role=='CA')
+			{
+				msNavigationService.deleteItem('fuse.admin');
+			}
+			if(role=='BC')
+			{
+				msNavigationService.deleteItem('fuse.admin');
+				msNavigationService.deleteItem('fuse.settings');
+			}
+			if(role=='FM')
+			{
+				msNavigationService.deleteItem('fuse.admin');
+				msNavigationService.deleteItem('fuse.settings');
+			}
 		}
 
 	}
