@@ -153,17 +153,19 @@
         vm.assign_item = assign_item;
         function assign_item(item,item_name,item_charge,item_id){
             
-            var item_array = {'item':item,'item_name':item_name,'item_charge':item_charge,'item_id':item_id,'order_id':$scope.order_id};
+            var item_array = {'item':item,'item_name':item_name,'item_charge':item_charge,'item_id':item_id,'order_id':$scope.order_id,'company_id':sessionService.get('company_id')};
 
             $http.post('api/public/order/addRemoveToFinishing',item_array).success(function(result) {
+
+                if(result.data.success == '1') {
+                    $scope.orderDetail();
+                }
+                else {
+                    var data = {"status": "error", "message": result.data.message}
+                    notifyService.notify(data.status, data.message);               
+                }
                 
             });
-
-            if(item == 0){
-                return item=1;
-            }
-            else
-                return item=0;
         }
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
