@@ -28,6 +28,7 @@
                     result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
                     result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
                     result.data.records[0].start_date = new Date(result.data.records[0].start_date);
+                    $scope.order_id = result.data.records[0].order_id;
 
                     $scope.designInforamtion = result.data.records[0];
 
@@ -97,30 +98,30 @@
         }
 
 
-          $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition,key)
+        $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition,key)
         {
-           
-          var position_main_data = {};
-          position_main_data.table =table_name;
-          $scope.name_filed = column_name;
-          
-          var obj = {};
-          obj[$scope.name_filed] =  value;
-          position_main_data.data = angular.copy(obj);
+            var position_main_data = {};
+            position_main_data.table =table_name;
+            $scope.name_filed = column_name;
 
-          var condition_obj = {};
-          condition_obj[match_condition] =  id;
-          position_main_data.cond = angular.copy(condition_obj);
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            position_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[match_condition] =  id;
+            position_main_data.cond = angular.copy(condition_obj);
+            position_main_data.order_id = $scope.order_id;
+            position_main_data.company_id = sessionService.get('company_id');
           
-            $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+            $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
                 if(column_name == 'position_id') {
                     $scope.order_design_position[key].position_name = $scope.miscData.position[value].value;
-
                 }
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
-                     notifyService.notify(data.status, data.message);
+                notifyService.notify(data.status, data.message);
+                $scope.designProductData();
             });
-      
         }
 
         var misc_list_data = {};
