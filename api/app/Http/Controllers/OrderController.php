@@ -223,10 +223,19 @@ class OrderController extends Controller {
 
 
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
-       
+
         if(!empty($order_items))
         {
             $items = $this->order->getItemsByOrder($data['id']);
+            $finishing_count = $this->order->getFinishingCount($data['company_id']);
+
+            $total_shipped_qnty = $this->order->getShippedByOrder($data);
+            $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
+            $dist_location = count($locations);
+
+            $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
+            $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
+            $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
 
             foreach ($order_items as $order_item)
             {

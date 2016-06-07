@@ -969,4 +969,40 @@ public function saveColorSize($post)
         
         return $orderData[0]->total_qnty;
     }
+    public function getTotalQntyByOrder($data)
+    {
+        $whereConditions = ['od.order_id' => $data['id']];
+        $listArray = [DB::raw('SUM(pd.qnty) as total')];
+        $qntyData = DB::table('purchase_detail as pd')
+                         ->leftJoin('order_design as od','pd.design_id','=','od.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $qntyData;
+    }
+    public function getShippedByOrder($data)
+    {
+        $whereConditions = ['od.order_id' => $data['id'],'is_distribute' => '1'];
+        $listArray = [DB::raw('SUM(pd.qnty) as total')];
+        $qntyData = DB::table('purchase_detail as pd')
+                         ->leftJoin('order_design as od','pd.design_id','=','od.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $qntyData[0]->total;
+    }
+    public function getFinishingCount($company_id)
+    {
+        $whereConditions = ['company_id' => $company_id, 'is_finish' => '1'];
+
+        $orderData = DB::table('orders')
+                         ->select(DB::raw('COUNT(id) as total'))
+                         ->where($whereConditions)
+                         ->get();
+
+        return $orderData[0]->total;
+
+    }
 }
