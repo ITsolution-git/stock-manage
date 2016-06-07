@@ -32,20 +32,37 @@
       if(operation == 'Edit') {
 
         $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
-           $scope.AllProductDetail = Listdata.data.colorData;
 
-           $scope.colorName = colorName;
-
-           $scope.modelDisplay = '';
+            if(Listdata.data.success == 0)
+            {
+                var data = {"status": "error", "message": Listdata.data.message}
+                notifyService.notify(data.status, data.message);
+                $mdDialog.hide();
+            }
+            else
+            {
+                $scope.AllProductDetail = Listdata.data.colorData;
+                $scope.colorName = colorName;
+                $scope.modelDisplay = '';
+            }
            $("#ajax_loader").hide();
         });
 
       } else {
 
         $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
-           $scope.AllProductDetail = Listdata.data.colorData;
-           $scope.colorName = angular.copy(Listdata.data.colorSelection);
-           $scope.modelDisplay = '';
+            if(Listdata.data.success == 0)
+            {
+                var data = {"status": "error", "message": Listdata.data.message}
+                notifyService.notify(data.status, data.message);
+                $mdDialog.hide();
+            }
+            else
+            {
+                $scope.AllProductDetail = Listdata.data.colorData;
+                $scope.colorName = angular.copy(Listdata.data.colorSelection);
+                $scope.modelDisplay = '';
+            }
            $("#ajax_loader").hide();
         });
 

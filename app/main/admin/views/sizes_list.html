@@ -1,0 +1,68 @@
+<div class="content client-list-page">
+    <div class="simple-table-container md-whiteframe-4dp">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=20>
+                Clients
+            </div>
+            <div class="search-block" flex=40>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                </md-input-container>
+            </div>
+            <div class="client-modal-title " flex=50>
+                <span class="cursor-p" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
+            </div>
+        </div>
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
+            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                 <table class="dataTable row-border hover">
+    <!--                 <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Main Contact</span>
+                                </div>
+                            </th>
+
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Contact Phone</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Contact Email</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead> -->
+                    <thead tasty-thead></thead>
+                    <tbody>
+
+                        <tr ng-repeat="client in rows" >
+                            <td  ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
+                            <td>{{ client.first_name }} {{client.last_name}}</td>
+                            <td>{{ client.phone }}</td>
+                            <td>{{ client.email }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div tasty-pagination class="tasty-page"></div>
+            </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
+                <thead>
+                    <tr>
+                        <th>No Records Found</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

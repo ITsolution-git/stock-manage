@@ -40,9 +40,9 @@
                 </md-card>
             </div>
             <div classs="" flex="25" layout-align="end end" layout="column">
-                <md-button  class="bg-grey right-m-0 " >
+                <!-- <md-button  class="bg-grey right-m-0 " >
                     CONFIRM PRICING
-                </md-button>
+                </md-button> -->
                 <md-button  class="bg-grey right-m-0 " ng-click="openEmailPopup($event)">
                     EMAIL
                 </md-button>
@@ -348,7 +348,7 @@
                     <div layout="row" layout-wrap layout-align="center center" flex="60">
                         <div layout="row">
                             <div layout="column">
-                                <span class="h2 semibold f-52">{{ vm.shipping.productshipped}}</span>
+                                <span class="h2 semibold f-52">{{ order.total_shipped_qnty}}</span>
                                 <span class="m-r-15">Product shipped</span>
                             </div>
                         </div>
@@ -357,7 +357,7 @@
                         </div>
                         <div layout="row">
                             <div layout="column">
-                                <span class="h2 semibold f-52">{{ vm.shipping.Total}}</span>
+                                <span class="h2 semibold f-52">{{ total_unit}}</span>
                                 <span class="m-l-20">Total</span>
                             </div>
                         </div>
@@ -377,7 +377,7 @@
                     </md-card-title>
                     <md-card-content  layout="column" layout-padding>
                         <div layout="row" layout-wrap layout-align="center center" flex="60">
-                            <span class="h2 semibold f-52">{{ vm.distrbution.location}}</span><br/>
+                            <span class="h2 semibold f-52">{{ order.dist_location}}</span><br/>
                         </div>
                         <div class="text-center"> <span class="font-18">Location</span></div>
                     </md-card-content>
@@ -443,7 +443,7 @@
                 </md-card-title>
                 <md-card-content  layout="column" layout-padding>
                     <div layout="row" layout-wrap layout-align="center center" flex="60">
-                        <label class="h2 semibold f-52">{{ vm.finishing.finish}}</label>
+                        <label class="h2 semibold f-52">{{ order.finishing_count}}</label>
                     </div>
                 </md-card-content>
                 <md-divider ></md-divider>

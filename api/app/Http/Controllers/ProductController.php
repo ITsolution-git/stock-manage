@@ -268,17 +268,24 @@ public function create_dir($dir_path) {
         $result = curl_exec($curl);
         curl_close($curl);
 
-       $all_data = json_decode($result);
+        $all_data = json_decode($result);
+
+        if(empty($all_data))
+        {
+            $data = array("success"=>0,"message"=>"This product is no longer exists");
+            $record_data = $this->common->DeleteTableRecords('products',array('product_id' => $data['product_id']));
+            return response()->json(["data" => $data]);
+        }
        
 
-       $allDetail = array();
-       if($data['design_id'] != 0) {
-        $allDetail = $this->product->getPurchaseDetail($data['design_id']);
-       }
-
+        $allDetail = array();
+        if($data['design_id'] != 0) {
+            $allDetail = $this->product->getPurchaseDetail($data['design_id']);
+        }
+        
         foreach($all_data as $key => $data) {
-             
-            $color_data = $this->common->getColorId($data->colorName);
+         
+        $color_data = $this->common->getColorId($data->colorName);
 
             if(!empty($color_data))
             {
@@ -297,7 +304,7 @@ public function create_dir($dir_path) {
                 } else {
                     $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
                 }
-            
+
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
@@ -376,7 +383,7 @@ public function create_dir($dir_path) {
         $result = $this->product->addProduct($post);
 
         $return = 1;
-        //$return = $this->orderCalculation($post);
+        $return = $this->orderCalculation($post['id']);
 
 
         if(is_array($return))
@@ -393,8 +400,8 @@ public function create_dir($dir_path) {
 
     public function orderCalculation($design_id)
     {
-        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id),array());
-        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id),array());
+        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1'),array());
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id,'is_delete' => '1'),array());
 
         $total_qnty = 0;
         foreach ($purchase_detail as $size) {
@@ -402,6 +409,7 @@ public function create_dir($dir_path) {
         }
         
         $order_data = $this->order->getOrderByDesign($design_id);
+
         $price_id = $order_data[0]->price_id;
         $order_id = $order_data[0]->id;
 
@@ -636,6 +644,7 @@ public function create_dir($dir_path) {
 
             $per_item = $avg_garment_price + $print_charges;
             $sales_total = $per_item * $line_qty;
+            $sales_total2 = $sales_total + $design_product[0]->extra_charges;
 
             $update_arr = array(
                                 'avg_garment_cost' => round($avg_garment_cost,2),
@@ -643,7 +652,7 @@ public function create_dir($dir_path) {
                                 'print_charges' => round($print_charges,2),
                                 'markup' => $markup,
                                 'markup_default' => $markup_default,
-                                'sales_total' => round($sales_total,2),
+                                'sales_total' => round($sales_total2,2),
                                 'total_line_charge' => round($per_item,2)
                                 );
 

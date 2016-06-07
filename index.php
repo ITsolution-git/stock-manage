@@ -233,6 +233,19 @@
     <script src="app/main/invoices/invoices.module.js"></script>
     <script src="app/main/invoices/invoices.controller.js"></script>
     <script src="app/main/invoices/views/singleInvoice/singleInvoice.controller.js"></script>
+    <script src="app/main/invoices/dialogs/linktopay/linktopay-dialog.controller.js"></script>
+    <script src="app/main/invoices/views/linktopay/linktopay.controller.js"></script>
+
+    <!-- Shipping -->
+    <script src="app/main/shipping/shipping.module.js"></script>
+    <script src="app/main/shipping/shipping.controller.js"></script>
+
+
+    <!-- COMPANY ADMIN -->
+    <script src="app/main/admin/admin.module.js"></script>
+    <script src="app/main/admin/admin.controller.js"></script>
+
+
 
     <!--Datatable Scrolling-->
 

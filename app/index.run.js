@@ -17,6 +17,7 @@
             {
                 $rootScope.loadingProgress = false;
                 $(".settings-block").addClass("collapsed");
+                $(".admin-block").addClass("collapsed");
             });
         });
 
