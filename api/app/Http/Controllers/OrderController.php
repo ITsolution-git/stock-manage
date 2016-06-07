@@ -2028,7 +2028,7 @@ else
         $data = Input::all();
         $design_data = array();
        
-        $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array());
+        $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
         $size_data = array();
         $order_design = array();
          $total_unit = 0;

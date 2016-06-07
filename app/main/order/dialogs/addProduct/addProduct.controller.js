@@ -7,7 +7,7 @@
         .controller('AddProductController', AddProductController);
 
     /** @ngInject */
-    function AddProductController(product_id,operation,design_id,color_id,is_supply,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
+    function AddProductController(product_id,operation,design_id,color_id,is_supply,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout)
     {
         var vm = this;
 
@@ -27,35 +27,58 @@
                         }
                 });
 
-
-                $scope.changeProduct = function(id,color_id){
+              
+                $scope.changeProduct = function(id,color_id,operation){
 
                      var combine_array_id = {}
                      combine_array_id.id = id;
                      combine_array_id.design_id = design_id;
 
-                       $http.post('api/public/product/getProductDetailColorSize',combine_array_id).success(function(result) {
                       
+                       $http.post('api/public/product/getProductDetailColorSize',combine_array_id).success(function(result) {
+                        
+                            $scope.productId =result.data.product_id;
+                            $scope.productColorSize =result.data.productColorSizeData;
 
-                      $scope.productId =result.data.product_id;
-                      $scope.productColorSize =result.data.productColorSizeData;
+                            if(operation == 'Add') {
+                                 $scope.color_id = '0';
+                                 $scope.sizeAll = {}
+                            } else {
+                                $scope.sizeAll =$scope.productColorSize[color_id].size_data;
+                            }
 
-                       if(color_id != 0) {
-                        $scope.sizeAll = result.data.productColorSizeData[color_id];
-
-                      } else {
-                        $scope.sizeAll = {}
-                      }
-
-                   
-                    });
+                           
+                          
+                        });
+                }
+                $scope.changeColor = function(color_id){
+                    $scope.sizeAll = {}
+                    if(color_id != 0){
+                        $scope.sizeAll =$scope.productColorSize[color_id].size_data;
+                    }
+                    
                 }
 
 
        $scope.addProduct = function (productData,product_id,is_supply) {
             
             
-             var combine_array_id = {};
+
+              if(product_id == undefined) {
+                 var data = {"status": "error", "message": "Please select product"}
+                    notifyService.notify(data.status, data.message);
+                    return false;
+                 }
+
+
+            if(productData.length == undefined){
+                var data = {"status": "error", "message": "Please select color"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+
+
+            var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.product_id = product_id;
             combine_array_id.company_id = sessionService.get('company_id');
@@ -108,8 +131,8 @@
             if(is_supply == 1) {
                 $scope.is_supply = true;
             }
-              $scope.changeProduct(product_id,color_id);
-           
+              $scope.changeProduct(product_id,color_id,operation);
+
             } 
         
             $scope.cancel = function () {

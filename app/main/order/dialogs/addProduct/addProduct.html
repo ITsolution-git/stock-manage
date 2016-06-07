@@ -3,19 +3,19 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add Custom Product</span>
-                <md-button  ng-click="cancel()" >
+                <md-button  ng-click="cancel()" aria-label="cancel">
                     <span><md-icon md-font-icon="icon-close"></md-icon></span>
                 </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
-            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+            <div layout="column" layout-wrap="wrap" class="design-add-modal " layout-padding>
 
                
-                <div flex="20">
+                <div flex="100">
                             <md-input-container class="width100">
                                 <label>Product</label>
-                                 <md-select ng-model="product_id" ng-change="changeProduct(product_id,0)">
+                                 <md-select ng-model="product_id" ng-change="changeProduct(product_id,0,'Add')">
                                     <md-option ng-repeat="data in allProduct" value="{{data.id}}" >
                                         {{data.name}}
                                     </md-option>
@@ -23,12 +23,16 @@
                             </md-input-container>
                 </div>
 
-                <div flex="20">
+                <div flex="100">
                             <md-input-container class="width100">
                                 <label>Color</label>
-                                 <md-select ng-model="color_id" ng-change="changeProduct(product_id,color_id)">
-                                
-                                    <md-option ng-repeat="(keyColor,colorsdata) in productColorSize" value="{{keyColor}}" >
+                                 <md-select ng-model="color_id" ng-change="changeColor(color_id)">
+                                 
+                                  <md-option  ng-selected="0" value="0">
+                                        Select Color
+                                    </md-option>
+
+                                    <md-option  ng-repeat="(keyColor,colorsdata) in productColorSize" value="{{keyColor}}" >
                                         {{colorsdata.color_name}}
                                     </md-option>
                                  </md-select>
@@ -38,22 +42,24 @@
                
                 <div layout="row">
 
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="(key,all_size) in sizeAll.size_data">
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="(key,all_size) in sizeAll">
                         <label class="font-14">{{all_size.sizeName}}</label>
                         <input placeholder=""  ng-model="all_size.qnty">
                     </md-input-container>
                                        
                 </div>
                
+               <div flex="100">
                 <md-checkbox  aria-label="Checkbox 1" ng-model="is_supply">
                     These products are supplied garments
                 </md-checkbox>
+            </div>
                          
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="cancel()"  class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised " ng-click="addProduct(sizeAll.size_data,product_id,is_supply)" ng-disabled="orderForm.$invalid">ADD</md-button>
+            <md-button  aria-label="cancel" ng-click="cancel()"  class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button  aria-label="add" class="md-accent md-raised " ng-click="addProduct(sizeAll,product_id,is_supply)" ng-disabled="orderForm.$invalid">ADD</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 
