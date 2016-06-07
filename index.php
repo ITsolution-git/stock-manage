@@ -240,6 +240,13 @@
     <script src="app/main/shipping/shipping.module.js"></script>
     <script src="app/main/shipping/shipping.controller.js"></script>
 
+
+    <!-- COMPANY ADMIN -->
+    <script src="app/main/admin/admin.module.js"></script>
+    <script src="app/main/admin/admin.controller.js"></script>
+
+
+
     <!--Datatable Scrolling-->
 
     <!--<script src="https://cdn.datatables.net/scroller/1.4.1/js/dataTables.scroller.min.js"></script>

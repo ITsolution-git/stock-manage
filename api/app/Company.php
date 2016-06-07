@@ -31,10 +31,10 @@ class Company extends Model {
     }
     public function InsertCompanyData($post)
     {
-
+ 
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
    
-    	$result = DB::table('users')->insert(array('name'=>$post['name'],'email'=>$post['email'],'password'=>$post['password'],'oversize_value' => '0.50','role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
+    	$result = DB::table('users')->insert(array('name'=>$post['name'],'email'=>$post['email'],'password'=>$post['password'],'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
        $user_array = $post;
         unset($post['email']);
         unset($post['password']);
@@ -43,15 +43,16 @@ class Company extends Model {
         unset($post['parent_id']);
         unset($post['created_date']); 
         unset($post['status']);
+        $post['oversize_value'] = 0.50;
+        $companyid = DB::getPdo()->lastInsertId();
         
-     $companyid = DB::getPdo()->lastInsertId();
         $post['company_id'] = $companyid ;
 
 
 
 
-        $result_company_detail = DB::table('staff')->insert($post);
-
+        $result_company_detail = DB::table('staff')->insert(array('user_id'=>$companyid,'oversize_value'=>OVERSIZE_VALUE,'tax_rate'=>TAX_RATE,'created_date'=>date('Y-m-d')));
+         
 /// default price grid code start 
 
        $whereConditions = ['is_delete' => '1','company_id' => 0];

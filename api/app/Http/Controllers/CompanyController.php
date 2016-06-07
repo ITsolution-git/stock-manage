@@ -31,7 +31,7 @@ $this->common = $common;
 			$success = 1;
 			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
 			$data = array("records" => $getData,"success"=>$success,"message"=>$message);
-		return response()->json(['data'=>$data]);
+		return response()->json(['data'=>$data]); 
 	}
 	/**
 * Get All account list data
@@ -43,8 +43,9 @@ $this->common = $common;
 	{
 		$post = Input::all();
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['role_id']) )
+		if(!empty($post['email']) && !empty($post['password']))
 		{
+			$post['role_id'] = 17;
 			$email = $this->common->checkemailExist($post['email'],0); // CHECK EMAIL EXIST, FOR ALL USERS
 			if(count($email)>0)
 			{

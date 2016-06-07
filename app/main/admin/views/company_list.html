@@ -1,0 +1,71 @@
+    <div class="content order-info-page m-b-20">
+        <div class="simple-table-container md-whiteframe-4dp">
+            <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+                <div class="table-title-text h2 text-semibold" flex=20>
+                    <div class="title" layout-padding><span class="basicInfoStyle">COMPANY</span></div>
+                </div>
+                <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+                    <a class="link-back cursor-p createPriceGridLink" ng-click="addCompany($event)">ADD NEW COPMANY</a>
+                </div>
+            </div>
+            <div class=" ms-responsive-table-wrapper userMgmntPadding">
+                <table class="simple" >
+                    <thead>
+                        <tr>
+                            <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Name</span>
+                                </div>
+                            </th>
+                             <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Email</span>
+                                </div>
+                            </th>
+                            <!-- <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Phone</span>
+                                </div>
+                            </th> -->
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Action</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                   <tbody >
+                        <tr  ng-repeat="user in company">
+                            <td class="">{{user.name}}</td>
+                            <td class="">{{user.email}}</td>
+                            <!-- <td class="">{{user.phone}}</td> -->
+                            <td class=""> 
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4"> 
+                                        <md-menu-item>
+                                            <md-button ng-click="edit_company($event,user.id)">
+                                                Edit User
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="resetUserPasswordDialog($event,user.id)">
+                                                Reset Password
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="removeCompany($event,user.id)">
+                                                Remove Company
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+                        </tr>
+                    </tbody> 
+                </table>         
+            </div>
+        </div>
+    </div>
