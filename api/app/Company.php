@@ -34,7 +34,7 @@ class Company extends Model {
  
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
    
-    	$result = DB::table('users')->insert(array('name'=>$post['name'],'email'=>$post['email'],'password'=>$post['password'],'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
+    	$result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>$post['password'],'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
        $user_array = $post;
         unset($post['email']);
         unset($post['password']);
