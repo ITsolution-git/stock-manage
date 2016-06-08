@@ -58,9 +58,10 @@
         	//$("#ajax_loader").show();     
 	       return $http.post('api/public/admin/company/list',company_data).success(function(result) 
 	     	{
+	     		$scope.success  = result.success;
 	     		if(result.success=='1')
 	            {
-	                $scope.success  = result.success;
+	                
 	                return {
 	                  'rows': result.rows,
 	                  'header': result.header,
