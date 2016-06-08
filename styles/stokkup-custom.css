@@ -216,7 +216,13 @@ hr .style1 {
 .settings-margin-0 {
   margin : 10px !important;
 }
-
+.embroidery-sec .settings-margin-0 {
+  margin: 0px 10px !important;
+}
+.embroidery-sec .settings-margin-0.first {
+  margin-left: 0px !important;
+  margin-right: 20px !important;
+}
 .margin-top-25 {
       margin-top: 25px !important;
 }
@@ -355,6 +361,9 @@ md-input-container > label {
 /********************************
 **** Common css
 ********************************/
+md-card md-card-content { font-size: 14px; }
+.bdr0-B { border-bottom: 0px !important;}
+md-input-container .md-errors-spacer { min-height: 1px; }
 .inline-b {
 	display:inline-block;
 }
@@ -410,6 +419,11 @@ md-input-container > label {
 	padding:8px 5px;
 	border-right:0px;
 	margin-bottom:5px;
+}
+.box-typ3 {
+  border-bottom:2px solid #797979;
+  padding-bottom:10px;
+  margin-bottom:10px;
 }
 .box-typ2:nth-child(even){
 	background:#f8f7f7;
@@ -525,6 +539,7 @@ md-input-container > label {
 .mrg10-T { margin-top: 10px;}
 .mrg10-TB { margin-bottom:10px; margin-top:10px; }
 .mrg10-B { margin-bottom:10px;}
+.pd10 { padding: 10px;}
 .pd10-R { padding-right:10px; }
 .mrg5-B { margin-bottom:5px; }
 .mrg10-L { margin-left:10px; }
@@ -533,6 +548,7 @@ md-input-container > label {
 	opacity: 0.537255;
 	font-size:14px;
 }
+.bdr-1L { border-left:1px solid #ccc;}
 [md-theme="default"] a.f-black, .f-black { color: #000;}
 .tbl-typ2 { width: 100%; border-collapse:collapse; margin-bottom:20px;}
 .tbl-typ2:last-child { margin-bottom: 0px;}
@@ -554,6 +570,7 @@ md-input-container > label {
     vertical-align: middle;
     border-radius: 5px;
 }
+.order-container { max-height: 400px; overflow: auto; position: relative;}
 .fileUpload span, .btn-typ-submit span {
     color: #fff !important;
     font-size: 15px !important;
@@ -582,7 +599,13 @@ md-input-container > label {
 .pd15-L { padding-left: 15px; }
 .m-l-20 md-card .recap.pd0 .card-box { padding:8px 10px !important;}
 .header-typ2 { padding: 10px 15px; border-bottom:1px solid #ccc; }
+.header-typ3 { color: #000000; font-size: 13px; font-weight: bold; margin-bottom: 10px;}
+.header-typ3 md-checkbox { color: #000; font-weight: normal; font-size: 12px; }
 .font-20 { font-size: 20px;}
+.orderwait-midsection { border-left: 1px solid #ccc; border-right: 1px solid #ccc; padding-left: 10px; padding-right: 10px;}
+.order-container .trans-box { padding: 0px 2px; }
+.order-container .trans-box > div { font-size: 13px; line-height: 13px; }
+.order-container .trans-box span.font-14 { font-size: 13px !important; }
 /*****************************/	
 .loaderouter{
     position:fixed;
@@ -634,7 +657,7 @@ md-input-container > label {
 .loader:after {
     left: 1.5em;
 }
-.fs22 { font-size: 22px;}  
+.fs22 { font-size: 22px;} 
 @-webkit-keyframes load1 {
     0%,
     80%,

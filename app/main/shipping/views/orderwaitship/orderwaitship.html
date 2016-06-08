@@ -1,0 +1,86 @@
+<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
+    <div class="simple-table-container md-whiteframe-4dp m-t-20 m-b-20 m-r-15 pd15" >
+        <table class="tbl-typ2">
+            <tr>
+                <td>
+                    <div class="header-typ1">Ship Order #18750</div>
+                    <div layout="row" class="pd10">
+                        <div flex="35" layout="column">
+                            <div class="header-typ3">
+                                <div layout="row">
+                                    <div layout="column" flex="70">Order Items</div>
+                                    <div layout="column" flex="30">
+                                        <md-checkbox aria-label="Select All" class="font-12 f-black" aria-label="Select All">Select All</md-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order-container pd10-R" ms-scroll>
+                                <div class="box-typ3" ng-repeat="orders in vm.orderItems">
+                                    <div layout="row" flex="100" class="demo-select-all-checkboxes">
+                                        <div layout="column" flex="10">
+                                            <md-checkbox aria-label="Select"></md-checkbox>
+                                        </div>
+                                        <div layout="column" flex="90">
+                                            <div layout-wrap="" layout="row" class="layout-wrap layout-row">
+                                                <div class="trans-box">
+                                                    <div>Size Group</div>
+                                                    <span class="chrome-weight font-14 ng-binding">{{ orders.sizeGroup }}</span>
+                                                </div>
+                                                <div class="trans-box">
+                                                    <div>Product#</div>
+                                                    <span class="chrome-weight font-14 ng-binding">{{ orders.product }}</span> </div>
+                                                <div class="trans-box">
+                                                    <div>Size</div>
+                                                    <span class="chrome-weight font-14 ng-binding">{{ orders.size }}</span>
+                                                </div>
+                                                <div class="trans-box">
+                                                    <div>Color</div>
+                                                    <span class="chrome-weight font-14 ng-binding">{{ orders.color }}</span> </div>
+                                            </div>
+                                            <div layout="row" flex="100" class="mrg10-TB">
+                                                <div layout="column" flex="100">
+                                                    <div class="font-12">Product Description</div>
+                                                    <div class="gray-text font-12">{{ orders.productDescription }}</div>
+                                                </div>
+                                            </div>
+                                            <div layout="row" flex="100">
+                                                <div layout="column" flex="40" class="pd10">
+                                                    <div class="font-18 text-center">{{ orders.qtyOrdered }}</div>
+                                                    <div class="font-13 gray-text text-center">Qty Ordered</div>
+                                                </div>
+                                                <div layout="column" flex="60" class="pd10 bdr-1L">
+                                                    <div class="font-18 text-center">{{ orders.remainingDistribute }}</div>
+                                                    <div class="font-13 gray-text text-center">Remaining to Distribute</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div flex="30" layout="column" class="orderwait-midsection">
+                            <div class="header-typ3">Distribution Addresses</div>
+                            <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="addrss in vm.addresses">
+                                <div layout="column" flex="80">
+                                    <div class="font-12">{{ addrss.location }}</div>
+                                    <div class="font-12">{{ addrss.shortCode }}</div>
+                                    <div class="font-12">{{ addrss.full }}</div>
+                                    <div class="font-12">{{ addrss.phone }}</div>
+                                </div>
+                                <div layout="column" flex="20" class="text-right">
+                                    <span class="icon icon-arrow-right font-18"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div flex="35" layout="column" class="mrg10-L">
+                            <div class="header-typ3">Shipment Items</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Next" ui-sref="app.shipping.shipmentdetails"><span class="ng-scope">Next</span></button>
+    </md-dialog-actions>
+</div>

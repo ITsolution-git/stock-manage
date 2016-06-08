@@ -25,6 +25,14 @@
                         return msApi.resolve('shipping@get');
                     }
                 }
+            }).state('app.shipping.orderwaitship', {
+                url  : '/orderwaitship',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/shipping/views/orderwaitship/orderwaitship.html',
+                        controller : 'orderWaitController as vm'
+                    }
+                }
             });
 
        // Translation
