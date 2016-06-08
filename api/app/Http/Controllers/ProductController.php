@@ -589,7 +589,7 @@ public function create_dir($dir_path) {
                 }
             }
 
-            if($design_product[0]->markup > 0)
+            if(isset($design_product[0]) && $design_product[0]->markup > 0)
             {
                 $markup = $design_product[0]->markup;
             }
@@ -641,7 +641,17 @@ public function create_dir($dir_path) {
 
             $per_item = $avg_garment_price + $print_charges;
             $sales_total = $per_item * $line_qty;
-            $sales_total2 = $sales_total + $design_product[0]->extra_charges;
+            
+            if(isset($design_product[0]->extra_charges))
+            {
+                $extraCharges = $design_product[0]->extra_charges;
+            }
+            else
+            {
+                $extraCharges = 0;
+            }
+
+            $sales_total2 = $sales_total + $extraCharges;
 
             $update_arr = array(
                                 'avg_garment_cost' => round($avg_garment_cost,2),
@@ -652,7 +662,6 @@ public function create_dir($dir_path) {
                                 'sales_total' => round($sales_total2,2),
                                 'total_line_charge' => round($per_item,2)
                                 );
-            print_r($update_arr);
 
             $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
 
@@ -707,7 +716,6 @@ public function create_dir($dir_path) {
                                     'balance_due' => round($balance_due,2),
                                     'order_charges_total' => round($order_charges_total,2)
                                     );
-            print_r($update_order_arr);
 
             $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
 
