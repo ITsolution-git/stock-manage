@@ -216,7 +216,13 @@ hr .style1 {
 .settings-margin-0 {
   margin : 10px !important;
 }
-
+.embroidery-sec .settings-margin-0 {
+  margin: 0px 10px !important;
+}
+.embroidery-sec .settings-margin-0.first {
+  margin-left: 0px !important;
+  margin-right: 20px !important;
+}
 .margin-top-25 {
       margin-top: 25px !important;
 }
@@ -355,6 +361,9 @@ md-input-container > label {
 /********************************
 **** Common css
 ********************************/
+md-card md-card-content { font-size: 14px; }
+.bdr0-B { border-bottom: 0px !important;}
+md-input-container .md-errors-spacer { min-height: 1px; }
 .inline-b {
 	display:inline-block;
 }
@@ -648,7 +657,7 @@ md-input-container > label {
 .loader:after {
     left: 1.5em;
 }
-.fs22 { font-size: 22px;}  
+.fs22 { font-size: 22px;} 
 @-webkit-keyframes load1 {
     0%,
     80%,
