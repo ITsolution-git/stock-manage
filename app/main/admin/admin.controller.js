@@ -12,24 +12,73 @@
     {
     	var originatorEv;
         var vm = this;
-        $scope.companylist = function ()
+         
+
+    	/* TESTY PAGINATION */     
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'user.id',
+          'sortOrder': 'dsc'
+        };
+
+        $scope.reloadCallback = function () { };
+
+        $scope.filterBy = {
+          'search': '',
+          'name': '',
+          'email': ''
+        };
+        $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+            //getResource();
+        };
+                               // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
+            var state = {};
+            state.table ='state';
+
+            $http.post('api/public/common/GetTableRecords',state).success(function(result) 
+            {   
+                if(result.data.success=='1')
+                {   
+                	$scope.states_all = result.data.records;
+                }
+            });
+
+
+
+       $scope.getResource = function (params, paramsObj, search)
         {   
-        	$("#ajax_loader").show();     
-	        $http.get('api/public/admin/company/list').success(function(result) 
+        	$scope.params = params;
+            $scope.paramsObj = paramsObj;
+
+            var company_data = {};
+            company_data.cond ={params:$scope.params};
+
+        	//$("#ajax_loader").show();     
+	       return $http.post('api/public/admin/company/list',company_data).success(function(result) 
 	     	{
-	     		if(result.data.success=='1')
+	     		if(result.success=='1')
 	            {
-	                $scope.company  = result.data.records;
+	                $scope.success  = result.success;
+	                return {
+	                  'rows': result.rows,
+	                  'header': result.header,
+	                  'pagination': result.pagination,
+	                  'sortBy': result.sortBy,
+	                  'sortOrder': result.sortOrder
+                	}
+
 	            }
 	            else
 	            {
-	                notifyService.notify('error',result.data.message);
+	                notifyService.notify('error',result.message);
 	            }
 	            $("#ajax_loader").hide();
 	        });
     	}
 
-    	$scope.companylist(); // CALL COMPANY LIST
+    	//$scope.getResource(); // CALL COMPANY LIST
 
         $scope.addCompany = function(ev, settings)
         {
@@ -37,6 +86,7 @@
                 //controller: 'AddEmployeeDialogController',
                 controller: function($scope,params){
                     $scope.params = params;
+                    $scope.states_all = params.states_all;
                     $scope.AddUsers = function (users) 
                     {
                     //$("#ajax_loader").show();
@@ -72,7 +122,7 @@
                     params:$scope,
                     event: ev
                 },
-                onRemoving : $scope.companylist
+                onRemoving : $scope.reloadCallback
             });
         }
         $scope.edit_company = function (ev,user_id)
@@ -82,6 +132,7 @@
                     $("#ajax_loader").show();
                     $scope.params = params;
                     $scope.user_id = user_id;
+                    $scope.states_all = params.states_all;
                     $http.get('api/public/admin/account/edit/'+user_id+'/1').success(function(Listdata) 
                     {
                         if(Listdata.data.success=='1')
@@ -100,7 +151,7 @@
                             account.id= $scope.user_id;
                             account.parent_id=1;
 
-                            $http.post('api/public/admin/account/save',account).success(function(result, status, headers, config) 
+                            $http.post('api/public/admin/company/save',account).success(function(result, status, headers, config) 
                             {
                                 if(result.data.success=='1')
                                 {
@@ -127,7 +178,7 @@
                     params:$scope,
                     event: ev
                 },
-                onRemoving : $scope.companylist
+                onRemoving : $scope.reloadCallback
             });
         }
 
@@ -190,7 +241,7 @@
 	                if(result.data.success=='1')
 	                {
 	                   notifyService.notify('success', "Record Updated Successfully!");
-	                   $scope.companylist(); // CALL COMPANY LIST
+	                   $scope.reloadCallback(); // CALL COMPANY LIST
 	                }
 	                else
 	                {
