@@ -198,7 +198,7 @@
     <script src="app/main/settings/views/userManagement/userManagement.controller.js"></script>
     <script src="app/main/settings/views/affiliate/affiliate.controller.js"></script>
     <script src="app/main/settings/dialogs/changePassword/changePassword-dialog.controller.js"></script>
-    <script src="app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.controller.js"></script>
+    <script src="app/main/settings/views/priceGrid/createPriceGrid.controller.js"></script>
     <script src="app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.controller.js"></script>
     <script src="app/main/settings/views/companyDetails/companyDetails.controller.js"></script>
     <script src="app/main/settings/dialogs/addEmployee/addEmployee-dialog.controller.js"></script>
@@ -240,6 +240,13 @@
     <script src="app/main/shipping/shipping.module.js"></script>
     <script src="app/main/shipping/shipping.controller.js"></script>
     <script src="app/main/shipping/views/orderwaitship/orderwaitship.controller.js"></script>
+
+
+    <!-- COMPANY ADMIN -->
+    <script src="app/main/admin/admin.module.js"></script>
+    <script src="app/main/admin/admin.controller.js"></script>
+
+
 
     <!--Datatable Scrolling-->
 

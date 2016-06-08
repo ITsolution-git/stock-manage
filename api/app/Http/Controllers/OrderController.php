@@ -223,10 +223,19 @@ class OrderController extends Controller {
 
 
         $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
-       
+
         if(!empty($order_items))
         {
             $items = $this->order->getItemsByOrder($data['id']);
+            $finishing_count = $this->order->getFinishingCount($data['company_id']);
+
+            $total_shipped_qnty = $this->order->getShippedByOrder($data);
+            $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
+            $dist_location = count($locations);
+
+            $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
+            $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
+            $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
 
             foreach ($order_items as $order_item)
             {
@@ -734,12 +743,15 @@ class OrderController extends Controller {
      public function updatePositions()
      {
         $post = Input::all();
-//        echo "<pre>"; print_r($post); echo "</pre>"; die;
 
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
-          $result = $this->order->updatePositions($post['table'],$post['cond'],$post['data']);
+          $date_field = (empty($post['date_field']))? '':$post['date_field']; 
+          
+          $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
+
+          $return = $return = $this->calculateAll($post['order_id'],$post['company_id']);
         }
         else
         {
@@ -2182,16 +2194,16 @@ else
             {
                 foreach($design_data as $design) {
                     
-                    $total_qnty = $this->order->getTotalQntyByDesign($design->id);
+                    $total_qnty = $this->order->getTotalQntyByDesign($design->design_id);
 
-                    if($total_qnty > 0 && $post['item_charge'] <= $design->sales_total)
+                    if($total_qnty > 0 && $post['item_charge'] <= $design->sales_total && $post['item_charge'] <= $design->extra_charges)
                     {
                         $extra_charges = $design->extra_charges - $post['item_charge'];
                         $subtract = $design->sales_total - $post['item_charge'];
                         $sales_total = round($subtract,2);
                         
-                        $update_arr = array('sales_total' => $sales_total, 'extra_charges' => $extra_charges);
-                        $this->common->UpdateTableRecords('design_product',array('design_id' => $design->id),$update_arr);
+                        $update_arr = array('extra_charges' => $extra_charges);
+                        $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id),$update_arr);
                     }
                 }
 
@@ -2204,16 +2216,16 @@ else
             {
                 foreach($design_data as $design) {
                     
-                    $total_qnty = $this->order->getTotalQntyByDesign($design->id);
-                    
+                    $total_qnty = $this->order->getTotalQntyByDesign($design->design_id);
+
                     if($total_qnty > 0)
                     {
                         $extra_charges = $design->extra_charges + $post['item_charge'];
                         $sum = $design->sales_total + $post['item_charge'];
                         $sales_total = round($sum,2);
 
-                        $update_arr = array('sales_total' => $sales_total, 'extra_charges' => $extra_charges);
-                        $this->common->UpdateTableRecords('design_product',array('design_id' => $design->id),$update_arr);
+                        $update_arr = array('extra_charges' => $extra_charges);
+                        $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id),$update_arr);
                     }
                 }
                 $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);

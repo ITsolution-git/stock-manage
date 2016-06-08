@@ -273,6 +273,7 @@ public function create_dir($dir_path) {
         if(empty($all_data))
         {
             $data = array("success"=>0,"message"=>"This product is no longer exists");
+            $record_data = $this->common->DeleteTableRecords('products',array('product_id' => $data['product_id']));
             return response()->json(["data" => $data]);
         }
        
@@ -643,6 +644,7 @@ public function create_dir($dir_path) {
 
             $per_item = $avg_garment_price + $print_charges;
             $sales_total = $per_item * $line_qty;
+            $sales_total2 = $sales_total + $design_product[0]->extra_charges;
 
             $update_arr = array(
                                 'avg_garment_cost' => round($avg_garment_cost,2),
@@ -650,7 +652,7 @@ public function create_dir($dir_path) {
                                 'print_charges' => round($print_charges,2),
                                 'markup' => $markup,
                                 'markup_default' => $markup_default,
-                                'sales_total' => round($sales_total,2),
+                                'sales_total' => round($sales_total2,2),
                                 'total_line_charge' => round($per_item,2)
                                 );
 

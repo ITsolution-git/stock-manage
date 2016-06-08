@@ -87,6 +87,8 @@
         var vm = this;
         //console.log(sessionService.get('company_name'));
         vm.company_name = sessionService.get('company_name');
+        vm.role_slug = sessionService.get('role_slug');
+        vm.name = sessionService.get('name');
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {

@@ -4,12 +4,35 @@
                 <div class="table-title-text h2 text-semibold" flex=20>
                     <div class="title" layout-padding><span class="basicInfoStyle">COMPANY PRICE GRIDS</span></div>
                 </div>
-                <div class="order-modal-title " layout="row" layout-align="end center" flex=30 >
-                    <a class="link-back1 cursor-p createPriceGridLink" ng-click="vm.uploadCSV($event)">UPLOAD CSV</a>
+                
+                 <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+
+                   <!--  <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data" target="_blank">
+                        <div class="fileUpload">
+                            <input type="file" name="file" id="file" class="upload" ng-model="file">
+                            <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
+                            <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                            <span>Upload CSV</span>
+                        </div>
+                        <a href="#" class="btn-typ-submit" ng-click="submitForm()">
+                            <span class="icon icon-upload"></span>
+                        </a>
+                       </form> -->
+
+                        <form name="uploadcsv" id="uploadcsv" action="#" method="post" enctype="multipart/form-data" target="_blank">
+                        <div class="fileUpload">
+                            <input type="file" name="file" id="file" class="upload" ng-model="file">
+                            <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
+                            <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                            <span>Upload CSV</span>
+                        </div>
+                        <a href="#" class="btn-typ-submit" ng-click="submitForm()">
+                            <span class="icon icon-upload"></span>
+                        </a>
+                       </form>
+               
                 </div>
-                <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
-                    <a class="link-back cursor-p createPriceGridLink" ng-click="vm.openCreatePriceGridDialog($event)">CREATE NEW PRICE GRID</a>
-                </div>
+               
             </div>
             <div class="ms-responsive-table-wrapper priceGridTableContainer userMgmntPadding">
                 <table class="scrol table3 row-border hover" id="priceGrid" dt-options="vm.dtOptions"  >
@@ -27,107 +50,14 @@
                         </tr>
                     </thead>
                    <tbody class="scrollable" ms-scroll>
-                        <tr class="cursor-p">
-                            <td class="">Price Grid Name</td>
+                        <tr class="cursor-p" ng-repeat="price_data in price">
+                            <td class="" ui-sref="app.settings.price-info({id:price_data.id})">{{price_data.name}}</td>
                             <td class="text-right "> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                     </md-button>
                                     <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openCreatePriceGridDialog($event)">
-                                                Edit Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deletePriceGrid($event,design.id)">
-                                                Delete Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                        <tr class="cursor-p">
-                            <td class="">Price Grid Name</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openCreatePriceGridDialog($event)">
-                                                Edit Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deletePriceGrid($event,design.id)">
-                                                Delete Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                        <tr class="cursor-p">
-                            <td class="">Price Grid Name</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openCreatePriceGridDialog($event)">
-                                                Edit Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deletePriceGrid($event,design.id)">
-                                                Delete Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                        <tr class="cursor-p">
-                            <td class="">Price Grid Name</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openCreatePriceGridDialog($event)">
-                                                Edit Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.deletePriceGrid($event,design.id)">
-                                                Delete Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                        <tr class="cursor-p">
-                            <td class="">Price Grid Name</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="vm.openCreatePriceGridDialog($event)">
-                                                Edit Price Grid
-                                            </md-button>
-                                        </md-menu-item>
                                         <md-menu-item>
                                             <md-button ng-click="vm.deletePriceGrid($event,design.id)">
                                                 Delete Price Grid
