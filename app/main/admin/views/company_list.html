@@ -1,16 +1,22 @@
     <div class="content order-info-page m-b-20">
         <div class="simple-table-container md-whiteframe-4dp">
             <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
-                <div class="table-title-text h2 text-semibold" flex=20>
+                <div class="search-block" flex=10>
                     <div class="title" layout-padding><span class="basicInfoStyle">COMPANY</span></div>
+                </div>
+                <div class="search-block" flex=40>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
                 </div>
                 <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
                     <a class="link-back cursor-p createPriceGridLink" ng-click="addCompany($event)">ADD NEW COPMANY</a>
                 </div>
             </div>
-            <div class=" ms-responsive-table-wrapper userMgmntPadding">
-                <table class="simple" >
-                    <thead>
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
+            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                 <table class="dataTable row-border hover">
+                    <!-- <thead>
                         <tr>
                             <th class="secondary-text ">
                                 <div class="table-header">
@@ -22,20 +28,16 @@
                                     <span class="column-title">Email</span>
                                 </div>
                             </th>
-                            <!-- <th class="secondary-text ">
-                                <div class="table-header">
-                                    <span class="column-title">Phone</span>
-                                </div>
-                            </th> -->
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Action</span>
                                 </div>
                             </th>
                         </tr>
-                    </thead>
+                    </thead> -->
+                    <thead tasty-thead></thead>
                    <tbody >
-                        <tr  ng-repeat="user in company">
+                        <tr  ng-repeat="user in rows">
                             <td class="">{{user.name}}</td>
                             <td class="">{{user.email}}</td>
                             <!-- <td class="">{{user.phone}}</td> -->
@@ -65,7 +67,9 @@
                             </td>
                         </tr>
                     </tbody> 
-                </table>         
-            </div>
-        </div>
+                </table>
+            <div tasty-pagination class="tasty-page"></div>
+        </div>         
     </div>
+</div>
+</div>

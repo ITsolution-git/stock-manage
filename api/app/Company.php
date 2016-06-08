@@ -19,15 +19,36 @@ class Company extends Model {
      *
      *
      */
-    public function GetCompanyData() {
+    public function GetCompanyData($post) {
+       $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
         $admindata = DB::table('users as usr')
         				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','rol.title','usr.id','usr.phone')
+        				 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
         				 ->where('usr.is_delete','=','1')
-                 ->where('rol.slug','=','CA')
-                 ->orderBy('usr.id', 'desc')
+                 ->where('rol.slug','=','CA');
+                 if($search != '')               
+                  {
+                      $admindata = $admindata->Where(function($query) use($search)
+                      {
+                          $query->orWhere('usr.name', 'LIKE', '%'.$search.'%')
+                                ->orWhere('usr.email','LIKE', '%'.$search.'%');
+                      });
+                  }
+                 $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                 ->skip($post['start'])
+                 ->take($post['range'])
                  ->get();
-        return $admindata;
+        
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $admindata;
+        $returnData['count'] = $count[0]->Totalcount;
+        return $returnData;
+
     }
     public function InsertCompanyData($post)
     {
@@ -49,9 +70,16 @@ class Company extends Model {
         $post['company_id'] = $companyid ;
 
 
-
-
-        $result_company_detail = DB::table('staff')->insert(array('user_id'=>$companyid,'oversize_value'=>OVERSIZE_VALUE,'tax_rate'=>TAX_RATE,'created_date'=>date('Y-m-d')));
+        $result_company_detail = DB::table('staff')->insert(array('user_id'=>$companyid,'oversize_value'=>OVERSIZE_VALUE,'tax_rate'=>TAX_RATE,
+                  'created_date'=>date('Y-m-d'),
+                  'prime_address1'=>$post['prime_address1'],
+                  'prime_address_street'=>$post['prime_address_street'],
+                  'prime_address_city'=>$post['prime_address_city'],
+                  'prime_address_state'=>$post['prime_address_state'],
+                  'prime_address_zip'=>$post['prime_address_zip'],
+                  'prime_phone_main'=>$post['prime_phone_main'],
+                  'url'=>$post['url'])
+                );
          
 /// default price grid code start 
 
@@ -402,45 +430,14 @@ class Company extends Model {
 
         $make_folder = $this->makefolder($post['id']);
         
-        $new_post = array('prime_address1'=>$post['prime_address1'],'prime_address_city'=>$post['prime_address_city'],'prime_address_state'=>$post['prime_address_state'],'prime_address_country'=>$post['prime_address_country'],'prime_address_zip'=>$post['prime_address_zip'],'url'=>$post['url']);
-    	
-        unset($post['prime_address1']);
-        unset($post['prime_address_city']);
-        unset($post['prime_address_state']);
-        unset($post['prime_address_country']);
-        unset($post['prime_address_zip']);
-        unset($post['url']);
-        unset($post['photo']);
-        unset($post['user_id']);
+        $new_post = array('prime_address1'=>$post['prime_address1'],'prime_address_city'=>$post['prime_address_city'],'prime_address_state'=>$post['prime_address_state'],'prime_address_country'=>$post['prime_address_country'],'prime_phone_main'=>$post['prime_phone_main'],'prime_address_street'=>$post['prime_address_street'],'prime_address_zip'=>$post['prime_address_zip'],'url'=>$post['url']);
 
-/*        if(isset($post['oversize_value']))
-        {*/
-            $new_post['oversize_value']=$post['oversize_value'];
-            unset($post['oversize_value']);
-/*        }
 
-        if(isset($post['tax_rate']))
-        {*/
-            $new_post['tax_rate']=$post['tax_rate'];
-            unset($post['tax_rate']);
-        //}
+        $result = DB::table('users')->where('id','=',$post['id'])->update(array('name'=>$post['name'],'email'=>$post['email']));
 
-            
-        if(isset($post['company_url_photo']))
-        {
-            unset($post['company_url_photo']);
-        }
-        if(!empty($post['id']))
-    	  {
-        		$result = DB::table('users')->where('id','=',$post['id'])->update($post);
+        $result_address = DB::table('staff')->where('user_id','=',$post['id'])->update($new_post);
+        return $result;
 
-            $result_address = DB::table('staff')->where('user_id','=',$post['id'])->update($new_post);
-        		return $result;
-       	}
-      	else
-      	{
-      		return 0;
-      	}
     }
     public function DeleteCompanyData($id)
     {
