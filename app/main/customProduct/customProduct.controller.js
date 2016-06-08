@@ -128,5 +128,10 @@
                 }
         }
 
+         $scope.submitFormDownload = function () {
+ 
+             document.getElementById('downloadcsv').submit();
+        }
+
     }
 })();
