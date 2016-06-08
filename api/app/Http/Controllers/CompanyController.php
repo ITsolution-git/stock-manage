@@ -25,13 +25,38 @@ $this->common = $common;
 */
 	public function listData ()
 	{
-			$getData = $this->company->GetCompanyData();
-			
-			$count = count($getData);
-			$success = 1;
-			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
-			$data = array("records" => $getData,"success"=>$success,"message"=>$message);
-		return response()->json(['data'=>$data]); 
+		$post_all = Input::all();
+        $records = array();
+
+        $post = $post_all['cond']['params'];
+
+    	if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'usr.id';
+        }
+
+    	$result = $this->company->GetCompanyData($post);
+    	$records = $result['allData'];
+    	$success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'usr.name', 'name' => 'Name'),
+                        1=>array('key' => 'usr.email', 'name' => 'Email'),
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$post['sorts']['sortBy'],'sortOrder' => $post['sorts']['sortOrder'],'success'=>$success);
+        return  response()->json($data);
 	}
 	/**
 * Get All account list data
@@ -43,7 +68,7 @@ $this->common = $common;
 	{
 		$post = Input::all();
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
-		if(!empty($post['email']) && !empty($post['password']))
+		if(!empty($post['email']) && !empty($post['name']))
 		{
 			$post['role_id'] = 17;
 			$email = $this->common->checkemailExist($post['email'],0); // CHECK EMAIL EXIST, FOR ALL USERS
@@ -55,7 +80,7 @@ $this->common = $common;
 			}
 			else
 			{
-				$post['password'] = md5($post['password']);
+				$post['password'] = md5('admin');
 				$post['created_date'] = date('Y-m-d H:i:s');
 				$getData = $this->company->InsertCompanyData($post);
 				
@@ -137,7 +162,7 @@ $this->common = $common;
 	{
 		$post = Input::all();
 
-		if(!empty($post['email']) && !empty($post['password']) && !empty($post['id']))
+		if(!empty($post['email']) && !empty($post['id']) && !empty($post['name']))
 		{
 			$email = $this->common->checkemailExist($post['email'],$post['id']); // CHECK UNIQUE EMIAL IN USERS TABLE
 			if(count($email)>0)
@@ -147,26 +172,18 @@ $this->common = $common;
 			}
 			else
 			{
-				if($post['password']=='testcodal')
-				{
-					unset($post['password']);
-				}
-				else
-				{
-					$post['password']=md5($post['password']);
-				}
 				$post['updated_date'] = date('Y-m-d H:i:s');
 				$getData = $this->company->SaveCompanyData($post);
-				$this->common->UpdateTableRecords('client',array('company_id' => $post['id']),array('tax_rate' => $post['tax_rate']));
+				//$this->common->UpdateTableRecords('client',array('company_id' => $post['id']),array('tax_rate' => $post['tax_rate']));
 				
-				$company_data = $this->common->GetTableRecords('client',array('company_id' => $post['id']),array());
+				//$company_data = $this->common->GetTableRecords('client',array('company_id' => $post['id']),array());
 
-				foreach ($company_data as $company) {
-					if($company->tax_exempt == 0)
-					{
+				//foreach ($company_data as $company) {
+				//	if($company->tax_exempt == 0)
+				//	{
 						//$this->common->UpdateTableRecords('orders',array('client_id' => $company->client_id),array('tax_rate' => $post['tax_rate']));
-					}
-				}
+					//}
+			//}
 
 				$message = UPDATE_RECORD;
 				$success = 1;

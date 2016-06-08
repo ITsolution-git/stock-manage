@@ -28,7 +28,7 @@ Route::post('admin/change_password', 'LoginController@change_password');
 
 // COMPANY ROUTERS
 Route::get('admin/company', 'CompanyController@listData');
-Route::get('admin/company/list', 'CompanyController@listData');
+Route::post('admin/company/list', 'CompanyController@listData');
 Route::post('admin/company/add', 'CompanyController@addData');
 Route::get('admin/company/edit/{id}/{company_id}', 'CompanyController@GetData');
 Route::post('admin/company/save', 'CompanyController@SaveData');
