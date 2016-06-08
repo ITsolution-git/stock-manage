@@ -5,14 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Common;
+use App\Login;
+use Mail;
 use DateTime;
 
 class Company extends Model {
 
 
-        public function __construct( Common $common)
+        public function __construct( Common $common, Login $login)
           {
         $this->common = $common;
+        $this->login = $login;
         }
     /**
      * login verify function
@@ -54,16 +57,19 @@ class Company extends Model {
     {
  
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
-   
-    	$result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>$post['password'],'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
+      $string = $this->login->getString(6);
+    	$result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
        $user_array = $post;
-        unset($post['email']);
-        unset($post['password']);
-        unset($post['name']);
-        unset($post['role_id']);
-        unset($post['parent_id']);
-        unset($post['created_date']); 
-        unset($post['status']);
+      
+      $post['prime_address1']       = !empty($post['prime_address1'])?$post['prime_address1']:'';
+      $post['prime_address_street'] = !empty($post['prime_address_street'])?$post['prime_address_street']:'';
+      $post['prime_address_city']   = !empty($post['prime_address_city'])?$post['prime_address_city']:'';
+      $post['prime_address_state']  = !empty($post['prime_address_state'])?$post['prime_address_state']:'';
+      $post['prime_address_zip']    = !empty($post['prime_address_zip'])?$post['prime_address_zip']:'';
+      $post['prime_phone_main']     = !empty($post['prime_phone_main'])?$post['prime_phone_main']:'';
+      $post['url']                 = !empty($post['url'])?$post['url']:'';
+
+
         $post['oversize_value'] = 0.50;
         $companyid = DB::getPdo()->lastInsertId();
         
@@ -80,7 +86,15 @@ class Company extends Model {
                   'prime_phone_main'=>$post['prime_phone_main'],
                   'url'=>$post['url'])
                 );
-         
+
+        // SEND MAIL TO COMPANY WITH PASSWORD
+        $email = $post['email'];
+        Mail::send('emails.newcompany', ['password' =>$string,'user'=>$post['name'],'email'=>$email], function($message) use ($email) 
+                {
+                    $message->to($email, 'New Stokkup Account')->subject('New Account for Stokkup');
+                });
+        
+               
 /// default price grid code start 
 
        $whereConditions = ['is_delete' => '1','company_id' => 0];
