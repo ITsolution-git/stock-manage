@@ -139,39 +139,6 @@ class OrderController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return $this->return_response($data);
     }
-    /**
-     * Delete Data
-     *
-     * @param  post.
-     * @return success message.
-     */
-    public function DeleteOrder()
-    {
-        $post = Input::all();
-
-
-        if(!empty($post[0]))
-        {
-            $getData = $this->order->deleteOrder($post[0]);
-            if($getData)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
 
 /** 
  * @SWG\Definition(
@@ -339,374 +306,6 @@ class OrderController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-    /** 
-     * @SWG\Definition(
-     *      definition="OrderLineDetail",
-     *      type="object",
-     *      required={"company_id", "id"},
-     *      @SWG\Property(
-     *          property="company_id",
-     *          type="integer"
-     *      ),
-     *      @SWG\Property(
-     *          property="id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/getOrderLineDetail",
-     *  summary = "Order Line Tab Detail",
-     *  tags={"Order"},
-     *  description = "Order Line Tab Detail",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Order Line Tab Detail",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/OrderLineDetail")
-     *  ),
-     *  @SWG\Response(response=200, description="Order Line Tab Detail"),
-     *  @SWG\Response(response="default", description="Order Line Tab Detail"),
-     * )
-     */
-
-    public function getOrderLineDetail()
-    {
-        $data = Input::all();
-        $result = $this->order->getOrderLineDetail($data);
-
-        if(!empty($result['order_line_data']))
-        {
-            $sum = 0;
-            foreach($result['order_line_data'] as $row)
-            {
-                $row->orderline_id = $row->id;
-                $row->products = array();
-                $row->colors = array();
-                $row->productData = array();
-
-                if($row->vendor_id > 0)
-                {
-
-                    $oldata = array();
-                    $oldata['where'] = array('vendor_id' => $row->vendor_id);
-                    $oldata['fields'] = array();
-                    $row->products = $this->product->getVendorProducts($oldata);
-                    $row->productData[]['id'] = (string)$row->product_id;
-                }
-                if($row->product_id > 0)
-                {
-                    $colors = $this->product->GetProductColor(array('id'=>$row->product_id));
-                    $colors = unserialize($colors[0]->color_size_data);
-                    if(!empty($colors))
-                    {
-                        foreach($colors as $key=>$color) {
-                            $color_data = $this->product->GetColorDeail(array('id'=>$key));
-                            $row->colors[] = $color_data[0];
-                        }
-                    }
-                }
-
-                $order_line_items = $this->order->getOrderLineItemById($row->id);
-                $count = 1;
-                $order_line = array();
-                foreach ($order_line_items as $line) {
-                 
-                    $line->number = $count;
-                    $order_line[] = $line;
-                    $count++;
-                }
-                $row->items = $order_line;
-
-                $result['order_line'][] = $row;
-            }
-        }
-        else
-        {
-            $result['order_line'] = array();
-        }
-
-        if (count($result) > 0) {
-            $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'order_line' => $result['order_line'],
-                                );
-        } else {
-            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS,
-                                'order_line' => $result['order_line']
-                            );
-
-        }
-
-        return response()->json(["data" => $response]);
-    }
-
-
- /**
- * @SWG\Get(
- *  path = "/api/public/order/getOrderNoteDetails/{id}",
- *  summary = "Order Notes Data",
- *  tags={"Order"},
- *  description = "Order Notes Data",
- *  @SWG\Parameter(
- *     in="path",
- *     name="id",
- *     description="Order Notes Data",
- *     type="integer",
- *     required=true
- *  ),
- *  @SWG\Response(response=200, description="Order Notes Data"),
- *  @SWG\Response(response="default", description="Order Notes Data"),
- * )
- */
-
-    public function getOrderNoteDetails($id)
-    {
-
-        $result = $this->order->getOrderNoteDetails($id);
-        return $this->return_response($result);
-        
-    }
-
-    /**
-    * Get Client Details by ID
-    * @params order_id
-    * @return json data
-    */
-   /* public function getOrderDetailById($id)
-    {
-        $result = $this->order->getOrderDetailById($id);
-        return $this->return_response($result);
-    }
-*/
-
-
-/*
-    public function updateOrderNotes()
-    {
-        $post = Input::all();
-        $result = $this->order->updateOrderNotes($post['data'][0]);
-        $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        return response()->json(['data'=>$data]);
-    }*/
-
-    /**
-    * Delete order note tab record.
-    * @params note_id
-    * @return json data
-    */
-
-
-/**
- * @SWG\Get(
- *  path = "/api/public/order/deleteOrderNotes/{id}",
- *  summary = "Order Notes Delete",
- *  tags={"Order"},
- *  description = "Order Notes Delete",
- *  @SWG\Parameter(
- *     in="path",
- *     name="id",
- *     description="Order Notes Delete",
- *     type="integer",
- *     required=true
- *  ),
- *  @SWG\Response(response=200, description="Order Notes Delete"),
- *  @SWG\Response(response="default", description="Order Notes Delete"),
- * )
- */
-
-
-    public function deleteOrderNotes($id)
-    {
-        $result = $this->order->deleteOrderNotes($id);
-        $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        return response()->json(['data'=>$data]);
-    }
-
-
-   /**
-   * Save Order notes.
-   * @return json data
-    */
-
-
-   /** 
- * @SWG\Definition(
- *      definition="saveOrderNotes  ",
- *      type="object",
- *     
- *      @SWG\Property(
- *          property="data",
- *          type="object",
- *          required={"order_notes"},
- *          @SWG\Property(
- *          property="order_notes",
- *          type="string",
- *         ),
- *         @SWG\Property(
- *          property="order_id",
- *          type="integer",
- *         ),
- *         @SWG\Property(
- *          property="user_id",
- *          type="integer",
- *         )
- *
- *      )
- *  )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/order/saveOrderNotes",
- *  summary = "Add Notes in particular order",
- *  tags={"Order"},
- *  description = "Add Notes in particular order",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Add Notes in particular order",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/saveOrderNotes")
- *  ),
- *  @SWG\Response(response=200, description="Add Notes in particular order"),
- *  @SWG\Response(response="default", description="Add Notes in particular order"),
- * )
- */
-
-    public function saveOrderNotes()
-    {
-
-        $post = Input::all();
-        $post['data']['created_date']=date('Y-m-d');
- 
-        if(!empty($post['data']['order_id']) && !empty($post['data']['order_notes']))
-        {
-            $result = $this->order->saveOrderNotes($post['data']);
-            $message = INSERT_RECORD;
-            $success = 1;
-        }
-        else
-        {
-            $message = MISSING_PARAMS.", id";
-            $success = 0;
-        }
-        
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
-    /**
-    * Save Orderline order.
-    * @return json data
-    */
-    public function orderLineadd()
-    {
-        $post = Input::all();
-
-        $post['data']['created_date']=date('Y-m-d');
-       
-        $result = $this->order->saveOrderLineData($post['data']);
-
-        $shipping_id = $this->common->InsertRecords('artjob_artworkproof',array('orderline_id' => $result));
-        $message = INSERT_RECORD;
-        $success = 1;
-        
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
-
-    /**
-   * Update Orderline order.
-   * @return json data
-    */
-    public function orderLineupdate()
-    {
-        $post = Input::all();
-
-        if(!isset($post['data']['avg_garment_cost']))
-        {
-            $post['data']['avg_garment_cost'] = '0';
-        }
-        if(!isset($post['data']['avg_garment_price']))
-        {
-            $post['data']['avg_garment_price'] = '0';
-        }
-        if(!isset($post['data']['print_charges']))
-        {
-            $post['data']['print_charges'] = '0';
-        }
-        if(!isset($post['data']['peritem']))
-        {
-            $post['data']['peritem'] = '0';
-        }
-        if(!isset($post['data']['per_line_total']))
-        {
-            $post['data']['per_line_total'] = '0';
-        }
-
-        $post['data']['order_id'] = $post['data']['order_id'];
-        $post['data']['size_group_id'] = $post['data']['size_group_id'];
-        $post['data']['product_id'] = $post['data']['product_id'];
-        $post['data']['vendor_id'] = $post['data']['vendor_id'];
-        $post['data']['color_id'] = $post['data']['color_id'];
-        $post['data']['qnty'] = $post['data']['qnty'];
-        $post['data']['avg_garment_cost'] = round($post['data']['avg_garment_cost'],2);
-        $post['data']['avg_garment_price'] = round($post['data']['avg_garment_price'],2);
-        $post['data']['print_charges'] = round($post['data']['print_charges'],2);
-        $post['data']['markup'] = $post['data']['markup'];
-        $post['data']['markup_default'] = $post['data']['markup_default'];
-        $post['data']['override'] = $post['data']['override'];
-        $post['data']['peritem'] = round($post['data']['peritem'],2);
-        $post['data']['os'] = $post['data']['os'];
-        $post['data']['per_line_total'] = round($post['data']['per_line_total'],1);
-        $post['data']['override_diff'] = $post['data']['override_diff'];
-       
-
-/*        if($post['data']['product_name'] != '')
-        {
-            $product_data = $this->common->GetTableRecords('products',array('name' => $post['data']['product_name']),array());
-            $post['data']['product_id'] = $product_data[0]->id;
-        }*/
-
-        $post['data']['created_date']=date('Y-m-d');
-       
-        $result = $this->order->updateOrderLineData($post['data']);
-        $message = INSERT_RECORD;
-        $success = 1;
-        
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
-   /**
-   * Save Button Data.
-   * @return json data
-   */
-
-    public function saveButtonData()
-    {
-        $post = Input::all();
-
-        $post['created_date']=date('Y-m-d');
-        
-        $result = $this->order->saveButtonData($post);
-        $message = INSERT_RECORD;
-        $success = 1;
-        
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
-
-
     /**
     * Insert record for any single table.
     * @params Table name, Post array
@@ -751,7 +350,7 @@ class OrderController extends Controller {
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
 
-          $return = $return = $this->calculateAll($post['order_id'],$post['company_id']);
+          $return = $this->calculateAll($post['order_id'],$post['company_id']);
         }
         else
         {
@@ -759,72 +358,26 @@ class OrderController extends Controller {
         }
         return response()->json(['data'=>$data]);
      }
-
-
-/**
-    * Save po.
-    * @return json data
-    */
-    public function savePO()
-    {
+     
+     public function deletePositions()
+     {
         $post = Input::all();
 
-      
-        $post['created_date']=date('Y-m-d');
-        $result = $this->order->savePO($post);
-        $message = INSERT_RECORD;
-        $success = 1;
-        
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
+        if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
+        {
+          $date_field = (empty($post['date_field']))? '':$post['date_field']; 
+          
+          $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
+          $data = array("success"=>1,"message"=>UPDATE_RECORD);
 
-    /** 
-     * @SWG\Definition(
-     *      definition="PODetail",
-     *      type="object",
-     *      required={"id"},
-     *      @SWG\Property(
-     *          property="id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/PODetail",
-     *  summary = "PO Detail",
-     *  tags={"Order"},
-     *  description = "PO Detail",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="PO Detail",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/PODetail")
-     *  ),
-     *  @SWG\Response(response=200, description="PO Detail"),
-     *  @SWG\Response(response="default", description="PO Detail"),
-     * )
-     */
-
-    public function PODetail() {
- 
-        $data = Input::all();
-
-        $result = $this->order->POorderDetail($data);
-
-       
-        if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => GET_RECORDS,'order_po_data' => $result['order_po_data']);
-        } else {
-            $response = array('success' => 0, 'message' => NO_RECORDS,'order_po_data' => $result['order_po_data']);
+          $return = $this->calculateAll($post['order_id'],$post['company_id']);
         }
-        
-        return response()->json(["data" => $response]);
-
-    }
+        else
+        {
+            $data = array("success"=>0,"message"=>MISSING_PARAMS);
+        }
+        return response()->json(['data'=>$data]);
+     }
 
     /**
     * Get Array
@@ -1111,58 +664,6 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
-    public function updateOrderTask()
-    {
-        $post = Input::all();
-
-        if(isset($post['data']['task_name']) && $post['data']['task_name'] != '')
-        {
-            $task_arr = $this->common->GetTableRecords('task',array('task_name' => $post['data']['task_name']),array());
-
-            if(empty($task_arr))
-            {
-                $task_id = $this->common->InsertRecords('task',array('task_name' => $post['data']['task_name']));
-            }
-            else
-            {
-                $task_id = $task_arr[0]->id;
-            }
-            $post['data']['task_id'] = $task_id;
-            unset($post['data']['task_name']);
-        }
-
-        if(isset($post['data']['result_name']) && $post['data']['result_name'] != '')
-        {
-            $result_arr = $this->common->GetTableRecords('result',array('result_name' => $post['data']['result_name']),array());
-
-            if(empty($result_arr))
-            {
-                $result_id = $this->common->InsertRecords('result',array('result_name' => $post['data']['result_name']));
-            }
-            else
-            {
-                $result_id = $result_arr[0]->id;
-            }
-            $post['data']['result_id'] = $result_id;
-            unset($post['data']['result_name']);
-        }
-
-        $post['data']['user_id'] = implode(',', $post['data']['user_id']);
-
-        if($post['action'] == 'update')
-        {
-            $this->common->UpdateTableRecords('order_tasks',$post['cond'],$post['data']);
-            $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        }
-        else
-        {
-            $post['data']['date_added'] = date('Y-m-d');
-            $this->common->InsertRecords('order_tasks',$post['data']);
-            $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        }
-        return response()->json(['data'=>$data]);
-    }
-
     /** 
      * @SWG\Definition(
      *      definition="updateDistributedQty",
@@ -1222,159 +723,6 @@ class OrderController extends Controller {
         $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
     }
-
-  /** 
-     * @SWG\Definition(
-     *      definition="duplicatePoData",
-     *      type="object",
-     *      required={"po_id"},
-     *      @SWG\Property(
-     *          property="po_id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/duplicatePoData",
-     *  summary = "Duplicate PO",
-     *  tags={"Order"},
-     *  description = "Duplicate PO",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Duplicate PO",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/duplicatePoData")
-     *  ),
-     *  @SWG\Response(response=200, description="Duplicate PO"),
-     *  @SWG\Response(response="default", description="Duplicate PO"),
-     * )
-     */
-
-    public function duplicatePoData() {
-
-       $post = Input::all();
-        $post['data']['created_date']=date('Y-m-d');
-        $post['data']['po_id']=$post['po_id'];
-       
-       
-        $result = $this->order->poDuplicate($post['data']);
-          
-        $data = array("success"=>1,"message"=>INSERT_RECORD);
-        
-        return response()->json(["data" => $data]);
-    }
-
-     /** 
-     * @SWG\Definition(
-     *      definition="getTaskList",
-     *      type="object",
-     *      required={"order_id"},
-     *      @SWG\Property(
-     *          property="order_id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/getTaskList",
-     *  summary = "Get Task List",
-     *  tags={"Order"},
-     *  description = "Get Task List",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Get Task List",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/getTaskList")
-     *  ),
-     *  @SWG\Response(response=200, description="Get Task List"),
-     *  @SWG\Response(response="default", description="Get Task List"),
-     * )
-     */
-
-    public function getTaskList()
-    {
-        $post = Input::all();
-        $task_detail = $this->order->getTaskList($post['order_id']);
-
-        if (count($task_detail) > 0) {
-            $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'task_detail' => $task_detail
-                            );
-        } else {
-            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS,
-                                'task_detail' => array()
-                                );
-        } 
-        
-        return response()->json(["data" => $response]);
-    }
-
-    /** 
-     * @SWG\Definition(
-     *      definition="getTaskDetails",
-     *      type="object",
-     *      required={"id"},
-     *      @SWG\Property(
-     *          property="id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/getTaskDetails",
-     *  summary = "Get Task Details",
-     *  tags={"Order"},
-     *  description = "Get Task Details",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Get Task Details",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/getTaskDetails")
-     *  ),
-     *  @SWG\Response(response=200, description="Get Task Details"),
-     *  @SWG\Response(response="default", description="Get Task Details"),
-     * )
-     */
-
-    public function getTaskDetails()
-    {
-        $post = Input::all();
-        $users = $this->common->GetTableRecords('users',array(),array('role_id' => '7'));
-        $task = $this->common->GetTableRecords('task',array(),array());
-        $result = $this->common->GetTableRecords('result',array(),array());
-
-        $task_detail = array();
-
-        if(!empty($post['id']) > 0)
-        {
-            $task_detail = $this->order->getTaskDetail($post['id']);
-            $task_detail[0]->user_id = explode(',', $task_detail[0]->user_id);
-        }
-
-        $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'users' => $users,
-                                'tasks' => $task,
-                                'result' => $result,
-                                'task_detail' => $task_detail
-                            );
-        return response()->json(["data" => $response]);
-    }
-
 
      /**
    * Save Color size.
@@ -1673,41 +1021,39 @@ class OrderController extends Controller {
 
 
 
-//PHPMailer Object
-$mail = new PHPMailer;
+        //PHPMailer Object
+        $mail = new PHPMailer;
 
-//From email address and name
-$mail->From = "from@yourdomain.com";
-$mail->FromName = "Full Name";
+        //From email address and name
+        $mail->From = "from@yourdomain.com";
+        $mail->FromName = "Full Name";
 
-//To address and name
-$mail->addAddress("hdeliwala@codal.com", "Recepient Name");
-$mail->addAddress("recepient1@example.com"); //Recipient name is optional
+        //To address and name
+        $mail->addAddress("hdeliwala@codal.com", "Recepient Name");
+        $mail->addAddress("recepient1@example.com"); //Recipient name is optional
 
-//Address to which recipient will reply
-$mail->addReplyTo("reply@yourdomain.com", "Reply");
+        //Address to which recipient will reply
+        $mail->addReplyTo("reply@yourdomain.com", "Reply");
 
-//CC and BCC
-$mail->addCC("cc@example.com");
-$mail->addBCC("bcc@example.com");
+        //CC and BCC
+        $mail->addCC("cc@example.com");
+        $mail->addBCC("bcc@example.com");
 
-//Send HTML or Plain Text email
-$mail->isHTML(true);
+        //Send HTML or Plain Text email
+        $mail->isHTML(true);
 
-$mail->Subject = "Subject Text";
-$mail->Body = "<i>Mail body in HTML</i>";
-$mail->AltBody = "This is the plain text version of the email content";
+        $mail->Subject = "Subject Text";
+        $mail->Body = "<i>Mail body in HTML</i>";
+        $mail->AltBody = "This is the plain text version of the email content";
 
-if(!$mail->send()) 
-{
-    echo "Mailer Error: " . $mail->ErrorInfo;
-} 
-else 
-{
-    echo "Message has been sent successfully";
-}
-
-
+        if(!$mail->send()) 
+        {
+            echo "Mailer Error: " . $mail->ErrorInfo;
+        } 
+        else 
+        {
+            echo "Message has been sent successfully";
+        }
 
         $response = array('success' => 1, 'message' => MAIL_SEND);
           
@@ -2241,13 +1587,14 @@ else
         }
         else
         {
-            $data = array("success"=>0,"message"=>"Add atleast one design to pack item");
+            $data = array("success"=>0,"message"=>"Add atleast one design product to pack item");
             return response()->json(["data" => $data]);
         }
     }
     public function calculateAll($order_id,$company_id)
     {
         $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
+        print_r($design_data);exit;
 
         if(!empty($design_data))
         {

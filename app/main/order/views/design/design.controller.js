@@ -14,6 +14,7 @@
         $scope.NoImage = AllConstant.NoImage;
         $scope.productSearch = '';
         $scope.vendor_id = 0;
+        $scope.company_id = sessionService.get('company_id');
 
        $scope.designDetail = function(){
          $("#ajax_loader").show();
@@ -475,16 +476,20 @@
             var condition_obj = {};
             condition_obj[cond_field] =  cond_value;
             UpdateArray.cond = angular.copy(condition_obj);
+            UpdateArray.order_id = $scope.order_id;
+            UpdateArray.company_id = $scope.company_id;
 
             var permission = confirm(AllConstant.deleteMessage);
                 if (permission == true)
                 {
 
-                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                $http.post('api/public/order/deletePositions',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
                     {
-                       notifyService.notify('success','Record Deleted Successfully.');
-                       $scope.designPosition();
+                        notifyService.notify('success','Record Deleted Successfully.');
+                        $scope.designDetail();
+                        $scope.designPosition();
+                        $scope.designProductData();
                     }
                     else
                     {
