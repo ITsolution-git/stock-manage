@@ -30,7 +30,7 @@ class Company extends Model {
 
         $admindata = DB::table('users as usr')
         				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
-        				 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
+        				 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
         				 ->where('usr.is_delete','=','1')
                  ->where('rol.slug','=','CA');
                  if($search != '')               
@@ -45,11 +45,20 @@ class Company extends Model {
                  ->skip($post['start'])
                  ->take($post['range'])
                  ->get();
-        
+       
         $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
         $returnData = array();
         $returnData['allData'] = $admindata;
         $returnData['count'] = $count[0]->Totalcount;
+        
+        if($count[0]->Totalcount>0)
+        {
+          foreach ($admindata as $key=>$value) 
+          {
+            $admindata[$key]->created_date =date('m/d/Y',strtotime($value->created_date)) ;
+          }
+        }
+        
         return $returnData;
 
     }
