@@ -84,7 +84,7 @@ class ProductController extends Controller {
  */
 
     public function index() {
- $post = Input::all();
+        $post = Input::all();
         $result = $this->product->productList($post);
        
        
@@ -373,13 +373,10 @@ public function create_dir($dir_path) {
         $post = Input::all();
 
         $post['created_date']=date('Y-m-d');
-        // $record_delete = $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['id']));
-        // $record_delete = $this->common->DeleteTableRecords('design_product',array('design_id' => $post['id']));
 
         $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
         $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));
 
-        //$post['record_delete']=$record_delete;
         $result = $this->product->addProduct($post);
 
         $return = 1;
@@ -422,7 +419,7 @@ public function create_dir($dir_path) {
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id),array());
+        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id,'is_delete' => '1'),array());
         $data = array();
         $data['cond']['company_id'] = $order_data[0]->company_id;
         $miscData = $this->common->getAllMiscDataWithoutBlank($data);
@@ -655,6 +652,7 @@ public function create_dir($dir_path) {
                                 'sales_total' => round($sales_total2,2),
                                 'total_line_charge' => round($per_item,2)
                                 );
+            print_r($update_arr);
 
             $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
 
@@ -675,7 +673,7 @@ public function create_dir($dir_path) {
 
             foreach ($all_design as $design) {
                 
-                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id),array());
+                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1'),array());
                 
                 foreach ($position_data as $row) {
 
@@ -709,6 +707,7 @@ public function create_dir($dir_path) {
                                     'balance_due' => round($balance_due,2),
                                     'order_charges_total' => round($order_charges_total,2)
                                     );
+            print_r($update_order_arr);
 
             $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
 
@@ -767,7 +766,7 @@ public function create_dir($dir_path) {
        
         if(!empty($post['id']))
         {
-           
+            $order_data = $this->order->getOrderByDesign($post['id']);
             $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
             $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));
 
@@ -781,6 +780,7 @@ public function create_dir($dir_path) {
                 $message = MISSING_PARAMS;
                 $success = 0;
             }
+            $return = app('App\Http\Controllers\OrderController')->calculateAll($order_data[0]->id,$order_data[0]->company_id);
         }
         else
         {
