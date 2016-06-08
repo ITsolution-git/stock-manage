@@ -239,6 +239,7 @@
     <!-- Shipping -->
     <script src="app/main/shipping/shipping.module.js"></script>
     <script src="app/main/shipping/shipping.controller.js"></script>
+    <script src="app/main/shipping/views/orderwaitship/orderwaitship.controller.js"></script>
 
     <!--Datatable Scrolling-->
 
