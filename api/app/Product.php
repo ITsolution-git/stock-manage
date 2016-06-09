@@ -286,6 +286,16 @@ class Product extends Model {
     }
 
     public function addProduct($post) {
+
+          if(isset($post['is_supply'])) {
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply']);
+          } else {
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id']);
+          }
+
+         // if($post['record_delete'] == 0) {
+            $result_design = DB::table('design_product')->insert($insert_array);
+         // }
        
         foreach($post['productData'] as $row) {
 
@@ -313,15 +323,7 @@ class Product extends Model {
             $result = DB::table('purchase_detail')->insert($insert_purchase_array);
         }
 
-          if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply']);
-          } else {
-            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id']);
-          }
-
-         // if($post['record_delete'] == 0) {
-            $result_design = DB::table('design_product')->insert($insert_array);
-         // }
+        
          
          return true;
 

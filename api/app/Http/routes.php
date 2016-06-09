@@ -28,7 +28,7 @@ Route::post('admin/change_password', 'LoginController@change_password');
 
 // COMPANY ROUTERS
 Route::get('admin/company', 'CompanyController@listData');
-Route::get('admin/company/list', 'CompanyController@listData');
+Route::post('admin/company/list', 'CompanyController@listData');
 Route::post('admin/company/add', 'CompanyController@addData');
 Route::get('admin/company/edit/{id}/{company_id}', 'CompanyController@GetData');
 Route::post('admin/company/save', 'CompanyController@SaveData');
@@ -204,6 +204,7 @@ Route::post('order/deleteOrderLine', 'OrderController@deleteOrderLine');
 Route::post('order/saveButtonData', 'OrderController@saveButtonData');
 Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
+Route::post('order/deletePositions', 'OrderController@deletePositions');
 Route::post('order/PODetail', 'OrderController@PODetail');
 Route::post('order/distributionDetail', 'OrderController@distributionDetail');
 Route::post('order/addToDistribute', 'OrderController@addToDistribute');
@@ -273,6 +274,7 @@ Route::post('product/uploadCSV', 'ProductController@uploadCSV');
 Route::post('product/getProductDetailColorSize', 'ProductController@getProductDetailColorSize');
 Route::post('product/addcolorsize', 'ProductController@addcolorsize');
 Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
+Route::post('product/downloadCSV', 'ProductController@downloadCSV');
 
 
 // API CONTROLLER

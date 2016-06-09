@@ -37,7 +37,8 @@ class Account extends Model {
     {
     	$admindata = DB::table('users as usr')
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','usr.id','usr.role_id')
+                         ->leftJoin('staff as staff', 'staff.user_id', '=', 'usr.id')
+        				 ->select('staff.*','usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','usr.id','usr.role_id')
         				 ->where('usr.id','=',$id)
         				 ->where('usr.is_delete','=','1')
                          ->where('usr.parent_id','=',$parent_id)

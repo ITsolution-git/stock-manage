@@ -88,19 +88,5 @@
 
         $scope.priceDetail();
 
-        var vm = this;
-
-        //////////
-
-        $scope.cancel = function () {
-            $mdDialog.hide();
-        };
-        /**
-         * Close dialog
-         */
-        function closeDialog()
-        {
-            $mdDialog.hide();
-        }
     }
 })();

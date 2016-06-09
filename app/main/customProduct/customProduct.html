@@ -6,13 +6,13 @@
             </div>
            
 
-            <div class="search-block" flex=30>
+            <div class="search-block" flex=25>
                 <md-input-container class="md-block" flex-gt-sm>
                     <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
 
-             <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+             <div class="order-modal-title " layout="row" layout-align="end center" flex=20 >
 
             <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data" target="_blank">
                 <div class="fileUpload">
@@ -24,13 +24,20 @@
                 <a href="#" class="btn-typ-submit" ng-click="submitForm()">
                     <span class="icon icon-upload"></span>
                 </a>
-                <a href="#" class="btn-typ-submit">
-                    <span class="icon icon-download"></span>
-                    <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
-                </a>
+              
                </form>
-               
+
+                 <form name="downloadcsv" id="downloadcsv" action="api/public/product/downloadCSV" method="post" enctype="multipart/form-data">
+                
+                    <a href="#" class="btn-typ-submit" ng-click="submitFormDownload()" class="btn-typ-submit">
+                        <span class="icon icon-download"></span>
+                        <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
+                    </a>
+               </form>
+
                 </div>
+
+               
 
              <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
                 <span class="cursor-p" ng-click="vm.openCustomProductDialog($event,0)" >CREATE CUSTOM PRODUCT</span>

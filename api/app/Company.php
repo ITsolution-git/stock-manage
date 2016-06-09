@@ -5,54 +5,105 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Common;
+use App\Login;
+use Mail;
 use DateTime;
 
 class Company extends Model {
 
 
-        public function __construct( Common $common)
+        public function __construct( Common $common, Login $login)
           {
         $this->common = $common;
+        $this->login = $login;
         }
     /**
      * login verify function
      *
      *
      */
-    public function GetCompanyData() {
+    public function GetCompanyData($post) {
+       $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
         $admindata = DB::table('users as usr')
         				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','rol.title','usr.id','usr.phone')
+        				 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
         				 ->where('usr.is_delete','=','1')
-                 ->where('rol.slug','=','CA')
-                 ->orderBy('usr.id', 'desc')
+                 ->where('rol.slug','=','CA');
+                 if($search != '')               
+                  {
+                      $admindata = $admindata->Where(function($query) use($search)
+                      {
+                          $query->orWhere('usr.name', 'LIKE', '%'.$search.'%')
+                                ->orWhere('usr.email','LIKE', '%'.$search.'%');
+                      });
+                  }
+                 $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                 ->skip($post['start'])
+                 ->take($post['range'])
                  ->get();
-        return $admindata;
+       
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $admindata;
+        $returnData['count'] = $count[0]->Totalcount;
+        
+        if($count[0]->Totalcount>0)
+        {
+          foreach ($admindata as $key=>$value) 
+          {
+            $admindata[$key]->created_date =date('m/d/Y',strtotime($value->created_date)) ;
+          }
+        }
+        
+        return $returnData;
+
     }
     public function InsertCompanyData($post)
     {
  
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
-   
-    	$result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>$post['password'],'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
+      $string = $this->login->getString(6);
+    	$result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
        $user_array = $post;
-        unset($post['email']);
-        unset($post['password']);
-        unset($post['name']);
-        unset($post['role_id']);
-        unset($post['parent_id']);
-        unset($post['created_date']); 
-        unset($post['status']);
+      
+      $post['prime_address1']       = !empty($post['prime_address1'])?$post['prime_address1']:'';
+      $post['prime_address_street'] = !empty($post['prime_address_street'])?$post['prime_address_street']:'';
+      $post['prime_address_city']   = !empty($post['prime_address_city'])?$post['prime_address_city']:'';
+      $post['prime_address_state']  = !empty($post['prime_address_state'])?$post['prime_address_state']:'';
+      $post['prime_address_zip']    = !empty($post['prime_address_zip'])?$post['prime_address_zip']:'';
+      $post['prime_phone_main']     = !empty($post['prime_phone_main'])?$post['prime_phone_main']:'';
+      $post['url']                 = !empty($post['url'])?$post['url']:'';
+
+
         $post['oversize_value'] = 0.50;
         $companyid = DB::getPdo()->lastInsertId();
         
         $post['company_id'] = $companyid ;
 
 
+        $result_company_detail = DB::table('staff')->insert(array('user_id'=>$companyid,'oversize_value'=>OVERSIZE_VALUE,'tax_rate'=>TAX_RATE,
+                  'created_date'=>date('Y-m-d'),
+                  'prime_address1'=>$post['prime_address1'],
+                  'prime_address_street'=>$post['prime_address_street'],
+                  'prime_address_city'=>$post['prime_address_city'],
+                  'prime_address_state'=>$post['prime_address_state'],
+                  'prime_address_zip'=>$post['prime_address_zip'],
+                  'prime_phone_main'=>$post['prime_phone_main'],
+                  'url'=>$post['url'])
+                );
 
-
-        $result_company_detail = DB::table('staff')->insert(array('user_id'=>$companyid,'oversize_value'=>OVERSIZE_VALUE,'tax_rate'=>TAX_RATE,'created_date'=>date('Y-m-d')));
-         
+        // SEND MAIL TO COMPANY WITH PASSWORD
+        $email = $post['email'];
+        Mail::send('emails.newcompany', ['password' =>$string,'user'=>$post['name'],'email'=>$email], function($message) use ($email) 
+                {
+                    $message->to($email, 'New Stokkup Account')->subject('New Account for Stokkup');
+                });
+        
+               
 /// default price grid code start 
 
        $whereConditions = ['is_delete' => '1','company_id' => 0];
@@ -402,45 +453,14 @@ class Company extends Model {
 
         $make_folder = $this->makefolder($post['id']);
         
-        $new_post = array('prime_address1'=>$post['prime_address1'],'prime_address_city'=>$post['prime_address_city'],'prime_address_state'=>$post['prime_address_state'],'prime_address_country'=>$post['prime_address_country'],'prime_address_zip'=>$post['prime_address_zip'],'url'=>$post['url']);
-    	
-        unset($post['prime_address1']);
-        unset($post['prime_address_city']);
-        unset($post['prime_address_state']);
-        unset($post['prime_address_country']);
-        unset($post['prime_address_zip']);
-        unset($post['url']);
-        unset($post['photo']);
-        unset($post['user_id']);
+        $new_post = array('prime_address1'=>$post['prime_address1'],'prime_address_city'=>$post['prime_address_city'],'prime_address_state'=>$post['prime_address_state'],'prime_address_country'=>$post['prime_address_country'],'prime_phone_main'=>$post['prime_phone_main'],'prime_address_street'=>$post['prime_address_street'],'prime_address_zip'=>$post['prime_address_zip'],'url'=>$post['url']);
 
-/*        if(isset($post['oversize_value']))
-        {*/
-            $new_post['oversize_value']=$post['oversize_value'];
-            unset($post['oversize_value']);
-/*        }
 
-        if(isset($post['tax_rate']))
-        {*/
-            $new_post['tax_rate']=$post['tax_rate'];
-            unset($post['tax_rate']);
-        //}
+        $result = DB::table('users')->where('id','=',$post['id'])->update(array('name'=>$post['name'],'email'=>$post['email']));
 
-            
-        if(isset($post['company_url_photo']))
-        {
-            unset($post['company_url_photo']);
-        }
-        if(!empty($post['id']))
-    	  {
-        		$result = DB::table('users')->where('id','=',$post['id'])->update($post);
+        $result_address = DB::table('staff')->where('user_id','=',$post['id'])->update($new_post);
+        return $result;
 
-            $result_address = DB::table('staff')->where('user_id','=',$post['id'])->update($new_post);
-        		return $result;
-       	}
-      	else
-      	{
-      		return 0;
-      	}
     }
     public function DeleteCompanyData($id)
     {
