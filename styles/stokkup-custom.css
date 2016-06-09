@@ -1,4 +1,15 @@
 /* ======== UPLOAD POPUP IMAGE DIMATION AND LAYOUT SET */
+@font-face {
+    font-family: 'Robotoregular';
+    src: url('../assets/icons/fonts/Roboto-Regular-webfont.eot');
+    src: url('../assets/icons/fonts/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../assets/icons/fonts/Roboto-Regular-webfont.woff') format('woff'),
+         url('../assets/icons/fonts/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('../assets/icons/fonts/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
 .popup-image{
 	height: 100%;
 	width: 100%;

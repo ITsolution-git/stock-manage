@@ -14,11 +14,7 @@
         <link rel="stylesheet" href="styles/app.css">
         <link rel="stylesheet" href="styles/stokkup-custom.css">
         <link rel="stylesheet" href="styles/mdPickers.min.css">
-
-        <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
-              rel='stylesheet' type='text/css'>
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.css">
         <script>
             var timer;
             function loadscreen()
