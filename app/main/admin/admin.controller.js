@@ -342,13 +342,232 @@
 	            });
         	}
         }
+        $scope.EditColor = function(ev, id)
+        {
+            $mdDialog.show({
+                //controller: 'AddEmployeeDialogController',
+                controller: function($scope,params){
+                    $scope.params = params;
+                   
+                    var colorData = {};
+                    colorData.table ='color';
+                    colorData.cond ={id:id}
+
+                    // GET CLIENT TABLE CALL
+                    $http.post('api/public/common/GetTableRecords',colorData).success(function(result) 
+                    {   
+                        if(result.data.success=='1')
+                        {   
+							$scope.colors = result.data.records[0];
+                        }
+                        else
+                        {
+                    	    notifyService.notify('error', result.data.message);
+                            $("#ajax_loader").hide();
+                        }
+                    });
+
+
+                    $scope.SaveRecords = function (name,id) 
+                    {
+                    	var UpdateArray = {};
+			            //console.log(name); return false;
+			            UpdateArray.table ='color';
+			            UpdateArray.data = {name:name};
+			            UpdateArray.cond ={id:id}
+			            if(name.trim()!='')
+			            {
+		                    $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+		                    {
+		                    	if(result.data.success=='1')
+	                    		{
+	                    			notifyService.notify('success',result.data.message);
+	                    			$mdDialog.hide();
+	                    		}
+	                			else
+	                			{
+									notifyService.notify('error',result.data.message);
+	                			}
+		                    });
+		                }
+                    } 
+
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    } 
+
+                },
+                templateUrl: 'app/main/admin/dialogs/editcolor.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                },
+                onRemoving : $scope.reloadCallback
+            });
+        }
     
 
 
     }
         /** @ngInject */
-    function SizeController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http) {
+    function SizeController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http,notifyService,AllConstant) 
+    {
+        
+        var originatorEv;
         var vm = this;
+         
+         vm.openMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
+
+        /* TESTY PAGINATION */     
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'user.id',
+          'sortOrder': 'dsc'
+
+        };
+        $scope.reloadCallback = function () { };
+        $scope.filterBy = {
+          'search': '',
+          'name': '',
+          'email': '',
+          'function':'size_list'
+        };
+        $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+            //getResource();
+        };
+        $scope.getResource = function (params, paramsObj, search)
+        {
+        	$scope.params = params;
+            $scope.paramsObj = paramsObj;
+            var company_data = {};
+            company_data.cond ={params:$scope.params};
+        	$("#ajax_loader").show();   
+	       return $http.post('api/public/common/getTestyRecords',company_data).success(function(result) 
+	     	{
+	     		$("#ajax_loader").hide();
+	     		$scope.success  = result.success;
+	     		if(result.success=='1')
+	            {
+	                return {
+	                  'rows': result.rows,
+	                  'header': result.header,
+	                  'pagination': result.pagination,
+	                  'sortBy': result.sortBy,
+	                  'sortOrder': result.sortOrder
+                	}
+	            }
+	            else
+	            {
+	                notifyService.notify('error',result.message);
+	            }
+	            
+	        });
+        }
+        $scope.removesize = function(ev,id)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table ='product_size';
+            UpdateArray.data = {is_delete:0};
+            UpdateArray.cond = {id:id};
+
+ 			var permission = confirm(AllConstant.deleteMessage);
+            if (permission == true) 
+            {
+	            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+	            {
+	                if(result.data.success=='1')
+	                {
+	                   notifyService.notify('success', "Record Deleted Successfully!");
+	                   $scope.reloadCallback(); // CALL COMPANY LIST
+	                }
+	                else
+	                {
+	                    notifyService.notify('error',result.data.message);
+	                }
+	            });
+        	}
+        }
+        $scope.Editsize = function(ev, id)
+        {
+            $mdDialog.show({
+                //controller: 'AddEmployeeDialogController',
+                controller: function($scope,params){
+                    $scope.params = params;
+                   
+                    var sizeData = {};
+                    sizeData.table ='product_size';
+                    sizeData.cond ={id:id}
+
+                    // GET CLIENT TABLE CALL
+                    $http.post('api/public/common/GetTableRecords',sizeData).success(function(result) 
+                    {   
+                        if(result.data.success=='1')
+                        {   
+							$scope.sizes = result.data.records[0];
+                        }
+                        else
+                        {
+                    	    notifyService.notify('error', result.data.message);
+                            $("#ajax_loader").hide();
+                        }
+                    });
+
+
+                    $scope.SaveRecords = function (name,id) 
+                    {
+                    	var UpdateArray = {};
+			            //console.log(name); return false;
+			            UpdateArray.table ='product_size';
+			            UpdateArray.data = {name:name};
+			            UpdateArray.cond ={id:id}
+			            if(name.trim()!='')
+			            {
+		                    $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+		                    {
+		                    	if(result.data.success=='1')
+	                    		{
+	                    			notifyService.notify('success',result.data.message);
+	                    			$mdDialog.hide();
+	                    		}
+	                			else
+	                			{
+									notifyService.notify('error',result.data.message);
+	                			}
+		                    });
+		                }
+                    } 
+                    
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    } 
+
+                },
+                templateUrl: 'app/main/admin/dialogs/editsize.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                },
+                onRemoving : $scope.reloadCallback
+            });
+        }
+    
+
+
+    
 
     
 

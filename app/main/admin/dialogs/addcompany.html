@@ -14,7 +14,7 @@
         <div layout="row" layout-wrap>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Name" required name="name"  ng-model="users.name">
+                    <input placeholder="Name *" required name="name"  ng-model="users.name">
                      <div ng-messages="employeeform.name.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>This field is required</span>
@@ -22,7 +22,7 @@
                     </div>
                 </md-input-container>
                  <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Email" type="email" name="email" required ng-pattern="/^.+@.+\..+$/"  ng-model="users.email">
+                    <input placeholder="Email *" type="email" name="email" required ng-pattern="/^.+@.+\..+$/"  ng-model="users.email">
                     <div ng-messages="employeeform.email.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span >This field is required</span>

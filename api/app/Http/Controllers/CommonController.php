@@ -928,7 +928,7 @@ class CommonController extends Controller {
 
         $result=array();
 
-        if($post['filter']['function']=='color_list') // COLOR LISTIN CONDITION
+        if($post['filter']['function']=='color_list') // COLOR LISTING CONDITION
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
@@ -940,8 +940,20 @@ class CommonController extends Controller {
                             1=>array('key' => '', 'name' => 'Action','sortable' => false),
                         );
         }
+        if($post['filter']['function']=='size_list') // SIZE LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'pz.id';
+            }
+            $result = $this->company->getSizes($post);
+            $header = array(
+                            0=>array('key' => 'pz.name', 'name' => 'Name'),
+                            1=>array('key' => '', 'name' => 'Action','sortable' => false),
+                        );
+        }
 
-        if($post['filter']['function']=='company_list') // COMPANY LIST CONDITION
+        if($post['filter']['function']=='company_list') // COMPANY LISTING CONDITION
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
