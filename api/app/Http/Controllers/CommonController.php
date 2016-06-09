@@ -7,6 +7,7 @@ use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Common;
+use App\Company;
 use DB;
 
 use Request;
@@ -18,9 +19,10 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common) 
+    public function __construct(Common $common, Company $company) 
     {
         $this->common = $common;
+        $this->company = $company;
 
     }
 
@@ -899,6 +901,74 @@ class CommonController extends Controller {
             return response()->json(['data'=>$data]);
         }
      }
+
+    /**
+    * Get record for any table with Total count and Pagination parameters.
+    * @params Testy Post data
+    * @return json data, with Testy parameters
+    */
+    public function getTestyRecords()
+    {
+        $post_all = Input::all();
+        $records = array();
+
+        $post = $post_all['cond']['params'];
+
+        
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        
+
+        $result=array();
+
+        if($post['filter']['function']=='color_list') // COLOR LISTIN CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'cl.id';
+            }
+            $result = $this->company->getColors($post);
+            $header = array(
+                            0=>array('key' => 'cl.name', 'name' => 'Name'),
+                            1=>array('key' => '', 'name' => 'Action','sortable' => false),
+                        );
+        }
+
+        if($post['filter']['function']=='company_list') // COMPANY LIST CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'usr.id';
+            }
+            $result = $this->company->GetCompanyData($post);
+            $header = array(
+                0=>array('key' => 'usr.name', 'name' => 'Name'),
+                1=>array('key' => 'usr.email', 'name' => 'Email'),
+                2=>array('key' => 'usr.created_date', 'name' => 'Create Date'),
+                );
+
+        }
+        
+        $records = $result['allData'];
+
+        $success = (empty($result['count']))?'0':1;
+        $message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;
+
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
+
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$post['sorts']['sortBy'],'sortOrder' => $post['sorts']['sortOrder'],'success'=>$success,'message'=>$message);
+        return  response()->json($data);
+    }
+
 
 
 }

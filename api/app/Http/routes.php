@@ -24,7 +24,8 @@ Route::post('admin/login', 'LoginController@loginverify');
 Route::post('admin/forgot_password', 'LoginController@forgot_password');
 Route::post('admin/check_user_password', 'LoginController@check_user_password');
 Route::post('admin/change_password', 'LoginController@change_password');
-
+Route::get('auth/session', 'LoginController@check_session');
+Route::get('auth/logout', 'LoginController@logout');
 
 // COMPANY ROUTERS
 Route::get('admin/company', 'CompanyController@listData');
@@ -41,7 +42,6 @@ Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
 Route::get('admin/company/getAuthorizeAPI/{company_id}', 'CompanyController@getAuthorizeAPI');
 Route::get('admin/company/getUpsAPI/{company_id}', 'CompanyController@getUpsAPI');
 Route::get('admin/company/getSnsAPI/{company_id}', 'CompanyController@getSnsAPI');
-
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
@@ -115,8 +115,6 @@ Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
 Route::get('common/type/{type}', 'CommonController@type');
 Route::get('common/staffRole', 'CommonController@getStaffRoles');
 Route::get('common/checkemail/{email}/{userid}', 'CommonController@checkemailExist');
-Route::get('auth/session', 'LoginController@check_session');
-Route::get('auth/logout', 'LoginController@logout');
 Route::post('auth/company', 'CommonController@CompanyService');
 Route::get('common/getAllVendors/{id}', 'CommonController@getAllVendors');
 Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
@@ -139,6 +137,7 @@ Route::post('common/deleteImage', 'CommonController@deleteImage'); //Update Imag
 Route::post('common/updateRecordsEmailVal', 'CommonController@updateRecordsEmailVal'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('common/insertRecordsEmail', 'CommonController@insertRecordsEmail'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/allColor', 'CommonController@allColor'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
+Route::post('common/getTestyRecords', 'CommonController@getTestyRecords'); // GET RECORDS WITH PAGINATION PARAMETERS.
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
