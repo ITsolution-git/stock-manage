@@ -180,5 +180,373 @@
                          window.history.back();
                   }
 
+
+
+                        $scope.percentagecalc = function($event,type) {
+                          
+                           var price_in_percentage = $event.target.value;
+                           
+                          
+                          if(type == 'charges') {
+
+                                if($scope.temp.discharge){
+                                var discharge_value = parseFloat(parseFloat($scope.temp.discharge) + ($scope.temp.discharge * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.discharge = discharge_value;
+                                 } 
+
+
+                                 if($scope.temp.specialty){
+                                    var specialty_value = parseFloat(parseFloat($scope.temp.specialty) + ($scope.temp.specialty * price_in_percentage) / 100).toFixed(2)
+                                    $scope.price.specialty = specialty_value;
+                                   }
+
+                              if($scope.temp.color_matching){
+
+                                var color_matching_value = parseFloat(parseFloat($scope.temp.color_matching) + ($scope.temp.color_matching * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.color_matching = color_matching_value;
+
+                              }
+
+                              if($scope.temp.embroidered_names){
+
+                                var embroidered_names_value = parseFloat(parseFloat($scope.temp.embroidered_names) + ($scope.temp.embroidered_names * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.embroidered_names = embroidered_names_value;
+
+                              }
+
+                              if($scope.temp.foil){
+
+                                var foil_value = parseFloat(parseFloat($scope.temp.foil) + ($scope.temp.foil * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.foil = foil_value;
+
+                              }
+
+                              if($scope.temp.folding){
+
+                                var folding_value = parseFloat(parseFloat($scope.temp.folding) + ($scope.temp.folding * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.folding = folding_value;
+
+                              }
+
+                              if($scope.temp.hang_tag){
+
+                                var hang_tag_value = parseFloat(parseFloat($scope.temp.hang_tag) + ($scope.temp.hang_tag * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.hang_tag = hang_tag_value;
+
+                              }
+
+                              if($scope.temp.ink_changes){
+
+                                var ink_changes_value = parseFloat(parseFloat($scope.temp.ink_changes) + ($scope.temp.ink_changes * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.ink_changes = ink_changes_value;
+
+                              }
+
+                                if($scope.temp.number_on_dark){
+                                var number_on_dark_value = parseFloat(parseFloat($scope.temp.number_on_dark) + ($scope.temp.number_on_dark * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.number_on_dark = number_on_dark_value;
+                                }
+
+                                if($scope.temp.number_on_light){
+                                var number_on_light_value = parseFloat(parseFloat($scope.temp.number_on_light) + ($scope.temp.number_on_light * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.number_on_light = number_on_light_value;
+                                }
+
+                                 if($scope.temp.over_size){
+                                var over_size_value = parseFloat(parseFloat($scope.temp.over_size) + ($scope.temp.over_size * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.over_size = over_size_value;
+                                }
+
+                                 if($scope.temp.over_size_screens){
+                                var over_size_screens_value = parseFloat(parseFloat($scope.temp.over_size_screens) + ($scope.temp.over_size_screens * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.over_size_screens = over_size_screens_value;
+                                }
+
+                                if($scope.temp.poly_bagging){
+                                var poly_bagging_value = parseFloat(parseFloat($scope.temp.poly_bagging) + ($scope.temp.poly_bagging * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.poly_bagging = poly_bagging_value;
+                                }
+
+                                if($scope.temp.press_setup){
+                                var press_setup_value = parseFloat(parseFloat($scope.temp.press_setup) + ($scope.temp.press_setup * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.press_setup = press_setup_value;
+                                }
+
+
+                                if($scope.temp.printed_names){
+                                var printed_names_value = parseFloat(parseFloat($scope.temp.printed_names) + ($scope.temp.printed_names * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.printed_names = printed_names_value;
+                                }
+
+                                if($scope.temp.screen_fees){
+                                var screen_fees_value = parseFloat(parseFloat($scope.temp.screen_fees) + ($scope.temp.screen_fees * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.screen_fees = screen_fees_value;
+                                }
+
+                                 if($scope.temp.shipping_charge){
+                                var shipping_charge_value = parseFloat(parseFloat($scope.temp.shipping_charge) + ($scope.temp.shipping_charge * price_in_percentage) / 100).toFixed(2)
+                                $scope.price.shipping_charge = shipping_charge_value;
+                                }
+
+                              }  else if(type == 'chargeslist'){
+                                
+                                  var index = 0;
+                                  angular.forEach($scope.temp_allPriceGrid, function( key, value ) {
+                                   
+                                       $scope.allPriceGrid[index].charge = parseFloat(parseFloat(key.charge) + (key.charge * price_in_percentage) / 100).toFixed(2);
+                                       $scope.allPriceGrid[index].time =parseFloat(parseFloat(key.time) + (key.time * price_in_percentage) / 100).toFixed(2)
+                                      index++;
+                                    });
+
+                              } else if(type == 'primary'){
+                               
+                               var index = 0;
+
+                                  angular.forEach($scope.temp_primary, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                       $scope.allScreenPrimary[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
+                                       
+                                    }
+                                      index++;
+                                    });
+                              }
+
+                              else if(type == 'secondary'){
+                               
+
+                               var index = 0;
+
+                                  angular.forEach($scope.temp_secondary, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                      $scope.allScreenSecondary[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
+                                    }
+                                      index++;
+                                    });
+                                  
+                              } else if(type == 'embroidery'){
+                               
+
+                               var index = 0;
+
+                                  angular.forEach($scope.temp_embro, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                      $scope.allEmbroidery[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
+                                    }
+                                      index++;
+                                    });
+                                  
+                                  
+                              } else if(type == 'dtogarment'){
+                               
+
+                               var index = 0;
+
+                                  angular.forEach($scope.temp_gar, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                      $scope.allGarment[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
+                                    }
+                                      index++;
+                                    });
+                                  
+                                  
+                              }
+
+                        }
+
+
+
+                        $scope.amtcalc = function($event,type) {
+                          
+                                var price_in_amt = $event.target.value;
+
+                                  if(!price_in_amt.length){
+                                  price_in_amt = 0;
+                                 }
+
+                                if(type == 'charges') {
+                                 
+                                if($scope.temp.discharge){
+                                  var discharge_value = parseFloat(parseFloat($scope.temp.discharge) + parseFloat(price_in_amt)).toFixed(2)
+                                  $scope.price.discharge = discharge_value;
+                                 } 
+
+
+                                 if($scope.temp.specialty){
+                                    var specialty_value = parseFloat(parseFloat($scope.temp.specialty) + parseFloat(price_in_amt)).toFixed(2)
+                                    $scope.price.specialty = specialty_value;
+                                   }
+
+                              if($scope.temp.color_matching){
+
+                                var color_matching_value = parseFloat(parseFloat($scope.temp.color_matching) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.color_matching = color_matching_value;
+
+                              }
+
+                              if($scope.temp.embroidered_names){
+
+                                var embroidered_names_value = parseFloat(parseFloat($scope.temp.embroidered_names) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.embroidered_names = embroidered_names_value;
+
+                              }
+
+                              if($scope.temp.foil){
+
+                                var foil_value = parseFloat(parseFloat($scope.temp.foil) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.foil = foil_value;
+
+                              }
+
+                              if($scope.temp.folding){
+
+                                var folding_value = parseFloat(parseFloat($scope.temp.folding) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.folding = folding_value;
+
+                              }
+
+                              if($scope.temp.hang_tag){
+
+                                var hang_tag_value = parseFloat(parseFloat($scope.temp.hang_tag) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.hang_tag = hang_tag_value;
+
+                              }
+
+                              if($scope.temp.ink_changes){
+
+                                var ink_changes_value = parseFloat(parseFloat($scope.temp.ink_changes) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.ink_changes = ink_changes_value;
+
+                              }
+
+                                if($scope.temp.number_on_dark){
+                                var number_on_dark_value = parseFloat(parseFloat($scope.temp.number_on_dark) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.number_on_dark = number_on_dark_value;
+                                }
+
+                                if($scope.temp.number_on_light){
+                                var number_on_light_value = parseFloat(parseFloat($scope.temp.number_on_light) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.number_on_light = number_on_light_value;
+                                }
+
+                                 if($scope.temp.over_size){
+                                var over_size_value = parseFloat(parseFloat($scope.temp.over_size) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.over_size = over_size_value;
+                                }
+
+                                 if($scope.temp.over_size_screens){
+                                var over_size_screens_value = parseFloat(parseFloat($scope.temp.over_size_screens) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.over_size_screens = over_size_screens_value;
+                                }
+
+                                if($scope.temp.poly_bagging){
+                                var poly_bagging_value = parseFloat(parseFloat($scope.temp.poly_bagging) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.poly_bagging = poly_bagging_value;
+                                }
+
+                                if($scope.temp.press_setup){
+                                var press_setup_value = parseFloat(parseFloat($scope.temp.press_setup) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.press_setup = press_setup_value;
+                                }
+
+
+                                if($scope.temp.printed_names){
+                                var printed_names_value = parseFloat(parseFloat($scope.temp.printed_names) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.printed_names = printed_names_value;
+                                }
+
+                                if($scope.temp.screen_fees){
+                                var screen_fees_value = parseFloat(parseFloat($scope.temp.screen_fees) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.screen_fees = screen_fees_value;
+                                }
+
+                                 if($scope.temp.shipping_charge){
+                                var shipping_charge_value = parseFloat(parseFloat($scope.temp.shipping_charge) + parseFloat(price_in_amt)).toFixed(2)
+                                $scope.price.shipping_charge = shipping_charge_value;
+                                }
+
+                              } else if(type == 'chargeslist'){
+                               
+
+                               var index = 0;
+                                  angular.forEach($scope.temp_allPriceGrid, function( key, value ) {
+                                   
+                                       $scope.allPriceGrid[index].charge = parseFloat(parseFloat(key.charge) + parseFloat(price_in_amt)).toFixed(2)
+                                       $scope.allPriceGrid[index].time =parseFloat(parseFloat(key.time) + parseFloat(price_in_amt)).toFixed(2)
+                                      index++;
+                                    });
+                                  
+
+                              }
+
+                              else if(type == 'primary'){
+                               
+
+                               var index = 0;
+
+                                  angular.forEach($scope.temp_primary, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                      $scope.allScreenPrimary[index][price_field] = parseFloat(parseFloat(key[price_field]) + parseFloat(price_in_amt)).toFixed(2)
+                                    }
+                                      index++;
+                                    });
+                                  
+                              } else if(type == 'secondary'){
+                               
+
+                               var index = 0;
+
+                                  angular.forEach($scope.temp_secondary, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                      $scope.allScreenSecondary[index][price_field] = parseFloat(parseFloat(key[price_field]) + parseFloat(price_in_amt)).toFixed(2)
+                                    }
+                                      index++;
+                                    });
+                                  
+                              } else if(type == 'embroidery'){
+                               
+
+                               var index = 0;
+                                 
+                                  angular.forEach($scope.temp_embro, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                      $scope.allEmbroidery[index][price_field] = parseFloat(parseFloat(key[price_field]) + parseFloat(price_in_amt)).toFixed(2)
+                                    }
+                                      index++;
+                                    });
+                                  
+                              } else if(type == 'dtogarment'){
+                               
+
+                               var index = 0;
+                                 
+                                  angular.forEach($scope.temp_gar, function( key, value ) {
+                                   var price_field;
+                                   for (var i=1; i<=12; i++) {
+                                      price_field = "pricing_"+i+"c";
+                                      $scope.allGarment[index][price_field] = parseFloat(parseFloat(key[price_field]) + parseFloat(price_in_amt)).toFixed(2)
+                                    }
+                                      index++;
+                                    });
+                                  
+                              }
+
+                              
+
+                        }
+
     }
 })();
