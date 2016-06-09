@@ -1,0 +1,100 @@
+<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
+    <div class="simple-table-container md-whiteframe-4dp m-t-20 m-b-20 m-r-15 pd15" >
+        <table class="tbl-typ2">
+            <tr>
+                <td>
+                    <div class="header-typ1">Boxing Details for Shipment #18750</div>
+                    <div layout="row" class="pd10">
+                        <div flex="30" layout="column" class="pd10-R bdr1-R">
+                            <div class="header-typ3">Box ID</div>
+                            <div class="order-container" ms-scroll>
+                                <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="item in vm.boxDetails">
+                                    <div layout="column" flex="90">
+                                        <div layout="row" flex="100" class="mrg5-B">
+                                            <div layout="column" flex="50" class="mrg10-R">
+                                                <div>Box ID</div>
+                                                <div class="gray-text">{{ item.boxId }}</div>
+                                            </div>
+                                            <div layout="column" flex="50">
+                                                <div>Number of Box</div>
+                                                <div class="gray-text">{{ item.numBox }}</div>
+                                            </div>
+                                        </div>
+                                        <div layout="row" flex="100" class="mrg5-B">
+                                            <div layout="column" flex="50" class="mrg10-R">
+                                                <div>Units Packaged</div>
+                                                <div class="gray-text">{{ item.unitPackaged }}</div>
+                                            </div>
+                                            <div layout="column" flex="50">
+                                                <div>Tracking Number</div>
+                                                <div class="gray-text">{{ item.trackNumber }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div layout="column" flex="10" class="align-M text-right">
+                                        <span class="icon icon-close f-red font-18"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div flex="70" layout="column" class="mrg10-L">
+                            <div class="header-typ3">Box Details</div>
+                            <div class="ms-responsive-table-wrapper">
+                                <table class="simple hover simple-tbl1 tbl-typ3">
+                                    <thead>
+                                        <tr>
+                                            <th class="secondary-text" width="10%">Box Item ID</th>
+                                            <th class="secondary-text" width="10%">Size Group</th>
+                                            <th class="secondary-text" width="10%">Product</th>
+                                            <th class="secondary-text" width="10%">Product Color</th>
+                                            <th class="secondary-text" width="10%">Size</th>
+                                            <th class="secondary-text" width="10%">Boxed Qnty</th>
+                                            <th class="secondary-text" width="10%">MD</th>
+                                            <th class="secondary-text" width="10%">Spoil</th>
+                                            <th class="secondary-text" width="10%">Actual</th>
+                                            <th class="secondary-text" width="20%">Re-Allocate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                        <tr ng-repeat="item in vm.productDetail" class="cursor-p">
+                                            <td>{{ item.boxId}}</td>
+                                            <td>{{ item.sizeGroup}}</td>
+                                            <td>{{ item.product}}</td>
+                                            <td>{{ item.productColor}}</td>
+                                            <td>{{ item.size}}</td>
+                                            <td>{{ item.boxedQty}}</td>
+                                            <td>
+                                                <md-input-container flex="100" class="mrg0-TB" aria-label="MD">
+                                                    <input placeholder="MD">
+                                                </md-input-container>
+                                            </td>
+                                            <td>
+                                                <md-input-container flex="100" class="mrg0-TB" aria-label="Spoil">
+                                                    <input placeholder="Spoil">
+                                                </md-input-container>
+                                            </td>
+                                            <td>{{ item.actual}}</td>
+                                            <td>
+                                                <md-select ng-model="company.prime_address_state" placeholder="39130" class="mrg6-TB">
+                                                    <md-option value="0">39130</md-option>
+                                                    <md-option>39130</md-option>
+                                                    <md-option>39130</md-option>
+                                                </md-select>
+                                            </td>
+                                        </tr>                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+        <button aria-label="Back" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ng-transclude="" ui-sref="app.shipping.shipmentdetails"><span class="ng-scope">Back</span>
+        </button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save &amp; Print Labels"><span class="ng-scope">Save &amp; Print Labels</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button>
+    </md-dialog-actions>
+</div>
