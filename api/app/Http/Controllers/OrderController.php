@@ -12,6 +12,7 @@ use App\Common;
 use App\Purchase;
 use App\Product;
 use App\Client;
+use App\Affiliate;
 use DB;
 use App;
 use Request;
@@ -22,14 +23,14 @@ use PDF;
 
 class OrderController extends Controller { 
 
-    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client)
+    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate)
     {
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
         $this->product = $product;
         $this->client = $client;
-        DB::enableQueryLog();
+        $this->affiliate = $affiliate;
     }
 
 /** 
@@ -176,6 +177,14 @@ class OrderController extends Controller {
     public function orderDetail() {
  
         $data = Input::all();
+
+        if(isset($data['affiliate_id']))
+        {
+            $affiliate_data = $this->common->GetTableRecords('order_affiliate_mapping',array('affiliate_id' => $data['affiliate_id']),array());
+            $data['id'] = $affiliate_data[0]->order_id;
+            $data['is_affiliate'] = true;
+        }
+        
         $result = $this->order->orderDetail($data);
 
          if(empty($result['order']))
@@ -1261,8 +1270,15 @@ class OrderController extends Controller {
  
         $data = Input::all();
         $design_data = array();
-       
-        $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
+        
+        if(isset($data['affiliate_id']))
+        {
+            $order_design_data = $this->affiliate->getAffiliateDesign($data['affiliate_id']);
+        }
+        else
+        {
+            $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
+        }
         $size_data = array();
         $order_design = array();
          $total_unit = 0;
@@ -1288,8 +1304,15 @@ class OrderController extends Controller {
                 $cnt++;
             }
 
-
-            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
+            if(isset($data['affiliate_id']))
+            {
+                $size_data = $this->common->GetTableRecords('affiliate_product',array('affiliate_id' => $design->affiliate_id,'is_delete' => '1'),array());
+            }
+            else
+            {
+                $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
+            }
+            
             $total_qnty = 0;
             foreach ($size_data as $size) {
                 $total_qnty += $size->qnty;

@@ -27,13 +27,15 @@
         $scope.filterBy = {
           'search': '',
           'name': '',
-          'email': ''
+          'function': 'company_list'
         };
         $scope.search = function ($event){
             $scope.filterBy.name = $event.target.value;
             //getResource();
         };
-                               // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
+        
+
+        // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
             var state = {};
             state.table ='state';
 
@@ -56,11 +58,12 @@
             company_data.cond ={params:$scope.params};
 
         	//$("#ajax_loader").show();     
-	       return $http.post('api/public/admin/company/list',company_data).success(function(result) 
+	       return $http.post('api/public/common/getTestyRecords',company_data).success(function(result) 
 	     	{
+	     		$scope.success  = result.success;
 	     		if(result.success=='1')
 	            {
-	                $scope.success  = result.success;
+	                
 	                return {
 	                  'rows': result.rows,
 	                  'header': result.header,
@@ -240,7 +243,7 @@
 	            {
 	                if(result.data.success=='1')
 	                {
-	                   notifyService.notify('success', "Record Updated Successfully!");
+	                   notifyService.notify('success', "Record Deleted Successfully!");
 	                   $scope.reloadCallback(); // CALL COMPANY LIST
 	                }
 	                else
@@ -257,9 +260,88 @@
         };
     }
         /** @ngInject */
-    function ColorController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http) {
+    function ColorController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http,notifyService,AllConstant) 
+    {
+        var originatorEv;
         var vm = this;
+         
+         vm.openMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
 
+        /* TESTY PAGINATION */     
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'user.id',
+          'sortOrder': 'dsc'
+
+        };
+        $scope.reloadCallback = function () { };
+        $scope.filterBy = {
+          'search': '',
+          'name': '',
+          'email': '',
+          'function':'color_list'
+        };
+        $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+            //getResource();
+        };
+        $scope.getResource = function (params, paramsObj, search)
+        {
+        	$scope.params = params;
+            $scope.paramsObj = paramsObj;
+            var company_data = {};
+            company_data.cond ={params:$scope.params};
+        	$("#ajax_loader").show();   
+	       return $http.post('api/public/common/getTestyRecords',company_data).success(function(result) 
+	     	{
+	     		$("#ajax_loader").hide();
+	     		$scope.success  = result.success;
+	     		if(result.success=='1')
+	            {
+	                return {
+	                  'rows': result.rows,
+	                  'header': result.header,
+	                  'pagination': result.pagination,
+	                  'sortBy': result.sortBy,
+	                  'sortOrder': result.sortOrder
+                	}
+	            }
+	            else
+	            {
+	                notifyService.notify('error',result.message);
+	            }
+	            
+	        });
+        }
+        $scope.removeColor = function(ev,id)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table ='color';
+            UpdateArray.data = {is_delete:0};
+            UpdateArray.cond = {id:id};
+
+ 			var permission = confirm(AllConstant.deleteMessage);
+            if (permission == true) 
+            {
+	            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+	            {
+	                if(result.data.success=='1')
+	                {
+	                   notifyService.notify('success', "Record Deleted Successfully!");
+	                   $scope.reloadCallback(); // CALL COMPANY LIST
+	                }
+	                else
+	                {
+	                    notifyService.notify('error',result.data.message);
+	                }
+	            });
+        	}
+        }
     
 
 

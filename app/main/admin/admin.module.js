@@ -61,11 +61,29 @@
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/admin/views/colors_list.html',
-                        controller : 'AdminController as vm'
+                        controller : 'ColorController as vm'
                     }
                 }
             })
             .state('app.admin.sizes', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".admin-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('ALL');
+                    },
+                },
+                url  : '/admin.sizes',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/admin/views/sizes_list.html',
+                        controller : 'AdminController as vm'
+                    }
+                }
+            })
+            .state('app.admin.snsinventory', {
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
@@ -107,7 +125,6 @@
             
             weight     : 1
         });
-
         msNavigationServiceProvider.saveItem('fuse.admin.colors', {
             title      : 'Colors',
             state      : 'app.admin.colors',
@@ -116,7 +133,6 @@
             
             weight     : 2
         });
-
         msNavigationServiceProvider.saveItem('fuse.admin.sizes', {
             title      : 'Sizes',
             state      : 'app.admin.sizes',
@@ -124,6 +140,13 @@
             class      : 'navigation-dashboards project-dashboard',
             
             weight     : 3
+        });
+        msNavigationServiceProvider.saveItem('fuse.admin.snsinventory', {
+            title      : 'S&S Inventory',
+            state      : '',
+            class      : 'navigation-dashboards project-dashboard',
+            
+            weight     : 4
         });
     }
 

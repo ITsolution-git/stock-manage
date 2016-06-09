@@ -40,7 +40,7 @@
                         <tr  ng-repeat="user in rows">
                             <td class="">{{user.name}}</td>
                             <td class="">{{user.email}}</td>
-                            <!-- <td class="">{{user.phone}}</td> -->
+                             <td class="">{{user.created_date}}</td>
                             <td class=""> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -49,7 +49,7 @@
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
                                             <md-button ng-click="edit_company($event,user.id)">
-                                                Edit User
+                                                Edit Company
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
@@ -68,8 +68,17 @@
                         </tr>
                     </tbody> 
                 </table>
-            <div tasty-pagination class="tasty-page"></div>
+            <div tasty-pagination class="tasty-page" ></div>
         </div>         
+    </div>
+    <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+       <table class="simple">
+            <thead>
+                <tr>
+                    <th>No Records Found</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 </div>

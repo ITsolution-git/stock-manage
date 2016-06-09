@@ -47,15 +47,17 @@ $this->common = $common;
     	$result = $this->company->GetCompanyData($post);
     	$records = $result['allData'];
     	$success = (empty($result['count']))?'0':1;
+    	$message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
         $header = array(
                         0=>array('key' => 'usr.name', 'name' => 'Name'),
                         1=>array('key' => 'usr.email', 'name' => 'Email'),
+                        2=>array('key' => 'usr.created_date', 'name' => 'Create Date'),
                         );
 
-        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$post['sorts']['sortBy'],'sortOrder' => $post['sorts']['sortOrder'],'success'=>$success);
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$post['sorts']['sortBy'],'sortOrder' => $post['sorts']['sortOrder'],'success'=>$success,'message'=>$message);
         return  response()->json($data);
 	}
 	/**

@@ -78,9 +78,8 @@ class Order extends Model {
     public function orderDetail($data) {
 
       
-         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
+        $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
-
         $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','staff.first_name',
                       'staff.last_name','users.name','cc.first_name as client_first_name',
                       'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
@@ -89,9 +88,18 @@ class Order extends Model {
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
-                         ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
-                         ->leftJoin('price_grid as price_grid','order.price_id','=', 'price_grid.id')
-                         ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
+                         ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "));
+                         if(isset($data['is_affiliate']))
+                         {
+                               $orderDetailData = $orderDetailData->leftJoin('order_affiliate_mapping as oam','order.id','=', 'oam.order_id');
+                               $orderDetailData = $orderDetailData->leftJoin('affiliates as a','oam.affiliate_id','=', 'a.id');
+                               $orderDetailData = $orderDetailData->leftJoin('price_grid as price_grid','a.price_grid','=', 'price_grid.id');
+                         }
+                         else
+                         {
+                            $orderDetailData = $orderDetailData->leftJoin('price_grid as price_grid','order.price_id','=', 'price_grid.id');
+                         }
+                         $orderDetailData = $orderDetailData->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();

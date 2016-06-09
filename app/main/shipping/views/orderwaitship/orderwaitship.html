@@ -68,12 +68,53 @@
                                     <div class="font-12">{{ addrss.phone }}</div>
                                 </div>
                                 <div layout="column" flex="20" class="text-right">
-                                    <span class="icon icon-arrow-right font-18"></span>
+                                    <span class="icon icon-arrow-right font-18 mrg35-T"></span>
                                 </div>
                             </div>
                         </div>
                         <div flex="35" layout="column" class="mrg10-L">
                             <div class="header-typ3">Shipment Items</div>
+                            <div class="box-typ3">
+                                <div layout="row" flex="100">
+                                    <div layout="column" flex="90">
+                                        <div class="ms-responsive-table-wrapper">
+                                            <table class="simple hover simple-tbl1 tbl-typ3">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="secondary-text" width="30%">Size Group</th>
+                                                        <th class="secondary-text" width="30%">Product #</th>
+                                                        <th class="secondary-text" width="20%">Color</th>
+                                                        <th class="secondary-text" width="20%">Size</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody> 
+                                                    <tr ng-repeat="item in vm.selectedOrderItems" class="cursor-p">
+                                                        <td>{{ item.sizeGroup}}</td>
+                                                        <td>{{ item.product}}</td>
+                                                        <td>{{ item.color}}</td>
+                                                        <td>{{ item.size}}</td>
+                                                    </tr>                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <div layout="row" flex="100">
+                                                <div layout="column" flex="40" class="pd10">
+                                                    <div class="font-18 text-center">20</div>
+                                                    <div class="font-13 gray-text text-center">Qty Ordered</div>
+                                                </div>
+                                                <div layout="column" flex="60" class="pd10 bdr-1L">
+                                                    <div class="font-18 text-center">10</div>
+                                                    <div class="font-13 gray-text text-center">Remaining to Distribute</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div layout="colum" flex="10" class="align-M text-center">
+                                        <a href="#" class="icon icon-close font-18 f-red"></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </td>

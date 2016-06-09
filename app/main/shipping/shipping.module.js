@@ -33,6 +33,22 @@
                         controller : 'orderWaitController as vm'
                     }
                 }
+            }).state('app.shipping.shipmentdetails', {
+                url  : '/shipmentdetails',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/shipping/views/shipmentdetails/shipmentdetails.html',
+                        controller : 'shipmentController as vm'
+                    }
+                }
+            }).state('app.shipping.boxingdetail', {
+                url  : '/boxingdetail',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/shipping/views/boxingdetail/boxingdetail.html',
+                        controller : 'boxingdetailController as vm'
+                    }
+                }
             });
 
        // Translation
