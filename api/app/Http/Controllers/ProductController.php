@@ -410,7 +410,7 @@ public function create_dir($dir_path) {
         $price_id = $order_data[0]->price_id;
         $order_id = $order_data[0]->id;
 
-        $price_grid_data = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','id' => $price_id),array());
+        $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $price_id),array());
         $price_grid = $price_grid_data[0];
 
         $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
