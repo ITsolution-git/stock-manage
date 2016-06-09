@@ -13,7 +13,7 @@
             $("#ajax_loader").show();
             
             var combine_array_id = {};
-            combine_array_id.affiliate_id = $stateParams.id;
+            combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
             $scope.order_id = $stateParams.id;
             
@@ -32,7 +32,7 @@
         $scope.designDetail = function(){
 
             var combine_array_id = {};
-            combine_array_id.affiliate_id = $stateParams.id;
+            combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {

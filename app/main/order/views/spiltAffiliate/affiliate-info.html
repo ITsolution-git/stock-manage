@@ -55,11 +55,11 @@
                 <div class="table-title-text h2 text-semibold" flex=20>
                     Designs
                 </div>
-                <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+                <!-- <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
                     <md-button class="dark-bg" ng-click="vm.openaddDesignDialog($event,0)">
                         ADD NEW
                     </md-button>
-                </div>
+                </div> -->
             </div>
             <div class="ms-responsive-table-wrapper">
                 
@@ -100,7 +100,7 @@
                     </thead>
                    <tbody class="scrollable" ms-scroll>
                         <tr ng-repeat="design in designs">
-                            <td class="cursor-p" ui-sref="app.order.design({id:design.id})">{{ design.id}} </td>
+                            <td class="cursor-p">{{ design.id}} </td>
                             <td>{{ design.design_name}}</td>
                             <td>{{ design.total_qnty}}</td>
                             <td>{{ design.cnt}}</td>

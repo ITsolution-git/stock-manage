@@ -299,7 +299,7 @@ class Product extends Model {
        
         foreach($post['productData'] as $row) {
 
-             if(isset($post['sku'])) {
+             if(isset($row['sku'])) {
 
                 $insert_purchase_array = array('design_id'=>$post['id'],
                     'size'=>$row['sizeName'],

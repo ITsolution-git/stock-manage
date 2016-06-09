@@ -16,15 +16,15 @@ class Affiliate extends Model {
 
     public function getAffiliateData($data) {
         
-        $whereConditions = ['oam.order_id' => $data['id']];
+        $whereConditions = ['o.parent_order_id' => $data['id']];
         
 
-        $listArray = ['a.name as affiliate_name','od.design_name','p.name as product_name','p.product_image','oam.note','oam.id','oam.affiliate_id'];
+        $listArray = ['a.name as affiliate_name','od.design_name','p.name as product_name','p.product_image','o.note','o.id','o.affiliate_id','dp.design_id'];
 
-        $affiliatesData = DB::table('order_affiliate_mapping as oam')
-                         ->leftJoin('affiliates as a','oam.affiliate_id','=', 'a.id')
-                         ->leftJoin('order_design as od','oam.design_id','=', 'od.id')
-                         ->leftJoin('design_product as dp','oam.design_id','=', 'dp.design_id')
+        $affiliatesData = DB::table('orders as o')
+                         ->leftJoin('affiliates as a','o.affiliate_id','=', 'a.id')
+                         ->leftJoin('order_design as od','o.id','=', 'od.order_id')
+                         ->leftJoin('design_product as dp','od.id','=', 'dp.design_id')
                          ->leftJoin('products as p','dp.product_id','=', 'p.id')
                          ->select($listArray)
                          ->where($whereConditions)
@@ -35,11 +35,10 @@ class Affiliate extends Model {
 
     public function getAffiliateSizes($id)
     {
-        $affiliatesData = DB::table('affiliate_product as oam')
+        $affiliatesData = DB::table('purchase_detail as pd')
                          ->select('id','size','qnty')
-                         ->where('affiliate_id','=',$id)
+                         ->where('design_id','=',$id)
                          ->where('is_delete','=',1)
-                         ->GroupBy('id')
                          ->get();
 
         return $affiliatesData;
