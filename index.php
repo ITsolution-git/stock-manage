@@ -243,6 +243,7 @@
     <script src="app/main/shipping/views/orderwaitship/orderwaitship.controller.js"></script>
     <script src="app/main/shipping/views/shipmentdetails/shipmentdetails.controller.js"></script>
     <script src="app/main/shipping/views/boxingdetail/boxingdetail.controller.js"></script>
+    <script src="app/main/shipping/views/shipmentoverview/shipmentoverview.controller.js"></script>
 
 
     <!-- COMPANY ADMIN -->

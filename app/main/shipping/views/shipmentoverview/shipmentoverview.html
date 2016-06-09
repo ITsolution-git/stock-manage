@@ -1,0 +1,160 @@
+<div class="order-info-page m-r-15 m-l-20 m-b-20">
+    <div class="header "  layout="column">
+        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <h2 flex="4" class="font-500">Shipment Overview Demo Order #1234 for Company: </h2>
+            <md-input-container md-no-float class="md-block" flex="3">
+                <input aria-label="Client Name">
+            </md-input-container>
+        </div>
+        <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <div class="info-order" flex="100">
+                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
+                <md-card layout="row">
+                    <md-card-content flex="100" layout="column" ng-repeat="order in vm.shipDetails">
+                        <div layout="row" layout-wrap class="mrg10-B">
+                            <div layout="column" flex="20">
+                                <div>Order ID</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.orderId }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Order Name</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.orderName }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Shipping By</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.shippingBy }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>In Hand By</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.inHandBy }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Status</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.status }}</span>
+                            </div>
+                        </div>
+                        <div layout="row" class="mrg10-B">
+                            <div layout="column" flex="20">
+                                <div>Shipping ID</div>
+                               <span class="font-14 chrome-weight gray-text">{{ order.shippingId }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Product</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.product }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Box Type</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.boxType }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Shipping Type</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.shippingType }}</span>
+                            </div>
+                        </div>
+                        <div layout="row">
+                            <div layout="column" flex="20">
+                                <div>Client ID</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.clientId }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Client Name</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.clientName }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Fully Shipped</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.fullyShipped }}</span>
+                            </div>
+                            <div layout="column" flex="20">
+                                <div>Date Shipped</div>
+                                <span class="font-14 chrome-weight gray-text">{{ order.dateShipped }}</span>
+                            </div>
+                        </div>
+                        <div layout-align="end" layout="row">
+                            <a>EDIT</a>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <div  layout="row" class="margin">
+        <div flex="100" layout="column" class="">
+            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
+                <div class="pd15-LR mrg15-T" layout="row" layout-align="space-between center">
+                    <div class="table-title-text h2 text-semibold">Distribution Locations</div>
+                </div>
+                <div class="ms-responsive-table-wrapper">
+                    <table class="simple hover simple-tbl1">
+                        <thead>
+                            <tr>
+                                <th class="secondary-text" width="20%">Location Name</th>
+                                <th class="secondary-text" width="20%">ATTN</th>
+                                <th class="secondary-text" width="40%">Address</th>
+                                <th class="secondary-text" width="20%">Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr ng-repeat="loc in vm.distrLoc" class="cursor-p">
+                                <td>{{ loc.locationName}}</td>
+                                <td>{{ loc.locationAttn}}</td>
+                                <td>{{ loc.locationAddress}}</td>
+                                <td>{{ loc.locationPhone}}</td>
+                            </tr>                    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  layout="row" class="margin">
+        <div flex="100" layout="column" class="">
+            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
+                <div class="pd15-LR mrg15-T" layout="row" layout-align="space-between center">
+                    <div class="table-title-text h2 text-semibold">Boxed Shipments</div>
+                </div>
+                <div class="ms-responsive-table-wrapper">
+                    <table class="simple hover simple-tbl1">
+                        <thead>
+                            <tr>
+                                <th class="secondary-text" width="30%">Box ID</th>
+                                <th class="secondary-text" width="30%">Units Packed</th>
+                                <th class="secondary-text" width="40%">Tracking Number</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr ng-repeat="box in vm.boxShipmnt" class="cursor-p">
+                                <td>{{ box.boxId}}</td>
+                                <td>{{ box.unitPacked}}</td>
+                                <td>{{ box.trackNo}}</td>
+                            </tr>                    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  layout="row" class="margin">
+        <div flex="100" layout="column" class="">
+            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
+                <div class="pd15-LR mrg15-T" layout="row" layout-align="space-between center">
+                    <div class="table-title-text h2 text-semibold">Printing Option</div>
+                </div>
+                <div layout="row" flex="100" class="pd15-TLR">
+                    <div layout="column" flex="25">
+                        <md-checkbox aria-label="Select All" aria-label="Select All">Manifest</md-checkbox>
+                    </div>
+                    <div layout="column" flex="25">
+                        <md-checkbox aria-label="Select All" aria-label="Select All">Shipping Report</md-checkbox>
+                    </div>
+                    <div layout="column" flex="25">
+                        <md-checkbox aria-label="Select All" aria-label="Select All">Shipping Label</md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print"><span class="ng-scope">Print</span></button>
+    </md-dialog-actions>
+</div>

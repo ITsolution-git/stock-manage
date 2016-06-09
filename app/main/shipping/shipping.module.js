@@ -49,6 +49,14 @@
                         controller : 'boxingdetailController as vm'
                     }
                 }
+            }).state('app.shipping.shipmentoverview', {
+                url  : '/shipmentoverview',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/shipping/views/shipmentoverview/shipmentoverview.html',
+                        controller : 'shipmentOverviewController as vm'
+                    }
+                }
             });
 
        // Translation
