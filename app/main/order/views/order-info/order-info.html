@@ -267,9 +267,9 @@
                             <tr ng-repeat="affiliateOrder in affiliateList" class="cursor-p">
                                 <td>{{ affiliateOrder.affiliate_name}}</td>
                                 <td>{{ affiliateOrder.total}}  
-                                <td>{{ affiliateOrder.design_total}}</td>
+                                <td>1</td>
                                 <td class="text-right"> 
-                                    <a href="#" ui-sref="app.purchaseOrder.affiliatePO">VIEW </a>
+                                    <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a>
                                 </td>
                             </tr>
                         </tbody> 
