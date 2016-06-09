@@ -2,7 +2,7 @@
     <div class="simple-table-container md-whiteframe-4dp">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20>
-                Clients
+                Colors
             </div>
             <div class="search-block" flex=40>
 
@@ -12,9 +12,9 @@
             </div>
 
                
-            <div class="client-modal-title " flex=50>
+          <!--   <div class="client-modal-title " flex=50>
                 <span class="cursor-p" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
-            </div>
+            </div> -->
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
@@ -55,7 +55,7 @@
                                     </md-button>
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
-                                            <md-button ng-click="editColor($event,color.id)">
+                                            <md-button ng-click="EditColor($event,color.id)">
                                                 Edit Color
                                             </md-button>
                                         </md-menu-item>
