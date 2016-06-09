@@ -499,6 +499,11 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 	padding-top:15px;
 	padding-bottom:15px;
 }
+.pd15-TLR {
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
 .pd25-T {
 	padding-top:25px;
 }
