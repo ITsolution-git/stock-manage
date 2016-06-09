@@ -1,0 +1,28 @@
+<md-dialog class="task-dialog addEmployeeDialog" >
+<form name="colorForm" class="md-inline-form" novalidate>
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit Color</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap>
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Name *" required name="name"  ng-model="colors.name" ui-event="{ change : 'SaveRecords($event.target.value,colors.id)' }"  >
+                     <div ng-messages="colorForm.name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+        </div>
+    </md-card-content>
+    </div>
+</div>
+</form>
+</md-dialog>

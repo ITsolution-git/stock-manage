@@ -3,24 +3,33 @@
     <div ng-cloak>
          <form name="priceForm" class="form-validation stokkupForm priceGrid" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)">
         <md-content>
-            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+
+         <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                <div class="table-title-text" flex="40">
+                    <label>Price Grid<span class="f-red"> *</span><em class="text-muted"></em></label>
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder=""  name="" ui-event=""  aria-label="Price Grid" ng-model="price.name" required>
+                    </md-input-container>
+                </div>          
+        </div>
+
+
+            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab" md-selected="selectedIndex">
                 <!-----------------Charges Tab-------------------->
                 <md-tab label="Charges">
-                    
-
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
                             <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=40>
+                                <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
+                                        <input ng-model="percentagecalcdata" name="" ui-event="{ blur : 'percentagecalc($event,\'charges\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
-                                <div class="table-title-text" flex=40>
+                                <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by amount</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
+                                        <input  ng-model="amtcalcdata" name="" ui-event="{ blur : 'amtcalc($event,\'charges\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -177,17 +186,17 @@
                 <md-tab label="Charges List">
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by %   </label>
+                             <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" aria-label="a" valid-number>
+                                        <input ng-model="percentagecalcdata" name="" ui-event="{ blur : 'percentagecalc($event,\'chargeslist\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by amount   </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by amount</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" aria-label="a" valid-number>
+                                        <input  ng-model="amtcalcdata" name="" ui-event="{ blur : 'amtcalc($event,\'chargeslist\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -252,7 +261,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click=" " aria-label="a">
+                                            <md-button class="bg-blue" ng-click="addInput()" aria-label="a">
                                                     ADD
                                             </md-button>
                                         </td>  
@@ -266,19 +275,17 @@
                 <md-tab label="Screen Printing Primary">
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by %   </label>
+                           <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
-                                        
+                                        <input ng-model="percentagecalcdata" name="" ui-event="{ blur : 'percentagecalc($event,\'primary\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by amount </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by amount</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
-                                       
+                                        <input  ng-model="amtcalcdata" name="" ui-event="{ blur : 'amtcalc($event,\'primary\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -391,7 +398,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close" ></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeScreenPrimary($index)"></i>
                             </td>
                         </tr>   
                                            
@@ -400,12 +407,12 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click=" ">
+                                            <md-button class="bg-blue" ng-click="addScreenPrimary()">
                                                     ADD
                                             </md-button>
                                         </td>  
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click=" ">
+                                            <md-button class="bg-blue" ng-click="duplicateprimary(allScreenPrimary)">
                                                     Duplicate Primary
                                             </md-button>
                                         </td>                                       
@@ -420,16 +427,16 @@
                       <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
                             <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by %   </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
+                                        <input ng-model="percentagecalcdata" name="" ui-event="{ blur : 'percentagecalc($event,\'secondary\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by amount   </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by amount</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
+                                        <input  ng-model="amtcalcdata" name="" ui-event="{ blur : 'amtcalc($event,\'secondary\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -540,7 +547,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close" ></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeScreenSecondary($index)"></i>
                             </td>
                         </tr>   
                                            
@@ -549,7 +556,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click=" ">
+                                            <md-button class="bg-blue" ng-click="addScreenSecondary()">
                                                     ADD
                                             </md-button>
                                         </td>                                        
@@ -564,26 +571,16 @@
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
                             <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by %   </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" aria-label="a">
-                                        <div ng-messages=" " role="alert" multiple>
-                                            <div ng-message="required">
-                                                <span>This field is required</span>
-                                            </div>
-                                        </div>
+                                        <input ng-model="percentagecalcdata" name="" ui-event="{ blur : 'percentagecalc($event,\'embroidery\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by amount  </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by amount</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" aria-label="a">
-                                        <div ng-messages=" " role="alert" multiple>
-                                            <div ng-message="required">
-                                                <span>This field is required</span>
-                                            </div>
-                                        </div>
+                                        <input  ng-model="amtcalcdata" name="" ui-event="{ blur : 'amtcalc($event,\'embroidery\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -752,14 +749,15 @@
                                             </md-input-container>
                                         </div>
                                         <div layout="column" flex="5" class="text-center mrg10-T">
-                                            <i class="icon icon-close f-red"></i>
+                                            <i class="icon icon-close cursor-p f-red"  ng-click="removeEmbroidery($index)"></i>
+
                                         </div>
                                     </div>
                                 </div>
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click=" ">
+                                            <md-button class="bg-blue" ng-click="addEmbroidery()">
                                                 Add
                                             </md-button>
                                         </td>                                        
@@ -774,18 +772,16 @@
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
                             <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by %   </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
-                                        
+                                        <input ng-model="percentagecalcdata" name="" ui-event="{ blur : 'percentagecalc($event,\'dtogarment\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by amount   </label>
+                                <div class="table-title-text" flex="40">
+                                    <label class="priceGridTr">Price Increase by amount</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
-                                       
+                                        <input  ng-model="amtcalcdata" name="" ui-event="{ blur : 'amtcalc($event,\'dtogarment\')' }" valid-number aria-label="a">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -909,7 +905,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close" ></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeGarment($index)"></i>
                             </td>
                         </tr>   
                                            
@@ -918,7 +914,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click=" ">
+                                            <md-button class="bg-blue" ng-click="addGarment()">
                                                     ADD
                                             </md-button>
                                         </td>                                        
@@ -932,20 +928,7 @@
                 <md-tab label="Garment Markup">
                      <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by %   </label>
-                                    <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
-                                    </md-input-container>
-                                </div>
-                                <div class="table-title-text" flex=40>
-                                    <label class="priceGridTr">Price Increase by amount </label>
-                                    <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
-                                        <input placeholder="" name="" ui-event="" valid-number aria-label="a">
-                                    </md-input-container>
-                                </div>
-                            </div>
+                            
                             <div class="ms-responsive-table-wrapper innertab-scroll">
                                 <table class="simple" id="garmentMarkup">
                     <thead>
@@ -986,7 +969,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close" ></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeGarmentMackup($index)"></i>
                             </td>
                         </tr>   
                                            
@@ -995,7 +978,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click=" ">
+                                            <md-button class="bg-blue" ng-click="addGarmentMackup()">
                                                     ADD
                                             </md-button>
                                         </td>                                        

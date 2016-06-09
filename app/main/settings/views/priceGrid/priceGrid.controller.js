@@ -8,88 +8,60 @@
             
 
     /** @ngInject */
-    function PriceGridController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state)
+    function PriceGridController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,AllConstant,notifyService)
     {
         var originatorEv;
         var vm = this ;
         $scope.company_id = sessionService.get('company_id');
      
 
-        var company_id = sessionService.get('company_id');
-        var price_list_data = {};
-        var condition_obj = {};
-        condition_obj['company_id'] =  company_id;
-        price_list_data.cond = angular.copy(condition_obj);
+        $scope.priceList = function(){
 
-        $http.post('api/public/admin/price',price_list_data).success(function(result, status, headers, config) {
-            $scope.price = result.data.records;                     
-        });
+             var company_id = sessionService.get('company_id');
+                var price_list_data = {};
+                var condition_obj = {};
+                condition_obj['company_id'] =  company_id;
+                price_list_data.cond = angular.copy(condition_obj);
 
-        vm.openCreatePriceGridDialog = openCreatePriceGridDialog;
-        vm.uploadCSV = uploadCSV ;
-        vm.deletePriceGrid = deletePriceGrid ;
+                $http.post('api/public/admin/price',price_list_data).success(function(result, status, headers, config) {
+                    $scope.price = result.data.records;                     
+                });
+        }
 
-        $scope.cancel = function () {
-            $mdDialog.hide();
-        };
+        $scope.priceList();
+
+        $scope.updateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
+            
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+            var permission = confirm(AllConstant.deleteMessage);
+            if (permission == true)
+                {
+
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                      notifyService.notify('success','Record Deleted Successfully.');
+                        $scope.priceList();
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
+                    }
+                });
+             }
+        } 
         
-        /**
-         * Close dialog
-         */
-        function closeDialog()
-        {
-            $mdDialog.hide();
-        }
-
-        function openCreatePriceGridDialog(ev, price_id)
-        {
-            $mdDialog.show({
-                controller: 'CreatePriceGridDialogController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/settings/dialogs/createPriceGrid/createPriceGrid-dialog.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    price_id: price_id,
-                    event: ev
-                }
-            });
-        }
-
-        function uploadCSV(ev, settings)
-        {
-            $mdDialog.show({
-                controller: 'UploadCSVDialogController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/settings/dialogs/uploadCSV/uploadCSV-dialog.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    Settings: settings,
-                    Settings: vm.settings,
-                    event: ev
-                }
-            });
-        }
-
-        function deletePriceGrid(ev, settings)
-        {
-            $mdDialog.show({
-                controller: 'DeletePriceGridDialogController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    Settings: settings,
-                    Settings: vm.settings,
-                    event: ev
-                }
-            });
-        }
 
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
