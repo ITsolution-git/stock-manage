@@ -88,6 +88,47 @@
 
         $scope.priceDetail();
 
+
+           $scope.duplicateprimary = function (price_primary) {
+            
+              var combine_array_data = {};
+              combine_array_data.price_id = $stateParams.id;
+              combine_array_data.price_primary = price_primary;
+              
+
+              var permission = confirm("This will over right the current settings if any in the secondary price grid panel.");
+
+              if (permission == true) {
+              
+                    $http.post('api/public/admin/priceGridPrimaryDuplicate',combine_array_data).success(function(result, status, headers, config) {
+
+                    if(result.data.success == '1') {
+
+
+                    $http.post('api/public/admin/priceSecondary',$stateParams.id).success(function(result, status, headers, config) {
+  
+                      if(result.data.success == '1') {
+                               
+                                $scope.allScreenSecondary = result.data.allScreenSecondary;
+                               
+                       }  else {
+                       $state.go('app.dashboard');
+                       }
+                   
+                    });
+
+                     $scope.selectedIndex = 3;
+                         //  $("md-tabs-canvas md-tab-item").removeClass("md-active"); 
+                           //$( "md-tabs-canvas md-tab-item:nth-child(3)").addClass( "md-active" );
+
+                     } 
+           
+                });
+
+              }
+          } 
+
+
             $scope.savePrice = function(price,price_grid,price_primary,price_secondary,garment_mackup,garment,embroswitch,allEmbroidery) {
                    
                     var combine_array_data = {};
