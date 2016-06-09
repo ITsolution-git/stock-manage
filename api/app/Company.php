@@ -583,7 +583,33 @@ class Company extends Model {
       return $result;
     }
     
-    
+    public function getColors($post)
+    {
+        $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+        $colordata = DB::table('color as cl')
+                 ->select(DB::raw('SQL_CALC_FOUND_ROWS *'))
+                 ->where('cl.is_delete','=','1')
+                 ->where('cl.is_sns','=','1');
+                 if($search != '')               
+                  {
+                      $colordata = $colordata->Where('cl.name', 'LIKE', '%'.$search.'%');
+                  }
+                 $colordata = $colordata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+       
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $colordata;
+        $returnData['count'] = $count[0]->Totalcount;
+
+        return $returnData;
+    }
     
 
 }

@@ -61,7 +61,7 @@
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/admin/views/colors_list.html',
-                        controller : 'AdminController as vm'
+                        controller : 'ColorController as vm'
                     }
                 }
             })
