@@ -38,7 +38,7 @@
             </div>
             <div layout="row" class="pad-10-15 p-l-0">
                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="row in sizes">
-                    <label class="font-14 p-l-0">{{row.size}}</label>
+                    <label class="font-14 p-l-0 mrg3-L">{{row.size}}:<span class="text-bold mrg5-L">24</span></label>
                     <input ng-model="row.affiliate_qnty" type="number" ng-min="0" ng-max="{{row.qnty}}" ng-class="{'red':orderForm.input.$invalid}"  ng-init="$parent.total = total + row.affiliate_qnty">
                 </md-input-container>
 <!--                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">

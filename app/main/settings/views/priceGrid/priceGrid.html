@@ -1,8 +1,8 @@
     <div class="content order-info-page m-b-20">
         <div class="simple-table-container md-whiteframe-4dp">
-            <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+            <div class="pd15-TLR paddingbottom-0" layout="row" layout-align="space-between center">
                 <div class="table-title-text h2 text-semibold" flex=20>
-                    <div class="title" layout-padding><span class="basicInfoStyle">COMPANY PRICE GRIDS</span></div>
+                    <div class="title"><span class="basicInfoStyle">COMPANY PRICE GRIDS</span></div>
                 </div>
                 
                  <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
@@ -34,42 +34,31 @@
                 </div>
                
             </div>
-            <div class="ms-responsive-table-wrapper priceGridTableContainer userMgmntPadding">
-                <table class="scrol table3 row-border hover" id="priceGrid" dt-options="vm.dtOptions"  >
-                    <thead>
-
-                        <tr>
-                            <th class="secondary-text userMgmntTdWidth">
-                                <div class="table-header">
-                                    <span class="column-title">Price Grid Name</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-
-                            </th>
-                        </tr>
-                    </thead>
-                   <tbody class="scrollable" ms-scroll>
-                        <tr class="cursor-p" ng-repeat="price_data in price">
-                            <td class="" ui-sref="app.settings.price-info({id:price_data.id})">{{price_data.name}}</td>
-                            <td class="text-right "> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4">
-                                        <md-menu-item>
-                                            <md-button ng-click="updateTableField('is_delete','0','price_grid','id',price_data.id)">
-                                                Delete Price Grid
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                    </tbody> 
-                </table>
-         
+            <div class="ms-responsive-table-wrapper priceGridTableContainer pd15-LR">
+                <div class="font-13 text-bold mrg10-T">Price Grid Name</div>
+                <div class="order-container" ms-scroll>
+                    <table class="simple row-border hover" id="priceGrid" dt-options="vm.dtOptions">
+                       <tbody>
+                            <tr class="cursor-p" ng-repeat="price_data in price">
+                                <td class="" ui-sref="app.settings.price-info({id:price_data.id})">{{price_data.name}}</td>
+                                <td class="text-right "> 
+                                    <md-menu>
+                                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button ng-click="updateTableField('is_delete','0','price_grid','id',price_data.id)">
+                                                    Delete Price Grid
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div>
             </div>
         </div>
     </div>

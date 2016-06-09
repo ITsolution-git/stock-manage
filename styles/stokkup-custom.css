@@ -379,6 +379,10 @@ md-input-container .md-errors-spacer { min-height: 1px; }
 	display:inline-block;
 }
 .pd0 { padding: 0px; }
+.mrg15 { margin:15px; }
+.mrg20-T { margin-top:20px; }
+.mrg3-L { margin-left: 3px;}
+.mrg5-L { margin-left: 5px;}
 .mrg6-TB, md-select.mrg6-TB { margin-top: 6px; margin-bottom: 6px;}
 md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .mrg10-R {
@@ -946,3 +950,9 @@ a:hover {
 .pull-right { float: right; }
 .form-cntnr md-input-container { margin: 0px; padding:0px;  }
 .form-cntnr .md-errors-spacer { min-height: 1px; }
+.box-typ4 {
+  background: #fff;
+  padding: 0px 15px 5px;
+  border-left: 5px solid #039BE5;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
