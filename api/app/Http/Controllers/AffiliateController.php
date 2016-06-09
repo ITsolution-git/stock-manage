@@ -64,23 +64,63 @@ class AffiliateController extends Controller {
     {
         $post = Input::all();
 
+        $order_design = $this->common->GetTableRecords('order_design',array('id' => $post['design_id'],'order_id' => $post['order_id'],'is_affiliate_design' => '0'),array());
+        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $post['design_id'],'is_affiliate_design' => '0'),array());
+        $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id'],'parent_order_id' => '0'),array());
+        $affiliate_data = $this->common->GetTableRecords('affiliates',array('id' => $post['affiliate_id']),array());
+
         $insert_arr = array(
-                            'order_id' => $post['order_id'],
+                            'parent_order_id' => $post['order_id'],
                             'affiliate_id' => $post['affiliate_id'],
-                            'design_id' => $post['design_id'],
+                            'client_id' => $order_data[0]->client_id,
+                            'contact_main_id' => $order_data[0]->contact_main_id,
+                            'price_id' => $affiliate_data[0]->price_grid,
+                            'account_manager_id' => $order_data[0]->account_manager_id,
+                            'name' => $order_data[0]->name,
+                            'approval_id' => $order_data[0]->approval_id,
+                            'sales_id' => $order_data[0]->sales_id,
                             'total_affiliate' => $post['total_affiliate'],
                             'total_not_assign' => $post['total_not_assign'],
                             'note' => $post['notes'],
                             'shop_invoice' => $post['shop_invoice'],
                             'additional_charges' => $post['additional_charges'],
                             'affiliate_invoice' => $post['affiliate_invoice'],
-                            'total' => $post['total']
+                            'total' => $post['total'],
+                            'login_id' => $order_data[0]->login_id,
+                            'company_id' => $order_data[0]->company_id
                             );
 
-        $id = $this->common->InsertRecords('order_affiliate_mapping',$insert_arr);
+        $order_id = $this->common->InsertRecords('orders',$insert_arr);
 
-        foreach ($post['sizes'] as $size) {
-            $this->common->InsertRecords('affiliate_product',array('affiliate_id' => $id,'size' => $size['size'],'qnty' => $size['affiliate_qnty']));
+        $insert_order_design = array(
+                                    'order_id' => $order_id,
+                                    'design_name' => $order_design[0]->design_name,
+                                    'front_color_id' => $order_design[0]->front_color_id,
+                                    'back_color_id' => $order_design[0]->back_color_id,
+                                    'side_right_color_id' => $order_design[0]->side_right_color_id,
+                                    'side_left_color_id' => $order_design[0]->side_left_color_id,
+                                    'top_color_id' => $order_design[0]->top_color_id,
+                                    'bottom_color_id' => $order_design[0]->bottom_color_id,
+                                    'is_affiliate_design' => '1'
+                                    );
+        $design_id = $this->common->InsertRecords('order_design',$insert_order_design);
+
+        $insert_design_product = array('design_id' => $design_id, 'product_id' => $design_product[0]->product_id, 'is_affiliate_design' => '1');
+
+        $design_product_id = $this->common->InsertRecords('design_product',$insert_design_product);
+
+        foreach($post['sizes'] as $row) {
+
+            $insert_purchase_array = array(
+                                            'design_id'=>$design_id,
+                                            'size'=>$row['size'],
+                                            'sku'=>$row['sku'],
+                                            'price'=>$row['price'],
+                                            'qnty'=>$row['affiliate_qnty'],
+                                            'color_id'=>$row['color_id']
+                                        );
+
+            $this->common->InsertRecords('purchase_detail',$insert_purchase_array);
         }
 
         $response = array(
@@ -99,21 +139,23 @@ class AffiliateController extends Controller {
 
         $affiliateList = $this->affiliate->getAffiliateData($data);
 
+        $assigned_total = 0;
         foreach($affiliateList as $list)
         {
-            $sizes = $this->affiliate->getAffiliateSizes($list->id);
+            $sizes = $this->affiliate->getAffiliateSizes($list->design_id);
             $total = 0;
             foreach ($sizes as $size) {
                 $total += $size->qnty;
             }
             $list->total = $total;
             $list->sizes = $sizes;
+            $assigned_total += $total;
         }
 
         $assigned = $this->affiliate->getAssignCount($data);
         $not_assigned = $this->affiliate->getUnassignCount($data);
 
-        $result['order'][0]->assign = $assigned[0]->total ? $assigned[0]->total : '0';
+        $result['order'][0]->assign = $assigned_total;//$assigned[0]->total ? $assigned[0]->total : '0';
         $result['order'][0]->total = $not_assigned[0]->total ? $not_assigned[0]->total : '0';
 
         $response = array(
