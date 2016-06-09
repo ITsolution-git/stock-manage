@@ -39,7 +39,7 @@
                         return sessionService.AccessService('ALL');
                     },
                 },
-                url  : '/admin/companyProfile',
+                url  : '/companyProfile',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/admin/views/company_list.html',
@@ -57,7 +57,7 @@
                         return sessionService.AccessService('ALL');
                     },
                 },
-                url  : '/admin/colors',
+                url  : '/colors',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/admin/views/colors_list.html',
@@ -75,11 +75,11 @@
                         return sessionService.AccessService('ALL');
                     },
                 },
-                url  : '/admin.sizes',
+                url  : '/sizes',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/admin/views/sizes_list.html',
-                        controller : 'AdminController as vm'
+                        controller : 'SizeController as vm'
                     }
                 }
             })

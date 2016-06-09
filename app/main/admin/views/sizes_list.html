@@ -2,19 +2,22 @@
     <div class="simple-table-container md-whiteframe-4dp">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20>
-                Sizes
+                sizes
             </div>
             <div class="search-block" flex=40>
+
                 <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search">
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
-            <div class="client-modal-title " flex=50>
-                <span class="cursor-p" >ADD NEW SIZE</span>
-            </div>
+
+               
+          <!--   <div class="client-modal-title " flex=50>
+                <span class="cursor-p" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
+            </div> -->
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
-            <div >
+            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
                  <table class="dataTable row-border hover">
     <!--                 <thead>
                         <tr>
@@ -41,18 +44,33 @@
                             </th>
                         </tr>
                     </thead> -->
-                   
-                    <tbody>
-
-                        <tr ng-repeat="client in rows" >
-                            <td  ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
-                            <td>{{ client.first_name }} {{client.last_name}}</td>
-                            <td>{{ client.phone }}</td>
-                            <td>{{ client.email }}</td>
+                    <thead tasty-thead></thead>
+                    <tbody >
+                        <tr  ng-repeat="size in rows">
+                            <td class="">{{size.name}}</td>
+                            <td class=""> 
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4"> 
+                                        <md-menu-item>
+                                            <md-button ng-click="Editsize($event,size.id)">
+                                                Edit size
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="removesize($event,size.id)">
+                                                Remove size
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
                         </tr>
-                    </tbody>
+                    </tbody> 
                 </table>
-                
+                <div tasty-pagination class="tasty-page"></div>
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
