@@ -118,15 +118,42 @@
                     });
 
                      $scope.selectedIndex = 3;
-                         //  $("md-tabs-canvas md-tab-item").removeClass("md-active"); 
-                           //$( "md-tabs-canvas md-tab-item:nth-child(3)").addClass( "md-active" );
-
+                        
                      } 
            
                 });
 
               }
-          } 
+          }
+
+          $scope.duplicate = function (price,price_grid,price_primary,price_secondary,garment_mackup,garment,embroswitch,allEmbroidery) {
+                          
+                            var combine_array_data = {};
+                            combine_array_data.price = price;
+                            combine_array_data.price_grid = price_grid;
+                            combine_array_data.price_primary = price_primary;
+                            combine_array_data.price_secondary = price_secondary;
+                            combine_array_data.garment_mackup = garment_mackup;
+                            combine_array_data.garment = garment;
+                            combine_array_data.embroswitch = embroswitch;
+                            combine_array_data.allEmbroidery = allEmbroidery;
+
+                            
+
+                            var permission = confirm("Are you sure you want to duplicate this Price Grid ?");
+
+                            if (permission == true) {
+                            
+                                  $http.post('api/public/admin/priceGridDuplicate',combine_array_data).success(function(result, status, headers, config) {
+        
+                                  if(result.data.success == '1') {
+                                          window.history.back();
+                                   } 
+                         
+                              });
+
+                            }
+                        }
 
 
             $scope.savePrice = function(price,price_grid,price_primary,price_secondary,garment_mackup,garment,embroswitch,allEmbroidery) {
