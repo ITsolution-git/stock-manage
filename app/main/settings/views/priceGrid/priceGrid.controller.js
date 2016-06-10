@@ -68,6 +68,32 @@
             $mdOpenMenu(ev);
         };
 
+         $scope.submitPriceGridDownload = function () {
+ 
+             document.getElementById('downloadPricecsv').submit();
+        }
+
+         $scope.submitPriceForm = function () {
+ 
+             var fileName = $("#file").val();
+            
+
+             if(fileName == ''){
+                 var data = {"status": "error", "message": "Please upload CSV file."}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+             }
+                if(fileName.lastIndexOf("csv")!=fileName.length-3) {
+
+                     var data = {"status": "error", "message": "File must be in CSV format"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+                } else {
+                    
+                    document.getElementById('uploadPricecsv').submit();
+                }
+        }
+
     }
     
 })();
