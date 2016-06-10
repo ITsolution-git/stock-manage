@@ -96,6 +96,7 @@
 
         vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
         vm.openinformationDialog = openinformationDialog;
+        vm.openApproveOrderDialog = openApproveOrderDialog;
       
         vm.purchases = [
             {"poid": "27", "potype": "Purchase Order", "clientName": "kensville", "vendor": "SNS", "dateCreated": "xx/xx/xxxx"},
@@ -228,7 +229,19 @@
                   }
             });
         }
-
+        function openApproveOrderDialog(ev, settings) {
+            $mdDialog.show({
+                controller: 'approveOrderDiallogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    event: ev
+                }
+            });
+        }
         $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
         {
             var position_main_data = {};

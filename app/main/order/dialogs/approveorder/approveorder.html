@@ -1,0 +1,36 @@
+<md-dialog class="task-dialog designadd-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">{{vm.title}}</span>
+                <md-button  ng-click="cancel()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="wrap" class="design-add-modal">
+                <div layout="row" flex="100">
+                    <md-checkbox aria-label="S&amp;S Order" aria-label="Select All">S&amp;S Order</md-checkbox>
+                </div>
+                <div layout="row" flex="100">
+                    <md-checkbox aria-label="Create Invoice" aria-label="Select All">Create Invoice</md-checkbox>
+                </div>
+                <div layout="row" flex="100">
+                    <md-select flex="30" ng-model="company.prime_address_state" placeholder="Payment Terms" class="mrg6-TB">
+                        <md-option value="0">Payment Terms</md-option>
+                        <md-option>Pending</md-option>
+                        <md-option>Approved</md-option>
+                    </md-select>
+                </div>
+                <div layout="row" flex="100">
+                    <md-checkbox aria-label="Create Invoice" aria-label="Select All" checked>Sync to Quickbooks</md-checkbox>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised " ng-click="saveDesign(design)">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 
