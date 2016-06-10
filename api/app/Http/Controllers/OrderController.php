@@ -1326,7 +1326,10 @@ class OrderController extends Controller {
             $order_design['all_design'][] = $design;
 
         }
-        $order_design['total_unit'] = $total_unit;
+        if($total_unit > 0)
+        {
+            $order_design['total_unit'] = $total_unit;
+        }
       
         if (count($order_design) > 0) {
             $response = array(
@@ -1621,11 +1624,7 @@ class OrderController extends Controller {
         if(!empty($design_data))
         {
             foreach ($design_data as $design) {
-/*                $item_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
-                if(!empty($item_data))
-                {*/
-                    $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
-//                }
+                $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
             }
         }
         return true;
