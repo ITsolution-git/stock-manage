@@ -238,7 +238,7 @@ Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
 Route::post('order/updateMarkup', 'OrderController@updateMarkup');
 Route::post('order/updateOverride', 'OrderController@updateOverride');
 Route::post('order/addRemoveToFinishing', 'OrderController@addRemoveToFinishing');
-
+Route::get('order/calculateAll/{order_id}/{company_id}', 'OrderController@calculateAll');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
