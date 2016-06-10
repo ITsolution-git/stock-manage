@@ -488,6 +488,129 @@ class SettingController extends Controller {
 
     }
 
+    public function downloadPricegridCSV()
+    {
+            $path = base_path().'/'; // change the path to fit your websites document structure
+             
+            $dl_file = preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})", '', 'addpricegrid.csv'); // simple file name validation
+            $dl_file = filter_var($dl_file, FILTER_SANITIZE_URL); // Remove (more) invalid characters
+            $fullPath = $path.$dl_file;
+             
+            if ($fd = fopen ($fullPath, "r")) {
+                $fsize = filesize($fullPath);
+                $path_parts = pathinfo($fullPath);
+                $ext = strtolower($path_parts["extension"]);
+                switch ($ext) {
+                    case "pdf":
+                    header("Content-type: application/pdf");
+                    header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a file download
+                    break;
+                    // add more headers for other content types here
+                    default;
+                    header("Content-type: application/octet-stream");
+                    header("Content-Disposition: filename=\"".$path_parts["basename"]."\"");
+                    break;
+                }
+                header("Content-length: $fsize");
+                header("Cache-control: private"); //use this to open files directly
+                while(!feof($fd)) {
+                    $buffer = fread($fd, 2048);
+                    echo $buffer;
+                }
+            }
+            fclose ($fd);
+            exit;
+
+    }
+
+
+     public function uploadPricingCSV()
+    {
+        $post = Input::all();
+      
+       if(isset($post["file"])){
+        $filename=$_FILES["file"]["tmp_name"];
+         if($_FILES["file"]["size"] > 0)
+         {
+            $file = fopen($filename, "r");
+           
+            while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
+            {
+               /* if($emapData[0] != '') {
+               
+                       $product_data = $this->common->GetTableRecords('products',array('name' => trim($emapData[0]),'company_id' => $post['company_id'],'vendor_id' => 0),array());
+                       
+                       if(count($product_data)>0) {
+                         $product_id = $product_data[0]->id;
+                      
+                       } else {
+                            $product_name = array(
+                                'name'=>$emapData[0],
+                                'description'=>$emapData[3],
+                                'created_date' => date('Y-m-d'),
+                                'company_id' => $post['company_id']
+                                
+                                );
+                              $result = $this->common->InsertRecords('products',$product_name);
+                              $product_id = $result;
+                       }
+                       if($emapData[1] != '') {
+                       $color_data = $this->common->GetTableRecords('color',array('name' => trim($emapData[1]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                       
+                       if(count($color_data)>0) {
+                         $color_id = $color_data[0]->id;
+                      
+                       } else {
+                           $color_name = array(
+                                    'name'=>$emapData[1],
+                                    'is_sns' => 0,
+                                    'company_id' => $post['company_id']
+                                    );
+                            $result_color = $this->common->InsertRecords('color',$color_name);
+                            $color_id = $result_color;
+                       }
+                     
+                       if($emapData[2] != '') {
+                      
+                               $size_data = $this->common->GetTableRecords('product_size',array('name' => trim($emapData[2]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                               
+                                   if(count($size_data)>0) {
+                                     $size_id = $size_data[0]->id;
+                                  
+                                   } else {
+                                       $size_name = array(
+                                                'name'=>$emapData[2],
+                                                'is_sns' => 0,
+                                                'company_id' => $post['company_id']
+                                                );
+                                        $result_size = $this->common->InsertRecords('product_size',$size_name);
+                                        $size_id = $result_size;
+                                   }
+                               $product_color_data = $this->common->GetTableRecords('product_color_size',array('product_id' => $product_id,'color_id' => $color_id,'size_id' => $size_id),array());
+                               
+                                   if(count($product_color_data) == 0) {
+                                        
+                                        $product_color_size = array(
+                                                    'product_id'=>$product_id,
+                                                    'color_id' => $color_id,
+                                                    'size_id' => $size_id
+                                                    );
+                                        $result_size_color = $this->common->InsertRecords('product_color_size',$product_color_size);
+                                        $id = $result_size_color;
+                                    }
+                        }
+                    }
+                  }*/
+              
+            }
+            fclose($file);
+            echo "complete";
+            exit;
+        }
+    }    
+
+  }
+
 
 
 

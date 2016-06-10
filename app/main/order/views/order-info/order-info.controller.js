@@ -43,6 +43,7 @@
                 }
                 else {
                     $scope.designs = [];
+                    $scope.total_unit = 0;
                 }
             });
         }
