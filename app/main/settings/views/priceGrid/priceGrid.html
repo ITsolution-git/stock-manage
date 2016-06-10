@@ -5,7 +5,7 @@
                     <div class="title"><span class="basicInfoStyle">COMPANY PRICE GRIDS</span></div>
                 </div>
                 
-                 <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+                 <div class="order-modal-title " layout="row" layout-align="end end" flex="35" >
 
                    <!--  <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data" target="_blank">
                         <div class="fileUpload">
@@ -19,7 +19,7 @@
                         </a>
                        </form> -->
 
-                        <form name="uploadcsv" id="uploadcsv" action="#" method="post" enctype="multipart/form-data" target="_blank">
+                        <form name="uploadcsv" id="uploadcsv" action="#" method="post" enctype="multipart/form-data" target="_blank" class="width-auto">
                         <div class="fileUpload">
                             <input type="file" name="file" id="file" class="upload" ng-model="file">
                             <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
@@ -29,6 +29,12 @@
                         <a href="#" class="btn-typ-submit" ng-click="submitForm()">
                             <span class="icon icon-upload"></span>
                         </a>
+                       </form>
+                        <form name="downloadcsv" id="downloadcsv" action="api/public/product/downloadCSV" method="post" enctype="multipart/form-data" class="mrg10-L width-auto">
+                            <a href="#" class="btn-typ-submit" ng-click="submitFormDownload()" class="btn-typ-submit">
+                                <span class="icon icon-download"></span>
+                                <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
+                            </a>
                        </form>
                
                 </div>

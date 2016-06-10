@@ -1,45 +1,35 @@
 <div class="content order-list-page custom-product-page">
     <div class="simple-table-container md-whiteframe-4dp">
-        <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20 class="cursor-p" >
+        <div class="table-title " layout="row" layout-align="space-between center" flex="100">
+            <div class="table-title-text" flex="20" class="cursor-p" >
                 Custom Product
             </div>
-           
-
-            <div class="search-block" flex=25>
+            <div class="search-block" flex="25">
                 <md-input-container class="md-block" flex-gt-sm>
                     <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
-
-             <div class="order-modal-title " layout="row" layout-align="end center" flex=20 >
-
-            <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data" target="_blank">
-                <div class="fileUpload">
-                    <input type="file" name="file" id="file" class="upload" ng-model="file">
-                    <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
-                    <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
-                    <span>Upload CSV</span>
-                </div>
-                <a href="#" class="btn-typ-submit" ng-click="submitForm()">
-                    <span class="icon icon-upload"></span>
-                </a>
-              
-               </form>
-
-                 <form name="downloadcsv" id="downloadcsv" action="api/public/product/downloadCSV" method="post" enctype="multipart/form-data">
-                
-                    <a href="#" class="btn-typ-submit" ng-click="submitFormDownload()" class="btn-typ-submit">
-                        <span class="icon icon-download"></span>
-                        <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
+             <div class="order-modal-title mrg25-L" layout="row" layout-align="center center" flex="35">
+                <form name="uploadcsv" id="uploadcsv" action="api/public/product/uploadCSV" method="post" enctype="multipart/form-data" target="_blank">
+                    <div class="fileUpload">
+                        <input type="file" name="file" id="file" class="upload" ng-model="file">
+                        <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
+                        <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                        <span>Upload CSV</span>
+                    </div>
+                    <a href="#" class="btn-typ-submit" ng-click="submitForm()">
+                        <span class="icon icon-upload"></span>
                     </a>
-               </form>
-
+                   </form>
+                     <form name="downloadcsv" id="downloadcsv" action="api/public/product/downloadCSV" method="post" enctype="multipart/form-data">
+                    
+                        <a href="#" class="btn-typ-submit" ng-click="submitFormDownload()" class="btn-typ-submit">
+                            <span class="icon icon-download"></span>
+                            <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
+                        </a>
+                   </form>
                 </div>
-
-               
-
-             <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+             <div class="order-modal-title " layout="row" layout-align="end center" flex="20" >
                 <span class="cursor-p" ng-click="vm.openCustomProductDialog($event,0)" >CREATE CUSTOM PRODUCT</span>
             </div>
         </div>
