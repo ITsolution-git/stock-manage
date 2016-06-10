@@ -90,6 +90,14 @@
                         controller : 'AffiliateInfoController as vm'
                     }
                 }
+            }).state('app.order.affiliate-view', {
+                url  : '/affiliate-view/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/spiltAffiliate/affiliate-view.html',
+                        controller : 'AffiliateViewController as vm'
+                    }
+                }
             })
             ;
 
