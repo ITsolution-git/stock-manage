@@ -399,7 +399,7 @@ public function create_dir($dir_path) {
     {
         $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
         $total_qnty = 0;
-
+        $purchase_detail = array();
         if(!empty($design_product))
         {
             $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id,'is_delete' => '1'),array());
@@ -666,7 +666,7 @@ public function create_dir($dir_path) {
                                 'total_line_charge' => round($per_item,2)
                                 );
 
-            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id, 'is_calculate' => '1'),$update_arr);
 
             $total_qnty = 0;
             foreach ($purchase_detail as $size) {
@@ -681,11 +681,11 @@ public function create_dir($dir_path) {
             }
             
 
-            $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
+            $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_calculate' => '1'),array());
 
             foreach ($all_design as $design) {
                 
-                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1'),array());
+                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1','is_calculate' => '1'),array());
                 
                 foreach ($position_data as $row) {
 
@@ -721,8 +721,6 @@ public function create_dir($dir_path) {
                                     );
 
             $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
-
-//            $this->common->UpdateTableRecords('orders',array('id' => $order_id),array('screen_charge' => $total_screens,'press_setup_charge' => $total_press_setup,));
             return true;
         }
         else
