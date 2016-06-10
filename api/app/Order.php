@@ -527,7 +527,7 @@ public function saveColorSize($post)
 
     public function getDesignByOrder($order_id)
     {
-        $whereConditions = ['od.order_id' => $order_id,'dp.is_delete' => '1'];
+        $whereConditions = ['od.order_id' => $order_id,'dp.is_delete' => '1','od.is_calculate' => '1'];
         $listArray = ['dp.*'];
 
         $orderData = DB::table('design_product as dp')
@@ -535,7 +535,7 @@ public function saveColorSize($post)
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
-
+                         
         return $orderData;
     }
     

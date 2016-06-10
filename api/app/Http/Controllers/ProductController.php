@@ -398,6 +398,7 @@ public function create_dir($dir_path) {
     public function orderCalculation($design_id)
     {
         $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
+
         $total_qnty = 0;
         $purchase_detail = array();
         if(!empty($design_product))
@@ -407,7 +408,6 @@ public function create_dir($dir_path) {
                 $total_qnty += $size->qnty;
             }
         }
-        
         $order_data = $this->order->getOrderByDesign($design_id);
 
         $price_id = $order_data[0]->price_id;
@@ -666,7 +666,7 @@ public function create_dir($dir_path) {
                                 'total_line_charge' => round($per_item,2)
                                 );
 
-            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id, 'is_calculate' => '1'),$update_arr);
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
 
             $total_qnty = 0;
             foreach ($purchase_detail as $size) {
@@ -674,12 +674,11 @@ public function create_dir($dir_path) {
             }
 
             $design_data = $this->order->getDesignByOrder($order_id);
-            
+
             $design_product_total = 0;
             foreach ($design_data as $design) {
                     $design_product_total += $design->sales_total;
             }
-            
 
             $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_calculate' => '1'),array());
 

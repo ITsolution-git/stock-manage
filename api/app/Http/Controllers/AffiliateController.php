@@ -80,10 +80,6 @@ class AffiliateController extends Controller {
         unset($position_data[0]->design_id);
         $position_insert_data = json_decode(json_encode($position_data[0]),true);
 
-        $this->common->UpdateTableRecords('order_design',array('id' => $post['design_id'],'is_affiliate_design' => '0'),array('is_calculate' => '0'));
-        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id']),array('is_calculate' => '0'));
-        $this->common->UpdateTableRecords('order_design_position',array('design_id' => $post['design_id']),array('is_calculate' => '0'));
-
         $insert_arr['parent_order_id'] = $post['order_id'];
         $insert_arr['affiliate_id'] = $post['affiliate_id'];
         $insert_arr['note'] = $post['notes'];
@@ -116,6 +112,10 @@ class AffiliateController extends Controller {
 
             $this->common->InsertRecords('purchase_detail',$insert_purchase_array);
         }
+
+        $this->common->UpdateTableRecords('order_design',array('id' => $post['design_id'],'is_affiliate_design' => '0'),array('is_calculate' => '0'));
+        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id']),array('is_calculate' => '0'));
+        $this->common->UpdateTableRecords('order_design_position',array('design_id' => $post['design_id']),array('is_calculate' => '0'));
 
         $return = app('App\Http\Controllers\OrderController')->calculateAll($post['order_id'],$order_data[0]->company_id);
         $return = app('App\Http\Controllers\OrderController')->calculateAll($order_id,$order_data[0]->company_id);
