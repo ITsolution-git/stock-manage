@@ -397,12 +397,15 @@ public function create_dir($dir_path) {
 
     public function orderCalculation($design_id)
     {
-        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1'),array());
-        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id,'is_delete' => '1'),array());
-
+        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
         $total_qnty = 0;
-        foreach ($purchase_detail as $size) {
-            $total_qnty += $size->qnty;
+
+        if(!empty($design_product))
+        {
+            $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id,'is_delete' => '1'),array());
+            foreach ($purchase_detail as $size) {
+                $total_qnty += $size->qnty;
+            }
         }
         
         $order_data = $this->order->getOrderByDesign($design_id);
@@ -419,7 +422,7 @@ public function create_dir($dir_path) {
         $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
         $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id,'is_delete' => '1'),array());
+        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
         $data = array();
         $data['cond']['company_id'] = $order_data[0]->company_id;
         $miscData = $this->common->getAllMiscDataWithoutBlank($data);

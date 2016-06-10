@@ -59,13 +59,13 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            $scope.execute = 0;
-            angular.forEach($scope.sizes, function(size) {
+            $scope.execute = 1;
+/*            angular.forEach($scope.sizes, function(size) {
                 if(size.affiliate_qnty > 0)
                 {
                     $scope.execute = 1;
                 }
-            });
+            });*/
             
             if($scope.execute == 0)
             {
