@@ -63,8 +63,6 @@
                     targetEvent: ev,
                     clickOutsideToClose: true,
                     locals: {
-                        Settings: settings,
-                        Settings: vm.settings,
                         event: ev
                     }
                 });
@@ -159,8 +157,6 @@
                     targetEvent: ev,
                     clickOutsideToClose: true,
                     locals: {
-                        Settings: settings,
-                        Settings: vm.settings,
                         event: ev
                     }
                 });

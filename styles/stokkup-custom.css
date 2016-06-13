@@ -24,7 +24,7 @@
   height: 30px;
 }
 
-.table3 td {
+.table3 td, .table4 td {
   height:56px; 
 }
 
@@ -964,3 +964,4 @@ a:hover {
 button.dark-bg.md-focused, button.bg-grey.md-focused {
   background: #999 !important;
 }
+.min-ht-62 { min-height: 62px;}
