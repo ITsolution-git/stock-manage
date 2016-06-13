@@ -171,7 +171,7 @@ class AffiliateController extends Controller {
 
         foreach($affiliateList as $list)
         {
-            $sizes = $this->affiliate->getAffiliateSizes($list->id);
+            $sizes = $this->affiliate->getAffiliateSizes($list->design_id);
             $total = 0;
             foreach ($sizes as $size) {
                 $total += $size->qnty;

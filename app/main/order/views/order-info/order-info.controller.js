@@ -54,10 +54,10 @@
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
 
-            $http.post('api/public/affiliate/getAffiliateData',combine_array_id).success(function(result, status, headers, config) {
+            $http.post('api/public/affiliate/getAffiliateList',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.data.success == '1') {
-                   $scope.affiliateList = result.data.affiliateList;
+                   $scope.affiliateList = result.data.records;
                 }
                 else {
                     $scope.affiliateList = [];
