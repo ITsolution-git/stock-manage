@@ -398,8 +398,9 @@ public function create_dir($dir_path) {
     public function orderCalculation($design_id)
     {
         $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
-        $total_qnty = 0;
 
+        $total_qnty = 0;
+        $purchase_detail = array();
         if(!empty($design_product))
         {
             $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id,'is_delete' => '1'),array());
@@ -407,7 +408,6 @@ public function create_dir($dir_path) {
                 $total_qnty += $size->qnty;
             }
         }
-        
         $order_data = $this->order->getOrderByDesign($design_id);
 
         $price_id = $order_data[0]->price_id;
@@ -674,18 +674,17 @@ public function create_dir($dir_path) {
             }
 
             $design_data = $this->order->getDesignByOrder($order_id);
-            
+
             $design_product_total = 0;
             foreach ($design_data as $design) {
                     $design_product_total += $design->sales_total;
             }
-            
 
-            $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
+            $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_calculate' => '1'),array());
 
             foreach ($all_design as $design) {
                 
-                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1'),array());
+                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1','is_calculate' => '1'),array());
                 
                 foreach ($position_data as $row) {
 
@@ -721,8 +720,6 @@ public function create_dir($dir_path) {
                                     );
 
             $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
-
-//            $this->common->UpdateTableRecords('orders',array('id' => $order_id),array('screen_charge' => $total_screens,'press_setup_charge' => $total_press_setup,));
             return true;
         }
         else

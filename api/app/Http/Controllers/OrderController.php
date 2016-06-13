@@ -1620,7 +1620,6 @@ class OrderController extends Controller {
     public function calculateAll($order_id,$company_id)
     {
         $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
-
         if(!empty($design_data))
         {
             foreach ($design_data as $design) {
