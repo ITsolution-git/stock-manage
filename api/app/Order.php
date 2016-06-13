@@ -21,7 +21,7 @@ class Order extends Model {
             $created_date = date("Y-m-d", strtotime($post['filter']['created_date']));
         }
 
-        $whereConditions = ['order.is_delete' => "1",'order.company_id' => $post['company_id']];
+        $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['company_id'],'order.parent_order_id' => '0'];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.name,order.created_date,order.approved_date,order.date_shipped,
                       order.status,order.approval_id,client.client_company,misc_type.value as approval,staff.first_name,staff.last_name')];

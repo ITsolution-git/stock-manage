@@ -269,7 +269,8 @@
                                 <td>{{ affiliateOrder.total}}  
                                 <td>1</td>
                                 <td class="text-right"> 
-                                    <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a>
+                                    <!-- <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a> -->
+                                    <a>VIEW </a>
                                 </td>
                             </tr>
                         </tbody> 
@@ -381,8 +382,9 @@
                         </div>
                         <div class="text-center"> <span class="font-18">Location</span></div>
                     </md-card-content>
+                    <md-divider ></md-divider>
                     <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <a>&nbsp;</a>
+                        <a>VIEW DISTRIBUTION</a>
                     </div>
                 </md-card>
                 <md-card class="m-b-20 m-r-15" flex="33">
@@ -402,7 +404,7 @@
                         <a>VIEW NOTES</a>
                     </div>
                 </md-card>
-                <md-card class="m-b-20" flex="33">
+                <md-card class="m-b-20 m-r-15" flex="33">
                     <md-card-title>
                         <md-card-title-text class="text-left">
                             Artwork
@@ -412,7 +414,7 @@
                         <div layout="row" layout-wrap layout-align="center center" flex="60">
                             <span class="h2 semibold f-52">{{ vm.artwork.approved}}</span>
                         </div>
-                        <div class="text-center"> <span class="font-18">&nbsp:</span></div>
+                        <div class="text-center"> <span class="font-18">&nbsp</span></div>
                     </md-card-content>
                     <md-divider ></md-divider>
                     <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
@@ -513,9 +515,9 @@
     </div>
 </div>
 <div class="footer border-t-grey" layout-padding layout="row">
-    <md-button  aria-label="Close button" class="close-btn border-t-grey" >
-       <md-icon md-font-icon="icon-close"></md-icon>
-                </md-button>
+    <!-- <md-button  aria-label="Close button" class="close-btn border-t-grey" >
+        <md-icon md-font-icon="icon-close"></md-icon>
+    </md-button> -->
     <div flex="25">
         <span class="h4 text-semibold">Order Total</span>
     </div>

@@ -749,7 +749,7 @@ public function create_dir($dir_path) {
 
             $productArray = ['id' => $result['product_id']];
             $result_product = $this->product->productDetail($productArray);
-            $calculate_data = $this->common->GetTableRecords('design_product',array('design_id' => $result['design_id']),array());        
+            $calculate_data = $this->common->GetTableRecords('design_product',array('design_id' => $result['design_id'],'is_delete' => '1'),array());
        }
        
       
