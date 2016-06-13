@@ -234,6 +234,19 @@
             condition_obj[cond_field] =  cond_value;
             UpdateArray.cond = angular.copy(condition_obj);
 
+            if(extra=='document')
+            {
+                var permission = confirm("Are you sure to delete this Record ?");
+                if (permission == true) 
+                {
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
                     {
@@ -259,6 +272,10 @@
                             $scope.getClientProfile();
                        }
                        if(extra=='salesweb') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                       {
+                            $scope.getClientProfile();
+                       }
+                       if(extra=='document') 
                        {
                             $scope.getClientProfile();
                        }
