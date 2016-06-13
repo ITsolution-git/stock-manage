@@ -27,7 +27,7 @@
             
         ];
         vm.arts = [
-           
+            
         ];
 
 
@@ -81,6 +81,7 @@
                     $scope.art_detail = vm.Response.art_detail;
                     $scope.addressAll=vm.Response.addressAll.result;
                     $scope.Distribution_address= vm.Response.Distribution_address.result;
+                    $scope.documents= vm.Response.documents;
                 }
                 $("#ajax_loader").hide();
             });
@@ -111,6 +112,27 @@
 
             open_popup(ev,params,'CompanyInfo',popup_page);
         }
+
+        $scope.getDocument = function (ev,id)
+        {
+            $http.get('api/public/client/getDocumentDetailbyId/'+id+'/'+$scope.company_id).success(function(result) 
+            {
+                if(result.data.success == '1') 
+                {
+                    var params = {contact_arr: result.data.records[0], alldata:$scope};
+                    open_popup(ev,params,'CompanyInfo','document_form');
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+            });
+        }
+        $scope.AddDocument = function (ev)
+        {
+            open_popup(ev,$scope,'CompanyInfo','add_document');
+        }
+
 
 // ====================== GLOBAL CALL FOR GET RECORD, ADD/EDIT THEN OPEN POPUP ===========//        
         function editCompanyConatct(ev,operation,table,popup_page,cond_field,cond_value,extra)
@@ -458,6 +480,9 @@
         $scope.AllPriceGrid = Params.AllPriceGrid;
         $scope.client_tax = Params.client_tax;
         $scope.Distribution_address = Params.Distribution_address;
+        $scope.alldata = Params.alldata;
+        $scope.client_id = Params.client_id;
+        $scope.company_id = Params.company_id;
         //console.log(Params);
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
@@ -478,11 +503,11 @@
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
                     {
-                       notifyService.notify('success', result.data.message);
-                       if(extra=='contact_main')
-                       {
+                        notifyService.notify('success', result.data.message);
+                        if(extra=='contact_main')
+                        {
                             $scope.UpdateTableField('contact_main','1','client_contact','id',param,'','');
-                       }
+                        }
                     }
                     else
                     {
@@ -490,10 +515,60 @@
                     }
                 });
         }
+        $scope.saveDocument = function(saveDocDetails)
+        {
+            var doc_data = {};
+              doc_data.data = saveDocDetails;
+              doc_data.data.client_id = $scope.alldata.client_id;
+              doc_data.data.company_id = $scope.alldata.company_id;
+             
+              //console.log(saveDocDetails); return false;
+              $http.post('api/public/client/updateDoc',doc_data).success(function(result) 
+              {
+                    if(result.data.success=='1')
+                    {
+                        $scope.closeDialog();
+                    }
+                    else
+                    {
+                        notifyService('error',result.data.message);
+                    }
+              });
+                                         
+        }
+        $scope.AddDocument = function (document_data)
+        {
+              var doc_data = {};
+              doc_data.data = document_data;
+              doc_data.data.client_id = $scope.client_id;
+              doc_data.data.company_id = $scope.company_id;
+             
+              //console.log(saveDocDetails); return false;
+              $http.post('api/public/client/saveDoc',doc_data).success(function(result) 
+              {
+                    if(result.data.success=='1')
+                    {
+                        $mdDialog.hide();
+                    }
+                    else
+                    {
+                        notifyService('error',result.data.message);
+                    }
+              });
+        }
         $scope.closeDialog = function() 
         {
             //$state.go($state.current, $stateParams, {reload: true, inherit: false});
             $mdDialog.hide();
         }
+        $scope.showtcprofileimg = false;
+        $scope.onLoad=function()
+            {
+                $scope.showtcprofileimg = true;
+            }; 
+        $scope.removeProfileImage=function()
+            {
+                $scope.showtcprofileimg = false;
+            }; 
     }
 })();

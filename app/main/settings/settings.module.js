@@ -69,8 +69,6 @@
                         templateUrl: 'app/main/settings/views/priceGrid/createPriceGrid.html',
                         controller : 'CreatePriceGridDialogController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.companyProfile', {
                 resolve: {
@@ -105,8 +103,6 @@
                         templateUrl: 'app/main/settings/views/companyDetails/companyDetails.html',
                         controller : 'CompanyDetailsController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.userManagement', {
                 resolve: {
@@ -124,8 +120,6 @@
                         templateUrl: 'app/main/settings/views/userManagement/userManagement.html',
                         controller : 'UserManagementController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.affiliate', {
                 resolve: {
@@ -143,8 +137,6 @@
                         templateUrl: 'app/main/settings/views/affiliate/affiliate.html',
                         controller : 'AffiliateController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.integrations', {
                 resolve: {
@@ -162,8 +154,6 @@
                         templateUrl: 'app/main/settings/views/integrations/integrations.html',
                         controller : 'IntegrationsController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.settings.support', {
                 resolve: {
@@ -181,8 +171,6 @@
                         templateUrl: 'app/main/settings/views/support/support.html',
                         controller : 'SupportController as vm'
                     }
-                },resolve: {
-                   
                 }
             })
             ;

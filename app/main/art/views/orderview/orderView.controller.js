@@ -54,12 +54,7 @@
             });
         }
         //        Datatable Options
-        vm.dtOptions = {
-            dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            pagingType: 'simple',
-            autoWidth: false,
-            responsive: true
-        };
+       
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;

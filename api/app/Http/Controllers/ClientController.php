@@ -339,9 +339,10 @@ class ClientController extends Controller {
 				$art_detail = '';//$this->art->Client_art_screen($post['client_id'],$post['company_id']);
 				$addressAll = $this->client->getAddress($id);
 				$Distribution_address = $this->client->GetDistributionAddress($id);
+				$documents = $this->client->getDocument($id,$post['company_id']);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else
@@ -600,10 +601,10 @@ class ClientController extends Controller {
    * Get Documents.
    * @return json data
    */
-    public function getDocument($id)
+    public function getDocument($id,$company_id)
     {
 
-        $result = $this->client->getDocument($id);
+        $result = $this->client->getDocument($id,$company_id);
         return $this->return_response($result);
         
     }
@@ -613,11 +614,12 @@ class ClientController extends Controller {
     * @params document_id
     * @return json data
     */
-    public function getDocumentDetailbyId($id)
+    public function getDocumentDetailbyId($id,$company_id)
     {
         $result = $this->client->getDocumentDetailbyId($id);
 
-        $result[0]->document_photo_url = UPLOAD_PATH.'document/'.$result[0]->document_photo;
+        $result[0]->unlink_url = $result[0]->document_photo;
+        $result[0]->document_photo_url = UPLOAD_PATH.$company_id.'/document/'.$result[0]->client_id.'/'.$result[0]->document_photo;
         return $this->return_response($result);
     }
 
@@ -631,25 +633,45 @@ class ClientController extends Controller {
     {
         $post = Input::all();
 
-         if(isset($post['data'][0]['document_photo']['base64'])){
+       // echo "<pre>"; print_r($post); echo "</pre>"; die;
+        if(!empty($post['data']['document_photo']['base64'])){
 
-            	$split = explode( '/', $post['data'][0]['document_photo']['filetype'] );
+            	$split = explode( '/', $post['data']['document_photo']['filetype'] );
                 $type = $split[1]; 
 
 		        $png_url_doc = "doc-logo-".time().".".$type;
-				$path = base_path() . "/public/uploads/document/" . $png_url_doc;
-				$img = $post['data'][0]['document_photo']['base64'];
+
+	            $image_path = $post['data']['company_id']."/document/".$post['data']['client_id'];
+	            $image_path = FILEUPLOAD.$image_path;
+	           // echo $image_path; die();
+	            if (!file_exists($image_path)) {
+                    mkdir($image_path, 0777, true);
+                } else {
+                 exec("chmod $image_path 0777");
+                   // chmod($dir_path, 0777);
+                }
+				$path = $image_path."/".$png_url_doc;
+				$img = $post['data']['document_photo']['base64'];
 				
 				$data = base64_decode($img);
 				$success = file_put_contents($path, $data);
 				
 
-				$post['data'][0]['document_photo'] = $png_url_doc;
+				$post['data']['document_photo'] = $png_url_doc;
+
+				if(!empty($post['data']['unlink_url']))
+				{
+					$unlink_url = $image_path."/".$post['data']['unlink_url'];
+                    exec('rm -rf '.escapeshellarg($unlink_url));
+                }
 
 	    }
+	    else
+	    {
+	    	$post['data']['document_photo'] = $post['data']['unlink_url'];
+	    }
 
-
-        $result = $this->client->updateDoc($post['data'][0]);
+        $result = $this->client->updateDoc($post['data']);
         $data = array("success"=>1,"message"=>UPDATE_RECORD);
         return response()->json(['data'=>$data]);
     }
@@ -666,26 +688,37 @@ class ClientController extends Controller {
         $post['data']['created_date']=date('Y-m-d');
 
 
-        if(isset($post['data']['document_photo']['base64'])){
 
+ 		
+        if(!empty($post['data']['client_id']) && !empty($post['data']['company_id']))
+        {
+
+        	//echo "<pre>"; print_r($post); echo "</pre>"; die;
+        	if(isset($post['data']['document_photo']['base64']))
+        	{
             	$split = explode( '/', $post['data']['document_photo']['filetype'] );
                 $type = $split[1]; 
-
 		        $png_url_doc = "doc-logo-".time().".".$type;
-				$path = base_path() . "/public/uploads/document/" . $png_url_doc;
+	            $image_path = $post['data']['company_id']."/document/".$post['data']['client_id'];
+	            $image_path = FILEUPLOAD.$image_path;
+	            if (!file_exists($image_path)) {
+                    mkdir($image_path, 0777, true);
+                } else {
+                 exec("chmod $image_path 0777");
+                   // chmod($dir_path, 0777);
+                }
+
+				$path = $image_path."/".$png_url_doc;
 				$img = $post['data']['document_photo']['base64'];
 				
 				$data = base64_decode($img);
 				$success = file_put_contents($path, $data);
-				
 
 				$post['data']['document_photo'] = $png_url_doc;
 
-	    }
+	    	}
 
- 
-        if(!empty($post['data']['client_id']))
-        {
+	    	unset($post['data']['company_id']);
             $result = $this->client->saveDoc($post['data']);
             $message = INSERT_RECORD;
             $success = 1;
