@@ -45,6 +45,11 @@
                     $scope.designs = [];
                     $scope.total_unit = 0;
                 }
+
+                if($scope.total_unit == undefined)
+                {
+                    $scope.total_unit = 0;            
+                }
             });
         }
 

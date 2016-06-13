@@ -59,67 +59,54 @@ class FinishingController extends Controller {
  */
     public function listFinishing()
     {
-        $post = Input::all();
-        $data = $this->finishing->getFinishingdata($post);
+        //$post = Input::all();
+        //$data = $this->finishing->getFinishingdata($post);
 
-        $result['poly_bagging'] = array();
-        $result['hang_tag'] = array();
-        $result['tag_removal'] = array();
-        $result['speciality'] = array();
-        $result['packing'] = array();
-        $result['sticker'] = array();
-        $result['sew_on_women_tag'] = array();
-        $result['inside_tag'] = array();
-        $result['active'] = array();
-        $result['completed'] = array();
+        $post_all = Input::all();
+        $records = array();
 
-        if(!empty($data))
-        {
-            foreach ($data as $value) {
-                
-                if ($value->category_id == '1' && $value->status == '0')
-                {
-                    $result['poly_bagging'][] = $value;
-                }
-                if ($value->category_id == '2' && $value->status == '0')
-                {
-                    $result['hang_tag'][] = $value;
-                }
-                if ($value->category_id == '3' && $value->status == '0')
-                {
-                    $result['tag_removal'][] = $value;
-                }
-                if ($value->category_id == '4' && $value->status == '0')
-                {
-                    $result['speciality'][] = $value;
-                }
-                if ($value->category_id == '5' && $value->status == '0')
-                {
-                    $result['packing'][] = $value;
-                }
-                if ($value->category_id == '6' && $value->status == '0')
-                {
-                    $result['sticker'][] = $value;
-                }
-                if ($value->category_id == '7' && $value->status == '0')
-                {
-                    $result['sew_on_women_tag'][] = $value;
-                }
-                if ($value->category_id == '8' && $value->status == '0')
-                {
-                    $result['inside_tag'][] = $value;
-                }
-                if ($value->status == '0')
-                {
-                    $result['active'][] = $value;
-                }
-                if ($value->status == '1')
-                {
-                    $result['completed'][] = $value;
-                }
-            }
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
         }
-        return $this->return_response($result);
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'f.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'f.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
+        $result = $this->finishing->getFinishingdata($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'order.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'f.qty', 'name' => 'Qty'),
+                        2=>array('key' => 'fc.category_name', 'name' => 'Finishing Item'),
+                        3=>array('key' => 'c.client_company', 'name' => 'Client'),
+                        4=>array('key' => 'f.start_time', 'name' => 'Start'),
+                        5=>array('key' => 'f.end_time', 'name' => 'End'),
+                        6=>array('key' => 'f.est', 'name' => 'EST Completion Time'),
+                        7=>array('key' => 'f.status', 'name' => 'Done?'),
+                        8=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return response()->json($data);
     }
     /**
      * Delete Data
@@ -231,9 +218,8 @@ class FinishingController extends Controller {
         return  response()->json(["data" => $response]);
     }
 
-    public function removeFinishingItem()
+    public function removeFinishingItem($post)
     {
-        $post = Input::all();
         $category = $this->category->getCategoryByName($post['item_name']);
 
         if(!empty($category))
@@ -245,14 +231,13 @@ class FinishingController extends Controller {
             $result = $this->finishing->updateFinishing($finishingData);
         }
     }
-    public function addFinishingItem()
+    public function addFinishingItem($post)
     {
-        $post = Input::all();
         $category = $this->category->getCategoryByName($post['item_name']);
 
         if(!empty($category))
         {
-            $finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qty']);
+            $finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qnty']);
             $result = $this->finishing->addFinishing($finishingData);
         }
     }
