@@ -4,7 +4,7 @@
         </div>
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-order" flex="100">
-                
+                <form name="copmpany_profile">
                 <md-card layout="row">
                     
                     <md-card-content flex="50" layout="column">
@@ -38,20 +38,39 @@
                         </div>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Phone Number" name="prime_phone_main" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
+                            <input placeholder="Phone Number" name="prime_phone_main" valid-phone ng-maxlength="16" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
+
+                             <div ng-messages="copmpany_profile.prime_phone_main.$error" role="alert" multiple>
+                                <div ng-message="maxlength">
+                                    <span >Please enter valid phone number</span>
+                                </div>
+                            </div>
+
+
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0 ">
-                            <input placeholder="Email Address" name="" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }">
+                            <input placeholder="Email Address" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'check_email\')' }">
+
+                            <div ng-messages="copmpany_profile.email.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                                <div ng-message="pattern">
+                                    <span >Email must be a valid e-mail address</span>
+                                </div>
+                            </div>
+
+
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0 ">
-                            <input placeholder="Tax Rate" ng-model="company.tax_rate" name="tax_rate" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            <input placeholder="Tax Rate" ng-model="company.tax_rate" valid-number  name="tax_rate" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
                         </md-input-container>
 
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                             <input placeholder="Oversize Value" ng-model="company.oversize_value" name="oversize_value"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                             <input placeholder="Oversize Value" ng-model="company.oversize_value" valid-number name="oversize_value"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
                         </md-input-container>
 
 
@@ -86,6 +105,7 @@
 
                     
             </md-card>
+            </form>
         </div>
                     </md-card-content>
                 </md-card>

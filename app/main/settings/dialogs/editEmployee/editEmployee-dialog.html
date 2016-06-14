@@ -34,7 +34,7 @@
                     </div>
                 </md-input-container>
                  <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Email" name="email" required ng-model="users.email">
+                    <input placeholder="Email" name="email" type="email" ng-pattern="/^.+@.+\..+$/"  required ng-model="users.email">
                     <div ng-messages="employeeform.email.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span >This field is required</span>
@@ -53,7 +53,7 @@
 <table> 
     <tr>
         <td class="p-16 td-500">
-            <md-button class="bg-blue float-right" ng-disabled="employeeform.$invalid" ng-click="SaveRecords(users)">
+            <md-button class="bg-blue float-right" ng-disabled="employeeform.$invalid || employeeformemployeeform.$pristine"  ng-click="SaveRecords(users)">
                     SAVE
             </md-button>
         </td>  
