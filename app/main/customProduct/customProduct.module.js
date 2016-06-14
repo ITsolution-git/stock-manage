@@ -18,12 +18,6 @@
                         templateUrl: 'app/main/customProduct/customProduct.html',
                         controller : 'customProductController as vm'
                     }
-                },
-                resolve: {
-                    customProductData: function (msApi)
-                    {
-                        return msApi.resolve('customProduct@get');
-                    }
                 }
             }).state('app.customProduct.companyPO', {
                 url  : '/companyPO/:id',
@@ -58,9 +52,6 @@
 
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/customProduct');
-
-        // Api
-        msApiProvider.register('customProduct', ['app/data/customProduct/customProduct.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

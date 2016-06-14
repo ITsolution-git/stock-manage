@@ -6,7 +6,7 @@
             .controller('customProductController', customProductController);
 
     /** @ngInject */
-    function customProductController(customProductData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,notifyService,sessionService,$state) {
+    function customProductController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,notifyService,sessionService,$state) {
         var vm = this;
         
         vm.searchOrder;
