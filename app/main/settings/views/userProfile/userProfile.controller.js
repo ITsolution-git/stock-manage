@@ -67,6 +67,12 @@
              // console.log(Listdata); 
       });
     }
+
+   function isValidEmail(emailText) {
+    var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    return pattern.test(emailText);
+    };
+
    $scope.GetCompany();
     // COMPANY EDIT TIME CALL
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
@@ -84,40 +90,62 @@
         condition_obj[cond_field] =  cond_value;
         UpdateArray.cond = angular.copy(condition_obj);
         UpdateArray.date_field = extra;
-
-            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                if(result.data.success=='1')
-                {
-                   notifyService.notify('success', result.data.message);
-                }
-                else
-                {
-                    notifyService.notify('error', result.data.message);
-                }
-            });
-    }                          
-                          $scope.checkemail = function () {
-
-                               var mail = $('#comp_email').val();
-                               //console.log(mail);
-                               if(mail.trim() != '')
-                               {
-                                 $http.get('api/public/common/checkemail/'+mail+'/'+$scope.user_id).success(function(result, status, headers, config) {
+        
+        if(param=='check_email')
+        {
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;  
+            if(!emailReg.test(field_value) || field_value.trim() == '')
+            {  
+               return false;
+            }
+            else
+            {
+                 $http.get('api/public/common/checkemail/'+field_value+'/'+$scope.user_id).success(function(result, status, headers, config) {
           
-                                            if(result.data.success=='2')
-                                            {
-                                              $("#company_email").hide();
-                                              return false;
-                                            }
-                                            else
-                                            {
-                                              $("#company_email").val(result.data.message);
-                                              $("#company_email").show();
-                                              return false;
-                                            }
-                                       });
-                               }
-                              }   
+                    if(result.data.success=='2')
+                    {
+                      //return false;
+                    }
+                    else
+                    {
+                       notifyService.notify('error', "Email exist, Please choose different email address.");
+                       return false;
+                    }
+                });
+            }    
+        }
+
+        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+            if(result.data.success=='1')
+            {
+               notifyService.notify('success', result.data.message);
+            }
+            else
+            {
+                notifyService.notify('error', result.data.message);
+            }
+        });
+    }                          
+    $scope.checkemail = function () {
+           var mail = $('#comp_email').val();
+           if(mail.trim() != '')
+           {
+               $http.get('api/public/common/checkemail/'+mail+'/'+$scope.user_id).success(function(result, status, headers, config) 
+               {
+                    if(result.data.success=='2')
+                    {
+                      $("#company_email").hide();
+                      return false;
+                    }
+                    else
+                    {
+                      $("#company_email").val(result.data.message);
+                      $("#company_email").show();
+                      return false;
+                    }
+               });
+           }
+    }   
 
         function openChangePasswordialog(ev, settings)
         {
