@@ -256,21 +256,38 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="scrol table5 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="affiliateList.length > 0">
+                    <table width="100%" class="table5 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="affiliateList.length > 0">
                         <thead>
-                        <th>Company</th>
-                        <th>Total # of Units</th>
-                        <th>Total # of Designs</th>
-                        <th></th>
+                        <th class="secondary-text" width="20%">
+                            <div class="table-header">
+                                <span class="column-title">Company</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" width="20%">
+                            <div class="table-header">
+                                <span class="column-title">Total # of Units</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" width="20%">
+                            <div class="table-header">
+                                <span class="column-title">Total # of Designs</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" width="20%">
+                            <div class="table-header">
+                                <span class="column-title">Design</span>
+                            </div>
+                        </th>
+                        <th class="secondary-text" width="20%"></th>
                         </thead>
-                        <tbody class="scrollable" ms-scroll>
+                        <tbody>
                             <tr ng-repeat="affiliateOrder in affiliateList" class="cursor-p">
                                 <td>{{ affiliateOrder.affiliate_name}}</td>
-                                <td>{{ affiliateOrder.total}}  
+                                <td>{{ affiliateOrder.total}}</td>
+                                <td>{{ affiliateOrder.design_name}}</td>  
                                 <td>1</td>
                                 <td class="text-right"> 
-                                    <!-- <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a> -->
-                                    <a>VIEW </a>
+                                    <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a>
                                 </td>
                             </tr>
                         </tbody> 
