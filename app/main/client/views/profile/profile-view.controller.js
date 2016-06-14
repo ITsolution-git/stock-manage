@@ -534,6 +534,7 @@
         }
         $scope.saveDocument = function(saveDocDetails)
         {
+            $("#ajax_loader").show();
             var doc_data = {};
               doc_data.data = saveDocDetails;
               doc_data.data.client_id = $scope.alldata.client_id;
@@ -550,11 +551,13 @@
                     {
                         notifyService('error',result.data.message);
                     }
+                    $("#ajax_loader").hide();
               });
                                          
         }
         $scope.AddDocument = function (document_data)
         {
+            $("#ajax_loader").show();
               var doc_data = {};
               doc_data.data = document_data;
               doc_data.data.client_id = $scope.client_id;
@@ -571,6 +574,7 @@
                     {
                         notifyService('error',result.data.message);
                     }
+                    $("#ajax_loader").hide();
               });
         }
         $scope.closeDialog = function() 
