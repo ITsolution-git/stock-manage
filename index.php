@@ -162,10 +162,11 @@
     <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
     <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
     <script src="app/main/order/dialogs/information/information.controller.js"></script>
+    <script src="app/main/order/dialogs/approveorder/approveorder.controller.js"></script>
     
 
     <!-- CLIENT FILES START -->
-    <script src="app/main/client/client.module.js"></script>
+    <script src="app/main/client/client.module.js"></script>    
     <script src="app/main/client/views/profile/profile-view.controller.js"></script>
     <script src="app/main/client/dialogs/client/client-dialog.controller.js"></script>
     <script src="app/main/client/client.controller.js"></script>

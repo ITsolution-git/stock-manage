@@ -36,7 +36,7 @@
                         setTimeout(function(){ 
                            $(".admin-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                         return sessionService.AccessService('SA');
                     },
                 },
                 url  : '/companyProfile',
@@ -54,7 +54,7 @@
                         setTimeout(function(){ 
                            $(".admin-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                         return sessionService.AccessService('SA');
                     },
                 },
                 url  : '/colors',
@@ -72,7 +72,7 @@
                         setTimeout(function(){ 
                            $(".admin-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                        return sessionService.AccessService('SA');
                     },
                 },
                 url  : '/sizes',
@@ -90,7 +90,7 @@
                         setTimeout(function(){ 
                            $(".admin-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                         return sessionService.AccessService('SA');
                     },
                 },
                 url  : '/admin.sizes',

@@ -72,7 +72,7 @@ class Affiliate extends Model {
 
     public function getAffiliateList($data) {
         
-        $whereConditions = ['oam.order_id' => $data['id']];
+        /*$whereConditions = ['oam.order_id' => $data['id']];
 
         $listArray = ['a.name as affiliate_name','oam.id','a.id as affiliate_id',DB::raw('COUNT(oam.design_id) as design_total')];
 
@@ -83,6 +83,26 @@ class Affiliate extends Model {
                          ->GroupBy('oam.affiliate_id')
                          ->get();
 
+        return $affiliatesData;*/
+
+        $whereConditions = ['o.parent_order_id' => $data['id'],'od.is_delete' => '1'];
+        
+
+        $listArray = ['a.name as affiliate_name','dp.design_id',DB::raw('COUNT(dp.design_id) as design_total')];
+
+        $affiliatesData = DB::table('orders as o')
+                         ->Join('affiliates as a','o.affiliate_id','=', 'a.id')
+                         ->Join('order_design as od','o.id','=', 'od.order_id')
+                         ->Join('design_product as dp','od.id','=', 'dp.design_id')
+                         ->Join('products as p','dp.product_id','=', 'p.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        if($affiliatesData[0]->affiliate_name == '' && $affiliatesData[0]->design_id == '' && $affiliatesData[0]->design_total == 0)
+        {
+            $affiliatesData = array();
+        }
         return $affiliatesData;
     }
 

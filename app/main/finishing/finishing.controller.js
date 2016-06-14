@@ -6,7 +6,7 @@
             .controller('FinishingController', FinishingController);
 
     /** @ngInject */
-    function FinishingController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function FinishingController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
          vm.searchQuery = "";
 
@@ -15,6 +15,119 @@
         this.conditions = ('Yes No').split(' ').map(function (state) { return { abbrev: state }; });
         
         vm.editFinishing = editFinishing ;
+        
+        /*$scope.getFinishingData = function()
+        {
+            var finish_list_data = {};
+            var condition_obj = {};
+            condition_obj['company_id'] =  sessionService.get('company_id');
+            finish_list_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/finishing/listFinishing',finish_list_data).success(function(result)
+            {
+                $scope.orders = result.data.records;
+            });
+        }
+
+        $scope.getFinishingData();*/
+
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'order.id',
+          'sortOrder': 'dsc'
+        };
+
+        $scope.reloadCallback = function () { };
+
+
+        $scope.filterBy = {
+          'temp':'',
+          'search': '',
+          'seller': '',
+          'client': '',
+          'created_date': ''
+        };
+         $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+        };
+        /**
+         * Returns the formatted date 
+         * @returns {date}
+         */
+        function get_formated_date(unixdate)
+        {
+            var date = ("0" + unixdate.getDate()).slice(-2);
+            var month = unixdate.getMonth() + 1;
+            month = ("0" + month).slice(-2);
+            var year = unixdate.getFullYear();
+
+            var new_date = year + "-" + month + "-" + date;
+            return new_date;
+        }
+
+        $scope.filterOrders = function(){
+            
+            var flag = true;
+            $scope.filterBy.seller = '';
+            $scope.filterBy.client = '';
+            $scope.filterBy.created_date = '';
+            $scope.filterBy.temp = '';
+            $scope.sellerArray = [];
+
+            angular.forEach(vm.salesCheckModal, function(check){
+                    $scope.sellerArray.push(check.id);
+            })
+            if($scope.sellerArray.length > 0)
+            {
+                flag = false;
+                $scope.filterBy.seller = angular.copy($scope.sellerArray);
+            }
+
+            $scope.clientArray = [];
+            angular.forEach(vm.companyCheckModal, function(company){
+                    $scope.clientArray.push(company.id);
+            })
+            if($scope.clientArray.length > 0)
+            {
+                flag = false;
+                $scope.filterBy.client = angular.copy($scope.clientArray);
+            }
+
+            if(vm.createDate != '' && vm.createDate != undefined && vm.createDate != false)
+            {
+                flag = false;
+                $scope.filterBy.created_date = vm.createDate;
+            }
+            if(flag == true)
+            {
+                $scope.filterBy.temp = angular.copy(1);
+            }
+        }
+
+        $scope.getResource = function (params, paramsObj, search) {
+            
+            $scope.params = params;
+            $scope.paramsObj = paramsObj;
+            $("#ajax_loader").show();
+            var orderData = {};
+
+              orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
+
+              return $http.post('api/public/finishing/listFinishing',orderData).success(function(response) {
+                $("#ajax_loader").hide();
+                console.log(response);
+                var header = response.header;
+                $scope.success = response.success;
+                return {
+                  'rows': response.rows,
+                  'header': header,
+                  'pagination': response.pagination,
+                  'sortBy': response.sortBy,
+                  'sortOrder': response.sortOrder
+                }
+              });
+        }
 
         function editFinishing(ev, finishing)
             {

@@ -10,173 +10,86 @@
                     <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
                 </md-input-container>
             </div>
-            <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon> 
+            <!-- <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon>  -->
         </div>
         <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" id="finishing" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
-                <thead>
-                    <tr>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Order #</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header" >
-                                <span class="column-title color-b-grey">Qty</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Finishing Item</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Client</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Product Name</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Start</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">End</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">EST Completion Time</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Done?</span>
-                            </div>
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>27</td>
-                        <td>300</td>
-                        <td>Hang Tag</td>
-                        <td>Codal</td>
-                        <td>Product Name</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <md-input-container flex=30 class="m-b-20 m-t-25">
-                                <md-select ng-model="vm.condition" aria-label="r1">
-                                  <md-option ng-repeat="state in vm.conditions" >
-                                    {{state.abbrev}}
-                                   </md-option>
-                                </md-select>                                
-                            </md-input-container>
-                        </td>
-                        <td class="accor details-control text-right">
-                            <a ng-click="vm.editFinishing($event)">EDIT</a>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td>34</td>
-                        <td>300</td>
-                        <td>PolyBagging</td>
-                        <td>Codal</td>
-                        <td>Product Name</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <md-input-container flex=30 class="m-b-20 m-t-25">
-                                <md-select ng-model="vm.condition" aria-label="r2">
-                                  <md-option ng-repeat="state in vm.conditions" >
-                                    {{state.abbrev}}
-                                   </md-option>
-                                </md-select>                                
-                            </md-input-container>
-                        </td>
-                        <td class="accor details-control text-right">
-                            <a ng-click="vm.editFinishing($event)">EDIT</a>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td>51</td>
-                        <td>300</td>
-                        <td>PolyBagging</td>
-                        <td>Codal</td>
-                        <td>Product Name</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <md-input-container flex=30 class="m-b-20 m-t-25">
-                                <md-select ng-model="vm.condition" aria-label="r3">
-                                  <md-option ng-repeat="state in vm.conditions" >
-                                    {{state.abbrev}}
-                                   </md-option>
-                                </md-select>                                
-                            </md-input-container>
-                        </td>
-                        <td class="accor details-control text-right">
-                            <a ng-click="vm.editFinishing($event)">EDIT</a>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td>12</td>
-                        <td>300</td>
-                        <td>PolyBagging</td>
-                        <td>Codal</td>
-                        <td>Product Name</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <md-input-container flex=30 class="m-b-20 m-t-25">
-                                <md-select ng-model="vm.condition" aria-label="r4">
-                                  <md-option ng-repeat="state in vm.conditions" >
-                                    {{state.abbrev}}
-                                   </md-option>
-                                </md-select>                                
-                            </md-input-container>
-                        </td>
-                        <td class="accor details-control text-right">
-                            <a ng-click="vm.editFinishing($event)">EDIT</a>
-                        </td>
-                    </tr>  
-                    <tr>
-                        <td>76</td>
-                        <td>300</td>
-                        <td>PolyBagging</td>
-                        <td>Codal</td>
-                        <td>Product Name</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <md-input-container flex=30 class="m-b-20 m-t-25">
-                                <md-select ng-model="vm.condition" aria-label="Condition">
-                                  <md-option ng-repeat="state in vm.conditions" >
-                                    {{state.abbrev}}
-                                   </md-option>
-                                </md-select>                                
-                            </md-input-container>
-                        </td>
-                        <td class="accor details-control text-right">
-                            <a ng-click="vm.editFinishing($event)">EDIT</a>
-                        </td>
-                    </tr>  
-                </tbody>
-            </table>
+            <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
+                <table class="dataTable row-border hover" id="finishing">
+                    <!-- <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title color-b-grey">Order #</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header" >
+                                    <span class="column-title color-b-grey">Qty</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title color-b-grey">Finishing Item</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title color-b-grey">Client</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title color-b-grey">Start</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title color-b-grey">End</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title color-b-grey">EST Completion Time</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title color-b-grey">Done?</span>
+                                </div>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead> -->
+                    <thead tasty-thead></thead>
+                    <tbody>
+                        <tr ng-repeat="order in rows">
+                            <td>{{order.order_id}}</td>
+                            <td>{{order.qty}}</td>
+                            <td>{{order.category_name}}</td>
+                            <td>{{order.client_company}}</td>
+                            <td>{{order.start_time}}</td>
+                            <td>{{order.end_time}}</td>
+                            <td>{{order.est}}</td>
+                            <td>
+                                <md-input-container flex=30 class="m-b-20 m-t-25">
+                                    <md-select ng-model="order.status" aria-label="r1">
+                                      <md-option ng-selected="{{order.status==1}}">
+                                        Yes
+                                       </md-option>
+                                       <md-option ng-selected="{{order.status==0}}">
+                                        No
+                                       </md-option>
+                                    </md-select>                                
+                                </md-input-container>
+                            </td>
+                            <td class="accor details-control text-right">
+                                <a ng-click="vm.editFinishing($event)">EDIT</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            <div tasty-pagination class="tasty-page"></div>
+            </div>
         </div>
     </div>
 </div>

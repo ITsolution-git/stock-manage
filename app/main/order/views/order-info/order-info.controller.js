@@ -43,6 +43,12 @@
                 }
                 else {
                     $scope.designs = [];
+                    $scope.total_unit = 0;
+                }
+
+                if($scope.total_unit == undefined)
+                {
+                    $scope.total_unit = 0;            
                 }
             });
         }
@@ -53,10 +59,10 @@
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
 
-            $http.post('api/public/affiliate/getAffiliateData',combine_array_id).success(function(result, status, headers, config) {
+            $http.post('api/public/affiliate/getAffiliateList',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.data.success == '1') {
-                   $scope.affiliateList = result.data.affiliateList;
+                   $scope.affiliateList = result.data.records;
                 }
                 else {
                     $scope.affiliateList = [];
@@ -96,6 +102,7 @@
 
         vm.openaddSplitAffiliateDialog = openaddSplitAffiliateDialog;
         vm.openinformationDialog = openinformationDialog;
+        vm.openApproveOrderDialog = openApproveOrderDialog;
       
         vm.purchases = [
             {"poid": "27", "potype": "Purchase Order", "clientName": "kensville", "vendor": "SNS", "dateCreated": "xx/xx/xxxx"},
@@ -228,7 +235,19 @@
                   }
             });
         }
-
+        function openApproveOrderDialog(ev, settings) {
+            $mdDialog.show({
+                controller: 'approveOrderDiallogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    event: ev
+                }
+            });
+        }
         $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
         {
             var position_main_data = {};

@@ -11,21 +11,50 @@ class Finishing extends Model {
     
     public function getFinishingdata($post)
     {
-        $listArray = ['o.id as order_id','f.id','f.qty','fc.category_name', DB::raw('CONCAT(c.pl_firstname," ",c.pl_lastname) as client_name'),'o.job_name',
-                      'f.status','f.note','f.category_id','c.client_id','f.time','f.start_time','f.end_time','f.est'];
+        $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
 
-        $query = DB::table('orders as o')
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,f.id,f.qty,fc.category_name,f.status,f.note,f.category_id,c.client_id,f.time,f.start_time,f.end_time,f.est')];
+
+        $finishingData = DB::table('orders as o')
                         ->leftJoin('finishing as f', 'o.id', '=', 'f.order_id')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                         ->leftJoin('finishing_category as fc', 'f.category_id', '=', 'fc.id')
-                        ->leftJoin('misc_type as misc', 'o.f_approval', '=', 'misc.id')
                         ->select($listArray)
-                        ->where('f.is_delete', '!=', '1')
-                        ->where('misc.slug', '=', '148')
-                        ->where('o.company_id', '=', $post['cond']['company_id'])
-                        ->orderBy('f.id', 'desc');
-        
-        $finishingData = $query->get();
+                        ->where('f.is_delete', '=', '1')
+                        ->where('o.company_id', '=', $post['company_id']);
+
+                        if($search != '')
+                        {
+                          $finishingData = $finishingData->Where(function($query) use($search)
+                          {
+                              $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('staff.first_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
+                          });
+                        }
+                        if(isset($post['filter']['seller']))
+                        {
+                          $finishingData = $finishingData->whereIn('order.sales_id', $post['filter']['seller']);
+                        }
+                        if(isset($post['filter']['client']))
+                        {
+                          $finishingData = $finishingData->whereIn('order.client_id', $post['filter']['client']);
+                        }
+                        $finishingData = $finishingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                        ->skip($post['start'])
+                        ->take($post['range'])
+                        ->get();
+
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        //dd(DB::getQueryLog());
+        $returnData = array();
+        $returnData['allData'] = $finishingData;
+        $returnData['count'] = $count[0]->Totalcount;
+        return $returnData;
 
         return $finishingData;  
     }

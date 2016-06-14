@@ -336,23 +336,25 @@ class Client extends Model {
 * @return array $result
 */ 
 
-     public function getDocument($id)
+     public function getDocument($id,$company_id)
    {
        
         $whereConditions = ['client_id' => $id,'status' => '1','is_delete' => '1'];
-        $listArray = ['id','description','document_photo','status','is_delete'];
 
         $clientDocumentData = DB::table('client_document')
-                         ->select($listArray)
+                         ->select("*")
                          ->where($whereConditions)
                          ->get();
 
         $final_array = array();
-        foreach ($clientDocumentData as $key => $all_data) {
+        foreach ($clientDocumentData as $key => $all_data) 
+        {
 
           $all_data->document_photo_url = '';
-          if($all_data->document_photo != ''){
-            $all_data->document_photo_url = UPLOAD_PATH.'document/'.$all_data->document_photo;
+          $all_data->created_date = date('m/d/Y',strtotime( $all_data->created_date));
+          if($all_data->document_photo != '')
+          {
+            $all_data->document_photo_url = UPLOAD_PATH.$company_id.'/document/'.$id.'/'.$all_data->document_photo;
           }
          $final_array[] = $all_data;
         }

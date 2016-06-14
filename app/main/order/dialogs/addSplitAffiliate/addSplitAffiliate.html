@@ -37,21 +37,9 @@
                 </md-input-container>
             </div>
             <div layout="row" class="pad-10-15 p-l-0">
-                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="row in sizes">
+<!--                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="row in sizes">
                     <label class="font-14 p-l-0 mrg3-L">{{row.size}}:<span class="text-bold mrg5-L">24</span></label>
                     <input ng-model="row.affiliate_qnty" type="number" ng-min="0" ng-max="{{row.qnty}}" ng-class="{'red':orderForm.input.$invalid}"  ng-init="$parent.total = total + row.affiliate_qnty">
-                </md-input-container>
-<!--                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                    <label class="font-14 p-l-0">M</label>
-                    <input placeholder="" ng-model="$scope.splitAffiliateSize.m" >
-                </md-input-container>
-                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                    <label class="font-14 p-l-0">L</label>
-                    <input placeholder="" ng-model="$scope.splitAffiliateSize.l">
-                </md-input-container>
-                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                    <label class="font-14 p-l-0">XL</label>
-                    <input placeholder="" ng-model="$scope.splitAffiliateSize.xl">
                 </md-input-container> -->
             </div>
             <div layout="row" layout-align="space-between center">
@@ -71,7 +59,7 @@
                 </md-input-container>
                 <md-icon md-font-icon="icon-plus" flex="50" class="m-t-10"></md-icon>
             </div>
-            <md-input-container class="md-block pad0 m-b-0 margin-0">
+            <md-input-container class="md-block pad0">
                 <label class="p-l-0">Notes</label>
                 <textarea ng-model="notes" md-maxlength="150" rows="5" md-select-on-focus></textarea>
             </md-input-container>
