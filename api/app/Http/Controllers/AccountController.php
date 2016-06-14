@@ -112,9 +112,25 @@ class AccountController extends Controller {
 		if(!empty($id) && !empty($parent_id))
 		{
 			$getData = $this->account->GetCompanybyId($id,$parent_id);
+
+			//echo "<pre>"; print_r($getData); echo "</pre>"; die;
 			$count = count($getData);
-			$success = 1;
-			$message  = ($count>0)? GET_RECORDS:NO_RECORDS;
+			if($count>0)
+			{
+				if(empty($getData[0]->staff_id))
+				{
+					$getData[0]->staff_id = $this->common->InsertRecords('staff',array('user_id'=>$id,'is_delete'=>1));
+				}
+				$success = 1;
+				$message  = GET_RECORDS;
+			}
+			else 
+			{
+				$success = 0;
+				$message  = NO_RECORDS;
+
+			}
+			
 		}
 		else
 		{

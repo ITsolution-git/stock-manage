@@ -32,7 +32,8 @@ class Company extends Model {
         				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
         				 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
         				 ->where('usr.is_delete','=','1')
-                 ->where('rol.slug','=','CA');
+                 ->where('rol.slug','=','CA')
+                 ->where('usr.parent_id','=','1');
                  if($search != '')               
                   {
                       $admindata = $admindata->Where(function($query) use($search)
@@ -453,7 +454,7 @@ class Company extends Model {
 
         $make_folder = $this->makefolder($post['id']);
         
-        $new_post = array('prime_address1'=>$post['prime_address1'],'prime_address_city'=>$post['prime_address_city'],'prime_address_state'=>$post['prime_address_state'],'prime_address_country'=>$post['prime_address_country'],'prime_phone_main'=>$post['prime_phone_main'],'prime_address_street'=>$post['prime_address_street'],'prime_address_zip'=>$post['prime_address_zip'],'url'=>$post['url']);
+        $new_post = array('prime_address1'=>$post['prime_address1'],'prime_address_city'=>$post['prime_address_city'],'prime_address_state'=>$post['prime_address_state'],'prime_phone_main'=>$post['prime_phone_main'],'prime_address_street'=>$post['prime_address_street'],'prime_address_zip'=>$post['prime_address_zip'],'url'=>$post['url']);
 
 
         $result = DB::table('users')->where('id','=',$post['id'])->update(array('name'=>$post['name'],'email'=>$post['email']));
@@ -593,7 +594,7 @@ class Company extends Model {
         $colordata = DB::table('color as cl')
                  ->select(DB::raw('SQL_CALC_FOUND_ROWS *'))
                  ->where('cl.is_delete','=','1')
-                 ->where('cl.is_sns','=','1');
+                 ->where('cl.is_sns','=','0');
                  if($search != '')               
                   {
                       $colordata = $colordata->Where('cl.name', 'LIKE', '%'.$search.'%');
@@ -620,7 +621,7 @@ class Company extends Model {
         $colordata = DB::table('product_size as pz')
                  ->select(DB::raw('SQL_CALC_FOUND_ROWS *'))
                  ->where('pz.is_delete','=','1')
-                 ->where('pz.is_sns','=','1');
+                 ->where('pz.is_sns','=','0');
                  if($search != '')               
                   {
                       $colordata = $colordata->Where('pz.name', 'LIKE', '%'.$search.'%');
