@@ -880,8 +880,7 @@ public function create_dir($dir_path) {
               
             }
             fclose($file);
-            echo "complete";
-            exit;
+            return redirect()->back();
         }
     }    
 
