@@ -1352,15 +1352,21 @@ class OrderController extends Controller {
         $data = Input::all();
         $result = $this->order->designDetail($data);
 
-        
-         if($result['design'][0]->hands_date != '') {
+         
+         if($result['design'][0]->hands_date != '0000-00-00') {
             $result['design'][0]->hands_date = date("n/d/Y", strtotime($result['design'][0]->hands_date));
+         } else {
+            $result['design'][0]->hands_date = '';
          }
-         if($result['design'][0]->shipping_date != '') {
+         if($result['design'][0]->shipping_date != '0000-00-00') {
             $result['design'][0]->shipping_date = date("n/d/Y", strtotime($result['design'][0]->shipping_date));
+         }else{
+            $result['design'][0]->shipping_date = '';
          }
-         if($result['design'][0]->start_date != '') {
+         if($result['design'][0]->start_date != '0000-00-00') {
             $result['design'][0]->start_date = date("n/d/Y", strtotime($result['design'][0]->start_date));
+         } else {
+            $result['design'][0]->start_date = '';
          }
 
          
@@ -1397,9 +1403,18 @@ class OrderController extends Controller {
         unset($post['designData']['top_color_name']);
        
       
-      $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
-      $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
-      $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
+        if($post['designData']['hands_date'] != '')
+        {
+            $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
+        }
+        if($post['designData']['shipping_date'] != '')
+        {
+            $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
+        }
+        if($post['designData']['start_date'] != '')
+        {
+            $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
+        }
 
        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['designData']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
