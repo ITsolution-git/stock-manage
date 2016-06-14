@@ -4,7 +4,7 @@
         </div>
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-order" flex="100">
-                
+                <form name="user_profile">
                 <md-card layout="row">
                     
                     <md-card-content flex="50" layout="column">
@@ -16,11 +16,21 @@
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Email Address" name="email" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }">
+                            <input placeholder="Email Address" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'check_email\')' }">
+
+                            <div ng-messages="user_profile.email.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                                <div ng-message="pattern">
+                                    <span >Email must be a valid e-mail address</span>
+                                </div>
+                            </div>
+
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Phone Number" name="prime_phone_main" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
+                            <input placeholder="Phone Number" name="prime_phone_main" valid-phone ng-maxlength="16" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
                         </md-input-container>
 
                          <div class="title" layout-padding><span class="basicInfoStyle">PASSWORD</span></div>   
@@ -39,10 +49,11 @@
                         </div>
 
                         
-                      </div>
+                      
 
                     </md-card-content>
                 </md-card>
+                </form>
             </div>
         </div>
     </div>
