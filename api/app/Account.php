@@ -36,7 +36,7 @@ class Account extends Model {
     public function GetCompanybyId($id,$parent_id)
     {
     	$admindata = DB::table('users as usr')
-        				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
+        				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
                          ->leftJoin('staff as staff', 'staff.user_id', '=', 'usr.id')
         				 ->select('staff.*','usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','usr.id','usr.role_id')
         				 ->where('usr.id','=',$id)
