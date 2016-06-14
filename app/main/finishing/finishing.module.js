@@ -12,6 +12,12 @@
         // State
         $stateProvider
             .state('app.finishing', {
+                resolve: {
+                    checksession : function (sessionService)
+                    {
+                       return sessionService.AccessService('BC,CA');
+                    },
+                },
                 url    : '/finishing',
                 views  : {
                     'content@app': {
