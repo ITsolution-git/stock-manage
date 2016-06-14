@@ -421,6 +421,7 @@ class Product extends Model {
                           $productData = $productData->Where(function($query) use($search)
                           {
                               $query->orWhere('product.name', 'LIKE', '%'.$search.'%');
+                              $query->orWhere('product.id', '=', $search);
                           });
                         }
                         

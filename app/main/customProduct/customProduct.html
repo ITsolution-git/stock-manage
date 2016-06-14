@@ -37,11 +37,11 @@
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                 <table class="dataTable row-border hover">
                     
-                    <thead tasty-thead></thead>
+                    <thead tasty-thead class="cursor-p"></thead>
                     <tbody>
                         <tr  ng-repeat="row in rows"  >
                             <td ng-click="vm.openCustomProductDialog($event,row.id)"  class="cursor-p">{{ row.id}}</td>
-                            <td>{{ row.name}}</td>
+                            <td ng-click="vm.openCustomProductDialog($event,row.id)"  class="cursor-p">{{ row.name}}</td>
                         </tr>                  
                     </tbody>
                 </table>
