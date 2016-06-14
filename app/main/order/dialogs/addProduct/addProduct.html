@@ -44,7 +44,7 @@
 
                     <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="(key,all_size) in sizeAll">
                         <label class="font-14">{{all_size.sizeName}}</label>
-                        <input placeholder=""  ng-model="all_size.qnty">
+                        <input placeholder=""  ng-model="all_size.qnty" ng-maxlength="10" valid-number>
                     </md-input-container>
                                        
                 </div>
