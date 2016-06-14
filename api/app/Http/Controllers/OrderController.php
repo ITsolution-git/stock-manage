@@ -1352,10 +1352,18 @@ class OrderController extends Controller {
         $data = Input::all();
         $result = $this->order->designDetail($data);
 
-         $result['design'][0]->hands_date = date("n/d/Y", strtotime($result['design'][0]->hands_date));
-         $result['design'][0]->shipping_date = date("n/d/Y", strtotime($result['design'][0]->shipping_date));
-         $result['design'][0]->start_date = date("n/d/Y", strtotime($result['design'][0]->start_date));
-              
+        
+         if($result['design'][0]->hands_date != '') {
+            $result['design'][0]->hands_date = date("n/d/Y", strtotime($result['design'][0]->hands_date));
+         }
+         if($result['design'][0]->shipping_date != '') {
+            $result['design'][0]->shipping_date = date("n/d/Y", strtotime($result['design'][0]->shipping_date));
+         }
+         if($result['design'][0]->start_date != '') {
+            $result['design'][0]->start_date = date("n/d/Y", strtotime($result['design'][0]->start_date));
+         }
+
+         
 
         if(empty($result['design']))
         {

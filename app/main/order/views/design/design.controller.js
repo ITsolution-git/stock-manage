@@ -26,9 +26,9 @@
                 if(result.data.success == '1') {
                     
                      $("#ajax_loader").hide();
-                    result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
+                    /*result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
                     result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
-                    result.data.records[0].start_date = new Date(result.data.records[0].start_date);
+                    result.data.records[0].start_date = new Date(result.data.records[0].start_date);*/
                     $scope.order_id = result.data.records[0].order_id;
 
                     $scope.designInforamtion = result.data.records[0];
