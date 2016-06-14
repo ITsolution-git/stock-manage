@@ -339,6 +339,7 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
     public function priceGridDuplicate($data,$priceData,$priceScreenPrimary,$priceScreenSecondary,$priceGarmentMackup,$priceDirectGarment,$priceEmbroSwitch,$price_embro) {
         
         unset($data['id']);
+       
 
         $data['name'] = $data['name'].' Copy';
         $data['created_date'] = date("Y-m-d H:i:s");

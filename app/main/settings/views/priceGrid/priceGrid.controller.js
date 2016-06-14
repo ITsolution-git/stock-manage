@@ -68,7 +68,7 @@
             $mdOpenMenu(ev);
         };
 
-         $scope.submitPriceGridDownload = function () {
+        /* $scope.submitPriceGridDownload = function () {
  
              document.getElementById('downloadPricecsv').submit();
         }
@@ -93,7 +93,7 @@
                     document.getElementById('uploadPricecsv').submit();
                 }
         }
-
+*/
     }
     
 })();
