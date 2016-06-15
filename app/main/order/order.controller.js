@@ -12,6 +12,7 @@
         var vm = this;
         vm.resetFilter = resetFilter;
         vm.showDatePicker = showDatePicker;
+        $scope.role = sessionService.get('role_slug');
         // Data
 
         vm.salesCheckData = OrderUserData.data.records;
