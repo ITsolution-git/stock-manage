@@ -42,7 +42,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.finishing', {
-            title: 'Finishing',
+           // title: 'Finishing',
             icon: 'icon-cart',
             state: 'app.finishing',        
             weight   : 1
