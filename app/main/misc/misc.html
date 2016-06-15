@@ -9,28 +9,45 @@
                     <!-----------------Order Waiting to Ship Tab-------------------->
                     <md-tab label="Value 1">
                         
-                        <!-- <div class="ms-responsive-table-wrapper">
+                        <div class="ms-responsive-table-wrapper">
                             <table class="simple hover simple-tbl1">
                                 <thead>
                                     <tr>
-                                        <th class="secondary-text" width="20%">Order ID</th>
-                                        <th class="secondary-text" width="30%">Client Name</th>
-                                        <th class="secondary-text" width="20%">PO #</th>
-                                        <th class="secondary-text" width="15%">Status</th>
-                                        <th class="secondary-text text-center" width="15%">&nbsp;</th>
+                                        <th class="secondary-text" >Approval / Order Sequence</th>
+                                        <th class="secondary-text" >Art Type</th>
+                                        <th class="secondary-text" >Boxing Type</th>
+                                        <th class="secondary-text" >Charge Apply</th>
+                                        <th class="secondary-text" >Color Group</th>
+                                        <th class="secondary-text" >Direct to Garment</th>
+                                        <th class="secondary-text" >Dir. to Garment Sz.</th>
+                                        <th class="secondary-text" >Disposition</th>
+                                        <th class="secondary-text" >Graphic Size</th>
+                                        <th class="secondary-text" >Level</th>
+                                        <th class="secondary-text" >Yes No</th>
+                                        <th class="secondary-text" >PO Status</th>
+                                        <th class="secondary-text" >Address Type</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                    <tr ng-repeat="ows in ::vm.ows" class="cursor-p">
-                                        <td>{{ ows.orderId}}</td>
-                                        <td>{{ ows.clientName}}</td>
-                                        <td>{{ ows.po}}</td>
-                                        <td>{{ ows.status}}</td>
-                                        <td class="text-center" ui-sref="app.misc.orderwaitship"><a>SHIP</a></td>
-                                    </tr>                    
+                                 <tr data-ng-repeat="i in range" class="stripedDiv">
+                                      <td>{{miscData.approval[i].value}}</td>
+                                      <td>{{miscData.art_type[i].value}}</td>
+                                      <td>{{miscData.boxing_type[i].value}}</td>
+                                      <td>{{miscData.charges_apply[i].value}}</td>
+                                      <td>{{miscData.color_group[i].value}}</td>
+                                      <td>{{miscData.direct_to_garment[i].value}}</td>
+                                      <td>{{miscData.dir_to_garment_sz[i].value}}</td>
+                                      <td>{{miscData.disposition[i].value}}</td>
+                                      <td>{{miscData.graphic_size[i].value}}</td>
+                                      <td>{{miscData.level[i].value}}</td>
+                                      <td>{{miscData.yesno[i].value}}</td>
+                                      <td>{{miscData.po_status[i].value}}</td>
+                                      <td>{{miscData.address_type[i].value}}</td>
+                                </tr>                
                                 </tbody>
                             </table>
-                        </div> -->                    
+                        </div>                    
                     </md-tab>
                     <!-----------------Order In Progress Tab-------------------->
                     <md-tab label="Value 2">
