@@ -212,7 +212,21 @@
         
         function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply)
         {
-            
+            if($scope.order_design_position.length == '0')
+            {
+                var data = {"status": "error", "message": "Please add position"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+                return false;
+            }
+            else if($scope.total_pos_qnty == '0')
+            {
+                var data = {"status": "error", "message": "Please enter position quantity"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+                return false;
+            }
+
             $mdDialog.show({
                 controller: controller,
                 controllerAs: $scope,
