@@ -1433,13 +1433,15 @@ class OrderController extends Controller {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
-                                'order_design_position' => $result['order_design_position']
+                                'order_design_position' => $result['order_design_position'],
+                                'total_pos_qnty' => $result['total_pos_qnty']
                             );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'order_design_position' => $result['order_design_position']
+                                'order_design_position' => $result['order_design_position'],
+                                'total_pos_qnty' => 0
                             );
         }
         return response()->json(["data" => $response]);
