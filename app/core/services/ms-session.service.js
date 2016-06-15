@@ -99,7 +99,7 @@
 		}
 		function checkRollMenu(role)
 		{
-			console.log(role);
+			//console.log(role);
 			if(role=='SA')
 			{
 				msNavigationService.deleteItem('fuse.settings');
@@ -134,7 +134,6 @@
 			{
 				msNavigationService.deleteItem('fuse.settings');
 				msNavigationService.deleteItem('fuse.art');
-				msNavigationService.deleteItem('fuse.client');
 				msNavigationService.deleteItem('fuse.order');
 				msNavigationService.deleteItem('fuse.invoices');
 				msNavigationService.deleteItem('fuse.purchaseOrder');

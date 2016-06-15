@@ -32,7 +32,7 @@
                     checksession : function (sessionService)
                     {
                         
-                       return sessionService.AccessService('BC,CA');
+                       return sessionService.AccessService('BC,CA,AD,FM,PU,SC,PO,SH,RA,SO');
                     },
                 },
                 url    : '/list',
