@@ -70,7 +70,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.purchaseOrder', {
-            title    : 'Purchase Order',
+            //title    : 'Purchase Order',
             icon     : 'icon-basket',
             state    : 'app.purchaseOrder',
             /*stateParams: {
