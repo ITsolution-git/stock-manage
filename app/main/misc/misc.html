@@ -30,7 +30,7 @@
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                 <tr data-ng-repeat="i in range" class="stripedDiv">
+                                 <tr data-ng-repeat="i in range">
                                       <td>{{miscData.approval[i].value}}</td>
                                       <td>{{miscData.art_type[i].value}}</td>
                                       <td>{{miscData.boxing_type[i].value}}</td>
@@ -52,28 +52,49 @@
                     <!-----------------Order In Progress Tab-------------------->
                     <md-tab label="Value 2">
                         
-                        <!-- <div class="ms-responsive-table-wrapper">
+                         <div class="ms-responsive-table-wrapper">
                             <table class="simple hover simple-tbl1">
                                 <thead>
                                     <tr>
-                                        <th class="secondary-text" width="20%">Order ID</th>
-                                        <th class="secondary-text" width="30%">Client Name</th>
-                                        <th class="secondary-text" width="20%">PO #</th>
-                                        <th class="secondary-text" width="15%">Status</th>
-                                        <th class="secondary-text text-center" width="15%">&nbsp;</th>
+                                          <th class="secondary-text">Placement Type</th>
+                                          <th class="secondary-text">Position</th>
+                                          <th class="secondary-text">Production</th>
+                                          <th class="secondary-text">Production Sub Type</th>
+                                          <th class="secondary-text">Production Type</th>
+                                          <th class="secondary-text">Size Group</th>
+                                          <th class="secondary-text">Staff Type</th>
+                                          <th class="secondary-text">Status</th>
+                                          <th class="secondary-text">Symbol Description</th>
+                                          <th class="secondary-text">Terms</th> 
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                    <tr ng-repeat="oip in ::vm.oip" class="cursor-p">
-                                        <td>{{ oip.orderId}}</td>
-                                        <td>{{ oip.clientName}}</td>
-                                        <td>{{ oip.po}}</td>
-                                        <td>{{ oip.status}}</td>
-                                        <td class="text-center" ui-sref="app.misc.orderwaitship"><a>SHIP</a></td>
-                                    </tr>                    
+                                    <tr data-ng-repeat="i in range">
+
+                                       <td>{{miscData.placement_type[i].value}}</td>
+
+                                       <td>{{miscData.position[i].value}}</td>
+
+                                       <td>{{miscData.production[i].value}}</td>
+
+                                       <td>{{miscData.production_sub_type[i].value}}</td>
+
+                                        <td>{{miscData.product_type[i].value}}</td>
+
+                                       <td>{{miscData.size_group[i].value}}</td>
+
+                                       <td>{{miscData.staff_type[i].value}}</td>
+
+                                       <td>{{miscData.status[i].value}}</td>
+
+                                        <td>{{miscData.symbol_description[i].value}}</td>
+
+                                        <td>{{miscData.terms[i].value}}</td>
+                                        </td>
+                                   </tr>                    
                                 </tbody>
                             </table>
-                        </div> --> 
+                        </div>  
                     </md-tab>
                     <!-----------------Shipped Orders Tab-------------------->
                     <md-tab label="Value 3">
