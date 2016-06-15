@@ -220,9 +220,10 @@ class Client extends Model {
     			$result['tax']['tax_id'] = $value->tax_id;
     			$result['tax']['tax_rate'] = $value->tax_rate;
     			$result['tax']['tax_exempt'] = $value->tax_exempt;
-          $result['tax']['tax_document'] = $value->tax_document;
-          $result['tax']['tax_document_url'] = (!empty($result['tax']['tax_document']))?UPLOAD_PATH.$value->company_id."/tax/".$value->client_id."/".$value->tax_document:'';
-
+          $result['tax']['tax_exempt_show'] = ($value->tax_exempt=='0')? "No" : "Yes";
+          $result['tax']['tax_document'] = (empty($value->tax_document))? "1" : $value->tax_document ;
+          $result['tax']['tax_document_url'] = (!empty($value->tax_document))?UPLOAD_PATH.$value->company_id."/tax/".$value->client_id."/".$value->tax_document:'';
+          $result['tax']['tax_unlink_url'] = $value->tax_document;
 
 
     		}
@@ -408,6 +409,13 @@ public function saveDoc($post)
         return $result;
    }
 
+public function saveTaxDoc($post)
+{
+      $result = DB::table('client')
+                        ->where('client_id','=',$post['client_id'])
+                        ->update(array('tax_document'=>$post['data']['tax_document']));
+        return $result;
+}
 
    /**
 * Delete Doc          

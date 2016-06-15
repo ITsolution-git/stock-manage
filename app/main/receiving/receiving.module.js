@@ -52,7 +52,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.receiving', {
-            title: 'Receiving',
+           // title: 'Receiving',
             icon: 'icon-cart',
             state: 'app.receiving',
             /*stateParams: {
