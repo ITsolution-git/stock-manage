@@ -118,7 +118,6 @@
                 }
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
                 notifyService.notify(data.status, data.message);
-                $scope.designPosition();
                 $scope.designProductData();
             });
         }
