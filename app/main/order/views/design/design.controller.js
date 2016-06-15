@@ -460,7 +460,7 @@
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
-                notifyService.notify('success',result.data.message);
+                /*notifyService.notify('success',result.data.message);*/
                      
             });
         }
