@@ -12,6 +12,13 @@
         // State
         $stateProvider
             .state('app.customProduct', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url    : '/customProduct',
                 views  : {
                     'content@app': {
