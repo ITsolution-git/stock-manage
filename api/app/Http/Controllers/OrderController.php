@@ -352,6 +352,8 @@ class OrderController extends Controller {
      {
         $post = Input::all();
 
+        //$positionData = $this->common->GetTableRecords('order_design_position',array('design_id' => $data['design_id']),array());
+
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
           $date_field = (empty($post['date_field']))? '':$post['date_field']; 

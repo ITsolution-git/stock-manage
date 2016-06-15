@@ -110,6 +110,7 @@
             condition_obj[match_condition] =  id;
             position_main_data.cond = angular.copy(condition_obj);
             position_main_data.order_id = $scope.order_id;
+            position_main_data.design_id = $stateParams.id;
             position_main_data.company_id = sessionService.get('company_id');
           
             $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
