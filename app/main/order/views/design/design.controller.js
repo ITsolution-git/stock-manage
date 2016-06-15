@@ -151,7 +151,7 @@
 
         var vendor_data = {};
         vendor_data.table ='vendors';
-        vendor_data.cond ={'company_id':condition_obj['company_id']}
+        /*vendor_data.cond ={'company_id':condition_obj['company_id']}*/
         $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
             
             if(result.data.success == '1') 
@@ -161,6 +161,18 @@
             else
             {
                 $scope.allVendors=[];
+            }
+        });
+
+        var combine_array_id = {};
+        combine_array_id.company_id = sessionService.get('company_id');
+
+        $scope.valid_sns = 1;
+        
+        $http.post('api/public/product/checkSnsAuth',combine_array_id).success(function(result) {
+           
+            if(result.data.success == '0') {
+                $scope.valid_sns = 0;
             }
         });
 
@@ -263,6 +275,7 @@
         }
         function openSearchProductDialog(ev)
         {
+
              
             if($scope.vendor_id > 0)
             {
@@ -290,7 +303,13 @@
 
         $scope.checkVendor = function()
         {
-            if($scope.order_design_position.length == '0')
+            if($scope.valid_sns == 0)
+            {
+                var data = {"status": "error", "message": "Please enter valid credentials for S&S"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+            }
+            else if($scope.order_design_position.length == '0')
             {
                 var data = {"status": "error", "message": "Please add position"}
                 notifyService.notify(data.status, data.message);

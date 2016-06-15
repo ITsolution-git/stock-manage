@@ -31,6 +31,7 @@
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
         $scope.company_id = sessionService.get('company_id');
+        $scope.role = sessionService.get('role_slug');
 
         //////////
 
