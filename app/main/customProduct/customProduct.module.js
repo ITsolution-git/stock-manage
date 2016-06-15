@@ -20,6 +20,13 @@
                     }
                 }
             }).state('app.customProduct.companyPO', {
+                 resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/companyPO/:id',
                 views: {
                     'content@app': {
@@ -28,6 +35,13 @@
                     }
                 }
             }).state('app.customProduct.viewNote', {
+                 resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/viewNote/:id',
                 views: {
                     'content@app': {
@@ -36,6 +50,13 @@
                     }
                 }
             }).state('app.customProduct.affiliatePO', {
+                 resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/affiliatePO/:id',
                 views: {
                     'content@app': {
