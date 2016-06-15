@@ -96,6 +96,22 @@
         }
 
 
+        $scope.designPositionNew = function(){
+
+        var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+            $scope.total_pos_qnty = 0;
+            
+            $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
+               
+                if(result.data.success == '1') {
+                   
+                    $scope.total_pos_qnty = result.data.total_pos_qnty;
+                }
+            });
+        }
+
         $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition,key)
         {
             var position_main_data = {};
@@ -120,6 +136,7 @@
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
                 notifyService.notify(data.status, data.message);
                 $scope.designProductData();
+                $scope.designPositionNew();
             });
         }
 
