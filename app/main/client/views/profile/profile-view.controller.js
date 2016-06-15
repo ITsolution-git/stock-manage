@@ -12,6 +12,7 @@
     {
 
         $scope.NoImage = AllConstant.NoImage;
+        $scope.NoDocument = AllConstant.NoDocument
         $scope.Current_date = AllConstant.currentdate;
         var vm = this;
         //Dummy models data
@@ -132,6 +133,11 @@
         {
             open_popup(ev,$scope,'CompanyInfo','add_document');
         }
+        $scope.EditTaxDoc = function (ev)
+        {
+            open_popup(ev,$scope,'CompanyInfo','tax_document');
+        }
+
 
 
 // ====================== GLOBAL CALL FOR GET RECORD, ADD/EDIT THEN OPEN POPUP ===========//        
@@ -495,12 +501,11 @@
         $scope.StaffList = Params.StaffList;
         $scope.salesDetails = Params.salesDetails
         $scope.AllPriceGrid = Params.AllPriceGrid;
-        $scope.client_tax = Params.client_tax;
         $scope.Distribution_address = Params.Distribution_address;
         $scope.alldata = Params.alldata;
         $scope.client_id = Params.client_id;
         $scope.company_id = Params.company_id;
-        //console.log(Params);
+        $scope.client_tax = Params.client_tax;
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
         {
             var vm = this;
@@ -577,19 +582,44 @@
                     $("#ajax_loader").hide();
               });
         }
-        $scope.closeDialog = function() 
-        {
-            //$state.go($state.current, $stateParams, {reload: true, inherit: false});
-            $mdDialog.hide();
-        }
+
         $scope.showtcprofileimg = false;
         $scope.onLoad=function()
-            {
-                $scope.showtcprofileimg = true;
-            }; 
+        {
+            $scope.showtcprofileimg = true;
+        }
         $scope.removeProfileImage=function()
-            {
-                $scope.showtcprofileimg = false;
-            }; 
-    }
+        {
+            $scope.showtcprofileimg = false;
+        }
+        $scope.closeDialog= function() 
+        {
+            $mdDialog.hide();
+        }  
+        $scope.SaveTaxDoc=function(taxDocDetail)
+        {
+             $("#ajax_loader").show();
+              var doc_array = {};
+              doc_array.data = taxDocDetail;
+              doc_array.client_id = $scope.client_id;
+              doc_array.company_id = $scope.company_id;
+             
+              $http.post('api/public/client/saveTaxDoc',doc_array).success(function(result) 
+              {
+                    if(result.data.success=='1')
+                    {
+                        $mdDialog.hide();
+                    }
+                    else
+                    {
+                        notifyService('error',result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+              });
+
+        }
+       
+       
+
+        }
 })();

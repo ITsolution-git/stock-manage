@@ -698,7 +698,7 @@ class ClientController extends Controller {
         	{
             	$split = explode( '/', $post['data']['document_photo']['filetype'] );
                 $type = $split[1]; 
-		        $png_url_doc = "doc-logo-".time().".".$type;
+		        $png_url_doc = "document-".time().".".$type;
 	            $image_path = $post['data']['company_id']."/document/".$post['data']['client_id'];
 	            $image_path = FILEUPLOAD.$image_path;
 	            if (!file_exists($image_path)) {
@@ -732,7 +732,58 @@ class ClientController extends Controller {
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
     }
+public function saveTaxDoc()
+{
 
+        $post = Input::all();
+		
+        if(!empty($post['client_id']) && !empty($post['company_id']))
+        {
+        	//echo "<pre>"; print_r($post); echo "</pre>"; die;
+        	if(isset($post['data']['tax_document']['base64']))
+        	{
+            	$split = explode( '/', $post['data']['tax_document']['filetype'] );
+                $type = $split[1]; 
+		        $png_url_doc = "tax-document-".time().".".$type;
+	            $image_path = $post['company_id']."/tax/".$post['client_id'];
+	            $image_path = FILEUPLOAD.$image_path;
+	            if (!file_exists($image_path)) {
+                    mkdir($image_path, 0777, true);
+                } else {
+                 exec("chmod $image_path 0777");
+                   // chmod($dir_path, 0777);
+                }
+
+				$path = $image_path."/".$png_url_doc;
+				$img = $post['data']['tax_document']['base64'];
+				
+				$data = base64_decode($img);
+				$success = file_put_contents($path, $data);
+
+				$post['data']['tax_document'] = $png_url_doc;
+				
+				if(!empty($post['data']['tax_unlink_url']))
+				{
+					$unlink_url = $image_path."/".$post['data']['tax_unlink_url'];
+                    exec('rm -rf '.escapeshellarg($unlink_url));
+                }
+
+	    	}
+
+	    	unset($post['company_id']);
+            $result = $this->client->saveTaxDoc($post);
+            $message = UPDATE_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS.", id";
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+}
 
      /**
     * Delete Doc.
