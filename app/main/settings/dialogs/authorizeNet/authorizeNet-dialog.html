@@ -18,15 +18,15 @@
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API username" name="username" ng-model="authorize.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                        <input placeholder="API username" readonly=""  onfocus="this.removeAttribute('readonly');" name="username" ng-model="authorize.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API login" name="login" ng-model="authorize.login" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                        <input placeholder="API login" name="login" readonly=""  onfocus="this.removeAttribute('readonly');" ng-model="authorize.login" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API Password" type="password" name="password" ng-model="authorize.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                        <input placeholder="API Password" type="password" readonly=""  onfocus="this.removeAttribute('readonly');" name="password" ng-model="authorize.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
