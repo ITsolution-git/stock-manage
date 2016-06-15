@@ -1,0 +1,41 @@
+{
+	"miscDetail": {
+	    "data": [
+	            {"orderId":"44", "clientName":"Kensville", "po":"12345", "status":"0/100"},
+	            {"orderId":"54", "clientName":"Design T-shirt", "po":"12345", "status":"0/100"},
+	            {"orderId":"32", "clientName":"Logo Design", "po":"12345", "status":"0/100"},
+	            {"orderId":"10", "clientName":"Order Test", "po":"12345", "status":"0/100"},
+	            {"orderId":"67", "clientName":"Kensville", "po":"12345", "status":"0/100"},
+	            {"orderId":"44", "clientName":"Kensville", "po":"12345", "status":"0/100"}
+	                         
+	        ],
+		"data1": [
+				{"orderId":"44", "clientName":"Kensville", "po":"12345", "status":"58/100"},
+	            {"orderId":"54", "clientName":"Design T-shirt", "po":"12345", "status":"35/100"},
+	            {"orderId":"32", "clientName":"Logo Design", "po":"12345", "status":"45/100"},
+	            {"orderId":"10", "clientName":"Order Test", "po":"12345", "status":"45/100"},
+	            {"orderId":"67", "clientName":"Kensville", "po":"12345", "status":"75/100"},
+	            {"orderId":"44", "clientName":"Kensville", "po":"12345", "status":"75/100"}
+		]
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

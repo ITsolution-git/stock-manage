@@ -69,6 +69,9 @@
             'app.navigation',
 
             // DRAG AND UPLOAD
-            'ngDraggable'
+            'ngDraggable',
+
+            //Misc data
+            'app.misc'
         ]);
 })();

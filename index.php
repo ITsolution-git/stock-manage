@@ -250,6 +250,10 @@
     <script src="app/main/admin/admin.module.js"></script>
     <script src="app/main/admin/admin.controller.js"></script>
 
+    <!-- Shipping -->
+    <script src="app/main/misc/misc.module.js"></script>
+    <script src="app/main/misc/misc.controller.js"></script>
+
 
 
     <!--Datatable Scrolling-->

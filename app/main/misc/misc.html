@@ -1,0 +1,91 @@
+<div class="content order-list-page">
+    <div class="simple-table-container md-whiteframe-4dp">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text pd15-TB" flex=100 class="cursor-p">Misc Data</div>
+        </div>
+        <div ng-cloak>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                    <!-----------------Order Waiting to Ship Tab-------------------->
+                    <md-tab label="Value 1">
+                        
+                        <!-- <div class="ms-responsive-table-wrapper">
+                            <table class="simple hover simple-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th class="secondary-text" width="20%">Order ID</th>
+                                        <th class="secondary-text" width="30%">Client Name</th>
+                                        <th class="secondary-text" width="20%">PO #</th>
+                                        <th class="secondary-text" width="15%">Status</th>
+                                        <th class="secondary-text text-center" width="15%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr ng-repeat="ows in ::vm.ows" class="cursor-p">
+                                        <td>{{ ows.orderId}}</td>
+                                        <td>{{ ows.clientName}}</td>
+                                        <td>{{ ows.po}}</td>
+                                        <td>{{ ows.status}}</td>
+                                        <td class="text-center" ui-sref="app.misc.orderwaitship"><a>SHIP</a></td>
+                                    </tr>                    
+                                </tbody>
+                            </table>
+                        </div> -->                    
+                    </md-tab>
+                    <!-----------------Order In Progress Tab-------------------->
+                    <md-tab label="Value 2">
+                        
+                        <!-- <div class="ms-responsive-table-wrapper">
+                            <table class="simple hover simple-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th class="secondary-text" width="20%">Order ID</th>
+                                        <th class="secondary-text" width="30%">Client Name</th>
+                                        <th class="secondary-text" width="20%">PO #</th>
+                                        <th class="secondary-text" width="15%">Status</th>
+                                        <th class="secondary-text text-center" width="15%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr ng-repeat="oip in ::vm.oip" class="cursor-p">
+                                        <td>{{ oip.orderId}}</td>
+                                        <td>{{ oip.clientName}}</td>
+                                        <td>{{ oip.po}}</td>
+                                        <td>{{ oip.status}}</td>
+                                        <td class="text-center" ui-sref="app.misc.orderwaitship"><a>SHIP</a></td>
+                                    </tr>                    
+                                </tbody>
+                            </table>
+                        </div> --> 
+                    </md-tab>
+                    <!-----------------Shipped Orders Tab-------------------->
+                    <md-tab label="Value 3">
+                        
+                        <!-- <div class="ms-responsive-table-wrapper">
+                            <table class="simple hover simple-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th class="secondary-text" width="20%">Order ID</th>
+                                        <th class="secondary-text" width="30%">Client Name</th>
+                                        <th class="secondary-text" width="15%">PO #</th>
+                                        <th class="secondary-text" width="15%">Status</th>
+                                        <th class="secondary-text text-center" width="20%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr ng-repeat="oip in ::vm.oip" class="cursor-p">
+                                        <td>{{ oip.orderId}}</td>
+                                        <td>{{ oip.clientName}}</td>
+                                        <td>{{ oip.po}}</td>
+                                        <td>{{ oip.status}}</td>
+                                        <td class="text-center" ui-sref="app.misc.shipmentoverview"><a>SHIPMENT OVERVIEW</a></td>
+                                    </tr>                    
+                                </tbody>
+                            </table>
+                        </div>  -->
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+        </div>
+    </div> 
+</div>
