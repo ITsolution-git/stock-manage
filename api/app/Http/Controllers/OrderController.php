@@ -119,7 +119,7 @@ class OrderController extends Controller {
                         4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
                         5=>array('key' => 'null', 'name' => 'Sales Rep', 'sortable' => false),
                         6=>array('key' => 'order.date_shipped', 'name' => 'Ship Date'),
-                        7=>array('key' => 'null', 'name' => 'Opeations', 'sortable' => false)
+                        7=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false)
                         );
 
         if(empty($records))

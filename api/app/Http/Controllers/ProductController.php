@@ -268,7 +268,6 @@ public function create_dir($dir_path) {
         $result = curl_exec($curl);
         curl_close($curl);
 
-        print_r($result);exit;
         $all_data = json_decode($result);
 
         if(empty($all_data))
