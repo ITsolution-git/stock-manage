@@ -8,7 +8,7 @@
                     <a class="link-back cursor-p createPriceGridLink" ng-click="vm.openAddEmployeeDialog($event)">ADD NEW EMPLOYEE</a>
                 </div>
             </div>
-            <div class=" ms-responsive-table-wrapper userMgmntPadding">
+            <div class=" ms-responsive-table-wrapper ">
                 <table class="simple" >
                     <thead>
 
@@ -41,7 +41,7 @@
                         </tr>
                     </thead>
                    <tbody >
-                        <tr  ng-repeat="user in users_data">
+                        <tr  ng-repeat="user in users_data" class="ng-scope">
                             <td class="">{{user.name}}</td>
                             <td class="">{{user.email}}</td>
                             <td class="">{{user.title}}</td>
@@ -55,17 +55,17 @@
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
                                             <md-button ng-click="openEditEmployeeDialog($event,user.id)">
-                                                Edit User
+                                                Edit Employee
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
                                             <md-button ng-click="vm.resetUserPasswordDialog($event,user.id)">
-                                                Reset User Password
+                                                Reset Employee Password
                                             </md-button>
                                         </md-menu-item>
                                         <md-menu-item>
                                             <md-button ng-click="RemoveFields('users','id',user.id,'users')">
-                                                Delete User
+                                                Delete Employee
                                             </md-button>
                                         </md-menu-item>
                                     </md-menu-content>

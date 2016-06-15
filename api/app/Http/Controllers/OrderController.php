@@ -1246,19 +1246,18 @@ class OrderController extends Controller {
         unset($post['designData']['top_color_name']);
 
      
-        if(isset($post['designData']['hands_date'])) {
+        if(isset($post['designData']['hands_date']) && $post['designData']['hands_date'] != '') {
           $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
         }
 
-        if(isset($post['designData']['shipping_date'])) {
+        if(isset($post['designData']['shipping_date']) && $post['designData']['shipping_date'] != '') {
           $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
         }
  
-        if(isset($post['designData']['start_date'])) {
+        if(isset($post['designData']['start_date']) && $post['designData']['start_date'] != '') {
             $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
          }
       
-       
         $design_id = $this->common->InsertRecords('order_design',$post['designData']);
 
        $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$design_id);
@@ -1353,17 +1352,17 @@ class OrderController extends Controller {
         $result = $this->order->designDetail($data);
 
          
-         if($result['design'][0]->hands_date != '0000-00-00') {
+         if($result['design'][0]->hands_date != '0000-00-00' && $result['design'][0]->hands_date != '') {
             $result['design'][0]->hands_date = date("n/d/Y", strtotime($result['design'][0]->hands_date));
          } else {
             $result['design'][0]->hands_date = '';
          }
-         if($result['design'][0]->shipping_date != '0000-00-00') {
+         if($result['design'][0]->shipping_date != '0000-00-00' && $result['design'][0]->shipping_date != '') {
             $result['design'][0]->shipping_date = date("n/d/Y", strtotime($result['design'][0]->shipping_date));
          }else{
             $result['design'][0]->shipping_date = '';
          }
-         if($result['design'][0]->start_date != '0000-00-00') {
+         if($result['design'][0]->start_date != '0000-00-00' && $result['design'][0]->start_date != '') {
             $result['design'][0]->start_date = date("n/d/Y", strtotime($result['design'][0]->start_date));
          } else {
             $result['design'][0]->start_date = '';
@@ -1434,13 +1433,15 @@ class OrderController extends Controller {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
-                                'order_design_position' => $result['order_design_position']
+                                'order_design_position' => $result['order_design_position'],
+                                'total_pos_qnty' => $result['total_pos_qnty']
                             );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'order_design_position' => $result['order_design_position']
+                                'order_design_position' => $result['order_design_position'],
+                                'total_pos_qnty' => 0
                             );
         }
         return response()->json(["data" => $response]);

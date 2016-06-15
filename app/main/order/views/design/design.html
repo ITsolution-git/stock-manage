@@ -287,7 +287,7 @@
                 <div class="design-search-section" layout-align="space-between-center" layout="row">
                     <md-input-container class="md-block" flex="30">
                         <label>Search</label>
-                        <input ng-model="productSearch" ng-focus="checkVendor()">
+                        <input ng-model="productSearch" ng-change="checkVendor()">
                     </md-input-container>
                     <div layout="row">
                         <md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button>

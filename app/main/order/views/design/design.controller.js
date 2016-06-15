@@ -26,9 +26,6 @@
                 if(result.data.success == '1') {
                     
                      $("#ajax_loader").hide();
-                    /*result.data.records[0].hands_date = new Date(result.data.records[0].hands_date);
-                    result.data.records[0].shipping_date = new Date(result.data.records[0].shipping_date);
-                    result.data.records[0].start_date = new Date(result.data.records[0].start_date);*/
                     $scope.order_id = result.data.records[0].order_id;
 
                     $scope.designInforamtion = result.data.records[0];
@@ -70,14 +67,14 @@
         var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
+            $scope.total_pos_qnty = 0;
             
             $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
                
                 if(result.data.success == '1') {
                     $scope.order_design_position = result.data.order_design_position;
-
+                    $scope.total_pos_qnty = result.data.total_pos_qnty;
                 }
-                
             });
         }
 
@@ -261,12 +258,19 @@
 
         $scope.checkVendor = function()
         {
-             
-            if($scope.vendor_id == '0')
+            if($scope.order_design_position.length == '0')
             {
-                var data = {"status": "error", "message": "Please select vendor"}
+                var data = {"status": "error", "message": "Please add position"}
                 notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
             }
+            else if($scope.total_pos_qnty == '0')
+            {
+                var data = {"status": "error", "message": "Please enter position quantity"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+            }
+
         }
 
 
