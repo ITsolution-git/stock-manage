@@ -452,7 +452,7 @@ public function saveColorSize($post)
 
 
         $combine_array['order_design_position'] = $orderPositionData;
-
+        $combine_array['total_pos_qnty'] = 0;
        
         if(count($combine_array['order_design_position'])>0)
         {
@@ -465,8 +465,9 @@ public function saveColorSize($post)
                 $combine_array['order_design_position'][$key]->image_4_url_photo = (!empty($value->image_4))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_4:'';
                 $total_pos_qnty += $value->qnty;
             }
-         }   
-         $combine_array['total_pos_qnty'] = $total_pos_qnty;
+            $combine_array['total_pos_qnty'] = $total_pos_qnty;
+         }
+         
         return $combine_array;
     }
 
