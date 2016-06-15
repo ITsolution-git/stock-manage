@@ -10,22 +10,24 @@
         </md-toolbar>
     <div ng-cloak>
     <md-card-content layout="column" class="box-shadow-0">
+    <form autocomplete="off">
         <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
                 <div layout="column"  flex="100">
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="UPS Email" name="email"  ng-model="ups.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
+                        <input placeholder="UPS Email" name="email" class="stop" readonly=""  ng-model="ups.email" onfocus="this.removeAttribute('readonly');" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Access UserName" name="username"  ng-model="ups.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
+                        <input placeholder="Access UserName" type="text" name="username" readonly=""  onfocus="this.removeAttribute('readonly');" ng-model="ups.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Account Password" type="password" name="password"  ng-model="ups.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
+                        <input placeholder="Account Password" type="password" name="password"  onfocus="this.removeAttribute('readonly');" readonly=""  ng-model="ups.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
                     </md-input-container>
                 </div>
             </div>
+        </form>
 </div>
     <!-- <md-button class="bg-blue float-right" id="affiliateSaveBtn"  ng-click="closeDialog()">
             SAVE
