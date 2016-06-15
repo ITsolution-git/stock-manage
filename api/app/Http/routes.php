@@ -240,6 +240,7 @@ Route::post('order/updateOverride', 'OrderController@updateOverride');
 Route::post('order/addRemoveToFinishing', 'OrderController@addRemoveToFinishing');
 Route::get('order/calculateAll/{order_id}/{company_id}', 'OrderController@calculateAll');
 
+
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
@@ -276,7 +277,7 @@ Route::post('product/getProductDetailColorSize', 'ProductController@getProductDe
 Route::post('product/addcolorsize', 'ProductController@addcolorsize');
 Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
 Route::post('product/downloadCSV', 'ProductController@downloadCSV');
-
+Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
