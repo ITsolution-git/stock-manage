@@ -99,28 +99,44 @@
                     <!-----------------Shipped Orders Tab-------------------->
                     <md-tab label="Value 3">
                         
-                        <!-- <div class="ms-responsive-table-wrapper">
+                         <div class="ms-responsive-table-wrapper">
                             <table class="simple hover simple-tbl1">
                                 <thead>
                                     <tr>
-                                        <th class="secondary-text" width="20%">Order ID</th>
-                                        <th class="secondary-text" width="30%">Client Name</th>
-                                        <th class="secondary-text" width="15%">PO #</th>
-                                        <th class="secondary-text" width="15%">Status</th>
-                                        <th class="secondary-text text-center" width="20%">&nbsp;</th>
+                                          <th class="secondary-text">Shipping Method</th>
+                                          <th class="secondary-text">Time off Type</th>
+                                          <th class="secondary-text">PO Type</th>
+                                          <th class="secondary-text">Art Filter</th>
+                                          <th class="secondary-text">Purchasing Filter</th>
+                                          <th class="secondary-text">Shipping Filter</th>
+                                          <th class="secondary-text">Status Filter</th>
+                                          <th class="secondary-text">Production Filter</th>
+                                          <th class="secondary-text">Production Shipped</th>
+                                          <th class="secondary-text">Production Paid</th>
+                                          <th class="secondary-text">Production On Press</th>
+                                          <th class="secondary-text">Finishing</th>
                                     </tr>
                                 </thead>
                                 <tbody> 
-                                    <tr ng-repeat="oip in ::vm.oip" class="cursor-p">
-                                        <td>{{ oip.orderId}}</td>
-                                        <td>{{ oip.clientName}}</td>
-                                        <td>{{ oip.po}}</td>
-                                        <td>{{ oip.status}}</td>
-                                        <td class="text-center" ui-sref="app.misc.shipmentoverview"><a>SHIPMENT OVERVIEW</a></td>
-                                    </tr>                    
+                                      <tr data-ng-repeat="i in range">
+
+                                          <td>{{miscData.shipping_method[i].value}}</td>
+                                          <td>{{miscData.time_off_type[i].value}}</td>
+                                          <td>{{miscData.po_type[i].value}}</td>
+                                          <td>{{miscData.art_filter[i].value}}</td>
+                                          <td>{{miscData.purchasing_filter[i].value}}</td>
+                                          <td>{{miscData.shipping_filter[i].value}}</td>
+                                          <td>{{miscData.status[i].value}}</td>
+                                          <td>{{miscData.production_filter[i].value}}</td>
+                                          <td>{{miscData.production_shipped[i].value}}</td>
+                                          <td>{{miscData.production_paid[i].value}}</td>
+                                          <td>{{miscData.production_on_press[i].value}}</td>
+                                          <td>{{miscData.finishing[i].value}}</td>
+                                          
+                                        </tr>               
                                 </tbody>
                             </table>
-                        </div>  -->
+                        </div> 
                     </md-tab>
                 </md-tabs>
             </md-content>
