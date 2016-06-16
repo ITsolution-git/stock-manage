@@ -1,0 +1,64 @@
+<div class="content client-list-page">
+    <div class="simple-table-container md-whiteframe-4dp">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=20>
+                Vendors
+            </div>
+            <div class="search-block" flex=40>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                </md-input-container>
+            </div>
+
+               
+            <div class="client-modal-title " flex=50>
+                <span class="cursor-p" ng-click="addVendor($event)">ADD NEW VENDOR</span>
+            </div>
+        </div>
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
+            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                 <table class="dataTable row-border hover">
+
+                    <thead tasty-thead></thead>
+                    <tbody >
+                        <tr ng-repeat="Vendor in rows">
+                            <td class="">{{Vendor.name_company}}</td>
+                            <td class="">{{Vendor.email}}</td>
+                            <td class="">{{Vendor.prime_phone_no}}</td>
+                            <td class=""> 
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4"> 
+                                        <md-menu-item>
+                                            <md-button ng-click="edit_company($event,Vendor.id)">
+                                                Edit Vendor
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="delete_vendor($event,Vendor.id)">
+                                                Remove Vendor
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+                        </tr>
+                    </tbody> 
+                </table>
+                <div tasty-pagination class="tasty-page"></div>
+            </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
+                <thead>
+                    <tr>
+                        <th>No Records Found</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

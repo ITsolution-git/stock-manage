@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Company;
+use App\Vendor;
 use DB;
 
 use Request;
@@ -19,10 +20,11 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company) 
+    public function __construct(Common $common, Company $company, Vendor $vendor ) 
     {
         $this->common = $common;
         $this->company = $company;
+        $this->vendor = $vendor;
 
     }
 
@@ -964,6 +966,20 @@ class CommonController extends Controller {
                 0=>array('key' => 'usr.name', 'name' => 'Name'),
                 1=>array('key' => 'usr.email', 'name' => 'Email'),
                 2=>array('key' => 'usr.created_date', 'name' => 'Create Date'),
+                );
+
+        }
+        if($post['filter']['function']=='vendor_list') // VENDOR LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->vendor->vendorList($post);
+            $header = array(
+                0=>array('key' => 'name_company', 'name' => 'Name'),
+                1=>array('key' => 'email', 'name' => 'Email'),
+                2=>array('key' => 'prime_phone_no', 'name' => 'Phone'),
                 );
 
         }

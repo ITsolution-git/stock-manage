@@ -209,6 +209,7 @@
     <script src="app/main/settings/dialogs/deleteAffiliate/deleteAffiliate-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/addAffiliate/addAffiliate-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/editAffiliate/editAffiliate-dialog.controller.js"></script>
+    <script src="app/main/settings/views/vendor/vendor.controller.js"></script>
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>
