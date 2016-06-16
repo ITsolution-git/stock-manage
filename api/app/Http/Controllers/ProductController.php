@@ -712,7 +712,7 @@ public function create_dir($dir_path) {
                                     'screen_charge' => $total_screens,
                                     'press_setup_charge' => $total_press_setup,
                                     'order_line_total' => round($design_product_total,2),
-                                    'order_total' => round($order_total,2),
+                                    'order_total' => round($order_total,2) + round($order_charges_total,2),
                                     'tax' => round($tax,2),
                                     'grand_total' => round($grand_total,2),
                                     'balance_due' => round($balance_due,2),
