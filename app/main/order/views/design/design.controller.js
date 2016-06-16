@@ -46,13 +46,13 @@
                
                 if(result.data.success == '1') {
                   
-                    $scope.designProduct = result.data.records;
-                    $scope.productData = result.data.productData.product[0];
-                    $scope.colorName = result.data.colorName;
-                    $scope.colorId = result.data.colorId;
-                    $scope.is_supply = result.data.is_supply;
-                    $scope.calculate_data = result.data.calculate_data[0];
-                    $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
+//                    $scope.designProduct = result.data.records;
+                    $scope.productData = result.data.productData;
+//                    $scope.colorName = result.data.colorName;
+//                    $scope.colorId = result.data.colorId;
+//                    $scope.is_supply = result.data.is_supply;
+//                    $scope.calculate_data = result.data.calculate_data[0];
+//                    $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
 
 
                 } else {
@@ -555,13 +555,12 @@
         } 
         
        
-        $scope.update_markup = function()
+        $scope.update_markup = function(product_id)
         {
             var markup_data = {};
-            markup_data['designProduct'] = $scope.designProduct;
-            markup_data['productData'] = $scope.productData;
-            markup_data['calculate_data'] = $scope.calculate_data;
+            markup_data['productData'] = $scope.productData[product_id];
             markup_data['company_id'] = sessionService.get('company_id');
+            markup_data['design_id'] = $stateParams.id;
 
             $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
                 $scope.designProductData();

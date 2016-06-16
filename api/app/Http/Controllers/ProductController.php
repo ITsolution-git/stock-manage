@@ -273,7 +273,7 @@ public function create_dir($dir_path) {
         if(empty($all_data))
         {
             $data = array("success"=>0,"message"=>"This product is no longer exists");
-            $record_data = $this->common->DeleteTableRecords('products',array('product_id' => $data['product_id']));
+            $record_data = $this->common->DeleteTableRecords('products',array('id' => $data['product_id']));
             return response()->json(["data" => $data]);
         }
        
@@ -374,8 +374,8 @@ public function create_dir($dir_path) {
 
         $post['created_date']=date('Y-m-d');
 
-        $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
-        $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));
+        /*$record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
+        $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));*/
 
         $result = $this->product->addProduct($post);
 
@@ -397,336 +397,340 @@ public function create_dir($dir_path) {
 
     public function orderCalculation($design_id)
     {
-        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
-
-        $total_qnty = 0;
-        $purchase_detail = array();
-        if(!empty($design_product))
-        {
-            $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design_id,'is_delete' => '1'),array());
-            foreach ($purchase_detail as $size) {
-                $total_qnty += $size->qnty;
-            }
-        }
         $order_data = $this->order->getOrderByDesign($design_id);
 
         $price_id = $order_data[0]->price_id;
         $order_id = $order_data[0]->id;
 
-        $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $price_id),array());
-        $price_grid = $price_grid_data[0];
+        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
 
-        $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
-        $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
-        $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
-        $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
-        $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
-
-        $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
-        $data = array();
-        $data['cond']['company_id'] = $order_data[0]->company_id;
-        $miscData = $this->common->getAllMiscDataWithoutBlank($data);
-
-        $color_stitch_count = 0;
-        $position_qty = 0;
-        $discharge_qnty = 0;
-        $speciality_qnty = 0;
-        $foil_qnty = 0;
-        $ink_charge_qnty = 0;
-        $number_on_dark_qnty = 0;
-        $number_on_light_qnty = 0;
-        $oversize_screens_qnty = 0;
-        $press_setup_qnty = 0;
-        $screen_fees_qnty = 0;
-        $screen_fees_qnty_total = 0;
-
-        $print_charges = 0;
-        $os = 0;
-        $per_line_total = 0;
-        $total_screens = 0;
-        $total_press_setup = 0;
-
-        if(count($position_data) > 0)
+        if(!empty($design_product))
         {
-            foreach($position_data as $position) {
-
-                $color_stitch_count = $position->color_stitch_count;
-                $position_qty = $position_data[0]->qnty;
-                if($position_qty == 0 || $position_qty == '')
-                {
-                    $data = array("success"=>0,"message"=>"Enter first position quantity","status"=>"error");
-                    return $data;
+            foreach ($design_product as $product) {
+                
+                $total_qnty = 0;
+                $purchase_detail = array();
+                $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_product_id' => $product->id,'is_delete' => '1'),array());
+                
+                foreach ($purchase_detail as $size) {
+                    $total_qnty += $size->qnty;
                 }
-                $discharge_qnty = $position->discharge_qnty;
-                $speciality_qnty = $position->speciality_qnty;
-                $foil_qnty = $position->foil_qnty;
-                $ink_charge_qnty = $position->ink_charge_qnty;
-                $number_on_dark_qnty = $position->number_on_dark_qnty;
-                $number_on_light_qnty = $position->number_on_light_qnty;
-                $oversize_screens_qnty = $position->oversize_screens_qnty;
-                $press_setup_qnty = $position->press_setup_qnty;
-                $screen_fees_qnty = $position->screen_fees_qnty;
-                $screen_fees_qnty_total += $position->screen_fees_qnty;
 
-                $calc_descharge =  $discharge_qnty * $price_grid->discharge;
-                $calc_speciality =  $speciality_qnty * $price_grid->specialty;
-                $calc_foil =  $foil_qnty * $price_grid->foil;
+                $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $price_id),array());
+                $price_grid = $price_grid_data[0];
 
-                $calc_ink_charge = $price_grid->ink_changes / $position_qty * $ink_charge_qnty;
-                $calc_number_on_dark = $price_grid->number_on_dark / $position_qty * $number_on_dark_qnty;
-                $calc_number_on_light = $price_grid->number_on_light / $position_qty * $number_on_light_qnty;
+                $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
+                $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
+                $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
+                $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
+                $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
 
-                $calc_oversize =  $oversize_screens_qnty * $price_grid->over_size_screens;
+                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
+                $data = array();
+                $data['cond']['company_id'] = $order_data[0]->company_id;
+                $miscData = $this->common->getAllMiscDataWithoutBlank($data);
+
+                $color_stitch_count = 0;
+                $position_qty = 0;
+                $discharge_qnty = 0;
+                $speciality_qnty = 0;
+                $foil_qnty = 0;
+                $ink_charge_qnty = 0;
+                $number_on_dark_qnty = 0;
+                $number_on_light_qnty = 0;
+                $oversize_screens_qnty = 0;
+                $press_setup_qnty = 0;
+                $screen_fees_qnty = 0;
+                $screen_fees_qnty_total = 0;
+
+                $print_charges = 0;
+                $os = 0;
+                $per_line_total = 0;
+                $total_screens = 0;
+                $total_press_setup = 0;
+
+                if(count($position_data) > 0)
+                {
+                    foreach($position_data as $position) {
+
+                        $color_stitch_count = $position->color_stitch_count;
+                        $position_qty = $position_data[0]->qnty;
+                        if($position_qty == 0 || $position_qty == '')
+                        {
+                            $data = array("success"=>0,"message"=>"Enter first position quantity","status"=>"error");
+                            return $data;
+                        }
+                        $discharge_qnty = $position->discharge_qnty;
+                        $speciality_qnty = $position->speciality_qnty;
+                        $foil_qnty = $position->foil_qnty;
+                        $ink_charge_qnty = $position->ink_charge_qnty;
+                        $number_on_dark_qnty = $position->number_on_dark_qnty;
+                        $number_on_light_qnty = $position->number_on_light_qnty;
+                        $oversize_screens_qnty = $position->oversize_screens_qnty;
+                        $press_setup_qnty = $position->press_setup_qnty;
+                        $screen_fees_qnty = $position->screen_fees_qnty;
+                        $screen_fees_qnty_total += $position->screen_fees_qnty;
+
+                        $calc_descharge =  $discharge_qnty * $price_grid->discharge;
+                        $calc_speciality =  $speciality_qnty * $price_grid->specialty;
+                        $calc_foil =  $foil_qnty * $price_grid->foil;
+
+                        $calc_ink_charge = $price_grid->ink_changes / $position_qty * $ink_charge_qnty;
+                        $calc_number_on_dark = $price_grid->number_on_dark / $position_qty * $number_on_dark_qnty;
+                        $calc_number_on_light = $price_grid->number_on_light / $position_qty * $number_on_light_qnty;
+
+                        $calc_oversize =  $oversize_screens_qnty * $price_grid->over_size_screens;
+                        $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
+                        $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
+
+                        $total_screens += $calc_screen_fees;
+                        $total_press_setup += $calc_press_setup;
+
+                        $calc_total = $calc_descharge + $calc_speciality + $calc_foil + $calc_ink_charge + $calc_number_on_dark + $calc_number_on_light;
+                        $print_charges +=  $calc_total;
+
+                        if($position->placement_type > 0)
+                        {
+                            $placement_type_id =  $position->placement_type;
+                            $miscData['placement_type'][$placement_type_id]->slug;
+                            
+                            if($miscData['placement_type'][$placement_type_id]->slug == 43)
+                            {
+                                foreach($price_screen_primary as $primary) {
+                                    
+                                    $price_field = 'pricing_'.$color_stitch_count.'c';
+
+                                    if($position_qty >= $primary->range_low && $position_qty <= $primary->range_high)
+                                    {
+                                        if(isset($primary->$price_field))
+                                        {
+                                            $print_charges += $primary->$price_field;
+                                        }
+                                    }
+                                }
+                            }
+                            else if($miscData['placement_type'][$placement_type_id]->slug == 44)
+                            {
+                                foreach($price_screen_secondary as $secondary) {
+                                    
+                                    $price_field = 'pricing_'.$color_stitch_count.'c';
+
+                                    if($position_qty >= $secondary->range_low && $position_qty <= $secondary->range_high)
+                                    {
+                                        if(isset($secondary->$price_field))
+                                        {
+                                            $print_charges += $secondary->$price_field;
+                                        }
+                                    }
+                                }
+                            }
+                            else if($miscData['placement_type'][$placement_type_id]->slug == 45)
+                            {
+                                foreach($embroidery_switch_count as $embroidery) {
+                                    
+                                    $price_field = 'pricing_'.$color_stitch_count.'c';
+
+                                    if($color_stitch_count >= $embroidery->range_low_1 && $color_stitch_count <= $embroidery->range_high_1)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_1c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_2 && $color_stitch_count <= $embroidery->range_high_2)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_2c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_3 && $color_stitch_count <= $embroidery->range_high_3)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_3c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_4 && $color_stitch_count <= $embroidery->range_high_4)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_4c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_5 && $color_stitch_count <= $embroidery->range_high_5)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_5c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_6 && $color_stitch_count <= $embroidery->range_high_6)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_6c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_7 && $color_stitch_count <= $embroidery->range_high_7)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_7c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_8 && $color_stitch_count <= $embroidery->range_high_8)
+                                    {
+                                        $switch_id = $embroidery.id;
+                                        $embroidery_field = 'pricing_8c';
+                                    }
+                                    if($color_stitch_count >= $embroidery->range_low_9 && $color_stitch_count <= $embroidery->range_high_9)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_9c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_10 && $color_stitch_count <= $embroidery->range_high_10)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_10c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_11 && $color_stitch_count <= $embroidery->range_high_11)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_11c';
+                                    }
+                                    else if($color_stitch_count >= $embroidery->range_low_12 && $color_stitch_count <= $embroidery->range_high_12)
+                                    {
+                                        $switch_id = $embroidery->id;
+                                        $embroidery_field = 'pricing_12c';
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if($product->markup > 0)
+                    {
+                        $markup = $product->markup;
+                    }
+                    else
+                    {
+                        $markup = 0;
+                    }
+
+                    $avg_garment_cost = 0;
+                    $markup_default = 0;
+                    if(count($price_garment_mackup) > 0 && $position_qty > 0)
+                    {
+                        foreach($price_garment_mackup as $value) {
+                            
+                            if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
+                            {
+                                $markup_default = $value->percentage;
+                            }
+                        }
+                    }
+
+                    $item_price = 0;
+                    $line_qty = 0;
+                    foreach($purchase_detail as $pd) {
+                        if($pd->qnty > 0)
+                        {
+                            $price = $pd->price;
+                            $sum = $price + $price_grid->shipping_charge;
+                            $avg_garment_cost += $sum;
+                            $line_qty += $pd->qnty;
+                        }
+                    }
+
+                    if($avg_garment_cost == 0)
+                    {
+                        $avg_garment_cost = $price_grid->shipping_charge;
+                    }
+
+                    if($markup > 0)
+                    {
+                        $garment_mackup = $markup/100;
+                    }
+                    else
+                    {
+                        $garment_mackup = $markup_default/100;
+                    }
+
+                    $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
+
+                    $per_item = $avg_garment_price + $print_charges;
+                    $sales_total = $per_item * $line_qty;
+                    
+                    if($product->extra_charges > 0)
+                    {
+                        $extraCharges = $product->extra_charges;
+                    }
+                    else
+                    {
+                        $extraCharges = 0;
+                    }
+
+                    $sales_total2 = $sales_total + $extraCharges;
+
+                    $update_arr = array(
+                                        'avg_garment_cost' => round($avg_garment_cost,2),
+                                        'avg_garment_price' => round($avg_garment_price,2),
+                                        'print_charges' => round($print_charges,2),
+                                        'markup' => $markup,
+                                        'markup_default' => $markup_default,
+                                        'sales_total' => round($sales_total2,2),
+                                        'total_line_charge' => round($per_item,2)
+                                        );
+
+                    $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id,'product_id' => $product->product_id),$update_arr);
+                }
+            }
+        }
+        else
+        {
+            $update_arr = array(
+                                'avg_garment_cost' => 0,
+                                'avg_garment_price' => 0,
+                                'print_charges' => 0,
+                                'markup' => 0,
+                                'markup_default' => 0,
+                                'sales_total' => 0,
+                                'total_line_charge' => 0
+                                );
+
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
+        }
+        
+        $design_product_total = $this->order->getDesignTotal($order_id);
+
+        $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_calculate' => '1'),array());
+
+        foreach ($all_design as $design) {
+            
+            $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1','is_calculate' => '1'),array());
+            
+            foreach ($position_data as $row) {
+
+                $press_setup_qnty = $row->press_setup_qnty;
+                $screen_fees_qnty = $row->screen_fees_qnty;
+
                 $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
                 $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
 
                 $total_screens += $calc_screen_fees;
                 $total_press_setup += $calc_press_setup;
-
-                $calc_total = $calc_descharge + $calc_speciality + $calc_foil + $calc_ink_charge + $calc_number_on_dark + $calc_number_on_light;
-                $print_charges +=  $calc_total;
-
-                if($position->placement_type > 0)
-                {
-                    $placement_type_id =  $position->placement_type;
-                    $miscData['placement_type'][$placement_type_id]->slug;
-                    
-                    if($miscData['placement_type'][$placement_type_id]->slug == 43)
-                    {
-                        foreach($price_screen_primary as $primary) {
-                            
-                            $price_field = 'pricing_'.$color_stitch_count.'c';
-
-                            if($position_qty >= $primary->range_low && $position_qty <= $primary->range_high)
-                            {
-                                if(isset($primary->$price_field))
-                                {
-                                    $print_charges += $primary->$price_field;
-                                }
-                            }
-                        }
-                    }
-                    else if($miscData['placement_type'][$placement_type_id]->slug == 44)
-                    {
-                        foreach($price_screen_secondary as $secondary) {
-                            
-                            $price_field = 'pricing_'.$color_stitch_count.'c';
-
-                            if($position_qty >= $secondary->range_low && $position_qty <= $secondary->range_high)
-                            {
-                                if(isset($secondary->$price_field))
-                                {
-                                    $print_charges += $secondary->$price_field;
-                                }
-                            }
-                        }
-                    }
-                    else if($miscData['placement_type'][$placement_type_id]->slug == 45)
-                    {
-                        foreach($embroidery_switch_count as $embroidery) {
-                            
-                            $price_field = 'pricing_'.$color_stitch_count.'c';
-
-                            if($color_stitch_count >= $embroidery->range_low_1 && $color_stitch_count <= $embroidery->range_high_1)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_1c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_2 && $color_stitch_count <= $embroidery->range_high_2)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_2c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_3 && $color_stitch_count <= $embroidery->range_high_3)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_3c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_4 && $color_stitch_count <= $embroidery->range_high_4)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_4c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_5 && $color_stitch_count <= $embroidery->range_high_5)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_5c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_6 && $color_stitch_count <= $embroidery->range_high_6)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_6c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_7 && $color_stitch_count <= $embroidery->range_high_7)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_7c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_8 && $color_stitch_count <= $embroidery->range_high_8)
-                            {
-                                $switch_id = $embroidery.id;
-                                $embroidery_field = 'pricing_8c';
-                            }
-                            if($color_stitch_count >= $embroidery->range_low_9 && $color_stitch_count <= $embroidery->range_high_9)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_9c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_10 && $color_stitch_count <= $embroidery->range_high_10)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_10c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_11 && $color_stitch_count <= $embroidery->range_high_11)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_11c';
-                            }
-                            else if($color_stitch_count >= $embroidery->range_low_12 && $color_stitch_count <= $embroidery->range_high_12)
-                            {
-                                $switch_id = $embroidery->id;
-                                $embroidery_field = 'pricing_12c';
-                            }
-                        }
-                    }
-                }
             }
+        }
 
-            if(isset($design_product[0]) && $design_product[0]->markup > 0)
-            {
-                $markup = $design_product[0]->markup;
-            }
-            else
-            {
-                $markup = 0;
-            }
+        $order_total = $total_screens + $total_press_setup + $design_product_total;
+        $tax = $order_total * $order_data[0]->tax_rate/100;
+        $grand_total = $order_total + $tax;
+        $balance_due = $grand_total - $order_data[0]->total_payments;
 
-            $avg_garment_cost = 0;
-            $markup_default = 0;
-            if(count($price_garment_mackup) > 0 && $position_qty > 0)
-            {
-                foreach($price_garment_mackup as $value) {
-                    
-                    if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
-                    {
-                        $markup_default = $value->percentage;
-                    }
-                }
-            }
+        $order_charges_total = $total_screens + $total_press_setup + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
+                                $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
+                                $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
 
-            $item_price = 0;
-            $line_qty = 0;
-            foreach($purchase_detail as $product) {
-                if($product->qnty > 0)
-                {
-                    $price = $product->price;
-                    $sum = $price + $price_grid->shipping_charge;
-                    $avg_garment_cost += $sum;
-                    $line_qty += $product->qnty;
-                }
-            }
-
-            if($avg_garment_cost == 0)
-            {
-                $avg_garment_cost = $price_grid->shipping_charge;
-            }
-
-            if($markup > 0)
-            {
-                $garment_mackup = $markup/100;
-            }
-            else
-            {
-                $garment_mackup = $markup_default/100;
-            }
-
-            $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
-
-            $per_item = $avg_garment_price + $print_charges;
-            $sales_total = $per_item * $line_qty;
-            
-            if(isset($design_product[0]->extra_charges))
-            {
-                $extraCharges = $design_product[0]->extra_charges;
-            }
-            else
-            {
-                $extraCharges = 0;
-            }
-
-            $sales_total2 = $sales_total + $extraCharges;
-
-            $update_arr = array(
-                                'avg_garment_cost' => round($avg_garment_cost,2),
-                                'avg_garment_price' => round($avg_garment_price,2),
-                                'print_charges' => round($print_charges,2),
-                                'markup' => $markup,
-                                'markup_default' => $markup_default,
-                                'sales_total' => round($sales_total2,2),
-                                'total_line_charge' => round($per_item,2)
+        $update_order_arr = array(
+                                'screen_charge' => $total_screens,
+                                'press_setup_charge' => $total_press_setup,
+                                'order_line_total' => round($design_product_total,2),
+                                'order_total' => round($order_total,2) + round($order_charges_total,2),
+                                'tax' => round($tax,2),
+                                'grand_total' => round($grand_total,2),
+                                'balance_due' => round($balance_due,2),
+                                'order_charges_total' => round($order_charges_total,2)
                                 );
 
-            $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
-
-            $total_qnty = 0;
-            foreach ($purchase_detail as $size) {
-                $total_qnty += $size->qnty;
-            }
-
-            $design_data = $this->order->getDesignByOrder($order_id);
-
-            $design_product_total = 0;
-            foreach ($design_data as $design) {
-                    $design_product_total += $design->sales_total;
-            }
-
-            $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_calculate' => '1'),array());
-
-            foreach ($all_design as $design) {
-                
-                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1','is_calculate' => '1'),array());
-                
-                foreach ($position_data as $row) {
-
-                    $press_setup_qnty = $row->press_setup_qnty;
-                    $screen_fees_qnty = $row->screen_fees_qnty;
-
-                    $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
-                    $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
-
-                    $total_screens += $calc_screen_fees;
-                    $total_press_setup += $calc_press_setup;
-                }
-            }
-
-            $order_total = $total_screens + $total_press_setup + $design_product_total;
-            $tax = $order_total * $order_data[0]->tax_rate/100;
-            $grand_total = $order_total + $tax;
-            $balance_due = $grand_total - $order_data[0]->total_payments;
-
-            $order_charges_total = $total_screens + $total_press_setup + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
-                                    $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
-                                    $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
-
-            $update_order_arr = array(
-                                    'screen_charge' => $total_screens,
-                                    'press_setup_charge' => $total_press_setup,
-                                    'order_line_total' => round($design_product_total,2),
-                                    'order_total' => round($order_total,2) + round($order_charges_total,2),
-                                    'tax' => round($tax,2),
-                                    'grand_total' => round($grand_total,2),
-                                    'balance_due' => round($balance_due,2),
-                                    'order_charges_total' => round($order_charges_total,2)
-                                    );
-
-            $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
-            return true;
-        }
-        else
-        {
-            $data = array("success"=>0,"message"=>"Please enter atleast one position","status"=>"error");
-            return $data;
-        }
+        $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
+        return true;
     }
 
      public function designProduct() {
@@ -734,10 +738,8 @@ public function create_dir($dir_path) {
         $data = Input::all();
         $result = $this->product->designProduct($data);
 
-
-        if(empty($result['design_product']))
+        if(empty($result))
         {
-
            $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS
@@ -745,15 +747,15 @@ public function create_dir($dir_path) {
            return response()->json(["data" => $response]);
         }
 
-        if($result['product_id']) {
+/*        if($result['product_id']) {
 
             $productArray = ['id' => $result['product_id']];
             $result_product = $this->product->productDetail($productArray);
             $calculate_data = $this->common->GetTableRecords('design_product',array('design_id' => $result['design_id'],'is_delete' => '1'),array());
-       }
+       }*/
        
       
-            $response = array(
+/*            $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['design_product'],
@@ -762,7 +764,13 @@ public function create_dir($dir_path) {
                                 'colorName' => $result['colorName'],
                                 'colorId' => $result['colorId'],
                                 'is_supply' => $result['is_supply']
+                                );*/
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'productData' => $result,
                                 );
+            //print_r($response);exit;
         
         return response()->json(["data" => $response]);
 

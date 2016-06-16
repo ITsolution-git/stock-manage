@@ -451,7 +451,7 @@
                 <md-card-content class="pad0 package-height scrollable" ms-scroll>
                     <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in order_items" ng-class="{active :  order_item.selected == 1}" ng-click="order_item.selected = vm.assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id)">
                         <div>{{order_item.item}}</div>
-                        <span>{{order_item.charge}}</span>
+                        <span>${{order_item.charge}}</span>
                     </div>
                 </md-card-content>
             </md-card>
@@ -481,17 +481,17 @@
 
                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Screens</div>
-                        <span class="ng-binding">{{order.screen_charge}}</span>
+                        <span class="ng-binding">${{order.screen_charge}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Press Setup</div>
-                        <span class="ng-binding">{{order.press_setup_charge}}</span>
+                        <span class="ng-binding">${{order.press_setup_charge}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Lines Total</div>
-                        <span class="ng-binding">{{order.order_line_total}}</span>
+                        <span class="ng-binding">${{order.order_line_total}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
@@ -500,7 +500,7 @@
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax Rate</div>
+                        <div class="ng-binding">Tax Rate(%)</div>
                         <span class="ng-binding">{{order.tax_rate}}</span>
                     </div>
 
@@ -516,7 +516,7 @@
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">{{order.total_payments}}</span>
+                        <span class="ng-binding">${{order.total_payments}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">

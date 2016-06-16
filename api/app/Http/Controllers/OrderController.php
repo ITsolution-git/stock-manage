@@ -1515,25 +1515,25 @@ class OrderController extends Controller {
 
         $post = Input::all();
 
-        $markup = $post['calculate_data']['markup'];
+        $markup = $post['productData']['markup'];
         if($markup > 0)
         {
             $garment_mackup = $markup/100;
         }
         else
         {
-            $garment_mackup = $post['calculate_data']['markup_default']/100;
+            $garment_mackup = $post['productData']['markup_default']/100;
         }
         
-        $avg_garment_price = $post['calculate_data']['avg_garment_cost'] * $garment_mackup + $post['calculate_data']['avg_garment_cost'];
+        $avg_garment_price = $post['productData']['avg_garment_cost'] * $garment_mackup + $post['productData']['avg_garment_cost'];
         $avg_garment_price2 = round($avg_garment_price,2);
 
-        $total_line_charge = $post['calculate_data']['print_charges'] + $avg_garment_price2;
+        $total_line_charge = $post['productData']['print_charges'] + $avg_garment_price2;
         $total_line_charge2 = round($total_line_charge,2);
 
-        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['calculate_data']['design_id']),array('markup' => $markup));
-        $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id'],'markup' => $markup);
-        $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['calculate_data']['design_id']);
+        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['productData']['id']),array('markup' => $markup));
+
+        $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['productData']['design_id']);
 
         $data = array("success"=>1);
         return response()->json(["data" => $data]);

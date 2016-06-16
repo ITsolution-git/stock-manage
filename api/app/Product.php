@@ -288,13 +288,13 @@ class Product extends Model {
     public function addProduct($post) {
 
           if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply']);
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d'));
           } else {
-            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id']);
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'date_added' => date('Y-m-d h:i:sa'));
           }
 
          // if($post['record_delete'] == 0) {
-            $result_design = DB::table('design_product')->insert($insert_array);
+            $result_design = DB::table('design_product')->insertGetId($insert_array);
          // }
        
         foreach($post['productData'] as $row) {
@@ -302,6 +302,7 @@ class Product extends Model {
              if(isset($row['sku'])) {
 
                 $insert_purchase_array = array('design_id'=>$post['id'],
+                    'design_product_id'=>$result_design,
                     'size'=>$row['sizeName'],
                     'sku'=>$row['sku'],
                     'price'=>$row['customerPrice'],
@@ -312,6 +313,7 @@ class Product extends Model {
              } else {
 
                 $insert_purchase_array = array('design_id'=>$post['id'],
+                    'design_product_id'=>$result_design,
                     'size'=>$row['sizeName'],
                     'sku'=>0,
                     'price'=>0,
@@ -340,7 +342,7 @@ class Product extends Model {
     public function designProduct($data) {
 
      
-        $whereConditions = ['pd.is_delete' => "1",'dp.is_delete' => "1",'dp.design_id' => $data['id']];
+        /*$whereConditions = ['pd.is_delete' => "1",'dp.is_delete' => "1",'dp.design_id' => $data['id']];
         $listArray = ['dp.*','pd.*','c.name as colorName'];
 
         $designDetailData = DB::table('design_product as dp')
@@ -361,6 +363,43 @@ class Product extends Model {
             $combine_array['colorName'] = $designDetailData[0]->colorName;
             $combine_array['colorId'] = $designDetailData[0]->color_id;
             $combine_array['is_supply'] = $designDetailData[0]->is_supply;
+        }
+
+        return $combine_array;*/
+        $where = ['od.id' => $data['id']];
+
+        $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
+                        'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id'];
+
+        $productData = DB::table('order_design as od')
+                         ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                         ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
+                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                         ->leftJoin('product_color_size as pcs', 'p.id', '=', 'pcs.product_id')
+                         ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
+                         ->select($listArray)
+                         ->where($where)
+                         ->GroupBy('dp.product_id')
+                         ->orderBy('dp.date_added','desc')
+                         ->get();
+
+        $combine_array = array();
+
+        if(!empty($productData) && $productData[0]->id > 0)
+        {
+            foreach ($productData as $product) {
+                $sizeData = DB::table('purchase_detail as pd')
+                                     ->where('pd.design_product_id','=',$product->design_product_id)
+                                     ->get();
+                $product->sizeData = $sizeData;
+                $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
+                $combine_array[$product->id] = $product;
+            }
+        }
+        else
+        {
+            return array();
         }
 
         return $combine_array;
