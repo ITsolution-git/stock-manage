@@ -206,7 +206,11 @@ class Common extends Model {
         {
              foreach ($data as $key => $value) 
             {
-                $data[$key] = date("Y-m-d", strtotime($value));
+                if(!empty($value))
+                {
+                    $data[$key] = date("Y-m-d", strtotime($value));
+                }
+                
             }
         }
         if($date_field=='web_http')

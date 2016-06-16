@@ -126,6 +126,7 @@
             condition_obj[match_condition] =  id;
             position_main_data.cond = angular.copy(condition_obj);
             position_main_data.order_id = $scope.order_id;
+            position_main_data.design_id = $stateParams.id;
             position_main_data.company_id = sessionService.get('company_id');
           
             $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
@@ -150,7 +151,7 @@
 
         var vendor_data = {};
         vendor_data.table ='vendors';
-        vendor_data.cond ={'company_id':condition_obj['company_id']}
+        /*vendor_data.cond ={'company_id':condition_obj['company_id']}*/
         $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
             
             if(result.data.success == '1') 
@@ -160,6 +161,18 @@
             else
             {
                 $scope.allVendors=[];
+            }
+        });
+
+        var combine_array_id = {};
+        combine_array_id.company_id = sessionService.get('company_id');
+
+        $scope.valid_sns = 1;
+        
+        $http.post('api/public/product/checkSnsAuth',combine_array_id).success(function(result) {
+           
+            if(result.data.success == '0') {
+                $scope.valid_sns = 0;
             }
         });
 
@@ -211,7 +224,21 @@
         
         function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply)
         {
-            
+            if($scope.order_design_position.length == '0')
+            {
+                var data = {"status": "error", "message": "Please add position"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+                return false;
+            }
+            else if($scope.total_pos_qnty == '0')
+            {
+                var data = {"status": "error", "message": "Please enter position quantity"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+                return false;
+            }
+
             $mdDialog.show({
                 controller: controller,
                 controllerAs: $scope,
@@ -248,6 +275,7 @@
         }
         function openSearchProductDialog(ev)
         {
+
              
             if($scope.vendor_id > 0)
             {
@@ -275,7 +303,13 @@
 
         $scope.checkVendor = function()
         {
-            if($scope.order_design_position.length == '0')
+            if($scope.valid_sns == 0)
+            {
+                var data = {"status": "error", "message": "Please enter valid credentials for S&S"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+            }
+            else if($scope.order_design_position.length == '0')
             {
                 var data = {"status": "error", "message": "Please add position"}
                 notifyService.notify(data.status, data.message);
@@ -477,7 +511,7 @@
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
-                notifyService.notify('success',result.data.message);
+                /*notifyService.notify('success',result.data.message);*/
                      
             });
         }

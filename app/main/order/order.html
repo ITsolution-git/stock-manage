@@ -171,7 +171,7 @@
                 </md-sidenav>
             </div>
             <!----------Filter Sidebar End-------->
-            <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+            <div class="order-modal-title " layout="row" layout-align="end center" flex=11 ng-if="role=='CA' || role=='BC'">
                 <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >CREATE NEW ORDER</span>
             </div>
         </div>
@@ -221,7 +221,8 @@
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr  ng-repeat-start="row in rows"  >
-                            <td ui-sref="app.order.order-info({id:row.id})" class="cursor-p">{{ row.id}}</td>
+                            <td ng-if="role=='CA' || role=='BC'" ui-sref="app.order.order-info({id:row.id})" class="cursor-p">{{ row.id}}</td>
+                            <td ng-if="role!='CA' && role!='BC'">{{ row.id}}</td>
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>

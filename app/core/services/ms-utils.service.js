@@ -320,6 +320,7 @@ core.factory('AllConstant', AllConstant);
                   deletePermanent: 'Are you sure want to delete this record ? Clicking Ok will delete record permanently.',
                   pagination: 15,
                   NoImage: base_path+'api/public/images/noimage.jpg',
+                  NoDocument: base_path+'api/public/images/nodocument.png',
                   currentdate : $filter('date')(new Date(), 'yyyy-MM-dd'),
                   base_path:base_path
                 }

@@ -116,19 +116,33 @@
 				msNavigationService.deleteItem('fuse.dashboard');
 
 			}
-			if(role=='CA')
+			else if(role=='CA')
 			{
 				msNavigationService.deleteItem('fuse.admin');
 			}
-			if(role=='BC')
+			else if(role=='BC')
 			{
 				msNavigationService.deleteItem('fuse.admin');
 				msNavigationService.deleteItem('fuse.settings');
 			}
-			if(role=='FM')
+			else if(role=='FM')
 			{
 				msNavigationService.deleteItem('fuse.admin');
 				msNavigationService.deleteItem('fuse.settings');
+			}
+			else
+			{
+				msNavigationService.deleteItem('fuse.settings');
+				msNavigationService.deleteItem('fuse.art');
+				msNavigationService.deleteItem('fuse.order');
+				msNavigationService.deleteItem('fuse.invoices');
+				msNavigationService.deleteItem('fuse.purchaseOrder');
+				msNavigationService.deleteItem('fuse.receiving');
+				msNavigationService.deleteItem('fuse.finishing');
+				msNavigationService.deleteItem('fuse.customProduct');
+				msNavigationService.deleteItem('fuse.customProduct');
+				msNavigationService.deleteItem('fuse.shipping');
+				msNavigationService.deleteItem('fuse.admin');
 			}
 		}
 

@@ -991,5 +991,31 @@ public function create_dir($dir_path) {
             exit;
 
     }
+    public function checkSnsAuth()
+    {
+        $data = Input::all();
+        $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
+       
+       // print_r($result_api[0]->password);exit;
+        $credential = $result_api[0]->username.":".$result_api[0]->password;
+ 
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/categories/1");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
+        $result = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($result);
+
+        if(isset($response->message))
+        {
+            $data = array("success"=>0);
+        }
+        else
+        {
+            $data = array("success"=>1);
+        }
+        return response()->json(['data'=>$data]);
+    }
     
 }

@@ -14,7 +14,7 @@
                                             <md-menu-content width="4"  ng-click="vm.editCompanyInfo($event,'tax_form')">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        ID Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
@@ -38,7 +38,7 @@
                                             <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'tax_form')">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Rate Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
@@ -62,14 +62,14 @@
                                             <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'tax_form')">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Tax Exempt Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>{{client_tax.tax_exempt}}</span>                                 
+                                        <span>{{client_tax.tax_exempt_show}}</span>                                 
                                     </md-card-content>
                                 </md-card>
                             </div>
@@ -83,17 +83,18 @@
                                             <md-button aria-label="Document Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'tax_form')">
+                                            <md-menu-content width="4" ng-click="EditTaxDoc()">
                                                 <md-menu-item>
                                                     <md-button>
-                                                        Document Options
+                                                        Edit
                                                     </md-button>
                                                 </md-menu-item>
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
                                     <md-card-content>
-                                        <span>{{client_tax.tax_document}}</span>
+                                        <span><a ng-if="client_tax.tax_document_url != ''" href="{{client_tax.tax_document_url}}" target="_blank"> OPEN </a></span>
+                                        <span  ng-if="client_tax.tax_document_url==''"> NO DOCUMENT </span>
                                     </md-card-content>
                                 </md-card>
                             </div>

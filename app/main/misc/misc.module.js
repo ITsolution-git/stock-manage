@@ -33,7 +33,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.misc', {
-            title    : 'Misc',
+            //title    : 'Misc',
             icon     : 'icon-truck',
             state    : 'app.misc',
             /*stateParams: {
