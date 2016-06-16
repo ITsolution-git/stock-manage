@@ -314,7 +314,7 @@ class Product extends Model {
                 $insert_purchase_array = array('design_id'=>$post['id'],
                     'size'=>$row['sizeName'],
                     'sku'=>0,
-                    'price'=>0,
+                    'price'=>$row['customer_price'],
                     'qnty'=>$row['qnty'],
                     'color_id'=>$row['color_id'],
                     'date'=>$post['created_date']);
