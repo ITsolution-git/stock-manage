@@ -442,7 +442,7 @@ class Product extends Model {
     {
        
         $whereConditions = ['p.product_id' => $post['id'],'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
-        $listArray = ['p.id','p.product_id','p.color_id','p.size_id','c.name as color','pz.name as sizeName'];
+        $listArray = ['p.id','p.product_id','p.customer_price','p.color_id','p.size_id','c.name as color','pz.name as sizeName'];
 
         $productColorSizeData = DB::table('product_color_size as p')
                          ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
@@ -478,6 +478,7 @@ class Product extends Model {
 
 
         $combine_array['productColorSizeData'] = $all_array;
+        $combine_array['vendor_id'] = $productName[0]->vendor_id;
         $combine_array['product_name'] = $productName[0]->name;
         $combine_array['product_id'] = $productName[0]->id;
         $combine_array['product_description'] = $productName[0]->description;

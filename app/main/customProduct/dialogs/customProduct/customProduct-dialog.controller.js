@@ -6,10 +6,25 @@
         .module('app.customProduct')
         .controller('CustomProductDialogController', CustomProductDialogController);
 /** @ngInject */
-    function CustomProductDialogController(product_id,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService)
+    function CustomProductDialogController(product_id,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$filter)
     {
 
      
+        var vendor_data = {};
+        vendor_data.table ='vendors';
+        
+        $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.allVendors =result.data.records;
+            } 
+            else
+            {
+                $scope.allVendors=[];
+            }
+        });
+
         if(product_id == 0) {
 
             var product_data = {};
@@ -18,7 +33,7 @@
            
             product_data.data = productData;
            
-          //  product_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
+            product_data.data.created_date = $filter('date')(new Date(), 'yyyy-MM-dd');
             product_data.data.vendor_id =0;
             product_data.data.name ='';
            
@@ -60,6 +75,7 @@
                       $scope.productName =result.data.product_name;
                       $scope.product_description =result.data.product_description;
                       $scope.productId =result.data.product_id;
+                      $scope.vendor_id =result.data.vendor_id;
                       $scope.productColorSize =result.data.productColorSizeData;
                    
                       
@@ -86,6 +102,7 @@
             position_main_data.cond = angular.copy(condition_obj);
 
             $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+               return true;
             });
         }
 
