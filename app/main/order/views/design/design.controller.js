@@ -39,26 +39,13 @@
 
         $scope.designProductData = function(){
 
-        var combine_array_id = {};
+            var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             
             $http.post('api/public/product/designProduct',combine_array_id).success(function(result, status, headers, config) {
-               
                 if(result.data.success == '1') {
-                  
-//                    $scope.designProduct = result.data.records;
                     $scope.productData = result.data.productData;
-//                    $scope.colorName = result.data.colorName;
-//                    $scope.colorId = result.data.colorId;
-//                    $scope.is_supply = result.data.is_supply;
-//                    $scope.calculate_data = result.data.calculate_data[0];
-//                    $scope.productData.product_image_view = "https://www.ssactivewear.com/"+$scope.productData.product_image;
-
-
-                } else {
-                    
                 }
-                
             });
         }
 
@@ -78,8 +65,6 @@
             });
         }
 
-
-
         $scope.addPosition = function(){
 
             var position_data_insert = {};
@@ -94,7 +79,6 @@
                
             });
         }
-
 
         $scope.designPositionNew = function(){
 
@@ -176,35 +160,12 @@
             }
         });
 
-
         $scope.designDetail();
         $scope.designPosition();
         $scope.designProductData();
 
         var vm = this;
-        //Dummy models data
-        
-      
-        vm.garmentCost={
-            averageGarmentCost:"$2.25",
-            markupDefault:"0%",
-            averageGarmentPrice:"$3.83",
-            PrintCharges:"$0.00",
-            totalLineCharge:"$3.85",
-            markup:"54",
-            perItem:"0",
-            saleTotal:"$3",
-            overide:"10.5"
-          
-        };
-        
-       
-        vm.dtOptions = {
-            dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            pagingType: 'simple',
-            autoWidth: false,
-            responsive: true
-        };
+
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
@@ -321,9 +282,7 @@
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
             }
-
         }
-
 
         // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,key) 
@@ -448,8 +407,6 @@
                      $scope.order_design_position[key][column_name] = '';
                      $scope.order_design_position[key][column_name_url] = '';
                 });
-
-                
             }
 
           e.stopPropagation(); // Stop event from bubbling up
@@ -481,23 +438,23 @@
             });
         }
 
-        $scope.deleteAddProduct = function(){
+        $scope.deleteAddProduct = function(product_id){
 
             var permission = confirm(AllConstant.deleteMessage);
 
             if (permission == true) {
 
                 var combine_array_id = {};
-                    combine_array_id.id = $stateParams.id;
+                combine_array_id.design_id = $stateParams.id;
+                combine_array_id.product_id = product_id;
                     
-                    
-                    $http.post('api/public/product/deleteAddProduct',combine_array_id).success(function(result, status, headers, config) {
+                $http.post('api/public/product/deleteAddProduct',combine_array_id).success(function(result, status, headers, config) {
                        
-                        if(result.data.success == '1') {
-                           $scope.productData = {};
-                        } 
-                        
-                    });
+                    if(result.data.success == '1') {
+                           notifyService.notify('success','Product Deleted Successfully.');
+                           $scope.designProductData();
+                    } 
+                });
               }
           }
 
@@ -551,7 +508,6 @@
                  }
         } 
         
-       
         $scope.update_markup = function(product_id)
         {
             var markup_data = {};
@@ -562,7 +518,6 @@
             $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
                 $scope.designProductData();
             });
-
         }
     }
 })();
