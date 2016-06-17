@@ -288,7 +288,7 @@ class Product extends Model {
     public function addProduct($post) {
 
           if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d'));
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d h:i:sa'));
           } else {
             $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'date_added' => date('Y-m-d h:i:sa'));
           }
@@ -366,7 +366,7 @@ class Product extends Model {
         }
 
         return $combine_array;*/
-        $where = ['od.id' => $data['id']];
+        $where = ['od.id' => $data['id'],'dp.is_delete' => '1'];
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
@@ -381,7 +381,7 @@ class Product extends Model {
                          ->select($listArray)
                          ->where($where)
                          ->GroupBy('dp.product_id')
-                         ->orderBy('dp.date_added','desc')
+                         ->orderBy('dp.id','desc')
                          ->get();
 
         $combine_array = array();
@@ -401,7 +401,6 @@ class Product extends Model {
         {
             return array();
         }
-
         return $combine_array;
     }
 

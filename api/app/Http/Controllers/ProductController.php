@@ -402,6 +402,9 @@ public function create_dir($dir_path) {
         $price_id = $order_data[0]->price_id;
         $order_id = $order_data[0]->id;
 
+        $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $price_id),array());
+        $price_grid = $price_grid_data[0];
+
         $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
 
         if(!empty($design_product))
@@ -415,9 +418,6 @@ public function create_dir($dir_path) {
                 foreach ($purchase_detail as $size) {
                     $total_qnty += $size->qnty;
                 }
-
-                $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $price_id),array());
-                $price_grid = $price_grid_data[0];
 
                 $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
                 $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
@@ -692,6 +692,8 @@ public function create_dir($dir_path) {
 
         $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_calculate' => '1'),array());
 
+        $total_screens = 0;
+        $total_press_setup = 0;
         foreach ($all_design as $design) {
             
             $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1','is_calculate' => '1'),array());
@@ -770,7 +772,6 @@ public function create_dir($dir_path) {
                                 'message' => GET_RECORDS,
                                 'productData' => $result,
                                 );
-            //print_r($response);exit;
         
         return response()->json(["data" => $response]);
 
@@ -780,13 +781,16 @@ public function create_dir($dir_path) {
     {
         $post = Input::all();
        
-        if(!empty($post['id']))
+        if(!empty($post['design_id']) && !empty($post['product_id']))
         {
-            $order_data = $this->order->getOrderByDesign($post['id']);
-            $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
-            $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));
+            $design = $this->common->GetTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['product_id']),array());
+            
+            $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['product_id']),array('is_delete' => '0'));
+            $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['design_id'],'design_product_id' => $design[0]->id),array('is_delete' => '0'));
 
-            if($record_data)
+            $order_data = $this->order->getOrderByDesign($post['design_id']);
+
+            if($record_update)
             {
                 $message = DELETE_RECORD;
                 $success = 1;
