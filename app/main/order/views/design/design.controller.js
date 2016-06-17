@@ -501,18 +501,15 @@
               }
           }
 
-        $scope.update_override = function(override_value) {
+        $scope.update_override = function(product_id) {
 
             var override_data = {};
-            override_data['designProduct'] = $scope.designProduct;
-            override_data['productData'] = $scope.productData;
-            override_data['calculate_data'] = $scope.calculate_data;
+            override_data['productData'] = $scope.productData[product_id];
             override_data['company_id'] = sessionService.get('company_id');
+            override_data['design_id'] = $stateParams.id;
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
-                /*notifyService.notify('success',result.data.message);*/
-                     
             });
         }
 

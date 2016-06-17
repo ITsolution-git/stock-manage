@@ -1542,32 +1542,31 @@ class OrderController extends Controller {
     public function updateOverride()
     {
         $post = Input::all();
-        if($post['calculate_data']['override'] > '0')
+        if($post['productData']['override'] > '0')
         {
-            $subtract = $post['calculate_data']['override'] - $post['calculate_data']['total_line_charge'];
+            $subtract = $post['productData']['override'] - $post['productData']['total_line_charge'];
             $override_diff = round($subtract,2);
-            $total_line_charge = $post['calculate_data']['override'];
+            $total_line_charge = $post['productData']['override'];
 
             $total_qnty = 0;
-            foreach ($post['designProduct'] as $size) {
+            foreach ($post['productData']['sizeData'] as $size) {
                 $total_qnty += $size['qnty'];
             }
 
             $mul = $total_qnty * $total_line_charge;
             $sales_total =round($mul,2);
 
-            $update_arr = array('total_line_charge' => $total_line_charge,'override' => $post['calculate_data']['override'],'sales_total' => $sales_total,'override_diff' => $override_diff);
+            $update_arr = array('total_line_charge' => $total_line_charge,'override' => $post['productData']['override'],'sales_total' => $sales_total,'override_diff' => $override_diff);
         }
         else
         {
             $update_arr = array('override_diff' => 0,'override' => 0);
         }
-        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['calculate_data']['design_id']),$update_arr);
+        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['productData']['id']),$update_arr);
 
-        if($post['calculate_data']['override'] == 0 || $post['calculate_data']['override'] == '')
+        if($post['productData']['override'] == 0 || $post['productData']['override'] == '')
         {
-            $calculate_arr = array('company_id' => $post['company_id'],'id'=>$post['calculate_data']['design_id'],'productData' => $post['designProduct'],'product_id' => $post['calculate_data']['id']);
-            $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['calculate_data']['design_id']);
+            $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['design_id']);
         }
 
         $data = array("success"=>1);
