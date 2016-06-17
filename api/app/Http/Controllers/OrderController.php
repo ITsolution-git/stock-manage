@@ -1240,13 +1240,6 @@ class OrderController extends Controller {
      public function addDesign()
     {
         $post = Input::all();
-        unset($post['designData']['back_color_name']);
-        unset($post['designData']['bottom_color_name']);
-        unset($post['designData']['front_color_name']);
-        unset($post['designData']['side_left_color_name']);
-        unset($post['designData']['side_right_color_name']);
-        unset($post['designData']['top_color_name']);
-
      
         if(isset($post['designData']['hands_date']) && $post['designData']['hands_date'] != '') {
           $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
@@ -1271,62 +1264,31 @@ class OrderController extends Controller {
  
         $data = Input::all();
         $design_data = array();
+      
+        $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
         
-        if(isset($data['affiliate_id']))
-        {
-            $order_design_data = $this->affiliate->getAffiliateDesign($data['affiliate_id']);
-        }
-        else
-        {
-            $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
-        }
         $size_data = array();
         $order_design = array();
          $total_unit = 0;
+
         foreach ($order_design_data as $design) {
            
-            $cnt = 0;
-            if($design->front_color_id != 0) {
-                $cnt++;
-            }
-            if($design->back_color_id != 0) {
-                $cnt++;
-            }
-            if($design->side_right_color_id != 0) {
-                $cnt++;
-            }
-            if($design->side_left_color_id != 0) {
-                $cnt++;
-            }
-            if($design->top_color_id != 0) {
-                $cnt++;
-            }
-            if($design->bottom_color_id != 0) {
-                $cnt++;
-            }
-
-            if(isset($data['affiliate_id']))
-            {
-                $size_data = $this->common->GetTableRecords('affiliate_product',array('affiliate_id' => $design->affiliate_id,'is_delete' => '1'),array());
-            }
-            else
-            {
-                $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
-            }
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
             
             $total_qnty = 0;
             foreach ($size_data as $size) {
                 $total_qnty += $size->qnty;
-                $size->affiliate_qnty = 0;
+               
             }
             $total_unit += $total_qnty;
 
             $design->size_data = $size_data;
             $design->total_qnty = $total_qnty;
-            $design->cnt = $cnt;
+            
             $order_design['all_design'][] = $design;
 
         }
+
         if($total_unit > 0)
         {
             $order_design['total_unit'] = $total_unit;
@@ -1396,12 +1358,6 @@ class OrderController extends Controller {
      public function editDesign()
     {
         $post = Input::all();
-        unset($post['designData']['back_color_name']);
-        unset($post['designData']['bottom_color_name']);
-        unset($post['designData']['front_color_name']);
-        unset($post['designData']['side_left_color_name']);
-        unset($post['designData']['side_right_color_name']);
-        unset($post['designData']['top_color_name']);
        
       
         if($post['designData']['hands_date'] != '')
