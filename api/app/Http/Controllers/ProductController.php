@@ -820,71 +820,93 @@ public function create_dir($dir_path) {
            
             while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
             {
-                if($emapData[0] != '') {
-               
-                       $product_data = $this->common->GetTableRecords('products',array('name' => trim($emapData[0]),'company_id' => $post['company_id'],'vendor_id' => 0),array());
-                       
-                       if(count($product_data)>0) {
-                         $product_id = $product_data[0]->id;
-                      
-                       } else {
-                            $product_name = array(
-                                'name'=>$emapData[0],
-                                'description'=>$emapData[3],
-                                'created_date' => date('Y-m-d'),
-                                'company_id' => $post['company_id']
-                                
-                                );
-                              $result = $this->common->InsertRecords('products',$product_name);
-                              $product_id = $result;
-                       }
-                       if($emapData[1] != '') {
-                       $color_data = $this->common->GetTableRecords('color',array('name' => trim($emapData[1]),'company_id' => $post['company_id'],'is_sns' => 0),array());
-                       
-                       if(count($color_data)>0) {
-                         $color_id = $color_data[0]->id;
-                      
-                       } else {
-                           $color_name = array(
-                                    'name'=>$emapData[1],
-                                    'is_sns' => 0,
+                if($emapData[4] != '') {
+
+                    if($emapData[0] != '') {
+
+
+                           $vendor_data = $this->common->GetTableRecords('vendors',array('name_company' => trim($emapData[4]),'company_id' => $post['company_id']),array());
+                           
+                           if(count($vendor_data)>0) {
+                             $vendor_id = $vendor_data[0]->id;
+                          
+                           } else {
+                                $vendor_name = array(
+                                    'name_company'=>$emapData[4],
+                                    'created_date' => date('Y-m-d'),
                                     'company_id' => $post['company_id']
+                                    
                                     );
-                            $result_color = $this->common->InsertRecords('color',$color_name);
-                            $color_id = $result_color;
-                       }
-                     
-                       if($emapData[2] != '') {
-                      
-                               $size_data = $this->common->GetTableRecords('product_size',array('name' => trim($emapData[2]),'company_id' => $post['company_id'],'is_sns' => 0),array());
-                               
-                                   if(count($size_data)>0) {
-                                     $size_id = $size_data[0]->id;
-                                  
-                                   } else {
-                                       $size_name = array(
-                                                'name'=>$emapData[2],
-                                                'is_sns' => 0,
-                                                'company_id' => $post['company_id']
-                                                );
-                                        $result_size = $this->common->InsertRecords('product_size',$size_name);
-                                        $size_id = $result_size;
-                                   }
-                               $product_color_data = $this->common->GetTableRecords('product_color_size',array('product_id' => $product_id,'color_id' => $color_id,'size_id' => $size_id),array());
-                               
-                                   if(count($product_color_data) == 0) {
-                                        
-                                        $product_color_size = array(
-                                                    'product_id'=>$product_id,
-                                                    'color_id' => $color_id,
-                                                    'size_id' => $size_id
+                                  $result = $this->common->InsertRecords('vendors',$vendor_name);
+                                  $vendor_id = $result;
+                           }
+
+                           $product_data = $this->common->GetTableRecords('products',array('name' => trim($emapData[0]),'company_id' => $post['company_id'],'vendor_id' => $vendor_id),array());
+                           
+                           if(count($product_data)>0) {
+                             $product_id = $product_data[0]->id;
+                          
+                           } else {
+                                $product_name = array(
+                                    'name'=>$emapData[0],
+                                    'description'=>$emapData[5],
+                                    'created_date' => date('Y-m-d'),
+                                    'company_id' => $post['company_id'],
+                                    'vendor_id' => $vendor_id
+                                    
+                                    );
+                                  $result = $this->common->InsertRecords('products',$product_name);
+                                  $product_id = $result;
+                           }
+                           if($emapData[1] != '') {
+                           $color_data = $this->common->GetTableRecords('color',array('name' => trim($emapData[1]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                           
+                           if(count($color_data)>0) {
+                             $color_id = $color_data[0]->id;
+                          
+                           } else {
+                               $color_name = array(
+                                        'name'=>$emapData[1],
+                                        'is_sns' => 0,
+                                        'company_id' => $post['company_id']
+                                        );
+                                $result_color = $this->common->InsertRecords('color',$color_name);
+                                $color_id = $result_color;
+                           }
+                         
+                           if($emapData[2] != '') {
+                          
+                                   $size_data = $this->common->GetTableRecords('product_size',array('name' => trim($emapData[2]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                                   
+                                       if(count($size_data)>0) {
+                                         $size_id = $size_data[0]->id;
+                                      
+                                       } else {
+                                           $size_name = array(
+                                                    'name'=>$emapData[2],
+                                                    'is_sns' => 0,
+                                                    'company_id' => $post['company_id']
                                                     );
-                                        $result_size_color = $this->common->InsertRecords('product_color_size',$product_color_size);
-                                        $id = $result_size_color;
-                                    }
+                                            $result_size = $this->common->InsertRecords('product_size',$size_name);
+                                            $size_id = $result_size;
+                                       }
+                                   $product_color_data = $this->common->GetTableRecords('product_color_size',array('product_id' => $product_id,'color_id' => $color_id,'size_id' => $size_id),array());
+                                   
+                                       if(count($product_color_data) == 0) {
+                                            
+                                            $product_color_size = array(
+                                                        'product_id'=>$product_id,
+                                                        'color_id' => $color_id,
+                                                        'size_id' => $size_id,
+                                                        'customer_price' => $emapData[3]
+                                                        );
+                                            $result_size_color = $this->common->InsertRecords('product_color_size',$product_color_size);
+                                            $id = $result_size_color;
+                                        }
+                            }
                         }
-                    }
-                  }
+                      }
+                } 
               
             }
             fclose($file);
