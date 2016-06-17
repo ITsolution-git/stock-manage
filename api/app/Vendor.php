@@ -16,6 +16,43 @@ class Vendor extends Model {
 
     public function vendorList($post) {
         
+               $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+        $admindata = DB::table('vendors')
+                         ->select(DB::raw('SQL_CALC_FOUND_ROWS *'))
+                         ->where('is_delete','=','1')
+                         ->where('company_id','=',$post['company_id']);
+                 if($search != '')               
+                  {
+                      $admindata = $admindata->Where(function($query) use($search)
+                      {
+                          $query->orWhere('name_company', 'LIKE', '%'.$search.'%')
+                                ->orWhere('email','LIKE', '%'.$search.'%');
+                      });
+                  }
+                 $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+       
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $admindata;
+        $returnData['count'] = $count[0]->Totalcount;
+        
+/*        if($count[0]->Totalcount>0)
+        {
+          foreach ($admindata as $key=>$value) 
+          {
+            $admindata[$key]->created_date =date('m/d/Y',strtotime($value->created_date)) ;
+          }
+        }
+        */
+        return $returnData;
+
         $whereConditions = ['status' => '1','is_delete' => '1','company_id' => $post['cond']['company_id']];
         $vendorData = DB::table('vendors')->where($whereConditions)->orderBy('id', 'desc')->get();
         return $vendorData;

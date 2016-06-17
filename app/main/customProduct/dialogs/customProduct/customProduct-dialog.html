@@ -21,13 +21,27 @@
                         <textarea ng-model="product_description"  rows="5" md-select-on-focus  ui-event="{ change : 'updateProduct(\'description\',productId,product_description,\'products\',\'id\')' }"></textarea>
                 </md-input-container>
 
+                
+                <md-input-container class="md-block" flex="30">
+                    <label>Vendor</label>
+                    <md-select ng-model="vendor_id"   ng-change="updateProduct('vendor_id',productId,vendor_id,'products','id')">
+                        <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-if="vendor.id != 1" ng-selected="{{vendor_id==vendor.id}}">
+                           
+                            {{vendor.name_company}}
+                           
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+           
+
                  
 
                <div class="attribute-box">
                     <table class="tbl-typ1">
                         <tr>
-                            <th width="40%">Color</th>
-                            <th width="40%">Size</th>
+                            <th width="30%">Color</th>
+                            <th width="35%">Size</th>
+                            <th width="15%">Price</th>
                             <th width="20%" class="text-center">
                                 <a href="#" class="add-attributes" ui-event="{ click : 'addcolorsize(productId,0,0)'}"><span class="icon icon-plus"></span></a>
                             </th>
@@ -44,6 +58,15 @@
                                         <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.sizeName" ui-event="{ change : 'updateProduct(\'name\',all_size.size_id,all_size.sizeName,\'product_size\',\'id\')' }">
                                         <a href="#" class="add-size" ng-click="addcolorsize(productId,all_size.color_id,0)" ng-show="key==0"><span class="icon icon-plus"></span></a>
                                         <a href="#" class="remove-size" ng-click="removeColorSize(productId,all_size.color_id,all_size.size_id)" ng-show="key!=0"><span class="icon icon-close"></span></a>
+                                    </md-input-container>
+                                </div>
+                               
+                            </td>
+
+                             <td>
+                                <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
+                                    <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
+                                        <input valid-number type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="customer_price" aria-invalid="false" ng-model="all_size.customer_price" ui-event="{ change : 'updateProduct(\'customer_price\',all_size.id,all_size.customer_price,\'product_color_size\',\'id\')' }">
                                     </md-input-container>
                                 </div>
                                

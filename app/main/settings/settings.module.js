@@ -172,6 +172,23 @@
                         controller : 'SupportController as vm'
                     }
                 }
+            }).state('app.settings.vendor', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
+                url  : '/vendor',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/vendor/vendor.html',
+                        controller : 'VendorController as vm'
+                    }
+                }
             })
             ;
         // Navigation
@@ -244,6 +261,13 @@
             stateParams: {'id': 7},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 7
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.vendor', {
+            title      : 'Vendor',
+            state      : 'app.settings.vendor',
+            stateParams: {'id': 8},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 8
         });/*
         msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',
