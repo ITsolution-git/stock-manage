@@ -90,25 +90,25 @@
                                 <tbody> 
                                     <tr data-ng-repeat="i in range">
 
-                                       <td>{{miscData.placement_type[i].value}}</td>
+                                       <td><a editable-text="miscData.placement_type[i].value" onaftersave="updateUser(miscData.placement_type[i].value,miscData.placement_type[i].id)">{{miscData.placement_type[i].value}}</a></td>
 
-                                       <td>{{miscData.position[i].value}}</td>
+                                       <td><a editable-text="miscData.position[i].value" onaftersave="updateUser(miscData.position[i].value,miscData.position[i].id)">{{miscData.position[i].value}}</a></td>
 
-                                       <td>{{miscData.production[i].value}}</td>
+                                       <td><a editable-text="miscData.production[i].value" onaftersave="updateUser(miscData.production[i].value,miscData.production[i].id)">{{miscData.production[i].value}}</a></td>
 
-                                       <td>{{miscData.production_sub_type[i].value}}</td>
+                                       <td><a editable-text="miscData.production_sub_type[i].value" onaftersave="updateUser(miscData.production_sub_type[i].value,miscData.production_sub_type[i].id)">{{miscData.production_sub_type[i].value}}</a></td>
 
-                                        <td>{{miscData.product_type[i].value}}</td>
+                                       <td><a editable-text="miscData.product_type[i].value" onaftersave="updateUser(miscData.product_type[i].value,miscData.product_type[i].id)">{{miscData.product_type[i].value}}</a></td>
 
-                                       <td>{{miscData.size_group[i].value}}</td>
+                                       <td><a editable-text="miscData.size_group[i].value" onaftersave="updateUser(miscData.size_group[i].value,miscData.size_group[i].id)">{{miscData.size_group[i].value}}</a></td>
 
-                                       <td>{{miscData.staff_type[i].value}}</td>
+                                       <td><a editable-text="miscData.staff_type[i].value" onaftersave="updateUser(miscData.staff_type[i].value,miscData.staff_type[i].id)">{{miscData.staff_type[i].value}}</a></td>
 
-                                       <td>{{miscData.status[i].value}}</td>
+                                       <td><a editable-text="miscData.status[i].value" onaftersave="updateUser(miscData.status[i].value,miscData.status[i].id)">{{miscData.status[i].value}}</a></td>
 
-                                        <td>{{miscData.symbol_description[i].value}}</td>
+                                        <td><a editable-text="miscData.symbol_description[i].value" onaftersave="updateUser(miscData.symbol_description[i].value,miscData.symbol_description[i].id)">{{miscData.symbol_description[i].value}}</a></td>
 
-                                        <td>{{miscData.terms[i].value}}</td>
+                                        <td><a editable-text="miscData.terms[i].value" onaftersave="updateUser(miscData.terms[i].value,miscData.terms[i].id)">{{miscData.terms[i].value}}</a>
                                         </td>
                                    </tr>                    
                                 </tbody>
