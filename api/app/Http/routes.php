@@ -267,6 +267,7 @@ Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
+Route::post('product/getProductCountByVendor', 'ProductController@getProductCountByVendor');
 Route::post('product/productDetailData', 'ProductController@productDetailData');
 Route::post('product/addProduct', 'ProductController@addProduct');
 Route::post('product/designProduct', 'ProductController@designProduct');
@@ -278,6 +279,7 @@ Route::post('product/addcolorsize', 'ProductController@addcolorsize');
 Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
 Route::post('product/downloadCSV', 'ProductController@downloadCSV');
 Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
+Route::post('product/getVendorByProductCount', 'ProductController@getVendorByProductCount');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');

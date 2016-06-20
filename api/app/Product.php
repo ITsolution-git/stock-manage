@@ -572,4 +572,18 @@ class Product extends Model {
         }
     }
 
+    public function getProductCountByVendor($vendor_id)
+    {
+        $count = DB::table('products')
+                         ->select(DB::raw('COUNT(id) as total'))
+                         ->where('vendor_id','=',$vendor_id)
+                         ->get();
+        
+        return $count[0]->total;
+    }
+
+    public function getVendorByProductCount($company_id)
+    {
+        
+    }
 }

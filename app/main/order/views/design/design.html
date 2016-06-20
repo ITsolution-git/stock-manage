@@ -274,8 +274,8 @@
             <div flex="20">
                 <md-input-container class="md-block" flex="30">
                     <label>Vendor</label>
-                    <md-select ng-model="vendor_id" ng-disabled="true">
-                        <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-selected="vendor.id == 1">
+                    <md-select ng-model="vendor_id">
+                        <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}">
                            
                             {{vendor.name_company}}
                            
@@ -287,7 +287,7 @@
                 <div class="design-search-section" layout-align="space-between-center" layout="row">
                     <md-input-container class="md-block" flex="30">
                         <label>Search</label>
-                        <input ng-model="productSearch" ng-change="checkVendor()">
+                        <input ng-model="productSearch" ng-change="checkValid()">
                     </md-input-container>
                     <div layout="row">
                         <md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button>
