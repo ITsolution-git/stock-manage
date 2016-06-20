@@ -10,7 +10,7 @@
                     <md-tab label="Value 1">
                         
                         <div class="ms-responsive-table-wrapper">
-                            <table class="simple hover simple-tbl1">
+                            <table class="simple hover simple-tbl1" ng-controller="XeditableCtrl">
                                 <thead>
                                     <tr>
                                         <th class="secondary-text" >Approval / Order Sequence</th>
@@ -31,19 +31,38 @@
                                 </thead>
                                 <tbody> 
                                  <tr data-ng-repeat="i in range">
-                                      <td>{{miscData.approval[i].value}}</td>
-                                      <td>{{miscData.art_type[i].value}}</td>
-                                      <td>{{miscData.boxing_type[i].value}}</td>
-                                      <td>{{miscData.charges_apply[i].value}}</td>
-                                      <td>{{miscData.color_group[i].value}}</td>
-                                      <td>{{miscData.direct_to_garment[i].value}}</td>
-                                      <td>{{miscData.dir_to_garment_sz[i].value}}</td>
-                                      <td>{{miscData.disposition[i].value}}</td>
-                                      <td>{{miscData.graphic_size[i].value}}</td>
-                                      <td>{{miscData.level[i].value}}</td>
-                                      <td>{{miscData.yesno[i].value}}</td>
-                                      <td>{{miscData.po_status[i].value}}</td>
-                                      <td>{{miscData.address_type[i].value}}</td>
+                                       <td><a editable-text="miscData.approval[i].value" onaftersave="updateUser(miscData.approval[i].value,miscData.approval[i].id)">{{miscData.approval[i].value}}</a></td>
+
+                                       <td><a editable-text="miscData.art_type[i].value" onaftersave="updateUser(miscData.art_type[i].value,miscData.art_type[i].id)">{{miscData.art_type[i].value}}</a></td>
+
+
+                                        <td><a editable-text="miscData.boxing_type[i].value" onaftersave="updateUser(miscData.boxing_type[i].value,miscData.boxing_type[i].id)">{{miscData.boxing_type[i].value}}</a></td>
+
+
+                                        <td><a editable-text="miscData.charges_apply[i].value" onaftersave="updateUser(miscData.charges_apply[i].value,miscData.charges_apply[i].id)">{{miscData.charges_apply[i].value}}</a></td>
+
+
+                                        <td><a editable-text="miscData.color_group[i].value" onaftersave="updateUser(miscData.color_group[i].value,miscData.color_group[i].id)">{{miscData.color_group[i].value}}</a></td>
+
+
+                                        <td><a editable-text="miscData.direct_to_garment[i].value" onaftersave="updateUser(miscData.direct_to_garment[i].value,miscData.direct_to_garment[i].id)">{{miscData.direct_to_garment[i].value}}</a></td>
+
+
+                                        <td><a editable-text="miscData.dir_to_garment_sz[i].value" onaftersave="updateUser(miscData.dir_to_garment_sz[i].value,miscData.dir_to_garment_sz[i].id)">{{miscData.dir_to_garment_sz[i].value}}</a></td>
+
+
+                                         <td><a editable-text="miscData.disposition[i].value" onaftersave="updateUser(miscData.disposition[i].value,miscData.disposition[i].id)">{{miscData.disposition[i].value}}</a></td>
+
+                                          <td><a editable-text="miscData.graphic_size[i].value" onaftersave="updateUser(miscData.graphic_size[i].value,miscData.graphic_size[i].id)">{{miscData.graphic_size[i].value}}</a></td>
+
+
+                                          <td><a editable-text="miscData.level[i].value" onaftersave="updateUser(miscData.level[i].value,miscData.level[i].id)">{{miscData.level[i].value}}</a></td>
+
+                                           <td><a editable-text="miscData.yesno[i].value" onaftersave="updateUser(miscData.yesno[i].value,miscData.yesno[i].id)">{{miscData.yesno[i].value}}</a></td>
+
+                                            <td><a editable-text="miscData.po_status[i].value" onaftersave="updateUser(miscData.po_status[i].value,miscData.po_status[i].id)">{{miscData.po_status[i].value}}</a></td>
+
+                                            <td><a editable-text="miscData.address_type[i].value" onaftersave="updateUser(miscData.address_type[i].value,miscData.address_type[i].id)">{{miscData.address_type[i].value}}</a></td>
                                 </tr>                
                                 </tbody>
                             </table>

@@ -72,6 +72,7 @@
             'ngDraggable',
 
             //Misc data
-            'app.misc'
+            'app.misc',
+            'xeditable'
         ]);
 })();
