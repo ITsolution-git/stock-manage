@@ -139,19 +139,31 @@
                                 <tbody> 
                                       <tr data-ng-repeat="i in range">
 
-                                          <td>{{miscData.shipping_method[i].value}}</td>
-                                          <td>{{miscData.time_off_type[i].value}}</td>
-                                          <td>{{miscData.po_type[i].value}}</td>
-                                          <td>{{miscData.art_filter[i].value}}</td>
-                                          <td>{{miscData.purchasing_filter[i].value}}</td>
-                                          <td>{{miscData.shipping_filter[i].value}}</td>
-                                          <td>{{miscData.status[i].value}}</td>
-                                          <td>{{miscData.production_filter[i].value}}</td>
-                                          <td>{{miscData.production_shipped[i].value}}</td>
-                                          <td>{{miscData.production_paid[i].value}}</td>
-                                          <td>{{miscData.production_on_press[i].value}}</td>
-                                          <td>{{miscData.finishing[i].value}}</td>
-                                          
+                                          <td><a editable-text="miscData.shipping_method[i].value" onaftersave="updateUser(miscData.shipping_method[i].value,miscData.shipping_method[i].id)">{{miscData.shipping_method[i].value}}</a></td>
+
+                                          <td><a editable-text="miscData.time_off_type[i].value" onaftersave="updateUser(miscData.time_off_type[i].value,miscData.time_off_type[i].id)">{{miscData.time_off_type[i].value}}</a></td>
+
+                                          <td><a editable-text="miscData.po_type[i].value" onaftersave="updateUser(miscData.po_type[i].value,miscData.po_type[i].id)">{{miscData.po_type[i].value}}</a></td>
+
+                                          <td><a editable-text="miscData.art_filter[i].value" onaftersave="updateUser(miscData.art_filter[i].value,miscData.art_filter[i].id)">{{miscData.art_filter[i].value}}</a></td>
+
+                                          <td><a editable-text="miscData.purchasing_filter[i].value" onaftersave="updateUser(miscData.purchasing_filter[i].value,miscData.purchasing_filter[i].id)">{{miscData.purchasing_filter[i].value}}</a></td>
+
+                                          <td><a editable-text="miscData.shipping_filter[i].value" onaftersave="updateUser(miscData.shipping_filter[i].value,miscData.shipping_filter[i].id)">{{miscData.shipping_filter[i].value}}</a></td>
+
+                                          <td><a editable-text="miscData.status[i].value" onaftersave="updateUser(miscData.status[i].value,miscData.status[i].id)">{{miscData.status[i].value}}</a></td>
+
+                                           <td><a editable-text="miscData.production_filter[i].value" onaftersave="updateUser(miscData.production_filter[i].value,miscData.production_filter[i].id)">{{miscData.production_filter[i].value}}</a></td>
+
+
+                                           <td><a editable-text="miscData.production_shipped[i].value" onaftersave="updateUser(miscData.production_shipped[i].value,miscData.production_shipped[i].id)">{{miscData.production_shipped[i].value}}</a></td>
+
+                                           <td><a editable-text="miscData.production_paid[i].value" onaftersave="updateUser(miscData.production_paid[i].value,miscData.production_paid[i].id)">{{miscData.production_paid[i].value}}</a></td>
+
+                                           <td><a editable-text="miscData.production_on_press[i].value" onaftersave="updateUser(miscData.production_on_press[i].value,miscData.production_on_press[i].id)">{{miscData.production_on_press[i].value}}</a></td>
+
+                                           <td><a editable-text="miscData.finishing[i].value" onaftersave="updateUser(miscData.finishing[i].value,miscData.finishing[i].id)">{{miscData.finishing[i].value}}</a></td>
+                                                                      
                                         </tr>               
                                 </tbody>
                             </table>
