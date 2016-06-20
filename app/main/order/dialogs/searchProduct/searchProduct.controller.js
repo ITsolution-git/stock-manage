@@ -142,6 +142,7 @@
                     product_name:product_name,
                     colorName:colorName,
                     design_id:0,
+                    design_product_id:0,
                     event: ev
                 },
                 onRemoving : $scope.reloadPage
