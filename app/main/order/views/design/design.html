@@ -315,7 +315,7 @@
         <md-divider></md-divider>
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
             <div class="title"><span class="h2 text-semibold">Added Products</span></div>
-            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-repeat="product in productData"> 
+            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-repeat="product in productData" ng-if="productData.length>0"> 
                 <div layout="row" layout-align="space-between center" class="margin-bootom15">
                     <div layout="column" >
                         <div class="h4">Product Name</div>
@@ -332,12 +332,12 @@
                             </md-button>
                             <md-menu-content width="4" ng-show="product.is_calculate == 1">
                                 <md-menu-item ng-show="product.vendor_id > 0">
-                                    <md-button ng-click="openSearchProductViewDialogView($event,product.id,product.product_image,product.description,product.name_company,'Edit',product.product_name,product.color_name)">
+                                    <md-button ng-click="openSearchProductViewDialogView($event,product.id,product.product_image,product.description,product.name_company,'Edit',product.product_name,product.color_name,product.design_product_id)">
                                         Edit
                                     </md-button>
                                 </md-menu-item>
                                 <md-menu-item ng-show="product.vendor_id == 0">
-                                    <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply)">
+                                    <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply.product.design_product_id)">
                                         Edit
                                     </md-button>
                                 </md-menu-item>

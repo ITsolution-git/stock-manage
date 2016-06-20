@@ -287,48 +287,63 @@ class Product extends Model {
 
     public function addProduct($post) {
 
-          if(isset($post['is_supply'])) {
+        if(isset($post['is_supply'])) {
             $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d h:i:sa'));
-          } else {
+        }
+        else
+        {
             $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'date_added' => date('Y-m-d h:i:sa'));
-          }
+        }
 
-         // if($post['record_delete'] == 0) {
-            $result_design = DB::table('design_product')->insertGetId($insert_array);
-         // }
+        if($post['action'] == 'Add') {
+            $design_product_id = DB::table('design_product')->insertGetId($insert_array);
+        }
+        else
+        {
+            $insert_design = DB::table('design_product')
+                            ->where('design_id', $post['id'])
+                            ->where('product_id', $post['product_id'])
+                            ->update($insert_array);
+
+            //$design_product_id = $post['design_product_id'];
+            $result_design = DB::table('design_product')
+                            ->where('design_id', $post['id'])
+                            ->where('product_id', $post['product_id'])
+                            ->get();
+            $design_product_id = $result_design[0]->id;
+        }
        
+        $delete = DB::table('purchase_detail')->where('design_product_id','=',$design_product_id)->delete();
+
         foreach($post['productData'] as $row) {
 
-             if(isset($row['sku'])) {
-
-                $insert_purchase_array = array('design_id'=>$post['id'],
-                    'design_product_id'=>$result_design,
-                    'size'=>$row['sizeName'],
-                    'sku'=>$row['sku'],
-                    'price'=>$row['customerPrice'],
-                    'qnty'=>$row['qnty'],
-                    'color_id'=>$row['color_id'],
-                    'date'=>$post['created_date']);
-
-             } else {
-
-                $insert_purchase_array = array('design_id'=>$post['id'],
-                    'design_product_id'=>$result_design,
-                    'size'=>$row['sizeName'],
-                    'sku'=>0,
-                    'price'=>$row['customer_price'],
-                    'qnty'=>$row['qnty'],
-                    'color_id'=>$row['color_id'],
-                    'date'=>$post['created_date']);
-             }
+            $sku = 0;
+            if(isset($row['sku'])) {
+                $sku = $row['sku'];
+            }
+            if(!isset($row['qnty']))
+            {
+                $row['qnty'] = 0;
+            }
+            if(isset($row['customerPrice'])) {
+                $price = $row['customerPrice'];
+            }
+            if(isset($row['customer_price'])) {
+                $price = $row['customer_price'];
+            }
+            
+            $insert_purchase_array = array('design_id'=>$post['id'],
+                'design_product_id'=>$design_product_id,
+                'size'=>$row['sizeName'],
+                'sku'=>$sku,
+                'price'=>$price,
+                'qnty'=>$row['qnty'],
+                'color_id'=>$row['color_id'],
+                'date'=>$post['created_date']);
 
             $result = DB::table('purchase_detail')->insert($insert_purchase_array);
         }
-
-        
-         
-         return true;
-
+        return true;
     }
 
 
@@ -404,9 +419,9 @@ class Product extends Model {
         return $combine_array;
     }
 
-    public function getPurchaseDetail($designId) {
+    public function getPurchaseDetail($design_product_id) {
 
-    $whereConditions = ['is_delete' => "1",'design_id' => $designId];
+    $whereConditions = ['is_delete' => "1",'design_product_id' => $design_product_id];
 
     $result = DB::table('purchase_detail')->where($whereConditions)->get();
 
