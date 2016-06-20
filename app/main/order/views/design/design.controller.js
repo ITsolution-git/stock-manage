@@ -183,7 +183,7 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply)
+        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id)
         {
             if($scope.order_design_position.length == '0')
             {
@@ -412,7 +412,7 @@
           e.stopPropagation(); // Stop event from bubbling up
         }
 
-          $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
+          $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,design_product_id)
         {
          
             $mdDialog.show({
@@ -431,6 +431,7 @@
                     product_name:product_name,
                     colorName:colorName,
                     design_id:$stateParams.id,
+                    design_product_id:design_product_id,
                     event: ev
                 },
                 onRemoving : $scope.designProductData

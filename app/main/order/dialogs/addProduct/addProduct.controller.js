@@ -84,6 +84,7 @@
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
             combine_array_id.is_supply = is_supply;
+            combine_array_id.action = operation;
              
             
 

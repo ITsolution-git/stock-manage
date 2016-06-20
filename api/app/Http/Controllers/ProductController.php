@@ -273,14 +273,14 @@ public function create_dir($dir_path) {
         if(empty($all_data))
         {
             $data_record = array("success"=>0,"message"=>"This product is no longer exists");
-            $record_data = $this->common->DeleteTableRecords('products',array('id' => $data['product_id']));
+            $record_data = $this->common->DeleteTableRecords('products',array('id' => $data['product_id'],'company_id' => $data['company_id']));
             return response()->json(["data" => $data_record]);
         }
        
 
         $allDetail = array();
         if($data['design_id'] != 0) {
-            $allDetail = $this->product->getPurchaseDetail($data['design_id']);
+            $allDetail = $this->product->getPurchaseDetail($data['design_product_id']);
         }
         
         foreach($all_data as $key => $data) {
@@ -790,16 +790,9 @@ public function create_dir($dir_path) {
 
             $order_data = $this->order->getOrderByDesign($post['design_id']);
 
-            if($record_update)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
+            $message = DELETE_RECORD;
+            $success = 1;
+            
             $return = app('App\Http\Controllers\OrderController')->calculateAll($order_data[0]->id,$order_data[0]->company_id);
         }
         else

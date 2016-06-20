@@ -5,7 +5,7 @@
             .module('app.order')
             .controller('SearchProductViewController', SearchProductViewController);
     /** @ngInject */
-    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
+    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
       $("#ajax_loader").show();
        var vm = this;
@@ -27,12 +27,11 @@
         $scope.vendor_name = vendor_name;
         $scope.product_id = product_id;
        
-
-      
       if(operation == 'Edit') {
 
+        combine_array_id.design_product_id = design_product_id;
         $http.post('api/public/product/productDetailData',combine_array_id).success(function(Listdata) {
-
+            
             if(Listdata.data.success == 0)
             {
                 var data = {"status": "error", "message": Listdata.data.message}
@@ -108,6 +107,8 @@
             combine_array_id.product_id = product_id;
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
+            combine_array_id.action = operation;
+            combine_array_id.design_product_id = design_product_id;
 
             $scope.execute = 0;
             angular.forEach(productData, function(size) {
