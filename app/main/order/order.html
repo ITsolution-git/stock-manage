@@ -245,6 +245,7 @@
                                             <th>Postion Name</th>
                                             <th>Ship Date</th>
                                             <th>Status</th>
+                                            
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="design_data_all in row.design_pos">
@@ -254,14 +255,13 @@
                                                 <td ng-if="design_data_all.shipping_date != '0000-00-00' && design_data_all.shipping_date != '' ">{{design_data_all.shipping_date | date:"M/d/yyyy"  }}</td>
                                                 <td ng-if="design_data_all.shipping_date == '0000-00-00' || design_data_all.shipping_date == '' "></td>
 
-                                                <td colspan="3" class="text-center font-small mdslider"><label class="slider">123</label>
+                                                <td  class="text-center font-small mdslider"><label class="slider">123</label>
                                                     <md-slider flex ng-model="row.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
                                                     </md-slider>
-                                                </td>                        
+                                                </td>                      
                                             </tr>
                                         </tbody>
                                     </table>
-                               
                             </td>
                         </tr>                    
                     </tbody>

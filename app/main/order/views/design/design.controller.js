@@ -529,7 +529,7 @@
                 if (permission == true)
                 {
 
-                $http.post('api/public/order/deletePositions',UpdateArray).success(function(result) {
+                $http.post('api/public/order/deleteOrderCommon',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success','Record Deleted Successfully.');

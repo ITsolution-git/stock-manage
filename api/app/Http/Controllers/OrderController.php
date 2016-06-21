@@ -370,7 +370,7 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
      }
      
-     public function deletePositions()
+     public function deleteOrderCommon()
      {
         $post = Input::all();
 

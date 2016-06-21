@@ -206,7 +206,7 @@ Route::post('order/deleteOrderLine', 'OrderController@deleteOrderLine');
 Route::post('order/saveButtonData', 'OrderController@saveButtonData');
 Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
-Route::post('order/deletePositions', 'OrderController@deletePositions');
+Route::post('order/deleteOrderCommon', 'OrderController@deleteOrderCommon');
 Route::post('order/PODetail', 'OrderController@PODetail');
 Route::post('order/distributionDetail', 'OrderController@distributionDetail');
 Route::post('order/addToDistribute', 'OrderController@addToDistribute');

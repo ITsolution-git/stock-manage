@@ -7,7 +7,7 @@
             .controller('OrderInfoController', OrderInfoController);
 
     /** @ngInject */
-    function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
+    function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
@@ -363,5 +363,42 @@
                 
             });
         }
+
+
+
+         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
+            
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+            UpdateArray.order_id = $scope.order_id;
+            UpdateArray.company_id = sessionService.get('company_id');
+
+            var permission = confirm(AllConstant.deleteMessage);
+                if (permission == true)
+                {
+
+                $http.post('api/public/order/deleteOrderCommon',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success','Record Deleted Successfully.');
+                        $scope.designDetail();
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                   });
+                 }
+        } 
     }
 })();
