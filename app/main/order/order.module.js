@@ -41,16 +41,28 @@
                     }
                 }
             }).state('app.order.order-info', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/order-info/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/order/views/order-info/order-info.html',
                         controller : 'OrderInfoController as vm'
                     }
-                },resolve: {
-                   
                 }
             }).state('app.order.design', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/design/:id',
                 views: {
                     'content@app': {
@@ -59,6 +71,13 @@
                     }
                 }
             }).state('app.order.distribution', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/distribution/:id',
                 views: {
                     'content@app': {
@@ -67,6 +86,13 @@
                     }
                 }
             }).state('app.order.distributionProduct', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/distributionProduct/:id',
                 views: {
                     'content@app': {
@@ -75,6 +101,13 @@
                     }
                 }
             }).state('app.order.spiltAffiliate', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/spiltAffiliate/:id',
                 views: {
                     'content@app': {
@@ -83,6 +116,13 @@
                     }
                 }
             }).state('app.order.affiliate-info', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/affiliate-info/:id',
                 views: {
                     'content@app': {
@@ -91,6 +131,13 @@
                     }
                 }
             }).state('app.order.affiliate-view', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/affiliate-view/:id',
                 views: {
                     'content@app': {

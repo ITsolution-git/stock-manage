@@ -25,6 +25,12 @@ class PurchaseController extends Controller {
         $this->common = $common;
     }
 
+    public function createPO()
+    {
+        $post = Input::all();
+        print_r($post);exit;
+    }
+
     /*=====================================
     TO GET PO AND SG SCREEN FIELDS VALUES 
     =====================================*/
