@@ -289,11 +289,13 @@ class CommonController extends Controller {
             $post['notcond'] = array();
         }
         
+        $post['sort']     =  empty($post['sort'])?     '' : $post['sort'];
+        $post['sortcond'] =  empty($post['sortcond'])? '' : $post['sortcond'];
        
         if(!empty($post['table']))
         {
-             $result = $this->common->GetTableRecords($post['table'],$post['cond'],$post['notcond']);
-             return $this->return_response($result);
+            $result = $this->common->GetTableRecords($post['table'],$post['cond'],$post['notcond'],$post['sort'],$post['sortcond']);
+            return $this->return_response($result);
         }
         else
         {

@@ -179,7 +179,7 @@ class Common extends Model {
             foreach ($cond as $key => $value) 
             {
                 if(!empty($value))
-                    $result =$result ->where($key,'=',$value);
+                $result =$result ->where($key,'=',$value);
             }
         }
 
@@ -188,11 +188,11 @@ class Common extends Model {
             foreach ($notcond as $key => $value) 
             {
                 
-                    $result =$result ->where($key,'!=',$value);
+                $result =$result ->where($key,'!=',$value);
             }
         }
 
-         if(!empty($sort) && !empty($sortBy))
+        if(!empty($sort) && !empty($sortBy))
         {
             $result =$result ->orderBy($sort, $sortBy);
         }

@@ -65,10 +65,14 @@ class AccountController extends Controller {
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
 		if(!empty($post['email']) && !empty($post['password']) && !empty($post['parent_id']))
 		{
+			$password = $post['password'];
+			$usr_email = trim($post['email']);
+			$user_name = trim($post['name']);
+			
 			$post['password'] = md5($post['password']);
 			$post['created_date'] = date('Y-m-d H:i:s');
 
-			$email = $this->common->checkemailExist($post['email'],0);
+			$email = $this->common->checkemailExist($usr_email,0);
 			if(count($email)>0)
 			{
 				$message = "Email Exists";
@@ -79,6 +83,12 @@ class AccountController extends Controller {
 				$getData = $this->account->InsertCompanyData($post);
 				if($getData)
 				{
+			 		//$string = $this->login->getString(6);
+
+					Mail::send('emails.newcompany', ['password' =>$password,'user'=>$user_name,'email'=>$usr_email], function($message) use ($usr_email) 
+	                {
+	                    $message->to($usr_email, 'New Stokkup Account')->subject('New Account for Stokkup');
+	                });
 					$message = INSERT_RECORD;
 					$success = 1;
 				}
