@@ -9,9 +9,10 @@
     function CustomProductDialogController(product_id,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$filter)
     {
 
-     
-        var vendor_data = {};
-        vendor_data.table ='vendors';
+
+         var vendor_data = {};
+         vendor_data.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
+         vendor_data.table ='vendors';
         
         $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
             

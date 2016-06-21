@@ -1316,6 +1316,19 @@ class OrderController extends Controller {
         $result = $this->order->designDetail($data);
 
          
+
+        if(empty($result['design']))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+      
+         
          if($result['design'][0]->hands_date != '0000-00-00' && $result['design'][0]->hands_date != '') {
             $result['design'][0]->hands_date = date("n/d/Y", strtotime($result['design'][0]->hands_date));
          } else {
@@ -1332,18 +1345,7 @@ class OrderController extends Controller {
             $result['design'][0]->start_date = '';
          }
 
-         
-
-        if(empty($result['design']))
-        {
-
-           $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
-           return response()->json(["data" => $response]);
-        }
-
+        
        
             $response = array(
                                 'success' => 1, 
