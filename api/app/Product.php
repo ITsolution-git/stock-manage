@@ -392,7 +392,7 @@ class Product extends Model {
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
                          ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
                          ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
-                         ->leftJoin('product_color_size as pcs', 'p.id', '=', 'pcs.product_id')
+                         ->leftJoin('purchase_detail as pcs', 'p.id', '=', 'pcs.product_id')
                          ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
                          ->select($listArray)
                          ->where($where)
