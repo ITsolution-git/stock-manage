@@ -15,6 +15,7 @@
         $scope.productSearch = '';
         $scope.vendor_id = 0;
         $scope.company_id = sessionService.get('company_id');
+        $scope.valid_sns = 1;
 
        $scope.designDetail = function(){
          $("#ajax_loader").show();
@@ -46,6 +47,9 @@
                 if(result.data.success == '1') {
                     $scope.productData = result.data.productData;
                 }
+                else{
+                    $scope.productData = [];                    
+                }
             });
         }
 
@@ -61,6 +65,10 @@
                 if(result.data.success == '1') {
                     $scope.order_design_position = result.data.order_design_position;
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
+                }
+                else{
+                    $scope.order_design_position = [];
+                    $scope.total_pos_qnty = 0;
                 }
             });
         }
@@ -144,18 +152,6 @@
             else
             {
                 $scope.allVendors=[];
-            }
-        });
-
-        var combine_array_id = {};
-        combine_array_id.company_id = sessionService.get('company_id');
-
-        $scope.valid_sns = 1;
-        
-        $http.post('api/public/product/checkSnsAuth',combine_array_id).success(function(result) {
-           
-            if(result.data.success == '0') {
-                $scope.valid_sns = 0;
             }
         });
 
@@ -263,23 +259,23 @@
 
         $scope.checkVendor = function()
         {
-            if($scope.vendor_id > 0)
+            $scope.vendorProducts = 0;
+            if($scope.vendor_id == 1)
             {
-                var vendor_data = {};
-                vendor_data ={'vendor_id':$scope.vendor_id}
-                $http.post('api/public/product/getProductCountByVendor',vendor_data).success(function(result) {
-                    
-                    if(result.data.success == '0')
-                    {
-                        var data = {"status": "error", "message": result.data.message}
+                var combine_array_id = {};
+                combine_array_id.company_id = sessionService.get('company_id');
+                $("#ajax_loader").show();
+                $http.post('api/public/product/checkSnsAuth',combine_array_id).success(function(result) {
+                   
+                    $("#ajax_loader").hide();
+                    if(result.data.success == '0') {
+                        var data = {"status": "error", "message": "Please enter valid credentials for S&S"}
                         notifyService.notify(data.status, data.message);
+                        $scope.productSearch = '';
+                        $scope.valid_sns = 0;
                     }
                 });
             }
-        }
-
-        $scope.checkValid = function()
-        {
             if($scope.vendor_id > 0)
             {
                 var vendor_data = {};
@@ -292,15 +288,29 @@
                         notifyService.notify(data.status, data.message);
                         $scope.productSearch = '';
                     }
+                    else
+                    {
+                        $scope.vendorProducts = 1;
+                    }
                 });
             }
-            else
+        }
+
+        $scope.checkValid = function()
+        {
+            if($scope.vendor_id == 0)
             {
                 var data = {"status": "error", "message": "Please select vendor to add product"}
                 notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
             }
-
-            if($scope.valid_sns == 0)
+            else if($scope.vendorProducts == 0)
+            {
+                var data = {"status": "error", "message": "No products available for this vendor"}
+                notifyService.notify(data.status, data.message);
+                $scope.productSearch = '';
+            }
+            else if($scope.valid_sns == 0)
             {
                 var data = {"status": "error", "message": "Please enter valid credentials for S&S"}
                 notifyService.notify(data.status, data.message);
