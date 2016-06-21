@@ -31,7 +31,7 @@ class Account extends Model {
         $id = DB::getPdo()->lastInsertId();
         DB::table('staff')->insert(array('user_id'=>$id,'created_date'=>date("Y-m-d"),'is_delete'=>1));
 
-    	return $result;
+    	return $id;
     }
     public function GetCompanybyId($id,$parent_id)
     {
