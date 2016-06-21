@@ -352,6 +352,16 @@
                     event: ev
                   }
             });
-        }; 
+        };
+
+        $scope.createPO = function() {
+            var condition_obj = {};
+            condition_obj.order_id = $scope.order_id;
+            condition_obj.company_id = sessionService.get('company_id');
+
+            $http.post('api/public/purchase/createPO',condition_obj).success(function(result) {
+                
+            });
+        }
     }
 })();
