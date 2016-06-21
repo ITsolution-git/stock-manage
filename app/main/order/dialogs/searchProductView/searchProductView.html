@@ -126,7 +126,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes)" ng-disabled="orderForm.$invalid">Add Product</md-button>
+            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

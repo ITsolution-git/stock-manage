@@ -134,9 +134,8 @@
         });
 
         var vendor_data = {};
-        vendor_data.table ='vendors';
-        /*vendor_data.cond ={'company_id':condition_obj['company_id']}*/
-        $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
+        vendor_data ={'company_id':condition_obj['company_id']}
+        $http.post('api/public/product/getVendorByProductCount',vendor_data).success(function(result) {
             
             if(result.data.success == '1') 
             {
@@ -264,6 +263,43 @@
 
         $scope.checkVendor = function()
         {
+            if($scope.vendor_id > 0)
+            {
+                var vendor_data = {};
+                vendor_data ={'vendor_id':$scope.vendor_id}
+                $http.post('api/public/product/getProductCountByVendor',vendor_data).success(function(result) {
+                    
+                    if(result.data.success == '0')
+                    {
+                        var data = {"status": "error", "message": result.data.message}
+                        notifyService.notify(data.status, data.message);
+                    }
+                });
+            }
+        }
+
+        $scope.checkValid = function()
+        {
+            if($scope.vendor_id > 0)
+            {
+                var vendor_data = {};
+                vendor_data ={'vendor_id':$scope.vendor_id}
+                $http.post('api/public/product/getProductCountByVendor',vendor_data).success(function(result) {
+                    
+                    if(result.data.success == '0')
+                    {
+                        var data = {"status": "error", "message": result.data.message}
+                        notifyService.notify(data.status, data.message);
+                        $scope.productSearch = '';
+                    }
+                });
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please select vendor to add product"}
+                notifyService.notify(data.status, data.message);
+            }
+
             if($scope.valid_sns == 0)
             {
                 var data = {"status": "error", "message": "Please enter valid credentials for S&S"}
