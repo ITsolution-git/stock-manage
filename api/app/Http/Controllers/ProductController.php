@@ -385,15 +385,21 @@ public function create_dir($dir_path) {
         $return = 1;
         $return = $this->orderCalculation($post['id']);
 
+        if($post['action'] == 'Edit') {
+            $message = 'Product updated successfully';
+        }
+        else{
+            $message = 'Product added successfully';
+        }
 
         if(is_array($return))
         {
-            $data = array("success"=>0,"message"=>$return['message'],"status"=>$return['status']);
+            $data = array("success"=>0,"message"=>$message,"status"=>$return['status']);
             return response()->json(["data" => $data]);
         }
         else
         {
-            $data = array("success"=>1);
+            $data = array("success"=>1,"message"=>$message,"status"=>$return['status']);
             return response()->json(["data" => $data]);
         }
     }
@@ -1068,6 +1074,16 @@ public function create_dir($dir_path) {
     {
         $data = Input::all();
         $result = $this->product->getVendorByProductCount($data['company_id']);
-        return response()->json(["data" => $result]);
+
+        if($result)
+        {
+            $success = 1;
+        }
+        else
+        {
+            $success = 0;
+        }
+        $data = array("success"=>$success,"records"=>$result);
+        return response()->json(['data'=>$data]);
     }
 }

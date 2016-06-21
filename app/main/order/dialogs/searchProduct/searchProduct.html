@@ -154,8 +154,9 @@
                     </div>
                     <div ng-show="success==1" layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                         <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20" >
-                            <div class="filter-product-image md-whiteframe-1dp"  ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name,'Add',product.name,'nocolor')" layout="row" layout-align="center center">
-                                <img src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
+                            <div class="filter-product-image md-whiteframe-1dp" layout="row" layout-align="center center">
+                                <img ng-if="product.vendor_id == '1'" src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image" ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name,'Add',product.name,'nocolor')"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
+                                <img ng-if="product.vendor_id > '1'" src="{{NoImage}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0)"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
                             </div>
                         </div>
                         <div tasty-pagination class="tasty-page" flex="100"></div>

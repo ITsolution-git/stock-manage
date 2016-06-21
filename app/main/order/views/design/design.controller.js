@@ -134,7 +134,7 @@
         });
 
         var vendor_data = {};
-        vendor_data.cond ={'company_id':condition_obj['company_id']}
+        vendor_data ={'company_id':condition_obj['company_id']}
         $http.post('api/public/product/getVendorByProductCount',vendor_data).success(function(result) {
             
             if(result.data.success == '1') 

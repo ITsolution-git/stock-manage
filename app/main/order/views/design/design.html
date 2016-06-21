@@ -271,51 +271,30 @@
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
 
             <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
-            <div flex="20">
-                <md-input-container class="md-block" flex="30">
-                    <label>Vendor</label>
-                    <md-select ng-model="vendor_id">
-                        <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}">
-                           
-                            {{vendor.name_company}}
-                           
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-            <div class="design-positions-box " layout="column" layout-align="start">
-                <div class="design-search-section" layout-align="space-between-center" layout="row">
-                    <md-input-container class="md-block" flex="30">
+            <div layout="row" flex="100">
+                <div layout="column" flex="20" class="mrg15-R">
+                    <md-input-container class="md-block" flex="25">
+                        <label>Vendor</label>
+                        <md-select ng-model="vendor_id">
+                            <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}">
+                                {{vendor.name_company}} ({{vendor.total}})
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div layout="column" flex="20" class="mrg15-R">
+                    <md-input-container class="md-block">
                         <label>Search</label>
                         <input ng-model="productSearch" ng-change="checkValid()">
                     </md-input-container>
-                    <div layout="row">
-                        <md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button>
-                        <md-button  class="bg-grey md-raised" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',0,'Add',0,0)">
-                            ADD A CUSTOM PRODUCT
-                        </md-button>
-                    </div>
                 </div>
-                <!-- <div class="design-browse-product p-b-20" layout="column">
-                    <div class="h4 p-b-10" >Browse Products</div>
-                    <div class="design-product-slider" layout="row" layout-align="space-between">
-                        <div layout="column" layout-align="center-center">
-                            <md-icon md-font-icon="icon-arrow-left"></md-icon>
-                        </div>
-                        <div ng-repeat="product in ::vm.productVendorLogo" class="md-whiteframe-1dp design-vendor-logo" layout="column" layout-align="center center" flex="10" >
-                            {{product.name}}
-                        </div>
-                        <div layout="column" layout-align="center-center">
-                            <md-icon md-font-icon="icon-arrow-right" ></md-icon>
-                        </div>
-                    </div>
-                </div> -->
+                <div layout="column" flex="5"><md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button></div>
             </div>
         </div>
         <md-divider></md-divider>
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
             <div class="title"><span class="h2 text-semibold">Added Products</span></div>
-            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-repeat="product in productData" ng-if="productData.length>0"> 
+            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-repeat="product in productData"> 
                 <div layout="row" layout-align="space-between center" class="margin-bootom15">
                     <div layout="column" >
                         <div class="h4">Product Name</div>
@@ -331,12 +310,12 @@
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
                             <md-menu-content width="4" ng-show="product.is_calculate == 1">
-                                <md-menu-item ng-show="product.vendor_id > 0">
+                                <md-menu-item ng-show="product.vendor_id == 1">
                                     <md-button ng-click="openSearchProductViewDialogView($event,product.id,product.product_image,product.description,product.name_company,'Edit',product.product_name,product.color_name,product.design_product_id)">
                                         Edit
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item ng-show="product.vendor_id == 0">
+                                <md-menu-item ng-show="product.vendor_id > 1">
                                     <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply.product.design_product_id)">
                                         Edit
                                     </md-button>
