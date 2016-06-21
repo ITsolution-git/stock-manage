@@ -794,9 +794,8 @@ public function create_dir($dir_path) {
         {
             $design = $this->common->GetTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['product_id']),array());
             
-            $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['product_id']),array('is_delete' => '0'));
-            $record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['design_id'],'design_product_id' => $design[0]->id),array('is_delete' => '0'));
-
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['product_id']),array('is_delete' => '0'));
+            $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['design_id'],'product_id' => $post['product_id']));
             $order_data = $this->order->getOrderByDesign($post['design_id']);
 
             $message = DELETE_RECORD;
