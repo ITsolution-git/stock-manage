@@ -272,7 +272,7 @@
                 <div layout="column" flex="20" class="mrg15-R">
                     <md-input-container class="md-block" flex="25">
                         <label>Vendor</label>
-                        <md-select ng-model="vendor_id">
+                        <md-select ng-model="vendor_id" ng-change="checkVendor()">
                             <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}">
                                 {{vendor.name_company}} ({{vendor.total}})
                             </md-option>
