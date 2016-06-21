@@ -11,7 +11,16 @@
     {
         // State
         $stateProvider
-            .state('app.misc', {
+            .state('app.settings.misc', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
                 url    : '/misc',
                 views  : {
                     'content@app': {
@@ -25,21 +34,20 @@
         $translatePartialLoaderProvider.addPart('app/main/misc');
 
        
-        // Navigation
+      /*  // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',
             group : true,
             weight: 1
-        });
+        });*/
 
-        msNavigationServiceProvider.saveItem('fuse.misc', {
-            //title    : 'Misc',
-            icon     : 'icon-truck',
-            state    : 'app.misc',
-            /*stateParams: {
+        msNavigationServiceProvider.saveItem('fuse.settings.misc', {
+            title    : 'Misc',
+            state    : 'app.settings.misc',
+            stateParams: {
                 'param1': 'page'
-             },*/
-            weight   : 1
+             },
+            weight   : 9
         });
     }
 })();
