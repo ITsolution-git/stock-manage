@@ -1,12 +1,13 @@
-Codal Test Product 123,Black,S,1.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Black,M,2.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Black,L,3.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Black,XL,4.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Black,2XL,5.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Red,S,6.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Red,M,7.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Red,3XL,8.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Red,4XL,9.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123,Red,5XL,10.23,Codal Test Vendor,Codal Test Description
-Codal Test Product 123 New,Red,L,11.23,Codal Test Vendor New,Codal Test Description New
-Codal Test Product 123 New,Yellow,XXL,12.23,Codal Test Vendor New,Codal Test Description New
+PRODUCT NAME,COLOR,SIZE,PRICE,VENDOR NAME,PRODUCT DESCRIPTION
+Codal Test Product new data1,Black,S,1.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Black,M,2.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Black,L,3.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Black,XL,4.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Black,2XL,5.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Red,S,6.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Red,M,7.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Red,3XL,8.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Red,4XL,9.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product new data1,Red,5XL,10.23,Codal Test Vendor data,Codal Test Description
+Codal Test Product 321 New,Red,L,11.23,Codal Test Vendor data New,Codal Test Description New
+Codal Test Product 321 New,Yellow,XXL,12.23,Codal Test Vendor data New,Codal Test Description New

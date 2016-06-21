@@ -823,9 +823,11 @@ public function create_dir($dir_path) {
          if($_FILES["file"]["size"] > 0)
          {
             $file = fopen($filename, "r");
-           
+            $flag = true;
             while (($emapData = fgetcsv($file, 10000, ",")) !== FALSE)
             {
+                if($flag) { $flag = false; continue; }
+                
                 if($emapData[4] != '') {
 
                     if($emapData[0] != '') {
