@@ -18,6 +18,7 @@
        combine_array_id.company_id = sessionService.get('company_id');
        product_image_main = "https://www.ssactivewear.com/"+product_image;
        product_image = "https://www.ssactivewear.com/"+product_image;
+       $scope.operation = operation;
         
 
         $scope.product_name = product_name;
@@ -134,7 +135,7 @@
                     }
                     else
                     {
-                        var data = {"status": "success", "message": "Product added successfully"}
+                        var data = {"status": "success", "message": result.data.message}
                         notifyService.notify(data.status, data.message);
                         $mdDialog.hide();
                     }

@@ -6,7 +6,7 @@
             .controller('SearchProductController', SearchProductController);
 
     /** @ngInject */
-    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state)
+    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams)
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
@@ -14,6 +14,7 @@
         $scope.toggle = true;
         $scope.color = true;
         $scope.size = true;
+        $scope.NoImage = AllConstant.NoImage;
         
         $scope.init = {
           'count': 20,
@@ -147,6 +148,27 @@
                 },
                 onRemoving : $scope.reloadPage
                
+            });
+        }
+
+        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id)
+        {
+            $mdDialog.show({
+                controller: controller,
+                controllerAs: $scope,
+                templateUrl: file,
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    product_id: product_id,
+                    operation:operation,
+                    design_id:$stateParams.id,
+                    color_id:color_id,
+                    is_supply:is_supply,
+                    event: ev
+                },
+                onRemoving : $scope.reloadPage
             });
         }
 

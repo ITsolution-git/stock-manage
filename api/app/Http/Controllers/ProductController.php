@@ -205,7 +205,10 @@ public function create_dir($dir_path) {
 
         if($post['filter']['vendor_id'] != '')
         {
-            $whereData['search'] = $post['filter']['search'];
+            if(isset($post['filter']['search']))
+            {
+                $whereData['search'] = $post['filter']['search'];
+            }
         }
         if(isset($post['filter']['category_id']) && !empty($post['filter']['category_id']))
         {
@@ -382,15 +385,21 @@ public function create_dir($dir_path) {
         $return = 1;
         $return = $this->orderCalculation($post['id']);
 
+        if($post['action'] == 'Edit') {
+            $message = 'Product updated successfully';
+        }
+        else{
+            $message = 'Product added successfully';
+        }
 
         if(is_array($return))
         {
-            $data = array("success"=>0,"message"=>$return['message'],"status"=>$return['status']);
+            $data = array("success"=>0,"message"=>$message,"status"=>$return['status']);
             return response()->json(["data" => $data]);
         }
         else
         {
-            $data = array("success"=>1);
+            $data = array("success"=>1,"message"=>$message,"status"=>$return['status']);
             return response()->json(["data" => $data]);
         }
     }
@@ -1044,5 +1053,37 @@ public function create_dir($dir_path) {
         }
         return response()->json(['data'=>$data]);
     }
-    
+    public function getProductCountByVendor()
+    {
+        $data = Input::all();
+        $count = $this->product->getProductCountByVendor($data['vendor_id']);
+
+        if($count > 0)
+        {
+            $success = 1;
+        }
+        else
+        {
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>"No products available for this vendor");
+        return response()->json(['data'=>$data]);
+    }
+    public function getVendorByProductCount()
+    {
+        $data = Input::all();
+        $result = $this->product->getVendorByProductCount($data['company_id']);
+
+        if($result)
+        {
+            $success = 1;
+        }
+        else
+        {
+            $success = 0;
+        }
+        $data = array("success"=>$success,"records"=>$result);
+        return response()->json(['data'=>$data]);
+    }
 }

@@ -2,7 +2,7 @@
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">Add Custom Product</span>
+                <span class="title">{{operation}} Custom Product</span>
                 <md-button  ng-click="cancel()" aria-label="cancel">
                     <span><md-icon md-font-icon="icon-close"></md-icon></span>
                 </md-button>
@@ -16,7 +16,7 @@
                             <md-input-container class="width100">
                                 <label>Product</label>
                                  <md-select ng-model="product_id" ng-change="changeProduct(product_id,0,'Add')">
-                                    <md-option ng-repeat="data in allProduct" value="{{data.id}}" >
+                                    <md-option ng-repeat="data in allProduct" value="{{data.id}}" ng-selected="product_id == data.id">
                                         {{data.name}}
                                     </md-option>
                                  </md-select>
@@ -59,7 +59,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button  aria-label="cancel" ng-click="cancel()"  class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button  aria-label="add" class="md-accent md-raised " ng-click="addProduct(sizeAll,product_id,is_supply)" ng-disabled="orderForm.$invalid">ADD</md-button>
+            <md-button  aria-label="add" class="md-accent md-raised " ng-click="addProduct(sizeAll,product_id,is_supply)" ng-disabled="orderForm.$invalid">{{operation}}</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

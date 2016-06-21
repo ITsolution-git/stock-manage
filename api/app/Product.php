@@ -150,11 +150,11 @@ class Product extends Model {
 
         if(empty($data['fields']))
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id')];
         }
         else
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.product_image,p.description,v.name_company as vendor_name')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id')];
         }
         
 
@@ -572,4 +572,26 @@ class Product extends Model {
         }
     }
 
+    public function getProductCountByVendor($vendor_id)
+    {
+        $count = DB::table('products')
+                         ->select(DB::raw('COUNT(id) as total'))
+                         ->where('vendor_id','=',$vendor_id)
+                         ->get();
+        
+        return $count[0]->total;
+    }
+
+    public function getVendorByProductCount($company_id)
+    {
+        $listArray = ['v.id','v.name_company',''];
+        $vendorData = DB::table('vendors as v')
+                        ->leftJoin('products as p', 'p.vendor_id', '=', 'v.id')
+                        ->select(DB::raw('COUNT(DISTINCT p.id) as total'),'v.id','v.name_company')
+                        ->where('v.company_id' , '=', $company_id)
+                        ->GroupBy('v.id')
+                        ->get();
+
+        return $vendorData;
+    }
 }
