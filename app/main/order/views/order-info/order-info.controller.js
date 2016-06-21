@@ -112,23 +112,8 @@
             {"roid": "27", "clientName": "kensville", "vendor": "SNS", "dateCreated": "xx/xx/xxxx"},
             {"roid": "28", "clientName": "Design T-shirt", "vendor": "Nike", "dateCreated": "xx/xx/xxxx"},
         ];
-        vm.affiliateOrders = [
-            {"Company": "Company Name", "units": "150", "designs": "1"},
-            {"Company": "Company Name", "units": "10,000", "designs": "2"},
-        ];
-        
-       
-       
-        vm.designTotal = {total: "160"};
-        vm.finishing = {finish: "5"};
-        
-        vm.shipping = {
-            "productshipped": "800",
-            "Total": "100",
-        };
-        vm.distrbution = {
-            "location": "231",
-        };
+      
+      
         vm.note = {
             "notes": "5",
         };
@@ -136,12 +121,7 @@
             "approved": "Approved"
 
         };
-        vm.ordertotal = {
-            "orderline": "$500",
-            "ordercharges": "$500",
-            "ordersales": "$500"
-        };
-        
+       
 //        Datatable Options
         vm.dtOptions = {
             dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',

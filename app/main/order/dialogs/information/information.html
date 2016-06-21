@@ -1,12 +1,19 @@
 <md-dialog class="task-dialog affiliate-dialog information-dialog" aria-label="New order">
-    <form name="orderForm" class="md-inline-form" novalidate>
+    <form name="orderInfoForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Information</span>
             </div>
         </md-toolbar>
-        <md-dialog-content ms-scroll class="m-t-10">
+        <md-dialog-content ms-scroll class="m-t-20">
             
+            <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Name</label>
+                       <input placeholder="Name" flex="100" ng-model="order_data.name" required>
+                </md-input-container>
+            </div>
+
             <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Sales</label>
@@ -52,7 +59,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised">Save</md-button>
+            <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised" ng-disabled="orderInfoForm.$invalid">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 
