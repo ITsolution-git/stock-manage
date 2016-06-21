@@ -32,7 +32,7 @@ for(var i=0;i<17;i++) {
 $scope.range = range;
 
 
-/*$('.footable-page a').filter('[data-page="0"]').trigger('click');
+$('.footable-page a').filter('[data-page="0"]').trigger('click');
 
 $scope.updateUser = function(value,id) {
 
@@ -43,6 +43,6 @@ $scope.updateUser = function(value,id) {
                $http.post('api/public/admin/miscSave',combine_array_data).success(function(result, status, headers, config) {
                          
                           });
-  };*/
+  };
     }
 })();

@@ -28,12 +28,7 @@
         } else {
 
             $scope.design = {};
-            $scope.design.front_color_name = '';
-            $scope.design.side_right_color_name = '';
-            $scope.design.top_color_name = '';
-            $scope.design.back_color_name = '';
-            $scope.design.side_left_color_name = '';
-            $scope.design.bottom_color_name = '';
+           
         }
        
         
