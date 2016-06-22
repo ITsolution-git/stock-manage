@@ -15,22 +15,55 @@ class Purchase extends Model {
         $this->common = $common;
     }
 	
-	function ListPurchase($type,$company_id)
+	function ListPurchase($post)
 	{
+		$search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
 		$result = DB::table('purchase_order as po')
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type')
+					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type','po.date')
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
-					->where('po.po_type','=',strtolower($type))
-					->where('ord.company_id','=',$company_id)
-					->GroupBy('po.po_id')
-					->orderBy('po.po_id', 'desc')
-					->get();
+					->where('ord.company_id','=',$post['company_id']);
+
+					if($search != '')               
+                  	{
+                      $result = $result->Where(function($query) use($search)
+                      {
+                          $query->orWhere('po.po_id', 'LIKE', '%'.$search.'%')
+                                ->orWhere('ord.id','LIKE', '%'.$search.'%')
+                                ->orWhere('cl.client_company','LIKE', '%'.$search.'%')
+                                ->orWhere('v.name_company','LIKE', '%'.$search.'%')
+                                ->orWhere('po.date','LIKE', '%'.$search.'%');
+                      });
+                  	}
+                 $result = $result->GroupBy('po.po_id')
+				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+				 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+		
+		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+        $check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
+        if(count($result)>0)
+        {
+          foreach ($result as $key=>$value) 
+          {
+            $result[$key]->date =date('m/d/Y',strtotime($value->date)) ;
+            $result[$key]->po_type =$check_array[$value->po_type] ;
+          }
+        }
+		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $result;
+        $returnData['count'] = $count[0]->Totalcount;		
 		//echo "<pre>"; print_r($result); die();
-		return $result;
+		return $returnData;
 	}
 	function GetPodata($id,$company_id)
 	{
@@ -330,7 +363,59 @@ class Purchase extends Model {
        // echo "<pre>"; print_r($temp_array); echo "</pre>"; die;
         return $temp_array['placement'];
 	}
+	public function getOrderData($company_id,$order_id)
+	{
+		$result = DB::table('orders as o')
+					->select('o.id as order_id','dp.product_id','pd.*','p.vendor_id')
+					->leftJoin('order_design as od','od.order_id','=','o.id')
+					->leftJoin('design_product as dp','dp.design_id','=','od.id')
+					->leftJoin('purchase_detail as pd','pd.design_product_id','=','dp.id')
+					->leftJoin('products as p','p.id','=','dp.product_id')
+					->where('o.is_delete','=',1)
+					->where('od.is_delete','=','1')
+					->where('dp.is_delete','=',1)
+					->where('o.id','=',$order_id)
+					->where('o.company_id','=',$company_id)
+					->get();
+		if(count($result)>0)
+		{
+			foreach($result as $key=>$value)
+			{
+				$new_array[$value->vendor_id][] = $value;
+			}
+			return $new_array;
+		}
+		return $result;
+		
+	}
+	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po')
+	{
+		$check = DB::table('purchase_order')
+				->select('*')
+				->where('order_id','=',$order_id)
+				->where('vendor_id','=',$vendor_id)
+				->get();
 
+		//echo "<pre>"; print_r($check); echo "</pre>"; die;
+		if(count($check)>0)
+		{
+			return 0 ;
+		}
+		else 
+		{
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type));
+			$id = DB::getPdo()->lastInsertId();
+        	return $id;	
+		}		
+
+	}
+	public function insert_purchase_order_line($post,$po_id)
+	{
+		$line_total = $post->price * $post->qnty;
+		$result = DB::table('purchase_order_line')->insert(array('po_id'=>$po_id,'purchase_detail'=>$post->id,'qnty_ordered'=>$post->qnty,'unit_price'=>$post->price,'line_total'=>$line_total));
+		$id = DB::getPdo()->lastInsertId();
+        return $id;
+	}
 }
 
 ?>

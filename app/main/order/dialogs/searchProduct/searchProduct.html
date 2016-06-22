@@ -10,7 +10,7 @@
         </md-toolbar>
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
-                <div layout="row" layout-align="space-between start">
+                <!-- <div layout="row" layout-align="space-between start">
                     <div class="h3">Filters</div>
                     <md-input-container class="md-block m-0" md-no-float flex="30">
                         <label>Vendor</label>
@@ -26,7 +26,7 @@
                     </md-input-container>
                     <md-button class="md-accent md-raised" ng-click="filterProducts('none','none')" ng-disabled="productSearch == ''">Search</md-button>
                     <md-button class="md-accent md-raised" ng-click="resetFilter()" >Reset</md-button>
-                </div>
+                </div> -->
                 <div layout="row" layout-align="space-between start">
                     <div layout="column" flex="20">
                         <div layout="column" class="f-box-1">
@@ -155,17 +155,15 @@
                     <div ng-show="success==1" layout="row" flex="80" layout-wrap="nowrap" layout-align="start start" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                         <div ng-repeat="product in rows" class="filter-product-image-wrap" flex="20" >
                             <div class="filter-product-image md-whiteframe-1dp" layout="row" layout-align="center center">
+
                                 <img ng-if="product.vendor_id == '1'" ng-src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image" ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name,'Add',product.name,'nocolor')"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
 
-                                <img ng-if="product.vendor_id > '1' && product.product_image =='' " ng-src="{{NoImage}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0)">
+                                <img ng-if="product.vendor_id > '1' && product.product_image =='' " ng-src="{{NoImage}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0,product.vendor_id)">
                            
-                                <img ng-if="product.vendor_id > '1' && product.product_image !='' " ng-src="{{product_base_path}}{{product.id}}/{{product.product_image}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0)">
-
-                                
-                                
-
-
+                                <img ng-if="product.vendor_id > '1' && product.product_image !='' " ng-src="{{product_base_path}}{{product.id}}/{{product.product_image}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0,product.vendor_id)">
                                 <md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
+
+
                             </div>
                         </div>
                         <div tasty-pagination class="tasty-page" flex="100"></div>
