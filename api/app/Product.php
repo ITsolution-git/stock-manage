@@ -595,4 +595,16 @@ class Product extends Model {
 
         return $vendorData;
     }
+
+    public function getAffiliateDesignProduct($design_id)
+    {
+        $whereConditions = ['dp.design_id' => $design_id,'dp.is_affiliate_design' => '0'];
+        $productData = DB::table('products as p')
+                         ->leftJoin('design_product as dp', 'p.id', '=', 'dp.product_id')
+                         ->select('p.name as product_name','dp.id as design_product_id')
+                         ->where($whereConditions)
+                         ->get();
+        
+        return $productData;
+    }
 }

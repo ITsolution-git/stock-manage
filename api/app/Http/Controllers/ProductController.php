@@ -1087,4 +1087,15 @@ public function create_dir($dir_path) {
         $data = array("success"=>$success,"records"=>$result);
         return response()->json(['data'=>$data]);
     }
+    public function getProductSize()
+    {
+        $data = Input::all();
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_product_id' => $data['design_product_id'],'is_delete' => '1'),array());
+                
+        foreach ($purchase_detail as $size) {
+            $size->affiliate_qnty = (int)$size->qnty;
+        }
+        $data = array("success"=>1,"records"=>$purchase_detail);
+        return response()->json(['data'=>$data]);
+    }
 }
