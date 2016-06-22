@@ -9,7 +9,65 @@
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
-            <div layout="column" layout-wrap="wrap" class="design-add-modal " layout-padding>
+        <div layout="row" flex="100">
+            <div layout="column" flex="30">
+                <img  ng-if="product_image" ng-src="{{product_image_url}}" class="product-popup-image" />
+                <img  ng-if="product_image == ''" ng-src="{{NoImage}}" alt="No Image" class="product-popup-image" />
+            </div>
+
+            <div layout="row" layout-wrap="wrap" class="design-add-modal " layout-padding flex="70">
+                
+
+                <div flex="50" layout="column">
+                            <md-input-container class="width100">
+                                <label>Product</label>
+                                 <md-select ng-model="product_id" ng-change="changeProduct(product_id,0,'Add')">
+                                    <md-option ng-repeat="data in allProduct" value="{{data.id}}" ng-selected="product_id == data.id">
+                                        {{data.name}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                </div>
+
+                <div flex="50" layout="column">
+                            <md-input-container class="width100">
+                                <label>Color</label>
+                                 <md-select ng-model="color_id" ng-change="changeColor(color_id)">
+                                 
+                                  <md-option  ng-selected="0" value="0">
+                                        Select Color
+                                    </md-option>
+
+                                    <md-option  ng-repeat="(keyColor,colorsdata) in productColorSize" value="{{keyColor}}" >
+                                        {{colorsdata.color_name}}
+                                    </md-option>
+                                 </md-select>
+                            </md-input-container>
+                </div>
+
+               
+                <div layout="row">
+
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="(key,all_size) in sizeAll">
+                        <label class="font-14">{{all_size.sizeName}}</label>
+                        <input placeholder=""  ng-model="all_size.qnty" ng-maxlength="10" valid-number>
+                    </md-input-container>
+                                       
+                </div>
+               
+              
+
+            </div>
+
+        </div>
+
+         <div flex="100">
+                <md-checkbox  aria-label="Checkbox 1" ng-model="is_supply">
+                    These products are supplied garments
+                </md-checkbox>
+            </div>
+
+           <!--  <div layout="column" layout-wrap="wrap" class="design-add-modal " layout-padding>
 
                
                 <div flex="100">
@@ -55,7 +113,7 @@
                 </md-checkbox>
             </div>
                          
-            </div>
+            </div> -->
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button  aria-label="cancel" ng-click="cancel()"  class="md-primary md-hue-1 md-accent ">Cancel</md-button>

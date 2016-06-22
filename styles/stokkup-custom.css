@@ -16,6 +16,14 @@
 	padding: 5px;
 }
 
+.product-popup-image{
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  max-height: 300px;
+}
+
+
 .mdslider md-slider {
   margin-top: -14px; 
 }
@@ -53,6 +61,18 @@
     /* height: auto; */
     width: auto;
     height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.img-container-product {
+  box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 25%;
+    -ms-flex: 1 1 25%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     position: relative;
     z-index: 1;
 }

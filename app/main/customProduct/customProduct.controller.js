@@ -73,7 +73,7 @@
             responsive: true
         };
         // Methods
-        vm.openCustomProductDialog = openCustomProductDialog;
+     //   vm.openCustomProductDialog = openCustomProductDialog;
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
 
@@ -87,7 +87,7 @@
             vm.tableInstance.search(query).draw();
         }
 
-
+/*
         function openCustomProductDialog(ev, product_id)
         {
 
@@ -105,7 +105,7 @@
                 onRemoving : $scope.getReload
             });
         }
-
+*/
         
         $scope.submitForm = function () {
  

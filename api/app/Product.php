@@ -386,7 +386,7 @@ class Product extends Model {
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id'];
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
@@ -409,7 +409,14 @@ class Product extends Model {
                                      ->where('pd.design_product_id','=',$product->design_product_id)
                                      ->get();
                 $product->sizeData = $sizeData;
-                $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
+
+                if($product->vendor_id >1){
+                    $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
+                    $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
+                } else {
+                    $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
+                }
+                
                 $combine_array[$product->id] = $product;
             }
         }
@@ -531,11 +538,15 @@ class Product extends Model {
         }
 
 
+        $combine_array['product_image_url'] = UPLOAD_PATH.$post['company_id']."/products/".$productName[0]->id."/".$productName[0]->product_image;
         $combine_array['productColorSizeData'] = $all_array;
         $combine_array['vendor_id'] = $productName[0]->vendor_id;
         $combine_array['product_name'] = $productName[0]->name;
         $combine_array['product_id'] = $productName[0]->id;
         $combine_array['product_description'] = $productName[0]->description;
+        $combine_array['product_image'] = $productName[0]->product_image;
+        
+
 
         return $combine_array;
     }

@@ -6,7 +6,7 @@
             .controller('SearchProductController', SearchProductController);
 
     /** @ngInject */
-    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams)
+    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams,sessionService)
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
@@ -15,6 +15,8 @@
         $scope.color = true;
         $scope.size = true;
         $scope.NoImage = AllConstant.NoImage;
+        $scope.product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/products/';
+
         
         $scope.init = {
           'count': 20,

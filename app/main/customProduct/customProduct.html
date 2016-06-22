@@ -30,7 +30,7 @@
                    </form>
                 </div>
              <div class="order-modal-title " layout="row" layout-align="end center" flex="20" >
-                <span class="cursor-p" ng-click="vm.openCustomProductDialog($event,0)" >CREATE CUSTOM PRODUCT</span>
+                <span class="cursor-p" ui-sref="app.settings.custom-info({id:0})" >CREATE CUSTOM PRODUCT</span>
             </div>
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
@@ -39,9 +39,9 @@
                     
                     <thead tasty-thead class="cursor-p"></thead>
                     <tbody>
-                        <tr  ng-repeat="row in rows"  >
-                            <td ng-click="vm.openCustomProductDialog($event,row.id)"  class="cursor-p">{{ row.id}}</td>
-                            <td ng-click="vm.openCustomProductDialog($event,row.id)"  class="cursor-p">{{ row.name}}</td>
+                        <tr  ng-repeat="row in rows">
+                            <td ui-sref="app.settings.custom-info({id:row.id})"  class="cursor-p">{{ row.id}}</td>
+                            <td ui-sref="app.settings.custom-info({id:row.id})"  class="cursor-p">{{ row.name}}</td>
                         </tr>                  
                     </tbody>
                 </table>

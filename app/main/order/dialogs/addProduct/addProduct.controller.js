@@ -7,10 +7,11 @@
         .controller('AddProductController', AddProductController);
 
     /** @ngInject */
-    function AddProductController(product_id,operation,design_id,color_id,is_supply,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout)
+    function AddProductController(product_id,operation,design_id,color_id,is_supply,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout,AllConstant)
     {
         var vm = this;
         $scope.product_id = product_id;
+        $scope.NoImage = AllConstant.NoImage;
         $scope.operation = operation;
         var companyData = {};
         companyData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1',vendor_id :0};
@@ -33,11 +34,14 @@
             var combine_array_id = {}
             combine_array_id.id = id;
             combine_array_id.design_id = design_id;
+            combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/product/getProductDetailColorSize',combine_array_id).success(function(result) {
 
                 $scope.productId =result.data.product_id;
                 $scope.productColorSize =result.data.productColorSizeData;
+                $scope.product_image_url =result.data.product_image_url;
+                      $scope.product_image =result.data.product_image;
 
                 if(operation == 'Add') {
                     $scope.color_id = '0';
