@@ -151,7 +151,7 @@
             });
         }
 
-        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id)
+        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id)
         {
             $mdDialog.show({
                 controller: controller,
@@ -166,6 +166,7 @@
                     design_id:$stateParams.id,
                     color_id:color_id,
                     is_supply:is_supply,
+                    vendor_id: $scope.vendor_id,
                     event: ev
                 },
                 onRemoving : $scope.reloadPage

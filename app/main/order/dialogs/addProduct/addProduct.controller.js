@@ -7,13 +7,15 @@
         .controller('AddProductController', AddProductController);
 
     /** @ngInject */
-    function AddProductController(product_id,operation,design_id,color_id,is_supply,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout)
+    function AddProductController(product_id,operation,design_id,color_id,is_supply,vendor_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout)
     {
+        console.log(vendor_id);
         var vm = this;
         $scope.product_id = product_id;
+        $scope.vendor_id = vendor_id;
         $scope.operation = operation;
         var companyData = {};
-        companyData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1',vendor_id :0};
+        companyData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1',vendor_id :$scope.vendor_id};
         companyData.table ='products';
 
         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
