@@ -330,7 +330,59 @@ class Purchase extends Model {
        // echo "<pre>"; print_r($temp_array); echo "</pre>"; die;
         return $temp_array['placement'];
 	}
+	public function getOrderData($company_id,$order_id)
+	{
+		$result = DB::table('orders as o')
+					->select('o.id as order_id','dp.product_id','pd.*','p.vendor_id')
+					->leftJoin('order_design as od','od.order_id','=','o.id')
+					->leftJoin('design_product as dp','dp.design_id','=','od.id')
+					->leftJoin('purchase_detail as pd','pd.design_product_id','=','dp.id')
+					->leftJoin('products as p','p.id','=','dp.product_id')
+					->where('o.is_delete','=',1)
+					->where('od.is_delete','=','1')
+					->where('dp.is_delete','=',1)
+					->where('o.id','=',$order_id)
+					->where('o.company_id','=',$company_id)
+					->get();
+		if(count($result)>0)
+		{
+			foreach($result as $key=>$value)
+			{
+				$new_array[$value->vendor_id][] = $value;
+			}
+			return $new_array;
+		}
+		return $result;
+		
+	}
+	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po')
+	{
+		$check = DB::table('purchase_order')
+				->select('*')
+				->where('order_id','=',$order_id)
+				->where('vendor_id','=',$vendor_id)
+				->get();
 
+		//echo "<pre>"; print_r($check); echo "</pre>"; die;
+		if(count($check)>0)
+		{
+			return 0 ;
+		}
+		else 
+		{
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type));
+			$id = DB::getPdo()->lastInsertId();
+        	return $id;	
+		}		
+
+	}
+	public function insert_purchase_order_line($post,$po_id)
+	{
+		$line_total = $post->price * $post->qnty;
+		$result = DB::table('purchase_order_line')->insert(array('po_id'=>$po_id,'purchase_detail'=>$post->id,'qnty_ordered'=>$post->qnty,'unit_price'=>$post->price,'line_total'=>$line_total));
+		$id = DB::getPdo()->lastInsertId();
+        return $id;
+	}
 }
 
 ?>
