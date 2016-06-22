@@ -16,16 +16,16 @@
                     </md-select>
                 </md-input-container>
             </div>
-<!--             <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
+            <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Product</label>
-                    <md-select ng-model="$scope.productSelect.location" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="options in $scope.productSelect.productOption" value="{{options.option}}">
-                            {{options.option}}
+                    <md-select ng-model="design_product_id" flex="100"  class="select-width font-16 font-weight" ng-change="getProductSize(design_product_id)">
+                        <md-option  ng-repeat="product in productData" value="{{product.design_product_id}}">
+                            {{product.product_name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
-            </div> -->
+            </div>
             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Affiliate</label>
@@ -37,12 +37,12 @@
                 </md-input-container>
             </div>
             <div layout="row" class="pad-10-15 p-l-0">
-<!--                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="row in sizes">
-                    <label class="font-14 p-l-0 mrg3-L">{{row.size}}:<span class="text-bold mrg5-L">24</span></label>
-                    <input ng-model="row.affiliate_qnty" type="number" ng-min="0" ng-max="{{row.qnty}}" ng-class="{'red':orderForm.input.$invalid}"  ng-init="$parent.total = total + row.affiliate_qnty">
-                </md-input-container> -->
+                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="row in sizes">
+                    <label class="font-14 p-l-0 mrg3-L">{{row.size}}:<span class="text-bold mrg5-L">{{row.qnty}}</span></label>
+                    <input aria-label="qnty" type="number" ng-min="0" ng-model="row.affiliate_qnty" ng-max="{{row.qnty}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{row.size}}" ui-event="{ change : 'calculateAffiliate()'}">
+                </md-input-container>
             </div>
-            <div layout="row" layout-align="space-between center">
+            <!-- <div layout="row" layout-align="space-between center">
                 <div layout="column" flex="40">
                     <div><span>Total for Affiliate Name</span></div>
                     <div><span class="grey-color font-14">{{total_affiliate}}</span></div>
@@ -51,13 +51,13 @@
                     <div><span>Total not assigned</span></div>
                     <div><span class="grey-color font-14">{{total_not_assign}}</span></div>
                 </div>
-            </div>
+            </div> -->
             <div class="m-t-20"><span>Additional Charges</span></div>
             <div layout="row">
                 <md-input-container md-no-float class="md-block b-m-0 mar-t-0 mar-b-0" flex="40">
-                    <input  placeholder="" ng-model="additional_charges">
+                    <input valid-number placeholder="" ng-model="additional_charges" ui-event="{ change : 'finalCalcualtion()'}">
                 </md-input-container>
-                <md-icon md-font-icon="icon-plus" flex="50" class="m-t-10"></md-icon>
+                <!-- <md-icon md-font-icon="icon-plus" flex="50" class="m-t-10"></md-icon> -->
             </div>
             <md-input-container class="md-block pad0">
                 <label class="p-l-0">Notes</label>
@@ -83,7 +83,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised" ng-click="save(total)" ng-disabled="orderForm.$invalid">Save</md-button>
+            <md-button class="md-accent md-raised" ng-click="save()" ng-disabled="orderForm.$invalid">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

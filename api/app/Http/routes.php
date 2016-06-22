@@ -281,6 +281,7 @@ Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
 Route::post('product/downloadCSV', 'ProductController@downloadCSV');
 Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
 Route::post('product/getVendorByProductCount', 'ProductController@getVendorByProductCount');
+Route::post('product/getProductSize', 'ProductController@getProductSize');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
@@ -310,3 +311,5 @@ Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDet
 Route::post('affiliate/addAffiliate', 'AffiliateController@addAffiliate');
 Route::post('affiliate/getAffiliateData', 'AffiliateController@getAffiliateData');
 Route::post('affiliate/getAffiliateList', 'AffiliateController@getAffiliateList');
+Route::post('affiliate/getAffiliateDesignProduct', 'AffiliateController@getAffiliateDesignProduct');
+Route::post('affiliate/affiliateCalculation', 'AffiliateController@affiliateCalculation');
