@@ -178,7 +178,7 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id)
+        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id)
         {
             if($scope.order_design_position.length == '0')
             {
@@ -207,6 +207,7 @@
                     operation:operation,
                     design_id:$stateParams.id,
                     color_id:color_id,
+                    vendor_id:vendor_id,
                     is_supply:is_supply,
                     event: ev
                 },
