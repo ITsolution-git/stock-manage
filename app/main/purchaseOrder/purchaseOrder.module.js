@@ -20,10 +20,10 @@
                     }
                 },
                 resolve: {
-                    PurchaseOrderData: function (msApi)
+                   checksession : function (sessionService)
                     {
-                        return msApi.resolve('purchaseOrder@get');
-                    }
+                        return sessionService.AccessService('CA,BC');
+                    },
                 }
             }).state('app.purchaseOrder.companyPO', {
                 url  : '/companyPO/:id',
@@ -60,7 +60,6 @@
         $translatePartialLoaderProvider.addPart('app/main/purchaseOrder');
 
         // Api
-        msApiProvider.register('purchaseOrder', ['app/data/purchaseOrder/purchaseOrder.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
@@ -70,7 +69,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.purchaseOrder', {
-            //title    : 'Purchase Order',
+            title    : 'Purchase Order',
             icon     : 'icon-basket',
             state    : 'app.purchaseOrder',
             /*stateParams: {

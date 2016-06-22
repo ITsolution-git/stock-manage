@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Company;
 use App\Vendor;
+use App\Purchase;
 use DB;
 
 use Request;
@@ -20,11 +21,12 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase ) 
     {
         $this->common = $common;
         $this->company = $company;
         $this->vendor = $vendor;
+        $this->purchase = $purchase;
 
     }
 
@@ -982,6 +984,23 @@ class CommonController extends Controller {
                 0=>array('key' => 'name_company', 'name' => 'Name'),
                 1=>array('key' => 'email', 'name' => 'Email'),
                 2=>array('key' => 'prime_phone_no', 'name' => 'Phone'),
+                );
+
+        }
+        if($post['filter']['function']=='purchase_list') // PURCHASE LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->purchase->ListPurchase($post);
+            $header = array(
+                0=>array('key' => 'po.po_id', 'name' => 'PO#'),
+                1=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                2=>array('key' => 'po.po_type', 'name' => 'PO Type'),
+                3=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
+                5=>array('key' => 'po.date', 'name' => 'Created Date'),
                 );
 
         }

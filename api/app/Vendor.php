@@ -53,9 +53,7 @@ class Vendor extends Model {
         */
         return $returnData;
 
-        $whereConditions = ['status' => '1','is_delete' => '1','company_id' => $post['cond']['company_id']];
-        $vendorData = DB::table('vendors')->where($whereConditions)->orderBy('id', 'desc')->get();
-        return $vendorData;
+
     }
 
 /**
