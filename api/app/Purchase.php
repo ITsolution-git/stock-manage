@@ -15,22 +15,55 @@ class Purchase extends Model {
         $this->common = $common;
     }
 	
-	function ListPurchase($type,$company_id)
+	function ListPurchase($post)
 	{
+		$search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
 		$result = DB::table('purchase_order as po')
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type')
+					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type','po.date')
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
-					->where('po.po_type','=',strtolower($type))
-					->where('ord.company_id','=',$company_id)
-					->GroupBy('po.po_id')
-					->orderBy('po.po_id', 'desc')
-					->get();
+					->where('ord.company_id','=',$post['company_id']);
+
+					if($search != '')               
+                  	{
+                      $result = $result->Where(function($query) use($search)
+                      {
+                          $query->orWhere('po.po_id', 'LIKE', '%'.$search.'%')
+                                ->orWhere('ord.id','LIKE', '%'.$search.'%')
+                                ->orWhere('cl.client_company','LIKE', '%'.$search.'%')
+                                ->orWhere('v.name_company','LIKE', '%'.$search.'%')
+                                ->orWhere('po.date','LIKE', '%'.$search.'%');
+                      });
+                  	}
+                 $result = $result->GroupBy('po.po_id')
+				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+				 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+		
+		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+        $check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
+        if(count($result)>0)
+        {
+          foreach ($result as $key=>$value) 
+          {
+            $result[$key]->date =date('m/d/Y',strtotime($value->date)) ;
+            $result[$key]->po_type =$check_array[$value->po_type] ;
+          }
+        }
+		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $result;
+        $returnData['count'] = $count[0]->Totalcount;		
 		//echo "<pre>"; print_r($result); die();
-		return $result;
+		return $returnData;
 	}
 	function GetPodata($id,$company_id)
 	{

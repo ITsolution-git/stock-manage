@@ -6,7 +6,7 @@
             .module('app.client')
             .controller('ProfileViewController', ProfileViewController)
             .controller('CompanyInfo', CompanyInfo);
-
+ 
     /** @ngInject */
     function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
