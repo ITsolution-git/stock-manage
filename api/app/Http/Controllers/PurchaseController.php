@@ -28,7 +28,45 @@ class PurchaseController extends Controller {
     public function createPO()
     {
         $post = Input::all();
-        print_r($post);exit;
+
+        if(!empty($post['company_id']) && !empty($post['order_id']))
+        {
+            $po_type = !empty($post['po_type'])?$post['po_type']:'';
+            $order_data = $this->purchase->getOrderData($post['company_id'],$post['order_id'],$po_type);
+            
+            if(count($order_data)>0)
+            {
+                foreach ($order_data as $key=>$value) 
+                {
+                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key);
+                    if($purchase_order_id=='0')
+                    {
+                        $response = array('success' => 0, 'message' => "Purchase order is already created.");
+                        return response()->json(["data" => $response]);
+                    }
+                    else
+                    {
+                        foreach($order_data[$key] as $detail_key=>$detail_value) 
+                        {
+                            $purchase_order_line = $this->purchase->insert_purchase_order_line($detail_value,$purchase_order_id);
+                        }
+                    }
+                    
+                }
+                $response = array('success' => 1, 'message' => "Purchase order created succfully.",'data'=>$order_data);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Purchase order is already created.");
+            }
+        }
+        else
+        {
+            $order_data='';
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+       // print_r($post);exit;
+       return response()->json(["data" => $response]);
     }
 
     /*=====================================
