@@ -1098,4 +1098,20 @@ public function create_dir($dir_path) {
         $data = array("success"=>1,"records"=>$purchase_detail);
         return response()->json(['data'=>$data]);
     }
+    public function checkProductExist()
+    {
+        $data = Input::all();
+        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $data['design_id'],'product_id' => $data['product_id'],'is_delete' => '1'),array());
+
+        if(!empty($design_product))
+        {
+            $success = 1;
+        }
+        else
+        {
+            $success = 0;
+        }
+        $data = array("success"=>1,"records"=>$design_product);
+        return response()->json(['data'=>$data]);
+    }
 }

@@ -282,6 +282,7 @@ Route::post('product/downloadCSV', 'ProductController@downloadCSV');
 Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
 Route::post('product/getVendorByProductCount', 'ProductController@getVendorByProductCount');
 Route::post('product/getProductSize', 'ProductController@getProductSize');
+Route::post('product/checkProductExist', 'ProductController@checkProductExist');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
