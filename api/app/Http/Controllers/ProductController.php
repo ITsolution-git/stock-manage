@@ -749,6 +749,7 @@ public function create_dir($dir_path) {
         $data = Input::all();
         $result = $this->product->designProduct($data);
 
+
         if(empty($result))
         {
            $response = array(
@@ -1111,7 +1112,7 @@ public function create_dir($dir_path) {
         {
             $success = 0;
         }
-        $data = array("success"=>1,"records"=>$design_product);
+        $data = array("success"=>$success,"records"=>$design_product);
         return response()->json(['data'=>$data]);
     }
 }

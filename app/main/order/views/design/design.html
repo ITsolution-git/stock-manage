@@ -367,18 +367,18 @@
                         </div>
                     </div>
                     <div ng-if="!product.expanded" layout="row" layout-align="space-between start" >
-                        <div layout="row" layout-align="space-between start" flex="35">
+                        <div layout="row" layout-align="space-between start" flex="20">
                             <div layout="column">
                                 <div class="h4 p-b-10">Description</div>
                                 <p class="grey-color" ng-bind-html="product.description"></p>
                                 
                             </div>   
                                                     </div>
-                        <div layout="row" flex="65"  layout-align="space-between start" layout-padding>
+                        <div layout="row" flex="80"  layout-align="space-between start" layout-padding>
                             <div layout="column" flex="10">
                                 <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
                             </div>
-                            <div layout="column" flex="38">
+                            <div layout="column" flex="35">
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Average Garment Cost</div>
                                     <div class="h5 grey-color font-14 ">${{product.avg_garment_cost}}</div>
@@ -413,7 +413,7 @@
                                 </div>
                             </div> 
                             <div layout="column" flex="40">
-                                <div layout="column">
+                                <div layout="column" class="pd15-LR">
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Markup %</div>
                                         <div class="h5 grey-color font-14">${{product.markup}}</div>
@@ -441,7 +441,54 @@
                                         <div class="h5 grey-color font-14">${{product.sales_total}}</div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            <div layout="column" flex="25">
+                                <md-card class="m-b-20 newbox-typ">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            Packing Information
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                    <md-card-content class="pad0 package-height scrollable" ms-scroll>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Packing</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Hang Tag</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Poly Bagging</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Packing</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Hang Tag</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Poly Bagging</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Packing</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Hang Tag</div>
+                                            <span>$10</span>
+                                        </div>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
+                                            <div>Poly Bagging</div>
+                                            <span>$10</span>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
                         </div>  
                     </div>
                 </div>
