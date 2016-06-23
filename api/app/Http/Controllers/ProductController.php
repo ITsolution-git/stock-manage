@@ -699,13 +699,13 @@ public function create_dir($dir_path) {
         
         $design_product_total = $this->order->getDesignTotal($order_id);
 
-        $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_calculate' => '1'),array());
+        $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_delete' => '1'),array());
 
         $total_screens = 0;
         $total_press_setup = 0;
         foreach ($all_design as $design) {
             
-            $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1','is_calculate' => '1'),array());
+            $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1'),array());
             
             foreach ($position_data as $row) {
 
@@ -720,20 +720,20 @@ public function create_dir($dir_path) {
             }
         }
 
-        $order_total = $total_screens + $total_press_setup + $design_product_total;
+        $order_charges_total =  $total_screens + $total_press_setup + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
+                                $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
+                                $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
+
+        $order_total = $design_product_total + $order_charges_total - $order_data[0]->discount;
         $tax = $order_total * $order_data[0]->tax_rate/100;
         $grand_total = $order_total + $tax;
         $balance_due = $grand_total - $order_data[0]->total_payments;
-
-        $order_charges_total = $total_screens + $total_press_setup + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
-                                $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
-                                $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
 
         $update_order_arr = array(
                                 'screen_charge' => $total_screens,
                                 'press_setup_charge' => $total_press_setup,
                                 'order_line_total' => round($design_product_total,2),
-                                'order_total' => round($order_total,2) + round($order_charges_total,2),
+                                'order_total' => round($order_total,2),
                                 'tax' => round($tax,2),
                                 'grand_total' => round($grand_total,2),
                                 'balance_due' => round($balance_due,2),

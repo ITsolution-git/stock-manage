@@ -386,7 +386,7 @@ class Product extends Model {
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id'];
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
@@ -418,12 +418,45 @@ class Product extends Model {
                 }
                 
                 $combine_array[$product->id] = $product;
+
+                $whereConditions = ['order_id' => $product->order_id,'design_id' => $product->design_id,'product_id'=>$product->id];
+                $items = DB::table('order_item_mapping')->where($whereConditions)->get();
+
+                $order = DB::table('orders')->where('id','=',$product->order_id)->get();
+
+                $whereConditions = ['price_id' => $order[0]->price_id,'is_per_order' => '1'];
+                $order_items = DB::table('price_grid_charges')->where($whereConditions)->get();
+
+                $product_finishing_data = array();
+                foreach ($order_items as $order_item)
+                {
+                    $i = 0;
+                    foreach ($items as $item)
+                    {
+                        if($item->item_id == $order_item->id)
+                        {
+                            $i = 1;
+                        }
+                    }
+                    
+                    if($i == 1)
+                    {
+                        $order_item->selected = '1';
+                        $product->order_items[] = $order_item;
+                    }
+                    else
+                    {
+                        $order_item->selected = '0';
+                        $product->order_items[] = $order_item;
+                    }
+                }
             }
         }
         else
         {
             return array();
         }
+
         return $combine_array;
     }
 
@@ -609,7 +642,7 @@ class Product extends Model {
 
     public function getAffiliateDesignProduct($design_id)
     {
-        $whereConditions = ['dp.design_id' => $design_id,'dp.is_affiliate_design' => '0'];
+        $whereConditions = ['dp.design_id' => $design_id,'dp.assign_to_affiliate' => '0'];
         $productData = DB::table('products as p')
                          ->leftJoin('design_product as dp', 'p.id', '=', 'dp.product_id')
                          ->select('p.name as product_name','dp.id as design_product_id')

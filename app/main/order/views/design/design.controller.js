@@ -24,9 +24,9 @@
             
             $http.post('api/public/order/designDetail',combine_array_id).success(function(result, status, headers, config) {
                
+                $("#ajax_loader").hide();
                 if(result.data.success == '1') {
-                    
-                     $("#ajax_loader").hide();
+                     
                     $scope.order_id = result.data.records[0].order_id;
 
                     $scope.designInforamtion = result.data.records[0];
@@ -39,11 +39,13 @@
         }
 
         $scope.designProductData = function(){
-
+            $("#ajax_loader").show();
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             
             $http.post('api/public/product/designProduct',combine_array_id).success(function(result, status, headers, config) {
+                
+                $("#ajax_loader").hide();
                 if(result.data.success == '1') {
                     $scope.productData = result.data.productData;
                 }
@@ -563,6 +565,34 @@
 
             $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
                 $scope.designProductData();
+            });
+        }
+
+        $scope.assign_item = function(item,item_name,item_charge,item_id,product_id,design_id){
+            
+            $("#ajax_loader").show();
+            var item_array = {
+                                'item':item,
+                                'item_name':item_name,
+                                'item_charge':item_charge,
+                                'item_id':item_id,
+                                'order_id':$scope.order_id,
+                                'company_id':sessionService.get('company_id'),
+                                'product_id':product_id,
+                                'design_id':design_id
+                            };
+
+            $http.post('api/public/order/addRemoveToFinishing',item_array).success(function(result) {
+
+                $("#ajax_loader").hide();
+                if(result.data.success == '1') {
+                    $scope.designProductData();
+                }
+                else {
+                    var data = {"status": "error", "message": result.data.message}
+                    notifyService.notify(data.status, data.message);               
+                }
+                
             });
         }
     }

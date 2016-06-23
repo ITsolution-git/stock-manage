@@ -23,6 +23,7 @@
         $scope.shop_invoice = Order.order.grand_total;
         $scope.affiliate_invoice = 0;
         $scope.total = 0;
+        $scope.design_product_id = 0;
 
         $scope.finalCalcualtion = function()
         {
@@ -79,6 +80,7 @@
         {
             var size_data = {};
             size_data ={design_product_id:design_product_id}
+            $scope.design_product_id = design_product_id;
 
             // GET CLIENT TABLE CALL
             $http.post('api/public/product/getProductSize',size_data).success(function(result)
@@ -109,6 +111,12 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
+            if($scope.design_product_id == '0')
+            {
+                var data = {"status": "error", "message": "Please select product"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
             $scope.execute = 1;
 /*            angular.forEach($scope.sizes, function(size) {
                 if(size.affiliate_qnty > 0)
@@ -124,11 +132,14 @@
             }
             else
             {
-                var affiliate_data = {'order_id':$scope.order_id,'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizes':$scope.sizes,
+                var affiliate_data = {'order_id':$scope.order_id,'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizes':$scope.sizes,'design_product_id':$scope.design_product_id,
                                     'total_affiliate':$scope.total_affiliate,'additional_charges':$scope.additional_charges,'total_not_assign':$scope.total_not_assign,
                                     'notes':$scope.notes,'shop_invoice':$scope.shop_invoice,'affiliate_invoice':$scope.affiliate_invoice,'total':$scope.total};
+
+                $("#ajax_loader").show();
                 
                 $http.post('api/public/affiliate/addAffiliate',affiliate_data).success(function(result) {
+                    $("#ajax_loader").hide();
                     if(result.data.success == '1') 
                     {
                         $mdDialog.hide();

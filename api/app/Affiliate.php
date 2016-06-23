@@ -59,7 +59,7 @@ class Affiliate extends Model {
 
     public function getUnassignCount($data)
     {
-        $whereConditions = ['od.order_id' => $data['id'],'is_distribute' => '0','pd.is_delete' => 1];
+        $whereConditions = ['od.order_id' => $data['id'],'is_distribute' => '0','od.is_delete' => '1'];
         $listArray = [DB::raw('SUM(pd.qnty) as total')];
         $affiliatesData = DB::table('purchase_detail as pd')
                          ->leftJoin('order_design as od','pd.design_id','=','od.id')

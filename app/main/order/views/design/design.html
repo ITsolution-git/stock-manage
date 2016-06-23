@@ -450,41 +450,9 @@
                                         </md-card-title-text>
                                     </md-card-title>
                                     <md-card-content class="pad0 package-height scrollable" ms-scroll>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Packing</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Hang Tag</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Poly Bagging</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Packing</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Hang Tag</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Poly Bagging</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Packing</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Hang Tag</div>
-                                            <span>$10</span>
-                                        </div>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center">
-                                            <div>Poly Bagging</div>
-                                            <span>$10</span>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product.id,product.design_id)">
+                                            <div>{{order_item.item}}</div>
+                                            <span>${{order_item.charge}}</span>
                                         </div>
                                     </md-card-content>
                                 </md-card>

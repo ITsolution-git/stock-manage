@@ -66,6 +66,8 @@ class AffiliateController extends Controller {
     {
         $post = Input::all();
 
+        //print_r($post);exit;
+
         $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id'],'parent_order_id' => '0'),array());
         unset($order_data[0]->id);
         $insert_arr = json_decode(json_encode($order_data[0]),true);
@@ -74,7 +76,9 @@ class AffiliateController extends Controller {
         unset($order_design[0]->id);
         $insert_order_design = json_decode(json_encode($order_design[0]),true);
 
-        $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $post['design_id'],'is_affiliate_design' => '0'),array());
+        $design_product = $this->common->GetTableRecords('design_product',array('id' => $post['design_product_id'],'is_affiliate_design' => '0'),array());
+        $this->common->UpdateTableRecords('design_product',array('id' => $post['design_product_id']),array('assign_to_affiliate' => '1'));
+
         $affiliate_data = $this->common->GetTableRecords('affiliates',array('id' => $post['affiliate_id']),array());
 
         $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $post['design_id']),array());
@@ -84,6 +88,9 @@ class AffiliateController extends Controller {
 
         $insert_arr['parent_order_id'] = $post['order_id'];
         $insert_arr['affiliate_id'] = $post['affiliate_id'];
+        $insert_arr['shop_invoice'] = $post['shop_invoice'];
+        $insert_arr['affiliate_invoice'] = $post['affiliate_invoice'];
+        $insert_arr['total'] = $post['total'];
         $insert_arr['note'] = $post['notes'];
 
         $order_id = $this->common->InsertRecords('orders',$insert_arr);
@@ -105,6 +112,8 @@ class AffiliateController extends Controller {
 
             $insert_purchase_array = array(
                                             'design_id'=>$design_id,
+                                            'design_product_id'=>$design_product_id,
+                                            'product_id'=>$row['product_id'],
                                             'size'=>$row['size'],
                                             'sku'=>$row['sku'],
                                             'price'=>$row['price'],
