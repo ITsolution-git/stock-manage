@@ -26,6 +26,12 @@
                     },
                 }
             }).state('app.purchaseOrder.companyPO', {
+                resolve: {
+                   checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('CA,BC');
+                    },
+                },
                 url  : '/companyPO/:id',
                 views: {
                     'content@app': {
@@ -34,6 +40,12 @@
                     }
                 }
             }).state('app.purchaseOrder.viewNote', {
+                resolve: {
+                   checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('CA,BC');
+                    },
+                },
                 url  : '/viewNote/:id',
                 views: {
                     'content@app': {
@@ -42,6 +54,12 @@
                     }
                 }
             }).state('app.purchaseOrder.affiliatePO', {
+                resolve: {
+                   checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('CA,BC');
+                    },
+                },
                 url  : '/affiliatePO/:id',
                 views: {
                     'content@app': {
