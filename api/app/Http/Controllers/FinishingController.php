@@ -88,21 +88,21 @@ class FinishingController extends Controller {
 
         $result = $this->finishing->getFinishingdata($post);
 
+        foreach ($result['allData'] as $data) {
+            $inner_data = $this->finishing->getFinishingByOrder($data->order_id);
+            $data->order_finishing = $inner_data;
+        }
+
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'order.id', 'name' => 'Order ID'),
-                        1=>array('key' => 'f.qty', 'name' => 'Qty'),
-                        2=>array('key' => 'fc.category_name', 'name' => 'Finishing Item'),
-                        3=>array('key' => 'c.client_company', 'name' => 'Client'),
-                        4=>array('key' => 'f.start_time', 'name' => 'Start'),
-                        5=>array('key' => 'f.end_time', 'name' => 'End'),
-                        6=>array('key' => 'f.est', 'name' => 'EST Completion Time'),
-                        7=>array('key' => 'f.status', 'name' => 'Done?'),
-                        8=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.name', 'name' => 'Job Name'),
+                        2=>array('key' => 'c.client_company', 'name' => 'Client'),
+                        3=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -237,8 +237,10 @@ class FinishingController extends Controller {
 
         if(!empty($category))
         {
-            $finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qnty']);
-            $result = $this->finishing->addFinishing($finishingData);
+            //$finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qnty']);
+            $post['category_id'] = $category[0]->id;
+            unset($post['item_name']);
+            $result = $this->finishing->addFinishing($post);
         }
     }
 }

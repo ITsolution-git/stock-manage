@@ -19,17 +19,28 @@ class Affiliate extends Model {
         $whereConditions = ['o.parent_order_id' => $data['id']];
         
 
-        $listArray = ['a.name as affiliate_name','od.design_name','p.name as product_name','p.product_image','o.note','o.id','o.affiliate_id','dp.design_id'];
+        $listArray = ['a.name as affiliate_name','od.design_name','p.name as product_name','p.product_image','o.note','o.id','o.affiliate_id','dp.design_id','p.id as product_id','p.company_id','p.vendor_id'];
 
         $affiliatesData = DB::table('orders as o')
                          ->leftJoin('affiliates as a','o.affiliate_id','=', 'a.id')
                          ->leftJoin('order_design as od','o.id','=', 'od.order_id')
                          ->leftJoin('design_product as dp','od.id','=', 'dp.design_id')
                          ->leftJoin('products as p','dp.product_id','=', 'p.id')
+                         ->leftJoin('vendors as v','p.vendor_id','=', 'v.id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
 
+        foreach ($affiliatesData as $affiliate) {
+            if($affiliate->vendor_id >1)
+            {
+                $affiliate->product_image_view = UPLOAD_PATH.$affiliate->company_id."/products/".$affiliate->product_id."/".$affiliate->product_image;
+            }
+            else
+            {
+                $affiliate->product_image_view = "https://www.ssactivewear.com/".$affiliate->product_image;
+            }            
+        }
         return $affiliatesData;
     }
 

@@ -120,7 +120,8 @@
                     <div layout="row" layout-align="space-between start" flex="30">
                         <div class="ad-product-img md-whiteframe-1dp" layout-align="center center" layout="row">
                             <!-- <div class="h5 grey-color font-14">Product Image</div> -->
-                            <img src="https://www.ssactivewear.com/{{row.product_image}}">
+                            <img ng-if="row.product_image != ''" src="{{row.product_image_view}}" class="popup-image">
+                            <img ng-if="row.product_image == ''" src="{{NoImage}}" class="popup-image">
                         </div>  
                     </div>    
                     <div layout="column" flex="75">
