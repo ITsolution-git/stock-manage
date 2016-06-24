@@ -24,42 +24,53 @@
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             
-                                 <td class="accor" ng-show="row.order_finishing.length > 0">
-                            <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
-                            <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
-                        </td>
-                        <td  ng-show="row.order_finishing.length == 0">
-                            &nbsp;
-                        </td>
+                            <td class="accor" ng-show="row.order_finishing.length > 0">
+                                <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                                <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                            </td>
+                            <td  ng-show="row.order_finishing.length == 0">
+                                &nbsp;
+                            </td>
                         </tr>
-                                <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
-                                    <td colspan="8" class="collpas">
-                                    <table class="dataTable row-border hover" >
-                                        <thead>
-                                            <th>Design</th>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                            <th>Finishing Item</th>
-                                            <th>Start</th>
-                                            <th>End</th>
-                                            <th>EST Completion Time</th>
-                                            <th>Done</th>
-                                            
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="finishing in row.order_finishing">
-                                                <td class="cursor-p">{{finishing.design_name}}</td>
-                                                <td class="cursor-p">{{finishing.product_name}}</td>
-                                                <td class="cursor-p">{{finishing.qty}}</td>
-                                                <td class="cursor-p">{{finishing.category_name}}</td>
-                                                <td class="cursor-p">{{finishing.start_time}}</td>
-                                                <td class="cursor-p">{{finishing.end_time}}</td>
-                                                <td class="cursor-p">{{finishing.est}}</td>
-                                                <td class="cursor-p">Done</td>
-                    
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
+                            <td colspan="8" class="collpas">
+                                <table class="dataTable row-border hover" >
+                                    <thead>
+                                        <th>Design</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Finishing Item</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>EST Completion Time</th>
+                                        <th>Done?</th>
+                                        <th>Operation</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="finishing in row.order_finishing">
+                                            <td class="cursor-p">{{finishing.design_name}}</td>
+                                            <td class="cursor-p">{{finishing.product_name}}</td>
+                                            <td class="cursor-p">{{finishing.qty}}</td>
+                                            <td class="cursor-p">{{finishing.category_name}}</td>
+                                            <td class="cursor-p">{{finishing.start_time}}</td>
+                                            <td class="cursor-p">{{finishing.end_time}}</td>
+                                            <td class="cursor-p">{{finishing.est}}</td>
+                                            <td>
+                                                <md-input-container flex=30 class="m-b-20 m-t-25">
+                                                    <md-select ng-model="finishing.status" aria-label="r1">
+                                                      <md-option ng-selected="{{finishing.status==1}}">
+                                                        Yes
+                                                       </md-option>
+                                                       <md-option ng-selected="{{finishing.status==0}}">
+                                                        No
+                                                       </md-option>
+                                                    </md-select>                                
+                                                </md-input-container>
+                                            </td>
+                                            <td class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">EDIT</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </td>
                         </tr>                    
                     </tbody>

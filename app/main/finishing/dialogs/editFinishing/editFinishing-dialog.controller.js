@@ -7,9 +7,12 @@
         .controller('EditFinishingDialogController', EditFinishingDialogController);
 
     /** @ngInject */
-    function EditFinishingDialogController($mdDialog,$controller,$state,  event,$scope,sessionService,$resource, DTOptionsBuilder, DTColumnBuilder)
+    function EditFinishingDialogController(Finishing,$mdDialog,$controller,$state,  event,$scope,sessionService,$resource, DTOptionsBuilder, DTColumnBuilder)
     {
         var vm = this;
+        console.log(Finishing);
+
+        $scope.finishing_data = Finishing;
 
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',

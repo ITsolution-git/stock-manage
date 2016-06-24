@@ -6,7 +6,7 @@
             .controller('FinishingController', FinishingController);
 
     /** @ngInject */
-    function FinishingController($$q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function FinishingController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
          vm.searchQuery = "";
 
@@ -116,7 +116,6 @@
 
               return $http.post('api/public/finishing/listFinishing',orderData).success(function(response) {
                 $("#ajax_loader").hide();
-                console.log(response);
                 var header = response.header;
                 $scope.success = response.success;
                 return {
@@ -130,21 +129,20 @@
         }
 
         function editFinishing(ev, finishing)
-            {
-                $mdDialog.show({
-                    controller: 'EditFinishingDialogController',
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/finishing/dialogs/editFinishing/editFinishing-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        Finishing: finishing,
-                        Finishing: vm.finishing,
-                        event: ev
-                    }
-                });
-            }
+        {
+            $mdDialog.show({
+                controller: 'EditFinishingDialogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/finishing/dialogs/editFinishing/editFinishing-dialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Finishing: finishing,
+                    event: ev
+                }
+            });
+        }
 
         // Data
         //vm.receiving = ReceivingData.data;

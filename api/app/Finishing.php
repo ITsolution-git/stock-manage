@@ -90,7 +90,7 @@ class Finishing extends Model {
 
     public function getFinishingByOrder($order_id)
     {
-        $listArray = ['f.id','f.qty','fc.category_name','f.status','f.note','f.category_id','f.time','f.start_time','f.end_time','f.est','od.design_name','p.name as product_name'];
+        $listArray = ['f.id','f.qty','fc.category_name','f.status','f.note','f.category_id','f.time','f.start_time','f.end_time','f.est','od.design_name','p.name as product_name','p.id as product_id','od.id as design_id'];
 
         $finishingData = DB::table('orders as o')
                         ->leftJoin('finishing as f', 'o.id', '=', 'f.order_id')
