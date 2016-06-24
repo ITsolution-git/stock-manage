@@ -31,19 +31,9 @@ class Finishing extends Model {
                         {
                           $finishingData = $finishingData->Where(function($query) use($search)
                           {
-                              $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('staff.first_name', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
+                              $query->orWhere('o.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
                           });
-                        }
-                        if(isset($post['filter']['seller']))
-                        {
-                          $finishingData = $finishingData->whereIn('order.sales_id', $post['filter']['seller']);
-                        }
-                        if(isset($post['filter']['client']))
-                        {
-                          $finishingData = $finishingData->whereIn('order.client_id', $post['filter']['client']);
                         }
                         $finishingData = $finishingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                         ->GroupBy('o.id')

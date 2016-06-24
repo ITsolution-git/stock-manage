@@ -6,7 +6,7 @@
             .controller('FinishingController', FinishingController);
 
     /** @ngInject */
-    function FinishingController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function FinishingController($$q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
          vm.searchQuery = "";
 
