@@ -105,38 +105,42 @@ class Purchase extends Model {
 					->get();
 		return $result;
 	}
-	function GetPoLinedata($id=0,$postatus=0)
+	function GetPoLinedata($po_id,$company_id)
 	{
 		$result = DB::table('purchase_order as po')
-					->leftJoin('orders as ord','po.order_id','=','ord.id')
-					->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-					->leftJoin('purchase_detail as pd','pd.id','=','pol.line_id')
-					->leftJoin('order_orderlines as oo','oo.id','=','pd.orderline_id')
-					->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
-					->leftJoin('misc_type as mt1','mt1.id','=','oo.color_id')
-					->leftJoin('color as c','c.id','=','oo.color_id')
-					->leftJoin('products as p','p.id','=','oo.product_id')
+					->JOIN('purchase_order_line as pol','pol.po_id','=','po.po_id')
+					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
+					->JOIN('order_design as od','od.id','=','pd.design_id')
+					->JOIN('orders as ord','od.order_id','=','ord.id')
+					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
+				    ->JOIN('products as p','p.id','=','pd.product_id')
+					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select('v.name_company','p.name as product_name','p.description as product_description','ord.job_name','po.po_id','mt.value as size_group','c.name as product_color','pd.size','pd.qnty','pol.*',DB::raw('(select sum(qnty_received) from purchase_received where poline_id=pd.id) as total_qnty'),'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
+					->select('v.name_company','v.url','p.name as product_name','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',DB::raw('(select sum(qnty_received) from purchase_received where poline_id=pd.id) as total_qnty'),'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
                       DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
                       DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete' )
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*' )
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
-					->where('pd.size','<>','')
-					->where('pd.size','<>','0')
 					->where('pd.qnty','<>','0')
 					->where('pd.qnty','<>','')
-					->where('pol.status','=',$postatus);
+					->where('pol.po_id','=',$po_id)
+					->Where('ord.company_id','=',$company_id)
+				  	->get();
 
-
-				  if(!empty($id))
-				  {
-
-				  	$result = $result->where('po.po_id','=',$id);
-				  }
-				  $result = $result->get();
+		$check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
+		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+		if(count($result)>0)
+		{
+			foreach ($result as $key=>$value) 
+          	{
+	            $result[$key]->po_type =$check_array[$value->po_type] ;
+          	}
+			array_walk_recursive($result[0], function(&$item) {
+	            $item = str_replace(array('00/00/0000'),array(''), $item);
+	        });
+		}
 
 		return $result;
 	}

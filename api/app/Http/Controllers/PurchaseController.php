@@ -181,22 +181,24 @@ class PurchaseController extends Controller {
         else
         {
             $this->purchase->Update_Ordertotal($po_id);
-            $po = $this->purchase->GetPodata($po_id,$company_id);
-            
-            if(count($po)>0)
+            //$po = $this->purchase->GetPodata($po_id,$company_id);
+            $poline = $this->purchase->GetPoLinedata($po_id,$company_id);
+
+            //echo "<pre>"; print_r($poline); echo "</pre>"; die;
+            if(count($poline)>0)
             {
-                $poline = $this->purchase->GetPoLinedata($po_id,'1',$company_id);
-                $unassign_order = $this->purchase->GetPoLinedata();
+                
+                //c$unassign_order = $this->purchase->GetPoLinedata();
 
                 $order_total = $this->purchase->getOrdarTotal($po_id);
                 
-                $received_total = $this->purchase->getreceivedTotal($po_id);
-                $received_line = $this->purchase->GetPoReceived($po_id,$company_id);
+               // $received_total = $this->purchase->getreceivedTotal($po_id);
+               // $received_line = $this->purchase->GetPoReceived($po_id,$company_id);
 
-                $list_vendors = $this->common->getAllVendors($company_id);
+              //  $list_vendors = $this->common->getAllVendors($company_id);
 
-                $order_id = $po[0]->order_id;
-                $result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
+                $po_data = $poline[0];
+                $result = array('po_data'=>$po_data,'poline'=>$poline,'order_total'=>$order_total);//,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
             }
             else
@@ -236,9 +238,18 @@ class PurchaseController extends Controller {
     public function EditOrderLine()
     {
          $post = Input::all();
-         $result = $this->purchase->EditOrderLine($post);
-         $response = array('success' => 1, 'message' => GET_RECORDS);
-         return  response()->json(["data" => $response]);
+         if(empty($post['po_id']) || empty($post['id']))
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+            die();
+        }
+        else
+        {
+            $result = $this->purchase->EditOrderLine($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD);
+            return  response()->json(["data" => $response]);
+        }
     }
     /*=====================================
     TO CALCULATION ONE CP AND CE SCREEN TOTAL AMOUNT
