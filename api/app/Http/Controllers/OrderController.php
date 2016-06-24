@@ -1553,7 +1553,7 @@ class OrderController extends Controller {
             $update_arr = array('extra_charges' => $extra_charges);
             $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id,'product_id' => $design->product_id),$update_arr);
 
-            $this->common->DeleteTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'item_id' => $post['item_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id']));
+            $this->common->DeleteTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id']));
             $this->common->DeleteTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id']));
         }
         else
@@ -1573,7 +1573,7 @@ class OrderController extends Controller {
             $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id']);
             $shipping_id = $this->common->InsertRecords('order_item_mapping',$insert_arr);
 
-            $item_data = array('item_name' => $post['item_name'],'order_id' => $post['order_id'],'total_qnty' => $total_qnty,'design_id' => $post['design_id'],'product_id' => $post['product_id']);
+            $item_data = array('item_name' => $post['item_name'],'order_id' => $post['order_id'],'qty' => $total_qnty,'design_id' => $post['design_id'],'product_id' => $post['product_id']);
             $return = app('App\Http\Controllers\FinishingController')->addFinishingItem($item_data);
         }
         $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['design_id']);

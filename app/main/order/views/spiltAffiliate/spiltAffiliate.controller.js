@@ -7,8 +7,9 @@
             .controller('SpiltAffiliateController', SpiltAffiliateController);
 
     /** @ngInject */
-    function SpiltAffiliateController($document, $window, $timeout, $mdDialog, $stateParams, $scope, $http, sessionService)
+    function SpiltAffiliateController($document, $window, $timeout, $mdDialog, $stateParams, $scope, $http, sessionService, AllConstant)
     {
+        $scope.NoImage = AllConstant.NoImage;
         $scope.order_id = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
 

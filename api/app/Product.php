@@ -411,7 +411,6 @@ class Product extends Model {
                 $product->sizeData = $sizeData;
 
                 if($product->vendor_id >1){
-                    $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
                     $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
                 } else {
                     $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
