@@ -166,5 +166,19 @@
             var query = vm.searchQuery;
             vm.tableInstance.search(query).draw();
         }
+        
+        $scope.changeStatus = function(finishing)
+        {
+            var finishing_data = {};
+            finishing_data.data = {
+                                    'status' : finishing.status
+                                };
+            finishing_data.cond = {};
+            finishing_data['table'] ='finishing';
+            finishing_data.cond['id'] = finishing.id;
+            $http.post('api/public/common/UpdateTableRecords',finishing_data).success(function(result) {
+            
+            });
+        }
     }
 })();
