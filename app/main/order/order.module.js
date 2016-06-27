@@ -26,10 +26,6 @@
                          /*var order_list_data = {};
                          order_list_data.cond ={company_id :sessionService.get('company_id')};*/
                         //    return msApi.resolve('order@post',order_list_data);
-                    },OrderUserData: function (msApi,sessionService)
-                    {
-                       return msApi.resolve('orderUser@get',{id:sessionService.get('company_id')});
-                       
                     },OrderCompanyData: function (msApi,sessionService)
                     {
                          var order_comp_data = {};
@@ -152,7 +148,7 @@
        // $translatePartialLoaderProvider.addPart('app/main/order');
 
       // Api
-      msApiProvider.register('orderUser',['api/public/common/getStaffList/:id',null, {get:{method:'get'}}]);
+    
       //msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
   
      
