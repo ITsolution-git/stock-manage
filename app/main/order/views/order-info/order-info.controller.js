@@ -359,8 +359,16 @@
             condition_obj.order_id = $scope.order_id;
             condition_obj.company_id = sessionService.get('company_id');
 
-            $http.post('api/public/purchase/createPO',condition_obj).success(function(result) {
-                
+            $http.post('api/public/purchase/createPO',condition_obj).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success',result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
             });
         }
 

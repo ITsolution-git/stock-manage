@@ -81,7 +81,7 @@
                 <tbody>
                     <tr ng-repeat="line_item in poline" >
                         <td>{{ line_item.product_name}}</td>
-                        <td>{{ line_item.sKU}}</td>
+                        <td>{{ line_item.sku}}</td>
                         <td>{{ line_item.size}}</td>
                         <td>{{ line_item.product_color}}</td>
                         <td>{{ line_item.qnty_ordered}} / {{ line_item.qnty_purchased}}</td>
@@ -125,7 +125,7 @@
             </md-card-content>
             <md-divider ></md-divider>
             <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight">EDIT</a>
+                <a class="font-14 chrome-weight" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
             </div>
         </md-card>
         <md-card class="m-b-20 m-l-20 m-r-15 " flex="27">
@@ -142,14 +142,14 @@
             </md-card-content>
             <md-divider ></md-divider>
             <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight" ui-sref="app.purchaseOrder.viewNote" >VIEW NOTES</a>
+                <a class="font-14 chrome-weight" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a>
             </div>
         </md-card>
     </div>
 </div>
 <div class="m-t-20 p-t-30">
     <div class="footer border-t-grey" layout-padding layout="row">
-        <md-button  class="close-btn border-t-grey right-m-0 " >
+        <md-button aria-label="Back" class="close-btn border-t-grey right-m-0 " >
             <md-icon md-font-icon="icon-close"></md-icon>
         </md-button>
         <div flex="35">

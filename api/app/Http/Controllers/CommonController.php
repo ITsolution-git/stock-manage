@@ -1004,6 +1004,20 @@ class CommonController extends Controller {
                 );
 
         }
+        if($post['filter']['function']=='purchase_notes') // PURCHASE LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->purchase->getPurchaseNote($post);
+            $header = array(
+                0=>array('key' => 'note.note_date', 'name' => 'Created date'),
+                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
+                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                );
+
+        }
         
         $records = $result['allData'];
 

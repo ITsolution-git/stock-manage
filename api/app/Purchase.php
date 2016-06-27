@@ -307,17 +307,48 @@ class Purchase extends Model {
         return $orderLineData;                
 	}
 
-	public function getPurchaseNote($id)
+	public function getPurchaseNote($post)
    	{
-       
-        $whereConditions = ['po_id' => $id];
-        $listArray = ['id','note',DB::raw('DATE_FORMAT(note_date, "%m/%d/%Y") as note_date')];
+       	$search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
 
-        $orderNoteData = DB::table('purchase_notes')
-                         ->select($listArray)
-                         ->where($whereConditions)
-                         ->get();
-        return $orderNoteData;
+		$result = DB::table('purchase_notes as note')
+					->select('*')
+					->where('note.is_deleted','=','1')
+					->where('note.po_id','=',$post['po_id']);
+
+					if($search != '')               
+                  	{
+                      $result = $result->Where(function($query) use($search)
+                      {
+                          $query->orWhere('note.note_title', 'LIKE', '%'.$search.'%')
+                                ->orWhere('note.note','LIKE', '%'.$search.'%')
+                                ->orWhere('note.note_date','LIKE', '%'.$search.'%');
+
+                      });
+                  	}
+                 $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+				 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+		
+		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+        if(count($result)>0)
+        {
+          foreach ($result as $key=>$value) 
+          {
+          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00')?date("Y-m-d"):$result[$key]->note_date;
+            $result[$key]->note_date =date('m/d/Y',strtotime($value->note_date)) ;
+          }
+        }
+		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $result;
+        $returnData['count'] = $count[0]->Totalcount;		
+		//echo "<pre>"; print_r($result); die();
+		return $returnData;
 	}
 	public function getPlacementData($po_id)
 	{
