@@ -1014,3 +1014,6 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
   box-shadow: none !important;
   border: 1px solid #ddd;
 }
+.disable-click {
+  pointer-events:none;
+}

@@ -582,7 +582,7 @@
                                 'design_id':design_id
                             };
 
-            $http.post('api/public/order/addRemoveToFinishing',item_array).success(function(result) {
+            $http.post('api/public/finishing/addRemoveToFinishing',item_array).success(function(result) {
 
                 $("#ajax_loader").hide();
                 if(result.data.success == '1') {

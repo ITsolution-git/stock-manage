@@ -16,7 +16,7 @@ class Category extends Model {
     }
     public function getCategoryByName($name)
     {
-        $result = DB::table('finishing_category')->select('id','category_name')->where('category_name','=',$name)->get();
+        $result = DB::table('price_grid_charges')->select('id','item')->where('item','=',$name)->get();
         return $result;
     }
 }
