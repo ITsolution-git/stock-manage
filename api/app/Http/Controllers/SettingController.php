@@ -525,36 +525,26 @@ class SettingController extends Controller {
     public function uploadPricingCSV() {
 
 
-
             if(Input::hasFile('import_file')){
 
-
             $path = Input::file('import_file')->getRealPath();
-
-
 
             $data = Excel::selectSheetsByIndex(0,1)->load($path, function($reader) {
 
             })->get();
 
 
-           
-
             if(!empty($data[0]) && $data->count()){
 
                 foreach ($data[0] as $key => $value) {
 
-
                     $insert[] = ['title' => $value->title, 'description' => $value->description];
                    
-
                 }
                
                 print_r($insert);
 
                 if(!empty($insert)){
-
-                  
 
                 }
 
@@ -571,8 +561,6 @@ class SettingController extends Controller {
                 print_r($insert2);
                
                 if(!empty($insert)){
-
-                   
 
                 }
 
