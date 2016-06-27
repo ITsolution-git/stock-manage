@@ -57,11 +57,11 @@
                                             <td class="cursor-p">{{finishing.est}}</td>
                                             <td>
                                                 <md-input-container flex=30 class="m-b-20 m-t-25">
-                                                    <md-select ng-model="finishing.status" aria-label="r1">
-                                                      <md-option ng-selected="{{finishing.status==1}}">
+                                                    <md-select ng-model="finishing.status" aria-label="r1" ng-change="changeStatus(finishing)">
+                                                      <md-option ng-selected="{{finishing.status==1}}" value="1">
                                                         Yes
                                                        </md-option>
-                                                       <md-option ng-selected="{{finishing.status==0}}">
+                                                       <md-option ng-selected="{{finishing.status==0}}" value="0">
                                                         No
                                                        </md-option>
                                                     </md-select>                                

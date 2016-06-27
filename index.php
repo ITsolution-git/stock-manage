@@ -257,6 +257,9 @@
     <script src="app/main/misc/misc.module.js"></script>
     <script src="app/main/misc/misc.controller.js"></script>
 
+    <script src="scripts/timeoff.js"></script>
+    <script src="scripts/date.js"></script>
+
 
 
     <!--Datatable Scrolling-->

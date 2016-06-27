@@ -32,7 +32,7 @@ class Finishing extends Model {
                           $finishingData = $finishingData->Where(function($query) use($search)
                           {
                               $query->orWhere('o.name', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
+                                    ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                           });
                         }
                         $finishingData = $finishingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
@@ -60,7 +60,7 @@ class Finishing extends Model {
 
     public function updateFinishing($data)
     {
-        $result = DB::table($data['table'])
+        $result = DB::table('finishing')
                     ->where($data['where'])
                     ->update($data['field']);
         
@@ -90,7 +90,7 @@ class Finishing extends Model {
 
     public function getFinishingByOrder($order_id)
     {
-        $listArray = ['f.id','f.qty','fc.category_name','f.status','f.note','f.category_id','f.time','f.start_time','f.end_time','f.est','od.design_name','p.name as product_name','p.id as product_id','od.id as design_id'];
+        $listArray = ['f.id','f.qty','fc.category_name','f.status','f.note','f.category_id','f.time','f.start_time','f.end_time','f.est','od.design_name','p.name as product_name','p.id as product_id','od.id as design_id','f.note'];
 
         $finishingData = DB::table('orders as o')
                         ->leftJoin('finishing as f', 'o.id', '=', 'f.order_id')
