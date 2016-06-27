@@ -29,6 +29,7 @@ class Affiliate extends Model {
                          ->leftJoin('vendors as v','p.vendor_id','=', 'v.id')
                          ->select($listArray)
                          ->where($whereConditions)
+                         ->orderBy('o.id','desc')
                          ->get();
 
         foreach ($affiliatesData as $affiliate) {
@@ -108,6 +109,7 @@ class Affiliate extends Model {
                          ->Join('products as p','dp.product_id','=', 'p.id')
                          ->select($listArray)
                          ->where($whereConditions)
+                         ->orderBy('o.id','desc')
                          ->get();
 
         if($affiliatesData[0]->affiliate_name == '' && $affiliatesData[0]->design_id == '' && $affiliatesData[0]->design_total == 0)

@@ -66,8 +66,6 @@ class AffiliateController extends Controller {
     {
         $post = Input::all();
 
-        //print_r($post);exit;
-
         $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id'],'parent_order_id' => '0'),array());
         unset($order_data[0]->id);
         $insert_arr = json_decode(json_encode($order_data[0]),true);
@@ -85,6 +83,8 @@ class AffiliateController extends Controller {
         unset($position_data[0]->id);
         unset($position_data[0]->design_id);
         $position_insert_data = json_decode(json_encode($position_data[0]),true);
+
+        $order_item_mapping = $this->common->GetTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $design_product[0]->product_id),array());
 
         $insert_arr['parent_order_id'] = $post['order_id'];
         $insert_arr['affiliate_id'] = $post['affiliate_id'];
@@ -104,7 +104,19 @@ class AffiliateController extends Controller {
 
         $design_product_id = $this->common->InsertRecords('order_design_position',$position_insert_data);
 
-        $insert_design_product = array('design_id' => $design_id, 'product_id' => $design_product[0]->product_id, 'is_affiliate_design' => '1');
+        $extra_charges = 0;
+        foreach($order_item_mapping as $item)
+        {
+            $price_grid_charges = $this->common->GetTableRecords('price_grid_charges',array('id' => $item->item_id),array());
+            $charge = $price_grid_charges[0]->charge;
+            $extra_charges += (int)$charge;
+            $insert_item = json_decode(json_encode($item),true);
+            $insert_item['design_id'] = $design_id;
+            $insert_item['order_id'] = $order_id;
+            $order_item_mapping_id = $this->common->InsertRecords('order_item_mapping',$insert_item);
+        }
+
+        $insert_design_product = array('design_id' => $design_id, 'product_id' => $design_product[0]->product_id, 'is_affiliate_design' => '1', 'extra_charges' => $extra_charges);
 
         $design_product_id = $this->common->InsertRecords('design_product',$insert_design_product);
 
@@ -124,11 +136,6 @@ class AffiliateController extends Controller {
             $this->common->InsertRecords('purchase_detail',$insert_purchase_array);
         }
 
-   //     $this->common->UpdateTableRecords('order_design',array('id' => $post['design_id'],'is_affiliate_design' => '1'));
-//        $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['product_id']),array('is_calculate' => '0'));
-        //$this->common->UpdateTableRecords('order_design_position',array('design_id' => $post['design_id']),array('is_calculate' => '0'));
-
-//        $return = app('App\Http\Controllers\OrderController')->calculateAll($post['order_id'],$order_data[0]->company_id);
         $return = app('App\Http\Controllers\OrderController')->calculateAll($order_id,$order_data[0]->company_id);
 
         $response = array(
