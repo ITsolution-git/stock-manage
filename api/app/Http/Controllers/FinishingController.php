@@ -151,49 +151,8 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        $finishingData['table'] = $post['table'];
-
-        if($post['field'] == 'category_name')
-        {
-            $category = $this->category->getCategoryByName($post['value']);
-            if(empty($category))
-            {
-                $category_id = $this->category->addcategory(array('category_name' => $post['value']));
-            }
-            else
-            {
-                $category_id = $category[0]->id;
-            }
-            $finishingData['field'] = array('category_id' => $category_id);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if($post['field'] == 'job_name')
-        {
-            $finishing_data = $this->finishing->getFinishingDetailById($post['id']);
-
-            $finishingData['field'] = array('job_name' => $post['value']);
-            $finishingData['where'] = array('id' => $finishing_data[0]->order_id);
-        }
-        if($post['field'] == 'note')
-        {
-            $finishingData['field'] = array('note' => $post['value']);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if($post['field'] == 'status')
-        {
-            $finishingData['field'] = array('status' => $post['value']);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if(isset($post['start_time']))
-        {
-            $finishingData['field'] = array('start_time' => $post['start_time'],'est' => $post['est']);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if(isset($post['end_time']))
-        {
-            $finishingData['field'] = array('end_time' => $post['end_time'],'est' => $post['est'],'status' => '1');
-            $finishingData['where'] = array('id' => $post['id']);
-        }
+        $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est']);
+        $finishingData['where'] = array('id' => $post['id']);
 
         $result = $this->finishing->updateFinishing($finishingData);
         
