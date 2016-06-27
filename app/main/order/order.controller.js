@@ -8,7 +8,7 @@
 
     /** @ngInject */
 
-    function OrderController(OrderData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function OrderController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
         vm.resetFilter = resetFilter;
         vm.showDatePicker = showDatePicker;

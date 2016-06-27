@@ -20,20 +20,10 @@
                     }
                 },
                 resolve: {
-                    OrderData: function (msApi,sessionService)
+                    checksession : function (sessionService,$stateParams,$state)
                     {
-                       
-                         /*var order_list_data = {};
-                         order_list_data.cond ={company_id :sessionService.get('company_id')};*/
-                        //    return msApi.resolve('order@post',order_list_data);
-                    },OrderCompanyData: function (msApi,sessionService)
-                    {
-                         var order_comp_data = {};
-                         order_comp_data.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
-                         order_comp_data.table ="client";
-
-                         //return msApi.resolve('orderClient@post',order_comp_data);
-                       //return msApi.resolve('order@post',order_list_data);
+                        
+                       return sessionService.AccessService('BC,CA');
                     }
                 }
             }).state('app.order.order-info', {
@@ -141,18 +131,7 @@
                         controller : 'AffiliateViewController as vm'
                     }
                 }
-            })
-            ;
-
-        // Translation
-       // $translatePartialLoaderProvider.addPart('app/main/order');
-
-      // Api
-    
-      //msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
-  
-     
-
+            });
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
