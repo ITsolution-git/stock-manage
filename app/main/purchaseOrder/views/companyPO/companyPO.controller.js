@@ -55,6 +55,14 @@
                     $scope.saveLinedata = function (line_data)
                     {
                        // $("#ajax_loader").show();
+                        //console.log(line_data.qnty);
+                        //console.log(line_data.qnty_ordered);
+                        if(parseInt(line_data.qnty_ordered) > parseInt(line_data.qnty))
+                        {
+                            notifyService.notify('error',"More then "+line_data.qnty+" quantity not allow.");
+                            return false;
+
+                        }
                         var purchase_array = {};
                         purchase_array.qnty_ordered = line_data.qnty_ordered;
                         purchase_array.unit_price = line_data.unit_price;
@@ -81,6 +89,56 @@
                     } 
                 },
                 templateUrl: 'app/main/purchaseOrder/dialogs/purchaseline/changeLinedata.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                    locals: {
+                        params:$scope,
+                        event: ev
+                    },
+                onRemoving : $scope.GetPodata
+            });
+        }
+        $scope.changeDropship = function (vendor_instruction,ev)
+        {
+        
+            $("#ajax_loader").show();
+            $mdDialog.show({
+                controllerAs: $scope,
+                controller:function ($scope, params)
+                {
+                    $scope.params = params;
+                    $scope.po_id = $scope.params.po_id;
+                    $scope.vendor_instruction = vendor_instruction;
+                    $("#ajax_loader").hide();
+                    $scope.SaveRecords = function(vendor_instruction){
+                            
+                        var UpdateArray = {};
+                        UpdateArray.table ='purchase_order';
+                        UpdateArray.data = {vendor_instruction:vendor_instruction};
+                        UpdateArray.cond = {po_id: $scope.po_id};
+
+                        $("#ajax_loader").show();
+                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                        {
+                            if(result.data.success=='1')
+                            {
+                                notifyService.notify('success', result.data.message);
+                               // $scope.closeDialog();
+                            }
+                            else
+                            {
+                                notifyService.notify('error', result.data.message);
+                            }
+                            $("#ajax_loader").hide();
+                        });
+                    } 
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    } 
+                },
+                templateUrl: 'app/main/purchaseOrder/dialogs/purchaseline/Dropship_instruction.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
