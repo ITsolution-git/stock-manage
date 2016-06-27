@@ -230,7 +230,7 @@ class Exporter
 
         if (is_string($value)) {
             // Match for most non printable chars somewhat taking multibyte chars into account
-            if (preg_match('/[^\x09-\x0d\x20-\xff]/', $value)) {
+            if (preg_match('/[^\x09-\x0d\x1b\x20-\xff]/', $value)) {
                 return 'Binary String: 0x' . bin2hex($value);
             }
 

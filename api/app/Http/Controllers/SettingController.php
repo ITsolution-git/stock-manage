@@ -15,6 +15,7 @@ use SplFileInfo;
 use DB;
 use Image;
 use Request;
+use Excel;
 
 class SettingController extends Controller {  
 
@@ -521,6 +522,70 @@ class SettingController extends Controller {
             fclose ($fd);
             exit;
     }*/
+    public function uploadPricingCSV() {
+
+
+
+            if(Input::hasFile('import_file')){
+
+
+            $path = Input::file('import_file')->getRealPath();
+
+
+
+            $data = Excel::selectSheetsByIndex(0,1)->load($path, function($reader) {
+
+            })->get();
+
+
+           
+
+            if(!empty($data[0]) && $data->count()){
+
+                foreach ($data[0] as $key => $value) {
+
+
+                    $insert[] = ['title' => $value->title, 'description' => $value->description];
+                   
+
+                }
+               
+                print_r($insert);
+
+                if(!empty($insert)){
+
+                  
+
+                }
+
+            }
+
+             if(!empty($data[1]) && $data->count()){
+
+                foreach ($data[1] as $key => $value) {
+
+
+                    $insert2[] = ['color' => $value->color, 'size' => $value->size];
+
+                }
+                print_r($insert2);
+               
+                if(!empty($insert)){
+
+                   
+
+                }
+
+            }
+
+        }
+
+        exit;
+
+        return back();
+
+        
+    }
 
   }
 

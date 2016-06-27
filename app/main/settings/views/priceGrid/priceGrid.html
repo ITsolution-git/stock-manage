@@ -5,7 +5,7 @@
                     <div class="title"><span class="basicInfoStyle">COMPANY PRICE GRIDS</span></div>
                 </div>
                 
-                <!--  <div class="order-modal-title " layout="row" layout-align="end end" flex="35" >
+                  <div class="order-modal-title " layout="row" layout-align="end end" flex="35" >
 
                         <form name="uploadPricecsv" id="uploadPricecsv" action="api/public/admin/uploadPricingCSV" method="post" enctype="multipart/form-data" target="_blank" class="width-auto">
                         <div class="fileUpload">
@@ -24,8 +24,17 @@
                                 <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
                             </a>
                        </form>
+
+
+                            <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="api/public/admin/uploadPricingCSV" class="form-horizontal" method="post" enctype="multipart/form-data">
+
+                                        <input type="file" name="import_file" />
+
+                                        <button class="btn btn-primary">Import File</button>
+
+                                    </form>
                
-                </div> -->
+                </div> 
                
             </div>
             <div class="ms-responsive-table-wrapper priceGridTableContainer pd15-LR">
