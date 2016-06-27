@@ -136,7 +136,7 @@
                                     'total_affiliate':$scope.total_affiliate,'additional_charges':$scope.additional_charges,'total_not_assign':$scope.total_not_assign,
                                     'notes':$scope.notes,'shop_invoice':$scope.shop_invoice,'affiliate_invoice':$scope.affiliate_invoice,'total':$scope.total};
 
-                $("#ajax_loader").show();
+                //$("#ajax_loader").show();
                 
                 $http.post('api/public/affiliate/addAffiliate',affiliate_data).success(function(result) {
                     $("#ajax_loader").hide();

@@ -238,7 +238,6 @@ Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
 Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
 Route::post('order/updateMarkup', 'OrderController@updateMarkup');
 Route::post('order/updateOverride', 'OrderController@updateOverride');
-Route::post('order/addRemoveToFinishing', 'OrderController@addRemoveToFinishing');
 Route::get('order/calculateAll/{order_id}/{company_id}', 'OrderController@calculateAll');
 
 
@@ -251,6 +250,7 @@ Route::post('finishing/removeFinishingItem', 'FinishingController@removeFinishin
 Route::post('finishing/addFinishingItem', 'FinishingController@addFinishingItem');
 Route::post('finishing/orderAdd', 'FinishingController@add');
 Route::post('finishing/orderEdit', 'FinishingController@edit');
+Route::post('finishing/addRemoveToFinishing', 'FinishingController@addRemoveToFinishing');
 
 // SHIPPING CONTROLLER
 Route::get('shipping/listShipping', 'ShippingController@listShipping');
