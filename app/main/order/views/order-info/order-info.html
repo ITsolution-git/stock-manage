@@ -150,7 +150,7 @@
             <div class="simple-table-container md-whiteframe-4dp m-b-20" >
                 <div class="table-title " layout="row" layout-align="space-between center">
                     <div class="table-title-text h2 text-semibold" >
-                        Purchase Orders(Demo)
+                        Purchase Orders
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
@@ -174,7 +174,7 @@
                                 </th>
                                 <th class="secondary-text">
                                     <div class="table-header">
-                                        <span class="column-title">Total # of Colors</span>
+                                        <span class="column-title">Vendor</span>
                                     </div>
                                 </th>
                                 <th class="secondary-text">
@@ -187,13 +187,12 @@
                             </tr>
                         </thead>
                         <tbody class="scrollable" ms-scroll>
-                            <tr ng-repeat="puchase in ::vm.purchases" class="cursor-p">
-                                <td>{{ puchase.poid}}</td>
-                                <td>{{ puchase.potype}}  
-                                </td>
-                                <td>{{ puchase.clientName}}</td>
-                                <td>{{ puchase.vendor}}</td>
-                                <td>{{ puchase.dateCreated}}
+                            <tr ng-repeat="puchase in order.purchase_orders" class="cursor-p">
+                                <td>{{ puchase.po_id}}</td>
+                                <td>{{ puchase.po_type}}</td>
+                                <td>{{ puchase.client_company}}</td>
+                                <td>{{ puchase.name_company}}</td>
+                                <td>{{ puchase.date}}
                                 </td> 
                                 <td class="text-right"> 
                                     <a  href="#" ui-sref="app.purchaseOrder.companyPO">VIEW PO</a>
@@ -201,7 +200,7 @@
                             </tr>
                         </tbody> 
                     </table>
-                    <div class="p-23">
+                    <div class="p-23">`
                     </div>
                 </div>
             </div> 
