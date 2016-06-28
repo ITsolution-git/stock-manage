@@ -991,7 +991,7 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'id';
+                $post['sorts']['sortBy'] = 'po.po_id';
             }
             $result = $this->purchase->ListPurchase($post);
             $header = array(
@@ -1004,7 +1004,7 @@ class CommonController extends Controller {
                 );
 
         }
-        if($post['filter']['function']=='purchase_notes') // PURCHASE LISTING CONDITION
+        if($post['filter']['function']=='purchase_notes') // PURCHASE NOTES LISTING CONDITION
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
@@ -1015,6 +1015,23 @@ class CommonController extends Controller {
                 0=>array('key' => 'note.note_date', 'name' => 'Created date'),
                 1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
                 2=>array('key' => 'note.note', 'name' => 'Note Description')
+                );
+
+        }
+        if($post['filter']['function']=='receive_list') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'po.po_id';
+            }
+            $result = $this->purchase->ListReceive($post);
+            $header = array(
+                0=>array('key' => 'po.po_id', 'name' => 'RO#'),
+                1=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                2=>array('key' => 'po.po_type', 'name' => 'PO Type'),
+                3=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
+                5=>array('key' => 'po.date', 'name' => 'Created Date'),
                 );
 
         }

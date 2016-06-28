@@ -19,30 +19,32 @@
                         controller : 'ReceivingController as vm'
                     }
                 },
+               
                 resolve: {
-                    ReceivingData: function (msApi)
+                    checksession : function (sessionService)
                     {
-                        return msApi.resolve('receiving@get');
-                    }
+                        return sessionService.AccessService('CA,BC');
+                    },
                 }
             }).state('app.receiving.receivingInfo', {
-            url: '/rInfo/:id',
+            url: '/receivePO/:id',
             views: {
                 'content@app': {
                     templateUrl: 'app/main/receiving/views/receivingInfo/receivingInfo.html',
                     controller: 'ReceivingInfoController as vm'
                 }
             },resolve: {
-                   
+                    checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('CA,BC');
+                    }
                 }
         })
             ;
 
         // Translation
         $translatePartialLoaderProvider.addPart('app/main/receiving');
-
         // Api
-        msApiProvider.register('receiving', ['app/data/receiving/receiving.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
@@ -52,7 +54,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.receiving', {
-           // title: 'Receiving',
+            title: 'Receiving',
             icon: 'icon-cart',
             state: 'app.receiving',
             /*stateParams: {
