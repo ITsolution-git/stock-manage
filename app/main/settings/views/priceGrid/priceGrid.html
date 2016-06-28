@@ -43,26 +43,21 @@
                
             </div>
             <div class="ms-responsive-table-wrapper priceGridTableContainer pd15-LR">
-                <div class="font-13 text-bold mrg10-T">Price Grid Name</div>
+                
                 <div class="order-container" ms-scroll>
-                    <table class="simple row-border hover" id="priceGrid" dt-options="vm.dtOptions">
+                    <table class="dataTable row-border hover" id="priceGrid" dt-options="vm.dtOptions">
+                        <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Price Grid Name</span>
+                                </div>
+                            </th>
+                        </thead>    
                        <tbody>
                             <tr class="cursor-p" ng-repeat="price_data in price">
                                 <td class="" ui-sref="app.settings.price-info({id:price_data.id})">{{price_data.name}}</td>
-                                <td class="text-right "> 
-                                    <!-- <md-menu>
-                                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                        </md-button>
-                                        <md-menu-content width="4">
-                                            <md-menu-item>
-                                                <md-button ng-click="updateTableField('is_delete','0','price_grid','id',price_data.id)">
-                                                    Delete Price Grid
-                                                </md-button>
-                                            </md-menu-item>
-                                        </md-menu-content>
-                                    </md-menu> -->
-                                </td>
+                               
                             </tr>
                         </tbody> 
                     </table>
