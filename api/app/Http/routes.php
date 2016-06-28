@@ -187,6 +187,7 @@ Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
 Route::post('purchase/getPurchaseNote/{id}', 'PurchaseController@getPurchaseNote');
 Route::post('purchase/createPDF', 'PurchaseController@createPDF');
 Route::post('purchase/createPO', 'PurchaseController@createPO');
+Route::get('purchase/GetPoReceived/{id}/{company_id}', 'PurchaseController@GetPoReceived');
 
 
 // ORDER CONTROLLER 
