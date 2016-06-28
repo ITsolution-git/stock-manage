@@ -488,12 +488,12 @@ class SettingController extends Controller {
         return response()->json(["data" => $response]);
 
     }
-/*
+
     public function downloadPricegridCSV()
     {
             $path = base_path().'/'; // change the path to fit your websites document structure
              
-            $dl_file = preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})", '', 'addpricegrid.csv'); // simple file name validation
+            $dl_file = preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})", '', 'addpricegrid.xlsx'); // simple file name validation
             $dl_file = filter_var($dl_file, FILTER_SANITIZE_URL); // Remove (more) invalid characters
             $fullPath = $path.$dl_file;
              
@@ -521,7 +521,7 @@ class SettingController extends Controller {
             }
             fclose ($fd);
             exit;
-    }*/
+    }
     public function uploadPricingCSV() {
 
 
