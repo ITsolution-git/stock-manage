@@ -52,9 +52,13 @@ class Purchase extends Model {
         $check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
         if(count($result)>0)
         {
+        	array_walk_recursive($result[0], function(&$item) {
+	            $item = str_replace(array('0000-00-00'),array(''), $item);
+	        });
+
           foreach ($result as $key=>$value) 
           {
-            $result[$key]->date =date('m/d/Y',strtotime($value->date)) ;
+            $result[$key]->date = (!empty($value->date)) ? date('m/d/Y',strtotime($value->date)) : '' ;
             $result[$key]->po_type =$check_array[$value->po_type] ;
           }
         }
@@ -231,31 +235,71 @@ class Purchase extends Model {
 	}
 	function GetPoReceived($po_id,$company_id)
 	{
-		$listArray = ['po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
-                      DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
-                      DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
-                      DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete'];
-
-		$result =  DB::table('purchase_order as po')
-					->leftJoin('orders as ord','po.order_id','=','ord.id')
-					->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-					->leftJoin('purchase_detail as pd','pd.id','=','pol.line_id')
-					->leftJoin('order_orderlines as oo','oo.id','=','pd.orderline_id')
-					->leftJoin('misc_type as mt','mt.id','=','oo.size_group_id')
-					->leftJoin('products as p','p.id','=','oo.product_id')
+		
+		$result = DB::table('purchase_order as po')
+					->JOIN('purchase_order_line as pol','pol.po_id','=','po.po_id')
+					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
+					->JOIN('order_design as od','od.id','=','pd.design_id')
+					->JOIN('orders as ord','od.order_id','=','ord.id')
+					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
+				    ->JOIN('products as p','p.id','=','pd.product_id')
+					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->join('purchase_received as pr','pr.poline_id','=','pol.id')
-					->select('v.name_company','ord.job_name','po.po_id','mt.value as size_group','pr.id as pr_id','pr.poline_id','pr.qnty_received','pd.size','pd.qnty','pol.*','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
+					->select('v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',
+						DB::raw('(select sum(qnty_received) from purchase_received where poline_id=pd.id) as total_qnty'),'po.po_id',
+						'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
                       DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
                       DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete')
-					->where('pr.po_id','=',$po_id)
-					->get();
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*' )
+					->where('ord.status','=','1')
+					->where('ord.is_delete','=','1')
+					->where('pd.qnty','<>','0')
+					->where('pd.qnty','<>','')
+					->where('pol.po_id','=',$po_id)
+					->Where('ord.company_id','=',$company_id)
+				  	->get();
 
-				 // echo "<pre>"; print_r($result); die;
-		return $result;
+		$check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
+		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+		if(count($result)>0)
+		{
+
+			$temp = array();
+			$temp['po_data']=array();
+			foreach ($result as $key=>$value) 
+          	{
+          		array_walk_recursive($value, function(&$item) {
+	            	$item = str_replace(array('00/00/0000'),array(''), $item);
+	        	});
+	            $temp['receive'][$value->product_id]['data'][$value->size]= $value;
+	            $temp['receive'][$value->product_id]['product'] = $value;
+	            $temp['po_data']= $result[0];
+          	}
+          	foreach ($temp['receive'] as $key => $value) 
+          	{
+          		$total_order = 0;
+          		$rec_qnty = 0;
+          		$short = 0;
+          		foreach ($value['data'] as $key_temp => $value_temp) 
+          		{
+          			$total_order += $value_temp->qnty_ordered;
+          			$rec_qnty += $value_temp->qnty_purchased;
+          			$short += $value_temp->short;
+
+          			$value['data'][$key_temp]->short_unit = ($value_temp->qnty_ordered - $value_temp->qnty_purchased);
+          			//$value['data'][$key_temp]['']
+          		}
+          		$temp['receive'][$key]['total_product'] = $total_order;
+          		$temp['receive'][$key]['total_received'] = $rec_qnty;
+          		$temp['receive'][$key]['total_defective'] = $short;
+          		$temp['receive'][$key]['total_remains'] = $total_order -$rec_qnty;
+
+          	}
+
+
+	    }
+		return $temp;
 	}
 
 	function Update_shiftlock($post)
@@ -326,7 +370,6 @@ class Purchase extends Model {
                           $query->orWhere('note.note_title', 'LIKE', '%'.$search.'%')
                                 ->orWhere('note.note','LIKE', '%'.$search.'%')
                                 ->orWhere('note.note_date','LIKE', '%'.$search.'%');
-
                       });
                   	}
                  $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
@@ -339,8 +382,7 @@ class Purchase extends Model {
         {
           foreach ($result as $key=>$value) 
           {
-          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00')?date("Y-m-d"):$result[$key]->note_date;
-            $result[$key]->note_date =date('m/d/Y',strtotime($value->note_date)) ;
+          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00' || empty($result[$key]->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
           }
         }
 		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
@@ -451,6 +493,62 @@ class Purchase extends Model {
 		$id = DB::getPdo()->lastInsertId();
         return $id;
 	}
+
+	function ListReceive($post)
+	{
+		$search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+		$result = DB::table('purchase_order as po')
+					->leftJoin('orders as ord','po.order_id','=','ord.id')
+					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
+					->leftJoin('vendors as v','v.id','=','po.vendor_id')
+					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type','po.date')
+					->where('ord.status','=','1')
+					->where('ord.is_delete','=','1')
+					->where('ord.company_id','=',$post['company_id']);
+
+					if($search != '')               
+                  	{
+                      $result = $result->Where(function($query) use($search)
+                      {
+                          $query->orWhere('po.po_id', 'LIKE', '%'.$search.'%')
+                                ->orWhere('ord.id','LIKE', '%'.$search.'%')
+                                ->orWhere('cl.client_company','LIKE', '%'.$search.'%')
+                                ->orWhere('v.name_company','LIKE', '%'.$search.'%')
+                                ->orWhere('po.date','LIKE', '%'.$search.'%');
+                      });
+                  	}
+                 $result = $result->GroupBy('po.po_id')
+				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+				 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+		
+		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+        $check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
+        if(count($result)>0)
+        {
+        	array_walk_recursive($result[0], function(&$item) {
+	            $item = str_replace(array('0000-00-00'),array(''), $item);
+	        });
+
+          foreach ($result as $key=>$value) 
+          {
+            $result[$key]->date = (!empty($value->date)) ? date('m/d/Y',strtotime($value->date)) : '' ;
+            $result[$key]->po_type =$check_array[$value->po_type] ;
+          }
+        }
+		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $result;
+        $returnData['count'] = $count[0]->Totalcount;		
+		//echo "<pre>"; print_r($result); die();
+		return $returnData;
+	}
+
 }
 
 ?>

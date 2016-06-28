@@ -311,8 +311,9 @@ class PurchaseController extends Controller {
     TO GET SCREEN PRINT AND EMBRODIERY DATA
     =====================================*/
 
-    public function GetScreendata($po_id,$company_id)
+    public function GetPoReceived($po_id,$company_id)
     {
+
         if(empty($po_id) || empty($company_id))
         {
             $response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id, company_id");
@@ -321,64 +322,12 @@ class PurchaseController extends Controller {
         }
         else
         {
-            $Misc_data = $this->AllMsiData($company_id);
-            $this->purchase->Update_Ordertotal($po_id);
-            $screen_data = $this->purchase->GetPodata($po_id,$company_id);
+            //$this->purchase->Update_Ordertotal($po_id);
+            $result = $this->purchase->GetPoReceived($po_id,$company_id);
+             
+            $order_total = $this->purchase->getOrdarTotal($po_id);
 
-
-            //echo "<pre>"; print_r($screen_data); echo "</pre>"; die;
-            if(count($screen_data)>0)
-            {
-                $screen_line = $this->purchase->GetScreendata($po_id,$company_id);
-                $order_total = $this->purchase->getOrdarTotal($po_id);
-                $placements = $this->purchase->getPlacementData($po_id);
-
-
-                $list_vendors = $this->common->getAllVendors($company_id);
-                $order_id = $screen_data[0]->order_id;
-                $order_line_data = $this->purchase->GetOrderLineData($order_id);
-
-                foreach ($screen_line as $key => $value) 
-                {
-                    $screen_line[$key]->position_name = (!empty($value->position))?$Misc_data[$value->position]:'';
-                }
-
-                if(!empty($order_line_data))
-                    {
-                        $sum = 0;
-                        foreach($order_line_data as $row)
-                        {
-                            $row->orderline_id = $row->id;
-                          
-
-                            $order_line_items = $this->order->getOrderLineItemById($row->id);
-                            $count = 1;
-                            $order_line = array();
-                            foreach ($order_line_items as $line) {
-                             
-                                $line->number = $count;
-                                $order_line[] = $line;
-                                $count++;
-                            }
-                            $row->items = $order_line;
-
-                            $order_line_data_new[] = $row;
-                        }
-                    }
-                        else
-                        {
-                            $order_line_data_new = array();
-                        }
-
-                $result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors,'order_line_data_new'=>$order_line_data_new,'placements'=>$placements );
-                $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result );
-            }
-            else
-            {
-                $response = array('success' => 0, 'message' => NO_RECORDS);
-                return  response()->json(["data" => $response]);
-                die();
-            }
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'order_total'=>$order_total);
         }
         return  response()->json(["data" => $response]);
     }

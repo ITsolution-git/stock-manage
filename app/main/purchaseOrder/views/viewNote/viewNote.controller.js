@@ -78,28 +78,32 @@
                     $scope.params = params;
                     $scope.note_data  = note_data;
                     //console.log($scope.note_data);
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    } 
                     $scope.addNote = function (notes) 
                     {
-                    var InserArray = {}; // INSERT RECORD ARRAY
+                        var InserArray = {}; // INSERT RECORD ARRAY
 
-                    InserArray.data = notes;
-                    InserArray.data.po_id = $scope.params.po_id;
-                    InserArray.data.note_date = AllConstant.currentdate;
-                    InserArray.table ='purchase_notes';            
+                        InserArray.data = notes;
+                        InserArray.data.po_id = $scope.params.po_id;
+                        InserArray.data.note_date = AllConstant.currentdate;
+                        InserArray.table ='purchase_notes';            
 
-                    // INSERT API CALL
-                    $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
-                    {   
-                        if(Response.data.success=='1')
-                        {
-                            notifyService.notify('success',Response.data.message);
-                            $scope.closeDialog();
-                        }
-                        else
-                        {
-                            notifyService.notify('error',Response.data.message);
-                        }  
-                    });
+                        // INSERT API CALL
+                        $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
+                        {   
+                            if(Response.data.success=='1')
+                            {
+                                notifyService.notify('success',Response.data.message);
+                                $scope.closeDialog();
+                            }
+                            else
+                            {
+                                notifyService.notify('error',Response.data.message);
+                            }  
+                        });
                     } 
                     $scope.editNote = function (notes) 
                     {
@@ -115,22 +119,16 @@
                             if(result.data.success=='1')
                             {
                                 notifyService.notify('success', result.data.message);
-                                $scope.closeDialog();
-                                 $mdDialog.hide();
                             }
                             else
                             {
                                 notifyService.notify('error', result.data.message);
                             }
+                            $scope.closeDialog();
                             $("#ajax_loader").hide();
                         });
 
                     } 
-                    $scope.closeDialog = function() 
-                    {
-                        $mdDialog.hide();
-                    } 
-
                 },
                 controllerAs: 'vm',
                 templateUrl: 'app/main/purchaseOrder/dialogs/'+flag+'/'+flag+'.html',
