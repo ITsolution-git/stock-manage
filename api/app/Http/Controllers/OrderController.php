@@ -197,22 +197,25 @@ class OrderController extends Controller {
            return response()->json(["data" => $response]);
         }
 
+        $finishing_count = $this->order->getFinishingCount($result['order'][0]->id);
+        $total_shipped_qnty = $this->order->getShippedByOrder($data);
+        $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
+        $dist_location = count($locations);
+        $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id);
 
-        $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
+        $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
+        $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
+        $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
 
-        if(!empty($order_items))
+        $result['order'][0]->purchase_orders = $purchase_orders;
+
+
+        //$order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
+
+        /*if(!empty($order_items))
         {
-            $items = $this->order->getItemsByOrder($data['id']);
-            $finishing_count = $this->order->getFinishingCount($data['company_id']);
-
-            $total_shipped_qnty = $this->order->getShippedByOrder($data);
-            $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
-            $dist_location = count($locations);
-
-            $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
-            $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
-            $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
-
+            //$items = $this->order->getItemsByOrder($data['id']);
+            
             foreach ($order_items as $order_item)
             {
                 $i = 0;
@@ -239,21 +242,22 @@ class OrderController extends Controller {
         else
         {
             $result['order_item'] = array();
-        }
+        }*/
 
         if (count($result) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['order'],
-                                'order_item' => $result['order_item']
+                                'order_item' => array()
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'records' => $result['order'],
-                                'order_item' => $result['order_item']);
+                                'order_item' => array()
+                            );
         } 
         return response()->json(["data" => $response]);
 

@@ -565,12 +565,12 @@ public function saveColorSize($post)
 
         return $qntyData[0]->total;
     }
-    public function getFinishingCount($company_id)
+    public function getFinishingCount($order_id)
     {
-        $whereConditions = ['company_id' => $company_id, 'is_finish' => '1'];
+        $whereConditions = ['order_id' => $order_id, 'is_delete' => '1'];
 
-        $orderData = DB::table('orders')
-                         ->select(DB::raw('COUNT(id) as total'))
+        $orderData = DB::table('finishing')
+                         ->select(DB::raw('COUNT(order_id) as total'))
                          ->where($whereConditions)
                          ->get();
 
@@ -587,5 +587,20 @@ public function saveColorSize($post)
                          ->get();
 
         return $qntyData[0]->total;
+    }
+    public function getPoByOrder($order_id)
+    {
+      $result = DB::table('purchase_order as po')
+                ->leftJoin('orders as ord','po.order_id','=','ord.id')
+                ->leftJoin('client as cl','ord.client_id','=','cl.client_id')
+                ->leftJoin('vendors as v','v.id','=','po.vendor_id')
+                ->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type',DB::raw('DATE_FORMAT(po.date,"%m/%d/%Y") as date'))
+                ->where('ord.status','=','1')
+                ->where('ord.is_delete','=','1')
+                ->where('ord.id','=',$order_id)
+                ->GroupBy('po.po_id')
+                ->get();
+
+      return $result;
     }
 }
