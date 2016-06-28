@@ -529,48 +529,155 @@ class SettingController extends Controller {
 
             $path = Input::file('import_file')->getRealPath();
 
-            $data = Excel::selectSheetsByIndex(0,1)->load($path, function($reader) {
+            $data = Excel::selectSheetsByIndex(0,1,2,3,4,5,6,7,8)->load($path, function($reader) {
 
             })->get();
 
-
+         
+           // code start for price grid name
             if(!empty($data[0]) && $data->count()){
 
                 foreach ($data[0] as $key => $value) {
 
-                    $insert[] = ['title' => $value->title, 'description' => $value->description];
-                   
+                    $insert[] = ['name' => $value->name];
                 }
                
-                print_r($insert);
+                
 
-                if(!empty($insert)){
+                if(!empty($insert)) {
 
+                       $insert[0]['company_id'] = $_POST['company_id'];
+                       $insert[0]['created_date'] = date('Y-m-d');
+                       
+
+                       $price_grid = $this->common->InsertRecords('price_grid',$insert[0]);
+                       $price_id = $price_grid;
+                       
                 }
 
             }
 
-             if(!empty($data[1]) && $data->count()){
+            // code end for price grid name
+
+            // code start for charges
+            if(!empty($data[1]) && $data[1]->count()){
 
                 foreach ($data[1] as $key => $value) {
 
-
-                    $insert2[] = ['color' => $value->color, 'size' => $value->size];
-
+                    $charges[] = ['discharge' => $value->discharge,'foil' => $value->foil,'number_on_dark' => $value->number_on_dark,'poly_bagging' => $value->poly_bagging,'specialty' => $value->speciality,'folding' => $value->folding,'number_on_light' => $value->number_on_light,'press_setup' => $value->press_setup,'color_matching' => $value->color_matching,'hang_tag' => $value->hang_tag,'over_size' => $value->oversize,'printed_names' => $value->printed_name,'embroidered_names' => $value->embroidered_names,'ink_changes' => $value->ink_charges,'over_size_screens' => $value->oversize_screens,'screen_fees' => $value->screen_fees,'shipping_charge' => $value->shipping_charge];
                 }
-                print_r($insert2);
                
-                if(!empty($insert)){
+                if(!empty($charges)) {
 
+                       $charges[0]['updated_date'] = date('Y-m-d');
+                       $this->common->UpdateTableRecords('price_grid',array('id' => $price_id),$charges[0]);
+                       
                 }
 
             }
 
+           // code end for charges
+
+           // code start for charges List
+
+                if(!empty($data[2]) && $data[2]->count()){
+
+                foreach ($data[2] as $key => $value) {
+
+                     $this->common->InsertRecords('price_grid_charges',array('price_id' => $price_id,'item' => $value->item,'charge' => $value->charge,'time' => $value->time,'is_per_line' => $value->available_to_per_line,'is_per_order' => $value->available_to_per_order,'is_per_screen_set' => $value->available_to_per_screen_set,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+
+                 }
+
+            }
+
+           // code end for charges List
+
+            // code start for Screen printing primary
+
+                if(!empty($data[3]) && $data[3]->count()){
+
+                foreach ($data[3] as $key => $value) {
+
+                     $this->common->InsertRecords('price_screen_primary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+
+                 }
+
+            }
+
+           // code end for Screen printing primary
+
+            // code start for Screen secondary primary
+
+                if(!empty($data[4]) && $data[4]->count()){
+
+                foreach ($data[4] as $key => $value) {
+
+                     $this->common->InsertRecords('price_screen_secondary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+
+                 }
+
+            }
+
+           // code end for Screen secondary primary
+
+            // code start for Embroidery header
+
+                if(!empty($data[5]) && $data[5]->count()){
+
+                foreach ($data[5] as $key => $value) {
+
+                     $embroidery_switch_id = $this->common->InsertRecords('embroidery_switch_count',array('price_id' => $price_id,'range_low_1' => $value->range_low_1,'range_high_1' => $value->range_high_1,'range_low_2' => $value->range_low_2,'range_high_2' => $value->range_high_2,'range_low_3' => $value->range_low_3,'range_high_3' => $value->range_high_3,'range_low_4' => $value->range_low_4,'range_high_4' => $value->range_high_4,'range_low_5' => $value->range_low_5,'range_high_5' => $value->range_high_5,'range_low_6' => $value->range_low_6,'range_high_6' => $value->range_high_6,'range_low_7' => $value->range_low_7,'range_high_7' => $value->range_high_7,'range_low_8' => $value->range_low_8,'range_high_8' => $value->range_high_8,'range_low_9' => $value->range_low_9,'range_high_9' => $value->range_high_9,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+
+                 }
+
+            }
+
+           // code end for Embroidery header
+
+            // code start for Embroidery Price
+
+                if(!empty($data[6]) && $data[6]->count()){
+
+                foreach ($data[6] as $key => $value) {
+
+                     $this->common->InsertRecords('price_screen_embroidery',array('price_id' => $price_id,'embroidery_switch_id' => $embroidery_switch_id,'range_low' => $value->range_low,'range_high' => $value->range_high,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+
+                 }
+
+            }
+
+           // code end for Embroidery Price
+
+            // code start for Embroidery Price
+
+                if(!empty($data[7]) && $data[7]->count()){
+
+                foreach ($data[7] as $key => $value) {
+
+                     $this->common->InsertRecords('price_direct_garment',array('price_id' => $price_id,'range_low' => $value->range_low,'range_high' => $value->range_high,'pricing_1c' => $value->light_44,'pricing_2c' => $value->dark_44,'pricing_3c' => $value->light_66,'pricing_4c' => $value->dark_66,'pricing_5c' => $value->light_1010,'pricing_6c' => $value->dark_1010,'pricing_7c' => $value->light_1212,'pricing_8c' => $value->dark_1212,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+
+                 }
+
+            }
+
+           // code end for Embroidery Price
+
+            // code start for Garment Markup
+
+                if(!empty($data[8]) && $data[8]->count()){
+
+                foreach ($data[8] as $key => $value) {
+
+                     $this->common->InsertRecords('price_garment_mackup',array('price_id' => $price_id,'range_low' => $value->range_low,'range_high' => $value->range_high,'percentage' => $value->percentage,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+
+                 }
+
+            }
+
+           // code end for Garment Markup
         }
 
-        exit;
-
-        return back();
+       return redirect()->back();
 
         
     }
