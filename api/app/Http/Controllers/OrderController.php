@@ -1609,9 +1609,17 @@ class OrderController extends Controller {
         curl_close($curl);
 
         $all_data = json_decode($result);
-        print_r($all_data);
+        
+        
         if(!empty($all_data))
         {
+            if($all_data->code == 400) {
+
+             $data_record = array("success"=>0,"message"=>"State is not valid");
+             return response()->json(["data" => $data_record]);
+
+            }
+            
             $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
             $data_record = array("success"=>1,"message"=>"Order is successfully posted to S&S");
             
