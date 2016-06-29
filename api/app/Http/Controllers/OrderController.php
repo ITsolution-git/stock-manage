@@ -8,6 +8,7 @@ use Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Order;
+use App\Api;
 use App\Common;
 use App\Purchase;
 use App\Product;
@@ -23,7 +24,7 @@ use PDF;
 
 class OrderController extends Controller { 
 
-    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate)
+    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api)
     {
         $this->order = $order;
         $this->purchase = $purchase;
@@ -31,6 +32,7 @@ class OrderController extends Controller {
         $this->product = $product;
         $this->client = $client;
         $this->affiliate = $affiliate;
+        $this->api = $api;
     }
 
 /** 
@@ -426,7 +428,7 @@ class OrderController extends Controller {
      *          property="order_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+     *      @SWG\Property(
      *          property="address_id",
      *          type="integer"
      *      )
@@ -598,15 +600,15 @@ class OrderController extends Controller {
      *          property="order_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="address_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="item_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="shipping_id",
      *          type="integer"
      *      )
@@ -688,7 +690,7 @@ class OrderController extends Controller {
      *          property="id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="qty",
      *          type="integer"
      *      )
@@ -1546,4 +1548,82 @@ class OrderController extends Controller {
         }
         return true;
     }
+
+    public function snsOrder()
+     {
+        $post = Input::all();
+        
+        $result_company = $this->client->getStaffDetail($post['company_id']);
+        $result_order = $this->product->getSnsProductDetail($post['id']);
+        
+        if(empty($result_order))
+        {
+            $data_record = array("success"=>0,"message"=>"There is no S&S product for particular this order");
+            return response()->json(["data" => $data_record]);
+        }
+       
+
+        $shippingAddress = array(
+            "customer" => $post['company_name'],
+            "attn" => $result_company[0]->first_name.' '.$result_company[0]->last_name,
+            "address" => $result_company[0]->prime_address1,
+            "city" => $result_company[0]->prime_address_city,
+            "state"=> $result_company[0]->code,
+            "zip"=> $result_company[0]->prime_address_zip,
+            "residential"=> true);
+
+        $lines = array();
+        foreach($result_order as $order_data) {
+                
+                $lines[] = array(
+                    "warehouseAbbr" => $result_company[0]->code,
+                    "identifier" => $order_data->sku,
+                    "qty" => $order_data->qnty);
+
+            }
+
+            $order_main_array = array("shippingAddress" => $shippingAddress,
+                                          "shippingMethod"=> "1",
+                                          "emailConfirmation"=> $result_company[0]->email,
+                                          "testOrder"=> true,
+                                          "lines" =>  $lines);
+
+       $order_json = json_encode($order_main_array);
+      
+      
+         $result_api = $this->api->getApiCredential($post['company_id'],'api.sns','ss_detail');
+       
+      
+        $credential = $result_api[0]->username.":".$result_api[0]->password;
+ 
+        $curl = curl_init('https://api.ssactivewear.com/v2/orders/');                                                                      
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $order_json);                                                                  
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);                                                                      
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',                                                                                
+            'Content-Length: ' . strlen($order_json))                                                                       
+        );    
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        $all_data = json_decode($result);
+
+        if(!empty($all_data))
+        {
+            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
+            $data_record = array("success"=>1,"message"=>"Order is successfully posted to S&S");
+            
+            return response()->json(["data" => $data_record]);
+        } else {
+             $data_record = array("success"=>0,"message"=>"There are no items added to post order");
+            
+            return response()->json(["data" => $data_record]);
+        }
+
+       
+        
+      
+     }
 }

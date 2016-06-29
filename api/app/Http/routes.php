@@ -240,6 +240,7 @@ Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
 Route::post('order/updateMarkup', 'OrderController@updateMarkup');
 Route::post('order/updateOverride', 'OrderController@updateOverride');
 Route::get('order/calculateAll/{order_id}/{company_id}', 'OrderController@calculateAll');
+Route::post('order/snsOrder', 'OrderController@snsOrder');
 
 
 // FINISHING CONTROLLER 

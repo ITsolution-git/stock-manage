@@ -431,6 +431,18 @@ public function saveTaxDoc($post)
         return $result;
    }
 
+   public function getStaffDetail($id)
+    {
+        $whereConditions = ['s.user_id' => $id];
+        $result = DB::table('staff as s')
+                  ->leftJoin('state as st','st.id','=','s.prime_address_state')
+                  ->leftJoin('users as u','u.id','=','s.user_id')
+                  ->select('st.name as state_name','st.code as code','s.*','u.email')
+                  ->where($whereConditions)
+                  ->get();
+      return $result;
+    }
+
 
 
 }

@@ -532,9 +532,9 @@
 
                 </md-card-content>
             </md-card>
-            <!-- <div class="mrg15-B mrg-auto-T">
-                <md-button class="dark-bg" ng-click="vm.openApproveOrderDialog()">Approve Order</md-button>
-            </div> -->
+            <div class="mrg15-B mrg-auto-T" ng-show="total_unit > 0" >
+                <md-button class="dark-bg" ng-click="vm.openApproveOrderDialog(event,order.order_number)">Approve Order</md-button>
+            </div>
         </div>
     </div>
 </div>

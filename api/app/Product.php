@@ -650,4 +650,25 @@ class Product extends Model {
         
         return $productData;
     }
+
+    public function getSnsProductDetail($id) {
+
+     
+        $where = ['od.order_id' => $id,'dp.is_delete' => '1','pcs.sku' => '!=0','pcs.is_distribute' => '0','pcs.qnty' => '>0'];
+      
+        $listArray = ['pcs.*'];
+
+        $productData = DB::table('order_design as od')
+                         ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                         ->leftJoin('purchase_detail as pcs', 'dp.id', '=', 'pcs.design_product_id')
+                         ->select($listArray)
+                         ->where('od.order_id','=',$id)
+                         ->where('dp.is_delete','=','1')
+                         ->where('pcs.sku','!=','0')
+                         ->where('pcs.is_distribute','=','0')
+                         ->where('pcs.qnty','>','0')
+                         ->get();
+        
+        return $productData;
+    }
 }
