@@ -324,10 +324,15 @@ class PurchaseController extends Controller {
         {
             //$this->purchase->Update_Ordertotal($po_id);
             $result = $this->purchase->GetPoReceived($po_id,$company_id);
-             
-            $order_total = $this->purchase->getOrdarTotal($po_id);
-
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'order_total'=>$order_total);
+            if(count($result)>0)
+            {
+                $order_total = $this->purchase->getOrdarTotal($po_id);
+                $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'order_total'=>$order_total);
+            } 
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+            }
         }
         return  response()->json(["data" => $response]);
     }

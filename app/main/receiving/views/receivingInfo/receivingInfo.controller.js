@@ -27,12 +27,19 @@
                     $scope.po_data = result.data.records.po_data;
                     $scope.poline = result.data.records.receive;
                     $scope.order_total = result.data.order_total[0];
+                    if($scope.po_data.complete=='0')
+                    {
+                        notifyService.notify('error','Receive order is not created yet.');
+                        $state.go('app.purchaseOrder.companyPO',{id: $scope.po_data.po_id});
+                        return false;
+                    }
                 }
                 else
                 {
-                    notifyService.notify('error',result.message);
+                    notifyService.notify('error',result.data.message);
+                    $state.go('app.receiving');
+                    return false;
                 }
-                
             });
         }
         $scope.GetPodata();

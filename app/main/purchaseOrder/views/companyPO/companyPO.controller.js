@@ -7,7 +7,7 @@
             .controller('CompanyPOController', CompanyPOController);
 
     /** @ngInject */
-    function CompanyPOController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
+    function CompanyPOController($document, $window,$state, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
         var vm = this;
         $scope.po_id = $stateParams.id;
@@ -229,6 +229,38 @@
             autoWidth: false,
             responsive: true
         };
+         $scope.CreateRo = function(po_id,extra)
+         {
+            if(extra=='0')
+            {
+                var UpdateArray = {};
+                UpdateArray.table ='purchase_order';
+                UpdateArray.data = {complete:'1'};
+                UpdateArray.cond = {po_id: $scope.po_id};
+
+                $("#ajax_loader").show();
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                {
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success', 'Receiving PO created.');
+                        //$state.go('app.receiving.receivingInfo({id:po_id})');
+                        $state.go('app.receiving.receivingInfo',{id: po_id});
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+            }
+            else
+            {
+                $state.go('app.receiving.receivingInfo',{id: po_id});
+            }
+        } 
+
+
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
