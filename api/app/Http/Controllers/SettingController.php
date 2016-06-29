@@ -16,6 +16,7 @@ use DB;
 use Image;
 use Request;
 use Excel;
+use App\Api;
 
 class SettingController extends Controller {  
 
@@ -23,11 +24,11 @@ class SettingController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Price $price,Common $common) {
+    public function __construct(Price $price,Common $common,Api $api) {
 
         $this->price = $price;
         $this->common = $common;
-       
+        $this->api = $api;
     }
 
 /**
@@ -681,6 +682,146 @@ class SettingController extends Controller {
 
         
     }
+    public function uploadSnsCSV() {
+        
+        ini_set('display_errors', 1);
 
-  }
+        /*$mtime = microtime();
+        $mtime = explode(" ",$mtime);
+        $mtime = $mtime[1] + $mtime[0];
+        $starttime = $mtime;*/
+
+        $result_api = $this->api->getApiCredential(28,'api.sns','ss_detail');
+       
+        $credential = $result_api[0]->username.":".$result_api[0]->password;
+ 
+        $curl = curl_init();
+
+        // Inserting category start
+        
+        curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/categories/?mediatype=json");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
+        $category_result = curl_exec($curl);
+
+        $category_all_data = json_decode($category_result);
+
+        if(!empty($category_all_data))
+        {
+            $this->common->truncateTable('category');
+            $this->common->truncateTable('product_category');
+
+            foreach ($category_all_data as $category) {
+                $category_name = $category->name;
+                $this->common->InsertRecords('category',array('id' => $category->categoryID,'category_name' => $category->name, 'category_image' => $category->image));
+            }
+        }
+
+        // Inserting category ends
+
+        // Inserting products start
+
+        curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/styles/?mediatype=json");
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
+        $product_result = curl_exec($curl);
+
+        $product_all_data = json_decode($product_result);
+
+        if(!empty($product_all_data))
+        {
+            foreach ($product_all_data as $product) {
+                
+                $product_data = $this->common->GetTableRecords('products',array('id' => $product->styleID),array());
+                $product_name = $product->title;
+                $description = $product->description;
+
+                $product_arr = array('id' => $product->styleID, 'part_number' => $product->partNumber, 'vendor_id' => 1, 'name' => $product_name, 'description' => $description, 'product_image' => $product->styleImage);
+                $product_id = $product->styleID;
+
+                if(empty($product_data))
+                {
+                    $product_id = $this->common->InsertRecords('products',$product_arr);
+                }
+                else
+                {
+                    unset($product_arr['id']);
+                    $this->common->UpdateTableRecords('products',array('id' => $product_id),$product_arr);
+                }
+
+                // product mapping with category
+
+                if(!empty($product->categories))
+                {
+                    $categories = explode(",", $product->categories);
+                    foreach ($categories as $category_id) {
+                        $this->common->InsertRecords('product_category',array('product_id'=>$product_id,'category_id'=>$category_id));
+                    }
+                }
+
+                // product mapping with category ends
+
+                curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$product->partNumber."&mediaType=json");
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($curl,CURLOPT_USERPWD,$credential);
+                $product_detail = curl_exec($curl);
+
+                $product_detail_data = json_decode($product_detail);
+
+                if(!empty($product_detail_data))
+                {
+                    foreach ($product_detail_data as $data) {
+                        
+                        $color_data = $this->common->GetTableRecords('color',array('name' => $data->colorName,'company_id'=>'0'),array());
+
+                        if(empty($color_data))
+                        {
+                            $insert_color = array('name' => $data->colorName,'color_code' => $data->colorCode,'color_swatch_image' => $data->colorSwatchImage,'color_swatch_text_color' => $data->colorSwatchTextColor, 
+                                                'color_front_image' => $data->colorFrontImage,'color_side_image' => $data->colorSideImage,'color_back_image' => $data->colorBackImage,'color1' => $data->color1,'color2'=>$data->color2);
+                            $color_id = $this->common->InsertRecords('color',$insert_color);
+                        }
+                        else
+                        {
+                            $color_id = $color_data[0]->id;
+                        }
+
+                        $size_data = $this->common->GetTableRecords('product_size',array('name' => $data->sizeName,'is_sns'=>'1'),array());
+
+                        if(empty($size_data))
+                        {
+                            $size_id = $this->common->InsertRecords('product_size',array('name' => $data->sizeName,'is_sns'=>'1'));
+                        }
+                        else
+                        {
+                            $size_id = $size_data[0]->id;
+                        }
+
+                        $color_size_data = $this->common->GetTableRecords('product_color_size',array('product_id'=>$product->styleID,'color_id'=>$color_id,'size_id'=>$size_id),array());
+
+                        $insert = array('sku'=>$data->sku,'product_id'=>$product->styleID,'color_id'=>$color_id,'size_id'=>$size_id,'piece_price'=>$data->piecePrice,'dozen_price'=>$data->dozenPrice,
+                                'case_price'=>$data->casePrice,'sale_price'=>$data->salePrice,'customer_price'=>$data->customerPrice);
+
+                        if(empty($color_size_data))
+                        {
+                            $id = $this->common->InsertRecords('product_color_size',$insert);
+                        }
+                        else
+                        {
+                            $this->common->UpdateTableRecords('product_color_size',array('id' => $color_size_data[0]->id),$insert);
+                        }
+                    }
+                }
+            }
+        }
+        $response = array('success' => 1, 'message' => 'Data imported successfully');
+        return response()->json(["data" => $response]);
+        /*$mtime = microtime();
+        $mtime = explode(" ",$mtime);
+        $mtime = $mtime[1] + $mtime[0];
+        $endtime = $mtime;
+        $totaltime = ($endtime - $starttime);
+        echo "This page was created in ".$totaltime." seconds";
+        curl_close($curl);*/
+    }
+}
 

@@ -318,6 +318,7 @@ core.factory('AllConstant', AllConstant);
                   deleteMessage: 'Are you sure want to delete this record ?',
                   deleteImage: 'Are you sure want to delete this image ?',
                   deletePermanent: 'Are you sure want to delete this record ? Clicking Ok will delete record permanently.',
+                  snsImport: 'Are you sure want to import S&S data? it will take more time.',
                   pagination: 15,
                   NoImage: base_path+'api/public/images/noimage.jpg',
                   NoDocument: base_path+'api/public/images/nodocument.png',
