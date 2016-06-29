@@ -262,10 +262,11 @@ class Purchase extends Model {
 
 		$check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
 		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+		$temp = array();
 		if(count($result)>0)
 		{
 
-			$temp = array();
+			
 			$temp['po_data']=array();
 			foreach ($result as $key=>$value) 
           	{
@@ -508,7 +509,8 @@ class Purchase extends Model {
 					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type','po.date')
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
-					->where('ord.company_id','=',$post['company_id']);
+					->where('ord.company_id','=',$post['company_id'])
+					->where('po.complete','=','1');
 
 					if($search != '')               
                   	{

@@ -41,7 +41,7 @@
                             </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="5" layout="row">
+                    <div layout-align="end start" ng-if="po_data.complete==0" flex="5" layout="row">
                         <md-menu>
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -86,7 +86,7 @@
                         <td>{{ line_item.product_color}}</td>
                         <td>{{ line_item.qnty_ordered}} / {{ line_item.qnty_purchased}}</td>
                         <td>${{ line_item.unit_price}}</td>
-                        <td><a class="font-12" class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
+                        <td ng-if="po_data.complete==0"><a class="font-12" class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
                     </tr>
                 </tbody> 
             </table>
@@ -124,7 +124,7 @@
                 </div>
             </md-card-content>
             <md-divider ></md-divider>
-            <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+            <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
                 <a class="font-14 chrome-weight" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
             </div>
         </md-card>
@@ -141,7 +141,7 @@
                 <div class="text-center pad0"><span class="font-18">Total Notes</span></div>
             </md-card-content>
             <md-divider ></md-divider>
-            <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+            <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
                 <a class="font-14 chrome-weight" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a>
             </div>
         </md-card>
@@ -149,8 +149,8 @@
 </div>
 <div class="m-t-20 p-t-30">
     <div class="footer border-t-grey" layout-padding layout="row">
-        <md-button aria-label="Back" class="close-btn border-t-grey right-m-0 " >
-            <md-icon md-font-icon="icon-close"></md-icon>
+        <md-button aria-label="Back" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="close-btn border-t-grey right-m-0 " >
+            Create Receive PO
         </md-button>
         <div flex="35">
             <span class="h4 text-semibold font-19">Purchase Order Totals</span>
