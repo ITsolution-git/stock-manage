@@ -5,7 +5,8 @@
             .module('app.admin')
             .controller('AdminController', AdminController)
             .controller('ColorController', ColorController)
-            .controller('SizeController', SizeController);
+            .controller('SizeController', SizeController)
+            .controller('SnsController', SnsController);
 
     /** @ngInject */
     function AdminController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http,notifyService,AllConstant) 
@@ -564,13 +565,25 @@
                 onRemoving : $scope.reloadCallback
             });
         }
-    
+    }
+    function SnsController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http,notifyService,AllConstant) 
+    {
+        $scope.importSnsData = function()
+        {
+            var permission = confirm(AllConstant.snsImport);
 
+            if (permission == true) {
 
-    
-
-    
-
-
+                $("#ajax_loader").show();
+                $http.get('api/public/admin/uploadSnsCSV').success(function(result)
+                {   
+                    $("#ajax_loader").hide();
+                    if(result.data.success=='1')
+                    {   
+                        notifyService.notify('success',result.data.message);
+                    }
+                });
+            }
+        }
     }
 })();

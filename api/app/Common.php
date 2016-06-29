@@ -428,4 +428,9 @@ class Common extends Model {
         return $colorData;
     }
 
+    public function truncateTable($table)
+    {
+        DB::table($table)->truncate();
+    }
+
 }
