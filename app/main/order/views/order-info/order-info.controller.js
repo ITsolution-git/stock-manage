@@ -215,7 +215,7 @@
                   }
             });
         }
-        function openApproveOrderDialog(ev,order_number) {
+        function openApproveOrderDialog(ev,order_number,sns_shipping) {
             $mdDialog.show({
                 controller: 'approveOrderDiallogController',
                 controllerAs: 'vm',
@@ -225,6 +225,7 @@
                 clickOutsideToClose: true,
                 locals: {
                     order_number:order_number,
+                    sns_shipping:sns_shipping,
                     event: ev
                 }
             });

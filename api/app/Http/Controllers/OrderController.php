@@ -199,6 +199,20 @@ class OrderController extends Controller {
            return response()->json(["data" => $response]);
         }
 
+        $result['order'][0]->sns_shipping_name = '';
+
+        if($result['order'][0]->sns_shipping == '1') {
+            $result['order'][0]->sns_shipping_name = 'Ground';
+        } elseif ($result['order'][0]->sns_shipping == '2') {
+            $result['order'][0]->sns_shipping_name = 'Next Day Air';
+        } elseif ($result['order'][0]->sns_shipping == '3') {
+            $result['order'][0]->sns_shipping_name = '2nd Day Air';
+        } elseif ($result['order'][0]->sns_shipping == '16') {
+            $result['order'][0]->sns_shipping_name = '3 Day Select';
+        } elseif ($result['order'][0]->sns_shipping == '6') {
+            $result['order'][0]->sns_shipping_name = 'Will Call / PickUp';
+        }
+
         $finishing_count = $this->order->getFinishingCount($result['order'][0]->id);
         $total_shipped_qnty = $this->order->getShippedByOrder($data);
         $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
@@ -1205,6 +1219,7 @@ class OrderController extends Controller {
     public function addOrder()
     {
         $post = Input::all();
+
        
         $client_data = $this->client->GetclientDetail($post['orderData']['client_id']);
 
@@ -1217,6 +1232,12 @@ class OrderController extends Controller {
                 $estimation_id = $row->id;
               }
         }
+
+        
+        if(array_key_exists('sns_shipping', $post['orderData'])) {
+        $post['orderdata']['sns_shipping'] = $post['orderData']['sns_shipping'];
+        }
+
 
          $post['orderdata']['name'] = $post['orderData']['name'];
          $post['orderdata']['approval_id'] = $estimation_id;
@@ -1553,7 +1574,12 @@ class OrderController extends Controller {
      {
         $post = Input::all();
         
+        if($post['sns_shipping'] == '') {
+            $post['sns_shipping'] = '1';
+        }
+        
         $result_company = $this->client->getStaffDetail($post['company_id']);
+
         $result_order = $this->product->getSnsProductDetail($post['id']);
         
         if(empty($result_order))
@@ -1583,7 +1609,7 @@ class OrderController extends Controller {
             }
 
             $order_main_array = array("shippingAddress" => $shippingAddress,
-                                          "shippingMethod"=> "1",
+                                          "shippingMethod"=> $post['sns_shipping'],
                                           "emailConfirmation"=> $result_company[0]->email,
                                           "testOrder"=> true,
                                           "lines" =>  $lines);
@@ -1613,9 +1639,9 @@ class OrderController extends Controller {
         
         if(!empty($all_data))
         {
-            if($all_data->code == 400) {
 
-             $data_record = array("success"=>0,"message"=>"State is not valid");
+            if($all_data->code == 400) {
+             $data_record = array("success"=>0,"message"=>$all_data->errors[0]->message);
              return response()->json(["data" => $data_record]);
 
             }

@@ -7,7 +7,7 @@
         .controller('approveOrderDiallogController', approveOrderDiallogController);
 
     /** @ngInject */
-    function approveOrderDiallogController(order_number,$mdDialog,$document, $window, $timeout,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
+    function approveOrderDiallogController(order_number,sns_shipping,$mdDialog,$document, $window, $timeout,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
 
         
@@ -39,6 +39,7 @@
                 combine_array_id.id = $stateParams.id;
                 combine_array_id.company_id = sessionService.get('company_id');
                 combine_array_id.company_name = sessionService.get('company_name');
+                combine_array_id.sns_shipping = sns_shipping;
                 
                 
               $http.post('api/public/order/snsOrder',combine_array_id).success(function(result) 

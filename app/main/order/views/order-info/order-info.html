@@ -30,6 +30,12 @@
                                 <div>Price Grid</div>
                                 <span class="font-14 chrome-weight">{{order.price_grid_name}}</span>
                             </div>
+
+                            <div class="trans-box">
+                                <div>S&S Shipping method</div>
+                                <span class="font-14 chrome-weight">{{order.sns_shipping_name}}</span>
+                            </div>
+
                         </div>
                     </md-card-content>
                     <div layout-align="end start"  flex="20" layout="row">
@@ -533,7 +539,7 @@
                 </md-card-content>
             </md-card>
             <div class="mrg15-B mrg-auto-T" ng-show="total_unit > 0" >
-                <md-button class="dark-bg" ng-click="vm.openApproveOrderDialog(event,order.order_number)">Approve Order</md-button>
+                <md-button class="dark-bg" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping)">Approve Order</md-button>
             </div>
         </div>
     </div>
