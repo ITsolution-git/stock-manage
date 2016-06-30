@@ -2,8 +2,8 @@
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">{{vm.title}}</span>
-                <md-button  ng-click="vm.closeDialog()">
+                <span class="title">Add New Distribution Address</span>
+                <md-button  ng-click="closeDialog()">
                     <span>Cancel</span>
                 </md-button>
             </div>
@@ -12,51 +12,46 @@
             <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="60">
                     <label class="font-14">Description</label>
-                    <input placeholder="" flex="80"  ng-model="vm.addAddress.description">
+                    <input placeholder="" flex="80"  ng-model="addAddress.description">
                 </md-input-container>
                 <md-input-container class="md-block first-box margin-0" flex-gt-sm>
-                    <input placeholder="ATTN" ng-model="vm.addAddress.attn">
+                    <input placeholder="ATTN" ng-model="addAddress.attn">
                 </md-input-container>
                 <md-input-container md-no-float class="md-block b-m-0 margin-0">
-                    <input  placeholder="Address 1" ng-model="vm.addAddress.address1">
+                    <input  placeholder="Address 1" ng-model="addAddress.address">
                 </md-input-container>
                 <md-input-container md-no-float class="md-block b-m-0 margin-0">
-                    <input placeholder="Address 2" ng-model="vm.addAddress.address2">
+                    <input placeholder="Address 2" ng-model="addAddress.address2">
                 </md-input-container>
                 <md-input-container md-no-float class="md-block b-m-0 margin-0">
-                    <input placeholder="City" ng-model="vm.addAddress.city" >
+                    <input placeholder="City" ng-model="addAddress.city" >
                 </md-input-container>
                 <div layout="row" layout-align="space-between center">
                     <md-input-container class="margin-0" layout="row">
                         <label  class="font-14">State</label>
-                        <md-select ng-model="vm.stateSelect.location" flex="100"  class="select-width"  >
-                            <md-option  ng-repeat="options in vm.stateSelect.stateOption" value="{{options.option}}">
-                                {{options.option}}
+                        <md-select ng-model="stateSelect.state" flex="100"  class="select-width"  >
+                            <md-option  ng-repeat="state in states_all" value="{{state.code}}">
+                                {{state.name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container md-no-float class="md-block b-m-0 ">
-                        <input placeholder="Zipcode" ng-model="vm.addAddress.zipcode" >
+                        <input placeholder="Zipcode" ng-model="addAddress.zipcode" >
                     </md-input-container>
                 </div>
                 <div layout="row" layout-align="space-between center">
-                    <md-input-container class="margin-0" layout="row">
-                        <label class="font-14">Country</label>
-                        <md-select ng-model="vm.countrySelect.location" flex="100"  class="select-width" >
-                            <md-option  ng-repeat="options in vm.countrySelect.countryOption" value="{{options.option}}">
-                                {{options.option}}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
+                    <md-input-container md-no-float class="md-block b-m-0 margin-0">
+                    <input placeholder="City" ng-model="addAddress.country" >
+                </md-input-container>
                     <md-input-container md-no-float class="md-block b-m-0">
-                        <input placeholder="Phone" ng-model="vm.addAddress.phone" >
+                        <input valid-number placeholder="Phone" ng-model="addAddress.phone" >
                     </md-input-container>
                 </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised ">Save</md-button>
+            <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+            <md-button class="md-accent md-raised" ng-click="save()">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

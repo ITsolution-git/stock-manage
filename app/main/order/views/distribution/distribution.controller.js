@@ -60,18 +60,13 @@
 
             $http.post('api/public/distribution/getDistProductAddress',combine_array_id).success(function(result, status, headers, config) {
             
-                if(result.data.success == '1') {
-                   $scope.designs = result.data.records.all_design;
-                   $scope.total_unit = result.data.records.total_unit;
+                if(result.success == '1') {
+                   $scope.products = result.products;
+                   $scope.distribution_address = result.distribution_address;
                 }
                 else {
-                    $scope.designs = [];
-                    $scope.total_unit = 0;
-                }
-
-                if($scope.total_unit == undefined)
-                {
-                    $scope.total_unit = 0;            
+                    $scope.products = [];
+                    $scope.distribution_address = [];
                 }
             });
         }
@@ -121,10 +116,10 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    Orders: $scope.order,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
             });
         }
 
@@ -160,8 +155,7 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    Orders: $scope.order,
                     event: ev
                 }
             });
