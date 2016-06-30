@@ -210,9 +210,6 @@ Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSE
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/deleteOrderCommon', 'OrderController@deleteOrderCommon');
 Route::post('order/PODetail', 'OrderController@PODetail');
-Route::post('order/distributionDetail', 'OrderController@distributionDetail');
-Route::post('order/addToDistribute', 'OrderController@addToDistribute');
-Route::post('order/removeFromDistribute', 'OrderController@removeFromDistribute');
 Route::post('order/updateOrderTask', 'OrderController@updateOrderTask');
 Route::post('order/updateDistributedQty', 'OrderController@updateDistributedQty');
 Route::post('order/duplicatePoData', 'OrderController@duplicatePoData');
@@ -317,3 +314,9 @@ Route::post('affiliate/getAffiliateData', 'AffiliateController@getAffiliateData'
 Route::post('affiliate/getAffiliateList', 'AffiliateController@getAffiliateList');
 Route::post('affiliate/getAffiliateDesignProduct', 'AffiliateController@getAffiliateDesignProduct');
 Route::post('affiliate/affiliateCalculation', 'AffiliateController@affiliateCalculation');
+
+//DISTRIBUTION ROUTERS
+Route::post('distribution/distributionDetail', 'DistributionController@distributionDetail');
+Route::post('distribution/getDistProductAddress', 'DistributionController@getDistProductAddress');
+Route::post('distribution/addToDistribute', 'DistributionController@addToDistribute');
+Route::post('distribution/removeFromDistribute', 'DistributionController@removeFromDistribute');

@@ -588,7 +588,7 @@ public function saveColorSize($post)
 
         return $qntyData[0]->total;
     }
-    public function getPoByOrder($order_id)
+    public function getPoByOrder($order_id,$type)
     {
       $result = DB::table('purchase_order as po')
                 ->leftJoin('orders as ord','po.order_id','=','ord.id')
@@ -597,8 +597,12 @@ public function saveColorSize($post)
                 ->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type',DB::raw('DATE_FORMAT(po.date,"%m/%d/%Y") as date'))
                 ->where('ord.status','=','1')
                 ->where('ord.is_delete','=','1')
-                ->where('ord.id','=',$order_id)
-                ->GroupBy('po.po_id')
+                ->where('ord.id','=',$order_id);
+                if($type == 'ro')
+                {
+                  $result = $result->where('po.complete','=','1');
+                }
+                $result = $result->GroupBy('po.po_id')
                 ->get();
 
       return $result;
