@@ -187,15 +187,15 @@
                             </tr>
                         </thead>
                         <tbody class="scrollable" ms-scroll>
-                            <tr ng-repeat="puchase in order.purchase_orders" class="cursor-p">
-                                <td>{{ puchase.po_id}}</td>
-                                <td>{{ puchase.po_type}}</td>
-                                <td>{{ puchase.client_company}}</td>
-                                <td>{{ puchase.name_company}}</td>
-                                <td>{{ puchase.date}}
+                            <tr ng-repeat="purchase in order.purchase_orders" class="cursor-p">
+                                <td>{{ purchase.po_id}}</td>
+                                <td>{{ purchase.po_type}}</td>
+                                <td>{{ purchase.client_company}}</td>
+                                <td>{{ purchase.name_company}}</td>
+                                <td>{{ purchase.date}}
                                 </td> 
                                 <td class="text-right"> 
-                                    <a  href="#" ui-sref="app.purchaseOrder.companyPO">VIEW PO</a>
+                                    <a  href="#" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})">VIEW PO</a>
                                 </td>
                             </tr>
                         </tbody> 
@@ -207,7 +207,7 @@
             <div class="simple-table-container md-whiteframe-4dp m-b-20">
                 <div class="table-title " layout="row" layout-align="space-between center">
                     <div class="table-title-text h2 text-semibold" >
-                        Receiving Orders(Demo)
+                        Receiving Orders
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
@@ -239,14 +239,14 @@
                             </tr>
                         </thead>
                         <tbody class="scrollable" ms-scroll>
-                            <tr ng-repeat="receive in ::vm.receives" class="cursor-p">
-                                <td>{{ receive.roid}}</td>
-                                <td>{{ receive.clientName}}  
-                                <td>{{ receive.vendor}}</td>
-                                <td>{{ receive.dateCreated}}
-                                </td> 
+                            <tr ng-repeat="receive in order.recieve_orders" class="cursor-p">
+                                <td>{{ receive.po_id}}</td>
+                                <td>{{ receive.client_company}}  
+                                <td>{{ receive.name_company}}</td>
+                                <td>{{ receive.date}}
+                                </td>
                                 <td class="text-right"> 
-                                    <a>RECIEVE PO</a>
+                                    <a  href="#" ui-sref="app.receiving.receivingInfo({id:receive.po_id})">VIEW RECIEVE PO</a>
                                 </td>
                             </tr>
                         </tbody> 

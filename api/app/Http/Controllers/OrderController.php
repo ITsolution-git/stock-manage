@@ -203,13 +203,15 @@ class OrderController extends Controller {
         $total_shipped_qnty = $this->order->getShippedByOrder($data);
         $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
         $dist_location = count($locations);
-        $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id);
+        $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
+        $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');
 
         $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
         $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
         $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
 
         $result['order'][0]->purchase_orders = $purchase_orders;
+        $result['order'][0]->recieve_orders = $recieve_orders;
 
 
         //$order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
