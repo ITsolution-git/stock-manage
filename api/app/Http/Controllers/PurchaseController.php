@@ -53,11 +53,11 @@ class PurchaseController extends Controller {
                     }
                     
                 }
-                $response = array('success' => 1, 'message' => "Purchase order created succfully.",'data'=>$order_data);
+                $response = array('success' => 1, 'message' => "Purchase order created successfully.",'data'=>$order_data);
             }
             else
             {
-                $response = array('success' => 0, 'message' => "Purchase order is already created.");
+                $response = array('success' => 0, 'message' => "Please select Product.");
             }
         }
         else

@@ -95,7 +95,7 @@
         </div>
     </div>
     <div layout="row" layout="wrap" layout-align="space-between center" class="p-b-20">
-        <md-card class="m-b-20 " flex="27">
+        <md-card class="m-b-20 m-l-20" flex="27">
             <md-card-title>
                 <md-card-title-text class="text-left">
                     Web Portal
@@ -108,9 +108,9 @@
                 <div class="text-center"><span class="font-18">&nbsp;</span></div>
             </md-card-content>
             <md-divider ></md-divider>
-            <!-- <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight">EDIT</a>
-            </div> -->
+            <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                <a class="font-14 chrome-weight" href="{{po_data.url}}" target="_blank">View</a>
+            </div>
         </md-card>
         <md-card class="m-b-20 m-l-20" flex="27">
             <md-card-title>
@@ -136,9 +136,9 @@
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height">
                 <div layout="row" layout-wrap layout-align="center center" flex="60">
-                    <span class="h2 semibold f-52">{{vm.notePo.notes}}</span>
+                    <span class="h2 semibold f-52">{{po_data.total_note}}</span>
                 </div>
-                <div class="text-center pad0"><span class="font-18">Total Notes</span></div>
+                <div class="text-center pad0"><span class="font-18">Total Notes </span></div>
             </md-card-content>
             <md-divider ></md-divider>
             <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
@@ -149,8 +149,11 @@
 </div>
 <div class="m-t-20 p-t-30">
     <div class="footer border-t-grey" layout-padding layout="row">
-        <md-button aria-label="Back" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="close-btn border-t-grey right-m-0 " >
+        <md-button aria-label="Back" ng-if="po_data.complete==0" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="close-btn bg-grey bg-green right-m-0" >
             Create Receive PO
+        </md-button>
+        <md-button aria-label="Back" ng-if="po_data.complete==1" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="close-btn bg-grey bg-green right-m-0" >
+            Go to Receive PO
         </md-button>
         <div flex="35">
             <span class="h4 text-semibold font-19">Purchase Order Totals</span>
@@ -161,12 +164,25 @@
         <div flex="10" class="color-b-grey">
             <span>{{ order_total.ordered}}</span>
         </div>
-        <div flex="10">
+
+        <!-- LOCK PO -->
+        <div flex="10" ng-if="po_data.complete==1">
             <span>Vendor Ship Charge</span>
         </div>
-        <div flex="10" class="color-b-grey">
+
+        <div flex="10" class="color-b-grey" ng-if="po_data.complete==1"> 
             <span>${{ po_data.vendor_charge}}</span>
         </div>
+        <!-- LOCK PO -->
+
+
+        <div flex="10" title="click to change" ng-if="po_data.complete==0" class="cursor-p" ng-click="changeVendorcharge(po_data.vendor_charge)">
+            <span>Vendor Ship Charge</span>
+        </div>
+        <div flex="10" class="color-b-grey cursor-p" ng-if="po_data.complete==0" title="click to change" ng-click="changeVendorcharge(po_data.vendor_charge)">
+            <span>${{ po_data.vendor_charge}}</span>
+        </div>
+
         <div flex="10">
             <span>Total Amount</span>
         </div>

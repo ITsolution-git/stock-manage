@@ -1035,6 +1035,22 @@ class CommonController extends Controller {
                 );
 
         }
+        if($post['filter']['function']=='vendor_contact') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->vendor->vendorContacts($post);
+            $header = array(
+                0=>array('key' => 'first_name', 'name' => 'First Name'),
+                1=>array('key' => 'last_name', 'name' => 'Last Name'),
+                2=>array('key' => 'prime_email', 'name' => 'Email'),
+                3=>array('key' => 'prime_phone', 'name' => 'Phone')
+                );
+
+        }
+
         
         $records = $result['allData'];
 

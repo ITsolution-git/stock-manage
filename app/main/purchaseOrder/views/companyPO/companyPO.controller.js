@@ -27,7 +27,9 @@
                 }
                 else
                 {
-                    notifyService.notify('error',result.message);
+                    notifyService.notify('error',result.data.message);
+                    $state.go('app.purchaseOrder');
+                    return false;
                 }
                 
             });
@@ -149,6 +151,57 @@
                 onRemoving : $scope.GetPodata
             });
         }
+        $scope.changeVendorcharge = function (vendor_charge,ev)
+        {
+        
+            $("#ajax_loader").show();
+            $mdDialog.show({
+                controllerAs: $scope,
+                controller:function ($scope, params)
+                {
+                    $scope.params = params;
+                    $scope.po_id = $scope.params.po_id;
+                    $scope.vendor_charge = vendor_charge;
+                    $("#ajax_loader").hide();
+                    $scope.SaveRecords = function(vendor_charge){
+                            
+                        var UpdateArray = {};
+                        UpdateArray.table ='purchase_order';
+                        UpdateArray.data = {vendor_charge:vendor_charge};
+                        UpdateArray.cond = {po_id: $scope.po_id};
+
+                        $("#ajax_loader").show();
+                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                        {
+                            if(result.data.success=='1')
+                            {
+                                notifyService.notify('success', result.data.message);
+                               // $scope.closeDialog();
+                            }
+                            else
+                            {
+                                notifyService.notify('error', result.data.message);
+                            }
+                            $("#ajax_loader").hide();
+                        });
+                    } 
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    } 
+                },
+                templateUrl: 'app/main/purchaseOrder/dialogs/purchaseline/VendorCharge.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                    locals: {
+                        params:$scope,
+                        event: ev
+                    },
+                onRemoving : $scope.GetPodata
+            });
+        }
+        
         
         $scope.changePoData = function (ev)
         {
