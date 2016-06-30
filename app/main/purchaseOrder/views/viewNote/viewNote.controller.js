@@ -11,7 +11,6 @@
     {
         var vm = this;
          //vm.openaddNoteDialog = openaddNoteDialog;
-         vm.openeditNoteDialog = openeditNoteDialog;
          $scope.company_id = sessionService.get('company_id');
          $scope.po_id = $stateParams.id;
 
@@ -142,41 +141,10 @@
                 onRemoving : $scope.reloadCallback
             });
         }
-         function openeditNoteDialog(ev, order)
-        {
-            $mdDialog.show({
-                controller: 'EditNoteController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/purchaseOrder/dialogs/editNote/editNote.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    Order: order,
-                    Orders: vm.orders,
-                    event: ev
-                }
-            });
-        }
-      
-        
-//        Datatable Options
-        vm.dtOptions = {
-            dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            pagingType: 'simple',
-            autoWidth: false,
-            responsive: true
-        };
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
             $mdOpenMenu(ev);
         };
-        vm.dtInstanceCB = dtInstanceCB;
-        //methods
-        function dtInstanceCB(dt) {
-            var datatableObj = dt.DataTable;
-            vm.tableInstance = datatableObj;
-        }
     }
 })();
