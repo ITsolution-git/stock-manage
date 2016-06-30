@@ -2,7 +2,7 @@
     <div class="header "  layout="column">
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back cursor-p" ui-sref="app.receiving">BACK TO RECEIVING</a>
-            <h1 flex="4" class="font-500">Receiving Purchase Order #{{ po_data.po_id}} for {{ po_data.client_company}}: </h1>
+            <h1 flex="4" class="font-500">Receiving <a class="cursor-p" title="Go to Purchase order" ui-sref="app.purchaseOrder.companyPO({id:po_data.po_id})">Purchase Order #{{ po_data.po_id}}</a> for {{ po_data.client_company}}: </h1>
            <!--  <md-input-container md-no-float class="md-block" flex="3">
                 <input placeholder="">
             </md-input-container> -->
@@ -87,7 +87,7 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box" ng-repeat="(key,line_data) in line_item.data">
                                 <span class="sizeColor">{{line_data.size}}</span>
-                                <p class="font-14 chrome-weight fontStyle">Ordered &nbsp; &nbsp; &nbsp; {{line_data.qnty}}</p>
+                                <p class="font-14 chrome-weight fontStyle">Ordered &nbsp; &nbsp; &nbsp; {{line_data.qnty_ordered}}</p>
                                 <p class="font-14 chrome-weight fontStyle">Received &nbsp; &nbsp; 
                                     <md-input-container>
                                         <input ng-model="line_data.qnty_purchased" name="qnty_purchased" valid-number ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_ordered,\'received\')' }" aria-label="qnty_purchased">
