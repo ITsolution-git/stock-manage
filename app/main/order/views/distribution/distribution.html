@@ -1,9 +1,8 @@
 <div class="main-distribution-page m-r-15 m-l-20 m-b-20">
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
-
+            <a class="link-back cursor-p" ui-sref="app.order.order-info({id:order_id})">BACK TO ORDER INFO</a>
             <h1 flex="4">Demo Job #1234 for Company </h1>
-
         </div>
         <div class="distribution-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-disribution m-b-20" flex="100" >
@@ -38,7 +37,7 @@
                             </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="10" layout="row">
+                    <!-- <div layout-align="end start"  flex="10" layout="row">
                         <md-menu>
                             <md-button aria-label="Main Contact Options" class="md-icon-button"  ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -51,7 +50,7 @@
                                 </md-menu-item>
                             </md-menu-content>
                         </md-menu>
-                    </div>
+                    </div> -->
                 </md-card>
             </div>
             <div layout="row" flex="100" class="m-b-20">
@@ -117,9 +116,9 @@
                                         Products
                                     </div>
                                     <div flex="45" class="text-right">
-                                        <md-button  class="bg-grey bg-green right-m-0 " >
+                                        <!-- <md-button  class="bg-grey bg-green right-m-0 " >
                                             DISTRIBUTE EVENLY
-                                        </md-button>
+                                        </md-button> -->
                                         <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" >
                                             ADD NEW LOCATION
                                         </md-button>
@@ -129,24 +128,26 @@
                                     <table class="dataTable row-border hover" datatable="ng"  dt-options="vm.dtOptions"  >
                                         <thead>
                                         <th>Product Name</th>
-                                        <th>Job Name</th>
+<!--                                         <th>Job Name</th>
                                         <th>Job #</th>
-                                        <th>Total Allocated</th>
+ -->                                        <th>Total Allocated</th>
                                         <th></th>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="distProduct in ::vm.distProducts" class="cursor-p">
-                                                <td>{{ distProduct.productName}}</td>
-                                                <td>{{ distProduct.jobName}}  
-                                                <td>{{ distProduct.job}}</td>
-                                                <td>{{ distProduct.totalAllocated}}</td>
+                                            <tr ng-repeat="distProduct in products" class="cursor-p">
+                                                <td>{{ distProduct.name}}</td>
+<!--                                                 <td>{{ distProduct.jobName}}  
+                                                <td>{{ distProduct.job}}</td> -->
+                                                <td>{{distProduct.distributed}}/{{distProduct.total}}</td>
                                                 <td class="text-right"> 
-                                        <md-button  class="bg-grey  dark-bg  right-m-0 " >
-                                            {{distProduct.buttn}}
-                                        </md-button>
-                                        </td>
-                                        </tr>
-                                      
+                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0">
+                                                        Distribute
+                                                    </md-button>
+                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0">
+                                                        Edit
+                                                    </md-button>
+                                                </td>
+                                            </tr>
                                         </tbody> 
                                     </table>
                                     <div class="p-23 border-t-grey">
@@ -174,18 +175,18 @@
                                 <div class="ms-responsive-table-wrapper table-disrtri">
                                     <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions" >
                                         <thead>
-                                        <th>Product Name</th>
-                                        <th>Job Name</th>
-                                        <th>Job #</th>
-                                        <th>Total Allocated</th>
+                                        <th>Location Name</th>
+                                        <th>ATTN</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
                                         <th></th>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="distlocation in ::vm.distlocations" class="cursor-p">
-                                                <td>{{ distlocation.loactionName}}</td>
-                                                <td>{{ distlocation.ATTN}}  
-                                                <td>{{ distlocation.Address}}</td>
-                                                <td>{{ distlocation.Phone}}</td>
+                                            <tr ng-repeat="distlocation in distribution_address" class="cursor-p">
+                                                <td>{{ distlocation.description}}</td>
+                                                <td>{{ distlocation.attn}}  
+                                                <td>{{ distlocation.full_address}}</td>
+                                                <td>{{ distlocation.phone}}</td>
                                                 <td class="text-right"> 
                                         <md-button  class="bg-grey  dark-bg  right-m-0 blue-btn " >
                                             DISTRIBUTE
@@ -209,10 +210,9 @@
                 </md-button>
             </div>
         </div>
-        <md-dialog-actions layout="row" layout-align="end center">
-
+        <!-- <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
             <md-button class="md-accent md-raised ">Save</md-button>
-        </md-dialog-actions>
+        </md-dialog-actions> -->
     </div>
 </div>
