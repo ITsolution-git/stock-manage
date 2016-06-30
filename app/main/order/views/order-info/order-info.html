@@ -38,7 +38,7 @@
 
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="20" layout="row">
+                    <div layout-align="end start"  flex="20" layout="row" ng-show="order.order_number == ''">
                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event,order.id)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
@@ -55,7 +55,7 @@
                 <md-button  class="bg-grey right-m-0 " ng-click="printPdf()">
                     PRINT
                 </md-button> -->
-                <md-button class="bg-grey right-m-0 color-white" ng-click="checkDesign()">
+                <md-button class="bg-grey right-m-0 color-white" ng-click="checkDesign()" ng-show="order.order_number == ''">
                     ASSIGN/SPLIT AFFILIATE
                 </md-button>
             </div>
@@ -67,7 +67,7 @@
                 <div class="table-title-text h2 text-semibold" flex=20>
                     Designs
                 </div>
-                <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+                <div class="order-modal-title " layout="row" layout-align="end center"flex=11 ng-show="order.order_number == ''">
                     <md-button class="dark-bg" ng-click="vm.openaddDesignDialog($event,0)">
                         ADD NEW
                     </md-button>
@@ -105,7 +105,7 @@
                                     <span class="column-title marginLeft-58">Status</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th class="secondary-text" ng-show="order.order_number == ''">
 
                             </th>
                         </tr>
@@ -116,11 +116,11 @@
                             <td>{{ design.design_name}}</td>
                             <td>{{ design.total_qnty}}</td>
                             <td>{{ design.colors_count}}</td>
-                            <td class="text-center font-small mdslider pad-0 "><label class="slider">60</label>
+                            <td class="text-center font-small mdslider pad-0 " ><label class="slider">60</label>
                     <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
                     </md-slider>
                     </td> 
-                    <td class="text-right"> 
+                    <td class="text-right" ng-show="order.order_number == ''"> 
                     <md-menu>
                         <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -308,7 +308,7 @@
                     </div>
                 </div>
             </div>
-            <md-card class="m-b-20">
+            <md-card class="m-b-20" ng-class="{'disable-click': order.order_number != ''}">
                 <md-card-title>
                     <md-card-title-text class="text-left">
                         Order Info

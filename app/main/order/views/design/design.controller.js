@@ -11,6 +11,7 @@
 
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
+
         $scope.NoImage = AllConstant.NoImage;
         $scope.productSearch = '';
         $scope.vendor_id = 0;
@@ -28,6 +29,7 @@
                 if(result.data.success == '1') {
                      
                     $scope.order_id = result.data.records[0].order_id;
+                    $scope.order_number = result.data.records[0].order_number;
 
                     $scope.designInforamtion = result.data.records[0];
 

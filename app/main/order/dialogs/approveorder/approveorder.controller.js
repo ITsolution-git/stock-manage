@@ -41,10 +41,11 @@
                 combine_array_id.company_name = sessionService.get('company_name');
                 combine_array_id.sns_shipping = sns_shipping;
                 
-                
+               $("#ajax_loader").show();
+               
               $http.post('api/public/order/snsOrder',combine_array_id).success(function(result) 
                 {
-
+                    $("#ajax_loader").hide();
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success',result.data.message);
