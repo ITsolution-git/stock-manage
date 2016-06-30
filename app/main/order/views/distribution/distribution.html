@@ -18,23 +18,23 @@
                             </div>
                             <div class="trans-box">
                                 <div>Sales</div>
-                                <span>{{vm.distInfo.sales}}</span>
+                                <span class="font-14 chrome-weight">{{order.first_name}} &nbsp; {{ order.last_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Blind</div>
-                                <span>{{vm.distInfo.blind}}</span>
+                                <span class="font-14 chrome-weight">{{order.is_blind == '1'? 'Yes' : 'No'}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Account Manager</div>
-                                <span>{{vm.distInfo.accountManager}}</span>
+                                <span class="font-14 chrome-weight">{{order.name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Main Contact</div>
-                                <span>{{vm.distInfo.mainContact}}</span>
+                                <span class="font-14 chrome-weight">{{order.client_first_name}} &nbsp; {{ order.client_last_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Price Grid</div>
-                                <span>{{vm.distInfo.priceGrid}}</span>
+                                <span class="font-14 chrome-weight">{{order.price_grid_name}}</span>
                             </div>
                         </div>
                     </md-card-content>
@@ -66,7 +66,7 @@
                             <div layout="row" layout-wrap layout-align="center center" flex="60" class="p-t-30">
                                 <div layout="row">
                                     <div layout="column">
-                                        <span class="h2 semibold f-52">{{ vm.distributionDistributed.productshipped}}</span>
+                                        <span class="h2 semibold f-52">{{ order.total_shipped_qnty}}</span>
                                         <span class="m-r-15">Product shipped</span>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@
                                 </div>
                                 <div layout="row">
                                     <div layout="column">
-                                        <span class="h2 semibold f-52">{{ vm.distributionDistributed.Total}}</span>
+                                        <span class="h2 semibold f-52">{{total_unit}}</span>
                                         <span class="m-l-20">Total</span>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                         </md-card-title>
                         <md-card-content  layout="column" layout-padding>
                             <div layout="row" layout-wrap layout-align="center center" flex="60">
-                                <span class="h2 semibold f-52">{{ vm.distributionLocation.location}}</span><br/>
+                                <span class="h2 semibold f-52">{{ order.dist_location}}</span><br/>
                             </div>
                             <div class="text-center"> <span class="font-18">Location</span></div>
                         </md-card-content>

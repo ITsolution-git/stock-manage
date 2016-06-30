@@ -381,7 +381,7 @@
                         </div>
                         <div layout="row">
                             <div layout="column">
-                                <span class="h2 semibold f-52 min-ht-62">{{ total_unit}}</span>
+                                <span class="h2 semibold f-52 min-ht-62">{{total_unit}}</span>
                                 <span class="m-l-20">Total</span>
                             </div>
                         </div>
@@ -407,8 +407,7 @@
                     </md-card-content>
                     <md-divider ></md-divider>
                     <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <!-- <a ui-sref="app.finishing">VIEW DISTRIBUTION</a> -->
-                        <a>VIEW DISTRIBUTION</a>
+                        <a ui-sref="app.order.distribution({id:order_id})">VIEW DISTRIBUTION</a>
                     </div>
                 </md-card>
                 <md-card class="m-b-20 m-r-15" flex="33">
