@@ -160,7 +160,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="scrol table3 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
+                    <table class="scrol table3 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase" ng-if="order.purchase_orders.length > 0">
                         <thead>
                             <tr>
                                 <th class="secondary-text">
@@ -217,7 +217,7 @@
                     </div>
                 </div>
                 <div class="ms-responsive-table-wrapper">
-                    <table class="scrol table4 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  >
+                    <table class="scrol table4 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="order.recieve_orders.length > 0">
                         <thead>
                             <tr>
                                 <th class="secondary-text">
