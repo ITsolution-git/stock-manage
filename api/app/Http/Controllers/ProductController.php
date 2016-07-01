@@ -1069,7 +1069,7 @@ public function create_dir($dir_path) {
             $success = 0;
         }
         
-        $data = array("success"=>$success,"message"=>"No products available for this vendor");
+        $data = array("success"=>$success);
         return response()->json(['data'=>$data]);
     }
     public function getVendorByProductCount()

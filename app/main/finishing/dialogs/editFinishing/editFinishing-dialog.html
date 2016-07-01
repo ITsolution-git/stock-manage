@@ -28,7 +28,7 @@
                         </div>
                         <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                             <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                <input placeholder="Start Time" name="" ui-event="" ng-model="finishing_data.start_time" ng-click="setTime(finishing_data,'start')">
+                                <input placeholder="Start Time" name="" ui-event="" ng-model="finishing_data.start_time" ng-click="setTime(finishing_data,'start')" readonly="">
                                 <div ng-messages=" " role="alert" multiple>
                                     <div ng-message="required">
                                         <span>This field is required</span>
@@ -37,7 +37,7 @@
                             </md-input-container>
 
                             <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                <input placeholder="Stop Time" name="" ui-event="" ng-model="finishing_data.end_time" ng-click="setTime(finishing_data,'end')">
+                                <input placeholder="Stop Time" name="" ui-event="" ng-model="finishing_data.end_time" ng-click="setTime(finishing_data,'end')" readonly="">
                                 <div ng-messages=" " role="alert" multiple>
                                     <div ng-message="required">
                                         <span>This field is required</span>
@@ -46,7 +46,7 @@
                             </md-input-container>
 
                             <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                <input placeholder="EST Completion Time" name="" ui-event="" ng-model="finishing_data.est">
+                                <input placeholder="EST Completion Time" name="" ui-event="" ng-model="finishing_data.est" readonly="">
                                 <div ng-messages=" " role="alert" multiple>
                                     <div ng-message="required">
                                         <span>This field is required</span>
@@ -55,7 +55,7 @@
                             </md-input-container>
                         </div>
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Notes" name="" ui-event="">
+                            <input placeholder="Notes" name="" ui-event="" ng-model="finishing_data.note">
                             <div ng-messages=" " role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>

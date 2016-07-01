@@ -6,7 +6,7 @@
             .controller('FinishingController', FinishingController);
 
     /** @ngInject */
-    function FinishingController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function FinishingController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
         var vm = this;
          vm.searchQuery = "";
 
@@ -177,7 +177,8 @@
             finishing_data['table'] ='finishing';
             finishing_data.cond['id'] = finishing.id;
             $http.post('api/public/common/UpdateTableRecords',finishing_data).success(function(result) {
-            
+                var data = {"status": "success", "message": "Record updated successfully"}
+                notifyService.notify(data.status, data.message);
             });
         }
     }

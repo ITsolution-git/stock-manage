@@ -140,10 +140,10 @@
                                                 <td>{{ distProduct.job}}</td> -->
                                                 <td>{{distProduct.distributed}}/{{distProduct.total}}</td>
                                                 <td class="text-right"> 
-                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0">
+                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0" ng-click="vm.createDistribution($event,'add')">
                                                         Distribute
                                                     </md-button>
-                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0">
+                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0" ng-click="createDistribution($event,'edit')">
                                                         Edit
                                                     </md-button>
                                                 </td>
@@ -164,9 +164,9 @@
                                         Products
                                     </div>
                                     <div flex="45" class="text-right">
-                                        <md-button  class="bg-grey bg-green right-m-0 " >
+                                        <!-- <md-button  class="bg-grey bg-green right-m-0 " >
                                             DISTRIBUTE EVENLY
-                                        </md-button>
+                                        </md-button> -->
                                         <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" >
                                             ADD NEW LOCATION
                                         </md-button>
