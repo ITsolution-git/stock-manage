@@ -29,7 +29,7 @@
             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Affiliate</label>
-                    <md-select ng-model="affiliate" flex="100"  class="select-width font-16 font-weight" required>
+                    <md-select ng-model="affiliate" flex="100"  class="select-width font-16 font-weight" required ng-change="calculateAffiliate()">
                         <md-option  ng-repeat="affiliate in allAffiliate" value="{{affiliate.id}}">
                             {{affiliate.name}}
                         </md-option>
