@@ -1,0 +1,80 @@
+<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page view-notes">
+     <div class="header "  layout="column" >
+        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
+           <!-- <a class="link-back" ui-sref="app.purchaseOrder.companyPO({id:po_id})">BACK TO PO</a>
+            <h2 flex="4" class="font-500">Notes for Purchase Order #{{po_id}}</h2>
+<!--             <md-input-container md-no-float class="md-block" flex="3">
+                <input placeholder="">
+            </md-input-container>-->
+        </div>
+    </div> 
+    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15" >
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text h2 text-semibold" flex=20>
+                Vendor Contacts
+            </div>
+            <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+                <md-button class="dark-bg chrome-weight" ng-click="openInsertPopup('settings/dialogs/vendor/vendorContacts.html',$event)">
+                    ADD NEW
+                </md-button>
+            </div>
+        </div>
+           <div class="ms-responsive-table-wrapper" ng-show="success==1">
+                <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                    <table class="dataTable row-border hover">
+                        <thead tasty-thead></thead>
+                        <tbody >
+                            <tr ng-repeat="(key,note) in rows">
+                                <td class="">{{note.first_name}}</td>
+                                <td class="">{{note.last_name}}</td>
+                                <td class="">{{note.prime_email}}</td>
+                                <td class="">{{note.prime_phone}}</td>
+                                <td ng-if="note.is_main=='1'"><i class="icon icon-check s40"></i></td>
+                                <td ng-if="note.is_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
+                                <td>
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4"> 
+                                        <md-menu-item>
+                                            <md-button ng-click="openEditPopup('settings/dialogs/vendor/vendorContacts.html',note,$event)">
+                                                Edit Note
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="UpdateTableField('is_main',0,'vendor_contacts','vendor_id',note.vendor_id,'contact_main',note.id)">
+                                                Set as main
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item>
+                                            <md-button ng-click="UpdateTableField('is_deleted',0,'vendor_contacts','id',note.id,'delete_note','')">
+                                                Remove Note
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+
+                               </td> 
+                                <!-- <td class="" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})"> View</td> -->
+                            </tr>
+                        </tbody> 
+                    </table>
+                    <div tasty-pagination class="tasty-page"></div>
+                </div>
+            </div>
+            <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+               <table class="simple">
+                    <thead>
+                        <tr>
+                            <th>No Records Found</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="p-23 border-t-grey">
+            </div>
+        </div>
+    </div>
+</div>
+

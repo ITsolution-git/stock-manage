@@ -1046,7 +1046,8 @@ class CommonController extends Controller {
                 0=>array('key' => 'first_name', 'name' => 'First Name'),
                 1=>array('key' => 'last_name', 'name' => 'Last Name'),
                 2=>array('key' => 'prime_email', 'name' => 'Email'),
-                3=>array('key' => 'prime_phone', 'name' => 'Phone')
+                3=>array('key' => 'prime_phone', 'name' => 'Phone'),
+                4=>array('key' => 'is_main', 'name' => 'Main')
                 );
 
         }

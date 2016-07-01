@@ -190,7 +190,24 @@
                     }
                 }
             })
-            ;
+            .state('app.settings.vendor.contact', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
+                url  : '/contact/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/vendor/viewContact/viewContact.html',
+                        controller : 'vendordetailController as vm'
+                    }
+                }
+            });
         // Navigation
        /* msNavigationServiceProvider.saveItem('fuse', {
             title : '',
