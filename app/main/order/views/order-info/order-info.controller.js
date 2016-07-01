@@ -371,7 +371,7 @@
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success',result.data.message);
-                        $scope.order.is_complete = '1';
+                        $scope.order.is_complete = '0';
                     }
                     else
                     {
