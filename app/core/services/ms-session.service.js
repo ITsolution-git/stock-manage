@@ -155,6 +155,10 @@
                 controller:function ($scope, params)
                 {
                     $scope.params = params; // GET PARAMETERS FOR POPUP
+
+                    $scope.closeDialog = function() 
+                    { $mdDialog.hide(); } 
+                    
                     $scope.InsertTableData = function(insert_data,extra,cond)
 			        {
 			        	$("#ajax_loader").show();
@@ -174,12 +178,11 @@
 		                    $("#ajax_loader").hide();
                    		});
 			        }
-                    $scope.closeDialog = function() 
-                    { $mdDialog.hide(); } 
+
                 },
                 templateUrl: 'app/main/'+path,
                 parent: angular.element($document.body),
-                clickOutsideToClose: false,
+                clickOutsideToClose: true,
                     locals: {
                         params:params,  // PARAMETERS PASS TO POPUP
                     },

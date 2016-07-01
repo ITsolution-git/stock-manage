@@ -72,7 +72,7 @@
                 }
                 else
                 {
-                    notifyService.notify('error',result.message);
+                    //notifyService.notify('error',result.message);
                 }
                 
             });
