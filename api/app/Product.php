@@ -503,9 +503,10 @@ class Product extends Model {
 
         $whereConditions = ['product.is_delete' => "1",'product.company_id' => $post['company_id']];
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS product.*')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS product.*,v.name_company')];
 
         $productData = DB::table('products as product')
+                         ->leftJoin('vendors as v', 'v.id', '=', 'product.vendor_id')
                          ->select($listArray)
                          ->where($whereConditions);
                         
@@ -515,6 +516,8 @@ class Product extends Model {
                           {
                               $query->orWhere('product.name', 'LIKE', '%'.$search.'%');
                               $query->orWhere('product.id', '=', $search);
+                               $query->orWhere('v.name_company', 'LIKE', '%'.$search.'%');
+
                           });
                         }
                         

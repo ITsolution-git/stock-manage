@@ -360,7 +360,8 @@ public function create_dir($dir_path) {
 
         $header = array(
                         0=>array('key' => 'product.id', 'name' => 'ID'),
-                        1=>array('key' => 'product.name', 'name' => 'Name')
+                        1=>array('key' => 'product.name', 'name' => 'Name'),
+                        2=>array('key' => 'v.name_company', 'name' => 'Vendor')
                         
                         );
 
