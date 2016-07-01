@@ -414,7 +414,7 @@ public function saveColorSize($post)
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*','o.order_number'];
+        $listArray = ['od.*','o.order_number','o.is_complete'];
 
         $designDetailData = DB::table('order_design as od')
                          ->leftJoin('orders as o','od.order_id','=', 'o.id')

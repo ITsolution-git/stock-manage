@@ -30,7 +30,7 @@
                      
                     $scope.order_id = result.data.records[0].order_id;
                     $scope.order_number = result.data.records[0].order_number;
-
+                    $scope.is_complete = result.data.records[0].is_complete;
                     $scope.designInforamtion = result.data.records[0];
 
                 } else {

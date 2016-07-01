@@ -356,22 +356,28 @@
             });
         };
 
-        $scope.createPO = function() {
-            var condition_obj = {};
-            condition_obj.order_id = $scope.order_id;
-            condition_obj.company_id = sessionService.get('company_id');
+       $scope.createPO = function() {
+            
+            var permission = confirm("Please make sure that once you create PO, it can't be changed. You also would not be able to add new and edit existing Designs and Products.");
 
-            $http.post('api/public/purchase/createPO',condition_obj).success(function(result) 
-            {
-                if(result.data.success=='1')
+            if(permission == true){
+
+                var condition_obj = {};
+                condition_obj.order_id = $scope.order_id;
+                condition_obj.company_id = sessionService.get('company_id');
+
+                $http.post('api/public/purchase/createPO',condition_obj).success(function(result) 
                 {
-                    notifyService.notify('success',result.data.message);
-                }
-                else
-                {
-                    notifyService.notify('error',result.data.message);
-                }
-            });
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success',result.data.message);
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                });
+            }
         }
 
 

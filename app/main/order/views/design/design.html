@@ -61,7 +61,7 @@
                         <md-icon ng-if="position1.expanded" md-font-icon="icon-minus"></md-icon>
                         <md-icon ng-if="!position1.expanded" md-font-icon="icon-plus"></md-icon>
                     </button>
-                     <md-menu ng-show="order_number == ''">
+                     <md-menu ng-show="order_number == '' && is_complete == '1' ">
                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                         </md-button>
@@ -75,7 +75,7 @@
                     </md-menu> 
                    </div>
                 </div>
-                <div ng-if="position1.expanded" class="box-content" layout="column" layout-padding ng-class="{'disable-click': order_number != ''}">
+                <div ng-if="position1.expanded" class="box-content" layout="column" layout-padding ng-class="{'disable-click': order_number != '' || is_complete == '0'}">
                     <div layout="row" class="postion-details" layout-align="space between">
                         <div flex="20">
                             <md-input-container class="width100">
@@ -256,7 +256,7 @@
                 </div>
             </div>
             
-            <div class="text-right" ng-show="order_number == ''">
+            <div class="text-right" ng-show="order_number == '' && is_complete == '1' ">
                 <md-button  class="bg-grey md-raised" ng-click="addPosition()">
                             ADD New Position
                         </md-button>
@@ -265,7 +265,7 @@
             </div>
         </div>
 
-        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-class="{'disable-click': order_number != ''}">
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-class="{'disable-click': order_number != '' || is_complete == '0'}">
 
             <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
             <div layout="row" flex="100">
@@ -289,7 +289,7 @@
             </div>
         </div>
         <md-divider></md-divider>
-        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-class="{'disable-click': order_number != ''}">
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-class="{'disable-click': order_number != '' || is_complete == '0'}">
             <div class="title"><span class="h2 text-semibold">Added Products</span></div>
             <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-repeat="product in productData"> 
                 <div layout="row" layout-align="space-between center" class="margin-bootom15">
