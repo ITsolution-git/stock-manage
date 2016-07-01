@@ -6,7 +6,7 @@
             .controller('VendorController', VendorController);
 
     /** @ngInject */
-    function VendorController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
+    function VendorController($document, $window, $timeout,$state, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
         var vm = this;
         var originatorEv;
@@ -225,7 +225,11 @@
 	            });
        		}
         }
-
+        $scope.vendor_contact = function(ev,vendor_id)
+        {
+            $state.go('app.settings.vendor.contact',{id: vendor_id});
+            return false;
+        }
 
 
     }
