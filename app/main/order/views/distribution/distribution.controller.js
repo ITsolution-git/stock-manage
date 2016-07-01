@@ -139,6 +139,7 @@
         };
         vm.dtInstanceCB = dtInstanceCB;
         vm.openAddProductDialog = openAddProductDialog;
+        vm.createDistribution = createDistribution;
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
@@ -156,6 +157,23 @@
                 clickOutsideToClose: true,
                 locals: {
                     Orders: $scope.order,
+                    event: ev
+                }
+            });
+        }
+
+        function createDistribution(ev, action)
+        {
+            $mdDialog.show({
+                controller: 'DistributionProductController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/views/distributionProduct/distributionProduct.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Addresses: $scope.distribution_address,
+                    action: action,
                     event: ev
                 }
             });

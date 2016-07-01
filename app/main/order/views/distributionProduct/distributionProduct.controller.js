@@ -7,7 +7,7 @@
             .controller('DistributionProductController', DistributionProductController);
 
     /** @ngInject */
-    function DistributionProductController($document, $window, $timeout, $mdDialog)
+    function DistributionProductController(Addresses,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
         vm.orderOverview = {
