@@ -85,24 +85,39 @@ class Vendor extends Model {
 * @return array $combine_array
 */  
 
-    public function vendorDetail($data) {
+    public function vendorContacts($post) {
 
        
-        $whereVendorConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
-        $vendorData = DB::table('vendors')->where($whereVendorConditions)->get();
+               $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
 
+        $admindata = DB::table('vendor_contacts')
+                         ->select('*')
+                         ->where('is_deleted','=','1')
+                         ->where('vendor_id','=',$post['v_id']);
+                 if($search != '')               
+                  {
+                      $admindata = $admindata->Where(function($query) use($search)
+                      {
+                          $query->orWhere('first_name', 'LIKE', '%'.$search.'%')
+                                ->orWhere('last_name','LIKE', '%'.$search.'%')
+                                ->orWhere('prime_email','LIKE', '%'.$search.'%')
+                                ->orWhere('prime_phone','LIKE', '%'.$search.'%');
+                      });
+                  }
+                 $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+       
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $admindata;
+        $returnData['count'] = $count[0]->Totalcount;
         
-    $whereConditions = ['vendor_id' => $data['id']];
-    $listArray = ['first_name','last_name','role_id','prime_email','prime_phone','id'];
-   
-    $UserData = DB::table('vendor_contacts')->select($listArray)->where($whereConditions)->get();
-
-        $combine_array = array();
-
-        $combine_array['vendor'] = $vendorData;
-        $combine_array['allContacts'] = $UserData;
-
-        return $combine_array;
+        return $returnData;
     }
 
 
