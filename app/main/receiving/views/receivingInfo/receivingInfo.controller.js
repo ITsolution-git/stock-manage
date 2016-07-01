@@ -43,7 +43,7 @@
             });
         }
         $scope.GetPodata();
-        $scope.UpdateTableField = function(field_name,field_value,id,original,extra)
+        $scope.UpdateTableField = function(field_name,field_value,id,original,extra,param)
                     {
                         if(extra=='short')
                         {
@@ -60,7 +60,13 @@
                                 notifyService.notify('error', 'Received quantity should not be more then Ordered quantity');
                                 return false;
                             }
+                            if(parseInt(param)>parseInt(field_value))
+                            {
+                                notifyService.notify('error', 'Defective quantity should not be more then Received quantity');
+                                return false;
+                            }
                         }
+
                         var UpdateArray = {};
 
                         UpdateArray.table ='purchase_order_line';

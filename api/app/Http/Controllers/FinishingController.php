@@ -154,7 +154,7 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est']);
+        $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est'],'note'=>$post['note']);
         $finishingData['where'] = array('id' => $post['id']);
 
         $result = $this->finishing->updateFinishing($finishingData);
@@ -244,8 +244,8 @@ class FinishingController extends Controller {
             $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id']);
             $shipping_id = $this->common->InsertRecords('order_item_mapping',$insert_arr);
 
-            $item_data = array('item_name' => $post['item_name'],'order_id' => $post['order_id'],'qty' => $total_qnty,'design_id' => $post['design_id'],'product_id' => $post['product_id']);
-            $return = $this->addFinishingItem($item_data);
+            $item_data = array('category_id' => $post['item_id'],'order_id' => $post['order_id'],'qty' => $total_qnty,'design_id' => $post['design_id'],'product_id' => $post['product_id']);
+            $result = $this->finishing->addFinishing($item_data);
         }
         $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['design_id']);
 

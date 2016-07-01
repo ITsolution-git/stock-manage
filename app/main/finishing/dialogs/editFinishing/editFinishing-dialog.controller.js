@@ -82,8 +82,9 @@
             
             if(param == 'start')
             {
-                if($scope.finishing_data.start_time == '')
-                {
+                /*if($scope.finishing_data.start_time == '')
+                {*/
+                    $scope.finishing_data.end_time = '';
                     $scope.finishing_data.start_time = hours + ":" + minutes + ":" + seconds;
                     var start_time = $scope.finishing_data.start_time;
 
@@ -95,7 +96,7 @@
                       .toString('H:mm:ss');
 
                     $scope.finishing_data.est = est;
-                }
+                //}
             }
             if(param == 'end')
             {
