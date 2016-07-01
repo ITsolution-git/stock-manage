@@ -7,7 +7,7 @@
         </md-toolbar>
         <md-dialog-content ms-scroll class="m-t-10">
             <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
+                <md-input-container class="margin-5 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Select Design</label>
                     <md-select ng-model="design" flex="100"  class="select-width font-16 font-weight" ng-change="getDesignProduct(design)" required>
                         <md-option  ng-repeat="design in allDesign" value="{{design.id}}">

@@ -272,7 +272,15 @@ class AffiliateController extends Controller {
         $total_qnty = 0;
         
         foreach ($post['sizeData'] as $size) {
-            $total_qnty += $size['affiliate_qnty'];
+
+             if(array_key_exists('affiliate_qnty', $size)) {
+                $total_qnty += $size['affiliate_qnty'];
+             } else {
+                exit;
+             }
+                   
+
+            
         }
 
         $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());

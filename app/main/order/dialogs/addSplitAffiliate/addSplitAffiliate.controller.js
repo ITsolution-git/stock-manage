@@ -27,7 +27,12 @@
 
         $scope.finalCalcualtion = function()
         {
-            $scope.total = parseFloat($scope.shop_invoice) - parseFloat($scope.affiliate_invoice) + parseFloat($scope.additional_charges);
+            if($scope.additional_charges < 0 || $scope.additional_charges == ''){
+                $scope.additional_charges = 0;
+            }
+            
+            var total = parseFloat($scope.shop_invoice) - parseFloat($scope.affiliate_invoice) + parseFloat($scope.additional_charges);
+            $scope.total = total.toFixed(2);
         }
 
         $scope.finalCalcualtion();
