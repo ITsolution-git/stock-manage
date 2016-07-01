@@ -140,10 +140,10 @@
                                                 <td>{{ distProduct.job}}</td> -->
                                                 <td>{{distProduct.distributed}}/{{distProduct.total}}</td>
                                                 <td class="text-right"> 
-                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0" ng-click="vm.createDistribution($event,'add')">
+                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0" ng-click="vm.createDistribution($event,'add',distProduct.product_id)">
                                                         Distribute
                                                     </md-button>
-                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0" ng-click="createDistribution($event,'edit')">
+                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0" ng-click="createDistribution($event,'edit',distProduct.product_id)">
                                                         Edit
                                                     </md-button>
                                                 </td>

@@ -162,7 +162,7 @@
             });
         }
 
-        function createDistribution(ev, action)
+        function createDistribution(ev, action, product_id)
         {
             $mdDialog.show({
                 controller: 'DistributionProductController',
@@ -174,6 +174,7 @@
                 locals: {
                     Addresses: $scope.distribution_address,
                     action: action,
+                    product_id: product_id,
                     event: ev
                 }
             });

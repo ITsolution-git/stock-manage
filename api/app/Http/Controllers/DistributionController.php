@@ -51,4 +51,18 @@ class DistributionController extends Controller {
 
         return response()->json($response);
     }
+
+    public function getDistSizeByProduct()
+    {
+        $post = Input::all();
+        $products = $this->distribution->getDistSizeByProduct($post['product_id']);
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'products' => $products
+                        );
+
+        return response()->json($response);
+    }
 }

@@ -7,9 +7,22 @@
             .controller('DistributionProductController', DistributionProductController);
 
     /** @ngInject */
-    function DistributionProductController(Addresses,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
+    function DistributionProductController(Addresses,action,product_id,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
+
+        $scope.Addresses = Addresses;
+
+        var combine_array_id = {};
+        combine_array_id.product_id = product_id;
+
+        $http.post('api/public/distribution/getDistSizeByProduct',combine_array_id).success(function(result) {
+            
+            if(result.success == '1') {
+               $scope.products = result.products;
+            }
+        });
+
         vm.orderOverview = {
             productName: "American Apparel Crew Neck",
             vendor: "American Apparel",

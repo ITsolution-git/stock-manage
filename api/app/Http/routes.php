@@ -320,3 +320,4 @@ Route::post('distribution/distributionDetail', 'DistributionController@distribut
 Route::post('distribution/getDistProductAddress', 'DistributionController@getDistProductAddress');
 Route::post('distribution/addToDistribute', 'DistributionController@addToDistribute');
 Route::post('distribution/removeFromDistribute', 'DistributionController@removeFromDistribute');
+Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
