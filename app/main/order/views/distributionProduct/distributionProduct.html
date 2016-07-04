@@ -1,6 +1,106 @@
-<div class="dprodct m-b-20 m-t-20 disrtubtd-pro-page">
-    <md-content flex="100" class="m-l-20 m-r-15">
-        <a class="link-back">BACK TO DISTRIBUTION</a>
+<div class="dprodct disrtubtd-pro-page orderitem-detail">
+    <md-content flex="100">
+        <div class="order-box-header"> Order Item Name
+            <button ng-transclude="" type="button" class="md-button md-ink-ripple pull-right" ng-click="cancel()" aria-label="Cancel">
+                <span class="ng-scope"><span class="fa fa-times"></span></span>
+                <div class="md-ripple-container" style=""></div>
+            </button>
+        </div>
+        <div class="order-box-cntnr">
+            <div class="orderbox-head">Client Distribution Locations</div>
+            <div layout="row" flex="100">
+                <div layout="column" flex="60" class="mrg10-R">
+                    <div class="order-container pd10-R" ms-scroll>
+                        <md-input-container flex-gt-sm="" class="md-block flex-gt-sm md-default-theme">
+                            <label for="input_10"> <md-icon md-font-icon="icon-magnify" class="ng-isolate-scope md-font icon-magnify material-icons md-default-theme" aria-hidden="true"></md-icon></label>
+                            <input ng-model="vm.searchQuery" class="ng-pristine ng-valid md-input ng-empty ng-touched" id="input_10" aria-invalid="false" style="">
+                        </md-input-container>
+                        <div class="box-typ3" ng-repeat="addrss in vm.addresses">
+                            <div layout="row" flex="100" class="demo-select-all-checkboxes">
+                                <div layout="column" flex="20" class="align-M align-self-C">
+                                    <md-checkbox aria-label="Select"></md-checkbox>
+                                </div>
+                                <div layout="column" flex="80">
+                                    <div class="font-13">{{ addrss.location }}</div>
+                                    <div class="font-13">{{ addrss.shortCode }}</div>
+                                    <div class="font-13">{{ addrss.full }}</div>
+                                    <div class="font-13">{{ addrss.phone }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" flex="40" class="mrg10-L">
+                    <button ng-transclude="" type="button" class="bg-grey dark-bg right-m-0 md-button md-ink-ripple md-default-theme" ng-click="vm.openaddAddressDialog($event)" aria-label="ADD NEW LOCATION">
+                        <span class="ng-scope">ADD NEW LOCATION</span>
+                    </button>
+                    <div layout="column" class="pad-10-15">
+                        <div layout="row" flex="100" class="mrg15-B">
+                            <div layout="column" flex="75">&nbsp;</div>
+                            <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
+                                <label class="font-14">S</label>
+                                <input placeholder="" ng-model="vm.orderOverviewSize.s">
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex="100" class="mrg15-B">
+                            <div layout="column" flex="75">&nbsp;</div>
+                            <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
+                                <label class="font-14">M</label>
+                                <input placeholder="" ng-model="vm.orderOverviewSize.m" >
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex="100" class="mrg15-B">
+                            <div layout="column" flex="75">&nbsp;</div>
+                            <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
+                                <label class="font-14">L</label>
+                                <input placeholder="" ng-model="vm.orderOverviewSize.l">
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex="100" class="mrg15-B">
+                            <div layout="column" flex="75">&nbsp;</div>
+                            <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
+                                <label class="font-14">XL</label>
+                                <input placeholder="" ng-model="vm.orderOverviewSize.xl">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div layout="row" flex="100" class="mrg15-TB">
+                <div layout="column" flex="50">
+                    <button type="button" class="bg-grey bg-green right-m-0 text-center line-hei md-button md-ink-ripple md-default-theme" aria-label="DISTRIBUTE EVENLY">
+                        <span class="ng-scope">DISTRIBUTE EVENLY</span>
+                    </button>
+                </div>
+                <div layout="column" flex="50">
+                    <button type="button" class="bg-grey bg-blue line-hei md-button md-ink-ripple md-default-theme abs20-L" aria-label="ALLOCATE">
+                        <span class="ng-scope">ALLOCATE</span>
+                    </button>
+                </div>
+            </div>
+            <div class="remain-qtybox">
+                <div class="orderbox-head">Remaining Quantities</div>
+                <div layout="row" flex="100">
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">S</label>
+                        <input placeholder="10">
+                    </md-input-container>
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">M</label>
+                        <input placeholder="10">
+                    </md-input-container>
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">L</label>
+                        <input placeholder="10">
+                    </md-input-container>
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
+                        <label class="font-14">XL</label>
+                        <input placeholder="10">
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+        <!-- <a class="link-back">BACK TO DISTRIBUTION</a>
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Order Item Name">
                 <md-content class=" m-t-20" >
@@ -174,6 +274,6 @@
                     </div>
                 </md-content>
             </md-tab>
-        </md-tabs>
+        </md-tabs> -->
     </md-content>
 </div>

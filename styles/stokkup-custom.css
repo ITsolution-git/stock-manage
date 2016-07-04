@@ -1017,3 +1017,55 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 .disable-click {
   pointer-events:none;
 }
+.orderitem-detail {
+  width: 631px;
+}
+.order-box-header {
+  background: #f2f2f2 none repeat scroll 0 0;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px;
+  width: 100%;
+   border:1px solid #ccc;
+}
+.order-box-cntnr {
+  border:1px solid #ccc;
+  border-top:0px;
+  padding:15px;
+}
+.order-box-header .md-button {
+  margin-top: -6px;
+}
+.order-box-header:before, .order-box-header:after {
+  clear: both;
+}
+.orderbox-head {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 0px 15px;
+}
+.orderitem-detail .box-typ3 {
+  border-bottom: 0px;
+}
+.orderitem-detail .order-container {
+  max-height: 380px;
+}
+.mrg15-TB {
+  margin: 15px 0;
+}
+.orderitem-detail .bg-green {
+  padding: 8px 10px;
+}
+.orderitem-detail .bg-blue, .orderitem-detail .bg-blue:hover {
+  background: #3399FF !important;
+  padding: 8px 10px;
+}
+.abs20-L {
+  position: absolute;
+  right: 20px;
+}
+.remain-qtybox {
+  padding:15px;
+  border-top:1px solid #ccc;
+}

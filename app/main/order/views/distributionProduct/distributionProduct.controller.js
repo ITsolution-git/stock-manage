@@ -79,9 +79,15 @@
             {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
             {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
             {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"}
-        ]
-
-                ;
+        ];
+        vm.addresses = [
+            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
+            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
+            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
+            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
+            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
+            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"}
+        ];
         vm.distInfo = {
             customerPO: "######",
             sales: "Keval Baxi",
