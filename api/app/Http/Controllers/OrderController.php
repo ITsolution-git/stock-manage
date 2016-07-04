@@ -1390,6 +1390,9 @@ class OrderController extends Controller {
     {
         $post = Input::all();
        
+       
+        unset($post['designData']['order_number']);
+        unset($post['designData']['is_complete']);
       
         if($post['designData']['hands_date'] != '')
         {
