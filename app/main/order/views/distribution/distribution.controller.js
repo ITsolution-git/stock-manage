@@ -162,7 +162,7 @@
             });
         }
 
-        function createDistribution(ev, action, product_id)
+        function createDistribution(ev,action,product_id,product_name)
         {
             $mdDialog.show({
                 controller: 'DistributionProductController',
@@ -175,6 +175,9 @@
                     Addresses: $scope.distribution_address,
                     action: action,
                     product_id: product_id,
+                    order_id: $scope.order_id,
+                    client_id: $scope.order.client_id,
+                    product_name: product_name,
                     event: ev
                 }
             });

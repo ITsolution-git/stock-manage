@@ -4,15 +4,14 @@
 
     angular
             .module('app.order')
-            .controller('DistributionProductController', DistributionProductController);
+            .controller('ViewDistributionProductController', ViewDistributionProductController);
 
     /** @ngInject */
-    function DistributionProductController(Addresses,action,product_id,order_id,client_id,product_name,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
+    function ViewDistributionProductController(Addresses,action,product_id,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
 
         $scope.Addresses = Addresses;
-        $scope.product_name = product_name;
 
         var combine_array_id = {};
         combine_array_id.product_id = product_id;
@@ -23,19 +22,6 @@
                $scope.products = result.products;
             }
         });
-
-        var combine_array_id = {};
-        combine_array_id.product_id = product_id;
-        combine_array_id.order_id = order_id;
-        combine_array_id.client_id = client_id;
-
-        $http.post('api/public/distribution/getDistAddress',combine_array_id).success(function(result) {
-            
-            if(result.success == '1') {
-               $scope.addresses = result.addresses;
-            }
-        });
-
 
         vm.orderOverview = {
             productName: "American Apparel Crew Neck",
@@ -93,15 +79,9 @@
             {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
             {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
             {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"}
-        ];
-        vm.addresses = [
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"}
-        ];
+        ]
+
+                ;
         vm.distInfo = {
             customerPO: "######",
             sales: "Keval Baxi",

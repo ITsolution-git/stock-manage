@@ -65,4 +65,34 @@ class DistributionController extends Controller {
 
         return response()->json($response);
     }
+
+    public function getDistAddress()
+    {
+        $post = Input::all();
+        $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $post['client_id']),array());
+
+        $client_distaddress = array();
+        foreach ($dist_addr as $addr) {
+            $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
+            $distribution_address[] = $addr;
+
+            $result = $this->common->GetTableRecords('item_address_mapping',array('item_id' => $post['product_id'],'address_id' => $addr->id,'order_id' => $post['order_id']),array());
+            if(empty($result))
+            {
+                $addr->is_selected = 0;
+            }
+            else
+            {
+                $addr->is_selected = 1;
+            }
+        }
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'addresses' => $distribution_address
+                        );
+
+        return response()->json($response);        
+    }
 }
