@@ -1,0 +1,64 @@
+<md-dialog class="task-dialog addEmployeeDialog" >
+<form name="employeeform" class="md-inline-form" novalidate>
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Add Sales Detail</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap>
+
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Name *" required name="sales_name"  ng-model="params.data.sales_name">
+                     <div ng-messages="employeeform.sales_name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Email *" type="email" name="sales_email" required ng-pattern="/^.+@.+\..+$/"  ng-model="params.data.sales_email">
+                    <div ng-messages="employeeform.sales_email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span >Email must be a valid e-mail address</span>
+                        </div>
+                    </div> 
+                </md-input-container>
+
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Phone" valid-phone name="sales_phone"  ng-model="params.data.sales_phone">
+                </md-input-container>
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Website" name="sales_web"  ng-model="params.data.sales_web">
+                </md-input-container>
+        </div>
+    </md-card-content>
+       
+    </div>
+</div>
+<table> 
+    <tr>
+        <td class="p-16 td-500">
+        
+            <md-button class="bg-blue float-right" ng-if="params.flag=='add'" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params.data,'sales')">
+                    SAVE
+            </md-button>
+
+             <md-button class="bg-blue float-right"  ng-if="params.flag=='edit'"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params.data,'sales','id',params.data.id,'sales')">
+                    UPDATE
+            </md-button>
+
+            
+        </td>  
+    </tr>
+</table>
+</form>
+</md-dialog>

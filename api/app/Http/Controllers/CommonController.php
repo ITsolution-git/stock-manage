@@ -1051,10 +1051,23 @@ class CommonController extends Controller {
                 );
 
         }
+        if($post['filter']['function']=='sales_list') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->vendor->SalesList($post);
+            $header = array(
+                0=>array('key' => 'sales_name', 'name' => 'Name'),
+                1=>array('key' => 'sales_email', 'name' => 'Email'),
+                2=>array('key' => 'sales_phone', 'name' => 'Phone'),
+                3=>array('key' => 'sales_created_date', 'name' => 'Created Date')
+                );
 
-        
+        }
+
         $records = $result['allData'];
-
         $success = (empty($result['count']))?'0':1;
         $message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;
 
