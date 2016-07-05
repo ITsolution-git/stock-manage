@@ -179,7 +179,8 @@
                     client_id: $scope.order.client_id,
                     product_name: product_name,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
             });
         }
 

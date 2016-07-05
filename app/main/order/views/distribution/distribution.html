@@ -128,22 +128,18 @@
                                     <table class="dataTable row-border hover" datatable="ng"  dt-options="vm.dtOptions"  >
                                         <thead>
                                         <th>Product Name</th>
-<!--                                         <th>Job Name</th>
-                                        <th>Job #</th>
- -->                                        <th>Total Allocated</th>
+                                        <th>Total Allocated</th>
                                         <th></th>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="distProduct in products" class="cursor-p">
                                                 <td>{{ distProduct.name}}</td>
-<!--                                                 <td>{{ distProduct.jobName}}  
-                                                <td>{{ distProduct.job}}</td> -->
                                                 <td>{{distProduct.distributed}}/{{distProduct.total}}</td>
                                                 <td class="text-right"> 
-                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0" ng-click="vm.createDistribution($event,'add',distProduct.product_id,distProduct.name)">
+                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.is_distribute==0" ng-click="vm.createDistribution($event,'add',distProduct.product_id,distProduct.name)">
                                                         Distribute
                                                     </md-button>
-                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0" ng-click="createDistribution($event,'edit',distProduct.product_id,distProduct.name)">
+                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.is_distribute==1" ng-click="vm.createDistribution($event,'edit',distProduct.product_id,distProduct.name)">
                                                         Edit
                                                     </md-button>
                                                 </td>

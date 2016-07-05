@@ -14,6 +14,8 @@
         $scope.Addresses = Addresses;
         $scope.product_name = product_name;
 
+        $scope.searchQuery = '';
+
         var combine_array_id = {};
         combine_array_id.product_id = product_id;
 
@@ -33,85 +35,9 @@
             
             if(result.success == '1') {
                $scope.addresses = result.addresses;
+               $scope.selected_addresses = result.selected_addresses;
             }
         });
-
-
-        vm.orderOverview = {
-            productName: "American Apparel Crew Neck",
-            vendor: "American Apparel",
-            sku: "#######",
-            description: "Lorem spunm text that describe the product."
-        };
-        vm.orderOverviewSize = {
-            s: "",
-            m: "",
-            l: "",
-            xl: ""
-        };
-        vm.orderOverviewLocation = {
-            description: "Description Text",
-            attn: "ATTN",
-            location: "1234 N Main St. Chicago, IL 60611 - USA",
-            phone: "Phone"
-        };
-        vm.orderOverviewDescription = {
-            description: "Description Text",
-            attn: "ATTN",
-            location: "1234 N Main St. Chicago, IL 60611 - USA",
-            phone: "Phone"
-        };
-
-        vm.locationSelect = {
-            "locationOption":
-                    [
-                        {"option": "Section 1"},
-                        {"option": "Section 2"},
-                        {"option": "Section 3"}
-                    ],
-            "location": false,
-            "locationView":""
-
-        };
-
-
-        vm.distributionDistributed = {
-            "productshipped": "800",
-            "Total": "100",
-        };
-        vm.distributionLocation = {
-            "location": "231",
-        };
-        vm.distProducts = [
-            {productName: "Product Name 1", jobName: "Job Name1", job: "#", totalAllocated: "0/120"},
-            {productName: "Product Name 2", jobName: "Job Name1.1", job: "#", totalAllocated: "0/120"},
-            {productName: "Product Name 3", jobName: "Job Name1.2", job: "#", totalAllocated: "80/120"}
-        ]
-
-                ;
-        vm.distlocations = [
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"}
-        ];
-        vm.addresses = [
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"}
-        ];
-        vm.distInfo = {
-            customerPO: "######",
-            sales: "Keval Baxi",
-            blind: "Yes",
-            accountManager: "Nancy McPhee",
-            mainContact: "Joshi Goodman",
-            priceGrid: "ABC Grid",
-        };
-
-        //Dummy models data
 
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
@@ -143,9 +69,69 @@
                 }
             });
         }
-
-
         vm.productSearch = null;
+        
+        $scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+              list.splice(idx, 1);
+            }
+            else {
+              list.push(item);
+            }
+        };
+        $scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+        };
 
+        $scope.allocate = function()
+        {
+            console.log($scope.selected_addresses);
+            if($scope.selected_addresses.length == 0)
+            {
+                var data = {"status": "error", "message": "Please select atleast one address to distribute"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            var combine_array = {};
+            combine_array.product_id = product_id;
+            combine_array.order_id = order_id;
+            combine_array.client_id = client_id;
+            combine_array.address_ids = $scope.selected_addresses;
+            combine_array.products = $scope.products;
+            combine_array.action = action;
+
+            $http.post('api/public/distribution/addEditDistribute',combine_array).success(function(result) {
+                if(result.success == 1) {
+                    var data = {"status": "success", "message": result.message}
+                    notifyService.notify(data.status, data.message);
+                    $mdDialog.hide();
+                }
+                else {
+                    var data = {"status": "error", "message": result.message}
+                    notifyService.notify(data.status, data.message);
+                }
+            });
+        }
+
+        $scope.cancel = function()
+        {
+            $mdDialog.hide();
+        }
+
+        $scope.filterAddress = function()
+        {
+            var combine_array = {};
+            combine_array.product_id = product_id;
+            combine_array.order_id = order_id;
+            combine_array.client_id = client_id;
+            combine_array.search = $scope.searchQuery;
+
+            $http.post('api/public/distribution/getDistAddress',combine_array).success(function(result) {
+                if(result.success == '1') {
+                   $scope.addresses = result.addresses;
+                }
+            });
+        }
     }
 })();

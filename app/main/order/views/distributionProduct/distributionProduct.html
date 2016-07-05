@@ -13,12 +13,12 @@
                     <div class="order-container pd10-R" ms-scroll>
                         <md-input-container flex-gt-sm="" class="md-block flex-gt-sm md-default-theme">
                             <label for="input_10"> <md-icon md-font-icon="icon-magnify" class="ng-isolate-scope md-font icon-magnify material-icons md-default-theme" aria-hidden="true"></md-icon></label>
-                            <input ng-model="vm.searchQuery" class="ng-pristine ng-valid md-input ng-empty ng-touched" id="input_10" aria-invalid="false" style="">
+                            <input ng-model="searchQuery" class="ng-pristine ng-valid md-input ng-empty ng-touched" id="input_10" aria-invalid="false" ng-change="filterAddress()">
                         </md-input-container>
                         <div class="box-typ3" ng-repeat="addrss in addresses">
                             <div layout="row" flex="100" class="demo-select-all-checkboxes">
                                 <div layout="column" flex="20" class="align-M align-self-C">
-                                    <md-checkbox aria-label="Select" ng-true-value="1" ng-false-value="0" ng-model="addrss.is_selected"></md-checkbox>
+                                    <md-checkbox aria-label="Select" ng-true-value="1" ng-false-value="0" ng-model="addrss.is_selected" ng-checked="exists(addrss.id, selected_addresses)" ng-click="toggle(addrss.id, selected_addresses)"></md-checkbox>
                                 </div>
                                 <div layout="column" flex="80">
                                     <div class="font-13">{{addrss.description}}</div>
@@ -47,12 +47,12 @@
             </div>
             <div layout="row" flex="100" class="mrg15-TB">
                 <div layout="column" flex="50">
-                    <button type="button" class="bg-grey bg-green right-m-0 text-center line-hei md-button md-ink-ripple md-default-theme" aria-label="DISTRIBUTE EVENLY">
+                    <!-- <button type="button" class="bg-grey bg-green right-m-0 text-center line-hei md-button md-ink-ripple md-default-theme" aria-label="DISTRIBUTE EVENLY">
                         <span class="ng-scope">DISTRIBUTE EVENLY</span>
-                    </button>
+                    </button> -->
                 </div>
                 <div layout="column" flex="50">
-                    <button type="button" class="bg-grey bg-blue line-hei md-button md-ink-ripple md-default-theme abs20-L" aria-label="ALLOCATE">
+                    <button type="button" class="bg-grey bg-blue line-hei md-button md-ink-ripple md-default-theme abs20-L" aria-label="ALLOCATE" ng-click="allocate()">
                         <span class="ng-scope">ALLOCATE</span>
                     </button>
                 </div>
@@ -62,7 +62,7 @@
                 <div layout="row" flex="100">
                     <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="product in products">
                         <label class="font-14">{{product.size}}</label>
-                        <input placeholder="" ng-model="product.distributed_qnty">
+                        <input placeholder="" ng-model="product.qnty_purchased">
                     </md-input-container>
                 </div>
             </div>
