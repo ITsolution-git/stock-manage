@@ -151,6 +151,39 @@ class Vendor extends Model {
     }
 
 
+    public function SalesList($post) {
 
+       
+        $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+        $admindata = DB::table('sales')
+                         ->select('*',DB::raw('DATE_FORMAT(sales_created_date, "%m/%d/%Y") as sales_created_date'))
+                         ->where('sales_delete','=','1')
+                         ->where('company_id','=',$post['company_id']);
+                 if($search != '')               
+                  {
+                      $admindata = $admindata->Where(function($query) use($search)
+                      {
+                          $query->orWhere('sales_name', 'LIKE', '%'.$search.'%')
+                                ->orWhere('sales_email','LIKE', '%'.$search.'%')
+                                ->orWhere('sales_phone','LIKE', '%'.$search.'%')
+                                ->orWhere('sales_created_date','LIKE', '%'.$search.'%');
+                      });
+                  }
+                 $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+       
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $admindata;
+        $returnData['count'] = $count[0]->Totalcount;
+        
+        return $returnData;
+    }
 
 }
