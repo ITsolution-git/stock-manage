@@ -1069,3 +1069,11 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
   padding:15px;
   border-top:1px solid #ccc;
 }
+.dprodct.disrtubtd-pro-page.orderitem-detail .mrg15-TB.layout-row.flex-100 {
+  min-height: 47px;
+}
+.order-box-header button.md-button.md-ink-ripple.pull-right {
+  min-width: 1px;
+  font-size: 18px;
+  color:#757576;
+}
