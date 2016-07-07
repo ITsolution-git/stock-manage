@@ -62,5 +62,18 @@ class Distribution extends Model {
 
 		return $result;
 	}
+
+	public function getProductByAddress($id)
+	{
+		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty'];
+
+		$result = DB::table('purchase_detail as pd')
+					->leftJoin('product_address_size_mapping as pas','pd.id','=','pas.purchase_detail_id')
+					->select($listArr)
+					->where('pas.product_address_id','=',$id)
+					->get();
+
+		return $result;
+	}
 }
 ?>

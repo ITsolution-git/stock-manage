@@ -72,7 +72,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.shipping', {
-           // title    : 'Shipping',
+            title    : 'Shipping',
             icon     : 'icon-truck',
             state    : 'app.shipping',
             /*stateParams: {

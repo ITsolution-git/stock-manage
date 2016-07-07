@@ -322,3 +322,4 @@ Route::post('distribution/addEditDistribute', 'DistributionController@addEditDis
 Route::post('distribution/removeFromDistribute', 'DistributionController@removeFromDistribute');
 Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
 Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
+Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');

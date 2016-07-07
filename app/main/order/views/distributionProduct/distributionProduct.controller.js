@@ -15,29 +15,40 @@
         $scope.product_name = product_name;
 
         $scope.searchQuery = '';
-
-        var combine_array_id = {};
-        combine_array_id.product_id = product_id;
-
-        $http.post('api/public/distribution/getDistSizeByProduct',combine_array_id).success(function(result) {
-            
-            if(result.success == '1') {
-               $scope.products = result.products;
-            }
-        });
+        $scope.address_id = 0;
+        $scope.product_id = product_id;
+        $scope.order_id = order_id;
+        $scope.products = [];
 
         var combine_array_id = {};
         combine_array_id.product_id = product_id;
         combine_array_id.order_id = order_id;
-        combine_array_id.client_id = client_id;
 
-        $http.post('api/public/distribution/getDistAddress',combine_array_id).success(function(result) {
+/*        $http.post('api/public/distribution/getDistSizeByProduct',combine_array_id).success(function(result) {
             
             if(result.success == '1') {
-               $scope.addresses = result.addresses;
-               $scope.selected_addresses = result.selected_addresses;
+               $scope.products = result.products;
             }
-        });
+        });*/
+
+        $scope.getDistributionDetail = function()
+        {
+
+            var combine_array_id = {};
+            combine_array_id.product_id = product_id;
+            combine_array_id.order_id = order_id;
+            combine_array_id.client_id = client_id;
+
+            $http.post('api/public/distribution/getDistAddress',combine_array_id).success(function(result) {
+                
+                if(result.success == '1') {
+                   $scope.addresses = result.addresses;
+                   $scope.selected_addresses = result.selected_addresses;
+                }
+            });
+        }
+
+        $scope.getDistributionDetail();
 
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
@@ -84,10 +95,15 @@
             return list.indexOf(item) > -1;
         };
 
+        $scope.getProductByAddress = function(address_id)
+        {
+            $scope.address_id = address_id;
+            $scope.products = $scope.addresses[$scope.address_id].sizeArr;
+        }
+
         $scope.allocate = function()
         {
-            console.log($scope.selected_addresses);
-            if($scope.selected_addresses.length == 0)
+            if($scope.address_id == 0)
             {
                 var data = {"status": "error", "message": "Please select atleast one address to distribute"}
                 notifyService.notify(data.status, data.message);
@@ -97,7 +113,8 @@
             combine_array.product_id = product_id;
             combine_array.order_id = order_id;
             combine_array.client_id = client_id;
-            combine_array.address_ids = $scope.selected_addresses;
+//            combine_array.address_ids = $scope.selected_addresses;
+            combine_array.address_id = $scope.address_id;
             combine_array.products = $scope.products;
             combine_array.action = action;
 
@@ -105,7 +122,8 @@
                 if(result.success == 1) {
                     var data = {"status": "success", "message": result.message}
                     notifyService.notify(data.status, data.message);
-                    $mdDialog.hide();
+                    $scope.getDistributionDetail();
+                    $scope.products = $scope.addresses[$scope.address_id].sizeArr;
                 }
                 else {
                     var data = {"status": "error", "message": result.message}
