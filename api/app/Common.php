@@ -126,21 +126,13 @@ class Common extends Model {
         $misc_type = DB::table('misc_type')->where($whereVendorConditions)->where('value','!=','')->get();
         return $misc_type;
     }
-    public function getStaffList($company_id)
+    public function getStaffList($company_id) // SALES EMPLOYEE LIST
     {
-
-
-        $whereConditions = ['misc.status' => '1','misc.is_delete' => '1','staff.is_delete' => '1','misc.type' => 'staff_type','staff.company_id' => $company_id];
-        $listArray = ['staff.id','staff.first_name','staff.last_name',DB::raw('CONCAT(staff.first_name, " ", staff.last_name) AS label')];
-
-        $staffData = DB::table('staff as staff')
-                         ->Join('misc_type as misc','staff.staff_type','=',DB::raw("misc.id AND misc.company_id = ".$company_id))
-                         ->Join('users as users', 'users.id', '=', 'staff.user_id')
-                         ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
-                         ->select($listArray)
-                         ->where($whereConditions)
+        $staffData = DB::table('sales')
+                         ->select('*',DB::raw('DATE_FORMAT(sales_created_date, "%m/%d/%Y") as sales_created_date'))
+                         ->where('sales_delete','=','1')
+                         ->where('company_id','=',$company_id)
                          ->get();
-
         return $staffData;
     }
 

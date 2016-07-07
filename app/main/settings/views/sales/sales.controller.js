@@ -17,7 +17,7 @@
         $scope.company_id = sessionService.get('company_id');
 
 
-            	/* TESTY PAGINATION */     
+        /* TESTY PAGINATION */     
         $scope.init = {
           'count': 10,
           'page': 1,
@@ -37,8 +37,7 @@
             //getResource();
         };
         
-
-        // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
+       // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
             var state = {};
             state.table ='state';
 
@@ -49,9 +48,6 @@
                 	$scope.states_all = result.data.records;
                 }
             });
-
-
-
        $scope.getResource = function (params, paramsObj, search)
         {   
         	$scope.params = params;
@@ -103,12 +99,11 @@
             //console.log(123);
             $scope.reloadCallback();
         }
-        
         $scope.delete_sales = function (ev,sales_id)
         {
         	var UpdateArray = {};
             UpdateArray.table ='sales';
-            UpdateArray.data = {is_delete:0};
+            UpdateArray.data = {sales_delete:0};
             UpdateArray.cond = {id: sales_id};
             
             var permission = confirm(AllConstant.deleteMessage);
@@ -129,12 +124,5 @@
 	            });
        		}
         }
-        $scope.sales_contact = function(ev,vendor_id)
-        {
-            $state.go('app.settings.vendor.contact',{id: vendor_id});
-            return false;
-        }
-
-
     }
 })();
