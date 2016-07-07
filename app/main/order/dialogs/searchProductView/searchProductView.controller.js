@@ -27,6 +27,7 @@
         $scope.description = description;
         $scope.vendor_name = vendor_name;
         $scope.product_id = product_id;
+         $scope.colorName = colorName;
        
       if(operation == 'Edit') {
 

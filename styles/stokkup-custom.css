@@ -1077,3 +1077,9 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
   font-size: 18px;
   color:#757576;
 }
+.active-color {
+  border : 2px solid #424141;
+}
+.deactivate-color{
+  border : 2px solid #FFFFFF;
+}

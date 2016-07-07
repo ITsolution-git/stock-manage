@@ -27,11 +27,11 @@
 
                     <div layout="row" flex="100" layout-wrap="nowrap" layout-align="start start">
 
-                         <div ng-repeat="(key,allData) in AllProductDetail"   flex="25">
+                         <div ng-repeat="(key,allData) in AllProductDetail"   flex="25" class="{{colorName == key ? 'active-color' : 'deactivate-color'}}">
                             <div class="md-whiteframe-1dp image-space"  layout="row" layout-align="center center" ng-click="changeColorData(allData.colorName,allData.colorFrontImage)">
                             <img src="https://www.ssactivewear.com/{{allData.colorSwatchImage}}"><md-tooltip md-direction="bottom">{{key}}</md-tooltip></img>
                             </div>
-                    </div>
+                         </div>
 
 
                     </div>
