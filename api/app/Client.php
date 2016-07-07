@@ -147,11 +147,11 @@ class Client extends Model {
     {
 
     	$retArray = DB::table('client as c')
-    				->select('st.name as state_name','st.id as state_id','pg.name as price_grid','stf.first_name as sales_fname','stf.last_name as sales_lname','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*')
+    				->select('st.name as state_name','st.id as state_id','pg.name as price_grid','stf.sales_name','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*')
     				->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
     				->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
     				->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
-            ->leftJoin('staff as stf','stf.id','=',"c.salesperson")
+            ->leftJoin('sales as stf','stf.id','=',"c.salesperson")
     				->leftJoin('type as tp','tp.id','=',"c.client_companytype")
             ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
             ->leftJoin('state as st','st.id','=',"c.pl_state")
@@ -211,8 +211,7 @@ class Client extends Model {
     			$result['sales']['salesweb'] = $value->salesweb;
     			$result['sales']['anniversarydate'] = $value->anniversarydate;
     			$result['sales']['salesperson'] = $value->salesperson;
-          $result['sales']['first_name'] = $value->sales_fname;
-          $result['sales']['last_name'] = $value->sales_lname;
+          $result['sales']['sales_name'] = $value->sales_name;
     			$result['sales']['salespricegrid'] = $value->salespricegrid;
           $result['sales']['price_grid'] = $value->price_grid;
           $result['sales']['anniversarydate'] = ($result['sales']['anniversarydate']=='0000-00-00')? '': date('m/d/Y',strtotime($result['sales']['anniversarydate']));
