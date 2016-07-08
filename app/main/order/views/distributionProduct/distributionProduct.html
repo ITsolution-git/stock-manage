@@ -19,7 +19,7 @@
                             <div layout="row" flex="100" class="demo-select-all-checkboxes">
                                 <div layout="column" flex="20" class="align-M align-self-C">
                                     <!-- <md-checkbox aria-label="Select" ng-true-value="1" ng-false-value="0" ng-model="addrss.is_selected" ng-checked="exists(addrss.id, selected_addresses)" ng-click="toggle(addrss.id, selected_addresses)"></md-checkbox> -->
-                                    <input type="radio" name="radio_btn" ng-model="addrss.is_selected" ng-click="getProductByAddress(addrss.id)">
+                                    <input type="radio" name="radio_btn" ng-model="addrss_id" value="addrss.id" ng-click="getProductByAddress(addrss.id)">
                                 </div>
                                 <div layout="column" flex="80">
                                     <div class="font-13">{{addrss.description}}</div>

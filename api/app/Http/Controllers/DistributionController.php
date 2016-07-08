@@ -42,6 +42,10 @@ class DistributionController extends Controller {
 
         $products = $this->distribution->getAllDustributionProducts($post_all['order_id']);
 
+       foreach ($products as $product) {
+            $product->total = $this->distribution->getTotalAllocated($post_all['order_id'],$product->product_id);
+        }
+
         $response = array(
                         'success' => 1, 
                         'message' => GET_RECORDS,
@@ -73,31 +77,44 @@ class DistributionController extends Controller {
 
         $client_distaddress = array();
         $selected_addresses = array();
-
+        
         foreach ($dist_addr as $addr) {
             
+            $total_remaining_qnty = 0;
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
 
             $result = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id']),array());
 
             if(empty($result))
             {
-                $addr->is_selected = 0;
-
                 $products = $this->distribution->getDistSizeByProduct($post['product_id']);
-
+                
                 foreach ($products as $row) {
                     $this->common->UpdateTableRecords('purchase_detail',array('id'=>$row->id),array('remaining_qnty'=>$row->qnty_purchased));
                     $row->remaining_qnty = $row->qnty_purchased;
+                    $total_remaining_qnty += $row->qnty_purchased;
                 }
-
-                $addr->sizeArr = $products;
             }
             else
             {
-                $addr->is_selected = 1;
-                $addr->sizeArr = $this->distribution->getProductByAddress($result[0]->id);
+                $result = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id'],'address_id' => $addr->id),array());
+
+                if(empty($result))
+                {
+                    $products = $this->distribution->getDistSizeByProduct($post['product_id']);
+                }
+                else
+                {
+                    $products = $this->distribution->getProductByAddress($result[0]->id);
+                }
+
+                $total_remaining_qnty = 0;
+                foreach ($products as $row) {
+                    $total_remaining_qnty += $row->remaining_qnty;
+                }
             }
+            $addr->sizeArr = $products;
+            $addr->total_remaining_qnty = $total_remaining_qnty;
             $distribution_address[$addr->id] = $addr;
         }
 
@@ -117,7 +134,9 @@ class DistributionController extends Controller {
 
         $total = 0;
         foreach ($post['products'] as $product) {
-            if($product['distributed_qnty'] > $product['remaining_qnty'])
+            $size_data = $this->distribution->getSingleSizeTotal($product);
+            print_r($size_data);exit;
+            /*if($product['distributed_qnty'] > $product['remaining_qnty'])
             {
                 $response = array('success'=>0,'message'=>'Please enter valid quantity');
                 return response()->json($response);
@@ -125,7 +144,7 @@ class DistributionController extends Controller {
             if($product['distributed_qnty'] > 0)
             {
                 $total = 1;
-            }
+            }*/
         }
 
         if($total == 0)
