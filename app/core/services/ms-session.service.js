@@ -173,7 +173,7 @@
 			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
 			        	{ 
 			        		if(result.data.success=='1')
-		                    { notifyService.notify('success',result.data.success); $mdDialog.hide();}
+		                    { notifyService.notify('success',result.data.message); $mdDialog.hide();}
 			                else
 		                    { notifyService.notify('error',result.data.message); }
 		                    $("#ajax_loader").hide();
