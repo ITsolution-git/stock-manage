@@ -87,7 +87,7 @@ class Distribution extends Model {
 					->leftJoin('purchase_order_line as pol','pol.purchase_detail','=','pd.id')
 					->select($listArr)
 					->where('pd.id','=',$data['id'])
-					->where('pas.product_address_id','!=',$data['product_address_id'])
+//					->where('pas.product_address_id','!=',$data['product_address_id'])
 					->get();
 
 		return $result;

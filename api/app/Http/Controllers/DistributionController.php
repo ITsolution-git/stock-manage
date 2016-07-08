@@ -134,17 +134,29 @@ class DistributionController extends Controller {
 
         $total = 0;
         foreach ($post['products'] as $product) {
-            $size_data = $this->distribution->getSingleSizeTotal($product);
-            print_r($size_data);exit;
-            /*if($product['distributed_qnty'] > $product['remaining_qnty'])
+
+            if($product['product_address_id'] > 0)
             {
-                $response = array('success'=>0,'message'=>'Please enter valid quantity');
+                $size_data = $this->distribution->getSingleSizeTotal($product);
+                $max_qnty = $size_data[0]->qnty_purchased - $size_data[0]->distributed_qnty;
+                $distributed_qnty = $product['distributed_qnty'] + $size_data[0]->distributed_qnty;
+                $remaining_qnty = $size_data[0]->qnty_purchased;
+            }
+            else
+            {
+                $distributed_qnty = $product['distributed_qnty'];
+                $remaining_qnty = $product['remaining_qnty'];
+            }
+            
+            if($distributed_qnty > $remaining_qnty)
+            {
+                $response = array('success'=>0,'message'=>'Enter valid quantity maximum quantity are '.$max_qnty);
                 return response()->json($response);
             }
             if($product['distributed_qnty'] > 0)
             {
                 $total = 1;
-            }*/
+            }
         }
 
         if($total == 0)
@@ -153,26 +165,38 @@ class DistributionController extends Controller {
             return response()->json($response);
         }
 
-        if($post['action'] == 'add')
+        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product_id'],'address_id' => $post['address_id']),array());
+
+        if(empty($shipping_data))
         {
             $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'product_id' => $post['product_id']));
-
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
-
-            foreach ($post['products'] as $product) {
-                
-                $updateArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
-
-                $this->common->InsertRecords('product_address_size_mapping',$updateArr);
-
-                $remaining_qnty = $product['remaining_qnty'] - $product['distributed_qnty'];
-                $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
-            }
         }
         else
         {
-            $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product_id']),array());   
-            $shipping_id = $shipping_data[0]->shipping_id;
+            $product_address_id = $shipping_data[0]->id;
+        }
+
+        $this->common->DeleteTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id));
+
+        foreach ($post['products'] as $product) {
+
+            if($product['product_address_id'] > 0)
+            {
+                $size_data = $this->distribution->getSingleSizeTotal($product);
+                $max_qnty = $size_data[0]->qnty_purchased - $size_data[0]->distributed_qnty;
+            }
+            else
+            {
+                $max_qnty = $product['remaining_qnty'];
+            }
+            
+            $updateArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
+            $this->common->InsertRecords('product_address_size_mapping',$updateArr);
+
+            $remaining_qnty = $max_qnty - $product['distributed_qnty'];
+            
+            $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
         }
 
         $message = 'Product allocated successfully';
