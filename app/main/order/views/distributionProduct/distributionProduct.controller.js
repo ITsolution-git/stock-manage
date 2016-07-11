@@ -44,7 +44,12 @@
                 if(result.success == '1') {
                    $scope.addresses = result.addresses;
                    $scope.selected_addresses = result.selected_addresses;
-                }
+
+                   if($scope.address_id > 0)
+                   {
+                        $scope.getProductByAddress($scope.address_id);
+                   }
+               }
             });
         }
 
@@ -123,7 +128,6 @@
                     var data = {"status": "success", "message": result.message}
                     notifyService.notify(data.status, data.message);
                     $scope.getDistributionDetail();
-                    $scope.products = $scope.addresses[$scope.address_id].sizeArr;
                 }
                 else {
                     var data = {"status": "error", "message": result.message}
