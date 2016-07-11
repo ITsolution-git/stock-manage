@@ -20,6 +20,29 @@
         $scope.order_id = order_id;
         $scope.products = [];
 
+        $scope.order_id = $stateParams.id;
+
+        $scope.orderDetail = function(){
+            $("#ajax_loader").show();
+            
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+            $scope.order_id = $stateParams.id;
+            
+
+            $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+                if(result.data.success == '1') {
+                    $("#ajax_loader").hide();
+                   $scope.order = result.data.records[0];
+                   $scope.order_items = result.data.order_item;
+                } else {
+                    $state.go('app.order');
+                }
+            });
+        }
+
+        $scope.orderDetail();
         var combine_array_id = {};
         combine_array_id.product_id = product_id;
         combine_array_id.order_id = order_id;
@@ -62,7 +85,7 @@
         };
 
         vm.dtInstanceCB = dtInstanceCB;
-        vm.openAddProductDialog = openAddProductDialog;
+        vm.openaddAddressDialog = openaddAddressDialog;
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
@@ -153,6 +176,22 @@
                 if(result.success == '1') {
                    $scope.addresses = result.addresses;
                 }
+            });
+        }
+        function openaddAddressDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'AddAddressController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/addAddress/addAddress.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Orders: $scope.order,
+                    event: ev
+                },
+                onRemoving : $scope.reloadPage
             });
         }
     }
