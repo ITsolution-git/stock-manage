@@ -168,11 +168,12 @@
 
                 		// SPECIAL CONDITIONS
                 		if(extra=='vendorcontact') { InserArray.data.vendor_id = $scope.params.vendor_id;}
+                		if(extra=='sales') { InserArray.data.company_id = $scope.params.company_id; InserArray.data.sales_created_date =AllConstant.currentdate;}
                 		
 			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
 			        	{ 
 			        		if(result.data.success=='1')
-		                    { notifyService.notify('success',result.data.success); $mdDialog.hide();}
+		                    { notifyService.notify('success',result.data.message); $mdDialog.hide();}
 			                else
 		                    { notifyService.notify('error',result.data.message); }
 		                    $("#ajax_loader").hide();
@@ -233,7 +234,7 @@
 			            condition_obj[cond_field] =  cond_value;
 			            UpdateArray.cond = angular.copy(condition_obj);
 
-			            if(extra=='vendorcontact') { delete UpdateArray.data.id;}
+			            if(extra=='vendorcontact' || extra=='sales') { delete UpdateArray.data.id; delete UpdateArray.data.sales_created_date;}
                 		//console.log(UpdateArray); return false;
                 		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
 			        	{

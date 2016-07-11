@@ -283,7 +283,7 @@
             </div>
         </div> -->
         <md-divider></md-divider>
-        <div class="design-product md-whiteframe-1dp disable-click" layout="column" layout-align="start" layout-padding>
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
             <div class="title"><span class="h2 text-semibold">Added Products</span></div>
             <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-repeat="product in productData"> 
                 <div layout="row" layout-align="space-between center" class="margin-bootom15">
@@ -296,7 +296,7 @@
                             <md-icon ng-if="product.expanded" md-font-icon="icon-plus"></md-icon>
                             <md-icon ng-if="!product.expanded" md-font-icon="icon-minus"></md-icon>
                         </button>
-                        <md-menu>
+                        <!-- <md-menu class="disable-click">
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
@@ -315,7 +315,7 @@
                                     <md-button ng-click="deleteAddProduct(product.id)">Delete</md-button>
                                 </md-menu-item>
                             </md-menu-content>
-                        </md-menu>
+                        </md-menu> -->
                     </div>
                 </div>
                 <div class="box-content" layout="column" >
@@ -369,15 +369,13 @@
                             </div>   
                                                     </div>
                         <div layout="row" flex="80"  layout-align="space-between start" layout-padding>
-                            <div layout="column" flex="10">
-                                <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
-                            </div>
+                          
                             <div layout="column" flex="35">
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Average Garment Cost</div>
                                     <div class="h5 grey-color font-14 ">${{product.avg_garment_cost}}</div>
                                 </div>
-                                <div layout="row" layout-align="space-between start" class="p-b-10">
+                                <div layout="row" layout-align="space-between start" class="p-b-10 disable-click">
                                     <div class="h4">Markup Default 70%</div>
                                     <div class="h5 grey-color font-14">
                                         <div class="form-cntnr">
@@ -412,7 +410,7 @@
                                         <div class="h4">Markup %</div>
                                         <div class="h5 grey-color font-14">${{product.markup}}</div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="">
+                                    <div layout="row" layout-align="space-between start" class="disable-click">
                                         <div class="h4">Overide</div>
                                         <div class="h5 grey-color font-14">
                                             <div class="form-cntnr">
@@ -444,7 +442,7 @@
                                         </md-card-title-text>
                                     </md-card-title>
                                     <md-card-content class="pad0 package-height scrollable" ms-scroll>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product.id,product.design_id)">
+                                        <div class="card-box  hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}">
                                             <div>{{order_item.item}}</div>
                                             <span>${{order_item.charge}}</span>
                                         </div>

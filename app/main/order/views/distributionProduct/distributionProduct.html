@@ -1,6 +1,6 @@
 <div class="dprodct disrtubtd-pro-page orderitem-detail">
     <md-content flex="100">
-        <div class="order-box-header"> Order Item Name
+        <div class="order-box-header"> {{product_name}}
             <button type="button" class="md-button md-ink-ripple pull-right" ng-click="cancel()" aria-label="Cancel">
                 <span class="ng-scope"><span class="fa fa-times"></span></span>
                 <div class="md-ripple-container" style=""></div>
@@ -13,18 +13,19 @@
                     <div class="order-container pd10-R" ms-scroll>
                         <md-input-container flex-gt-sm="" class="md-block flex-gt-sm md-default-theme">
                             <label for="input_10"> <md-icon md-font-icon="icon-magnify" class="ng-isolate-scope md-font icon-magnify material-icons md-default-theme" aria-hidden="true"></md-icon></label>
-                            <input ng-model="vm.searchQuery" class="ng-pristine ng-valid md-input ng-empty ng-touched" id="input_10" aria-invalid="false" style="">
+                            <input ng-model="searchQuery" class="ng-pristine ng-valid md-input ng-empty ng-touched" id="input_10" aria-invalid="false" ng-change="filterAddress()">
                         </md-input-container>
-                        <div class="box-typ3" ng-repeat="addrss in vm.addresses">
+                        <div class="box-typ3" ng-repeat="addrss in addresses">
                             <div layout="row" flex="100" class="demo-select-all-checkboxes">
                                 <div layout="column" flex="20" class="align-M align-self-C">
-                                    <md-checkbox aria-label="Select"></md-checkbox>
+                                    <!-- <md-checkbox aria-label="Select" ng-true-value="1" ng-false-value="0" ng-model="addrss.is_selected" ng-checked="exists(addrss.id, selected_addresses)" ng-click="toggle(addrss.id, selected_addresses)"></md-checkbox> -->
+                                    <input type="radio" name="radio_btn" ng-model="addrss.is_selected" ng-click="getProductByAddress(addrss.id)">
                                 </div>
                                 <div layout="column" flex="80">
-                                    <div class="font-13">{{ addrss.location }}</div>
-                                    <div class="font-13">{{ addrss.shortCode }}</div>
-                                    <div class="font-13">{{ addrss.full }}</div>
-                                    <div class="font-13">{{ addrss.phone }}</div>
+                                    <div class="font-13">{{addrss.description}}</div>
+                                    <div class="font-13">{{addrss.attn}}</div>
+                                    <div class="font-13">{{addrss.full_address}}</div>
+                                    <div class="font-13">{{addrss.phone}}</div>
                                 </div>
                             </div>
                         </div>
@@ -36,88 +37,24 @@
                     </button>
                     <div class="order-container1" ms-scroll>
                         <div layout="column" class="pad-10-15">
-                            <div layout="row" flex="100" class="mrg15-B">
+                            <div layout="row" flex="100" class="mrg15-B" ng-repeat="product in products">
                                 <div layout="column" flex="75">&nbsp;</div>
                                 <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">S</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.s">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">M</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.m" >
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">L</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.l">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">XL</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">XL</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">XL</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">XL</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">XL</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">XL</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                                </md-input-container>
-                            </div>
-                            <div layout="row" flex="100" class="mrg15-B">
-                                <div layout="column" flex="75">&nbsp;</div>
-                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                    <label class="font-14">XL</label>
-                                    <input placeholder="" ng-model="vm.orderOverviewSize.xl">
+                                    <label class="font-14">{{product.size}}</label>
+                                    <input placeholder="" ng-model="product.distributed_qnty">
                                 </md-input-container>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+            
             <div layout="row" flex="100" class="mrg15-TB">
                 <div layout="column" flex="50">
-                    <button type="button" class="bg-grey bg-green right-m-0 text-center line-hei md-button md-ink-ripple md-default-theme" aria-label="DISTRIBUTE EVENLY">
+                    <!-- <button type="button" class="bg-grey bg-green right-m-0 text-center line-hei md-button md-ink-ripple md-default-theme" aria-label="DISTRIBUTE EVENLY">
                         <span class="ng-scope">DISTRIBUTE EVENLY</span>
-                    </button>
+                    </button> -->
                 </div>
                 <div layout="column" flex="50">
-                    <button type="button" class="bg-grey bg-blue line-hei md-button md-ink-ripple md-default-theme abs20-L" aria-label="ALLOCATE">
+                    <button type="button" class="bg-grey bg-blue line-hei md-button md-ink-ripple md-default-theme abs20-L" aria-label="ALLOCATE" ng-click="allocate()">
                         <span class="ng-scope">ALLOCATE</span>
                     </button>
                 </div>
@@ -125,199 +62,12 @@
             <div class="remain-qtybox">
                 <div class="orderbox-head">Remaining Quantities</div>
                 <div layout="row" flex="100">
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">S</label>
-                        <input placeholder="10">
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">M</label>
-                        <input placeholder="10">
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">L</label>
-                        <input placeholder="10">
-                    </md-input-container>
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15">
-                        <label class="font-14">XL</label>
-                        <input placeholder="10">
+                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="product in products">
+                        <label class="font-14">{{product.size}}</label>
+                        <input placeholder="" ng-model="product.remaining_qnty">
                     </md-input-container>
                 </div>
             </div>
         </div>
-        <!-- <a class="link-back">BACK TO DISTRIBUTION</a>
-        <md-tabs md-dynamic-height md-border-bottom>
-            <md-tab label="Order Item Name">
-                <md-content class=" m-t-20" >
-                    <div class="h2 text-semibold pad-10-15">
-                        Order &nbsp;Item &nbsp;Overview
-                    </div>
-                    <div class="pad-10-15">
-                    <div class=" pad-8" layout="row">
-                        <md-card-content flex="100" layout="column">
-                            <div layout="row" layout-wrap>
-                                <div class="trans-box">
-                                    <div>Product Name</div>
-                                    <span class="grey-color">{{vm.orderOverview.productName}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Vendor</div>
-                                    <span class="grey-color">{{vm.orderOverview.vendor}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>SKU</div>
-                                    <span class="grey-color"> {{vm.orderOverview.sku}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Description</div>
-                                    <span class="grey-color">{{vm.orderOverview.description}}</span>
-                                </div>       
-                            </div>
-                        </md-card-content>
-                    </div>
-                    <div layout="row" class="pad-10-15">
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">S</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.s">
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">M</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.m" >
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">L</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.l">
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">XL</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                        </md-input-container>
-
-                    </div>
-                    </div>
-                    <md-divider ></md-divider>
-                    <div layout="column" class="pad-10-15" >
-                        <div class="h2 text-semibold ">Location</div>
-                        <p class="p-t-30 margin-0">{{vm.orderOverviewLocation.description}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewLocation.attn}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewLocation.location}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewLocation.phone}}</p>
-                    </div>
-                    <md-divider ></md-divider>
-                    <div layout="column" class="pad-10-15">
-                        <div class="h2 text-semibold ">Description Text</div>
-                        <p class="p-t-30 margin-0">{{vm.orderOverviewDescription.description}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewDescription.attn}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewDescription.location}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewDescription.phone}}</p>
-                    </div>
-                </md-content>
-            </md-tab>
-            <md-tab label="Locations">
-                <md-content ng-if="!vm.locationSelect.location" class="trans m-t-20" layout-padding>
-                    <div class="h2 text-semibold">Location Overview</div>
-                    <md-input-container class="" layout="row">
-                        <label>Select Location</label>
-                        <md-select ng-model="vm.locationSelect.location" flex="25" >
-                            <md-option  ng-repeat="options in vm.locationSelect.locationOption" value="{{options.option}}">
-                                {{options.option}}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-                </md-content>
-                <md-content ng-if="vm.locationSelect.location" class="trans m-t-20" layout-padding>
-                    <div class="h2 text-semibold ">Location Overview</div>
-                    <div layout="column" class="pad-10-15" >
-                        <p class="p-t-30 margin-0">{{vm.orderOverviewLocation.description}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewLocation.attn}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewLocation.location}}</p>
-                        <p class=" margin-0">{{vm.orderOverviewLocation.phone}}</p>
-                    </div>
-                    <md-divider ></md-divider>
-                    <div class=" pad-8" layout="row">
-                        <md-card-content flex="100" layout="column">
-                            <div class="h2 text-semibold p-b-20">Order Item</div>
-                            <div layout="row" layout-wrap>
-
-                                <div class="trans-box">
-                                    <div>Product Name</div>
-                                    <span class="grey-color">{{vm.orderOverview.productName}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Vendor</div>
-                                    <span class="grey-color">{{vm.orderOverview.vendor}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>SKU</div>
-                                    <span class="grey-color"> {{vm.orderOverview.sku}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Description</div>
-                                    <span class="grey-color">{{vm.orderOverview.description}}</span>
-                                </div>       
-                            </div>
-                        </md-card-content>
-                    </div>
-                    <div layout="row" class="pad-10-15">
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">S</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.s">
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">M</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.m" >
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">L</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.l">
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">XL</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                        </md-input-container>
-                    </div>
-                    <md-divider ></md-divider>
-                    <div class=" pad-8" layout="row">
-                        <md-card-content flex="100" layout="column">
-                            <div layout="row" layout-wrap>
-                                <div class="trans-box">
-                                    <div>Product Name</div>
-                                    <span class="grey-color">{{vm.orderOverview.productName}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Vendor</div>
-                                    <span class="grey-color">{{vm.orderOverview.vendor}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>SKU</div>
-                                    <span class="grey-color"> {{vm.orderOverview.sku}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Description</div>
-                                    <span class="grey-color">{{vm.orderOverview.description}}</span>
-                                </div>       
-                            </div>
-                        </md-card-content>
-                    </div>
-                    <div layout="row" class="pad-10-15">
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">S</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.s">
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">M</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.m" >
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">L</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.l">
-                        </md-input-container>
-                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="6">
-                            <label class="font-14">XL</label>
-                            <input placeholder="" ng-model="vm.orderOverviewSize.xl">
-                        </md-input-container>
-                    </div>
-                </md-content>
-            </md-tab>
-        </md-tabs> -->
     </md-content>
 </div>

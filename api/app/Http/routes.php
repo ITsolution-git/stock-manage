@@ -318,6 +318,8 @@ Route::post('affiliate/affiliateCalculation', 'AffiliateController@affiliateCalc
 //DISTRIBUTION ROUTERS
 Route::post('distribution/distributionDetail', 'DistributionController@distributionDetail');
 Route::post('distribution/getDistProductAddress', 'DistributionController@getDistProductAddress');
-Route::post('distribution/addToDistribute', 'DistributionController@addToDistribute');
+Route::post('distribution/addEditDistribute', 'DistributionController@addEditDistribute');
 Route::post('distribution/removeFromDistribute', 'DistributionController@removeFromDistribute');
 Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
+Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
+Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');

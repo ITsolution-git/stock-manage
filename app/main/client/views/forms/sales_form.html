@@ -26,7 +26,7 @@
                             Select Person
                         </md-option>
                         <md-option ng-repeat="staff in StaffList" ng-selected="{{salesDetails.salesperson==staff.id}}" value="{{staff.id}}">
-                            {{staff.label}}
+                            {{staff.sales_name}}
                         </md-option>
                     </md-select>
                 </md-input-container>

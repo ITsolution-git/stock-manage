@@ -1,0 +1,223 @@
+.main-design-page{
+    .trans-box {
+        md-input-container{
+            margin: 0
+        }
+        padding: 13px;
+        width: 20%;
+        > div {
+            font-size: 14px;
+        }
+        > span{
+
+            color: #cccccc;
+            font-size: 12px;
+
+        }
+    }
+    .design-positions{
+        background: #fff;
+    }
+    .design-product{
+        background: #fff;
+    }
+}
+
+.info-order {
+    padding: 0;
+    .layout-row.md-default-theme {
+        margin: 0;
+    }
+    .f-52 {
+        font-size: 39px !important; 
+    }
+    .m-r-0{margin-right: 0 !important}
+
+}
+.order-info-page {
+    .dataTables_length{
+        display: none;
+    }
+    .dataTables_filter{
+        display: none
+    }
+    .bottom{
+        .left{display: none;}
+        .right{display: none;}
+
+    }
+    .top{
+        display: none;
+    }
+
+}
+button.dark-bg {
+    background: #999;
+    span{
+        color: #fff !important;
+        font-size: 12px;
+    }
+}
+.content.order-info-page {
+    margin: 10px;
+    td{
+        padding: 0 24px !important;
+    }
+
+}
+.margin{margin: 10px}
+
+
+
+
+
+.m-l-20{margin-left:  20px !important;
+        md-card{
+            margin: 0 8px;
+            .card-box {
+                padding: 10px 0;
+            }
+
+        }
+
+
+}
+.m-l-20 md-card-title {
+    background: #eeeeee none repeat scroll 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 6px;
+}
+.text-left {
+    text-align: left !important;
+}
+
+.h2.semibold.f-52 {
+    font-size: 39px;
+}
+.m-l-20 md-card {
+    margin: 0;
+}
+
+.footer{background: #fff}
+
+
+
+
+.width100{width: 100% !important}
+.layout-row > .flex-73, .layout-row > .flex-73 {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 73%;
+    -ms-flex: 1 1 73%;
+    flex: 1 1 73%;
+    max-width: 73%;
+    max-height: 100%;
+    box-sizing: border-box;
+
+}
+.pad-r{ padding-right: 42px;}
+.design-positions textarea {
+    height: 141px !important;
+}
+.border-grey.dot{
+    border:2px dashed #cccccc
+}
+.div-height{
+    height: 200px;
+}
+.layout-row > .flex-24, .layout-row > .flex-24 {
+    box-sizing: border-box;
+    flex: 1 1 25%;
+    max-height: 100%;
+    max-width: 24%;
+}
+
+.fontsize{
+    font-size: 68px !important;
+    display: inline;
+}
+
+button.bg-grey.md-raised {
+    background: #999 !important;
+    color: #fff !important;
+}
+.design-product-slider{min-height: 120px}
+.design-vendor-logo {
+    background: #f2f2f2;
+}
+
+.ad-product-img.md-whiteframe-1dp {
+    height: 182px;
+    width: 182px;
+    background: #eee;
+}
+.margin-bootom15{margin-bottom: 15px}
+
+.color {
+    color: #777777;
+}
+
+p.grey-color {
+    margin: 8px 0;
+    font-size: 14px;
+}
+.t-shirt{
+    font-size: 42px !important;
+    height: 24px !important;
+    line-height: 42px !important;
+    width: 0px !important;
+    margin-right: 2px;
+}
+
+.layout-row > .flex-38, .layout-row > .flex-38 {
+    box-sizing: border-box;
+    flex: 1 1 38%;
+    max-height: 100%;
+    max-width: 38%;
+}
+
+.distribution-information{
+    .trans-box {
+        padding: 6px 16px;
+        width: 16.6%;
+    }
+    
+}
+
+.table-disrtri td {
+    padding: 6px 35px !important;
+}
+.table-disrtri th {
+    padding-left: 34px !important;
+    color: #6f6f6f;
+}
+.line-hei{line-height: 1.4}
+.table-disrtri tr:nth-child(3) button {
+    background: #039be5 none repeat scroll 0 0 !important;
+
+}
+.distribution-information md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
+    background: #039be5 none repeat scroll 0 0;
+    color: #039be5;
+    height: 6px;
+}
+.distribution-information md-tabs.md-default-theme .md-tab.md-active, md-tabs .md-tab.md-active, md-tabs.md-default-theme .md-tab.md-active md-icon, md-tabs .md-tab.md-active md-icon, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused, md-tabs.md-default-theme .md-tab.md-focused md-icon, md-tabs .md-tab.md-focused md-icon{color:#039be5 !important }
+.layout-row > .flex-6, .layout-row > .flex-6 {
+    box-sizing: border-box;
+    flex: 1 1 15%;
+    max-height: 100%;
+    max-width: 6%;
+}
+.dprodct md-tabs-wrapper{border: none !important;}
+.dprodct md-tab-content{
+    border:1px solid #ccc;
+}
+.dprodct md-tabs-canvas{ background-color: #f5f5f5 !important}
+
+.dprodct md-content{position: relative}
+.link-back{position: absolute;
+top: 10px;
+right: 0px;
+font-size: 15px;
+z-index: 1;}
