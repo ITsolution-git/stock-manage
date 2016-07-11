@@ -94,26 +94,28 @@ class DistributionController extends Controller {
                     $row->remaining_qnty = $row->qnty_purchased;
                     $total_remaining_qnty += $row->qnty_purchased;
                 }
+                $addr->sizeArr = $products;
             }
             else
             {
-                $result = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id'],'address_id' => $addr->id),array());
+                $result2 = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id'],'address_id' => $addr->id),array());
 
-                if(empty($result))
+                if(empty($result2))
                 {
                     $products = $this->distribution->getDistSizeByProduct($post['product_id']);
                 }
                 else
                 {
-                    $products = $this->distribution->getProductByAddress($result[0]->id);
+                    $products = $this->distribution->getProductByAddress($result2[0]->id);
                 }
 
                 $total_remaining_qnty = 0;
                 foreach ($products as $row) {
                     $total_remaining_qnty += $row->remaining_qnty;
                 }
+                $addr->sizeArr = $products;
             }
-            $addr->sizeArr = $products;
+            
             $addr->total_remaining_qnty = $total_remaining_qnty;
             $distribution_address[$addr->id] = $addr;
         }
@@ -135,20 +137,21 @@ class DistributionController extends Controller {
         $total = 0;
         foreach ($post['products'] as $product) {
 
-            if($product['product_address_id'] > 0)
+            $size_data = $this->distribution->getSingleSizeTotal($product);
+
+            if($product['product_address_id'] > 0 && $product['product_address_id'] != null)
             {
-                $size_data = $this->distribution->getSingleSizeTotal($product);
-                $max_qnty = $size_data[0]->qnty_purchased - $size_data[0]->distributed_qnty;
-                $distributed_qnty = $product['distributed_qnty'] + $size_data[0]->distributed_qnty;
-                $remaining_qnty = $size_data[0]->qnty_purchased;
+                $product_address_size_mapping = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product['product_address_id'],'purchase_detail_id' => $product['id']),array());
+                $current_qnty = $product_address_size_mapping[0]->distributed_qnty;
+                $total_size_qnty = $size_data[0]->distributed_qnty - $current_qnty;
+                $max_qnty = $size_data[0]->qnty_purchased - $total_size_qnty;
             }
             else
             {
-                $distributed_qnty = $product['distributed_qnty'];
-                $remaining_qnty = $product['remaining_qnty'];
+                $max_qnty = $product['remaining_qnty'];
             }
-            
-            if($distributed_qnty > $remaining_qnty)
+
+            if($product['distributed_qnty'] > $max_qnty)
             {
                 $response = array('success'=>0,'message'=>'Enter valid quantity maximum quantity are '.$max_qnty);
                 return response()->json($response);
@@ -159,11 +162,11 @@ class DistributionController extends Controller {
             }
         }
 
-        if($total == 0)
+/*        if($total == 0)
         {
             $response = array('success'=>0,'message'=>'Please enter quantity to distribute');
             return response()->json($response);
-        }
+        }*/
 
         $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product_id'],'address_id' => $post['address_id']),array());
 
@@ -181,10 +184,23 @@ class DistributionController extends Controller {
 
         foreach ($post['products'] as $product) {
 
-            if($product['product_address_id'] > 0)
+            $size_data = $this->distribution->getSingleSizeTotal($product);
+
+            $current_qnty = 0;
+            if($product['product_address_id'] > 0 && $product['product_address_id'] != null)
             {
-                $size_data = $this->distribution->getSingleSizeTotal($product);
-                $max_qnty = $size_data[0]->qnty_purchased - $size_data[0]->distributed_qnty;
+                $product_address_size_mapping = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product['product_address_id'],'purchase_detail_id' => $product['id']),array());
+                
+                if(!empty($product_address_size_mapping))
+                {
+                    $current_qnty = $product_address_size_mapping[0]->distributed_qnty;
+                    $total_size_qnty = $size_data[0]->distributed_qnty - $current_qnty;
+                    $max_qnty = $size_data[0]->qnty_purchased - $total_size_qnty;
+                }
+                else
+                {
+                    $max_qnty = $product['remaining_qnty'];
+                }
             }
             else
             {
@@ -192,11 +208,14 @@ class DistributionController extends Controller {
             }
             
             $updateArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
-            $this->common->InsertRecords('product_address_size_mapping',$updateArr);
 
+            $this->common->InsertRecords('product_address_size_mapping',$updateArr);
             $remaining_qnty = $max_qnty - $product['distributed_qnty'];
             
-            $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
+            if($current_qnty != $product['distributed_qnty'])
+            {
+                $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
+            }
         }
 
         $message = 'Product allocated successfully';

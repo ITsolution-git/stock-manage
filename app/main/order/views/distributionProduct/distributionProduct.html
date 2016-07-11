@@ -35,13 +35,15 @@
                     <button type="button" class="bg-grey dark-bg right-m-0 md-button md-ink-ripple md-default-theme" ng-click="vm.openaddAddressDialog($event)" aria-label="ADD NEW LOCATION">
                         <span class="ng-scope">ADD NEW LOCATION</span>
                     </button>
-                    <div layout="column" class="pad-10-15">
-                        <div layout="row" flex="100" class="mrg15-B" ng-repeat="product in products">
-                            <div layout="column" flex="75">&nbsp;</div>
-                            <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                <label class="font-14">{{product.size}}</label>
-                                <input placeholder="" ng-model="product.distributed_qnty">
-                            </md-input-container>
+                    <div class="order-container1" ms-scroll>
+                        <div layout="column" class="pad-10-15">
+                            <div layout="row" flex="100" class="mrg15-B" ng-repeat="product in products">
+                                <div layout="column" flex="75">&nbsp;</div>
+                                <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
+                                    <label class="font-14">{{product.size}}</label>
+                                    <input placeholder="" ng-model="product.distributed_qnty">
+                                </md-input-container>
+                            </div>
                         </div>
                     </div>
                 </div>

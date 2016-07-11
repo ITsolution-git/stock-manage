@@ -36,6 +36,7 @@ class Distribution extends Model {
 					->select($listArr)
 					->where('pd.product_id','=',$product_id)
 					->where('pol.qnty_purchased','>','0')
+					->GroupBy('pd.id')
 					->get();
 
 		return $result;
@@ -73,6 +74,7 @@ class Distribution extends Model {
 					->leftJoin('product_address_size_mapping as pas','pd.id','=','pas.purchase_detail_id')
 					->select($listArr)
 					->where('pas.product_address_id','=',$id)
+					->GroupBy('pd.id')
 					->get();
 
 		return $result;
