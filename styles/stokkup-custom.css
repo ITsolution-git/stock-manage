@@ -625,6 +625,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     border-radius: 5px;
 }
 .order-container { max-height: 610px; overflow: auto; position: relative;}
+.order-container1 { max-height: 330px; overflow: auto; position: relative;}
 .fileUpload span, .btn-typ-submit span {
     color: #fff !important;
     font-size: 15px !important;
