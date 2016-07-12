@@ -1,0 +1,1996 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Stokkup",
+        "contact": {
+            "name": "codal api team",
+            "url": "http://new.stokkup.com/stokkup/"
+        },
+        "license": {
+            "name": "Codal Systems",
+            "url": "http://new.stokkup.com/stokkup/"
+        },
+        "version": "1.0"
+    },
+    "host": "new.stokkup.com/stokkup",
+    
+    "consumes": [
+        "application/json",
+        "multipart/form-data"
+    ],
+    "paths": {
+        "/api/public/art/listing/{company_id}": {
+            "get": {
+                "tags": [
+                    "Art"
+                ],
+                "summary": "Art LIsting",
+                "description": "Art LIsting",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "path",
+                        "description": "Art LIsting",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Art LIsting"
+                    },
+                    "default": {
+                        "description": "Art LIsting"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/product": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Product Listing",
+                "description": "Product Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Product Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/productList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product Listing"
+                    },
+                    "default": {
+                        "description": "Product Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/order/listOrder": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Listing",
+                "description": "Order Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Order Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OrderList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Listing"
+                    },
+                    "default": {
+                        "description": "Order Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/order/orderDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Detail",
+                "description": "Order Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Order Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OrderDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Detail"
+                    },
+                    "default": {
+                        "description": "Order Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/getOrderPositionDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Position Tab Detail",
+                "description": "Order Position Tab Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Order Position Tab Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OrderPositionDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Position Tab Detail"
+                    },
+                    "default": {
+                        "description": "Order Position Tab Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/getOrderLineDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Line Tab Detail",
+                "description": "Order Line Tab Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Order Line Tab Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/OrderLineDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Line Tab Detail"
+                    },
+                    "default": {
+                        "description": "Order Line Tab Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/getOrderNoteDetails/{id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Notes Data",
+                "description": "Order Notes Data",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order Notes Data",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Notes Data"
+                    },
+                    "default": {
+                        "description": "Order Notes Data"
+                    }
+                }
+            }
+        },
+        "/api/public/order/deleteOrderNotes/{id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Notes Delete",
+                "description": "Order Notes Delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order Notes Delete",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Notes Delete"
+                    },
+                    "default": {
+                        "description": "Order Notes Delete"
+                    }
+                }
+            }
+        },
+        "/api/public/order/saveOrderNotes": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Add Notes in particular order",
+                "description": "Add Notes in particular order",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add Notes in particular order",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/saveOrderNotes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Add Notes in particular order"
+                    },
+                    "default": {
+                        "description": "Add Notes in particular order"
+                    }
+                }
+            }
+        },
+        "/api/public/order/deleteOrderLine": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Line Delete",
+                "description": "Order Line Delete",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Order Line Delete",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/deleteOrderLine"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Line Delete"
+                    },
+                    "default": {
+                        "description": "Order Line Delete"
+                    }
+                }
+            }
+        },
+        "/api/public/order/PODetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "PO Detail",
+                "description": "PO Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "PO Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PODetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "PO Detail"
+                    },
+                    "default": {
+                        "description": "PO Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/distributionDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Line Tab Detail",
+                "description": "Order Line Tab Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Order Line Tab Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/distributionDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Line Tab Detail"
+                    },
+                    "default": {
+                        "description": "Order Line Tab Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/removeFromDistribute": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Distribution Delete",
+                "description": "Distribution Delete",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Distribution Delete",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/removeFromDistribute"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Distribution Delete"
+                    },
+                    "default": {
+                        "description": "Distribution Delete"
+                    }
+                }
+            }
+        },
+        "/api/public/order/updateDistributedQty": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Update Distributed Qty",
+                "description": "Update Distributed Qty",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Update Distributed Qty",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateDistributedQty"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Distributed Qty"
+                    },
+                    "default": {
+                        "description": "Update Distributed Qty"
+                    }
+                }
+            }
+        },
+        "/api/public/order/duplicatePoData": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Duplicate PO",
+                "description": "Duplicate PO",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Duplicate PO",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/duplicatePoData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Duplicate PO"
+                    },
+                    "default": {
+                        "description": "Duplicate PO"
+                    }
+                }
+            }
+        },
+        "/api/public/order/getTaskList": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Task List",
+                "description": "Get Task List",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get Task List",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/getTaskList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Task List"
+                    },
+                    "default": {
+                        "description": "Get Task List"
+                    }
+                }
+            }
+        },
+        "/api/public/order/getTaskDetails": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Task Details",
+                "description": "Get Task Details",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get Task Details",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/getTaskDetails"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Task Details"
+                    },
+                    "default": {
+                        "description": "Get Task Details"
+                    }
+                }
+            }
+        },
+        "/api/public/order/getProductDetailColorSize/{id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Product Color Detail",
+                "description": "Product Color Detail",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product Color Detail",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product Color Detail"
+                    },
+                    "default": {
+                        "description": "Product Color Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/AssignSize": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Assign color size to order line",
+                "description": "Assign color size to order line",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Assign color size to order line",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AssignSize"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Assign color size to order line"
+                    },
+                    "default": {
+                        "description": "Assign color size to order line"
+                    }
+                }
+            }
+        },
+        "/api/public/order/productDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Product Detail",
+                "description": "Get Product Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get Product Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/productDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Product Detail"
+                    },
+                    "default": {
+                        "description": "Get Product Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/deleteColorSize": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Delete Color Size",
+                "description": "Delete Color Size",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Delete Color Size",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/deleteColorSize"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Color Size"
+                    },
+                    "default": {
+                        "description": "Delete Color Size"
+                    }
+                }
+            }
+        },
+        "/api/public/order/sendEmail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Send Email To User",
+                "description": "Send Email To User",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Send Email To User",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/sendEmail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Send Email To User"
+                    },
+                    "default": {
+                        "description": "Send Email To User"
+                    }
+                }
+            }
+        },
+        "/api/public/order/orderImageDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get Order Image Detail",
+                "description": "Get Order Image Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get Order Image Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/orderImageDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Order Image Detail"
+                    },
+                    "default": {
+                        "description": "Get Order Image Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/addOrder": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Add Order",
+                "description": "Add Order",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add Order",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/addOrder"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Add Order"
+                    },
+                    "default": {
+                        "description": "Add Order"
+                    }
+                }
+            }
+        },
+        "/api/public/finishing/listFinishing": {
+            "post": {
+                "tags": [
+                    "Finishing"
+                ],
+                "summary": "Finishing Listing",
+                "description": "Finishing Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Finishing Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/finishingList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Finishing Listing"
+                    },
+                    "default": {
+                        "description": "Finishing Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/common/getAllMiscData": {
+            "post": {
+                "tags": [
+                    "Misc"
+                ],
+                "summary": "Miscdata Listing",
+                "description": "Miscdata Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Miscdata Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/miscList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Miscdata Listing"
+                    },
+                    "default": {
+                        "description": "Miscdata Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/common/InsertRecords": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Insert records",
+                "description": "Insert records",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Insert records",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InsertRecords"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Insert records"
+                    },
+                    "default": {
+                        "description": "Insert records"
+                    }
+                }
+            }
+        },
+        "/api/public/common/UpdateTableRecords": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Update Order Note",
+                "description": "Update Order Note",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Update Order Note",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateOrderNotes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Order Note"
+                    },
+                    "default": {
+                        "description": "Update Order Note"
+                    }
+                }
+            }
+        },
+        "/api/public/common/DeleteTableRecords": {
+            "post": {
+                "tags": [
+                    "Setting",
+                    "Color",
+                    "API"
+                ],
+                "summary": "Delete Placement",
+                "description": "Delete Record",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Delete Record",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteTableRecords"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete Record"
+                    },
+                    "default": {
+                        "description": "Delete Record"
+                    }
+                }
+            }
+        },
+        "/api/public/common/getAllColorData": {
+            "get": {
+                "tags": [
+                    "Color"
+                ],
+                "summary": "Get All colors",
+                "description": "Get All colors",
+                "responses": {
+                    "200": {
+                        "description": "Get All colors"
+                    },
+                    "default": {
+                        "description": "Get All colors"
+                    }
+                }
+            }
+        },
+        "/api/public/common/InsertUserRecords": {
+            "post": {
+                "tags": [
+                    "Staff"
+                ],
+                "summary": "Add Staff",
+                "description": "Add Staff",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add Staff",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InsertUserRecords"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Add Staff"
+                    },
+                    "default": {
+                        "description": "Add Staff"
+                    }
+                }
+            }
+        },
+        "/api/public/common/insertRecordsEmail": {
+            "post": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Add vendor",
+                "description": "Add vendor",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add vendor",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/InsertVendor"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Add vendor"
+                    },
+                    "default": {
+                        "description": "Add vendor"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/vendor": {
+            "post": {
+                "tags": [
+                    "Vendor"
+                ],
+                "summary": "Vendor Listing",
+                "description": "Vendor Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Vendor Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vendorList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vendor Listing"
+                    },
+                    "default": {
+                        "description": "Vendor Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/shipping/listShipping": {
+            "post": {
+                "tags": [
+                    "Shipping"
+                ],
+                "summary": "Shipping Listing",
+                "description": "Shipping Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Shipping Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/shippingList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Shipping Listing"
+                    },
+                    "default": {
+                        "description": "Shipping Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/miscSave": {
+            "post": {
+                "tags": [
+                    "Misc"
+                ],
+                "summary": "Misc save data",
+                "description": "Misc save data",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Misc save data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/miscSave"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Misc save data"
+                    },
+                    "default": {
+                        "description": "Misc save data"
+                    }
+                }
+            }
+        },
+        "/api/public/api/GetCompanyApi/{company_id}": {
+            "get": {
+                "tags": [
+                    "API"
+                ],
+                "summary": "Get Company API Listing",
+                "description": "Get Company API Listing",
+                "parameters": [
+                    {
+                        "name": "company_id",
+                        "in": "path",
+                        "description": "Get Company API Listing",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get Company API Listing"
+                    },
+                    "default": {
+                        "description": "Get Company API Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/client/ListClient": {
+            "post": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Client Listing",
+                "description": "Client Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Client Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/clientList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client Listing"
+                    },
+                    "default": {
+                        "description": "Client Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/staff": {
+            "post": {
+                "tags": [
+                    "Staff"
+                ],
+                "summary": "Staff Listing",
+                "description": "Staff Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Staff Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/staffList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Staff Listing"
+                    },
+                    "default": {
+                        "description": "Staff Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Login",
+                "description": "Login to the application using email and password",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Login credentials",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login to system"
+                    },
+                    "default": {
+                        "description": "Invalid Credentials"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/forgot_password": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Forgot Password",
+                "description": "Forgot Password",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Forgot Password",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Forgot"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Forgot Password"
+                    },
+                    "default": {
+                        "description": "Invalid Credentials"
+                    }
+                }
+            }
+        },
+        "/api/public/purchase/ListPurchase": {
+            "post": {
+                "tags": [
+                    "Purchasing"
+                ],
+                "summary": "Purchasing List",
+                "description": "Purchasing List",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Purchasing List",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/listPurchase"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Purchasing List"
+                    },
+                    "default": {
+                        "description": "Purchasing List"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/price": {
+            "post": {
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Pricegrid Listing",
+                "description": "Pricegrid Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Pricegrid Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/priceList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pricegrid Listing"
+                    },
+                    "default": {
+                        "description": "Pricegrid Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/placementSave": {
+            "post": {
+                "tags": [
+                    "Setting"
+                ],
+                "summary": "Placement Update",
+                "description": "Placement Update",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Placement Update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/placementSave"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Placement Update"
+                    },
+                    "default": {
+                        "description": "Placement Update"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/colorSave": {
+            "post": {
+                "tags": [
+                    "Color"
+                ],
+                "summary": "Color Update",
+                "description": "Color Update",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Color Update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/colorSave"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Color Update"
+                    },
+                    "default": {
+                        "description": "Color Update"
+                    }
+                }
+            }
+        },
+        "/api/public/admin/colorInsert": {
+            "post": {
+                "tags": [
+                    "Color"
+                ],
+                "summary": "Color Add",
+                "description": "Color Add",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Color Add",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/colorInsert"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Color Add"
+                    },
+                    "default": {
+                        "description": "Color Add"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "productList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "OrderList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "client_id"
+                    ],
+                    "properties": {
+                        "client_id": {
+                            "type": "integer"
+                        },
+                        "company_id": {
+                            "type": "integer"
+                        },
+                        "sales_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "OrderDetail": {
+            "required": [
+                "company_id",
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "OrderPositionDetail": {
+            "required": [
+                "company_id",
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "OrderLineDetail": {
+            "required": [
+                "company_id",
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "saveOrderNotes  ": {
+            "properties": {
+                "data": {
+                    "required": [
+                        "order_notes"
+                    ],
+                    "properties": {
+                        "order_notes": {
+                            "type": "string"
+                        },
+                        "order_id": {
+                            "type": "integer"
+                        },
+                        "user_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "deleteOrderLine": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "PODetail": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "distributionDetail": {
+            "required": [
+                "client_id",
+                "order_id",
+                "address_id"
+            ],
+            "properties": {
+                "client_id": {
+                    "type": "integer"
+                },
+                "order_id": {
+                    "type": "integer"
+                },
+                "address_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "removeFromDistribute": {
+            "required": [
+                "order_id"
+            ],
+            "properties": {
+                "order_id": {
+                    "type": "integer"
+                },
+                "address_id": {
+                    "type": "integer"
+                },
+                "item_id": {
+                    "type": "integer"
+                },
+                "shipping_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "updateDistributedQty": {
+            "required": [
+                "id",
+                "qty"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "qty": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "duplicatePoData": {
+            "required": [
+                "po_id"
+            ],
+            "properties": {
+                "po_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "getTaskList": {
+            "required": [
+                "order_id"
+            ],
+            "properties": {
+                "order_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "getTaskDetails": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "AssignSize": {
+            "required": [
+                "orderline_id",
+                "product_id",
+                "color_id",
+                "order_id"
+            ],
+            "properties": {
+                "orderline_id": {
+                    "type": "integer"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "color_id": {
+                    "type": "integer"
+                },
+                "order_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "productDetail": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "deleteColorSize": {
+            "required": [
+                "color_id",
+                "product_id"
+            ],
+            "properties": {
+                "color_id": {
+                    "type": "integer"
+                },
+                "product_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "sendEmail": {
+            "required": [
+                "email",
+                "product_id",
+                "order_id"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "order_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "orderImageDetail": {
+            "required": [
+                "id",
+                "company_id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "company_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "addOrder": {
+            "properties": {
+                "orderData": {
+                    "required": [
+                        "client_id"
+                    ],
+                    "properties": {
+                        "client_id": {
+                            "type": "integer"
+                        },
+                        "job_name": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "company_id": {
+                    "type": "integer"
+                },
+                "login_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "finishingList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "miscList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "InsertRecords": {
+            "properties": {
+                "data": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        },
+                        "login_id": {
+                            "type": "integer"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "vendor_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "updateOrderNotes": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "note_id"
+                    ],
+                    "properties": {
+                        "note_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "data": {
+                    "required": [
+                        "order_notes"
+                    ],
+                    "properties": {
+                        "order_notes": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "DeleteTableRecords": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "id"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "InsertUserRecords": {
+            "properties": {
+                "data": {
+                    "required": [
+                        "email"
+                    ],
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        },
+                        "role_id": {
+                            "type": "integer"
+                        },
+                        "parent_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "InsertVendor": {
+            "properties": {
+                "data": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        },
+                        "login_id": {
+                            "type": "integer"
+                        },
+                        "name_company": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "vendorList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "shippingList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "miscSave": {
+            "required": [
+                "value",
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "value": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "clientList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "staffList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Login": {
+            "required": [
+                "email",
+                "password"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Forgot": {
+            "required": [
+                "email"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "listPurchase": {
+            "required": [
+                "company_id",
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "priceList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "placementSave": {
+            "required": [
+                "updatedcolumn",
+                "id",
+                "columnname"
+            ],
+            "properties": {
+                "updatedcolumn": {
+                    "type": "string"
+                },
+                "columnname": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "colorSave": {
+            "required": [
+                "updatedcolumn",
+                "id",
+                "columnname"
+            ],
+            "properties": {
+                "updatedcolumn": {
+                    "type": "string"
+                },
+                "columnname": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "colorInsert": {
+            "required": [
+                "updatedcolumn",
+                "columnname"
+            ],
+            "properties": {
+                "updatedcolumn": {
+                    "type": "string"
+                },
+                "columnname": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "tags": [
+        {
+            "name": "Login",
+            "description": "Mange Login and Logout"
+        },
+        {
+            "name": "Order",
+            "description": "Order Module"
+        },
+        {
+            "name": "Staff",
+            "description": "Staff Module"
+        },
+        {
+            "name": "Product",
+            "description": "Product Module"
+        },
+        {
+            "name": "Vendor",
+            "description": "Vendor Module"
+        },
+        {
+            "name": "Setting",
+            "description": "Setting Module"
+        },
+        {
+            "name": "Misc",
+            "description": "Misc Module"
+        },
+        {
+            "name": "API",
+            "description": "API Module"
+        },
+        {
+            "name": "Client",
+            "description": "Client Module"
+        },
+        {
+            "name": "Purchasing",
+            "description": "Purchasing Module"
+        },
+        {
+            "name": "Art",
+            "description": "Art Module"
+        },
+        {
+            "name": "Finishing",
+            "description": "Finishing Module"
+        },
+        {
+            "name": "Shipping",
+            "description": "Shipping Module"
+        }
+    ]
+}

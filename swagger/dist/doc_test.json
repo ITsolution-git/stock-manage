@@ -1,0 +1,56 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Example Api",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/example": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Get Current User Details"
+                    }
+                }
+            }
+        },
+        "api/addexample": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "firstname",
+                        "description": "User first name",
+                        "required": true,
+                        "type": "string",
+                        "paramType": "path",
+                        "allowMultiple": false
+                    },
+                    {
+                        "name": "lastname",
+                        "description": "User Last Name",
+                        "required": true,
+                        "type": "string",
+                        "paramType": "path",
+                        "allowMultiple": false
+                    },
+                    {
+                        "name": "email",
+                        "description": "User Last Name",
+                        "required": true,
+                        "type": "string",
+                        "paramType": "path",
+                        "allowMultiple": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Add new User Details"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+
+    }
+}
