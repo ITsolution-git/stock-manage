@@ -59,9 +59,23 @@
                             <input placeholder="Phone Number" name="prime_phone_no" ng-model="affiliate.prime_phone_no">
                         </md-input-container>
 
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <md-input-container class="md-block first-box settings-margin-0">
                             <input placeholder="Email Address" name="email" ng-model="affiliate.email">
-                         </md-input-container>
+                        </md-input-container>
+
+                        <div layout="row" layout-wrap="nowrap" class="margin-top-25" layout-align="space-between start">
+                            <md-input-container flex=30 class="m-b-20 m-t-25">
+                            <label class="state-label-color">Status</label>
+                            <md-select  name="status" ng-model="affiliate.status">
+                                <md-option value="1">
+                                    Active
+                                </md-option>
+                                 <md-option value="0" >
+                                    Inactive
+                                </md-option>
+                            </md-select>
+                            </md-input-container>
+                        </div>
                 </div>
 
                 <div layout="column" flex="50">

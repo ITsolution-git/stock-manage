@@ -134,7 +134,8 @@
                                         <tbody>
                                             <tr ng-repeat="distProduct in products" class="cursor-p">
                                                 <td>{{ distProduct.name}}</td>
-                                                <td>{{distProduct.distributed}}/{{distProduct.total}}</td>
+                                                <td ng-if="distProduct.distributed == null">0/{{distProduct.total}}</td>
+                                                <td ng-if="distProduct.distributed != null">{{distProduct.distributed}}/{{distProduct.total}}</td>
                                                 <td class="text-right"> 
                                                     <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.is_distribute==0" ng-click="vm.createDistribution($event,'add',distProduct.product_id,distProduct.name)">
                                                         Distribute

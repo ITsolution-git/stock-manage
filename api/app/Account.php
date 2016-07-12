@@ -49,7 +49,7 @@ class Account extends Model {
     {
     	if(!empty($post['id']))
     	{
-    		$result = DB::table('users')->where('id','=',$post['id'])->update(array('role_id'=>$post['role_id'],'name'=>$post['name'],'email'=>$post['email']));
+    		$result = DB::table('users')->where('id','=',$post['id'])->update(array('role_id'=>$post['role_id'],'name'=>$post['name'],'email'=>$post['email'],'status'=>$post['status']));
     		return $result;
     	}
     	else

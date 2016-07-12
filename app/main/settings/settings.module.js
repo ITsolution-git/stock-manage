@@ -304,7 +304,7 @@
             weight     : 8
         });
         msNavigationServiceProvider.saveItem('fuse.settings.sales', {
-            title      : 'sales',
+            title      : 'Sales',
             state      : 'app.settings.sales',
             stateParams: {'id': 9},
             class      : 'navigation-dashboards project-dashboard',

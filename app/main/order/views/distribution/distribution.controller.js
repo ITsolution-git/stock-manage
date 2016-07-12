@@ -75,6 +75,11 @@
         $scope.designDetail();
         $scope.getDistProductAddress();
 
+        $scope.reloadPage = function()
+        {
+            $state.reload();
+        }
+
         var vm = this;
         vm.openaddAddressDialog = openaddAddressDialog;
         vm.distributionDistributed = {
@@ -106,6 +111,8 @@
             mainContact: "Joshi Goodman",
             priceGrid: "ABC Grid",
         };
+
+        vm.openAddProductDialog = openAddProductDialog;
         function openaddAddressDialog(ev, order)
         {
             $mdDialog.show({
@@ -122,9 +129,6 @@
                 onRemoving : $scope.reloadPage
             });
         }
-
-        //Dummy models data
-
 
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
@@ -158,7 +162,8 @@
                 locals: {
                     Orders: $scope.order,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
             });
         }
 
@@ -183,9 +188,6 @@
                 onRemoving : $scope.reloadPage
             });
         }
-
-
         vm.productSearch = null;
-
     }
 })();
