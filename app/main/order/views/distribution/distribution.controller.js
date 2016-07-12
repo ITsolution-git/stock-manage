@@ -106,6 +106,8 @@
             mainContact: "Joshi Goodman",
             priceGrid: "ABC Grid",
         };
+
+        vm.openAddProductDialog = openAddProductDialog;
         function openaddAddressDialog(ev, order)
         {
             $mdDialog.show({

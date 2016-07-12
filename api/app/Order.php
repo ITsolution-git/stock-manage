@@ -556,10 +556,10 @@ public function saveColorSize($post)
     }
     public function getShippedByOrder($data)
     {
-        $whereConditions = ['od.order_id' => $data['id'],'is_distribute' => '1'];
-        $listArray = [DB::raw('SUM(pd.distributed_qnty) as total')];
-        $qntyData = DB::table('purchase_detail as pd')
-                         ->leftJoin('order_design as od','pd.design_id','=','od.id')
+        $whereConditions = ['pam.order_id' => $data['id']];
+        $listArray = [DB::raw('SUM(pas.distributed_qnty) as total')];
+        $qntyData = DB::table('product_address_mapping as pam')
+                         ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
