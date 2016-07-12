@@ -98,8 +98,8 @@ class DistributionController extends Controller {
             }
             else
             {
+                $product_address_id = 0;
                 $result2 = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id'],'address_id' => $addr->id),array());
-
                 if(empty($result2))
                 {
                     $products = $this->distribution->getDistSizeByProduct($post['product_id']);
@@ -107,11 +107,18 @@ class DistributionController extends Controller {
                 else
                 {
                     $products = $this->distribution->getProductByAddress($result2[0]->id);
+                    $product_address_size_mapping = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $result2[0]->id),array());
+
+                    if(!empty($product_address_size_mapping))
+                    {
+                        $product_address_id = $result2[0]->id;
+                    }
                 }
 
                 $total_remaining_qnty = 0;
                 foreach ($products as $row) {
                     $total_remaining_qnty += $row->remaining_qnty;
+                    $row->product_address_id = $product_address_id;
                 }
                 $addr->sizeArr = $products;
             }
@@ -162,12 +169,6 @@ class DistributionController extends Controller {
             }
         }
 
-/*        if($total == 0)
-        {
-            $response = array('success'=>0,'message'=>'Please enter quantity to distribute');
-            return response()->json($response);
-        }*/
-
         $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product_id'],'address_id' => $post['address_id']),array());
 
         if(empty($shipping_data))
@@ -180,42 +181,47 @@ class DistributionController extends Controller {
             $product_address_id = $shipping_data[0]->id;
         }
 
-        $this->common->DeleteTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id));
+        //$this->common->DeleteTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id));
 
         foreach ($post['products'] as $product) {
 
             $size_data = $this->distribution->getSingleSizeTotal($product);
 
             $current_qnty = 0;
+
             if($product['product_address_id'] > 0 && $product['product_address_id'] != null)
             {
                 $product_address_size_mapping = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product['product_address_id'],'purchase_detail_id' => $product['id']),array());
                 
-                if(!empty($product_address_size_mapping))
+                if(empty($product_address_size_mapping))
                 {
                     $current_qnty = $product_address_size_mapping[0]->distributed_qnty;
                     $total_size_qnty = $size_data[0]->distributed_qnty - $current_qnty;
                     $max_qnty = $size_data[0]->qnty_purchased - $total_size_qnty;
+
+                    $insertArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
+                    $this->common->InsertRecords('product_address_size_mapping',$insertArr);
                 }
                 else
                 {
-                    $max_qnty = $product['remaining_qnty'];
+                    $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $product['product_address_id'],'purchase_detail_id' => $product['id']),array('distributed_qnty' => $product['distributed_qnty']));
+
+                    if($product_address_size_mapping[0]->distributed_qnty != $product['distributed_qnty'])
+                    {
+                        $max_qnty = $product['remaining_qnty'];
+                    }
                 }
             }
             else
             {
+                $insertArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
+                $this->common->InsertRecords('product_address_size_mapping',$insertArr);
                 $max_qnty = $product['remaining_qnty'];
             }
             
-            $updateArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
-
-            $this->common->InsertRecords('product_address_size_mapping',$updateArr);
             $remaining_qnty = $max_qnty - $product['distributed_qnty'];
             
-            if($current_qnty != $product['distributed_qnty'])
-            {
-                $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
-            }
+            $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
         }
 
         $message = 'Product allocated successfully';
