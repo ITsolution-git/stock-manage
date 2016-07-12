@@ -75,6 +75,11 @@
         $scope.designDetail();
         $scope.getDistProductAddress();
 
+        $scope.reloadPage = function()
+        {
+            $state.reload();
+        }
+
         var vm = this;
         vm.openaddAddressDialog = openaddAddressDialog;
         vm.distributionDistributed = {
@@ -125,9 +130,6 @@
             });
         }
 
-        //Dummy models data
-
-
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
@@ -160,7 +162,8 @@
                 locals: {
                     Orders: $scope.order,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
             });
         }
 
@@ -185,9 +188,6 @@
                 onRemoving : $scope.reloadPage
             });
         }
-
-
         vm.productSearch = null;
-
     }
 })();
