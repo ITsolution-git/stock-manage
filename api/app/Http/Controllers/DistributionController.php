@@ -34,6 +34,7 @@ class DistributionController extends Controller {
 
         $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $order_data[0]->client_id),array());
 
+        $distribution_address = array();
         $client_distaddress = array();
         foreach ($dist_addr as $addr) {
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
@@ -180,8 +181,6 @@ class DistributionController extends Controller {
         {
             $product_address_id = $shipping_data[0]->id;
         }
-
-        //$this->common->DeleteTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id));
 
         foreach ($post['products'] as $product) {
 

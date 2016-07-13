@@ -9,20 +9,70 @@ use DateTime;
 class Shipping extends Model {
 
 	
-	public function getShippingdata($post)
+	public function getShippingList($post)
 	{
-
-        $listArray = ['o.client_id','o.id as order_id','o.job_name','st.name','s.boxing_type','o.status','s.id as shipping_id','s.shipping_by','s.in_hands_by','s.date_shipped','s.fully_shipped','mt.value as job_status'];
+        $listArray = ['o.id','c.client_company','po.po_id'];
 
         $shippingData = DB::table('orders as o')
-                         ->Join('shipping as s', 'o.id', '=', 's.order_id')
-                         ->leftJoin('shipping_type as st', 's.shipping_type_id', '=', 'st.id')
-                         ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
+                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
+                         ->leftJoin('purchase_order as po', 'o.id', '=', 'po.order_id')
                          ->select($listArray)
-                         ->where('s.company_id','=',$post['cond']['company_id'])
-                         ->orderBy('s.id', 'desc')
+                         ->where('o.is_complete','=','1')
+                         ->where('o.company_id','=',$post['company_id'])
+                         ->GroupBy('o.id')
                          ->get();
-        return $shippingData;
+
+        $combine_array = array();
+        $waiting = array();
+        $shipped = array();
+        $progress = array();
+
+        foreach ($shippingData as $data) {
+            
+            $listArr = [DB::raw('SUM(pol.qnty_purchased) as total')];
+            $where = ['po.order_id' => $data->id];
+
+            $result = DB::table('purchase_order as po')
+                        ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+                        ->select($listArr)
+                        ->where($where)
+                        ->get();
+
+
+            $listArr2 = [DB::raw('SUM(pas.distributed_qnty) as distributed')];
+            $where2 = ['pam.order_id' => $data->id];
+
+            $result2 = DB::table('product_address_mapping as pam')
+                            ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                            ->select($listArr2)
+                            ->where($where2)
+                            ->get();
+
+            if($result[0]->total > 0)
+            {
+                $data->total = $result[0]->total;
+                $data->distributed = $result2[0]->distributed;
+                
+                if($result2[0]->distributed == '' || $result2[0]->distributed == '0')
+                {
+                    $waiting[] = $data;
+                }
+                else if($result2[0]->distributed == $result2[0]->distributed)
+                {
+                    $shipped[] = $data;
+                }
+                else
+                {
+                    $progress[] = $data;
+                }
+            }
+        }
+
+        $combine_array['waiting'] = $waiting;
+        $combine_array['progress'] = $progress;
+        $combine_array['shipped'] = $shipped;
+
+        return $combine_array;
 	}
 
     public function getShippingOrders($company_id)
