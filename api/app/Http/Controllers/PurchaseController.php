@@ -39,7 +39,7 @@ class PurchaseController extends Controller {
                 foreach ($order_data as $key=>$value) 
                 {
                     $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key);
-                    $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>0),'');
+                    $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
                     if($purchase_order_id=='0')
                     {
                         $response = array('success' => 0, 'message' => "Purchase order is already created.");
