@@ -5,7 +5,7 @@
             .module('app.order')
             .controller('SearchProductViewController', SearchProductViewController);
     /** @ngInject */
-    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
+    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,size_group_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
       $("#ajax_loader").show();
        var vm = this;
@@ -28,6 +28,19 @@
         $scope.vendor_name = vendor_name;
         $scope.product_id = product_id;
          $scope.colorName = colorName;
+         $scope.size_group_id = size_group_id;
+
+
+
+         var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                  $scope.miscData = result.data.records;
+        });
+
        
       if(operation == 'Edit') {
 
@@ -102,7 +115,7 @@
             
         }
 
-        $scope.addProduct = function (productData) {
+        $scope.addProduct = function (productData,size_group_id) {
             
              var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
@@ -110,6 +123,7 @@
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
             combine_array_id.action = operation;
+            combine_array_id.size_group_id = size_group_id;
             combine_array_id.design_product_id = design_product_id;
 
             $scope.execute = 0;

@@ -38,7 +38,7 @@
 
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="20" layout="row" ng-show="order.order_number == '' && order.is_complete == '1' ">
+                    <div layout-align="end start"  flex="20" layout="row" ng-show="order.order_number == '' && order.is_complete == '0' ">
                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event,order.id)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
@@ -55,7 +55,7 @@
                 <md-button  class="bg-grey right-m-0 " ng-click="printPdf()">
                     PRINT
                 </md-button> -->
-                <md-button class="bg-grey right-m-0 color-white" ng-click="checkDesign()" ng-show="order.order_number == '' && order.is_complete == '1' ">
+                <md-button class="bg-grey right-m-0 color-white" ng-click="checkDesign()" ng-show="order.order_number == '' && order.is_complete == '0' ">
                     ASSIGN/SPLIT AFFILIATE
                 </md-button>
             </div>
@@ -67,7 +67,7 @@
                 <div class="table-title-text h2 text-semibold" flex=20>
                     Designs
                 </div>
-                <div class="order-modal-title " layout="row" layout-align="end center"flex=11 ng-show="order.order_number == '' && order.is_complete == '1' ">
+                <div class="order-modal-title " layout="row" layout-align="end center"flex=11 ng-show="order.order_number == '' && order.is_complete == '0' ">
                     <md-button class="dark-bg" ng-click="vm.openaddDesignDialog($event,0)">
                         ADD NEW
                     </md-button>
@@ -105,7 +105,7 @@
                                     <span class="column-title marginLeft-58">Status</span>
                                 </div>
                             </th>
-                            <th class="secondary-text" ng-show="order.order_number == '' && order.is_complete == '1' ">
+                            <th class="secondary-text" ng-show="order.order_number == '' && order.is_complete == '0' ">
 
                             </th>
                         </tr>
@@ -120,7 +120,7 @@
                     <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
                     </md-slider>
                     </td> 
-                    <td class="text-right" ng-show="order.order_number == '' && order.is_complete == '1' "> 
+                    <td class="text-right" ng-show="order.order_number == '' && order.is_complete == '0' "> 
                     <md-menu>
                         <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -308,7 +308,7 @@
                     </div>
                 </div>
             </div>
-            <md-card class="m-b-20" ng-class="{'disable-click': order.order_number != '' || order.is_complete == '0'}">
+            <md-card class="m-b-20" ng-class="{'disable-click': order.order_number != '' || order.is_complete == '1'}">
                 <md-card-title>
                     <md-card-title-text class="text-left">
                         Order Info

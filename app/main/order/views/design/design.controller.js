@@ -182,7 +182,7 @@
             vm.tableInstance = datatableObj;
         }
         
-        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id)
+        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
         {
             if($scope.order_design_position.length == '0')
             {
@@ -213,6 +213,7 @@
                     color_id:color_id,
                     vendor_id:vendor_id,
                     is_supply:is_supply,
+                    size_group_id:size_group_id,
                     event: ev
                 },
                 onRemoving : $scope.designProductData
@@ -461,7 +462,7 @@
           e.stopPropagation(); // Stop event from bubbling up
         }
 
-          $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,design_product_id)
+          $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,design_product_id,size_group_id)
         {
          
             $mdDialog.show({
@@ -481,6 +482,7 @@
                     colorName:colorName,
                     design_id:$stateParams.id,
                     design_product_id:design_product_id,
+                    size_group_id:size_group_id,
                     event: ev
                 },
                 onRemoving : $scope.designProductData

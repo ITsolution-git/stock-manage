@@ -288,11 +288,11 @@ class Product extends Model {
     public function addProduct($post) {
 
         if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
         }
         else
         {
-            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
         }
 
         if($post['action'] == 'Add') {
@@ -386,7 +386,7 @@ class Product extends Model {
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id'];
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
