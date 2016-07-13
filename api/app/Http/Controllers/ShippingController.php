@@ -111,7 +111,7 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
-    	$result = $this->shipping->getShippingdata($post);
+    	$result = $this->shipping->getShippingList($post);
     	return $this->return_response($result);
 
     }
