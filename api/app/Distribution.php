@@ -9,7 +9,7 @@ class Distribution extends Model {
 
 	public function getAllDustributionProducts($order_id)
 	{
-		$listArr = ['p.name','p.id as product_id',DB::raw('SUM(pas.distributed_qnty) as distributed'),'pd.is_distribute'];
+		$listArr = ['p.name','p.id as product_id',DB::raw('SUM(pas.distributed_qnty) as distributed'),'pd.is_distribute','pd.design_product_id'];
 		$where = ['po.order_id' => $order_id,'po.complete' => '1'];
 
 		$result = DB::table('purchase_order as po')
@@ -25,7 +25,7 @@ class Distribution extends Model {
 		return $result;
 	}
 
-	public function getDistSizeByProduct($product_id)
+	public function getDistSizeByProduct($product_id,$design_product_id)
 	{
 		$listArr = ['pd.id','pd.size','pd.distributed_qnty','pol.qnty_purchased','pd.remaining_qnty','pas.product_address_id'];
 		$where = ['pd.product_id' => $product_id];
@@ -35,6 +35,7 @@ class Distribution extends Model {
 					->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
 					->select($listArr)
 					->where('pd.product_id','=',$product_id)
+					->where('pd.design_product_id','=',$design_product_id)
 					->where('pol.qnty_purchased','>','0')
 					->GroupBy('pd.id')
 					->get();
