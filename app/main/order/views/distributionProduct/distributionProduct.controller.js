@@ -7,16 +7,17 @@
             .controller('DistributionProductController', DistributionProductController);
 
     /** @ngInject */
-    function DistributionProductController(Addresses,action,product_id,order_id,client_id,product_name,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
+    function DistributionProductController(Addresses,action,product_arr,order_id,client_id,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
 
         $scope.Addresses = Addresses;
-        $scope.product_name = product_name;
+        $scope.product_name = product_arr.product_name;
 
         $scope.searchQuery = '';
         $scope.address_id = 0;
-        $scope.product_id = product_id;
+        $scope.product_id = product_arr.product_id;
+        $scope.design_product_id = product_arr.design_product_id;
         $scope.order_id = order_id;
         $scope.products = [];
 
@@ -44,7 +45,7 @@
 
         $scope.orderDetail();
         var combine_array_id = {};
-        combine_array_id.product_id = product_id;
+        combine_array_id.product_id = $scope.product_id;
         combine_array_id.order_id = order_id;
 
 /*        $http.post('api/public/distribution/getDistSizeByProduct',combine_array_id).success(function(result) {
@@ -58,9 +59,10 @@
         {
 
             var combine_array_id = {};
-            combine_array_id.product_id = product_id;
+            combine_array_id.product_id = $scope.product_id;
             combine_array_id.order_id = order_id;
             combine_array_id.client_id = client_id;
+            combine_array_id.design_product_id = $scope.design_product_id;
 
             $http.post('api/public/distribution/getDistAddress',combine_array_id).success(function(result) {
                 
@@ -138,7 +140,7 @@
                 return false;
             }
             var combine_array = {};
-            combine_array.product_id = product_id;
+            combine_array.product_id = $scope.product_id;
             combine_array.order_id = order_id;
             combine_array.client_id = client_id;
 //            combine_array.address_ids = $scope.selected_addresses;
@@ -167,7 +169,7 @@
         $scope.filterAddress = function()
         {
             var combine_array = {};
-            combine_array.product_id = product_id;
+            combine_array.product_id = $scope.product_id;
             combine_array.order_id = order_id;
             combine_array.client_id = client_id;
             combine_array.search = $scope.searchQuery;

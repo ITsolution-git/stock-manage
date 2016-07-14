@@ -88,7 +88,7 @@ class DistributionController extends Controller {
 
             if(empty($result))
             {
-                $products = $this->distribution->getDistSizeByProduct($post['product_id']);
+                $products = $this->distribution->getDistSizeByProduct($post['product_id'],$post['design_product_id']);
                 
                 foreach ($products as $row) {
                     $this->common->UpdateTableRecords('purchase_detail',array('id'=>$row->id),array('remaining_qnty'=>$row->qnty_purchased));
@@ -103,7 +103,7 @@ class DistributionController extends Controller {
                 $result2 = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id'],'address_id' => $addr->id),array());
                 if(empty($result2))
                 {
-                    $products = $this->distribution->getDistSizeByProduct($post['product_id']);
+                    $products = $this->distribution->getDistSizeByProduct($post['product_id'],$post['design_product_id']);
                 }
                 else
                 {
