@@ -90,11 +90,11 @@
                                 <p class="font-14 chrome-weight fontStyle">Ordered &nbsp; &nbsp; &nbsp; {{line_data.qnty_ordered}}</p>
                                 <p class="font-14 chrome-weight fontStyle">Received &nbsp; &nbsp; 
                                     <md-input-container>
-                                        <input ng-model="line_data.qnty_purchased" name="qnty_purchased" valid-number ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_ordered,\'received\',line_data.short)' }" aria-label="qnty_purchased">
+                                        <input ng-model="line_data.qnty_purchased" name="qnty_purchased" only-number ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_ordered,\'received\',line_data.short)' }" aria-label="qnty_purchased">
                                     </md-input-container></p>
                                 <p class="font-14 chrome-weight fontStyle">Defective &nbsp; &nbsp; 
                                      <md-input-container>
-                                        <input ng-model="line_data.short" valid-number name="short"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_purchased,\'short\')' }" aria-label="short">
+                                        <input ng-model="line_data.short" only-number name="short"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_purchased,\'short\')' }" aria-label="short">
                                     </md-input-container></p>
                                 </p>
                                 <p class="font-14 chrome-weight fontStyle">________________</p>
