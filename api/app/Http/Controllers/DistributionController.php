@@ -34,6 +34,7 @@ class DistributionController extends Controller {
 
         $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $order_data[0]->client_id),array());
 
+        $distribution_address = array();
         $client_distaddress = array();
         foreach ($dist_addr as $addr) {
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
@@ -87,7 +88,7 @@ class DistributionController extends Controller {
 
             if(empty($result))
             {
-                $products = $this->distribution->getDistSizeByProduct($post['product_id']);
+                $products = $this->distribution->getDistSizeByProduct($post['product_id'],$post['design_product_id']);
                 
                 foreach ($products as $row) {
                     $this->common->UpdateTableRecords('purchase_detail',array('id'=>$row->id),array('remaining_qnty'=>$row->qnty_purchased));
@@ -102,7 +103,7 @@ class DistributionController extends Controller {
                 $result2 = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id'],'address_id' => $addr->id),array());
                 if(empty($result2))
                 {
-                    $products = $this->distribution->getDistSizeByProduct($post['product_id']);
+                    $products = $this->distribution->getDistSizeByProduct($post['product_id'],$post['design_product_id']);
                 }
                 else
                 {
@@ -180,8 +181,6 @@ class DistributionController extends Controller {
         {
             $product_address_id = $shipping_data[0]->id;
         }
-
-        //$this->common->DeleteTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id));
 
         foreach ($post['products'] as $product) {
 
