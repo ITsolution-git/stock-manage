@@ -470,4 +470,12 @@ class ShippingController extends Controller {
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
     }
+
+    public function shipOrder()
+    {
+        $post = Input::all();
+
+        $unshippedProducts = $this->shipping->getUnshippedProducts($post['order_id']);
+        print_r($unshippedProducts);exit;
+    }
 }
