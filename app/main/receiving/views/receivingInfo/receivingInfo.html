@@ -10,12 +10,12 @@
         <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75">
                 <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
-                <md-card layout="row">
+                <md-card layout="row"  >
                     <md-card-content flex="80" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                              <div>PO Type</div>
-                                <span class="chrome-weight font-14">{{ po_data.po_type}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.po_type}}{{po_data.is_complete}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Order Number</div>
@@ -82,7 +82,7 @@
                         </div>
                     </md-card-content>
                 </md-card>
-                <md-card layout="row">
+                <md-card ng-class="{'disable-click': po_data.is_complete=='1'}" layout="row">
                     <md-card-content flex="100" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box" ng-repeat="(key,line_data) in line_item.data">
