@@ -308,9 +308,21 @@ public function create_dir($dir_path) {
                     $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
                 }
 
+                $maxValue = 0;
+                $warehouse = 'IL';
+                foreach ($data->warehouses as $warehouse_detail) {           
+                   if ($warehouse_detail->qty > $maxValue) {
+                        $maxValue = $warehouse_detail->qty;
+                        $warehouse = $warehouse_detail->warehouseAbbr;
+                    }
+                 }   
+
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['warehouse'] = $warehouse;
+                $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $maxValue;
+
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
+                //$productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
                 $productAllData['colorData'][$data->colorName]['colorSwatchImage'] = $data->colorSwatchImage;
                 $productAllData['colorData'][$data->colorName]['colorSwatchTextColor'] = $data->colorSwatchTextColor;
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'] = $data->customerPrice;

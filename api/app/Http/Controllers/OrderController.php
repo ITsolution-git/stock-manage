@@ -1607,7 +1607,7 @@ class OrderController extends Controller {
         foreach($result_order as $order_data) {
                 
                 $lines[] = array(
-                    "warehouseAbbr" => $result_company[0]->code,
+                    "warehouseAbbr" => $order_data->warehouse,
                     "identifier" => $order_data->sku,
                     "qty" => $order_data->qnty);
 
@@ -1620,11 +1620,9 @@ class OrderController extends Controller {
                                           "lines" =>  $lines);
 
        $order_json = json_encode($order_main_array);
-      
-      
-         $result_api = $this->api->getApiCredential($post['company_id'],'api.sns','ss_detail');
+
+        $result_api = $this->api->getApiCredential($post['company_id'],'api.sns','ss_detail');
        
-      
         $credential = $result_api[0]->username.":".$result_api[0]->password;
  
         $curl = curl_init('https://api.ssactivewear.com/v2/orders/');                                                                      

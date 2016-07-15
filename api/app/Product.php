@@ -328,8 +328,9 @@ class Product extends Model {
             if(isset($row['customerPrice'])) {
                 $price = $row['customerPrice'];
             }
-            if(isset($row['customer_price'])) {
-                $price = $row['customer_price'];
+            if(!isset($row['warehouse']))
+            {
+                $row['warehouse'] = '';
             }
             
             $insert_purchase_array = array('design_id'=>$post['id'],
@@ -339,6 +340,7 @@ class Product extends Model {
                 'sku'=>$sku,
                 'price'=>$price,
                 'qnty'=>$row['qnty'],
+                'warehouse'=>$row['warehouse'],
                 'color_id'=>$row['color_id'],
                 'date'=>$post['created_date']);
 
