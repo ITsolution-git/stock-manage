@@ -45,6 +45,11 @@
         $scope.GetPodata();
         $scope.UpdateTableField = function(field_name,field_value,id,original,extra,param)
                     {
+                        if($scope.po_data.is_complete=='1')
+                        {
+                            notifyService.notify('error', 'Receive order is locked, Changes not accecptable.');
+                            return false;
+                        }
                         if(extra=='short')
                         {
                             if(parseInt(field_value)>parseInt(original))
