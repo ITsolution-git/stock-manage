@@ -5,21 +5,35 @@
                 <td>
                     <div class="header-typ1">Ship Order #18750</div>
                     <div layout="row" class="pd10">
-                        <div flex="35" layout="column">
-                            <div class="header-typ3">
-                                <div layout="row">
-                                    <div layout="column" flex="70">Order Items</div>
-                                    <div layout="column" flex="30">
-                                        <md-checkbox aria-label="Select All" class="font-12 f-black" aria-label="Select All">Select All</md-checkbox>
-                                    </div>
+                        <div flex="30" layout="column">
+                            <div class="header-typ3">Distribution Addresses</div>
+                            <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="addrss in vm.addresses">
+                                <div layout="column" flex="80">
+                                    <div class="font-12">{{ addrss.location }}</div>
+                                    <div class="font-12">{{ addrss.shortCode }}</div>
+                                    <div class="font-12">{{ addrss.full }}</div>
+                                    <div class="font-12">{{ addrss.phone }}</div>
+                                </div>
+                                <div layout="column" flex="20" class="text-right">
+                                    <span class="icon icon-arrow-right font-18 mrg35-T"></span>
                                 </div>
                             </div>
-                            <div class="order-container pd10-R" ms-scroll>
+                        </div>
+                        <div flex="35" layout="column" class="orderwait-midsection">
+                            <div class="header-typ3 pd15-LR">
+                                <div layout="row">
+                                    <div layout="column" flex="70">Order Items</div>
+                                    <!-- <div layout="column" flex="30">
+                                        <md-checkbox aria-label="Select All" class="font-12 f-black" aria-label="Select All">Select All</md-checkbox>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="order-container pd15-LR" ms-scroll>
                                 <div class="box-typ3" ng-repeat="orders in vm.orderItems">
                                     <div layout="row" flex="100" class="demo-select-all-checkboxes">
-                                        <div layout="column" flex="10" class="align-M align-self-C">
+                                        <!-- <div layout="column" flex="10" class="align-M align-self-C">
                                             <md-checkbox aria-label="Select"></md-checkbox>
-                                        </div>
+                                        </div> -->
                                         <div layout="column" flex="90">
                                             <div layout-wrap="" layout="row" class="layout-wrap layout-row">
                                                 <div class="trans-box">
@@ -43,7 +57,17 @@
                                                     <div class="gray-text font-12">{{ orders.productDescription }}</div>
                                                 </div>
                                             </div>
-                                            <div layout="row" flex="100">
+                                            <div layout="row" flex="100" class="mrg10-TB">
+                                                <div layout="column" flex="100">
+                                                    <div class="font-12 gray-text">Quantity to distribute to location</div>
+                                                    <div class="search-block" flex=40>
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <input ng-model="orders.qtyOrdered" >
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div layout="row" flex="100">
                                                 <div layout="column" flex="40" class="pd10">
                                                     <div class="font-18 text-center">{{ orders.qtyOrdered }}</div>
                                                     <div class="font-13 gray-text text-center">Qty Ordered</div>
@@ -52,30 +76,19 @@
                                                     <div class="font-18 text-center">{{ orders.remainingDistribute }}</div>
                                                     <div class="font-13 gray-text text-center">Remaining to Distribute</div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div flex="30" layout="column" class="orderwait-midsection">
-                            <div class="header-typ3">Distribution Addresses</div>
-                            <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="addrss in vm.addresses">
-                                <div layout="column" flex="80">
-                                    <div class="font-12">{{ addrss.location }}</div>
-                                    <div class="font-12">{{ addrss.shortCode }}</div>
-                                    <div class="font-12">{{ addrss.full }}</div>
-                                    <div class="font-12">{{ addrss.phone }}</div>
-                                </div>
-                                <div layout="column" flex="20" class="text-right">
-                                    <span class="icon icon-arrow-right font-18 mrg35-T"></span>
-                                </div>
-                            </div>
-                        </div>
                         <div flex="35" layout="column" class="mrg10-L">
                             <div class="header-typ3">Shipment Items</div>
-                            <div class="box-typ3">
+                            <div class="box-typ3" ng-repeat="item in unshippedProducts">
                                 <div layout="row" flex="100">
+                                    <div layout="colum" flex="10" class="align-M align-self-C text-center">
+                                        <a href="#" class="icon icon-arrow-left font-18"></a>
+                                    </div>
                                     <div layout="column" flex="90">
                                         <div class="ms-responsive-table-wrapper">
                                             <table class="simple hover simple-tbl1 tbl-typ3">
@@ -88,10 +101,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody> 
-                                                    <tr ng-repeat="item in vm.selectedOrderItems" class="cursor-p">
-                                                        <td>{{ item.sizeGroup}}</td>
-                                                        <td>{{ item.product}}</td>
-                                                        <td>{{ item.color}}</td>
+                                                    <tr class="cursor-p">
+                                                        <td>{{ item.misc_value}}</td>
+                                                        <td>{{ item.name}}</td>
+                                                        <td>{{ item.color_name}}</td>
                                                         <td>{{ item.size}}</td>
                                                     </tr>                    
                                                 </tbody>
@@ -100,18 +113,21 @@
                                         <div>
                                             <div layout="row" flex="100">
                                                 <div layout="column" flex="40" class="pd10">
-                                                    <div class="font-18 text-center">20</div>
+                                                    <div class="font-18 text-center">{{item.total}}</div>
                                                     <div class="font-13 gray-text text-center">Qty Ordered</div>
                                                 </div>
                                                 <div layout="column" flex="60" class="pd10 bdr-1L">
-                                                    <div class="font-18 text-center">10</div>
+                                                    <div class="font-18 text-center">{{item.remaining_qnty}}</div>
                                                     <div class="font-13 gray-text text-center">Remaining to Distribute</div>
+                                                </div>
+                                                <div layout="column" flex="60" class="pd10 bdr-1L">
+                                                    <md-input-container class="md-block md-input-container1" flex-gt-sm>
+                                                            <input ng-model="item.distributed_qnty">
+                                                        </md-input-container>
+                                                    <div class="font-13 gray-text text-center">Qty to Distribute</div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div layout="colum" flex="10" class="align-M align-self-C text-center">
-                                        <a href="#" class="icon icon-close font-18 f-red"></a>
                                     </div>
                                 </div>
                             </div>

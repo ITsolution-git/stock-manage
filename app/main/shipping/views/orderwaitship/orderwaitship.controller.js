@@ -7,9 +7,23 @@
             .controller('orderWaitController', orderWaitController);
 
     /** @ngInject */
-    function orderWaitController($document, $window, $timeout, $mdDialog)
+    function orderWaitController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
+
+        var combine_array_id = {};
+        combine_array_id.order_id = $stateParams.id;
+        $scope.order_id = $stateParams.id;
+
+        $http.post('api/public/shipping/shipOrder',combine_array_id).success(function(result, status, headers, config) {
+            if(result.data.success == '1') {
+                $("#ajax_loader").hide();
+               $scope.unshippedProducts = result.data.unshippedProducts;
+               $scope.assignAddresses = result.data.assignAddresses;
+               $scope.unAssignAddresses = result.data.unAssignAddresses;
+            }
+        });
+
         //Dummy models data
         vm.orderItems = [
             {

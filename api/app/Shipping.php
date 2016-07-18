@@ -29,7 +29,7 @@ class Shipping extends Model {
 
         foreach ($shippingData as $data) {
             
-            $listArr = [DB::raw('SUM(pol.qnty_purchased) as total')];
+            $listArr = [DB::raw('SUM(pol.qnty_purchased - pol.short) as total'),'pol.purchase_detail'];
             $where = ['po.order_id' => $data->id];
 
             $result = DB::table('purchase_order as po')
@@ -38,8 +38,17 @@ class Shipping extends Model {
                         ->where($where)
                         ->get();
 
+            $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
+                                            LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$data->id."' ");
 
-            $listArr2 = [DB::raw('SUM(pas.distributed_qnty) as distributed')];
+            foreach($purchase_detail as $row)
+            {
+                $value = DB::table('purchase_detail')
+                        ->where('id','=',$row->purchase_detail)
+                        ->update(array('remaining_qnty'=>$row->total));
+            }
+
+            $listArr2 = [DB::raw('SUM(pas.distributed_qnty) as distributed'),'pas.purchase_detail_id'];
             $where2 = ['pam.order_id' => $data->id];
 
             $result2 = DB::table('product_address_mapping as pam')
@@ -50,11 +59,11 @@ class Shipping extends Model {
 
             if($result[0]->total > 0)
             {
-                $data->total = $result[0]->total;
-                $data->distributed = $result2[0]->distributed;
-                
                 if($result2[0]->distributed == '' || $result2[0]->distributed == '0')
                 {
+                    $data->total = $result[0]->total;
+                    $data->distributed = $result2[0]->distributed;
+                    
                     $waiting[] = $data;
                 }
                 else if($result2[0]->distributed == $result2[0]->distributed)
@@ -181,5 +190,63 @@ class Shipping extends Model {
         {
                 return false;
         }
+    }
+
+    public function getUnshippedProducts($order_id)
+    {
+        $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pol.qnty_purchased','pd.remaining_qnty'];
+        $where = ['po.order_id' => $order_id];
+
+        $result = DB::select("SELECT mt.value as misc_value,p.name,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pas.distributed_qnty 
+                                FROM purchase_order as po 
+                                LEFT JOIN purchase_order_line as pol ON po.po_id = pol.po_id 
+                                LEFT JOIN purchase_detail as pd ON pol.purchase_detail = pd.id 
+                                LEFT JOIN product_address_size_mapping as pas ON pol.purchase_detail = pas.purchase_detail_id 
+                                LEFT JOIN design_product as dp ON pd.design_product_id = dp.id
+                                LEFT JOIN products as p ON dp.product_id = p.id
+                                LEFT JOIN misc_type as mt ON dp.size_group_id = mt.id
+                                LEFT JOIN color as c ON pd.color_id = c.id
+                                WHERE po.order_id = '".$order_id."' AND pol.qnty_purchased > 0 
+                                GROUP BY pd.id ");
+
+/*        $result = DB::table('purchase_order as po')
+                    ->leftJoin('purchase_order_line as pol','po.po_id','=','pol.po_id')
+                    ->leftJoin('purchase_detail as pd','pol.purchase_detail','=','pd.id')
+                    ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
+                    ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
+                    ->leftJoin('products as p','dp.product_id','=','p.id')
+                    ->leftJoin('misc_type as mt','dp.size_group_id','=','mt.id')
+                    ->leftJoin('color as c','pd.color_id','=','c.id')
+                    ->select($listArr)
+                    ->where('po.order_id','=',$order_id)
+                    ->where('pol.qnty_purchased','>','0')
+                    ->GroupBy('pd.id')
+                    ->get();*/
+
+        return $result;
+    }
+
+    public function getAllocatedAddress($data)
+    {
+        $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('client_distaddress as cd','cd.id','=','pam.address_id')
+                    ->select('cd.id')
+                    ->where('pam.order_id','=',$data->id)
+                    ->get();
+
+        return $result;
+    }
+
+    public function getUnAllocatedAddress($data)
+    {
+        $result = DB::table('product_address_mapping as pam')
+                    ->rightJoin('client_distaddress as cd','cd.id','=','pam.address_id')
+                    ->select('cd.*')
+                    ->where('pam.order_id','=',$data->id)
+                    ->where('pam.address_id','=',NULL)
+                    ->where('cd.client_id','=',$data->client_id)
+                    ->get();
+
+        return $result;
     }
 }
