@@ -806,7 +806,7 @@ public function saveTaxDoc()
 			$AddrTypeData = $this->common->GetMicType('address_type',$company_id);
 			$Arrdisposition = $this->common->GetMicType('disposition',$company_id);
 			$state = $this->common->GetTableRecords('state',array(),array());
-			$AllPriceGrid = $this->common->GetTableRecords('price_grid',array('company_id'=>$company_id),array());
+			$AllPriceGrid = $this->common->GetTableRecords('price_grid',array('company_id'=>$company_id,'is_delete'=>'1'),array());
 			$approval = $this->common->GetMicType('approval',$company_id);
 			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state,'AllPriceGrid'=>$AllPriceGrid,'approval'=>$approval);
 			$message = GET_RECORDS;
