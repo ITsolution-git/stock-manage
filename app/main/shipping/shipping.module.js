@@ -26,7 +26,7 @@
                     }
                 }
             }).state('app.shipping.orderwaitship', {
-                url  : '/orderwaitship',
+                url  : '/orderwaitship/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/orderwaitship/orderwaitship.html',
