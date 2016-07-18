@@ -80,13 +80,13 @@ class Order extends Model {
       
         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
-        $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','staff.first_name',
-                      'staff.last_name','users.name','cc.first_name as client_first_name',
+        $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','sales.sales_name',
+                      'users.name','cc.first_name as client_first_name',
                       'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
 
         $orderDetailData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
+                         ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
                          ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "));
                          if(isset($data['is_affiliate']))
