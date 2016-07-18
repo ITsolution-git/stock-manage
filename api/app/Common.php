@@ -129,7 +129,7 @@ class Common extends Model {
     public function getStaffList($company_id) // SALES EMPLOYEE LIST
     {
         $staffData = DB::table('sales')
-                         ->select('*',DB::raw('DATE_FORMAT(sales_created_date, "%m/%d/%Y") as sales_created_date'))
+                         ->select('*','sales_name as label',DB::raw('DATE_FORMAT(sales_created_date, "%m/%d/%Y") as sales_created_date'))
                          ->where('sales_delete','=','1')
                          ->where('company_id','=',$company_id)
                          ->get();
