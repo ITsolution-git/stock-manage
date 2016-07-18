@@ -325,9 +325,15 @@ class Product extends Model {
             {
                 $row['qnty'] = 0;
             }
+            
             if(isset($row['customerPrice'])) {
                 $price = $row['customerPrice'];
             }
+            
+            if(isset($row['customer_price'])) {
+                $price = $row['customer_price'];
+            }
+            
             if(!isset($row['warehouse']))
             {
                 $row['warehouse'] = '';
