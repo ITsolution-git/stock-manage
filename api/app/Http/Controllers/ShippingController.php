@@ -475,7 +475,37 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
+        $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id']),array());
+        $combine_arr = array();
+
         $unshippedProducts = $this->shipping->getUnshippedProducts($post['order_id']);
-        print_r($unshippedProducts);exit;
+        $allocatedAddress = $this->shipping->getAllocatedAddress($order_data[0]);
+        $allAddress = $this->common->GetTableRecords('client_distaddress',array('client_id' => $order_data[0]->client_id),array());
+
+        $assignAddresses = array();
+        $unAssignAddresses = array();
+
+        foreach ($allAddress as $address) {
+            
+            $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
+
+            if(in_array($address->id, $allocatedAddress))
+            {
+                $assignAddresses[] = $address;
+            }
+            else
+            {
+                $unAssignAddresses[] = $address;
+            }
+        }
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'unshippedProducts' => $unshippedProducts,
+                        'assignAddresses' => $assignAddresses,
+                        'unAssignAddresses' => $unAssignAddresses
+                    );
+        return response()->json(["data" => $response]);
     }
 }

@@ -661,6 +661,10 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .order-container .trans-box { padding: 0px 2px; }
 .order-container .trans-box > div { font-size: 13px; line-height: 13px; }
 .order-container .trans-box span.font-14 { font-size: 13px !important; }
+.md-input-container1 {
+    position: relative;
+    vertical-align: middle;
+}
 /*****************************/	
 .loaderouter{
     position:fixed;
