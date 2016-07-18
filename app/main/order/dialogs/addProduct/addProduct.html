@@ -19,7 +19,7 @@
                 
 
                 <div flex="100" layout="column">
-                            <md-input-container class="width100">
+                            <md-input-container class="width100 disable-click">
                                 <label>Product</label>
                                  <md-select ng-model="product_id" ng-change="changeProduct(product_id,0,'Add')">
                                     <md-option ng-repeat="data in allProduct" value="{{data.id}}" ng-selected="product_id == data.id">
