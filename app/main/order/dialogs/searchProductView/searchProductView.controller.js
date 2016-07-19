@@ -5,7 +5,7 @@
             .module('app.order')
             .controller('SearchProductViewController', SearchProductViewController);
     /** @ngInject */
-    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,size_group_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
+    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,size_group_id,warehouse,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
       $("#ajax_loader").show();
        var vm = this;
@@ -19,6 +19,7 @@
        product_image_main = "https://www.ssactivewear.com/"+product_image;
        product_image = "https://www.ssactivewear.com/"+product_image;
        $scope.operation = operation;
+        $scope.warehouse = warehouse;
         
 
         $scope.product_name = product_name;
@@ -29,7 +30,6 @@
         $scope.product_id = product_id;
          $scope.colorName = colorName;
          $scope.size_group_id = size_group_id;
-
 
 
          var misc_list_data = {};
@@ -92,6 +92,11 @@
             $scope.modelDisplay = 'display';
         }
 
+        $scope.updateWarehouse = function(warehouse)
+        {
+                 $scope.warehouse = warehouse;
+        }
+
         $scope.changeModelImage = function(modelImage)
         {
             $scope.modelDisplay = '';
@@ -115,7 +120,7 @@
             
         }
 
-        $scope.addProduct = function (productData,size_group_id) {
+        $scope.addProduct = function (productData,size_group_id,warehouse) {
             
              var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
@@ -124,6 +129,7 @@
             combine_array_id.productData = productData;
             combine_array_id.action = operation;
             combine_array_id.size_group_id = size_group_id;
+            combine_array_id.warehouse = warehouse;
             combine_array_id.design_product_id = design_product_id;
 
             $scope.execute = 0;

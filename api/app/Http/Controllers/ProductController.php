@@ -298,6 +298,9 @@ public function create_dir($dir_path) {
 
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
 
+                 
+
+
                 if(count($allDetail) > 0) {
                 
                     if(isset($allDetail[$data->sizeName])){
@@ -308,17 +311,19 @@ public function create_dir($dir_path) {
                     $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
                 }
 
-                $maxValue = 0;
-                $warehouse = 'IL';
-                foreach ($data->warehouses as $warehouse_detail) {           
-                   if ($warehouse_detail->qty > $maxValue) {
-                        $maxValue = $warehouse_detail->qty;
-                        $warehouse = $warehouse_detail->warehouseAbbr;
-                    }
-                 }   
 
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['warehouse'] = $warehouse;
-                $productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $maxValue;
+                  foreach ($data->warehouses as $warehouse_detail) {           
+                     //   $inventory = $warehouse_detail->qty;
+                     //   $warehouse = $warehouse_detail->warehouseAbbr;
+
+
+                        $productAllData['colorData'][$data->colorName]['sizes'][$key]['inventory'][$warehouse_detail->warehouseAbbr] = $warehouse_detail->qty;
+                    }
+
+               
+
+              //  $productAllData['colorData'][$data->colorName]['sizes'][$key]['warehouse'] = $warehouse;
+               
 
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
@@ -332,6 +337,7 @@ public function create_dir($dir_path) {
                 $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
             }
         }
+      
         return response()->json(["data" => $productAllData]);
     }
     

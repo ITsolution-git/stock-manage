@@ -292,7 +292,7 @@ class Product extends Model {
         }
         else
         {
-            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
         }
 
         if($post['action'] == 'Add') {
@@ -321,6 +321,7 @@ class Product extends Model {
             if(isset($row['sku'])) {
                 $sku = $row['sku'];
             }
+
             if(!isset($row['qnty']))
             {
                 $row['qnty'] = 0;
@@ -334,10 +335,7 @@ class Product extends Model {
                 $price = $row['customer_price'];
             }
             
-            if(!isset($row['warehouse']))
-            {
-                $row['warehouse'] = '';
-            }
+            
             
             $insert_purchase_array = array('design_id'=>$post['id'],
                 'design_product_id'=>$design_product_id,
@@ -346,7 +344,6 @@ class Product extends Model {
                 'sku'=>$sku,
                 'price'=>$price,
                 'qnty'=>$row['qnty'],
-                'warehouse'=>$row['warehouse'],
                 'color_id'=>$row['color_id'],
                 'date'=>$post['created_date']);
 
@@ -394,7 +391,7 @@ class Product extends Model {
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id'];
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')

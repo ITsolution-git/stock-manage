@@ -462,7 +462,7 @@
           e.stopPropagation(); // Stop event from bubbling up
         }
 
-          $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,design_product_id,size_group_id)
+          $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,design_product_id,size_group_id,warehouse)
         {
          
             $mdDialog.show({
@@ -483,6 +483,7 @@
                     design_id:$stateParams.id,
                     design_product_id:design_product_id,
                     size_group_id:size_group_id,
+                    warehouse:warehouse,
                     event: ev
                 },
                 onRemoving : $scope.designProductData

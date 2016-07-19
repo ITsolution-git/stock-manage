@@ -56,6 +56,19 @@
                             </div>
 
 
+                            <div flex="100" layout="column">
+                            <md-input-container class="width100">
+                                <label>Warehouse</label>
+                                    <md-select ng-model="warehouse" ng-change="updateWarehouse(warehouse)">
+                                        <md-option value="IL" >Bolingbrook, IL</md-option>
+                                        <md-option value="KS" >Olathe, KS</md-option>
+                                        <md-option value="NJ" >Robbinsville, NJ</md-option>
+                                        <md-option value="CA" >Santa Fe Springs, CA</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+
+
                             <div class="box-typ1 scrollable" ms-scroll>
                                 <table class="tbl-typ1">
                                     <thead>
@@ -70,14 +83,14 @@
                                                 <table width="100%">
                                                     <tr>
                                                         <td width="70%" class="text-right color font-12">{{sizedata.sizeName}} :</td>
-                                                        <td width="20%" class="text-semibold font-12">{{sizedata.caseQty}}-</td>
-                                                        <td width="10%" class="text-semibold font-12">{{sizedata.warehouse}}</td>
+                                                        <td width="20%" class="text-semibold font-12">{{sizedata.inventory[warehouse]}}</td>
+                                                       
                                                     </tr>
                                                 </table>
                                             </td>
                                             <td class="pd5">
                                                 <md-input-container class="md-block" flex-gt-sm>
-                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.caseQty}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
+                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
 
                                                     <!--  <div ng-messages="orderForm.qnty_S.$error" role="alert" multiple>
                                                         <div ng-message="max">
@@ -102,45 +115,13 @@
 
   
                     </div>
-                    <div layout="column">
-                        <!-- <div layout="row" layout-align="space-between center" flex="100">
-                            <div layout="colunm" flex="20">
-                                <div class="h4">Inventory Level</div>
-                            </div>
-
-                                <div ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes" layout="column" flex="15">
-                                    <div class="h4 color font-19">{{sizedata.sizeName}}</div>
-                                    <div class="h4 text-semibold font-19">{{sizedata.caseQty}}</div>
-                                </div>
-
-                        </div> -->
-                        <!-- <div layout="row" layout-align="space-between center" flex="100">
-                            <div layout="colunm" flex="20">
-                                <div class="h4">Select Qty</div>
-                            </div>
-                            <div ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes" layout="column" flex="15">
-
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>{{sizedata.sizeName}}</label>
-                                    <input ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.caseQty}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
-
-                                    <div ng-messages="orderForm.qnty_S.$error" role="alert" multiple>
-                                        <div ng-message="max">
-                                            <span>This field is required</span>
-                                        </div>
-                                    </div>
-
-                                </md-input-container>
-
-                            </div> 
-                        </div> -->
-                    </div>
+                    
                 </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes,size_group_id)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
+            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes,size_group_id,warehouse)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 
