@@ -11,11 +11,13 @@
     {
         var vm = this;
 
-        var combine_array_id = {};
-        combine_array_id.order_id = $stateParams.id;
+        var combine_array = {};
+        combine_array.order_id = $stateParams.id;
         $scope.order_id = $stateParams.id;
 
-        $http.post('api/public/shipping/shipOrder',combine_array_id).success(function(result, status, headers, config) {
+        $scope.assignedItems = [];
+
+        $http.post('api/public/shipping/shipOrder',combine_array).success(function(result, status, headers, config) {
             if(result.data.success == '1') {
                 $("#ajax_loader").hide();
                $scope.unshippedProducts = result.data.unshippedProducts;
@@ -24,72 +26,19 @@
             }
         });
 
-        //Dummy models data
-        vm.orderItems = [
-            {
-                "sizeGroup": "Mens",
-                "product": "12345",
-                "size": "M",
-                "color": "Black",
-                "productDescription": "The Text describes the product that you are going to select",
-                "qtyOrdered": "20",
-                "remainingDistribute": "10"
-             },
-             {
-                "sizeGroup": "Mens",
-                "product": "12345",
-                "size": "M",
-                "color": "Black",
-                "productDescription": "The Text describes the product that you are going to select",
-                "qtyOrdered": "20",
-                "remainingDistribute": "10"
-             },
-             {
-                "sizeGroup": "Mens",
-                "product": "12345",
-                "size": "M",
-                "color": "Black",
-                "productDescription": "The Text describes the product that you are going to select",
-                "qtyOrdered": "20",
-                "remainingDistribute": "10"
-             },
-             {
-                "sizeGroup": "Mens",
-                "product": "12345",
-                "size": "M",
-                "color": "Black",
-                "productDescription": "The Text describes the product that you are going to select",
-                "qtyOrdered": "20",
-                "remainingDistribute": "10"
-             },
-             {
-                "sizeGroup": "Mens",
-                "product": "12345",
-                "size": "M",
-                "color": "Black",
-                "productDescription": "The Text describes the product that you are going to select",
-                "qtyOrdered": "20",
-                "remainingDistribute": "10"
-             },
-             {
-                "sizeGroup": "Mens",
-                "product": "12345",
-                "size": "M",
-                "color": "Black",
-                "productDescription": "The Text describes the product that you are going to select",
-                "qtyOrdered": "20",
-                "remainingDistribute": "10"
-             }];
-        vm.addresses = [
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"},
-            {"location": "Location Name", "shortCode": "ATTN", "full": "1234 N Main St. Chicago, IL 60611 - USA", "phone": "+ 91 123456789"}
-        ];
-        vm.selectedOrderItems = [
-            {"sizeGroup": "Mens", "product": "12345", "size": "M", "color": "Black"}
-        ];
+        $scope.getProductByAddress = function(address_id)
+        {
+            var combine_array = {};
+            combine_array.address_id = address_id;
+            combine_array.order_id = $scope.order_id;
+            
+            $http.post('api/public/shipping/getProductByAddress',combine_array).success(function(result, status, headers, config) {
+                
+                if(result.data.success == '1') {
+                    $("#ajax_loader").hide();
+                    $scope.assignedItems = result.data.unshippedProducts;
+                }
+            });
+        }
     }
 })();

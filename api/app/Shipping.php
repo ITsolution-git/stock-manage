@@ -38,16 +38,6 @@ class Shipping extends Model {
                         ->where($where)
                         ->get();
 
-            $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
-                                            LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$data->id."' ");
-
-            foreach($purchase_detail as $row)
-            {
-                $value = DB::table('purchase_detail')
-                        ->where('id','=',$row->purchase_detail)
-                        ->update(array('remaining_qnty'=>$row->total));
-            }
-
             $listArr2 = [DB::raw('SUM(pas.distributed_qnty) as distributed'),'pas.purchase_detail_id'];
             $where2 = ['pam.order_id' => $data->id];
 
@@ -57,16 +47,26 @@ class Shipping extends Model {
                             ->where($where2)
                             ->get();
 
+            if($result2[0]->distributed == '' || $result2[0]->distributed == '0')
+            {
+                $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
+                                                LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$data->id."' ");
+
+                foreach($purchase_detail as $row)
+                {
+                    $value = DB::table('purchase_detail')
+                            ->where('id','=',$row->purchase_detail)
+                            ->update(array('remaining_qnty'=>$row->total));
+                }
+            }
+
             if($result[0]->total > 0)
             {
                 if($result2[0]->distributed == '' || $result2[0]->distributed == '0')
                 {
-                    $data->total = $result[0]->total;
-                    $data->distributed = $result2[0]->distributed;
-                    
                     $waiting[] = $data;
                 }
-                else if($result2[0]->distributed == $result2[0]->distributed)
+                else if($result2[0]->distributed == $result[0]->total)
                 {
                     $shipped[] = $data;
                 }
@@ -74,6 +74,9 @@ class Shipping extends Model {
                 {
                     $progress[] = $data;
                 }
+
+                $data->total = $result[0]->total;
+                $data->distributed = $result2[0]->distributed;
             }
         }
 
@@ -247,6 +250,26 @@ class Shipping extends Model {
                     ->where('cd.client_id','=',$data->client_id)
                     ->get();
 
+        return $result;
+    }
+
+    public function getProductByAddress($data)
+    {
+        $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pas.distributed_qnty'];
+        $where = ['pam.order_id' => $data['order_id'], 'pam.address_id' => $data['address_id']];
+
+        $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                    ->leftJoin('purchase_detail as pd','pas.purchase_detail_id','=','pd.id')
+                    ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
+                    ->leftJoin('products as p','pd.product_id','=','p.id')
+                    ->leftJoin('misc_type as mt','dp.size_group_id','=','mt.id')
+                    ->leftJoin('color as c','pd.color_id','=','c.id')
+                    ->select($listArr)
+                    ->where($where)
+                    ->GroupBy('p.id')
+                    ->get();
+        
         return $result;
     }
 }
