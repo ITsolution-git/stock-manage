@@ -200,7 +200,7 @@ class Shipping extends Model {
         $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pol.qnty_purchased','pd.remaining_qnty'];
         $where = ['po.order_id' => $order_id];
 
-        $result = DB::select("SELECT mt.value as misc_value,p.name,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pas.distributed_qnty 
+        $result = DB::select("SELECT mt.value as misc_value,p.name,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pd.distributed_qnty 
                                 FROM purchase_order as po 
                                 LEFT JOIN purchase_order_line as pol ON po.po_id = pol.po_id 
                                 LEFT JOIN purchase_detail as pd ON pol.purchase_detail = pd.id 
@@ -231,10 +231,11 @@ class Shipping extends Model {
 
     public function getAllocatedAddress($data)
     {
-        $result = DB::table('product_address_mapping as pam')
-                    ->leftJoin('client_distaddress as cd','cd.id','=','pam.address_id')
-                    ->select('cd.id')
+        $result = DB::table('client_distaddress as cd')
+                    ->leftJoin('product_address_mapping as pam','cd.id','=','pam.address_id')
+                    ->select(DB::raw('GROUP_CONCAT(cd.id) as id'))
                     ->where('pam.order_id','=',$data->id)
+                    ->GroupBy('pam.order_id')
                     ->get();
 
         return $result;
@@ -267,7 +268,7 @@ class Shipping extends Model {
                     ->leftJoin('color as c','pd.color_id','=','c.id')
                     ->select($listArr)
                     ->where($where)
-                    ->GroupBy('p.id')
+                    ->GroupBy('pd.id')
                     ->get();
         
         return $result;
