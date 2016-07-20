@@ -490,7 +490,9 @@ class ShippingController extends Controller {
             $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
             $address->selected = 0;
 
-            if(in_array($address->id, $allocatedAddress))
+            $allocatedAddress2 = explode(",", $allocatedAddress[0]->id);
+
+            if(in_array($address->id, $allocatedAddress2))
             {
                 $assignAddresses[] = $address;
             }
@@ -498,6 +500,7 @@ class ShippingController extends Controller {
             {
                 $unAssignAddresses[] = $address;
             }
+
         }
 
         $response = array(

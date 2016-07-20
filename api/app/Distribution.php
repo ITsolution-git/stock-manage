@@ -27,7 +27,7 @@ class Distribution extends Model {
 
 	public function getDistSizeByProduct($product_id,$design_product_id)
 	{
-		$listArr = ['pd.id','pd.size','pd.distributed_qnty','pol.qnty_purchased','pd.remaining_qnty','pas.product_address_id'];
+		$listArr = ['pd.id','pd.size','pd.distributed_qnty',DB::raw('SUM(pol.qnty_purchased - pol.short) as qnty_purchased'),'pd.remaining_qnty','pas.product_address_id'];
 		$where = ['pd.product_id' => $product_id];
 
 		$result = DB::table('purchase_detail as pd')
@@ -98,7 +98,7 @@ class Distribution extends Model {
 
 	public function getTotalAllocated($order_id,$product_id)
 	{
-		$listArr = [DB::raw('SUM(pol.qnty_purchased) as total')];
+		$listArr = [DB::raw('SUM(pol.qnty_purchased - pol.short) as total')];
 		$where = ['po.order_id' => $order_id,'po.complete' => '1','pd.product_id' => $product_id];
 
 		$result = DB::table('purchase_order as po')
