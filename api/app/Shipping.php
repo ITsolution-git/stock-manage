@@ -200,7 +200,7 @@ class Shipping extends Model {
         $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pol.qnty_purchased','pd.remaining_qnty'];
         $where = ['po.order_id' => $order_id];
 
-        $result = DB::select("SELECT mt.value as misc_value,p.name,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pd.distributed_qnty 
+        $result = DB::select("SELECT mt.value as misc_value,p.name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id 
                                 FROM purchase_order as po 
                                 LEFT JOIN purchase_order_line as pol ON po.po_id = pol.po_id 
                                 LEFT JOIN purchase_detail as pd ON pol.purchase_detail = pd.id 
