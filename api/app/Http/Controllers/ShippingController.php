@@ -488,6 +488,7 @@ class ShippingController extends Controller {
         foreach ($allAddress as $address) {
             
             $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
+            $address->selected = 0;
 
             if(in_array($address->id, $allocatedAddress))
             {
@@ -505,6 +506,19 @@ class ShippingController extends Controller {
                         'unshippedProducts' => $unshippedProducts,
                         'assignAddresses' => $assignAddresses,
                         'unAssignAddresses' => $unAssignAddresses
+                    );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getProductByAddress()
+    {
+        $post = Input::all();
+        $result = $this->shipping->getProductByAddress($post);
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'products' => $result
                     );
         return response()->json(["data" => $response]);
     }

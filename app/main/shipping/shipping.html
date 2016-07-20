@@ -66,7 +66,7 @@
                                         <td>{{ progress.client_company}}</td>
                                         <td>{{ progress.po_id}}</td>
                                         <td>{{ progress.distributed}}/{{ progress.total}}</td>
-                                        <td class="text-center" ui-sref="app.shipping.orderwaitship"><a>SHIP</a></td>
+                                        <td class="text-center" ui-sref="app.shipping.orderwaitship({id:progress.id})"><a>SHIP</a></td>
                                     </tr>                    
                                 </tbody>
                             </table>

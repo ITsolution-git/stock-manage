@@ -266,6 +266,7 @@ Route::post('shipping/createPDF', 'ShippingController@createPDF');
 Route::post('shipping/addRemoveAddressToPdf', 'ShippingController@addRemoveAddressToPdf');
 Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 Route::post('shipping/shipOrder', 'ShippingController@shipOrder');
+Route::post('shipping/getProductByAddress', 'ShippingController@getProductByAddress');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');

@@ -7,11 +7,29 @@
                     <div layout="row" class="pd10">
                         <div flex="30" layout="column">
                             <div class="header-typ3">Distribution Addresses</div>
-                            <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="addrss in vm.addresses">
+                            <md-input-container class="md-block m-0">
+                                <input ng-model="productSearch" placeholder="Search Locations">
+                            </md-input-container>
+                            <md-button class="md-accent md-raised">Create New Location</md-button>
+
+                            <div class="header-typ3">Locations Products Allocated To</div>
+                            <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="addrss in assignAddresses" ng-click="getProductByAddress(addrss.id)">
                                 <div layout="column" flex="80">
-                                    <div class="font-12">{{ addrss.location }}</div>
-                                    <div class="font-12">{{ addrss.shortCode }}</div>
-                                    <div class="font-12">{{ addrss.full }}</div>
+                                    <div class="font-12"><b>{{ addrss.description }}</b></div>
+                                    <div class="font-12">{{ addrss.attn}}</div>
+                                    <div class="font-12">{{ addrss.full_address }}</div>
+                                    <div class="font-12">{{ addrss.phone }}</div>
+                                </div>
+                                <div layout="column" flex="20" class="text-right">
+                                    <span class="icon icon-arrow-right font-18 mrg35-T"></span>
+                                </div>
+                            </div>
+                            <div class="header-typ3">Other Locations</div>
+                            <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="addrss in unAssignAddresses" ng-click="getProductByAddress(addrss.id)">
+                                <div layout="column" flex="80">
+                                    <div class="font-12"><b>{{ addrss.description }}</b></div>
+                                    <div class="font-12">{{ addrss.attn}}</div>
+                                    <div class="font-12">{{ addrss.full_address }}</div>
                                     <div class="font-12">{{ addrss.phone }}</div>
                                 </div>
                                 <div layout="column" flex="20" class="text-right">
@@ -29,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="order-container pd15-LR" ms-scroll>
-                                <div class="box-typ3" ng-repeat="orders in vm.orderItems">
+                                <div class="box-typ3" ng-repeat="item in assignedItems">
                                     <div layout="row" flex="100" class="demo-select-all-checkboxes">
                                         <!-- <div layout="column" flex="10" class="align-M align-self-C">
                                             <md-checkbox aria-label="Select"></md-checkbox>
@@ -62,7 +80,7 @@
                                                     <div class="font-12 gray-text">Quantity to distribute to location</div>
                                                     <div class="search-block" flex=40>
                                                         <md-input-container class="md-block" flex-gt-sm>
-                                                            <input ng-model="orders.qtyOrdered" >
+                                                            <input aria-label="qtyOrdered" ng-model="orders.qtyOrdered" >
                                                         </md-input-container>
                                                     </div>
                                                 </div>
@@ -122,7 +140,7 @@
                                                 </div>
                                                 <div layout="column" flex="60" class="pd10 bdr-1L">
                                                     <md-input-container class="md-block md-input-container1" flex-gt-sm>
-                                                            <input ng-model="item.distributed_qnty">
+                                                            <input aria-label="distributed_qnty" ng-model="item.distributed_qnty">
                                                         </md-input-container>
                                                     <div class="font-13 gray-text text-center">Qty to Distribute</div>
                                                 </div>
