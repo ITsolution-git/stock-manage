@@ -68,7 +68,6 @@
                                 </md-input-container>
                             </div>
 
-
                             <div class="box-typ1 scrollable" ms-scroll>
                                 <table class="tbl-typ1">
                                     <thead>
@@ -89,17 +88,12 @@
                                                 </table>
                                             </td>
                                             <td class="pd5">
-                                                <md-input-container class="md-block" flex-gt-sm>
+                                                <md-input-container class="md-block" flex-gt-sm >
                                                     <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
-
-                                                    <!--  <div ng-messages="orderForm.qnty_S.$error" role="alert" multiple>
-                                                        <div ng-message="max">
-                                                            <span>This field is required</span>
-                                                        </div>
-                                                    </div> -->
-
                                                 </md-input-container>
+
                                             </td>
+
                                         </tr>
                                     </tbody>
                                 </table>

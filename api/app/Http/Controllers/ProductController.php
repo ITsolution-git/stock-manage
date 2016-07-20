@@ -286,7 +286,10 @@ public function create_dir($dir_path) {
             $allDetail = $this->product->getPurchaseDetail($data['design_product_id']);
         }
         
+
         foreach($all_data as $key => $data) {
+
+
          
         $color_data = $this->common->getColorId($data->colorName);
 
@@ -299,12 +302,10 @@ public function create_dir($dir_path) {
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
 
                  
-
-
                 if(count($allDetail) > 0) {
                 
-                    if(isset($allDetail[$data->sizeName])){
-                        $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$data->sizeName];
+                    if(isset($allDetail[$color_data[0]->id][$data->sizeName])){
+                        $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)$allDetail[$color_data[0]->id][$data->sizeName];
                     }
                
                 } else {
@@ -313,14 +314,11 @@ public function create_dir($dir_path) {
 
 
                   foreach ($data->warehouses as $warehouse_detail) {           
-                     //   $inventory = $warehouse_detail->qty;
-                     //   $warehouse = $warehouse_detail->warehouseAbbr;
-
-
                         $productAllData['colorData'][$data->colorName]['sizes'][$key]['inventory'][$warehouse_detail->warehouseAbbr] = $warehouse_detail->qty;
                     }
 
                
+
 
               //  $productAllData['colorData'][$data->colorName]['sizes'][$key]['warehouse'] = $warehouse;
                

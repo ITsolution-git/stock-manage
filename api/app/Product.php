@@ -312,10 +312,14 @@ class Product extends Model {
                             ->get();
             $design_product_id = $result_design[0]->id;
         }
+
+
        
         $delete = DB::table('purchase_detail')->where('design_product_id','=',$design_product_id)->delete();
 
         foreach($post['productData'] as $row) {
+
+
 
             $sku = 0;
             if(isset($row['sku'])) {
@@ -335,9 +339,9 @@ class Product extends Model {
                 $price = $row['customer_price'];
             }
             
-            
-            
-            $insert_purchase_array = array('design_id'=>$post['id'],
+            if($row['qnty'] > 0) {
+
+                  $insert_purchase_array = array('design_id'=>$post['id'],
                 'design_product_id'=>$design_product_id,
                 'product_id'=>$post['product_id'],
                 'size'=>$row['sizeName'],
@@ -348,6 +352,10 @@ class Product extends Model {
                 'date'=>$post['created_date']);
 
             $result = DB::table('purchase_detail')->insert($insert_purchase_array);
+            
+            }
+            
+              
         }
         return true;
     }
@@ -474,7 +482,7 @@ class Product extends Model {
         $purchaseDetail = array();
         foreach ($result as $key=>$alldata){
           
-                 $purchaseDetail[$alldata->size] = $alldata->qnty;
+                 $purchaseDetail[$alldata->color_id][$alldata->size] = $alldata->qnty;
           }
         
         return $purchaseDetail;
