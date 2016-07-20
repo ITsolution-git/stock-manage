@@ -1586,7 +1586,7 @@ class OrderController extends Controller {
         $result_company = $this->client->getStaffDetail($post['company_id']);
 
         $result_order = $this->product->getSnsProductDetail($post['id']);
-        
+       
         if(empty($result_order))
         {
             $data_record = array("success"=>0,"message"=>"There is no S&S product for particular this order");

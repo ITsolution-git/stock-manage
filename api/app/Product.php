@@ -287,6 +287,11 @@ class Product extends Model {
 
     public function addProduct($post) {
 
+         if(!isset($post['warehouse']))
+            {
+                $post['warehouse'] = '';
+            }
+
         if(isset($post['is_supply'])) {
             $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
         }
@@ -673,7 +678,7 @@ class Product extends Model {
      
         $where = ['od.order_id' => $id,'dp.is_delete' => '1','pcs.sku' => '!=0','pcs.is_distribute' => '0','pcs.qnty' => '>0'];
       
-        $listArray = ['pcs.*'];
+        $listArray = ['pcs.*','dp.warehouse'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')

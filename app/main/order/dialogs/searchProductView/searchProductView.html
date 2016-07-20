@@ -82,14 +82,14 @@
                                                 <table width="100%">
                                                     <tr>
                                                         <td width="70%" class="text-right color font-12">{{sizedata.sizeName}} :</td>
-                                                        <td width="20%" class="text-semibold font-12">{{sizedata.inventory[warehouse]}}</td>
+                                                        <td width="20%" class="text-semibold font-12">{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}</td>
                                                        
                                                     </tr>
                                                 </table>
                                             </td>
                                             <td class="pd5">
                                                 <md-input-container class="md-block" flex-gt-sm >
-                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
+                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
                                                 </md-input-container>
 
                                             </td>
