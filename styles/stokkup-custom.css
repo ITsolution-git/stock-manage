@@ -1088,3 +1088,6 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 .deactivate-color{
   border : 2px solid #FFFFFF;
 }
+.activeAddress {
+  background-color: rgba(0,0,0,0.1); 
+}

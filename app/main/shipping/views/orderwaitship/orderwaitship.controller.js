@@ -14,6 +14,7 @@
         var combine_array = {};
         combine_array.order_id = $stateParams.id;
         $scope.order_id = $stateParams.id;
+        $scope.address_id = 0;
 
         $scope.assignedItems = [];
 
@@ -23,11 +24,18 @@
                $scope.unshippedProducts = result.data.unshippedProducts;
                $scope.assignAddresses = result.data.assignAddresses;
                $scope.unAssignAddresses = result.data.unAssignAddresses;
+
+               if($scope.address_id > 0)
+               {
+                    $scope.getProductByAddress($scope.address_id);
+               }
             }
         });
 
         $scope.getProductByAddress = function(address_id)
         {
+            $scope.address_id = address_id;
+
             var combine_array = {};
             combine_array.address_id = address_id;
             combine_array.order_id = $scope.order_id;
@@ -36,7 +44,7 @@
                 
                 if(result.data.success == '1') {
                     $("#ajax_loader").hide();
-                    $scope.assignedItems = result.data.unshippedProducts;
+                    $scope.assignedItems = result.data.products;
                 }
             });
         }
