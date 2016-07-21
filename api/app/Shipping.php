@@ -209,7 +209,7 @@ class Shipping extends Model {
                                 LEFT JOIN products as p ON dp.product_id = p.id
                                 LEFT JOIN misc_type as mt ON dp.size_group_id = mt.id
                                 LEFT JOIN color as c ON pd.color_id = c.id
-                                WHERE po.order_id = '".$order_id."' AND pol.qnty_purchased > 0 
+                                WHERE po.order_id = '".$order_id."' AND pol.qnty_purchased > 0 AND pd.remaining_qnty > 0 
                                 GROUP BY pd.id ");
 
 /*        $result = DB::table('purchase_order as po')
