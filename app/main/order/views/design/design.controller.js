@@ -124,10 +124,24 @@
             position_main_data.order_id = $scope.order_id;
             position_main_data.design_id = $stateParams.id;
             position_main_data.company_id = sessionService.get('company_id');
+            position_main_data.column_name = $scope.name_filed;
           
             $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
+
+                        if(result.data.success == '2') 
+
+                        {
+
+                             var data = {"status": "error", "message": "This position is already exists in this order."}
+                             notifyService.notify(data.status, data.message);
+                            
+                             $scope.order_design_position[key].position_id = $scope.order_design_position[key].position_id_new;
+                             return false;
+                        } 
+
                 if(column_name == 'position_id') {
                     $scope.order_design_position[key].position_name = $scope.miscData.position[value].value;
+                    $scope.order_design_position[key].position_id_new = $scope.miscData.position[value].id;
                 }
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
                 notifyService.notify(data.status, data.message);

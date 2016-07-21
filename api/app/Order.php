@@ -608,4 +608,27 @@ public function saveColorSize($post)
 
       return $result;
     }
+
+    public function checkDuplicatePositions($order_id,$position)
+    {
+     
+
+       $whereConditions = ['od.status' => '1','od.is_delete' => '1','odp.is_delete' => '1','od.order_id' => $order_id];
+        $listArray = ['od.shipping_date','od.id','od.order_id','odp.position_id','od.design_name'];
+        $designData = DB::table('order_design as od')
+                        ->Join('order_design_position as odp','odp.design_id','=', 'od.id')
+                        ->select($listArray)
+                        ->where($whereConditions)->get();
+                     
+       
+        $position_array = array();
+        $duplicate =  0;
+        foreach($designData as $datanew) {
+            if($datanew->position_id == $position) {
+               $duplicate =  1;
+            }
+        }
+
+        return $duplicate;
+    }
 }

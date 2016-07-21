@@ -373,6 +373,14 @@ class OrderController extends Controller {
      public function updatePositions()
      {
         $post = Input::all();
+        if($post['column_name'] == 'position_id') {
+            $result = $this->order->checkDuplicatePositions($post['order_id'],$post['data']['position_id']);
+            
+            if($result == '1' ) {
+                $data = array("success"=>2,"message"=>"Duplicate");
+                 return response()->json(['data'=>$data]);
+            }
+        }
 
         //$positionData = $this->common->GetTableRecords('order_design_position',array('design_id' => $data['design_id']),array());
 
@@ -1670,4 +1678,5 @@ class OrderController extends Controller {
         
       
      }
+
 }
