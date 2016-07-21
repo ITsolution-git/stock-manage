@@ -11,15 +11,31 @@
     {
         var vm = this;
 
-        var combine_array = {};
-        combine_array.order_id = $stateParams.id;
-        $scope.order_id = $stateParams.id;
         $scope.address_id = 0;
+
+        var combine_array_id = {};
+        combine_array_id.id = $stateParams.id;
+        combine_array_id.company_id = sessionService.get('company_id');
+        $scope.order_id = $stateParams.id;
+        
+
+        $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+            if(result.data.success == '1') {
+                $("#ajax_loader").hide();
+               $scope.order = result.data.records[0];
+               $scope.order_items = result.data.order_item;
+            } else {
+                $state.go('app.order');
+            }
+        });
 
         $scope.assignedItems = [];
 
         $scope.shipOrder = function()
         {
+            var combine_array = {};
+            combine_array.order_id = $stateParams.id;
+            
             $http.post('api/public/shipping/shipOrder',combine_array).success(function(result, status, headers, config) {
                 if(result.data.success == '1') {
                     $("#ajax_loader").hide();
@@ -78,6 +94,25 @@
                 if(result.data.success == '1') {
                     $scope.shipOrder();
                 }
+            });
+        }
+
+        vm.openaddAddressDialog = openaddAddressDialog;
+
+        function openaddAddressDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'AddAddressController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/addAddress/addAddress.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Orders: $scope.order,
+                    event: ev
+                },
+                onRemoving : $scope.reloadPage
             });
         }
     }

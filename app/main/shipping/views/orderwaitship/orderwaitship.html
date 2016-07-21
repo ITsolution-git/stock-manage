@@ -10,7 +10,7 @@
                             <md-input-container class="md-block m-0">
                                 <input ng-model="productSearch" placeholder="Search Locations">
                             </md-input-container>
-                            <md-button class="md-accent md-raised">Create New Location</md-button>
+                            <md-button class="md-accent md-raised" ng-click="vm.openaddAddressDialog($event)">Create New Location</md-button>
 
                             <div class="header-typ3">Locations Products Allocated To</div>
                             <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in assignAddresses" ng-click="getProductByAddress(addrss.id)">
