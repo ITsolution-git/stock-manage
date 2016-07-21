@@ -13,7 +13,7 @@
                         <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                             <div flex=73 class="pd25-T">
                                 <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p" style="float:right;">
-                                    <md-tooltip md-delay="demo.delayTooltip">Filter By - Order</md-tooltip>
+                                    <md-tooltip md-delay="demo.delayTooltip">Filter By - Client</md-tooltip>
                                 </md-icon>
                             </div>
                             <div class="search-block" flex=25>
@@ -27,21 +27,21 @@
                         <div class="filter-menu filter-box">
                             <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
                                 <md-toolbar class=" filter-title">
-                                    <h1 class="md-toolbar-tools">Filter By - Order</h1>
+                                    <h1 class="md-toolbar-tools">Filter By - Orders</h1>
                                 </md-toolbar>
                                 <md-content class="flex-fix-bottom scrollable"  ms-scroll>
                                     <div class="contant-filter filter-detail" >
                                         <div layout="column" class="f-box-1 first-cheak">
                                             <div class="f-header">
                                             <span class="select-count">3 Selected</span>
-                                            <span> Position
+                                           <!--  <span> Clients
                                                 <button ng-if="vm.toggle" ng-click="vm.toggle = false">
                                                 <md-icon md-font-icon="icon-menu-up"></md-icon>
                                                 </button>
                                                 <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
                                                 <md-icon md-font-icon="icon-menu-down"></md-icon>
                                                 </button>
-                                                </span>
+                                                </span> -->
                                                 <md-divider ></md-divider>
                                             </div>
                                             <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
@@ -109,44 +109,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div layout="column" class="f-box-2">
-                                            <div class="f-header"> <span> Order ID
-                                                <button ng-if="vm.createdate" ng-click="vm.createdate = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.createdate" ng-click="vm.createdate = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body" ng-if="vm.createdate">
-                                                <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="Order ID">
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-1">
-                                            <div class="f-header"> <span> Screen Sets
-                                                <button ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.companyfilter">
-                                                <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="Screen Sets">
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </md-content>
                                 <div class="filter-footer" layout="row">
@@ -204,7 +167,7 @@
                                         <div layout="column" class="f-box-1 first-cheak">
                                             <div class="f-header">
                                             <span class="select-count">3 Selected</span>
-                                            <span> Position
+                                            <span> Clients
                                                 <button ng-if="vm.toggle" ng-click="vm.toggle = false">
                                                 <md-icon md-font-icon="icon-menu-up"></md-icon>
                                                 </button>
@@ -280,7 +243,9 @@
                                             </div>
                                         </div>
                                         <div layout="column" class="f-box-2">
-                                            <div class="f-header"> <span> Screen Set Name
+                                            <div class="f-header"> 
+                                            <span class="select-count">3 Selected</span>
+                                            <span> Sizes
                                                 <button ng-if="vm.createdate" ng-click="vm.createdate = false">
                                                 <md-icon md-font-icon="icon-menu-up"></md-icon>
                                                 </button>
@@ -292,147 +257,66 @@
                                             </div>
                                             <div class="f-body" ng-if="vm.createdate">
                                                 <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="Screen Set Name">
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-3">
-                                            <div class="f-header"> <span> # Of Screens
-                                                <button ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.companyfilter">
-                                                <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="# Of Screens">
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-4">
-                                            <div class="f-header"> <span> # Of Colors
-                                                <button ng-if="vm.colorfilter" ng-click="vm.colorfilter = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.colorfilter" ng-click="vm.companyfilter = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.companyfilter">
-                                                <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="# Of Colors">
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-5">
-                                            <div class="f-header">
-                                            <span class="select-count">3 Selected</span>
-                                            <span>Frame Size
-                                                <button ng-if="vm.framesizefilter" ng-click="vm.framesizefilter = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.framesizefilter" ng-click="vm.framesizefilter = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.framesizefilter">
-                                                <div class="filter-cntnr scrollable" ms-scroll>
                                                     <div layout="row">
                                                         <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> 45"</md-checkbox>
+                                                          <md-checkbox aria-label="Checkbox 1"> Screen</md-checkbox>
                                                         </div>
                                                     </div>
                                                     <div layout="row" >
                                                         <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> 35"</md-checkbox>
+                                                          <md-checkbox aria-label="Checkbox 1"> Back</md-checkbox>
                                                         </div>
                                                     </div>
                                                     <div layout="row">
                                                         <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> 25"</md-checkbox>
+                                                          <md-checkbox aria-label="Checkbox 1"> Side Right</md-checkbox>
                                                         </div>
                                                     </div>
                                                     <div layout="row">
                                                         <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> 15"</md-checkbox>
+                                                          <md-checkbox aria-label="Checkbox 1"> Side Left</md-checkbox>
                                                         </div>
                                                     </div>
                                                     <div layout="row">
                                                         <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> 5"</md-checkbox>
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-6">
-                                            <div class="f-header"> <span> Lines Per Inch
-                                                <button ng-if="vm.lineperinchfilter" ng-click="vm.lineperinchfilter = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.lineperinchfilter" ng-click="vm.lineperinchfilter = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body" ng-if="vm.lineperinchfilter">
-                                                <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="Lines Per Inch">
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-7">
-                                            <div class="f-header"> <span> Width
-                                                <button ng-if="vm.widthfilter" ng-click="vm.widthfilter = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.widthfilter" ng-click="vm.widthfilter = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body" ng-if="vm.widthfilter">
-                                                <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="Width">
-                                                    </md-input-container>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-8">
-                                            <div class="f-header"> <span>Height
-                                                <button ng-if="vm.heightfilter" ng-click="vm.heightfilter = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.heightfilter" ng-click="vm.heightfilter = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body" ng-if="vm.heightfilter">
-                                                <div layout="column" >
-                                                    <md-input-container>
-                                                        <input value="Height">
-                                                    </md-input-container>
+                                                    <div layout="row">
+                                                        <div flex-xs flex="100">
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div layout="row">
+                                                        <div flex-xs flex="100">
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div layout="row">
+                                                        <div flex-xs flex="100">
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div layout="row">
+                                                        <div flex-xs flex="100">
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div layout="row">
+                                                        <div flex-xs flex="100">
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div layout="row">
+                                                        <div flex-xs flex="100">
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div layout="row">
+                                                        <div flex-xs flex="100">
+                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

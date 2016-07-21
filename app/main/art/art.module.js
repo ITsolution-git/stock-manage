@@ -56,7 +56,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.art', {
-            //title    : 'Art',
+            title    : 'Art',
             icon     : 'icon-palette',
             state    : 'app.art',
             /*stateParams: {
