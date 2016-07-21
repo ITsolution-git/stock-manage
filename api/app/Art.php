@@ -8,28 +8,40 @@ use DateTime;
 
 class Art extends Model {
 
-	public function Listing($company_id)
+	public function Listing($post)
 	{
-		$Misc_data = $this->AllMsiData($company_id);
 
-		$query = DB::table('art as art')
-				->select('*')
-				->join('orders as or','art.order_id','=','or.id')
-				->leftJoin('client as cl','cl.client_id','=','or.client_id')
-				->where('or.is_delete','=','1')
-				->where('or.company_id','=',$company_id)
-				->orderBy('art.art_id', 'desc')
-				->get();
-				
-		if(count($query)>0)
-		{
-			foreach ($query as $key => $value) 
-			{
-				$query[$key]->f_approval = (!empty($value->f_approval) && array_key_exists($value->f_approval, $Misc_data))?$Misc_data[$value->f_approval]:'';
-			}
-		}
-		
-		return $query;
+		$search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+        $admindata = DB::table('orders as ord')
+        				->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
+        				->select(DB::raw('SQL_CALC_FOUND_ROWS ord.id,cl.client_company'),DB::raw("(SELECT count(*) from order_design od LEFT JOIN order_design_position odp on odp.design_id = od.id WHERE od.order_id=ord.id) as total_screen"))
+        				->where('ord.is_delete','=','1')
+		                ->where('ord.company_id','=',$post['company_id']);
+		                if($search != '')               
+		                 {
+		                     $admindata = $admindata->Where(function($query) use($search)
+		                     {
+		                         $query->orWhere('ord.id', 'LIKE', '%'.$search.'%')
+		                               ->orWhere('cl.client_company','LIKE', '%'.$search.'%');
+		                     });
+		                }
+		                $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+		                ->skip($post['start'])
+		                ->take($post['range'])
+		                ->get();
+       
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $admindata;
+        $returnData['count'] = $count[0]->Totalcount;
+        
+
+       // echo "<pre>"; print_r($returnData); echo "</pre>"; die;
+        return $returnData;
 	}
 	public function art_position($art_id,$company_id)
 	{
