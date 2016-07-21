@@ -490,7 +490,11 @@ class ShippingController extends Controller {
             $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
             $address->selected = 0;
 
-            $allocatedAddress2 = explode(",", $allocatedAddress[0]->id);
+            $allocatedAddress2 = array();
+            if(!empty($allocatedAddress))
+            {
+                $allocatedAddress2 = explode(",", $allocatedAddress[0]->id);    
+            }
 
             if(in_array($address->id, $allocatedAddress2))
             {
@@ -537,9 +541,17 @@ class ShippingController extends Controller {
         if(!empty($shipping_data)) {
 
             $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $shipping_data[0]->id,'purchase_detail_id' => $post['product']['id']),array());
-            $updated_qnty = $product_data[0]->distributed_qnty + $post['product']['distributed_qnty'];
 
-            $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $shipping_data[0]->id,'purchase_detail_id' => $post['product']['id']),array('distributed_qnty' => $updated_qnty));
+            if(empty($product_data))
+            {
+                $distributed_qnty = 0;
+                $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $shipping_data[0]->id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
+            }
+            else
+            {
+                $updated_qnty = $product_data[0]->distributed_qnty + $post['product']['distributed_qnty'];
+                $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $shipping_data[0]->id,'purchase_detail_id' => $post['product']['id']),array('distributed_qnty' => $updated_qnty));
+            }
         }
         else
         {
