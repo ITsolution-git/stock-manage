@@ -10,7 +10,7 @@
                             <md-input-container class="md-block m-0">
                                 <input ng-model="productSearch" placeholder="Search Locations">
                             </md-input-container>
-                            <md-button class="md-accent md-raised">Create New Location</md-button>
+                            <md-button class="md-accent md-raised" ng-click="vm.openaddAddressDialog($event)">Create New Location</md-button>
 
                             <div class="header-typ3">Locations Products Allocated To</div>
                             <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in assignAddresses" ng-click="getProductByAddress(addrss.id)">
@@ -71,12 +71,6 @@
                                             </div>
                                             <div layout="row" flex="100" class="mrg10-TB">
                                                 <div layout="column" flex="100">
-                                                    <div class="font-12">Product Description</div>
-                                                    <div class="gray-text font-12">{{ item.description }}</div>
-                                                </div>
-                                            </div>
-                                            <div layout="row" flex="100" class="mrg10-TB">
-                                                <div layout="column" flex="100">
                                                     <div class="font-12 gray-text">Quantity to distribute to location</div>
                                                     <div class="search-block" flex=40>
                                                         <md-input-container class="md-block" flex-gt-sm>
@@ -102,7 +96,7 @@
                         </div>
                         <div class="mrg10-L order-container" ms-scroll>
                             <div class="header-typ3">Shipment Items</div>
-                            <div class="box-typ3" ng-repeat="item in unshippedProducts">
+                            <div class="box-typ3" ng-repeat="product in unshippedProducts">
                                 <div layout="row" flex="100">
                                     <div layout="colum" flex="10" class="align-M align-self-C text-center">
                                         <a href="#" class="icon icon-arrow-left font-18"></a>
@@ -120,10 +114,10 @@
                                                 </thead>
                                                 <tbody> 
                                                     <tr class="cursor-p">
-                                                        <td>{{ item.misc_value}}</td>
-                                                        <td>{{ item.name}}</td>
-                                                        <td>{{ item.color_name}}</td>
-                                                        <td>{{ item.size}}</td>
+                                                        <td>{{ product.misc_value}}</td>
+                                                        <td>{{ product.name}}</td>
+                                                        <td>{{ product.color_name}}</td>
+                                                        <td>{{ product.size}}</td>
                                                     </tr>                    
                                                 </tbody>
                                             </table>
@@ -131,17 +125,17 @@
                                         <div>
                                             <div layout="row" flex="100">
                                                 <div layout="column" flex="40" class="pd10">
-                                                    <div class="font-18 text-center">{{item.total}}</div>
+                                                    <div class="font-18 text-center">{{product.total}}</div>
                                                     <div class="font-13 gray-text text-center">Qty Ordered</div>
                                                 </div>
                                                 <div layout="column" flex="60" class="pd10 bdr-1L">
-                                                    <div class="font-18 text-center">{{item.remaining_qnty}}</div>
+                                                    <div class="font-18 text-center">{{product.remaining_qnty}}</div>
                                                     <div class="font-13 gray-text text-center">Remaining to Distribute</div>
                                                 </div>
                                                 <div layout="column" flex="60" class="pd10 bdr-1L">
                                                     <md-input-container class="md-block md-input-container1" flex-gt-sm>
-                                                            <input aria-label="distributed_qnty" ng-model="item.distributed_qnty">
-                                                        </md-input-container>
+                                                        <input aria-label="distributed_qnty" ng-model="product.distributed_qnty" ui-event="{ change : 'updateShipping(product)' }">
+                                                    </md-input-container>
                                                     <div class="font-13 gray-text text-center">Qty to Distribute</div>
                                                 </div>
                                             </div>

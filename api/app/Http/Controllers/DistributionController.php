@@ -200,6 +200,9 @@ class DistributionController extends Controller {
 
                     $insertArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
                     $this->common->InsertRecords('product_address_size_mapping',$insertArr);
+
+                    $remaining_qnty = $max_qnty - $product['distributed_qnty'];
+                    $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
                 }
                 else
                 {
@@ -207,7 +210,18 @@ class DistributionController extends Controller {
 
                     if($product_address_size_mapping[0]->distributed_qnty != $product['distributed_qnty'])
                     {
-                        $max_qnty = $product['remaining_qnty'];
+                        if($product_address_size_mapping[0]->distributed_qnty > $product['distributed_qnty'])
+                        {
+                            $remaining_qnty = $product_address_size_mapping[0]->distributed_qnty - $product['distributed_qnty'];
+                        }
+                        else
+                        {
+                            $current_qnty = $product_address_size_mapping[0]->distributed_qnty;
+                            $total_size_qnty = $size_data[0]->distributed_qnty - $current_qnty;
+                            $max_qnty = $size_data[0]->qnty_purchased - $total_size_qnty;
+                            $remaining_qnty = $max_qnty - $product['distributed_qnty'];
+                        }
+                        $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
                     }
                 }
             }
@@ -216,11 +230,10 @@ class DistributionController extends Controller {
                 $insertArr = array('product_address_id' => $product_address_id, 'purchase_detail_id' => $product['id'], 'distributed_qnty' => $product['distributed_qnty']);
                 $this->common->InsertRecords('product_address_size_mapping',$insertArr);
                 $max_qnty = $product['remaining_qnty'];
+
+                $remaining_qnty = $max_qnty - $product['distributed_qnty'];
+                $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
             }
-            
-            $remaining_qnty = $max_qnty - $product['distributed_qnty'];
-            
-            $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
         }
 
         $message = 'Product allocated successfully';

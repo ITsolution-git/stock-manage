@@ -19,7 +19,7 @@ class Distribution extends Model {
 					->Join('products as p','p.id','=','pd.product_id')
 					->select($listArr)
 					->where($where)
-					->GroupBy('pd.product_id')
+					->GroupBy('p.id')
 					->get();
 
 		return $result;

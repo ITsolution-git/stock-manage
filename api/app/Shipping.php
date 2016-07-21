@@ -200,7 +200,7 @@ class Shipping extends Model {
         $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pol.qnty_purchased','pd.remaining_qnty'];
         $where = ['po.order_id' => $order_id];
 
-        $result = DB::select("SELECT mt.value as misc_value,p.name,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pd.distributed_qnty 
+        $result = DB::select("SELECT mt.value as misc_value,p.name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id 
                                 FROM purchase_order as po 
                                 LEFT JOIN purchase_order_line as pol ON po.po_id = pol.po_id 
                                 LEFT JOIN purchase_detail as pd ON pol.purchase_detail = pd.id 
@@ -209,7 +209,7 @@ class Shipping extends Model {
                                 LEFT JOIN products as p ON dp.product_id = p.id
                                 LEFT JOIN misc_type as mt ON dp.size_group_id = mt.id
                                 LEFT JOIN color as c ON pd.color_id = c.id
-                                WHERE po.order_id = '".$order_id."' AND pol.qnty_purchased > 0 
+                                WHERE po.order_id = '".$order_id."' AND pol.qnty_purchased > 0 AND pd.remaining_qnty > 0 
                                 GROUP BY pd.id ");
 
 /*        $result = DB::table('purchase_order as po')
