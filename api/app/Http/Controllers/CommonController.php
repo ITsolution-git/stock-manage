@@ -10,6 +10,7 @@ use App\Common;
 use App\Company;
 use App\Vendor;
 use App\Purchase;
+use App\Art;
 use DB;
 
 use Request;
@@ -21,12 +22,13 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art ) 
     {
         $this->common = $common;
         $this->company = $company;
         $this->vendor = $vendor;
         $this->purchase = $purchase;
+        $this->art = $art;
 
     }
 
@@ -1064,7 +1066,20 @@ class CommonController extends Controller {
                 2=>array('key' => 'sales_phone', 'name' => 'Phone'),
                 3=>array('key' => 'sales_created_date', 'name' => 'Created Date')
                 );
-
+        }
+        
+        if($post['filter']['function']=='art_list') // ART LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'ord.id';
+            }
+            $result = $this->art->Listing($post);
+            $header = array(
+                0=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                1=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets')
+                );
         }
 
         $records = $result['allData'];

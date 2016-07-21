@@ -26,7 +26,7 @@ class Purchase extends Model {
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type','po.date')
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id']);
@@ -506,7 +506,7 @@ class Purchase extends Model {
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type','po.date')
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id'])
