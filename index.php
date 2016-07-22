@@ -230,9 +230,9 @@
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>
     <script src="app/main/art/art.controller.js"></script>
-    <script src="app/main/art/views/orderview/orderview.controller.js"></script>
-    <script src="app/main/art/dialogs/createScreen/createScreen-dialog.controller.js"></script>
-    <script src="app/main/art/dialogs/generateArtForm/generateArtForm-dialog.controller.js"></script>
+    <script src="app/main/art/views/orderview/orderView.controller.js"></script>
+<!--     <script src="app/main/art/dialogs/createScreen/createScreen-dialog.controller.js"></script> -->
+<!--     <script src="app/main/art/dialogs/generateArtForm/generateArtForm-dialog.controller.js"></script> -->
     <script src="app/main/art/views/screensetview/screensetView.controller.js"></script>
     <script src="app/main/art/dialogs/createScreenDetail/createScreenDetail.controller.js"></script>
 
