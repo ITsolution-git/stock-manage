@@ -1081,6 +1081,22 @@ class CommonController extends Controller {
                 2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets')
                 );
         }
+        if($post['filter']['function']=='art_list_screen') // ART SCREEN LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'ord.id';
+            }
+            $result = $this->art->Screen_Listing($post);
+            $header = array(
+                0=>array('key' => 'ord.id', 'name' => 'Screen set'),
+                1=>array('key' => 'mt.value', 'name' => 'Position'),
+                2=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
+                4=>array('key' => 'screen_width', 'name' => '#of Screen'),
+                5=>array('key' => 'asc.screen_width', 'name' => 'Freame size')
+                );
+        }
 
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;

@@ -69,7 +69,7 @@
                                     <thead tasty-thead></thead>
                                     <tbody >
                                         <tr ng-repeat="art in rows">
-                                            <td title="Go to Order" class="cursor-p" ui-sref="app.order.order-info({id:art.id})">{{art.id}}</td>
+                                            <td>{{art.id}}</td>
                                             <td class="">{{art.client_company}}</td>
                                             <td class="">{{art.total_screen}}</td>
                                             <td><a class="font-12" class="cursor-p" ui-sref="app.art.orderView">VIEW</a></td> 
@@ -82,222 +82,159 @@
                         </div> 
                     </md-tab>
                     <!-----------------Screen Set Tab-------------------->
-                    <md-tab label="Screen Set">
-                        <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                            <div flex=73 class="pd25-T">
-                                <md-icon ng-click="vm.openRightMenu1()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p" style="float:right;">
-                                    <md-tooltip md-delay="demo.delayTooltip">Filter By - Screen Set</md-tooltip>
-                                </md-icon>
-                            </div>
-                            <div class="search-block" flex=25>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                                    <input ng-model="vm.searchQuery" >
-                                </md-input-container>
-                            </div>
-                        </div>
-                        <!--Filter Sidebar Start-->
-                        <div class="filter-menu filter-box" >
-                            <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="left" layout="column">
-                                <md-toolbar class=" filter-title">
-                                    <h1 class="md-toolbar-tools">Filter</h1>
-                                </md-toolbar>
-                                <md-content class="flex-fix-bottom scrollable"  ms-scroll>
-                                    <div class="contant-filter filter-detail" >
-                                        <div layout="column" class="f-box-1 first-cheak">
-                                            <div class="f-header">
-                                            <span class="select-count">3 Selected</span>
-                                            <span> Clients
-                                                <button ng-if="vm.toggle" ng-click="vm.toggle = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
-                                                <div class="filter-cntnr scrollable" ms-scroll>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Screen</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row" >
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Back</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Side Right</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Side Left</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div layout="column" class="f-box-2">
-                                            <div class="f-header"> 
-                                            <span class="select-count">3 Selected</span>
-                                            <span> Sizes
-                                                <button ng-if="vm.createdate" ng-click="vm.createdate = false">
-                                                <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                                </button>
-                                                <button ng-if="!vm.createdate" ng-click="vm.createdate = true">
-                                                <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                                </button>
-                                                </span>
-                                                <md-divider ></md-divider>
-                                            </div>
-                                            <div class="f-body" ng-if="vm.createdate">
-                                                <div layout="column" >
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Screen</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row" >
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Back</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Side Right</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Side Left</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                    <div layout="row">
-                                                        <div flex-xs flex="100">
-                                                          <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </md-content>
-                                <div class="filter-footer" layout="row">
-                                    <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
-                                    <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
+                    <md-tab label="Screen Set" >
+                        <div ng-controller="ArtScreenController">
+                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                <div flex=73 class="pd25-T">
+                                    <md-icon ng-click="vm.openRightMenu1()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p" style="float:right;">
+                                        <md-tooltip md-delay="demo.delayTooltip">Filter By - Screen Set</md-tooltip>
+                                    </md-icon>
                                 </div>
-                            </md-sidenav>
+                                <div class="search-block" flex=25>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
+                                        <input ng-model="vm.searchQuery" >
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <!--Filter Sidebar Start-->
+                            <div class="filter-menu filter-box" >
+                                <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="left" layout="column">
+                                    <md-toolbar class=" filter-title">
+                                        <h1 class="md-toolbar-tools">Filter</h1>
+                                    </md-toolbar>
+                                    <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+                                        <div class="contant-filter filter-detail" >
+                                            <div layout="column" class="f-box-1 first-cheak">
+                                                <div class="f-header">
+                                                <span class="select-count">3 Selected</span>
+                                                <span> Clients
+                                                    <button ng-if="vm.toggle" ng-click="vm.toggle = false">
+                                                    <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                                    </button>
+                                                    <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                                    <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                                    </button>
+                                                    </span>
+                                                    <md-divider ></md-divider>
+                                                </div>
+                                                <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
+                                                    <div class="filter-cntnr scrollable" ms-scroll>
+                                                        <div layout="row" ng-repeat="client in client_list">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> {{client.client_company}}</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div layout="column" class="f-box-2">
+                                                <div class="f-header"> 
+                                                <span class="select-count">3 Selected</span>
+                                                <span> Sizes
+                                                    <button ng-if="vm.createdate" ng-click="vm.createdate = false">
+                                                    <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                                    </button>
+                                                    <button ng-if="!vm.createdate" ng-click="vm.createdate = true">
+                                                    <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                                    </button>
+                                                    </span>
+                                                    <md-divider ></md-divider>
+                                                </div>
+                                                <div class="f-body" ng-if="vm.createdate">
+                                                    <div layout="column" >
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Screen</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row" >
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Back</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Side Right</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Side Left</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                        <div layout="row">
+                                                            <div flex-xs flex="100">
+                                                              <md-checkbox aria-label="Checkbox 1"> Position</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-content>
+                                    <div class="filter-footer" layout="row">
+                                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
+                                        <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
+                                    </div>
+                                </md-sidenav>
+                            </div>
+                            <div class="ms-responsive-table-wrapper"  ng-show="success==1">
+                                <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                                     <table class="dataTable row-border hover">
+                                        <thead tasty-thead></thead>
+                                        <tbody >
+                                            <tr ng-repeat="art in rows">
+                                                <td>{{art.screen_set}}</td>
+                                                <td class="">{{art.value}}</td>
+                                                <td class="">{{art.client_company}}</td>
+                                                <td class="">{{art.color_stitch_count}}</td>
+                                                <td class="">{{art.screen_total}}</td>
+                                                <td class="">{{art.screen_width}}</td>
+                                                <td><a class="font-12" class="cursor-p" ui-sref="app.art.orderView">VIEW</a></td> 
+                                                <!-- <td class="" ui-sref="app.artOrder.companyPO({id:art.po_id})"> View</td> -->
+                                            </tr>
+                                        </tbody> 
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                            </div> 
                         </div>
-                        <div class="ms-responsive-table-wrapper">
-                            <table class="simple hover simple-tbl1">
-                                <thead>
-                                    <tr>
-                                        <th class="secondary-text" width="15%">Screen Set Name</th>
-                                        <th class="secondary-text" width="15%">Position</th>
-                                        <th class="secondary-text" width="10%"># of Screens</th>
-                                        <th class="secondary-text" width="10%"># of Colors</th>
-                                        <th class="secondary-text" width="10%">Frame Size</th>
-                                        <th class="secondary-text" width="10%">Lines per inch</th>
-                                        <th class="secondary-text" width="10%">width</th>
-                                        <th class="secondary-text" width="10%">Height</th>
-                                        <th class="secondary-text" width="10%">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody> 
-                                    <tr ng-repeat="screenset in ::vm.screenset" class="cursor-p">
-                                        <td>{{ screenset.setName}}</td>
-                                        <td>{{ screenset.position}}</td>
-                                        <td>{{ screenset.posScreen}}</td>
-                                        <td>{{ screenset.posColor}}</td>
-                                        <td>{{ screenset.frameSize}}</td>
-                                        <td>{{ screenset.lineInch}}</td>
-                                        <td>{{ screenset.width}}</td>
-                                        <td>{{ screenset.height}}</td>
-                                        <td ui-sref="app.art.screensetView"><a>VIEW</a></td>
-                                    </tr>                    
-                                </tbody>
-                            </table>
-                        </div> 
                     </md-tab>
                 </md-tabs>
             </md-content>
