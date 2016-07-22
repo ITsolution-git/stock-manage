@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Shipping;
 use App\Common;
-use App\Purchase;
+use App\Distribution;
+
 use App\Order;
 use DB;
 use App;
@@ -18,10 +19,10 @@ use Request;
 use PDF;
 class ShippingController extends Controller { 
 
-    public function __construct(Shipping $shipping,Common $common,Purchase $purchase,Order $order) 
+    public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order) 
     {
         $this->shipping = $shipping;
-        $this->purchase = $purchase;
+        $this->distribution = $distribution;
         $this->common = $common;
     }
 
@@ -479,40 +480,11 @@ class ShippingController extends Controller {
         $combine_arr = array();
 
         $unshippedProducts = $this->shipping->getUnshippedProducts($post['order_id']);
-        $allocatedAddress = $this->shipping->getAllocatedAddress($order_data[0]);
-        $allAddress = $this->common->GetTableRecords('client_distaddress',array('client_id' => $order_data[0]->client_id),array());
-
-        $assignAddresses = array();
-        $unAssignAddresses = array();
-
-        foreach ($allAddress as $address) {
-            
-            $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
-            $address->selected = 0;
-
-            $allocatedAddress2 = array();
-            if(!empty($allocatedAddress))
-            {
-                $allocatedAddress2 = explode(",", $allocatedAddress[0]->id);    
-            }
-
-            if(in_array($address->id, $allocatedAddress2))
-            {
-                $assignAddresses[] = $address;
-            }
-            else
-            {
-                $unAssignAddresses[] = $address;
-            }
-
-        }
 
         $response = array(
                         'success' => 1, 
                         'message' => GET_RECORDS,
-                        'unshippedProducts' => $unshippedProducts,
-                        'assignAddresses' => $assignAddresses,
-                        'unAssignAddresses' => $unAssignAddresses
+                        'unshippedProducts' => $unshippedProducts
                     );
         return response()->json(["data" => $response]);
     }
@@ -565,5 +537,46 @@ class ShippingController extends Controller {
         
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
+    }
+
+    public function getShippingAddress()
+    {
+        $post = Input::all();
+
+        $allocatedAddress = $this->shipping->getAllocatedAddress($post);
+
+        $allAddress = $this->distribution->getDistAddress($post);
+
+        $assignAddresses = array();
+        $unAssignAddresses = array();
+
+        foreach ($allAddress as $address) {
+            
+            $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
+            $address->selected = 0;
+
+            $allocatedAddress2 = array();
+            if(!empty($allocatedAddress))
+            {
+                $allocatedAddress2 = explode(",", $allocatedAddress[0]->id);    
+            }
+
+            if(in_array($address->id, $allocatedAddress2))
+            {
+                $assignAddresses[] = $address;
+            }
+            else
+            {
+                $unAssignAddresses[] = $address;
+            }
+        }
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'assignAddresses' => $assignAddresses,
+                        'unAssignAddresses' => $unAssignAddresses
+                    );
+        return response()->json(["data" => $response]);
     }
 }

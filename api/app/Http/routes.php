@@ -269,6 +269,7 @@ Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 Route::post('shipping/shipOrder', 'ShippingController@shipOrder');
 Route::post('shipping/getProductByAddress', 'ShippingController@getProductByAddress');
 Route::post('shipping/addProductToShip', 'ShippingController@addProductToShip');
+Route::post('shipping/getShippingAddress', 'ShippingController@getShippingAddress');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');

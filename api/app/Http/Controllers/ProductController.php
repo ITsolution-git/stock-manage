@@ -276,7 +276,7 @@ public function create_dir($dir_path) {
         if(empty($all_data))
         {
             $data_record = array("success"=>0,"message"=>"This product is no longer exists");
-            $record_data = $this->common->DeleteTableRecords('products',array('id' => $data['product_id'],'company_id' => $data['company_id']));
+            $record_data = $this->common->DeleteTableRecords('products',array('id' => $data['product_id']));
             return response()->json(["data" => $data_record]);
         }
        
