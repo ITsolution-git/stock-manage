@@ -173,6 +173,7 @@
             combine_array.order_id = order_id;
             combine_array.client_id = client_id;
             combine_array.search = $scope.searchQuery;
+            combine_array.design_product_id = $scope.design_product_id;
 
             $http.post('api/public/distribution/getDistAddress',combine_array).success(function(result) {
                 if(result.success == '1') {

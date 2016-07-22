@@ -234,7 +234,7 @@ class Shipping extends Model {
         $result = DB::table('client_distaddress as cd')
                     ->leftJoin('product_address_mapping as pam','cd.id','=','pam.address_id')
                     ->select(DB::raw('GROUP_CONCAT(cd.id) as id'))
-                    ->where('pam.order_id','=',$data->id)
+                    ->where('pam.order_id','=',$data['id'])
                     ->GroupBy('pam.order_id')
                     ->get();
 
