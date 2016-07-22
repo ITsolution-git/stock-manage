@@ -189,12 +189,36 @@
         $scope.openAddProductDialog = openAddProductDialog;
         $scope.openaddDesignDialog = openaddDesignDialog;
         $scope.openSearchProductDialog = openSearchProductDialog;
+        $scope.openPositionDialog = openPositionDialog;
 
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
+
+        
+
+
+        function openPositionDialog(ev,order_id)
+        {
+            
+                $mdDialog.show({
+                    controller: 'PositionDialogController',
+                    controllerAs: $scope,
+                    templateUrl: 'app/main/order/dialogs/position/position-dialog.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        event: ev,
+                        order_id: order_id
+                    },
+                    onRemoving : $scope.designPosition
+                });
+            }
+           
+        
         
         function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
         {

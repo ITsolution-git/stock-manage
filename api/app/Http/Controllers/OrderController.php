@@ -1679,4 +1679,89 @@ class OrderController extends Controller {
       
      }
 
+
+     /** 
+ * @SWG\Definition(
+ *      definition="addOrder",
+ *      type="object",
+ *     
+ *
+ *      @SWG\Property(
+ *          property="orderData",
+ *          type="object",
+ *          required={"client_id"},
+ *          @SWG\Property(
+ *          property="client_id",
+ *          type="integer",
+ *         ),
+ *           @SWG\Property(
+ *          property="job_name",
+ *          type="string",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         ),
+ *       @SWG\Property(
+ *          property="login_id",
+ *          type="integer",
+ *        )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/addOrder",
+ *  summary = "Add Order",
+ *  tags={"Order"},
+ *  description = "Add Order",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Add Order",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/addOrder")
+ *  ),
+ *  @SWG\Response(response=200, description="Add Order"),
+ *  @SWG\Response(response="default", description="Add Order"),
+ * )
+ */
+    public function addPosition()
+    {
+        $post = Input::all();
+
+        $result = $this->order->checkDuplicatePositions($post['order_id'],$post['positionData']['position_id']);
+        
+        if($result == '1' ) {
+            $data = array("success"=>2,"message"=>"Duplicate","id"=>'');
+             return response()->json(['data'=>$data]);
+        }
+       
+         $post['positiondata']['position_id'] = $post['positionData']['position_id'];
+         $post['positiondata']['design_id'] = $post['design_id'];
+         $post['positiondata']['qnty'] = $post['positionData']['qnty'];
+
+         
+         
+          $id = $this->common->InsertRecords('order_design_position',$post['positiondata']);
+
+         if($id > 0) {
+
+            $post['artdata']['Positions'] = $id;
+            $post['artdata']['order_id'] = $post['order_id'];
+            $post['artdata']['screen_set'] = $post['order_id'].'_'.$post['position'];
+
+          $art_screen_id = $this->common->InsertRecords('artjob_screensets',$post['artdata']);
+
+         }
+         
+
+          $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['design_id']);
+
+           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$id);
+           return response()->json(['data'=>$data]);
+
+    }
+
 }

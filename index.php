@@ -167,6 +167,7 @@
     <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
     <script src="app/main/order/dialogs/information/information.controller.js"></script>
     <script src="app/main/order/dialogs/approveorder/approveorder.controller.js"></script>
+    <script src="app/main/order/dialogs/position/position-dialog.controller.js"></script>
     
 
     <!-- CLIENT FILES START -->

@@ -257,7 +257,7 @@
             </div>
             
             <div class="text-right" ng-show="order_number == '' && is_complete == '0' ">
-                <md-button  class="bg-grey md-raised" ng-click="addPosition()">
+                <md-button  class="bg-grey md-raised" ng-click="openPositionDialog($event,designInforamtion.order_id)">
                             ADD New Position
                         </md-button>
             </div>
