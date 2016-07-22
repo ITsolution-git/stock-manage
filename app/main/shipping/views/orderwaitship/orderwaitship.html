@@ -8,7 +8,7 @@
                         <div flex="30" layout="column" class="order-container">
                             <div class="header-typ3">Distribution Addresses</div>
                             <md-input-container class="md-block m-0">
-                                <input ng-model="productSearch" placeholder="Search Locations">
+                                <input ng-model="productSearch" placeholder="Search Locations" ng-change="getShippingAddress()">
                             </md-input-container>
                             <md-button class="md-accent md-raised" ng-click="vm.openaddAddressDialog($event)">Create New Location</md-button>
 
