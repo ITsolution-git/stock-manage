@@ -20,12 +20,20 @@
                     }
                 },
                 resolve: {
-                    ArtData: function (msApi)
-                    {
-                        return msApi.resolve('ArtOrder@get');
-                    }
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
                 }
             }).state('app.art.orderView', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                },
                 url  : '/artOrderView/:id',
                 views: {
                     'content@app': {
@@ -34,6 +42,13 @@
                     }
                 }
             }).state('app.art.screensetView', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                },
                 url  : '/screensetView',
                 views: {
                     'content@app': {
