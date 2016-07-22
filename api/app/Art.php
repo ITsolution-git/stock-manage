@@ -391,29 +391,46 @@ class Art extends Model {
 
     	return $result;
     }
-    public function screen_arts ($screen_id,$company_id)
+    public function Screen_Listing ($post)
     {
-    	$Misc_data = $this->AllMsiData($company_id);
-    	$query = DB::table('artjob_screensets as ass')
-				->select('aaw.*',DB::raw("GROUP_CONCAT(pl.misc_value) as wp_placement"),'ord.id as order_id','art.art_id')
-				->join('art as art','art.art_id','=','ass.art_id')
-				->join('orders as ord','ord.id','=','art.order_id')
-				->leftjoin('artjob_artworkproof as aaw','aaw.wp_screen','=','ass.id')
-				->leftJoin('placement as pl',DB::raw("FIND_IN_SET(pl.id,aaw.wp_placement)"),DB::raw(''),DB::raw(''))
-				->where('ord.company_id','=',$company_id)
-				->where('ass.id','=',$screen_id)
-				->groupBy('aaw.id')
-				->get();
+    			$search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+        $admindata = DB::table('order_design_position as odp')
+					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
+					->join('artjob_screensets as asc','asc.positions','=','odp.id')
+					->join('order_design as od','od.id','=','odp.design_id')
+					->join('orders as ord','ord.id','=','od.order_id')
+					->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
+					->Join('misc_type as mt', 'mt.id', '=', 'odp.position_id')
+					->where('ord.is_delete','=','1')
+					->where('odp.is_delete','=','1')
+			        ->where('ord.company_id','=',$post['company_id']);
+		            
+		            if($search != '')               
+	                {
+	                    $admindata = $admindata->Where(function($query) use($search)
+	                    {
+	                        $query->orWhere('ord.id', 'LIKE', '%'.$search.'%')
+	                        	  ->orWhere('asc.screen_width', 'LIKE', '%'.$search.'%')
+	                        	  ->orWhere('cl.client_company','LIKE', '%'.$search.'%');
 
-		if(count($query)>0)
-				{
-					foreach ($query as $key => $value) 
-					{
-						$query[$key]->wp_position = (!empty($value->wp_position))? $Misc_data[$value->wp_position] : '';
-						$query[$key]->wp_image = (!empty($value->wp_image))? UPLOAD_PATH.$company_id.'/art/'.$value->id.'/'.$value->wp_image : '';
-					}
-				}		
-		return $query;
+	                    });
+	                }
+	                $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+	                ->skip($post['start'])
+	                ->take($post['range'])
+	                ->get();
+       
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $admindata;
+        $returnData['count'] = $count[0]->Totalcount;
+        
+
+        //echo "<pre>"; print_r($returnData); echo "</pre>"; die;
+        return $returnData;
     }
     public function screen_garments ($screen_id,$company_id)
     {
