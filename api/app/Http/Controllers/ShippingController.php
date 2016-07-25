@@ -506,23 +506,34 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
-        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id']),array());
+        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
         $remaining_qty = $post['product']['remaining_qnty'] - $post['product']['distributed_qnty'];
 
         if(!empty($shipping_data)) {
 
-            $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $shipping_data[0]->id,'purchase_detail_id' => $post['product']['id']),array());
+            $product_address_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'product_id' => $post['product']['product_id']),array());
+
+            if(empty($product_address_data))
+            {
+                $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product']['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_data[0]->shipping_id));
+            }
+            else
+            {
+                $product_address_id = $shipping_data[0]->id;
+            }
+
+            $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id']),array());
 
             if(empty($product_data))
             {
                 $distributed_qnty = 0;
-                $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $shipping_data[0]->id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
+                $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
             }
             else
             {
                 $updated_qnty = $product_data[0]->distributed_qnty + $post['product']['distributed_qnty'];
-                $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $shipping_data[0]->id,'purchase_detail_id' => $post['product']['id']),array('distributed_qnty' => $updated_qnty));
+                $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id']),array('distributed_qnty' => $updated_qnty));
             }
         }
         else
