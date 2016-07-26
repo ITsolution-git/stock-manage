@@ -5,11 +5,11 @@
                 <td>
                     <div class="header-typ1">Shipping Details for Shipment #18750</div>
                     <div layout="row" class="pd10">
-                        <div flex="30" layout="column" ng-repeat="ship in vm.shipDetail" class="pd10-R bdr1-R">
+                        <div flex="30" layout="column" class="pd10-R bdr1-R">
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Shipping ID</div>
-                                    <div class="gray-text">{{ ship.shippingId }}</div>
+                                    <div class="gray-text">{{ shipping.shipping_id }}</div>
                                 </div>
                                 <div layout="column" flex="50">
                                     <md-select ng-model="company.prime_address_state" placeholder="Status" class="mrg6-TB">
@@ -22,61 +22,56 @@
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Order ID</div>
-                                    <div class="gray-text">{{ ship.orderId }}</div>
-                                </div>
-                                <div layout="column" flex="50">
-                                    <div>Product</div>
-                                    <div class="gray-text">{{ ship.product }}</div>
+                                    <div class="gray-text">{{ shipping.order_id }}</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Client ID</div>
-                                    <div class="gray-text">{{ ship.clientId }}</div>
+                                    <div class="gray-text">{{ shipping.client_id }}</div>
                                 </div>
                                 <div layout="column" flex="50">
                                     <div>Client</div>
-                                    <div class="gray-text">{{ ship.client }}</div>
+                                    <div class="gray-text">{{ shipping.client_company }}</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Shipping By</div>
-                                    <div class="gray-text">{{ ship.shippingby }}</div>
+                                    <div class="gray-text">{{ shipping.shipping_by }}</div>
                                 </div>
                                 <div layout="column" flex="50">
                                     <div>In Hand By</div>
-                                    <div class="gray-text">{{ ship.inHandBy }}</div>
+                                    <div class="gray-text">{{ shipping.in_hands_by }}</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Boxing Type" class="mrg6-TB">
+                                    <md-select ng-model="shipping.boxing_type" placeholder="Boxing Type" class="mrg6-TB">
                                         <md-option value="0">Boxing Type</md-option>
-                                        <md-option>Type1</md-option>
-                                        <md-option>Type2</md-option>
+                                        <md-option value="1">Retail</md-option>
+                                        <md-option value="2">Standard</md-option>
                                     </md-select>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="100">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Shipping Type" class="mrg6-TB">
-                                        <md-option value="0">Shipping Type</md-option>
-                                        <md-option>Type1</md-option>
-                                        <md-option>Type2</md-option>
+                                    <md-select ng-model="shipping.shipping_type" placeholder="Shipping Type" class="mrg6-TB">
+                                        <md-option>Shipping Type</md-option>
+                                        <md-option ng-repeat="type in shipping_type">{{type.name}}</md-option>
                                     </md-select>
                                 </div>
                             </div>
                             <div layout="row" flex="100">
                                 <div layout="column" flex="50" class="mrg10-R">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Fully Shipped" class="mrg6-TB">
+                                    <md-select ng-model="shipping.prime_address_state" placeholder="Fully Shipped" class="mrg6-TB">
                                         <md-option value="0">Fully Shipped</md-option>
                                         <md-option>Yes</md-option>
                                         <md-option>No</md-option>
                                     </md-select>
                                 </div>
                                 <div layout="column" flex="50">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Date Shipped" class="mrg6-TB">
+                                    <md-select ng-model="shipping.prime_address_state" placeholder="Date Shipped" class="mrg6-TB">
                                         <md-option value="0">Date Shipped</md-option>
                                         <md-option>Date1</md-option>
                                         <md-option>Date2</md-option>
@@ -90,9 +85,9 @@
                                     <td>
                                         <div class="header-typ1 font-13">
                                             United Center
-                                            <div class="gray-text font-11 mrg5-T">Client Distribution ID: 123456</div>
+                                            <div class="gray-text font-11 mrg5-T">Client Distribution ID: {{shipping.shipping_id}}</div>
                                         </div>
-                                        <div class="pd10-LR">
+                                        <div class="pd10-LR" ms-scroll>
                                             <div class="ms-responsive-table-wrapper">
                                                 <table class="simple hover simple-tbl1 tbl-typ3">
                                                     <thead>
@@ -109,26 +104,24 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody> 
-                                                        <tr ng-repeat="item in vm.productDetail" class="cursor-p">
-                                                            <td>{{ item.sizeGroup}}</td>
-                                                            <td>{{ item.product}}</td>
-                                                            <td>{{ item.color}}</td>
+                                                        <tr ng-repeat="item in shippingItems" class="cursor-p">
+                                                            <td>{{ item.misc_value}}</td>
+                                                            <td>{{ item.name}}</td>
+                                                            <td>{{ item.color_name}}</td>
                                                             <td>{{ item.size}}</td>
-                                                            <td>{{ item.distributed}}</td>
-                                                            <td>{{ item.shipped}}</td>
-                                                            <td>{{ item.boxedQty}}</td>
-                                                            <td>{{ item.remainingtoBox}}</td>
+                                                            <td>{{ item.shipped_qnty}}</td>
+                                                            <td>{{ item.shipped_qnty}}</td>
+                                                            <td>{{ item.boxed_qnty}}</td>
+                                                            <td>{{ item.remaining_to_box}}</td>
                                                             <td>
                                                                 <md-input-container flex="100" class="mrg0-TB">
-                                                                    <input placeholder="Max Pack" name="Max Pack">
+                                                                    <input placeholder="Max Pack" name="Max Pack" ng-model ="item.max_pack">
                                                                 </md-input-container>
                                                             </td>
                                                         </tr>                    
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="mrg10-T">Product Description</div>
-                                            <div class="gray-text mrg10-B">The text describes the product that you are going to select.</div>
                                         </div>
                                     </td>
                                 </tr>

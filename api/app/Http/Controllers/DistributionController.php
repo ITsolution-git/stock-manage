@@ -170,16 +170,25 @@ class DistributionController extends Controller {
             }
         }
 
-        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product_id'],'address_id' => $post['address_id']),array());
+        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
         if(empty($shipping_data))
         {
-            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'product_id' => $post['product_id']));
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
         }
         else
         {
-            $product_address_id = $shipping_data[0]->id;
+            $product_address_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'product_id' => $post['product_id']),array());
+
+            if(empty($product_address_data))
+            {
+                $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_data[0]->shipping_id));
+            }
+            else
+            {
+                $product_address_id = $shipping_data[0]->id;
+            }
         }
 
         foreach ($post['products'] as $product) {

@@ -34,7 +34,7 @@
                     }
                 }
             }).state('app.shipping.shipmentdetails', {
-                url  : '/shipmentdetails',
+                url  : '/shipmentdetails/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/shipmentdetails/shipmentdetails.html',
