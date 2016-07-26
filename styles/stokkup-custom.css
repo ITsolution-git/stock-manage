@@ -1091,3 +1091,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 .activeAddress {
   background-color: rgba(0,0,0,0.1); 
 }
+.tbl-scroll-cntnr {
+  position: relative;
+  max-height: 480px;
+}

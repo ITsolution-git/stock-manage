@@ -24,58 +24,79 @@
                                     <div>Order ID</div>
                                     <div class="gray-text">{{ shipping.order_id }}</div>
                                 </div>
-                            </div>
-                            <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Client ID</div>
                                     <div class="gray-text">{{ shipping.client_id }}</div>
                                 </div>
-                                <div layout="column" flex="50">
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
                                     <div>Client</div>
                                     <div class="gray-text">{{ shipping.client_company }}</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <div>Shipping By</div>
-                                    <div class="gray-text">{{ shipping.shipping_by }}</div>
-                                </div>
-                                <div layout="column" flex="50">
-                                    <div>In Hand By</div>
-                                    <div class="gray-text">{{ shipping.in_hands_by }}</div>
+                                <div layout="column" flex="100">
+                                    <div>Client Distribution</div>
+                                    <div class="gray-text">Chris niswandee</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="50" class="mrg10-R">
+                                <div layout="column" flex="30" class="mrg10-R mrg15-T">
                                     <md-select ng-model="shipping.boxing_type" placeholder="Boxing Type" class="mrg6-TB">
                                         <md-option value="0">Boxing Type</md-option>
                                         <md-option value="1">Retail</md-option>
                                         <md-option value="2">Standard</md-option>
                                     </md-select>
                                 </div>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Shipping By" name="Shipping By">
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="In Hands By" name="In Hands By">
+                                    </md-input-container>
+                                </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="100">
+                                <div layout="column" flex="30" class="mrg10-R mrg15-T">
                                     <md-select ng-model="shipping.shipping_type" placeholder="Shipping Type" class="mrg6-TB">
                                         <md-option>Shipping Type</md-option>
                                         <md-option ng-repeat="type in shipping_type">{{type.name}}</md-option>
                                     </md-select>
                                 </div>
-                            </div>
-                            <div layout="row" flex="100">
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <md-select ng-model="shipping.prime_address_state" placeholder="Fully Shipped" class="mrg6-TB">
-                                        <md-option value="0">Fully Shipped</md-option>
-                                        <md-option>Yes</md-option>
-                                        <md-option>No</md-option>
-                                    </md-select>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Date Shipped" name="Date Shipped">
+                                    </md-input-container>
                                 </div>
-                                <div layout="column" flex="50">
-                                    <md-select ng-model="shipping.prime_address_state" placeholder="Date Shipped" class="mrg6-TB">
-                                        <md-option value="0">Date Shipped</md-option>
-                                        <md-option>Date1</md-option>
-                                        <md-option>Date2</md-option>
-                                    </md-select>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Fully Shipped" name="Fully Shipped">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100">
+                                        <textarea name="SMALLSYS INC 795 E DRAGRAM TUCSON AZ 85705 USA"></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100">
+                                        <input placeholder="SKUs" name="SKUs">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Cost To Ship" name="Cost To Ship">
+                                    </md-input-container>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +108,7 @@
                                             United Center
                                             <div class="gray-text font-11 mrg5-T">Client Distribution ID: {{shipping.shipping_id}}</div>
                                         </div>
-                                        <div class="pd10-LR" ms-scroll>
+                                        <div class="pd10-LR tbl-scroll-cntnr" ms-scroll>
                                             <div class="ms-responsive-table-wrapper">
                                                 <table class="simple hover simple-tbl1 tbl-typ3">
                                                     <thead>
