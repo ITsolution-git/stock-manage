@@ -65,7 +65,7 @@
 
                         {
                        
-                             var data = {"status": "error", "message": "This position is already exists in this order."}
+                             var data = {"status": "error", "message": "This position already exists in this design."}
                              notifyService.notify(data.status, data.message);
                              return false;
                         } 

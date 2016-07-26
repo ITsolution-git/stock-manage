@@ -373,9 +373,12 @@ class OrderController extends Controller {
      public function updatePositions()
      {
         $post = Input::all();
+        
         if($post['column_name'] == 'position_id') {
-            $result = $this->order->checkDuplicatePositions($post['order_id'],$post['data']['position_id']);
-            
+            $result = $this->order->checkDuplicatePositions($post['design_id'],$post['data']['position_id']);
+
+            $screen_set = $post['order_id'].'_'.$post['position'].'_'.$post['design_id'];
+
             if($result == '1' ) {
                 $data = array("success"=>2,"message"=>"Duplicate");
                  return response()->json(['data'=>$data]);
@@ -389,6 +392,9 @@ class OrderController extends Controller {
           $date_field = (empty($post['date_field']))? '':$post['date_field']; 
           
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
+          $this->common->UpdateTableRecords('artjob_screensets',array('positions' => $post['cond']['id']),array('screen_set' => $screen_set));
+            
+
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
 
           $return = $this->calculateAll($post['order_id'],$post['company_id']);
@@ -1731,7 +1737,7 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
-        $result = $this->order->checkDuplicatePositions($post['order_id'],$post['positionData']['position_id']);
+        $result = $this->order->checkDuplicatePositions($post['design_id'],$post['positionData']['position_id']);
         
         if($result == '1' ) {
             $data = array("success"=>2,"message"=>"Duplicate","id"=>'');
@@ -1750,7 +1756,7 @@ class OrderController extends Controller {
 
             $post['artdata']['Positions'] = $id;
             $post['artdata']['order_id'] = $post['order_id'];
-            $post['artdata']['screen_set'] = $post['order_id'].'_'.$post['position'];
+            $post['artdata']['screen_set'] = $post['order_id'].'_'.$post['position'].'_'.$post['design_id'];
 
           $art_screen_id = $this->common->InsertRecords('artjob_screensets',$post['artdata']);
 
