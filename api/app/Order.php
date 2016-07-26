@@ -433,7 +433,7 @@ public function saveColorSize($post)
 
         $whereOrderPositionConditions = ['odp.design_id' => $data['id'],'odp.is_delete' => "1"];
 
-        $listArray = ['odp.*','m.value as position_name'];
+        $listArray = ['odp.*','m.value as position_name','odp.position_id as duplicate_position_id'];
 
         $orderPositionData = DB::table('order_design_position as odp')
                             ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
@@ -609,26 +609,22 @@ public function saveColorSize($post)
       return $result;
     }
 
-    public function checkDuplicatePositions($order_id,$position)
+    public function checkDuplicatePositions($design_id,$position)
     {
      
-
-       $whereConditions = ['od.status' => '1','od.is_delete' => '1','odp.is_delete' => '1','od.order_id' => $order_id];
-        $listArray = ['od.shipping_date','od.id','od.order_id','odp.position_id','od.design_name'];
-        $designData = DB::table('order_design as od')
-                        ->Join('order_design_position as odp','odp.design_id','=', 'od.id')
+       $whereConditions = ['status' => '1','is_delete' => '1','design_id' => $design_id];
+       $listArray = ['position_id'];
+       $designData = DB::table('order_design_position')
                         ->select($listArray)
                         ->where($whereConditions)->get();
                      
-       
-        $position_array = array();
-        $duplicate =  0;
-        foreach($designData as $datanew) {
-            if($datanew->position_id == $position) {
-               $duplicate =  1;
-            }
-        }
-
+      $position_array = array();
+      $duplicate =  0;
+      foreach($designData as $datanew) {
+          if($datanew->position_id == $position) {
+             $duplicate =  1;
+          }
+      }
         return $duplicate;
     }
 }
