@@ -13,7 +13,7 @@
                             <md-button class="md-accent md-raised" ng-click="vm.openaddAddressDialog($event)">Create New Location</md-button>
 
                             <div class="header-typ3">Locations Products Allocated To</div>
-                            <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in assignAddresses" ng-click="getProductByAddress(addrss.id)">
+                            <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in assignAddresses" ng-click="getProductByAddress(addrss)">
                                 <div layout="column" flex="80">
                                     <div class="font-12"><b>{{ addrss.description }}</b></div>
                                     <div class="font-12">{{ addrss.attn}}</div>
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <div class="header-typ3">Other Locations</div>
-                            <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in unAssignAddresses" ng-click="getProductByAddress(addrss.id)">
+                            <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in unAssignAddresses" ng-click="getProductByAddress(addrss)">
                                 <div layout="column" flex="80">
                                     <div class="font-12"><b>{{ addrss.description }}</b></div>
                                     <div class="font-12">{{ addrss.attn}}</div>
@@ -150,6 +150,6 @@
         </table>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Next" ui-sref="app.shipping.shipmentdetails"><span class="ng-scope">Next</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Next" ng-click="shippingDetails()" ng-disabled="shipping_id == 0"><span class="ng-scope">Next</span></button>
     </md-dialog-actions>
 </div>

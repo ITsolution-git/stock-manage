@@ -12,6 +12,7 @@
         var vm = this;
 
         $scope.address_id = 0;
+        $scope.shipping_id = 0;
         $scope.productSearch = '';
 
         var combine_array_id = {};
@@ -52,21 +53,31 @@
         }
         $scope.shipOrder();
 
-        $scope.getProductByAddress = function(address_id)
+        $scope.getProductByAddress = function(address)
         {
-            $scope.address_id = address_id;
+            $scope.address_id = address.id;
+            $scope.shipping_id = address.shipping_id;
 
-            var combine_array = {};
-            combine_array.address_id = address_id;
-            combine_array.order_id = $scope.order_id;
-            
-            $http.post('api/public/shipping/getProductByAddress',combine_array).success(function(result, status, headers, config) {
+            if($scope.shipping_id == undefined)
+            {
+                $scope.shipping_id = 0;
+                $scope.assignedItems = [];      
+            }
+
+            if($scope.shipping_id > 0)
+            {
+                var combine_array = {};
+                combine_array.address_id = address.id;
+                combine_array.order_id = $scope.order_id;
                 
-                if(result.data.success == '1') {
-                    $("#ajax_loader").hide();
-                    $scope.assignedItems = result.data.products;
-                }
-            });
+                $http.post('api/public/shipping/getProductByAddress',combine_array).success(function(result, status, headers, config) {
+                    
+                    if(result.data.success == '1') {
+                        $("#ajax_loader").hide();
+                        $scope.assignedItems = result.data.products;
+                    }
+                });
+            }
         }
 
         $scope.getShippingAddress = function()
@@ -111,6 +122,20 @@
                     $scope.shipOrder();
                 }
             });
+        }
+
+        $scope.shippingDetails = function()
+        {
+            if($scope.assignedItems.length == 0)
+            {
+                var data = {"status": "error", "message": "Please assign product to address"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            else
+            {
+                $state.go('app.shipping.shipmentdetails',{id: $scope.shipping_id});
+            }
         }
 
         vm.openaddAddressDialog = openaddAddressDialog;

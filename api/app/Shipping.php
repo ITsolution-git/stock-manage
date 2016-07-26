@@ -111,7 +111,7 @@ class Shipping extends Model {
 
 
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
-        $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.job_name','cd.id as client_distribution_id','o.client_id','c.client_company',
+        $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company',
                         's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku'];
 
         $shippingData = DB::table('shipping as s')
@@ -122,21 +122,24 @@ class Shipping extends Model {
                         ->select($listArray)
                         ->where($whereShippingConditions)->get();
 
-        $whereItemConditions = ['ia.shipping_id' => $data['shipping_id']];
-        $listItemsArray = ['ia.shipping_id','d.id','d.size','d.qnty','d.shipped_qnty','d.boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','mt.value as size_group_name','mt2.name as color_name'];
+        $whereItemConditions = ['pam.shipping_id' => $data['shipping_id']];
+        $listItemsArray = ['pam.shipping_id','pd.id','pd.size','pd.qnty','pd.shipped_qnty','pd.boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
 
-        $shippingItems = DB::table('item_address_mapping as ia')
-                        ->leftJoin('distribution_detail as d','ia.item_id','=','d.id')
-                        ->leftJoin('order_orderlines as ol','d.orderline_id','=','ol.id')
-                        ->leftJoin('products as p','ol.product_id','=','p.id')
-                        ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
-                        ->leftJoin('color as mt2','mt2.id','=','ol.color_id')
-                        ->select($listItemsArray)
-                        ->where($whereItemConditions)
-                        ->where('ia.item_id','!=','0')
-                        ->get();
+        $shippingItems = DB::select("SELECT mt.value as misc_value,p.name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total, 
+                                    (pol.qnty_purchased - pol.short) - pd.remaining_qnty as shipped_qnty,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id ,pd.boxed_qnty,
+                                    pd.remaining_to_box,pd.max_pack,pd.hoody
+                                FROM product_address_mapping as pam 
+                                LEFT JOIN product_address_size_mapping as pas ON pam.id = pas.product_address_id 
+                                LEFT JOIN purchase_detail as pd ON pas.purchase_detail_id = pd.id 
+                                LEFT JOIN purchase_order_line as pol ON pd.id = pol.purchase_detail 
+                                LEFT JOIN design_product as dp ON pd.design_product_id = dp.id
+                                LEFT JOIN products as p ON dp.product_id = p.id
+                                LEFT JOIN misc_type as mt ON dp.size_group_id = mt.id
+                                LEFT JOIN color as c ON pd.color_id = c.id
+                                WHERE pam.shipping_id = '".$data['shipping_id']."' 
+                                GROUP BY pd.id ");
 
-        $whereBoxConditions = ['sb.shipping_id' => $data['shipping_id']];
+        /*$whereBoxConditions = ['sb.shipping_id' => $data['shipping_id']];
 
         $listItemsArray = ['sb.md','sb.id as box_id','sb.spoil','sb.actual','sb.re_allocate_to','sb.box_qnty','sb.tracking_number','bi.id as box_item_id','bi.item_id','d.id','d.size','d.qnty','d.shipped_qnty','sb.box_qnty as boxed_qnty','d.remaining_to_box','d.max_pack','d.hoody','p.name as product_name','p.description as product_desc','mt.value as size_group_name','mt2.name as color_name'];
 
@@ -150,13 +153,13 @@ class Shipping extends Model {
                         ->select($listItemsArray)
                         ->where($whereBoxConditions)
                         ->where('bi.item_id','!=','0')
-                        ->get();
+                        ->get();*/
 
         $combine_array = array();
 
         $combine_array['shipping'] = $shippingData;
         $combine_array['shippingItems'] = $shippingItems;
-        $combine_array['shippingBoxes'] = $shippingBoxes;
+//        $combine_array['shippingBoxes'] = $shippingBoxes;
 
         return $combine_array;
     }

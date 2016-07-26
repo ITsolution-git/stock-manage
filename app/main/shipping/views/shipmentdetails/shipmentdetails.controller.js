@@ -7,25 +7,23 @@
             .controller('shipmentController', shipmentController);
 
     /** @ngInject */
-    function shipmentController($document, $window, $timeout, $mdDialog)
+    function shipmentController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
-        //Dummy models data
-        vm.shipDetail = [{
-                "shippingId": "1234",
-                "orderId": "1234",
-                "product": "Product1",
-                "clientId": "1234",
-                "client": "Codal",
-                "shippingby": "xx/xx/xx",
-                "inHandBy": "xx/xx/xx",
-             }];
-        vm.productDetail = [
-            {"sizeGroup": "Mens", "product": "12345", "size": "M", "color": "Black", "distributed":"20", "shipped": "0", "boxedQty":"72", "remainingtoBox":"0"},
-            {"sizeGroup": "Mens", "product": "12345", "size": "M", "color": "Black", "distributed":"20", "shipped": "0", "boxedQty":"72", "remainingtoBox":"0"}
-        ];
-        vm.selectedOrderItems = [
-            {"sizeGroup": "Mens", "product": "12345", "size": "M", "color": "Black"}
-        ];
+
+        var combine_array_id = {};
+        combine_array_id.shipping_id = $stateParams.id;
+        combine_array_id.company_id = sessionService.get('company_id');
+
+        $http.post('api/public/shipping/shippingDetail',combine_array_id).success(function(result, status, headers, config) {
+            if(result.data.success == '1') {
+                $scope.shippingItems = result.data.shippingItems;
+                $scope.shipping_type = result.data.shipping_type;
+                $scope.shipping = result.data.records[0];
+            }
+            else {
+                $scope.shippingItems = [];
+            }
+        });
     }
 })();

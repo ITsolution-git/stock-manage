@@ -191,8 +191,8 @@ class ShippingController extends Controller {
                                 'message' => GET_RECORDS,
                                 'records' => $result['shipping'],
                                 'shipping_type' => $shipping_type,
-                                'shippingItems' => $result['shippingItems'],
-                                'shippingBoxes' => $result['shippingBoxes']
+                                'shippingItems' => $result['shippingItems']
+//                                'shippingBoxes' => $result['shippingBoxes']
                                 );
         } else {
             $response = array(
@@ -200,8 +200,8 @@ class ShippingController extends Controller {
                                 'message' => NO_RECORDS,
                                 'records' => $result['shipping'],
                                 'shipping_type' => $shipping_type,
-                                'shippingItems' => $result['shippingItems'],
-                                'shippingBoxes' => $result['shippingBoxes']
+                                'shippingItems' => $result['shippingItems']
+//                                'shippingBoxes' => $result['shippingBoxes']
                                 );
         } 
         return response()->json(["data" => $response]);
@@ -574,6 +574,8 @@ class ShippingController extends Controller {
 
             if(in_array($address->id, $allocatedAddress2))
             {
+                $shipping = $this->common->GetTableRecords('product_address_mapping',array('address_id' => $address->id,'order_id' => $post['id']),array());
+                $address->shipping_id = $shipping[0]->shipping_id;
                 $assignAddresses[] = $address;
             }
             else
