@@ -7,9 +7,10 @@
             .controller('boxingdetailController', boxingdetailController);
 
     /** @ngInject */
-    function boxingdetailController($document, $window, $timeout, $mdDialog)
+    function boxingdetailController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
+        $scope.shipping_id = $stateParams.id;
         //Dummy models data
         vm.boxDetails = [{
                 "boxId": "1234",

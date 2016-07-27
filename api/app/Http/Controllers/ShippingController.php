@@ -245,7 +245,7 @@ class ShippingController extends Controller {
                 {
                     $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['qnty'], 'actual' => $value['qnty'], 'md' => '0', 'spoil' => '0');
                     $id = $this->common->InsertRecords('shipping_box',$insert_data);
-                    $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id'],'shipping_id' => $value['shipping_id']));
+                    $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id'],'shipping_id' => $value['shipping_id']));
                 }
                 else
                 {
@@ -263,7 +263,7 @@ class ShippingController extends Controller {
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
                         }
                         $id = $this->common->InsertRecords('shipping_box',$insert_data);
-                        $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id']));
+                        $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
                 }
                 $this->common->UpdateTableRecords('distribution_detail',array('id' => $value['id']),array('boxed_qnty' => $value['qnty']));

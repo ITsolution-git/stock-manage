@@ -126,8 +126,8 @@ class Shipping extends Model {
         $listItemsArray = ['pam.shipping_id','pd.id','pd.size','pd.qnty','pd.shipped_qnty','pd.boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
 
         $shippingItems = DB::select("SELECT mt.value as misc_value,p.name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total, 
-                                    (pol.qnty_purchased - pol.short) - pd.remaining_qnty as shipped_qnty,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id ,pd.boxed_qnty,
-                                    pd.remaining_to_box,pd.max_pack,pd.hoody
+                                    (pol.qnty_purchased - pol.short) - pd.remaining_qnty as qnty,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id ,pd.boxed_qnty,
+                                    pd.remaining_to_box,pd.max_pack,pd.hoody,pam.shipping_id
                                 FROM product_address_mapping as pam 
                                 LEFT JOIN product_address_size_mapping as pas ON pam.id = pas.product_address_id 
                                 LEFT JOIN purchase_detail as pd ON pas.purchase_detail_id = pd.id 

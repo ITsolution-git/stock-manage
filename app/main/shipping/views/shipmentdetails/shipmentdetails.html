@@ -138,13 +138,13 @@
                                                             <td>{{ item.name}}</td>
                                                             <td>{{ item.color_name}}</td>
                                                             <td>{{ item.size}}</td>
-                                                            <td>{{ item.shipped_qnty}}</td>
-                                                            <td>{{ item.shipped_qnty}}</td>
+                                                            <td>{{ item.qnty}}</td>
+                                                            <td>{{ item.qnty}}</td>
                                                             <td>{{ item.boxed_qnty}}</td>
                                                             <td>{{ item.remaining_to_box}}</td>
                                                             <td>
                                                                 <md-input-container flex="100" class="mrg0-TB">
-                                                                    <input placeholder="Max Pack" name="Max Pack" ng-model ="item.max_pack">
+                                                                    <input placeholder="Max Pack" name="max_pack" ng-model ="item.max_pack" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,item.id)'}">
                                                                 </md-input-container>
                                                             </td>
                                                         </tr>                    
@@ -162,8 +162,8 @@
         </table>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button aria-label="Back" ng-click="cancel()" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.orderwaitship"><span class="ng-scope">Back</span>
+        <button aria-label="Back" ng-click="cancel()" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.orderwaitship({id:shipping.order_id})"><span class="ng-scope">Back</span>
         </button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Box Shipment" ui-sref="app.shipping.boxingdetail"><span class="ng-scope">Box Shipment</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Box Shipment" ng-click="box_shipment(shippingItems)"><span class="ng-scope">Box Shipment</span></button>
     </md-dialog-actions>
 </div>

@@ -42,7 +42,7 @@
                     }
                 }
             }).state('app.shipping.boxingdetail', {
-                url  : '/boxingdetail',
+                url  : '/boxingdetail/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/boxingdetail/boxingdetail.html',
@@ -50,7 +50,7 @@
                     }
                 }
             }).state('app.shipping.shipmentoverview', {
-                url  : '/shipmentoverview',
+                url  : '/shipmentoverview/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/shipmentoverview/shipmentoverview.html',

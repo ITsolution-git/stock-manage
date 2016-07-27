@@ -28,24 +28,64 @@
 
         $scope.updateShippingAll = function(name,value,id)
         {
-              var order_main_data = {};
-              order_main_data.table ='shipping';
-              $scope.name_filed = name;
-              var obj = {};
-              obj[$scope.name_filed] =  value;
-              order_main_data.data = angular.copy(obj);
+            var order_main_data = {};
 
+            if(name == 'max_pack')
+            {
+                order_main_data.table ='purchase_detail';
+            }
+            else
+            {
+                order_main_data.table ='shipping';
+            }
 
-              var condition_obj = {};
-              condition_obj['id'] =  id;
-              order_main_data.cond = angular.copy(condition_obj);
-              
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
 
-                $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
 
-                    var data = {"status": "success", "message": "Data Updated Successfully."}
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
+        $scope.box_shipment = function(shipping_items)
+        {
+            $("#ajax_loader").show();
+            if($scope.shipping.shipping_type_id == 0 || $scope.shipping.shipping_type_id == '')
+            {
+                var data = {"status": "error", "message": "Please select any shipping method."}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(shipping_items.length == 0){
+                $("#ajax_loader").hide();
+                    var data = {"status": "error", "message": "There are no items for boxing."}
                     notifyService.notify(data.status, data.message);
-                });
+                    return false;
+            }
+            
+            $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
+
+                if(result.data.success == '1') {
+                    var data = {"status": "success", "message": "Boxes created Successfully."}
+                    notifyService.notify(data.status, data.message);
+                }
+                else
+                {
+                    var data = {"status": "error", "message": "Delete all boxes in the boxes tab to rebox shipment."}
+                    notifyService.notify(data.status, data.message);
+                }
+                $("#ajax_loader").hide();
+                $state.go('app.shipping.boxingdetail',{id: $stateParams.id});
+            });
+                      
         }
     }
 })();
