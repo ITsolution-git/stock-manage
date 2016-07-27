@@ -25,5 +25,27 @@
                 $scope.shippingItems = [];
             }
         });
+
+        $scope.updateShippingAll = function(name,value,id)
+        {
+              var order_main_data = {};
+              order_main_data.table ='shipping';
+              $scope.name_filed = name;
+              var obj = {};
+              obj[$scope.name_filed] =  value;
+              order_main_data.data = angular.copy(obj);
+
+
+              var condition_obj = {};
+              condition_obj['id'] =  id;
+              order_main_data.cond = angular.copy(condition_obj);
+              
+
+                $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                    var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
+                });
+        }
     }
 })();
