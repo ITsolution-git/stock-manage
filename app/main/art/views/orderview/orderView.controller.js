@@ -7,13 +7,36 @@
             .controller('orderViewController', orderViewController);
 
     /** @ngInject */
-    function orderViewController($document, $window, $timeout, $mdDialog)
+    function orderViewController($document,  $state,$window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
         var vm = this;
         vm.createNewScreen = createNewScreen;
         vm.generateArtForm = generateArtForm;
-        //Dummy models data
-        vm.screensetPOinfo = {
+        $scope.company_id = sessionService.get('company_id');
+        $scope.order_id = $stateParams.id;
+
+        $scope.GetOrderScreenSet = function() 
+        {
+            var GetScreenArray = {company_id:$scope.company_id, order_id:$scope.order_id};
+            $http.post('api/public/art/ScreenSets',GetScreenArray).success(function(result) 
+            {
+                if(result.data.success == '1') 
+                {
+                    $scope.ScreenSets = result.data.records;
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                    $state.go('app.art');
+                    return false;
+                }
+            });
+        }
+        $scope.GetOrderScreenSet();
+
+
+        $scope.screensetPOinfo = function ()
+        [{
             "client": "Client Name",
             "orderName": "12345",
             "orderDate": "12/05/2016",
@@ -21,7 +44,7 @@
             "affiliate": "Affiliate Name",
             "affiliateArrival": "xx/xx/xxxx",
             "affiliateDeadline": "xx/xx/xxxx"
-        };
+        }];
         vm.screensetinfo = [
             {"Position": "Front", "NumberColors": "30", "FrameSize": "32", "Width": "10", "PrintLocation": "Top", "NumberScreens": "10", "LinesPerInch": "10", "Height": "20"},
             {"Position": "Front", "NumberColors": "30", "FrameSize": "32", "Width": "10", "PrintLocation": "Top", "NumberScreens": "10", "LinesPerInch": "10", "Height": "20"},
@@ -29,26 +52,38 @@
         ];
         function createNewScreen(ev, settings) {
             $mdDialog.show({
-                controller: 'createNewScreenController',
+                controller: function ($scope, params){
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                    },
                 controllerAs: 'vm',
                 templateUrl: 'app/main/art/dialogs/createScreen/createScreen-dialog.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
+                    params:$scope,
                     event: ev
                 }
             });
         }
         function generateArtForm(ev, settings) {
             $mdDialog.show({
-                controller: 'generateArtController',
+                 controller: function ($scope, params){
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                    },
                 controllerAs: 'vm',
                 templateUrl: 'app/main/art/dialogs/generateArtForm/generateArtForm-dialog.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
+                    params:$scope,
                     event: ev
                 }
             });

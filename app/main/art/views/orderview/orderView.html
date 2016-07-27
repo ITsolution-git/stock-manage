@@ -2,44 +2,30 @@
     <div class="header "  layout="column" >
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back" ui-sref="app.art">BACK TO ART</a>
-            <h2 flex="4" class="font-500">Screen Sets for Purchase Order #1234 for Client: </h2>
-            <md-input-container md-no-float class="md-block" flex="3">
-                <input aria-label="Client Name">
-            </md-input-container>
+            <h2 flex="4" class="font-500">Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].client_id})">{{ScreenSets[0].client_company}}</a></h2>
+
         </div>
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75" layout="column">
                 <div class="title mrg10-B"><span class="h2 text-semibold">Information</span></div>
-                <md-card layout="row">
+                 <md-card layout="row">
                     <md-card-content flex="95" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Client</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.client}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].client_company}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Order Name</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.orderName}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].order_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Order Date</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.orderDate}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].created_date}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Contract</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.contract}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Affiliate</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.affiliate}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Affiliate Arrival Date</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.affiliateArrival}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Affiliate Deadline</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.affiliateDeadline}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].first_name}} {{ScreenSets[0].last_name}}</span>
                             </div>
                         </div>
                     </md-card-content>
@@ -51,7 +37,7 @@
                 </md-card>
             </div>
             <div flex="25" layout="column">
-                <md-select ng-model="vm.basicForm.state" arial-label="Affiliate Status">
+                <md-select ng-model="screensetPOinfo" aria-label="Affiliate Status">
                     <md-option value="0">Affiliate Status</md-option>
                 </md-select>
             </div>
@@ -62,44 +48,44 @@
 <!--         <div flex="25" class="text-right"><md-button class="md-raised md-primary" ng-click="vm.createNewScreen()">Create New Screen</md-button></div> -->
     </div>
     <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15" >
-        <table class="tbl-typ2" ng-repeat="screenset in vm.screensetinfo">
+        <table class="tbl-typ2" ng-repeat="sets in ScreenSets">
             <tr>
                 <td width="97%">
-                    <div class="header-typ1">48750_front_8inch</div>
-                    <div layout="row">
+                    <div class="header-typ1">{{ sets.screen_set}}</div>
+                    <div layout="row"  ng-show="sets.screen_active==1">
                         <div flex="95" layout="column">
                             <div layout="row" layout-wrap>
                                 <div class="trans-box">
                                     <div>Position</div>
-                                    <span class="chrome-weight font-14">{{ screenset.Position}}</span>
+                                    <span class="chrome-weight font-14">{{sets.position_name}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Number of Colors</div>
-                                    <span class="chrome-weight font-14">{{screenset.NumberColors}}</span>
+                                    <span class="chrome-weight font-14">{{sets.color_stitch_count}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Frame Size</div>
-                                    <span class="chrome-weight font-14">{{screenset.FrameSize}}</span>
+                                    <span class="chrome-weight font-14">{{sets.frame_size}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Width</div>
-                                    <span class="chrome-weight font-14">{{screenset.Width}}</span>
+                                    <span class="chrome-weight font-14">{{sets.screen_width}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Print Location</div>
-                                    <span class="chrome-weight font-14">{{screenset.PrintLocation}}</span>
+                                    <span class="chrome-weight font-14">{{sets.screen_location}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Number of Screens</div>
-                                    <span class="chrome-weight font-14">{{screenset.NumberScreens}}</span>
+                                    <span class="chrome-weight font-14">{{sets.screen_count}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Lines Per Inch</div>
-                                    <span class="chrome-weight font-14">{{screenset.LinesPerInch}}</span>
+                                    <span class="chrome-weight font-14">{{sets.line_per_inch}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Height</div>
-                                    <span class="chrome-weight font-14">{{screenset.Height}}</span>
+                                    <span class="chrome-weight font-14">{{sets.screen_height}}</span>
                                 </div>
                             </div>
                         </div>
@@ -109,6 +95,19 @@
                             </md-button>
                         </div>
                     </div>
+                    <div layout="row" ng-show="sets.screen_active==0">
+                        <div flex="80" layout="column">
+                            <div layout="row" layout-wrap>
+                                <h1 style="color:#cccccc; padding-left: 10px;"> Screen Set Not Yet Created </h1>
+                            </div>
+                        </div>
+                        <div flex="20" layout="column">
+                            <div layout="row" layout-wrap style="margin-top: 10px;">
+                            <div flex="25" class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e;" ng-click="vm.createNewScreen()">Active Screen Set</md-button></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </td>
                 <td width="3%" class="text-center">
                     <span class="icon icon-menu fs22"></span>
