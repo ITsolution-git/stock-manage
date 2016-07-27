@@ -35,8 +35,7 @@
         $scope.GetOrderScreenSet();
 
 
-        $scope.screensetPOinfo = function ()
-        [{
+        $scope.screensetPOinfo  = {
             "client": "Client Name",
             "orderName": "12345",
             "orderDate": "12/05/2016",
@@ -44,7 +43,7 @@
             "affiliate": "Affiliate Name",
             "affiliateArrival": "xx/xx/xxxx",
             "affiliateDeadline": "xx/xx/xxxx"
-        }];
+        };
         vm.screensetinfo = [
             {"Position": "Front", "NumberColors": "30", "FrameSize": "32", "Width": "10", "PrintLocation": "Top", "NumberScreens": "10", "LinesPerInch": "10", "Height": "20"},
             {"Position": "Front", "NumberColors": "30", "FrameSize": "32", "Width": "10", "PrintLocation": "Top", "NumberScreens": "10", "LinesPerInch": "10", "Height": "20"},
