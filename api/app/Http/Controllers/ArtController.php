@@ -164,11 +164,12 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
 
     }
-    public function ScreenListing($company_id)
+    public function ScreenSets()
     {
-        if(!empty($company_id) && $company_id != 'undefined')
+        $post = Input::all();
+        if(!empty($post['company_id']) && !empty($post['order_id']))
         {
-            $scren_listing = $this->art->ScreenListing($company_id);
+            $scren_listing = $this->art->ScreenSets($post);
             if(count($scren_listing)>0)
             {
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $scren_listing);
@@ -180,7 +181,7 @@ class ArtController extends Controller {
         }
         else 
         {
-            $response = array('success' => 2, 'message' => MISSING_PARAMS);
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
     }

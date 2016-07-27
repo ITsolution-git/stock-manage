@@ -49,7 +49,7 @@
                            return sessionService.AccessService('BC,CA');
                         }
                 },
-                url  : '/screensetView',
+                url  : '/screensetView/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/art/views/screensetview/screensetView.html',

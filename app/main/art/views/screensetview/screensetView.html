@@ -15,31 +15,19 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Client</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.client}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].client_company}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Order Name</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.orderName}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].order_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Order Date</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.orderDate}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].created_date}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Contract</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.contract}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Affiliate</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.affiliate}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Affiliate Arrival Date</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.affiliateArrival}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Affiliate Deadline</div>
-                                <span class="chrome-weight font-14">{{vm.screensetPOinfo.affiliateDeadline}}</span>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].first_name}} {{ScreenSets[0].last_name}}</span>
                             </div>
                         </div>
                     </md-card-content>

@@ -11,7 +11,9 @@
     {
         var vm = this;
         vm.createScreenDetail = createScreenDetail;
+        $scope.company_id = sessionService.get('company_id');
         //Dummy models data
+        
         vm.screensetPOinfo = {
             "client": "Client Name",
             "orderName": "12345",
