@@ -7,7 +7,7 @@
             .controller('screenSetViewController', screenSetViewController);
 
     /** @ngInject */
-    function screenSetViewController($document, $window, $timeout, $mdDialog)
+    function screenSetViewController($document,  $state,$window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
         var vm = this;
         vm.createScreenDetail = createScreenDetail;
