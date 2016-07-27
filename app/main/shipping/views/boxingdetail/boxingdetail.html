@@ -8,26 +8,26 @@
                         <div flex="30" layout="column" class="pd10-R bdr1-R">
                             <div class="header-typ3">Box ID</div>
                             <div class="order-container" ms-scroll class="tbl-scroll-cntnr">
-                                <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="item in vm.boxDetails">
-                                    <div layout="column" flex="90">
+                                <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="box in shippingBoxes" ng-class="{activeAddress: box.id==shipping_box_id}">
+                                    <div layout="column" flex="90" ng-click="select_box(box.id)">
                                         <div layout="row" flex="100" class="mrg5-B">
                                             <div layout="column" flex="50" class="mrg10-R">
                                                 <div>Box ID</div>
-                                                <div class="gray-text">{{ item.boxId }}</div>
+                                                <div class="gray-text">{{ box.id }}</div>
                                             </div>
                                             <div layout="column" flex="50">
                                                 <div>Number of Box</div>
-                                                <div class="gray-text">{{ item.numBox }}</div>
+                                                <div class="gray-text">{{ box.number_of_box }}</div>
                                             </div>
                                         </div>
                                         <div layout="row" flex="100" class="mrg5-B">
                                             <div layout="column" flex="50" class="mrg10-R">
                                                 <div>Units Packaged</div>
-                                                <div class="gray-text">{{ item.unitPackaged }}</div>
+                                                <div class="gray-text">{{ box.boxed_qnty }}</div>
                                             </div>
                                             <div layout="column" flex="50">
                                                 <div>Tracking Number</div>
-                                                <div class="gray-text">{{ item.trackNumber }}</div>
+                                                <div class="gray-text">{{ box.tracking_number }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -56,13 +56,13 @@
                                         </tr>
                                     </thead>
                                     <tbody> 
-                                        <tr ng-repeat="item in vm.productDetail" class="cursor-p">
-                                            <td>{{ item.boxId}}</td>
-                                            <td>{{ item.sizeGroup}}</td>
-                                            <td>{{ item.product}}</td>
-                                            <td>{{ item.productColor}}</td>
+                                        <tr ng-repeat="item in box_items" class="cursor-p">
+                                            <td>{{ item.box_item_id}}</td>
+                                            <td>{{ item.size_group_name}}</td>
+                                            <td>{{ item.name}}</td>
+                                            <td>{{ item.color_name}}</td>
                                             <td>{{ item.size}}</td>
-                                            <td>{{ item.boxedQty}}</td>
+                                            <td>{{ item.boxed_qnty}}</td>
                                             <td>
                                                 <md-input-container flex="100" class="mrg0-TB" aria-label="MD">
                                                     <input placeholder="MD">
@@ -75,10 +75,8 @@
                                             </td>
                                             <td>{{ item.actual}}</td>
                                             <td>
-                                                <md-select ng-model="company.prime_address_state" placeholder="39130" class="mrg6-TB">
-                                                    <md-option value="0">39130</md-option>
-                                                    <md-option>39130</md-option>
-                                                    <md-option>39130</md-option>
+                                                <md-select aria-label="shipping_box_id" ng-model="shipping_box_id" class="mrg6-TB" ng-change="reAllocate(shipping_box_id,item.box_item_id)">
+                                                    <md-option ng-selected="sbox.id == item.id" ng-repeat="sbox in shippingBoxes" value="{{sbox.id}}">{{sbox.id}}</md-option>
                                                 </md-select>
                                             </td>
                                         </tr>                    
