@@ -656,13 +656,19 @@ class ShippingController extends Controller {
 
         $response = $shipment->submitShipment();
 
-        if (isset($response['error']) && $response['error'] != '') {
+        foreach ($response['pkgs'] as $package) {
+            $label = $package['label_img'];
+            echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+        }
+
+
+        /*if (isset($response['error']) && $response['error'] != '') {
             // Something went wrong, show debug information
             echo $shipment->debug();
         } else {
-//            print_r($response['pkgs'][0]['label_img']); // display response
+            //print_r($response['pkgs'][0]['label_img']); // display response
             // Create label as a file
             file_put_contents('label.pdf', base64_decode($response['pkgs'][0]['label_img']));
-        }
+        }*/
     }
 }

@@ -224,16 +224,16 @@ return array(
     'fedex' => array(
 
         // Your FedEx developer key
-        'key' => 'YOUR_FEDEX_KEY',
+        'key' => 'YZgdMgtg7dAA4BLl',
 
         // Your FedEx developer password
-        'password' => 'YOUR_FEDEX_PASSWORD',
+        'password' => 'zpgyrXQDy6MyGaGLNgXbFv4G2',
 
         // Your FedEx accountNumber
-        'accountNumber' => 'YOUR_FEDEX_ACCOUNT',
+        'accountNumber' => '510087704',
 
         // Your FedEx meter number
-        'meterNumber' => 'YOUR_FEDEX_METER',
+        'meterNumber' => '100296167',
 
         // REGULAR_PICKUP
         // REQUEST_COURIER
@@ -362,7 +362,7 @@ return array(
     'usps' => array(
 
         // USPS userID
-        'userid' => 'YOUR_USPS_USERID',
+        'userid' => 'pdave@codal.com',
         'service' => 'Priority',
         'imageType' => 'PDF',
 
