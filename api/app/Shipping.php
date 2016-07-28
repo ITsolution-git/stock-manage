@@ -150,7 +150,7 @@ class Shipping extends Model {
     public function getBoxItems($box_id)
     {
         $whereItemConditions = ['bi.box_id' => $box_id];
-        $listItemsArray = ['sb.md','sb.id','sb.spoil','sb.actual','sb.re_allocate_to','bi.id as box_item_id','bi.item_id','pd.id','pd.size','sb.box_qnty as boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
+        $listItemsArray = ['sb.md','sb.id as box_id','sb.spoil','sb.actual','sb.re_allocate_to','bi.id as box_item_id','bi.item_id','pd.id','pd.size','sb.box_qnty as boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
 
         $shippingBoxItems = DB::table('box_product_mapping as bi')
                         ->leftJoin('shipping_box as sb','bi.box_id','=','sb.id')
@@ -270,7 +270,6 @@ class Shipping extends Model {
                         ->leftJoin('box_product_mapping as bi','bi.box_id','=','sb.id')
                         ->select($listItemsArray)
                         ->where($whereBoxConditions)
-                        ->where('bi.item_id','!=','0')
                         ->GroupBy('sb.id')
                         ->get();
 
