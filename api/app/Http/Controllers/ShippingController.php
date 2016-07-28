@@ -613,4 +613,27 @@ class ShippingController extends Controller {
 
         return response()->json(["data" => $response]);
     }
+
+    public function getShippingOverview()
+    {
+        $data = Input::all();
+        $data['overview'] = 1;
+
+        $result = $this->shipping->shippingDetail($data);
+        $boxes = $this->shipping->getShippingBoxes($data);
+
+        foreach ($result['shippingItems'] as $item) {
+            $item->description = strip_tags($item->description);
+        }
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'shippingBoxes' => $boxes,
+                        'records' => $result['shipping'],
+                        'shippingItems' => $result['shippingItems']
+                    );
+
+        return response()->json(["data" => $response]);
+    }
 }
