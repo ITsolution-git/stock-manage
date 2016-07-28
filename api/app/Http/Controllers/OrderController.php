@@ -392,7 +392,10 @@ class OrderController extends Controller {
           $date_field = (empty($post['date_field']))? '':$post['date_field']; 
           
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
-          $this->common->UpdateTableRecords('artjob_screensets',array('positions' => $post['cond']['id']),array('screen_set' => $screen_set));
+
+          if($post['column_name'] == 'position_id') {
+             $this->common->UpdateTableRecords('artjob_screensets',array('positions' => $post['cond']['id']),array('screen_set' => $screen_set));
+          }  
             
 
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
