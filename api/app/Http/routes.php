@@ -272,6 +272,7 @@ Route::post('shipping/addProductToShip', 'ShippingController@addProductToShip');
 Route::post('shipping/getShippingAddress', 'ShippingController@getShippingAddress');
 Route::post('shipping/getShippingBoxes', 'ShippingController@getShippingBoxes');
 Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverview');
+Route::get('shipping/createLabel', 'ShippingController@createLabel');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');

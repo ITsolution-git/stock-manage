@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://www.dhl.com" xmlns:dhlPickup="http://www.dhl.com/pickupdatatypes_EA" xmlns:dhl="http://www.dhl.com/datatypes_EA" xmlns="http://www.dhl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified">
+	<xsd:import namespace="http://www.dhl.com/datatypes_EA" schemaLocation="datatypes_EA.xsd"/>
+	<xsd:import namespace="http://www.dhl.com/pickupdatatypes_EA" schemaLocation="pickupdatatypes_EA.xsd"/>
+	<xsd:element name="BookPickupRequestEA">
+		<xsd:annotation>
+			<xsd:documentation>Root element of Book Pickup Request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Request" type="dhl:Request"/>
+				<xsd:element name="Requestor" type="dhlPickup:Requestor"/>
+				<xsd:element name="Place" type="dhlPickup:Place"/>
+				<xsd:element name="Pickup" type="dhlPickup:Pickup"/>
+				<xsd:element name="PickupContact" type="dhlPickup:Contact"/>
+				<xsd:element name="ShipmentDetails" type="dhlPickup:ShipmentDetails" minOccurs="0" maxOccurs="unbounded"/>
+				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

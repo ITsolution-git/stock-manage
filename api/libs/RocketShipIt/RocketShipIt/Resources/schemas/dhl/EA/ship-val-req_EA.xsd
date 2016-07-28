@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://www.dhl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.dhl.com" xmlns:dhl="http://www.dhl.com/datatypes_EA" elementFormDefault="unqualified">
+	<xsd:import namespace="http://www.dhl.com/datatypes_EA" schemaLocation="datatypes_EA.xsd"/>
+	<xsd:element name="ShipmentValidateRequestEA">
+		<xsd:annotation>
+			<xsd:documentation>Root element of shipment validation request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Request" type="dhl:Request"/>
+				<xsd:element name="NewShipper" type="dhl:YesNo" minOccurs="0"/>
+				<xsd:element name="LanguageCode" type="dhl:LanguageCode"/>
+                <xsd:element name="PiecesEnabled" type="dhl:PiecesEnabled" minOccurs="0"/> 
+				<xsd:element name="Billing" type="dhl:Billing"/>
+				<xsd:element name="Consignee" type="dhl:Consignee"/>
+				<xsd:element name="Commodity" type="dhl:Commodity" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="Dutiable" type="dhl:Dutiable" minOccurs="0"/>
+				<xsd:element name="ExportDeclaration" type="dhl:ExportDeclaration" minOccurs="0"/>
+				<xsd:element name="Reference" type="dhl:Reference" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="ShipmentDetails" type="dhl:ShipmentDetails"/>
+				<xsd:element name="Shipper" type="dhl:Shipper"/>
+				<xsd:element name="SpecialService" type="dhl:SpecialService" minOccurs="0" maxOccurs="unbounded"/>
+				<xsd:element name="Place" type="dhl:Place" minOccurs="0"/>
+				<xsd:element name="EProcShip" type="dhl:YesNo" minOccurs="0"/>
+                <xsd:element name="DocImages" type="dhl:DocImages" minOccurs="0"/>
+                <xsd:element name="LabelImageFormat" type="dhl:LabelImageFormat" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
