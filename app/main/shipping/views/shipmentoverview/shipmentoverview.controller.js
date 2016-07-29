@@ -7,33 +7,42 @@
             .controller('shipmentOverviewController', shipmentOverviewController);
 
     /** @ngInject */
-    function shipmentOverviewController($document, $window, $timeout, $mdDialog)
+    function shipmentOverviewController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
-        //Dummy models data
-        vm.shipDetails = [{
-                "orderId": "1234",
-                "orderName": "Name of Order",
-                "shippingBy": "xx/xx/xxxx",
-                "inHandBy": "xx/xx/xxxx",
-                "status": "Ready To Ship",
-                "shippingId": "1234",
-                "product": "Stoli Tech hood",
-                "boxType": "Standard",
-                "shippingType": "UPS",
-                "clientId": "12345",
-                "clientName": "Codal",
-                "fullyShipped": "xx/xx/xxxx",
-                "dateShipped": "xx/xx/xxxx",
-             }];
-        vm.distrLoc = [
-            {"locationName": "Location Name", "locationAttn": "Name", "locationAddress": "1234 N Main St. Chicago, IL 60611 - USA", "locationPhone": "+91 123456789"},
-            {"locationName": "Location Name", "locationAttn": "Name", "locationAddress": "1234 N Main St. Chicago, IL 60611 - USA", "locationPhone": "+91 123456789"}
-        ];
-        vm.boxShipmnt = [
-            {"boxId": "34", "unitPacked": "72", "trackNo": "xxxxxxxxxxxxxx"},
-            {"boxId": "34", "unitPacked": "72", "trackNo": "xxxxxxxxxxxxxx"},
-            {"boxId": "34", "unitPacked": "72", "trackNo": "xxxxxxxxxxxxxx"}
-        ];
+
+        $scope.shipping_id = $stateParams.id;
+
+        $scope.getShippingOverview = function()
+        {
+            $("#ajax_loader").show();
+            var combine_array = {};
+            combine_array.shipping_id = $scope.shipping_id;
+
+            $http.post('api/public/shipping/getShippingOverview',combine_array).success(function(result) {
+
+                $("#ajax_loader").hide();
+                if(result.data.success == '1') 
+                {
+                    $scope.shippingBoxes =result.data.shippingBoxes;
+                    $scope.shippingItems =result.data.shippingItems;
+                    $scope.shipping =result.data.records[0];
+
+                    if($scope.shipping.boxing_type == '0') {
+                        $scope.shipping.boxing_type = 'Retail';
+                    }
+                    if($scope.shipping.boxing_type == '1') {
+                        $scope.shipping.boxing_type = 'Standard';
+                    }
+                    if($scope.shipping.boxing_type == '1') {
+                        $scope.shipping.boxing_type = 'USPS';
+                    }
+                    if($scope.shipping.boxing_type == '2') {
+                        $scope.shipping.boxing_type = 'Fedex';
+                    }
+                }
+            });
+        }
+        $scope.getShippingOverview();
     }
 })();

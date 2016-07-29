@@ -613,4 +613,62 @@ class ShippingController extends Controller {
 
         return response()->json(["data" => $response]);
     }
+
+    public function getShippingOverview()
+    {
+        $data = Input::all();
+        $data['overview'] = 1;
+
+        $result = $this->shipping->shippingDetail($data);
+        $boxes = $this->shipping->getShippingBoxes($data);
+
+        foreach ($result['shippingItems'] as $item) {
+            $item->description = strip_tags($item->description);
+        }
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'shippingBoxes' => $boxes,
+                        'records' => $result['shipping'],
+                        'shippingItems' => $result['shippingItems']
+                    );
+
+        return response()->json(["data" => $response]);
+    }
+
+    public function createLabel()
+    {
+        $shipment = new \RocketShipIt\Shipment('fedex');
+
+        $shipment->setParameter('toCompany', 'John Doe');
+        $shipment->setParameter('toName', 'John Doe');
+        $shipment->setParameter('toPhone', '1231231234');
+        $shipment->setParameter('toAddr1', '111 W Legion');
+        $shipment->setParameter('toCity', 'Whitehall');
+        $shipment->setParameter('toState', 'MT');
+        $shipment->setParameter('toCode', '59759');
+
+        $shipment->setParameter('length', '5');
+        $shipment->setParameter('width', '5');
+        $shipment->setParameter('height', '5');
+        $shipment->setParameter('weight','5');
+
+        $response = $shipment->submitShipment();
+
+        foreach ($response['pkgs'] as $package) {
+            $label = $package['label_img'];
+            echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+        }
+
+
+        /*if (isset($response['error']) && $response['error'] != '') {
+            // Something went wrong, show debug information
+            echo $shipment->debug();
+        } else {
+            //print_r($response['pkgs'][0]['label_img']); // display response
+            // Create label as a file
+            file_put_contents('label.pdf', base64_decode($response['pkgs'][0]['label_img']));
+        }*/
+    }
 }
