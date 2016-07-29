@@ -446,19 +446,7 @@ class CommonController extends Controller {
               $post['extra'] = empty($post['extra'])?'' : $post['extra'];  
 
               $result = $this->common->DeleteTableRecords($post['table'],$post['cond']);
-              if($post['table'] == 'order_orderlines')
-              {
-                $this->common->DeleteTableRecords('purchase_detail',array('orderline_id' => $post['cond']['id']));
-              }
-
-              if($post['table'] == 'purchase_order')
-              {
-                $this->common->DeleteTableRecords('purchase_order_line',array('po_id' => $post['cond']['po_id']));
-              }
-              if($post['extra'] == 'users')
-              {
-                $this->common->DeleteTableRecords('staff',array('user_id' => $post['cond']['id']));
-              }
+              
               $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
         else
@@ -1089,7 +1077,7 @@ class CommonController extends Controller {
             }
             $result = $this->art->Screen_Listing($post);
             $header = array(
-                0=>array('key' => 'ord.id', 'name' => 'Screen set'),
+                0=>array('key' => 'ord.id', 'name' => 'Screen Set Name'),
                 1=>array('key' => 'mt.value', 'name' => 'Position'),
                 2=>array('key' => 'cl.client_company', 'name' => 'Client'),
                 3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),

@@ -13,19 +13,19 @@
                <div layout="column" flex="35">
                    <md-input-container flex=30 class="m-b-20 m-t-25">
                         <div>Position </div>
-                        <span class="chrome-weight font-14">Front</span>
+                        <span class="chrome-weight font-14">{{details_screenset[0].value}}</span>
                     </md-input-container>
                </div>
                <div layout="column" flex="35">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
                         <div>Color count</div>
-                        <span class="chrome-weight font-14">5</span>
+                        <span class="chrome-weight font-14">{{details_screenset[0].color_stitch_count}}</span>
                     </md-input-container>
                </div>
                <div layout="column" flex="35">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
                         <div>No of Screen</div>
-                        <span class="chrome-weight font-14">6</span>
+                        <span class="chrome-weight font-14">{{details_screenset[0].screen_count}}</span>
                     </md-input-container>
                </div>
            </div>
@@ -33,47 +33,68 @@
                <div layout="column" flex="50">
                    <md-input-container flex=30 class="m-b-20 m-t-25">
                         <label class="state-label-color">Frame Size</label>
-                           <input placeholder="Freame Size" name="" ui-event="">
+                           <input placeholder="Freame Size" name="frame_size" valid-number ng-model="details_screenset[0].frame_size" >
                     </md-input-container>
                </div>
                <div layout="column" flex="50">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Print Location" name="" ui-event="">
+                        <input placeholder="Print Location" name="screen_location"  ng-model="details_screenset[0].screen_location">
                     </md-input-container>
                </div>
            </div>
            <div layout="row">
                 <div layout="column" flex="50">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Lines Per Inch" name="" ui-event="">
+                        <input placeholder="Lines Per Inch" name="line_per_inch" valid-number ng-model="details_screenset[0].line_per_inch">
                     </md-input-container>
                </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Width" name="" ui-event="">
+                        <input placeholder="Width" name="screen_width" valid-number ng-model="details_screenset[0].screen_width">
                     </md-input-container>
                </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Height" name="" ui-event="">
+                        <input placeholder="Height" name="screen_height" valid-number ng-model="details_screenset[0].screen_height">
                     </md-input-container>
                </div>
+               
            </div>
         </div>
         <div layout="column" flex="40">
-            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                <input placeholder="Search By Color" name="" ui-event="">
-            </md-input-container>
+                  <md-autocomplete
+                      ng-disabled="isDisabled"
+                      md-no-cache="noCache"
+                      md-selected-item=""
+                      md-search-text-change=""
+                      md-search-text="allcolor.color_name"
+                      md-selected-item-change="add_color(item.id,item.name)"
+                      md-items="item in querySearch(allcolor.color_name)"
+                      md-item-text="item.name"
+                      md-min-length="1"
+                      ng-click=""
+                      ng-blur=""
+                      <md-item-template>
+                          <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                          No Color found.
+                      </md-not-found>
+                  </md-autocomplete>
+
             <div class="mrg10-B">Color :</div>
-            <div class="mrg5-B"><span class="gray-text">Black</span><a href="#" class="icon icon-close f-red mrg10-L"></a></div>
-            <div class="mrg5-B"><span class="gray-text">White</span><a href="#" class="icon icon-close f-red mrg10-L"></a></div>
-            <div class="mrg5-B"><span class="gray-text">Yellow</span><a href="#" class="icon icon-close f-red mrg10-L"></a></div>
+            <div ng-repeat="(key,sc) in initial_add_color">
+              <div class="mrg5-B"><span class="gray-text">{{sc.color_name}}</span><a href="#" ng-click="remove_added($index)" class="icon icon-close f-red mrg10-L"></a></div>
+            </div>
+            <div ng-repeat="sc in getColors">
+              <div class="mrg5-B"><span class="gray-text">{{sc.color_display_name}}</span><a href="#" ng-click="remove_selected($index,sc.id)" class="icon icon-close f-red mrg10-L"></a></div>
+            </div>
         </div>
     </div>
 </div>
 <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
     
-    <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button>
+    <button type="button" class="md-accent md-raised md-button md-ink-ripple" ng-click="CreateScreenset(details_screenset[0])" aria-label="Save"><span class="ng-scope" >Save</span></button>
 </md-dialog-actions>
 
 </md-dialog>

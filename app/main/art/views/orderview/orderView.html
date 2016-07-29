@@ -1,3 +1,6 @@
+<style type="text/css">
+    .trans-box{width: 20% !important;}
+</style>
 <div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
     <div class="header "  layout="column" >
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
@@ -29,11 +32,11 @@
                             </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="5" layout="row">
+                   <!--  <div layout-align="end start"  flex="5" layout="row">
                         <md-button class="md-icon-button" aria-label="View Details">
                             <md-icon md-font-icon="icon-dots-vertical"></md-icon>
                         </md-button>
-                    </div>
+                    </div> -->
                 </md-card>
             </div>
             <div flex="25" layout="column">
@@ -72,6 +75,9 @@
                                     <span class="chrome-weight font-14">{{sets.screen_width}}</span>
                                 </div>
                                 <div class="trans-box">
+                                    <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
+                                </div>
+                                <div class="trans-box">
                                     <div>Print Location</div>
                                     <span class="chrome-weight font-14">{{sets.screen_location}}</span>
                                 </div>
@@ -87,13 +93,16 @@
                                     <div>Height</div>
                                     <span class="chrome-weight font-14">{{sets.screen_height}}</span>
                                 </div>
+                                <div class="trans-box">
+                                    <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">View Screen</md-button>
+                                </div>
                             </div>
                         </div>
-                        <div layout-align="end start"  flex="5" layout="row">
-                            <md-button class="md-icon-button" aria-label="View Details">
+                        <!-- <div layout-align="end start"  flex="5" layout="row">
+                            <md-button  ng-click="vm.createNewScreen($event,sets.screen_id)" class="md-icon-button" aria-label="View Details">
                                 <md-icon md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
-                        </div>
+                        </div> -->
                     </div>
                     <div layout="row" ng-show="sets.screen_active==0">
                         <div flex="80" layout="column">
@@ -103,7 +112,7 @@
                         </div>
                         <div flex="20" layout="column">
                             <div layout="row" layout-wrap style="margin-top: 10px;">
-                            <div flex="25" class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e;" ng-click="vm.createNewScreen()">Active Screen Set</md-button></div>
+                            <div flex="25" class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Create Screen Set</md-button></div>
                             </div>
                         </div>
                     </div>
@@ -115,10 +124,10 @@
             </tr>
         </table>
     </div>
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+    <!-- <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
         <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
         <div class="md-ripple-container" style=""></div>
         </button>
         <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="vm.generateArtForm()"><span class="ng-scope">Generate Art Approval Form</span></button>
-    </md-dialog-actions>
+    </md-dialog-actions> -->
 </div>
