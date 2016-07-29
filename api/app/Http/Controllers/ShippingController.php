@@ -639,36 +639,112 @@ class ShippingController extends Controller {
 
     public function createLabel()
     {
-        $shipment = new \RocketShipIt\Shipment('fedex');
+        $post = Input::all();
+        $shipping = json_decode($post['shipping']);
 
-        $shipment->setParameter('toCompany', 'John Doe');
-        $shipment->setParameter('toName', 'John Doe');
-        $shipment->setParameter('toPhone', '1231231234');
-        $shipment->setParameter('toAddr1', '111 W Legion');
-        $shipment->setParameter('toCity', 'Whitehall');
-        $shipment->setParameter('toState', 'MT');
-        $shipment->setParameter('toCode', '59759');
+        if($shipping->shipping_type_id == 'Fedex')
+        {
+            $shipment = new \RocketShipIt\Shipment('fedex');    
+        }
+        else
+        {
+            $shipment = new \RocketShipIt\Shipment('STAMPS');
+        }
 
-        $shipment->setParameter('length', '5');
-        $shipment->setParameter('width', '5');
-        $shipment->setParameter('height', '5');
-        $shipment->setParameter('weight','5');
+        $shipment->setParameter('toCompany', $shipping->client_company);
+        $shipment->setParameter('toName', $shipping->description);
+        $shipment->setParameter('toPhone', $shipping->phone);
+        $shipment->setParameter('toAddr1', $shipping->address.' '.$shipping->address2);
+        $shipment->setParameter('toCity', $shipping->city);
+        $shipment->setParameter('toState', $shipping->state);
+        $shipment->setParameter('toCode', $shipping->zipcode);
+
+        if($shipping->shipping_type_id == 'USPS')
+        {
+            $shipment->setParameter('referenceValue', '123adsf');
+
+            $rate = new \RocketShipIt\Rate('STAMPS');
+            $rate->setParameter('toCode',$shipping->zipcode);
+            $rate->setParameter('weight','5');
+            $response = $rate->getAllRates();
+
+            $rates = $response->Rates;
+            $rate = $rates->Rate;
+
+            # Select the rate/service you want
+            # from a list of all available
+            $package = $rate[3];
+
+            # Remove all addons
+            $package->AddOns = null;
+
+            # Add the addons you want for this
+            # shipment
+            $addons = array();
+            $a = new \stdClass();
+            $a->AddOnType = 'US-A-DC';
+            array_push($addons, $a);
+            $package->AddOns = $addons;
+            //print_r($package);
+
+            // The rate can suggest a new zipcode
+            // Set this new zipcode on the shipment to avoid:
+            // "Rate ToZIPCode and Destination Address ZIPCode field must match."
+            $shipment->setParameter('toCode', $package->ToZIPCode);
+
+            $shipment->addPackageToShipment($package);
+        }
+        else
+        {
+            $shipment->setParameter('length', '5');
+            $shipment->setParameter('width', '5');
+            $shipment->setParameter('height', '5');
+            $shipment->setParameter('weight','5');
+        }
 
         $response = $shipment->submitShipment();
 
         foreach ($response['pkgs'] as $package) {
             $label = $package['label_img'];
-            echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+            header('Content-Disposition: attachment;filename="shipping_label.png"');
+            header('Content-Type: application/force-download');
+            echo base64_decode($label);
+            //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+        }
+    }
+
+    public function checkAddressValid()
+    {
+        $post = Input::all();
+
+        if($post['shipping_type_id'] == 'Fedex')
+        {
+            $av = new \RocketShipIt\AddressValidate('FedEx');
+        }
+        else
+        {
+            $av = new \RocketShipIt\AddressValidate('USPS');
         }
 
+        $av->setParameter('toAddr1', $post['address']);
+        $av->setParameter('toAddr2', $post['address2']);
+        $av->setParameter('toCity', $post['city']);
+        $av->setParameter('toState', $post['state']);
+        $av->setParameter('toCode', $post['zipcode']);
 
-        /*if (isset($response['error']) && $response['error'] != '') {
-            // Something went wrong, show debug information
-            echo $shipment->debug();
-        } else {
-            //print_r($response['pkgs'][0]['label_img']); // display response
-            // Create label as a file
-            file_put_contents('label.pdf', base64_decode($response['pkgs'][0]['label_img']));
-        }*/
+        $response = $av->validate();
+
+        $success = 0;
+        if($response['Meta']['ErrorMessage'] == '')
+        {
+            $success = 1;
+        }
+
+        $response = array(
+                        'success' => $success, 
+                        'message' => $response['Meta']['ErrorMessage']
+                    );
+
+        return response()->json(["data" => $response]);
     }
 }
