@@ -128,7 +128,7 @@
             
             if(column_name == 'position_id') {
                 position_main_data.position = $scope.miscData.position[value].value;
-            }
+            } 
           
             $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
 
