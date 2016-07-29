@@ -176,7 +176,7 @@ class ArtController extends Controller {
             }
             else
             {
-                $response = array('success' => 0, 'message' => NO_RECORDS);
+                $response = array('success' => 0, 'message' => 'No Positions are assign to this Order.');
             }
         }
         else 
@@ -252,30 +252,20 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
-    public function Insert_artworkproof($line_id)
-    {
-        if(!empty($line_id) && $line_id != 'undefined')
-        {
-            $wp_id = $this->art->Insert_artworkproof($line_id);
-            $response = array('success' => 1, 'message' => INSERT_RECORD,'records'=>$wp_id);
-        }
-        else 
-        {
-            $response = array('success' => 0, 'message' => MISSING_PARAMS);
-        }
-        return  response()->json(["data" => $response]);
-    }
+ 
     public function screen_colorpopup ($screen_id,$company_id)
     {
         if(!empty($company_id) && !empty($screen_id)    && $company_id != 'undefined')
         {
             $screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
-            $allcolors = $this->common->getAllColorData();
+            
             $graphic_size = $this->common->GetMicType('graphic_size',$company_id);
             $screen_arts = $this->art->screen_arts($screen_id,$company_id);
             $screen_garments = $this->art->screen_garments($screen_id,$company_id);
             $art_approval = $this->common->GetMicType('approval',$company_id);
+           
             $color_array= array();
+            $allcolors = $this->common->getAllColorData();
             foreach ($allcolors as $key => $value) 
             {
                 $color_array[$value->id]= $value->name;
@@ -321,11 +311,10 @@ class ArtController extends Controller {
     {
         $post = Input::all();
 
-        //echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
-        if(!empty($post['data']['art_id']))
+        if(!empty($post['alldata']['id']))
         {
-            $this->art->create_screen($post['data']);
-            $response = array('success' => 1, 'message' => INSERT_RECORD);
+            $this->art->create_screen($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD);
         }
         else 
         {
@@ -334,34 +323,38 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
 
     }
-    public function DeleteScreenRecord()
-    {
-        $post = Input::all();
+ 
 
-        //echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
-        if(!empty($post['cond']['id']))
+    public function GetScreenset_detail($position_id)
+    {
+        if(!empty($position_id))
         {
-            $this->art->DeleteScreenRecord($post['cond']);
-            $response = array('success' => 1, 'message' => DELETE_RECORD);
+            $result = $this->art->GetScreenset_detail($position_id);
+            if(count($result)>0)
+            {
+                $color_array= array();
+                $allcolors = $this->common->getAllColorData();
+                $getColors = $this->common->GetTableRecords('artjob_screencolors',array('screen_id' => $result[0]->id),array());
+
+                foreach ($allcolors as $key => $value) 
+                {
+                    $color_array[$value->id]= $value->name;
+                    $allcolors[$key]->name = strtolower($value->name);
+                }
+                if(count($getColors)>0)
+                {
+                    foreach ($getColors as $value) 
+                    {
+                        $value->color_display_name = $color_array[$value->color_name];
+                    }
+                }
+            
+            }
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'getColors'=>$getColors,'allcolors'=>$allcolors);
         }
         else 
         {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
-        }
-        return  response()->json(["data" => $response]);
-    }
-    public function art_worklist_listing($art_id,$company_id)
-    {
-        if(!empty($company_id) && !empty($art_id)   && $company_id != 'undefined')
-        {
-            $art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
-            $art_position = $this->art->art_position($art_id,$company_id);
-
-            $response = array('success' => 1, 'message' => GET_RECORDS,'art_worklist' => $art_worklist,'art_position'=>$art_position);
-        }
-        else 
-        {
-            $response = array('success' => 2, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
     }
