@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://www.dhl.com" xmlns:dhlRating="http://www.dhl.com/ratingdatatypes" xmlns:dhl="http://www.dhl.com/datatypes" xmlns="http://www.dhl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified">
+	<xsd:import namespace="http://www.dhl.com/datatypes" 
+	schemaLocation="datatypes.xsd"/>
+	<xsd:import namespace="http://www.dhl.com/ratingdatatypes" 
+	schemaLocation="ratingdatatypes.xsd"/>
+	<xsd:element name="ShipmentCustRatingRequest">
+		<xsd:annotation>
+			<xsd:documentation>Root element of Customer Rating Request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Request" type="dhl:Request"/>
+				<xsd:element name="Billing" type="dhlRating:CustomerRateBilling"/>
+				<xsd:element name="Shipper" type="dhlRating:RatingShipper"/>
+				<xsd:element name="Consignee" type="dhlRating:RatingConsignee"/>
+				<xsd:element name="ShipmentDetails" type="dhlRating:RatingShipmentDetails"/>
+				<xsd:element name="SpecialService" type="dhlRating:RatingSpecialService" minOccurs="0" maxOccurs="6"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

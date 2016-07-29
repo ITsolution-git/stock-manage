@@ -29,6 +29,10 @@
         "classmap": [
             "database"
         ],
+        "files": ["libs/RocketShipIt/RocketShipIt/RocketShipIt.php"],
+        "psr-0": {
+            "RocketShipIt\\": "libs/RocketShipIt/"
+        },
         "psr-4": {
             "App\\": "app/"
         }

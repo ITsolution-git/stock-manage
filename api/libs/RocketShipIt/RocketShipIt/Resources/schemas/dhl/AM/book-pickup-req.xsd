@@ -1,0 +1,30 @@
+<?xml version="1.0"?> 
+<xsd:schema targetNamespace="http://www.dhl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.dhl.com" xmlns:dhl="http://www.dhl.com/datatypes" xmlns:dhlPickup="http://www.dhl.com/pickupdatatypes" elementFormDefault="unqualified"> 
+	<xsd:import namespace="http://www.dhl.com/datatypes" schemaLocation="datatypes.xsd"/> 
+	<xsd:import namespace="http://www.dhl.com/pickupdatatypes" schemaLocation="pickupdatatypes.xsd"/> 
+	<xsd:element name="BookPickupRequest"> 
+		<xsd:annotation> 
+			<xsd:documentation>Root element of Book Pickup Request</xsd:documentation> 
+		</xsd:annotation> 
+		<xsd:complexType> 
+			<xsd:sequence> 
+				<xsd:element name="Request" type="dhl:Request"/> 
+				<xsd:element name="Requestor" type="dhlPickup:Requestor"/> 
+				<xsd:element name="Place" type="dhlPickup:Place"/> 
+				<xsd:element name="Pickup" type="dhlPickup:Pickup"/> 
+				<xsd:element name="PickupContact" type="dhlPickup:contact"/> 
+				<xsd:element name="ShipmentDetails" type="dhlPickup:ShipmentDetails" minOccurs="0" maxOccurs="unbounded"/> 
+				<xsd:element name="PickupType" type="dhlPickup:PickupType" minOccurs="0"> 
+					<xsd:annotation> 
+						<xsd:documentation>This element must be supplied with value G if requesting a pick up for a ground shipment</xsd:documentation> 
+					</xsd:annotation> 
+				</xsd:element> 
+				<xsd:element name="LargestPiece" type="dhlPickup:LargestPiece" minOccurs="0"> 
+					<xsd:annotation> 
+						<xsd:documentation>Lists measurements of largest piece. This element is mandatory if the weight of shipment for ground service exceeds 50 pounds</xsd:documentation> 
+					</xsd:annotation> 
+				</xsd:element> 
+			</xsd:sequence> 
+		</xsd:complexType> 
+	</xsd:element> 
+</xsd:schema> 
