@@ -83,6 +83,21 @@
                     return false;
                 }
             });
+
+            /*var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/createLabel';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var shipping = document.createElement('input');
+            shipping.name = 'shipping';
+            shipping.setAttribute('value', JSON.stringify($scope.shipping));
+            form.appendChild(shipping);
+
+            document.body.appendChild(form);
+            form.submit();*/
         }
     }
 })();
