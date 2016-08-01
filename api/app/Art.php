@@ -176,6 +176,7 @@ class Art extends Model {
         return $returnData;
     }
     
+    //ARTDETAIL PAGE SCREEN SETS LISTING.
     public function GetScreenset_detail($position_id)
     {
     	$query = DB::table('artjob_screensets as ass')
@@ -190,6 +191,7 @@ class Art extends Model {
 
 				return $query;
     }
+    // CREATE/ACTIVE SCREEN SETS
     public function create_screen($post)
     {
     	//echo "<pre>"; print_r($post); echo "</pre>"; die;
@@ -217,4 +219,21 @@ class Art extends Model {
     	}
     	return $result;
     }
+
+ 	//SCREEN SETS DETAIL PAGE COLOR LISTING
+    public function GetscreenColor($screen_id)
+    {
+    	$query = DB::table('artjob_screencolors as acol')
+				->select('or.name as order_name','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','acol.*')
+				->join('artjob_screensets as ass','acol.screen_id','=','ass.id')
+				->join('orders as or','ass.order_id','=','or.id')
+				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
+				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
+				->where('ass.id','=',$screen_id)
+				->groupby('acol.id')
+				->get();
+				return $query;
+    }
+
+
 }
