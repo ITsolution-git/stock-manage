@@ -12,7 +12,29 @@
         var vm = this;
         vm.createScreenDetail = createScreenDetail;
         $scope.company_id = sessionService.get('company_id');
-        //Dummy models data
+
+
+        $scope.screenset_id = $stateParams.id;
+
+        $scope.GetOrderScreenSet = function() 
+        {
+            $http.get('api/public/art/GetscreenColor/'+$scope.screenset_id).success(function(result) 
+            {
+                if(result.data.success == '1') 
+                {
+                    $scope.ScreenSets = result.data.records;
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                    /*$state.go('app.art');
+                    return false;*/
+                }
+            });
+        }
+        $scope.GetOrderScreenSet();
+
+
         
         vm.screensetPOinfo = {
             "client": "Client Name",
