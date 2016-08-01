@@ -122,6 +122,7 @@
                                         if(result.data.success == '1') 
                                         {
                                             $scope.closeDialog();
+                                            notifyService.notify('success','Screenset Updated successfully.');
                                         }
                                         else
                                         {

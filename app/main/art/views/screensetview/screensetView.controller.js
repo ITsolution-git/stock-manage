@@ -35,21 +35,7 @@
         $scope.GetOrderScreenSet();
 
 
-        
-        vm.screensetPOinfo = {
-            "client": "Client Name",
-            "orderName": "12345",
-            "orderDate": "12/05/2016",
-            "contract": "Joshi Goodman",
-            "affiliate": "Affiliate Name",
-            "affiliateArrival": "xx/xx/xxxx",
-            "affiliateDeadline": "xx/xx/xxxx"
-        };
-        vm.colorsetinfo = [
-            {"threadColor": "Black", "threadCount": "30", "stroke": "3", "inkType": "Type1", "headLocation": "Top", "Squeegee": "Type"},
-            {"threadColor": "Black", "threadCount": "30", "stroke": "3", "inkType": "Type1", "headLocation": "Top", "Squeegee": "Type"},
-            {"threadColor": "Black", "threadCount": "30", "stroke": "3", "inkType": "Type1", "headLocation": "Top", "Squeegee": "Type"}
-        ];
+     
         function createScreenDetail(ev, settings) {
             $mdDialog.show({
                 controller: 'createNewScreenController',
