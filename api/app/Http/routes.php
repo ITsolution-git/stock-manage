@@ -318,7 +318,7 @@ Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@scre
 Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
 Route::get('art/GetScreenset_detail/{position_id}', 'ArtController@GetScreenset_detail');
 Route::get('art/GetscreenColor/{screen_id}', 'ArtController@GetscreenColor');
-
+Route::post('art/UpdateColorScreen', 'ArtController@UpdateColorScreen');
 
 // AFFILIATES ROUTERS
 Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');

@@ -364,6 +364,7 @@ class ArtController extends Controller {
         if(!empty($screen_id))
         {
             $result = $this->art->GetscreenColor($screen_id);
+            $allcolors = array();
             if(count($result)>0)
             {
                 $color_array= array();
@@ -379,7 +380,7 @@ class ArtController extends Controller {
                     $value->color_name = $color_array[$value->color_name];
                     if(!empty($value->thread_color))
                     {
-                        $value->thread_color = $color_array[$value->thread_color];
+                        $value->thread_display = $color_array[$value->thread_color];
                     }
                 }
                             
@@ -391,6 +392,23 @@ class ArtController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
+    }
+    public function UpdateColorScreen()
+    {
+        $post = Input::all();
+
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+
+        if(!empty($post['id']))
+        {
+            $result = $this->art->UpdateColorScreen($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD);
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);        
     }
 }
 

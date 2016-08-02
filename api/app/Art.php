@@ -234,6 +234,27 @@ class Art extends Model {
 				->get();
 				return $query;
     }
+    public function UpdateColorScreen($post)
+    {
+    	if(!empty($post['thread_display']['id']))
+    	{
+    		$post['thread_color'] = $post['thread_display']['id'];
+    	}
+    	else if(empty($post['thread_display']))
+    	{
+    		$post['thread_color'] ='';
+    	}
 
+    	$result = DB::table('artjob_screencolors')
+    				->where('id','=',$post['id'])
+    				->update(array('thread_color'=>$post['thread_color'],
+    							   'inq'=>$post['inq'],
+    							   'stroke'=>$post['stroke'],
+    							   'squeegee'=>$post['squeegee'],
+    							   'mesh_thread_count'=>$post['mesh_thread_count'],
+    							   'head_location'=>$post['head_location']
+    							   ));
+    				return $result;
+    }
 
 }
