@@ -3,9 +3,9 @@
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back" ui-sref="app.art.orderView({id:ScreenSets[0].order_id})">BACK TO SCREENSET</a>
              <h2 flex="4" class="font-500">Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].client_id})">{{ScreenSets[0].client_company}}</a></h2>
-            <md-input-container md-no-float class="md-block" flex="3">
+            <!-- <md-input-container md-no-float class="md-block" flex="3">
                 <input aria-label="Client Name">
-            </md-input-container>
+            </md-input-container> -->
         </div>
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75" layout="column">
@@ -61,7 +61,7 @@
                             <div layout="row" layout-wrap>
                                 <div class="trans-box">
                                     <div>Pantone/Thread Color</div>
-                                    <span class="chrome-weight font-14">{{ colorsinf.name}}</span>
+                                    <span class="chrome-weight font-14">{{ colorsinf.thread_display}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Mesh/Thread Count</div>
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div layout-align="end start"  flex="5" layout="row">
-                            <md-button class="md-icon-button" aria-label="View Details">
+                            <md-button class="md-icon-button" ng-click="UpdateColorScreen($event,colorsinf)" aria-label="View Details">
                                 <md-icon md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
                         </div>
