@@ -46,7 +46,11 @@
 
                    if($scope.address_id > 0)
                    {
-                        $scope.getProductByAddress($scope.address_id);
+                        var addr_arr = {};
+                        addr_arr.id = $scope.address_id;
+                        addr_arr.shipping_id = $scope.shipping_id;
+                        $scope.getProductByAddress(addr_arr);
+                        $scope.getShippingAddress();
                    }
                 }
             });
@@ -61,13 +65,13 @@
             if($scope.shipping_id == undefined)
             {
                 $scope.shipping_id = 0;
-                $scope.assignedItems = [];      
+                $scope.assignedItems = [];
             }
 
             if($scope.shipping_id > 0)
             {
                 var combine_array = {};
-                combine_array.address_id = address.id;
+                combine_array.address_id = $scope.address_id;
                 combine_array.order_id = $scope.order_id;
                 
                 $http.post('api/public/shipping/getProductByAddress',combine_array).success(function(result, status, headers, config) {

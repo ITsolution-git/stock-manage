@@ -11,9 +11,10 @@ class Shipping extends Model {
 	
 	public function getShippingList($post)
 	{
-        $listArray = ['o.id','c.client_company','po.po_id'];
+        $listArray = ['o.id','c.client_company','po.po_id','s.id as shipping_id'];
 
         $shippingData = DB::table('orders as o')
+                         ->leftJoin('shipping as s', 's.order_id', '=', 'o.id')
                          ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                          ->leftJoin('purchase_order as po', 'o.id', '=', 'po.order_id')
                          ->select($listArray)

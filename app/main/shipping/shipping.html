@@ -99,7 +99,7 @@
                                         <td>{{ shipped.client_company}}</td>
                                         <td>{{ shipped.po_id}}</td>
                                         <td>{{ shipped.distributed}}/{{ shipped.total}}</td>
-                                        <td class="text-center" ui-sref="app.shipping.shipmentoverview"><a>SHIPMENT OVERVIEW</a></td>
+                                        <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:shipped.shipping_id})"><a>SHIPMENT OVERVIEW</a></td>
                                     </tr>                    
                                 </tbody>
                             </table>
