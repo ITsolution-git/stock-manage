@@ -378,6 +378,8 @@ class ArtController extends Controller {
                 foreach ($result as $value) 
                 {
                     $value->color_name = $color_array[$value->color_name];
+                    $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+
                     if(!empty($value->thread_color))
                     {
                         $value->thread_display = $color_array[$value->thread_color];

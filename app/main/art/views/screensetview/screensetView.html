@@ -100,15 +100,40 @@
     </div>
     <div layout="row" layout="nowrap" class="p-b-20 screen-bottom">
         <md-card class="m-b-20 " flex="30">
-            <md-card-title>
-                <md-card-title-text class="text-left">Mockup Image</md-card-title-text>
-            </md-card-title>
-            <md-card-content  layout="column" layout-padding class="min-height">
-                <table class="uploadfile">
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Mokup Image</span>
+                                        </md-card-header-text>
+
+                                        <md-menu>
+                                            <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item ng-click="ImagePopup('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" >
+                                                    <md-button>
+                                                        Change Image
+                                                    </md-button>
+                                                </md-menu-item>
+
+                                                <md-menu-item ng-click="deleteImage('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image,'id',ScreenSets[0].screen_id,ScreenSets[0].order_id)">
+                                                    <md-button>
+                                                        Remove Image
+                                                    </md-button>
+                                                </md-menu-item>
+
+                                            </md-menu-content>
+                                        </md-menu>
+                         </md-card-header>
+            <md-card-content ng-click="ImagePopup('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
+                
+                <img  ng-if="ScreenSets[0].mokup_image" ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
+                         
+                <table class="uploadfile" ng-show="ScreenSets[0].mokup_image == ''" >
                         <tr>
                             <td><span class="icon icon-plus font-50"></span></td>
                         </tr>
-                   </table>
+                </table>
             </md-card-content>
         </md-card>
         <md-card class="m-b-20 m-l-20" flex="30">

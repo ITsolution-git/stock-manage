@@ -224,7 +224,7 @@ class Art extends Model {
     public function GetscreenColor($screen_id)
     {
     	$query = DB::table('artjob_screencolors as acol')
-				->select('or.name as order_name','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','acol.*')
+				->select('or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','acol.*')
 				->join('artjob_screensets as ass','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
