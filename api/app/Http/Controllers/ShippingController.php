@@ -355,8 +355,9 @@ class ShippingController extends Controller {
     public function createPDF()
     {
         $post = Input::all();
+
         $shipping['shipping'] = json_decode($post['shipping']);
-        $shipping['shipping_type'] = json_decode($post['shipping_type']);
+//        $shipping['shipping_type'] = json_decode($post['shipping_type']);
         $shipping['shipping_items'] = json_decode($post['shipping_items']);
         $shipping['company_detail'] = json_decode($_POST['company_detail']);
         $shipping_boxes = json_decode($post['shipping_boxes']);
@@ -378,10 +379,10 @@ class ShippingController extends Controller {
         foreach ($shipping_boxes as $row) {
 
             $color_all_data[$row->color_name][$row->size] = $row->size;
-            $color_all_data[$row->color_name]['desc'] = $row->product_desc;
-            $color_all_data[$row->color_name][$row->size] = $row->qnty;
+            $color_all_data[$row->color_name]['desc'] = strip_tags($row->product_desc);
+            $color_all_data[$row->color_name][$row->size] = $row->box_qnty;
 
-            $total_qnty += $row->qnty;
+            $total_qnty += $row->box_qnty;
             $actual_total += $row->actual;
             $total_md += $row->md;
             $total_spoil += $row->spoil;

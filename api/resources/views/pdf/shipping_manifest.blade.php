@@ -20,7 +20,8 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td align="left" valign="top" width="25%">
-                        <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" />
+                        <!-- <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" /> -->
+                        <img alt="Logo" style="display:block; max-width:100%;" width="80" />
                     </td>
                     <td align="center" valign="top" width="25%" class="tableCol">
                         <span style="font-size:15px; line-height:15px;">
@@ -101,7 +102,7 @@
               <tbody class="color-grey">
               @foreach ($shipping_boxes as $box)
                 <tr>
-                  <td align="left" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"> {{$box->count}}</td>
+                  <td align="left" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"> {{$box->id}}</td>
                   <td align="center" valign="top" class="brdrBox" width="8%" style="border:1px solid #000000;"> {{$box->size}}</td>
                   <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
                   <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;"> {{$box->color_name}}</td>
