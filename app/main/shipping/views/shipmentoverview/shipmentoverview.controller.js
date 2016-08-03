@@ -12,6 +12,19 @@
         var vm = this;
 
         $scope.shipping_id = $stateParams.id;
+        var company_id = sessionService.get('company_id');
+
+        $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+                            
+            if(result.data.success == '1') 
+            {
+                $scope.allCompanyDetail =result.data.records;
+            } 
+            else
+            {
+                $scope.allCompanyDetail=[];
+            }
+        });
 
         $scope.getShippingOverview = function()
         {
@@ -65,9 +78,34 @@
 
         $scope.printLAbel = function()
         {
-            if($scope.shipping_label == false || $scope.shipping_label == undefined)
+            if($scope.shipping.address == '')
             {
-                notifyService.notify('error','Please select print option');
+                notifyService.notify('error','address is compulsory');
+                return false;
+            }
+            if($scope.shipping.address2 == '')
+            {
+                notifyService.notify('error','address2 is compulsory');
+                return false;
+            }
+            if($scope.shipping.city == '')
+            {
+                notifyService.notify('error','city is compulsory');
+                return false;
+            }
+            if($scope.shipping.state == '')
+            {
+                notifyService.notify('error','state is compulsory');
+                return false;
+            }
+            if($scope.shipping.zipcode == '')
+            {
+                notifyService.notify('error','zipcode is compulsory');
+                return false;
+            }
+            if($scope.shipping.shipping_type_id == '' || $scope.shipping.shipping_type_id == 0)
+            {
+                notifyService.notify('error','Please select shipping method');
                 return false;
             }
 
@@ -98,6 +136,44 @@
 
             document.body.appendChild(form);
             form.submit();*/
+        }
+
+        $scope.print_pdf = function(method)
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/createPDF';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var print_type = document.createElement('input');
+            print_type.name = 'print_type';
+            print_type.setAttribute('value', method);
+            form.appendChild(print_type);
+
+            var shipping = document.createElement('input');
+            shipping.name = 'shipping';
+            shipping.setAttribute('value', JSON.stringify($scope.shipping));
+            form.appendChild(shipping);
+
+            var shipping_items = document.createElement('input');
+            shipping_items.name = 'shipping_items';
+            shipping_items.setAttribute('value', JSON.stringify($scope.shippingItems));
+            form.appendChild(shipping_items);
+
+            var shipping_boxes = document.createElement('input');
+            shipping_boxes.name = 'shipping_boxes';
+            shipping_boxes.setAttribute('value', JSON.stringify($scope.shippingBoxes));
+            form.appendChild(shipping_boxes);
+
+            var input_company_detail = document.createElement('input');
+            input_company_detail.name = 'company_detail';
+            input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
+            form.appendChild(input_company_detail);
+
+            document.body.appendChild(form);
+            form.submit();
         }
     }
 })();

@@ -79,7 +79,7 @@
                 }
                 else
                 {
-                    var data = {"status": "error", "message": "Delete all boxes in the boxes tab to rebox shipment."}
+                    var data = {"status": "info", "message": "Delete all boxes in the boxes tab to rebox shipment."}
                     notifyService.notify(data.status, data.message);
                 }
                 $("#ajax_loader").hide();
