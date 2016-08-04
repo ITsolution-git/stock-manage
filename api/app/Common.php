@@ -327,7 +327,10 @@ class Common extends Model {
         $admindata = DB::table('users as usr')
                          ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
                          ->leftJoin('staff as s', 'usr.id', '=', 's.user_id')
-                         ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','s.prime_address1','s.prime_address_city','s.prime_address_state','s.prime_address_country','s.prime_address_zip','s.url','s.photo','s.oversize_value')
+                         ->leftJoin('company_detail as cd', 'usr.id', '=', 'cd.company_id')
+                         ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id',
+                                    's.prime_address1','s.prime_address_city','s.prime_address_state','s.prime_address_country','s.prime_address_zip',
+                                    's.url','s.photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip')
                          ->where('usr.id','=',$company_id)
                          ->where('usr.is_delete','=','1')
                          ->where('s.is_delete','=','1')

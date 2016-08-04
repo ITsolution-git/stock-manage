@@ -1,11 +1,11 @@
 <div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
     <div class="header "  layout="column" >
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back" ui-sref="app.art">BACK TO ART</a>
-            <h2 flex="4" class="font-500">Screens for Purchase Order #1234 for Client: </h2>
-            <md-input-container md-no-float class="md-block" flex="3">
+            <a class="link-back" ui-sref="app.art.orderView({id:ScreenSets[0].order_id})">BACK TO SCREENSET</a>
+             <h2 flex="4" class="font-500">Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].client_id})">{{ScreenSets[0].client_company}}</a></h2>
+            <!-- <md-input-container md-no-float class="md-block" flex="3">
                 <input aria-label="Client Name">
-            </md-input-container>
+            </md-input-container> -->
         </div>
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75" layout="column">
@@ -31,39 +31,41 @@
                             </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="5" layout="row">
+                    <!-- <div layout-align="end start"  flex="5" layout="row">
                         <md-button class="md-icon-button" aria-label="View Details">
                             <md-icon md-font-icon="icon-dots-vertical"></md-icon>
                         </md-button>
-                    </div>
+                    </div> -->
                 </md-card>
             </div>
             <div flex="25" layout="column">
-                <md-select ng-model="vm.basicForm.state" arial-label="Affiliate Status">
-                    <md-option value="0">Affiliate Status</md-option>
+                <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div>
+                <md-select ng-model="vm.basicForm.state" aria-label="Approval Status">
+                    <md-option value="1">Complete</md-option>
+                    <md-option value="0">Pending</md-option>
                 </md-select>
             </div>
         </div>
     </div>
     <div layout="row" class="pd10-R">
-        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">48750_front_8inch</span></div></div>
+        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">{{ScreenSets[0].screen_set}}</span></div></div>
         <!-- <div flex="25" class="text-right"><md-button class="md-raised md-primary" ng-click="vm.createScreenDetail()">Create New Screen</md-button></div> -->
     </div>
     <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15" >
-        <table class="tbl-typ2 col3-layout" ng-repeat="colorsinf in vm.colorsetinfo">
+        <table class="tbl-typ2 col3-layout" ng-repeat="colorsinf in ScreenSets">
             <tr>
                 <td width="97%">
-                    <div class="header-typ1">Color1</div>
+                    <div class="header-typ1">{{colorsinf.color_name}}</div>
                     <div layout="row">
                         <div flex="95" layout="column">
                             <div layout="row" layout-wrap>
                                 <div class="trans-box">
                                     <div>Pantone/Thread Color</div>
-                                    <span class="chrome-weight font-14">{{ colorsinf.threadColor}}</span>
+                                    <span class="chrome-weight font-14">{{ colorsinf.thread_display}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Mesh/Thread Count</div>
-                                    <span class="chrome-weight font-14">{{colorsinf.threadCount}}</span>
+                                    <span class="chrome-weight font-14">{{colorsinf.mesh_thread_count}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Stroke</div>
@@ -71,20 +73,20 @@
                                 </div>
                                 <div class="trans-box">
                                     <div>Ink Type</div>
-                                    <span class="chrome-weight font-14">{{colorsinf.inkType}}</span>
+                                    <span class="chrome-weight font-14">{{colorsinf.inq}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Head Location</div>
-                                    <span class="chrome-weight font-14">{{colorsinf.headLocation}}</span>
+                                    <span class="chrome-weight font-14">{{colorsinf.head_location}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Squeegee</div>
-                                    <span class="chrome-weight font-14">{{colorsinf.Squeegee}}</span>
+                                    <span class="chrome-weight font-14">{{colorsinf.squeegee}}</span>
                                 </div>
                             </div>
                         </div>
                         <div layout-align="end start"  flex="5" layout="row">
-                            <md-button class="md-icon-button" aria-label="View Details">
+                            <md-button class="md-icon-button" ng-click="UpdateColorScreen($event,colorsinf)" aria-label="View Details">
                                 <md-icon md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
                         </div>
@@ -98,15 +100,40 @@
     </div>
     <div layout="row" layout="nowrap" class="p-b-20 screen-bottom">
         <md-card class="m-b-20 " flex="30">
-            <md-card-title>
-                <md-card-title-text class="text-left">Mockup Image</md-card-title-text>
-            </md-card-title>
-            <md-card-content  layout="column" layout-padding class="min-height">
-                <table class="uploadfile">
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Mokup Image</span>
+                                        </md-card-header-text>
+
+                                        <md-menu>
+                                            <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item ng-click="ImagePopup('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" >
+                                                    <md-button>
+                                                        Change Image
+                                                    </md-button>
+                                                </md-menu-item>
+
+                                                <md-menu-item ng-click="deleteImage('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image,'id',ScreenSets[0].screen_id,ScreenSets[0].order_id)">
+                                                    <md-button>
+                                                        Remove Image
+                                                    </md-button>
+                                                </md-menu-item>
+
+                                            </md-menu-content>
+                                        </md-menu>
+                         </md-card-header>
+            <md-card-content ng-click="ImagePopup('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
+                
+                <img  ng-if="ScreenSets[0].mokup_image" ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
+                         
+                <table class="uploadfile" ng-show="ScreenSets[0].mokup_image == ''" >
                         <tr>
                             <td><span class="icon icon-plus font-50"></span></td>
                         </tr>
-                   </table>
+                </table>
             </md-card-content>
         </md-card>
         <md-card class="m-b-20 m-l-20" flex="30">

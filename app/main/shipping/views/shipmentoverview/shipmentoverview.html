@@ -39,7 +39,7 @@
                                <span class="font-14 chrome-weight gray-text">{{ shipping.shipping_id }}</span>
                             </div>
                             <div layout="column" flex="20">
-                                <div>Product</div>
+                                <div>Location</div>
                                 <span class="font-14 chrome-weight gray-text">{{ shipping.description }}</span>
                             </div>
                             <div layout="column" flex="20">
@@ -69,9 +69,9 @@
                                 <span class="font-14 chrome-weight gray-text">{{ shipping.date_shipped }}</span>
                             </div>
                         </div>
-                        <!-- <div layout-align="end" layout="row">
-                            <a>EDIT</a>
-                        </div> -->
+                        <div layout-align="end" layout="row">
+                            <a ui-sref="app.shipping.shipmentdetails({id: shipping.shipping_id})">EDIT</a>
+                        </div>
                     </md-card-content>
                 </md-card>
             </div>
@@ -140,14 +140,17 @@
                     <div class="table-title-text h2 text-semibold">Printing Option</div>
                 </div>
                 <div layout="row" flex="100" class="pd15-TLR">
-<!--                     <div layout="column" flex="25">
-                        <md-checkbox aria-label="Select All" aria-label="Select All">Manifest</md-checkbox>
+                    <div layout="column" flex="25">
+                        <!-- <md-checkbox aria-label="Select All" aria-label="Select All">Manifest</md-checkbox> -->
+                        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="print_pdf('manifest')"><span class="ng-scope">Manifest</span></button>
                     </div>
                     <div layout="column" flex="25">
-                        <md-checkbox aria-label="Select All" aria-label="Select All">Shipping Report</md-checkbox>
-                    </div> -->
+                        <!-- <md-checkbox aria-label="Select All" aria-label="Select All">Shipping Report</md-checkbox> -->
+                        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="print_pdf('report')"><span class="ng-scope">Shipping Report</span></button>
+                    </div>
                     <div layout="column" flex="25">
-                        <md-checkbox aria-label="Select All" aria-label="Select All" ng-model="shipping_label">Shipping Label</md-checkbox>
+                        <!-- <md-checkbox aria-label="Select All" aria-label="Select All" ng-model="shipping_label">Shipping Label</md-checkbox> -->
+                        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="print_pdf('label')"><span class="ng-scope">Shipping Label</span></button>
                     </div>
                 </div>
             </div>

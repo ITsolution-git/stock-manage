@@ -68,7 +68,7 @@ class Art extends Model {
     public function ScreenSets($post) // ART SCREEN DETAIL PAGE FOR SCREEN SETS
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.screen_location','ass.screen_active','ass.order_id')
+				->select('or.name as order_name','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
 				->join('art as art','art.order_id','=','ass.order_id')
 				->join('orders as or','art.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -176,10 +176,11 @@ class Art extends Model {
         return $returnData;
     }
     
+    //ARTDETAIL PAGE SCREEN SETS LISTING.
     public function GetScreenset_detail($position_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select('ord.id as order_id','od.id as design_id','odp.color_stitch_count','mt.value','ass.*')
+				->select(DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'ord.id as order_id','od.id as design_id','odp.color_stitch_count','mt.value','ass.*')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
 				->join('order_design as od','odp.design_id','=','od.id')
 				->join('orders as ord','ord.id','=','od.order_id')
@@ -190,6 +191,7 @@ class Art extends Model {
 
 				return $query;
     }
+    // CREATE/ACTIVE SCREEN SETS
     public function create_screen($post)
     {
     	//echo "<pre>"; print_r($post); echo "</pre>"; die;
@@ -217,4 +219,42 @@ class Art extends Model {
     	}
     	return $result;
     }
+
+ 	//SCREEN SETS DETAIL PAGE COLOR LISTING
+    public function GetscreenColor($screen_id)
+    {
+    	$query = DB::table('artjob_screencolors as acol')
+				->select('or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','acol.*')
+				->join('artjob_screensets as ass','acol.screen_id','=','ass.id')
+				->join('orders as or','ass.order_id','=','or.id')
+				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
+				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
+				->where('ass.id','=',$screen_id)
+				->groupby('acol.id')
+				->get();
+				return $query;
+    }
+    public function UpdateColorScreen($post)
+    {
+    	if(!empty($post['thread_display']['id']))
+    	{
+    		$post['thread_color'] = $post['thread_display']['id'];
+    	}
+    	else if(empty($post['thread_display']))
+    	{
+    		$post['thread_color'] ='';
+    	}
+
+    	$result = DB::table('artjob_screencolors')
+    				->where('id','=',$post['id'])
+    				->update(array('thread_color'=>$post['thread_color'],
+    							   'inq'=>$post['inq'],
+    							   'stroke'=>$post['stroke'],
+    							   'squeegee'=>$post['squeegee'],
+    							   'mesh_thread_count'=>$post['mesh_thread_count'],
+    							   'head_location'=>$post['head_location']
+    							   ));
+    				return $result;
+    }
+
 }

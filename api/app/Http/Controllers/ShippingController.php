@@ -355,8 +355,9 @@ class ShippingController extends Controller {
     public function createPDF()
     {
         $post = Input::all();
+
         $shipping['shipping'] = json_decode($post['shipping']);
-        $shipping['shipping_type'] = json_decode($post['shipping_type']);
+//        $shipping['shipping_type'] = json_decode($post['shipping_type']);
         $shipping['shipping_items'] = json_decode($post['shipping_items']);
         $shipping['company_detail'] = json_decode($_POST['company_detail']);
         $shipping_boxes = json_decode($post['shipping_boxes']);
@@ -378,10 +379,10 @@ class ShippingController extends Controller {
         foreach ($shipping_boxes as $row) {
 
             $color_all_data[$row->color_name][$row->size] = $row->size;
-            $color_all_data[$row->color_name]['desc'] = $row->product_desc;
-            $color_all_data[$row->color_name][$row->size] = $row->qnty;
+            $color_all_data[$row->color_name]['desc'] = strip_tags($row->product_desc);
+            $color_all_data[$row->color_name][$row->size] = $row->box_qnty;
 
-            $total_qnty += $row->qnty;
+            $total_qnty += $row->box_qnty;
             $actual_total += $row->actual;
             $total_md += $row->md;
             $total_spoil += $row->spoil;
@@ -516,7 +517,8 @@ class ShippingController extends Controller {
 
             if(empty($product_address_data))
             {
-                $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product']['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_data[0]->shipping_id));
+                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product']['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
             }
             else
             {
@@ -538,7 +540,8 @@ class ShippingController extends Controller {
         }
         else
         {
-            $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id']));
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+            $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
             $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
         }
         $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['product']['id']),array('remaining_qnty' => $remaining_qty));

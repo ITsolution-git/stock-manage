@@ -358,4 +358,61 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+
+    public function GetscreenColor($screen_id)
+    {
+        if(!empty($screen_id))
+        {
+            $result = $this->art->GetscreenColor($screen_id);
+            $allcolors = array();
+            if(count($result)>0)
+            {
+                $color_array= array();
+                $allcolors = $this->common->getAllColorData();
+                foreach ($allcolors as $key => $value) 
+                {
+                    $color_array[$value->id]= $value->name;
+                    $allcolors[$key]->name = strtolower($value->name);
+                }
+               
+                foreach ($result as $value) 
+                {
+                    $value->color_name = $color_array[$value->color_name];
+                    $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+
+                    if(!empty($value->thread_color))
+                    {
+                        $value->thread_display = $color_array[$value->thread_color];
+                    }
+                }
+                            
+            }
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'allcolors'=>$allcolors);
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function UpdateColorScreen()
+    {
+        $post = Input::all();
+
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+
+        if(!empty($post['id']))
+        {
+            $result = $this->art->UpdateColorScreen($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD);
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);        
+    }
 }
+
+
+

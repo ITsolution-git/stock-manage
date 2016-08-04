@@ -11,9 +11,10 @@ class Shipping extends Model {
 	
 	public function getShippingList($post)
 	{
-        $listArray = ['o.id','c.client_company','po.po_id'];
+        $listArray = ['o.id','c.client_company','po.po_id','s.id as shipping_id'];
 
         $shippingData = DB::table('orders as o')
+                         ->leftJoin('shipping as s', 's.order_id', '=', 'o.id')
                          ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                          ->leftJoin('purchase_order as po', 'o.id', '=', 'po.order_id')
                          ->select($listArray)
@@ -272,10 +273,15 @@ class Shipping extends Model {
     {
         $whereBoxConditions = ['sb.shipping_id' => $data['shipping_id']];
 
-        $listItemsArray = ['sb.id','sb.box_qnty','sb.tracking_number',DB::raw('COUNT(bi.id) as number_of_box'),'sb.box_qnty as boxed_qnty'];
+        $listItemsArray = ['sb.id','sb.box_qnty','sb.tracking_number',DB::raw('COUNT(bi.id) as number_of_box'),'sb.box_qnty as boxed_qnty','c.name as color_name','p.description as product_desc','pd.size','sb.md','sb.spoil','sb.actual','mt.value as size_group_name','p.name as product_name'];
 
         $shippingBoxes = DB::table('shipping_box as sb')
                         ->leftJoin('box_product_mapping as bi','bi.box_id','=','sb.id')
+                        ->leftJoin('purchase_detail as pd','bi.item_id','=','pd.id')
+                        ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
+                        ->leftJoin('products as p','pd.product_id','=','p.id')
+                        ->leftJoin('misc_type as mt','mt.id','=','dp.size_group_id')
+                        ->leftJoin('color as c','pd.color_id','=','c.id')
                         ->select($listItemsArray)
                         ->where($whereBoxConditions)
                         ->GroupBy('sb.id')

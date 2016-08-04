@@ -40,8 +40,10 @@
                 </md-card>
             </div>
             <div flex="25" layout="column">
-                <md-select ng-model="screensetPOinfo" aria-label="Affiliate Status">
-                    <md-option value="0">Affiliate Status</md-option>
+                 <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div>
+                <md-select ng-model="screensetPOinfo" aria-label="Approval Status">
+                    <md-option value="1">Complete</md-option>
+                    <md-option value="0">Pending</md-option>
                 </md-select>
             </div>
         </div>
@@ -83,7 +85,7 @@
                                 </div>
                                 <div class="trans-box">
                                     <div>Number of Screens</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_count}}</span>
+                                    <span class="chrome-weight font-14">{{sets.screen_total}}</span>
                                 </div>
                                 <div class="trans-box">
                                     <div>Lines Per Inch</div>
@@ -94,7 +96,7 @@
                                     <span class="chrome-weight font-14">{{sets.screen_height}}</span>
                                 </div>
                                 <div class="trans-box">
-                                    <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">View Screen</md-button>
+                                    <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
                                 </div>
                             </div>
                         </div>
