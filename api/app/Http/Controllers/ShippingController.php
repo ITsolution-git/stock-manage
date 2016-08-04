@@ -642,7 +642,49 @@ class ShippingController extends Controller {
 
     public function createLabel()
     {
-        $post = Input::all();
+        $shipment = new \RocketShipIt\Shipment('STAMPS');
+        $shipment->setParameter('toCompany', 'RocketShipIt');
+        $shipment->setParameter('toName', 'John Doe');
+        $shipment->setParameter('toAddr1', '111 W Legion');
+        $shipment->setParameter('toCity', 'Whitehall');
+        $shipment->setParameter('toState', 'MT');
+        $shipment->setParameter('toCode', '59759');
+        $shipment->setParameter('referenceValue', '123adsf');
+
+        $rate = new \RocketShipIt\Rate('STAMPS');
+        $rate->setParameter('toCode','59759');
+        $rate->setParameter('weight','5');
+        $response = $rate->getAllRates();
+
+        $rates = $response->Rates;
+        $rate = $rates->Rate;
+
+        # Select the rate/service you want
+        # from a list of all available
+        $package = $rate[3];
+
+        # Remove all addons
+        $package->AddOns = null;
+
+        # Add the addons you want for this
+        # shipment
+        $addons = array();
+        $a = new \stdClass();
+        $a->AddOnType = 'US-A-DC';
+        array_push($addons, $a);
+        $package->AddOns = $addons;
+        //print_r($package);
+
+        // The rate can suggest a new zipcode
+        // Set this new zipcode on the shipment to avoid:
+        // "Rate ToZIPCode and Destination Address ZIPCode field must match."
+        $shipment->setParameter('toCode', $package->ToZIPCode);
+
+        $shipment->addPackageToShipment($package);
+
+        $response = $shipment->submitShipment();
+
+        /*$post = Input::all();
         $shipping = json_decode($post['shipping']);
 
         if($shipping->shipping_type_id == 'Fedex')
@@ -651,7 +693,7 @@ class ShippingController extends Controller {
         }
         else
         {
-            $shipment = new \RocketShipIt\Shipment('STAMPS');
+            $shipment = new \RocketShipIt\Shipment('USPS');
         }
 
         $shipment->setParameter('toCompany', $shipping->client_company);
@@ -666,7 +708,7 @@ class ShippingController extends Controller {
         {
             $shipment->setParameter('referenceValue', '123adsf');
 
-            $rate = new \RocketShipIt\Rate('STAMPS');
+            $rate = new \RocketShipIt\Rate('USPS');
             $rate->setParameter('toCode',$shipping->zipcode);
             $rate->setParameter('weight','5');
             $response = $rate->getAllRates();
@@ -713,7 +755,7 @@ class ShippingController extends Controller {
             header('Content-Type: application/force-download');
             echo base64_decode($label);
             //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
-        }
+        }*/
     }
 
     public function checkAddressValid()
