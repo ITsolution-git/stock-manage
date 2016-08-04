@@ -82,11 +82,38 @@ class Product extends Model {
         if(isset($data['where']['search']))
         {
             $search = $data['where']['search'];
-            $sql = DB::table('products')
+
+             $brand = DB::table('brand')
+                        ->select(DB::raw('GROUP_CONCAT(id) as brand_id'))
+                        ->where('brand_name', 'LIKE', '%'.$search.'%')
+                        ->get();
+
+            if(is_numeric($search) && $data['where']['vendor_id'] == 1)
+            {
+                 $sql = DB::table('products')
+                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                        ->where('id','=',$search)
+                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
+                        ->get();
+            }
+            else if($data['where']['vendor_id'] == 1 && count($brand)>0)
+            {
+                $brand_id_array = explode(",",$brand[0]->brand_id);
+                $sql = DB::table('products')
+                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                        ->whereIn('brand_id' ,$brand_id_array )
+                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
+                        ->get();
+            }
+            else
+            {
+                $sql = DB::table('products')
                         ->select(DB::raw('GROUP_CONCAT(id) as products'))
                         ->where('name', 'LIKE', '%'.$search.'%')
                         ->where('vendor_id' , '=', $data['where']['vendor_id'])
                         ->get();
+            }
+            
             if(count($sql)>0)
             {
                 $product_id_array = explode(",",$sql[0]->products);
