@@ -41,7 +41,7 @@
             <div flex="25" layout="column">
                 <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div>
                 <md-select ng-model="vm.basicForm.state" aria-label="Approval Status">
-                    <md-option value="1">Complete</md-option>
+                    <md-option value="1">Approved</md-option>
                     <md-option value="0">Pending</md-option>
                 </md-select>
             </div>
@@ -85,10 +85,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div layout-align="end start"  flex="5" layout="row">
-                            <md-button class="md-icon-button" ng-click="UpdateColorScreen($event,colorsinf)" aria-label="View Details">
-                                <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                            </md-button>
+                        <div layout-align="end start"  flex="5" layout="row"  style="margin-top: 30px;">
+                            <div  class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="UpdateColorScreen($event,colorsinf)">Edit Screen Detail</md-button></div>
                         </div>
                     </div>
                 </td>
