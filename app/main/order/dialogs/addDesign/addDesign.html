@@ -15,28 +15,14 @@
                 </md-input-container>
 
                  <md-input-container class="md-block first-box" flex-gt-sm>
-                    <input placeholder="Colors" flex="80" ng-model="design.colors_count" valid-number>
+                    <input placeholder="Positions Count" flex="80" ng-model="design.colors_count" valid-number>
                 </md-input-container>
 
                 <div class="content-heading">
                     <span class="md-title">Dates</span>
                 </div>
-                <div>
-                    <span class="grey-color">
-                        In Hands By
-                    </span>
-                </div>
-                <div class="date-input">
-                    <input kendo-date-picker id="hands_date" ng-model="design.hands_date" k-ng-model="dateObject" placeholder="Dates"/>
-                </div>
-                <div>
-                    <span class="grey-color">
-                        Shipped Date
-                    </span>
-                </div>
-               <div class="date-input">
-                    <input kendo-date-picker ng-model="design.shipping_date" k-ng-model="dateObject1" placeholder="Dates"/>
-                </div>
+                
+                
                 <div>
                     <span class="grey-color">
                         Start Date
@@ -45,6 +31,28 @@
                 <div class="date-input">
                     <input kendo-date-picker ng-model="design.start_date" k-ng-model="dateObject2" placeholder="Dates"/>
                 </div>
+
+
+                <div>
+                    <span class="grey-color">
+                        Shipped Date
+                    </span>
+                </div>
+               <div class="date-input">
+                    <input kendo-date-picker ng-model="design.shipping_date" k-ng-model="dateObject1" placeholder="Dates"/>
+                </div>
+
+
+                <div>
+                    <span class="grey-color">
+                        In Hands By
+                    </span>
+                </div>
+                <div class="date-input">
+                    <input kendo-date-picker id="hands_date" ng-model="design.hands_date" k-ng-model="dateObject" placeholder="Dates"/>
+                </div>
+
+
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">

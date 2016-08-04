@@ -67,6 +67,11 @@
             $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
                
                 if(result.data.success == '1') {
+
+                    $scope.position_array_count = result.data.order_design_position.length;
+
+
+
                     $scope.order_design_position = result.data.order_design_position;
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
                 }
@@ -118,6 +123,9 @@
             obj[$scope.name_filed] =  value;
             position_main_data.data = angular.copy(obj);
 
+           
+
+
             var condition_obj = {};
             condition_obj[match_condition] =  id;
             position_main_data.cond = angular.copy(condition_obj);
@@ -129,6 +137,8 @@
             if(column_name == 'position_id') {
                 position_main_data.position = $scope.miscData.position[value].value;
             } 
+
+
           
             $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
 
@@ -148,6 +158,13 @@
                     $scope.order_design_position[key].duplicate_position_id = $scope.miscData.position[value].id;
                   
                 }
+
+                if(column_name == 'color_stitch_count') {
+                    $scope.order_design_position[key].screen_fees_qnty = value;
+                  
+                }
+
+
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
                 notifyService.notify(data.status, data.message);
                 $scope.designProductData();
@@ -162,6 +179,7 @@
 
         $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
                   $scope.miscData = result.data.records;
+
         });
 
         var vendor_data = {};
@@ -205,7 +223,7 @@
         
 
 
-        function openPositionDialog(ev,order_id)
+        function openPositionDialog(ev,order_id,quantity)
         {
             
                 $mdDialog.show({
@@ -217,7 +235,8 @@
                     clickOutsideToClose: true,
                     locals: {
                         event: ev,
-                        order_id: order_id
+                        order_id: order_id,
+                        quantity: quantity
                     },
                     onRemoving : $scope.designPosition
                 });
