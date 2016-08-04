@@ -17,6 +17,10 @@
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    
+
+        
         <script>
             var timer;
             function loadscreen()
@@ -104,6 +108,7 @@
     <script src="app/core/directives/ms-datepicker-fix/ms-datepicker-fix.directive.js"></script>
     <script src="app/core/directives/ms-card/ms-card.directive.js"></script>
      <script src="app/core/directives/validation.js"></script>
+     <script src="app/core/directives/ConnectToQuickBooksDirective.js"></script>
 
 
 

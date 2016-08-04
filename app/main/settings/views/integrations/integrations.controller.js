@@ -10,6 +10,8 @@
     /** @ngInject */
     function IntegrationsController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
+
+
             $scope.company_id = sessionService.get('company_id');
             var originatorEv;
             var vm = this ;
@@ -17,6 +19,8 @@
             vm.ssActivewearDialog = ssActivewearDialog ;
             vm.authorizeNet = authorizeNet ;
             vm.upsDialog = upsDialog ;
+            vm.quickbookActivewearDialog=quickbookActivewearDialog;
+            vm.quickbookDisconnect = quickbookDisconnect;
 
             vm.openMenu = function ($mdOpenMenu, ev) {
                 originatorEv = ev;
@@ -96,6 +100,32 @@
                     }
                 });
             }
+
+
+             function quickbookActivewearDialog(ev, settings)
+            {
+
+
+                  $http.get('api/public/qbo/qboConnect').success(function(result, status, headers, config) 
+              {
+                 
+                  
+              });
+            }
+
+            function quickbookDisconnect(ev, settings)
+            {
+
+
+                  $http.get('api/public/qbo/disconnect').success(function(result, status, headers, config) 
+              {
+                 $state.reload();
+                  
+              });
+            }
+
+
+            
 
             function authorizeNet(ev, settings)
             {
