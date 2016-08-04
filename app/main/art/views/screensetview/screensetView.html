@@ -57,7 +57,7 @@
                 <td width="97%">
                     <div class="header-typ1">{{colorsinf.color_name}}</div>
                     <div layout="row">
-                        <div flex="95" layout="column">
+                        <div flex="95" layout="column" ng-show="colorsinf.is_complete==1">
                             <div layout="row" layout-wrap>
                                 <div class="trans-box">
                                     <div>Pantone/Thread Color</div>
@@ -85,7 +85,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div layout-align="end start"  flex="5" layout="row"  style="margin-top: 30px;">
+                        <div flex="95" layout="column" ng-show="colorsinf.is_complete==0">
+                            <div layout="row" layout-wrap>
+                                <h1 style="color:#cccccc; padding-left: 10px;"> Screen Details Not Yet Entered </h1>
+                            </div>
+                        </div>
+                        <div layout-align="end start"  flex="5" layout="row" >
                             <div  class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="UpdateColorScreen($event,colorsinf)">Edit Screen Detail</md-button></div>
                         </div>
                     </div>
