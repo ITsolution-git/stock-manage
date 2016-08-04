@@ -336,3 +336,18 @@ Route::post('distribution/removeFromDistribute', 'DistributionController@removeF
 Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
 Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
 Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');
+
+/*
+Route::get('qbo/oauth','QuickBookController@qboOauth');
+Route::get('qbo/success','QuickBookController@qboSuccess');
+Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
+Route::get('qbo/qboConnect','QuickBookController@qboConnect');
+Route::get('qbo/createCustomer','QuickBookController@createCustomer');*/
+
+
+Route::get('qbo/oauth','QuickBookController@qboOauth');
+Route::get('qbo/success','QuickBookController@qboSuccess');
+Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
+Route::get('qbo/qboConnect','QuickBookController@qboConnect');
+Route::get('qbo/createCustomer','QuickBookController@createCustomer');
+
