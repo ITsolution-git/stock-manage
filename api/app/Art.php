@@ -253,7 +253,8 @@ class Art extends Model {
     							   'stroke'=>$post['stroke'],
     							   'squeegee'=>$post['squeegee'],
     							   'mesh_thread_count'=>$post['mesh_thread_count'],
-    							   'head_location'=>$post['head_location']
+    							   'head_location'=>$post['head_location'],
+    							   'is_complete'=>'1'
     							   ));
     				return $result;
     }
