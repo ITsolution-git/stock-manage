@@ -231,6 +231,7 @@ class Art extends Model {
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
 				->where('ass.id','=',$screen_id)
 				->groupby('acol.id')
+				->orderBy('acol.head_location','asc')
 				->get();
 				return $query;
     }
