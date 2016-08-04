@@ -362,9 +362,9 @@ return array(
     'usps' => array(
 
         // USPS userID
-        'userid' => 'pdave@codal.com',
+        'userid' => '486ABC001734',
         'service' => 'Priority',
-        'imageType' => 'PDF',
+        'imageType' => 'PNG',
 
     ),
 
@@ -381,8 +381,8 @@ return array(
     'stamps' => array(
 
         // USPS Stamps.com Credentials
-        'username' => 'YOUR_STAMPS_USERNAME',
-        'password' => 'YOUR_STAMPS_PASSWORD',
+        'username' => 'Codal-001',
+        'password' => 'postage1',
 
         // Label Image Type
         //  Zpl
@@ -394,7 +394,7 @@ return array(
         //  Gif
         //  Png
         //  Auto
-        'imageType' => 'Zpl',
+        'imageType' => 'Png',
 
         'packagingType' => '',
 

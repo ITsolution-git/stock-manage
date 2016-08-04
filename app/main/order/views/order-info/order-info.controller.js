@@ -370,8 +370,10 @@
                 {
                     if(result.data.success=='1')
                     {
+                        $scope.orderDetail();
                         notifyService.notify('success',result.data.message);
                         $scope.order.is_complete = '0';
+
                     }
                     else
                     {
