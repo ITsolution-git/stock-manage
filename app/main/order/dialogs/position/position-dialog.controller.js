@@ -6,8 +6,12 @@
         .module('app.order')
         .controller('PositionDialogController', PositionDialogController);
 /** @ngInject */
-    function PositionDialogController(order_id,$stateParams,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService)
+    function PositionDialogController(order_id,quantity,$stateParams,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService)
     {
+      
+            $scope.order_design_position={};
+            $scope.order_design_position.qnty = quantity;
+
             var misc_list_data = {};
             var condition_obj = {};
             condition_obj['company_id'] =  sessionService.get('company_id');
@@ -17,20 +21,9 @@
                       $scope.miscData = result.data.records;
             });
 
-            $scope.GetValue = function (fruit) {
-                var fruitId = $scope.order_design_position.position_id;
-                var fruitName = $.grep($scope.miscData, function (fruit) {
-                    return fruit.id == fruitId;
-                })[0].value;
-                $window.alert("Selected Value: " + fruitId + "\nSelected Text: " + fruitName);
-            }
-
-
-
-
+      
                  $scope.save = function (positionData) {
- 
-         
+                    
                    if(positionData == undefined) {
 
                       var data = {"status": "error", "message": "Position and Quantity should not be blank"}

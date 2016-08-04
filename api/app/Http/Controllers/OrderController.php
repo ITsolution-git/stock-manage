@@ -391,6 +391,12 @@ class OrderController extends Controller {
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
           $date_field = (empty($post['date_field']))? '':$post['date_field']; 
+
+          if($post['column_name'] == 'color_stitch_count') {
+            $post['data']['screen_fees_qnty'] = $post['data']['color_stitch_count'];
+          }  
+
+         
           
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
 

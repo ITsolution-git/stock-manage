@@ -11,7 +11,7 @@
                     <md-card-content flex="80" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
-                                <div>Total # of Colors</div>
+                                <div>Positions Count</div>
                                 <span>{{designInforamtion.colors_count}}</span>
                             </div>
                             <div class="trans-box">
@@ -87,7 +87,7 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <div flex="20">
+                        <div flex="20" >
                             <md-input-container class="width100">
                                 <label>Placement Type</label>
                                 <md-select ng-model="order_design_position.placement_type" ng-change="updateDesignPosition('placement_type',order_design_position.id,order_design_position.placement_type,'order_design_position','id',key)">
@@ -97,8 +97,11 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <div flex="20">
+                        <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
+                              
+                           
                             <md-input-container class="width100">
+
                                 <label>DtG Size</label>
                                 <md-select ng-model="order_design_position.dtg_size" ng-change="updateDesignPosition('dtg_size',order_design_position.id,order_design_position.dtg_size,'order_design_position','id',key)">
                                     <md-option  ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value="{{misc_dtgsize.id}}">
@@ -107,7 +110,7 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <div flex="20">
+                        <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
                             <md-input-container class="width100">
                                 <label>DtG on </label>
                                 <md-select ng-model="order_design_position.dtg_on" ng-change="updateDesignPosition('dtg_on',order_design_position.id,order_design_position.dtg_on,'order_design_position','id',key)">
@@ -256,8 +259,8 @@
                 </div>
             </div>
             
-            <div class="text-right" ng-show="order_number == '' && is_complete == '0' ">
-                <md-button  class="bg-grey md-raised" ng-click="openPositionDialog($event,designInforamtion.order_id)">
+            <div class="text-right" ng-show="order_number == '' && is_complete == '0' && position_array_count != designInforamtion.colors_count">
+                <md-button  class="bg-grey md-raised" ng-click="openPositionDialog($event,designInforamtion.order_id,order_design_position[0].qnty)">
                             ADD New Position
                         </md-button>
             </div>
