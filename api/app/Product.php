@@ -105,14 +105,15 @@ class Product extends Model {
             else if($data['where']['vendor_id'] == 1 && count($brand)>0)
             {
                 $brand_id_array = explode(",",$brand[0]->brand_id);
+
                 $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'));
-                        $sql = $sql->orWhere(function($query) use($search,$brand_id_array)
+                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                        ->where('vendor_id' , '=', $data['where']['vendor_id']);
+                        $sql = $sql->Where(function($query) use($search)
                         {
-                              $query->orWhere('name', 'LIKE', '%'.$search.'%')
-                              ->whereIn('brand_id' ,$brand_id_array);
+                            $query->orWhere('name', 'LIKE', '%'.$search.'%');
                         });
-                        $sql = $sql->where('vendor_id' , '=', $data['where']['vendor_id'])
+                        $sql = $sql->orWhereIn('brand_id' ,$brand_id_array)
                         ->get();
             }
             else

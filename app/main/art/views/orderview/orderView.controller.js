@@ -96,6 +96,7 @@
                                 {
                                     if( !angular.isUndefined(id))
                                     {
+                                        $('#remove_color').val('');
                                         $scope.initial_add_color.push({id:id,color_name:color_name});
                                     }
                                 }

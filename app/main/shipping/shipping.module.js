@@ -12,6 +12,13 @@
         // State
         $stateProvider
             .state('app.shipping', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url    : '/shipping',
                 views  : {
                     'content@app': {
@@ -26,6 +33,13 @@
                     }
                 }
             }).state('app.shipping.orderwaitship', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/orderwaitship/:id',
                 views: {
                     'content@app': {
@@ -34,6 +48,13 @@
                     }
                 }
             }).state('app.shipping.shipmentdetails', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/shipmentdetails/:id',
                 views: {
                     'content@app': {
@@ -42,6 +63,13 @@
                     }
                 }
             }).state('app.shipping.boxingdetail', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/boxingdetail/:id',
                 views: {
                     'content@app': {
@@ -50,6 +78,13 @@
                     }
                 }
             }).state('app.shipping.shipmentoverview', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
                 url  : '/shipmentoverview/:id',
                 views: {
                     'content@app': {
