@@ -9,7 +9,7 @@
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
-            <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
+            <div layout="column" layout-wrap="nowrap"  layout-padding>
                
                 <md-input-container class="width100">
                     <label>Position</label>
@@ -18,6 +18,16 @@
                             {{misc_pos.value}}
                         </md-option>
                     </md-select>
+                </md-input-container>
+
+
+                <md-input-container class="width100">
+                                <label>Placement Type</label>
+                                <md-select ng-model="order_design_position.placement_type">
+                                    <md-option  ng-repeat="misc_placement in miscData.placement_type" value="{{misc_placement.id}}">
+                                        {{misc_placement.value}}
+                                    </md-option>
+                                </md-select>
                 </md-input-container>
 
 

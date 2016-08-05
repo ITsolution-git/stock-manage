@@ -39,6 +39,11 @@
                       var data = {"status": "error", "message": "Position should not be blank"}
                               notifyService.notify(data.status, data.message);
                               return false;
+                    }else if(positionData.placement_type == undefined) {
+
+                      var data = {"status": "error", "message": "Placement Type should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
                     }
 
               var combine_array_id = {};

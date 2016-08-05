@@ -154,13 +154,23 @@
                         } 
 
                 if(column_name == 'position_id') {
-                    $scope.order_design_position[key].position_name = $scope.miscData.position[value].value;
+                    $scope.order_design_position[key].position_header_name = $scope.miscData.position[value].value +'-'+ $scope.order_design_position[key].qnty+'-'+ $scope.order_design_position[key].color_stitch_count+'-'+ $scope.order_design_position[key].placement_type_name;
                     $scope.order_design_position[key].duplicate_position_id = $scope.miscData.position[value].id;
                   
                 }
 
                 if(column_name == 'color_stitch_count') {
                     $scope.order_design_position[key].screen_fees_qnty = value;
+                    $scope.order_design_position[key].position_header_name = $scope.order_design_position[key].position_name +'-'+ $scope.order_design_position[key].qnty+'-'+ value +'-'+ $scope.order_design_position[key].placement_type_name;
+                  
+                }
+
+                if(column_name == 'placement_type') {
+                    $scope.order_design_position[key].position_header_name = $scope.order_design_position[key].position_name +'-'+ $scope.order_design_position[key].qnty+'-'+ $scope.order_design_position[key].color_stitch_count +'-'+ $scope.miscData.placement_type[value].value;
+                }
+
+                if(column_name == 'qnty') {
+                    $scope.order_design_position[key].position_header_name = $scope.order_design_position[key].position_name +'-'+ value +'-'+ $scope.order_design_position[key].color_stitch_count +'-'+ $scope.order_design_position[key].placement_type_name;
                   
                 }
 

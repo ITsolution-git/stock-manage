@@ -1757,6 +1757,7 @@ class OrderController extends Controller {
          $post['positiondata']['position_id'] = $post['positionData']['position_id'];
          $post['positiondata']['design_id'] = $post['design_id'];
          $post['positiondata']['qnty'] = $post['positionData']['qnty'];
+         $post['positiondata']['placement_type'] = $post['positionData']['placement_type'];
 
          
          
