@@ -29,7 +29,7 @@
                     </span>
                 </div>
                 <div class="date-input">
-                    <input kendo-date-picker ng-model="design.start_date" k-ng-model="dateObject2" placeholder="Dates"/>
+                    <input kendo-date-picker ng-model="design.start_date" k-ng-model="dateObject2" placeholder="Dates" ng-change="updateStartDate()"/>
                 </div>
 
 
@@ -39,7 +39,7 @@
                     </span>
                 </div>
                <div class="date-input">
-                    <input kendo-date-picker ng-model="design.shipping_date" k-ng-model="dateObject1" placeholder="Dates"/>
+                    <input kendo-date-picker ng-model="design.shipping_date" k-ng-model="dateObject1" placeholder="Dates" k-min = "minDate" k-rebind = "minDate" ng-change="updateshipDate()"/>
                 </div>
 
 
@@ -49,7 +49,7 @@
                     </span>
                 </div>
                 <div class="date-input">
-                    <input kendo-date-picker id="hands_date" ng-model="design.hands_date" k-ng-model="dateObject" placeholder="Dates"/>
+                    <input kendo-date-picker id="hands_date" ng-model="design.hands_date" k-ng-model="dateObject" placeholder="Dates" k-min = "minShipDate" k-rebind = "minShipDate"/>
                 </div>
 
 
