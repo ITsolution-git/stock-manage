@@ -433,10 +433,11 @@ public function saveColorSize($post)
 
         $whereOrderPositionConditions = ['odp.design_id' => $data['id'],'odp.is_delete' => "1"];
 
-        $listArray = ['odp.*','m.value as position_name','odp.position_id as duplicate_position_id'];
+        $listArray = ['odp.*','m.value as position_name','mt.value as placement_type_name','odp.position_id as duplicate_position_id'];
 
         $orderPositionData = DB::table('order_design_position as odp')
                             ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
+                            ->leftJoin('misc_type as mt','odp.placement_type','=', 'mt.id')
                             ->where($whereOrderPositionConditions)
                             ->select($listArray)
                             ->get();
@@ -450,6 +451,17 @@ public function saveColorSize($post)
             $total_pos_qnty = 0;
             foreach ($combine_array['order_design_position'] as $key => $value) 
             {
+               
+                 $combine_array['order_design_position'][$key]->position_header_name = $value->position_name.'-'.$value->qnty;
+
+                 if($value->color_stitch_count != ''){
+                  $combine_array['order_design_position'][$key]->position_header_name .= '-'.$value->color_stitch_count;
+                 }
+
+                 if($value->placement_type_name != ''){
+                   $combine_array['order_design_position'][$key]->position_header_name .= '-'.$value->placement_type_name;
+                 }
+                 
                 $combine_array['order_design_position'][$key]->image_1_url_photo = (!empty($value->image_1))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_1:'';
                 $combine_array['order_design_position'][$key]->image_2_url_photo = (!empty($value->image_2))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_2:'';
                 $combine_array['order_design_position'][$key]->image_3_url_photo = (!empty($value->image_3))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_3:'';
