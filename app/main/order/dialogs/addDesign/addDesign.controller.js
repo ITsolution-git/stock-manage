@@ -9,7 +9,19 @@
    
     function AddDesignController(event_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
-        var vm = this;
+
+          
+          $scope.updateStartDate = function(){
+            $scope.minDate = new Date($scope.design.start_date);
+            $scope.minShipDate = new Date($scope.design.start_date);
+          }
+
+          $scope.updateshipDate = function(){
+            $scope.minShipDate = new Date($scope.design.shipping_date);
+          }
+
+          
+          var vm = this;
           vm.title = 'Add/Edit Design';
 
         
@@ -22,6 +34,8 @@
                
                 if(result.data.success == '1') {
                     $scope.design = result.data.records[0];
+                    $scope.minDate = new Date($scope.design.start_date);
+                     $scope.minShipDate = new Date($scope.design.shipping_date);
                 }
                 
             });
