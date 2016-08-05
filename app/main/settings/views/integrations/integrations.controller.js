@@ -27,6 +27,47 @@
                 $mdOpenMenu(ev);
             };
 
+            $scope.GetAllApi = function ()
+            {
+                $http.get('api/public/admin/company/getSnsAPI/'+$scope.company_id).success(function(result) 
+                {   
+                    if(result.data.success=='1')
+                    {
+                        $scope.sns = result.data.data[0];
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+                 $http.get('api/public/admin/company/getAuthorizeAPI/'+$scope.company_id).success(function(result) 
+                {   
+                    if(result.data.success=='1')
+                    {
+                        $scope.authorize = result.data.data[0];
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+                $http.get('api/public/admin/company/getUpsAPI/'+$scope.company_id).success(function(result) 
+                {   
+                    if(result.data.success=='1')
+                    {
+                        $scope.ups = result.data.data[0];
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+            }
+
+            $scope.GetAllApi();
 
             $scope.cancel = function () {
                 $mdDialog.hide();
@@ -47,18 +88,8 @@
                     controller: function ($scope,params)
                     {
                         $scope.params = params;
-                        $http.get('api/public/admin/company/getSnsAPI/'+$scope.params.company_id).success(function(result) 
-                        {   
-                            if(result.data.success=='1')
-                            {
-                                $scope.sns = result.data.data[0];
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                            $("#ajax_loader").hide();
-                        });
+                        $scope.sns = $scope.params.sns;
+                         $("#ajax_loader").hide();
 
                         $scope.closeDialog = function() 
                         {
@@ -134,19 +165,8 @@
                     controller: function ($scope,params)
                     {
                         $scope.params = params;
-                        $http.get('api/public/admin/company/getAuthorizeAPI/'+$scope.params.company_id).success(function(result) 
-                        {   
-                            if(result.data.success=='1')
-                            {
-                                $scope.authorize = result.data.data[0];
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                            $("#ajax_loader").hide();
-                        });
-
+                        $scope.authorize = $scope.params.authorize;
+                       $("#ajax_loader").hide();
                         $scope.closeDialog = function() 
                         {
                             $mdDialog.hide();
@@ -195,19 +215,8 @@
                     controller: function ($scope,params)
                     {
                         $scope.params = params;
-                        $http.get('api/public/admin/company/getUpsAPI/'+$scope.params.company_id).success(function(result) 
-                        {   
-                            if(result.data.success=='1')
-                            {
-                                $scope.ups = result.data.data[0];
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                            $("#ajax_loader").hide();
-                        });
-
+                        $scope.ups = $scope.params.ups;
+                        $("#ajax_loader").hide();
                         $scope.closeDialog = function() 
                         {
                             $mdDialog.hide();
