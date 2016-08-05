@@ -88,6 +88,12 @@ class Product extends Model {
                         ->where('brand_name', 'LIKE', '%'.$search.'%')
                         ->get();
 
+            if($brand[0]->brand_id == '')
+            {
+                $brand = array();
+            }
+
+
             if(is_numeric($search) && $data['where']['vendor_id'] == 1)
             {
                  $sql = DB::table('products')
@@ -100,9 +106,13 @@ class Product extends Model {
             {
                 $brand_id_array = explode(",",$brand[0]->brand_id);
                 $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->whereIn('brand_id' ,$brand_id_array )
-                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
+                        ->select(DB::raw('GROUP_CONCAT(id) as products'));
+                        $sql = $sql->orWhere(function($query) use($search,$brand_id_array)
+                        {
+                              $query->orWhere('name', 'LIKE', '%'.$search.'%')
+                              ->whereIn('brand_id' ,$brand_id_array);
+                        });
+                        $sql = $sql->where('vendor_id' , '=', $data['where']['vendor_id'])
                         ->get();
             }
             else
