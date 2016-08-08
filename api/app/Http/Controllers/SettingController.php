@@ -775,7 +775,10 @@ class SettingController extends Controller {
                 {
                     foreach ($product_detail_data as $data) {
                         
-                        print_r($data);
+                        if(!isset($data->colorName))
+                        {
+                            print_r($data);
+                        }
                         $color_data = $this->common->GetTableRecords('color',array('name' => $data->colorName,'company_id'=>'0'),array());
 
                         if(empty($color_data))
