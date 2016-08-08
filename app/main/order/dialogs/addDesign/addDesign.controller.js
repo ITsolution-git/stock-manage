@@ -56,6 +56,20 @@
                               notifyService.notify(data.status, data.message);
                               return false;
             }
+
+            if(designData.colors_count == undefined || designData.colors_count == '') {
+
+                      var data = {"status": "error", "message": "Position Count should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+            if(designData.colors_count == '0') {
+
+                      var data = {"status": "error", "message": "Position Count must be greater than 0"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
             
             if(event_id != 0) {
 
