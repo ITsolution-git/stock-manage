@@ -98,7 +98,8 @@ class Product extends Model {
             {
                  $sql = DB::table('products')
                         ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->where('id','=',$search)
+                        ->orWhere('id','=',$search)
+                        ->orWhere('name', 'LIKE', '%'.$search.'%')
                         ->where('vendor_id' , '=', $data['where']['vendor_id'])
                         ->get();
             }
