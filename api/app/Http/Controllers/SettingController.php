@@ -695,7 +695,7 @@ class SettingController extends Controller {
         $starttime = $mtime;*/
 
         $result_api = $this->api->getApiCredential(28,'api.sns','ss_detail');
-       
+
         $credential = $result_api[0]->username.":".$result_api[0]->password;
  
         $curl = curl_init();
@@ -775,6 +775,7 @@ class SettingController extends Controller {
                 {
                     foreach ($product_detail_data as $data) {
                         
+                        print_r($data);
                         $color_data = $this->common->GetTableRecords('color',array('name' => $data->colorName,'company_id'=>'0'),array());
 
                         if(empty($color_data))
