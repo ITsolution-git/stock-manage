@@ -730,7 +730,6 @@ class SettingController extends Controller {
         $product_result = curl_exec($curl);
 
         $product_all_data = json_decode($product_result);
-        print_r($product_all_data);exit;
 
         if(!empty($product_all_data))
         {
