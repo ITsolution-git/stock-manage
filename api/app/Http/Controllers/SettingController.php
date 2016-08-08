@@ -684,8 +684,8 @@ class SettingController extends Controller {
     }
     public function uploadSnsCSV() {
         
-        $response = array('success' => 1, 'message' => 'Data imported successfully');
-        return response()->json(["data" => $response]);
+/*        $response = array('success' => 1, 'message' => 'Data imported successfully');
+        return response()->json(["data" => $response]);*/
         
         ini_set('display_errors', 1);
         ini_set("max_input_time", -1);
@@ -695,7 +695,7 @@ class SettingController extends Controller {
         $starttime = $mtime;*/
 
         $result_api = $this->api->getApiCredential(28,'api.sns','ss_detail');
-       
+
         $credential = $result_api[0]->username.":".$result_api[0]->password;
  
         $curl = curl_init();
@@ -712,7 +712,7 @@ class SettingController extends Controller {
         if(!empty($category_all_data))
         {
             $this->common->truncateTable('category');
-            $this->common->truncateTable('product_category');
+            $this->common->truncateTable('product_brand_category');
 
             foreach ($category_all_data as $category) {
                 $category_name = $category->name;
@@ -736,7 +736,7 @@ class SettingController extends Controller {
             foreach ($product_all_data as $product) {
                 
                 $product_data = $this->common->GetTableRecords('products',array('id' => $product->styleID),array());
-                $product_name = $product->title;
+                $product_name = $product->title." - ".$product->styleName;
                 $description = $product->description;
 
                 $product_arr = array('id' => $product->styleID, 'part_number' => $product->partNumber, 'vendor_id' => 1, 'name' => $product_name, 'description' => $description, 'product_image' => $product->styleImage);
@@ -758,7 +758,7 @@ class SettingController extends Controller {
                 {
                     $categories = explode(",", $product->categories);
                     foreach ($categories as $category_id) {
-                        $this->common->InsertRecords('product_category',array('product_id'=>$product_id,'category_id'=>$category_id));
+                        $this->common->InsertRecords('product_brand_category',array('product_id'=>$product_id,'category_id'=>$category_id));
                     }
                 }
 
@@ -774,43 +774,46 @@ class SettingController extends Controller {
                 if(!empty($product_detail_data))
                 {
                     foreach ($product_detail_data as $data) {
-                        
-                        $color_data = $this->common->GetTableRecords('color',array('name' => $data->colorName,'company_id'=>'0'),array());
 
-                        if(empty($color_data))
+                        if(is_array($data))
                         {
-                            $insert_color = array('name' => $data->colorName,'color_code' => $data->colorCode,'color_swatch_image' => $data->colorSwatchImage,'color_swatch_text_color' => $data->colorSwatchTextColor, 
-                                                'color_front_image' => $data->colorFrontImage,'color_side_image' => $data->colorSideImage,'color_back_image' => $data->colorBackImage,'color1' => $data->color1,'color2'=>$data->color2);
-                            $color_id = $this->common->InsertRecords('color',$insert_color);
-                        }
-                        else
-                        {
-                            $color_id = $color_data[0]->id;
-                        }
+                            $color_data = $this->common->GetTableRecords('color',array('name' => $data->colorName,'company_id'=>'0'),array());
 
-                        $size_data = $this->common->GetTableRecords('product_size',array('name' => $data->sizeName,'is_sns'=>'1'),array());
+                            if(empty($color_data))
+                            {
+                                $insert_color = array('name' => $data->colorName,'color_code' => $data->colorCode,'color_swatch_image' => $data->colorSwatchImage,'color_swatch_text_color' => $data->colorSwatchTextColor, 
+                                                    'color_front_image' => $data->colorFrontImage,'color_side_image' => $data->colorSideImage,'color_back_image' => $data->colorBackImage,'color1' => $data->color1,'color2'=>$data->color2);
+                                $color_id = $this->common->InsertRecords('color',$insert_color);
+                            }
+                            else
+                            {
+                                $color_id = $color_data[0]->id;
+                            }
 
-                        if(empty($size_data))
-                        {
-                            $size_id = $this->common->InsertRecords('product_size',array('name' => $data->sizeName,'is_sns'=>'1'));
-                        }
-                        else
-                        {
-                            $size_id = $size_data[0]->id;
-                        }
+                            $size_data = $this->common->GetTableRecords('product_size',array('name' => $data->sizeName,'is_sns'=>'1'),array());
 
-                        $color_size_data = $this->common->GetTableRecords('product_color_size',array('product_id'=>$product->styleID,'color_id'=>$color_id,'size_id'=>$size_id),array());
+                            if(empty($size_data))
+                            {
+                                $size_id = $this->common->InsertRecords('product_size',array('name' => $data->sizeName,'is_sns'=>'1'));
+                            }
+                            else
+                            {
+                                $size_id = $size_data[0]->id;
+                            }
 
-                        $insert = array('sku'=>$data->sku,'product_id'=>$product->styleID,'color_id'=>$color_id,'size_id'=>$size_id,'piece_price'=>$data->piecePrice,'dozen_price'=>$data->dozenPrice,
-                                'case_price'=>$data->casePrice,'sale_price'=>$data->salePrice,'customer_price'=>$data->customerPrice);
+                            $color_size_data = $this->common->GetTableRecords('product_color_size',array('product_id'=>$product->styleID,'color_id'=>$color_id,'size_id'=>$size_id),array());
 
-                        if(empty($color_size_data))
-                        {
-                            $id = $this->common->InsertRecords('product_color_size',$insert);
-                        }
-                        else
-                        {
-                            $this->common->UpdateTableRecords('product_color_size',array('id' => $color_size_data[0]->id),$insert);
+                            $insert = array('sku'=>$data->sku,'product_id'=>$product->styleID,'color_id'=>$color_id,'size_id'=>$size_id,'piece_price'=>$data->piecePrice,'dozen_price'=>$data->dozenPrice,
+                                    'case_price'=>$data->casePrice,'sale_price'=>$data->salePrice,'customer_price'=>$data->customerPrice);
+
+                            if(empty($color_size_data))
+                            {
+                                $id = $this->common->InsertRecords('product_color_size',$insert);
+                            }
+                            else
+                            {
+                                $this->common->UpdateTableRecords('product_color_size',array('id' => $color_size_data[0]->id),$insert);
+                            }
                         }
                     }
                 }

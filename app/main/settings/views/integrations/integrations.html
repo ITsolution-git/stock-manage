@@ -27,14 +27,14 @@
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.
                             </td>
 
-                            <td class=""><md-button class="md-raised btn-width-200" ng-click="vm.ssActivewearDialog($event)">CONNECT</md-button></td>
+                            <td class=""><md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':sns.username=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':sns.username!=''}"  ng-click="vm.ssActivewearDialog($event)">CONNECT</md-button></td>
                         </tr>
                         <tr class="cursor-p">
                             <td class="integrationsTd1"><img src="assets/images/integrations/authorize_net.png" height="105px" width="105px" /></td>
                             <td class="integrationsTdWidth integrationsTd2">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.
                             </td>   
-                  <td class=""><md-button class="md-raised btn-width-200" ng-click="vm.authorizeNet($event)">CONNECT</md-button></td>
+                  <td class=""><md-button  ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':authorize.login=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':authorize.login!=''}"  ng-click="vm.authorizeNet($event)">CONNECT</md-button></td>
                         </tr>
                         <tr class="cursor-p">
                             <td class="integrationsTd1"><img src="assets/images/integrations/ups.png" height="105px" width="105px" /></td>
@@ -42,7 +42,7 @@
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.
                             </td>
 
-                            <td class=""><md-button class="md-raised btn-width-200" ng-click="vm.upsDialog($event)">CONNECT</md-button></td>
+                            <td class=""><md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':ups.username=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':ups.username!=''}"  ng-click="vm.upsDialog($event)">CONNECT</md-button></td>
                         </tr>
                     </tbody> 
                 </table>
