@@ -684,8 +684,8 @@ class SettingController extends Controller {
     }
     public function uploadSnsCSV() {
         
-        $response = array('success' => 1, 'message' => 'Data imported successfully');
-        return response()->json(["data" => $response]);
+/*        $response = array('success' => 1, 'message' => 'Data imported successfully');
+        return response()->json(["data" => $response]);*/
         
         ini_set('display_errors', 1);
         ini_set("max_input_time", -1);
@@ -712,7 +712,7 @@ class SettingController extends Controller {
         if(!empty($category_all_data))
         {
             $this->common->truncateTable('category');
-            $this->common->truncateTable('product_category');
+            $this->common->truncateTable('product_brand_category');
 
             foreach ($category_all_data as $category) {
                 $category_name = $category->name;
@@ -758,7 +758,7 @@ class SettingController extends Controller {
                 {
                     $categories = explode(",", $product->categories);
                     foreach ($categories as $category_id) {
-                        $this->common->InsertRecords('product_category',array('product_id'=>$product_id,'category_id'=>$category_id));
+                        $this->common->InsertRecords('product_brand_category',array('product_id'=>$product_id,'category_id'=>$category_id));
                     }
                 }
 
