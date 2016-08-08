@@ -736,7 +736,7 @@ class SettingController extends Controller {
             foreach ($product_all_data as $product) {
                 
                 $product_data = $this->common->GetTableRecords('products',array('id' => $product->styleID),array());
-                $product_name = $product->title;
+                $product_name = $product->title." - ".$product->styleName;
                 $description = $product->description;
 
                 $product_arr = array('id' => $product->styleID, 'part_number' => $product->partNumber, 'vendor_id' => 1, 'name' => $product_name, 'description' => $description, 'product_image' => $product->styleImage);
