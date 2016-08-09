@@ -639,4 +639,18 @@ public function saveColorSize($post)
       }
         return $duplicate;
     }
+
+    public function getPoNotes($order_id)
+    {
+        $whereConditions = ['po.order_id' => $order_id,'pn.is_deleted' => '1'];
+
+        $orderData = DB::table('purchase_order as po')
+                        ->leftJoin('orders as ord','po.order_id','=','ord.id')
+                        ->leftJoin('purchase_notes as pn','pn.po_id','=','po.po_id')
+                        ->select(DB::raw('COUNT(pn.note) as total'))
+                        ->where($whereConditions)
+                        ->get();
+
+        return $orderData[0]->total;
+    }
 }
