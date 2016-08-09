@@ -693,6 +693,7 @@ class Product extends Model {
                         ->leftJoin('products as p', 'p.vendor_id', '=', 'v.id')
                         ->select(DB::raw('COUNT(DISTINCT p.id) as total'),'v.id','v.name_company')
                         ->where('v.company_id' , '=', $company_id)
+                        ->where('v.is_delete' , '=', '1')
                         ->orWhere('v.company_id' , '=', '0')
                         ->GroupBy('v.id')
                         ->get();
