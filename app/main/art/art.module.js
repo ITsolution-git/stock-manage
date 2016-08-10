@@ -56,6 +56,22 @@
                         controller : 'screenSetViewController as vm'
                     }
                 }
+            })
+            .state('app.art.notes', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                },
+                url  : '/notes/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/art/views/viewNote/viewNote.html',
+                        controller : 'ArtViewNoteController as vm'
+                    }
+                }
             });
 
        // Translation

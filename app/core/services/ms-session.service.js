@@ -151,9 +151,11 @@
 
 		function openAddPopup(scope,path,params,table)
 		{
+			$("#ajax_loader").show();
 			$mdDialog.show({
                 controller:function ($scope, params)
                 {
+                	$("#ajax_loader").hide();
                     $scope.params = params; // GET PARAMETERS FOR POPUP
 
                     $scope.closeDialog = function() 
@@ -166,10 +168,12 @@
                 		InserArray.data = insert_data;
                 		InserArray.table =table;
 
-                		// SPECIAL CONDITIONS
+                		//=============== SPECIAL CONDITIONS ==============
                 		if(extra=='vendorcontact') { InserArray.data.vendor_id = $scope.params.vendor_id;}
                 		if(extra=='sales') { InserArray.data.company_id = $scope.params.company_id; InserArray.data.sales_created_date =AllConstant.currentdate;}
-                		
+                		if(extra=='artnote') { InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;}
+                		//=============== SPECIAL CONDITIONS ==============
+
 			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
 			        	{ 
 			        		if(result.data.success=='1')
@@ -192,12 +196,15 @@
 		}
 		function openEditPopup(scope,path,params,table)
 		{
+			$("#ajax_loader").show();
 			$mdDialog.show({
                 controller:function ($scope, params)
                 {
+                	$("#ajax_loader").hide();
                     $scope.params = params; // GET PARAMETERS FOR POPUP
                     $scope.UpdateTableData = function(field_name,field_value,table_name,cond_field,cond_value,extra,extra_cond)
 			        {
+			        	$("#ajax_loader").show();
 			        	var UpdateArray = {};
 			            UpdateArray.table =table_name;
 			            
@@ -221,6 +228,7 @@
 		                    {
 		                        notifyService.notify('error',result.data.message);
 		                    }
+		                    $("#ajax_loader").hide();
                    		});
 			        }
 			        $scope.UpdateTableDataAll = function(tableData,table_name,cond_field,cond_value,extra,extra_cond)
@@ -234,8 +242,12 @@
 			            condition_obj[cond_field] =  cond_value;
 			            UpdateArray.cond = angular.copy(condition_obj);
 
-			            if(extra=='vendorcontact' || extra=='sales') { delete UpdateArray.data.id; delete UpdateArray.data.sales_created_date;}
+			            //=============== SPECIAL CONDITIONS ==============
+			            if(extra=='vendorcontact' || extra=='sales' ) { delete UpdateArray.data.id; delete UpdateArray.data.sales_created_date;}
                 		//console.log(UpdateArray); return false;
+                		if(extra=='artnote'){ delete UpdateArray.data.id;}
+                		//=============== SPECIAL CONDITIONS ==============
+
                 		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
 			        	{
 		                    if(result.data.success=='1')

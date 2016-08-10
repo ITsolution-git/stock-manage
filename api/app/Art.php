@@ -223,9 +223,9 @@ class Art extends Model {
  	//SCREEN SETS DETAIL PAGE COLOR LISTING
     public function GetscreenColor($screen_id)
     {
-    	$query = DB::table('artjob_screencolors as acol')
+    	$query = DB::table('artjob_screensets as ass')
 				->select('or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','acol.*')
-				->join('artjob_screensets as ass','acol.screen_id','=','ass.id')
+				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
@@ -258,5 +258,46 @@ class Art extends Model {
     							   ));
     				return $result;
     }
+    public function getArtColorNote($post)
+   	{
+       	$search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+		$result = DB::table('art_notes as note')
+					->select('*')
+					->where('note.is_deleted','=','1')
+					->where('note.screenset_id','=',$post['screenset_id']);
+
+					if($search != '')               
+                  	{
+                      $result = $result->Where(function($query) use($search)
+                      {
+                          $query->orWhere('note.note_title', 'LIKE', '%'.$search.'%')
+                                ->orWhere('note.note','LIKE', '%'.$search.'%')
+                                ->orWhere('note.note_date','LIKE', '%'.$search.'%');
+                      });
+                  	}
+                 $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+				 ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+		
+		//echo "<pre>"; print_r($result); echo "</pre>"; die;
+        if(count($result)>0)
+        {
+          foreach ($result as $key=>$value) 
+          {
+          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00' || empty($result[$key]->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
+          }
+        }
+		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $result;
+        $returnData['count'] = $count[0]->Totalcount;		
+		//echo "<pre>"; print_r($result); die();
+		return $returnData;
+	}
 
 }

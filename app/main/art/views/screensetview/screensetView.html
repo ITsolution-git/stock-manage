@@ -90,7 +90,12 @@
                                 <h1 style="color:#cccccc; padding-left: 10px;"> Screen Details Not Yet Entered </h1>
                             </div>
                         </div>
-                        <div layout-align="end start"  flex="5" layout="row" >
+                        <div flex="95" layout="column" ng-show="colorsinf.is_complete==null">
+                            <div layout="row" layout-wrap>
+                                <h1 style="color:#cccccc; padding-left: 10px;"> No color assigned for this Screen set</h1>
+                            </div>
+                        </div>
+                        <div layout-align="end start"  flex="5" layout="row" ng-show="colorsinf.is_complete==0 || colorsinf.is_complete==1" >
                             <div  class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="UpdateColorScreen($event,colorsinf)">Edit Screen Detail</md-button></div>
                         </div>
                     </div>
@@ -105,7 +110,7 @@
         <md-card class="m-b-20 " flex="30">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
-                                            <span class="md-title">Mokup Image</span>
+                                            <span class="md-title">Mockup Image</span>
                                         </md-card-header-text>
 
                                         <md-menu>
@@ -139,7 +144,8 @@
                 </table>
             </md-card-content>
         </md-card>
-        <md-card class="m-b-20 m-l-20" flex="30">
+
+        <md-card class="m-b-20 m-l-20" style="height: 50% !important;" flex="30">
             <md-card-title>
                 <md-card-title-text class="text-left">Notes</md-card-title-text>
             </md-card-title>
@@ -151,10 +157,10 @@
             </md-card-content>
             <md-divider ></md-divider>
             <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight">View Notes</a>
+                <a class="font-14 chrome-weight" ui-sref="app.art.notes({id:ScreenSets[0].screen_id})">View Notes</a>
             </div>
         </md-card>
-    </div>
+    
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
         <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
         <div class="md-ripple-container" style=""></div>
