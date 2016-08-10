@@ -217,6 +217,14 @@ class FinishingController extends Controller {
 
         if($post['item'] == 1)
         {
+            $finishing_data = $this->common->GetTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id'],'category_id' => $post['item_id']),array());
+            
+            if($finishing_data[0]->status == '1')
+            {
+                $data = array("success"=>0,"message"=>'Finishing of this item is completed.');
+                return response()->json(["data" => $data]);
+            }
+            
             $extra_charges = $design->extra_charges - $post['item_charge'];
             $subtract = $design->sales_total - $post['item_charge'];
             $sales_total = round($subtract,2);

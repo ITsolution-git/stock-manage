@@ -65,12 +65,12 @@
                                             <td>{{ item.boxed_qnty}}</td>
                                             <td>
                                                 <md-input-container flex="100" class="mrg0-TB" aria-label="MD" >
-                                                    <input name="md" aria-label="md" ng-model="item.md" ui-event="{ change : 'update_box_qty(item)'}" valid-number>
+                                                    <input name="md" aria-label="md" ng-model="item.md" ui-event="{ change : 'update_box_qty(item)'}" only-number>
                                                 </md-input-container>
                                             </td>
                                             <td>
                                                 <md-input-container flex="100" class="mrg0-TB" aria-label="Spoil">
-                                                    <input name="spoil" aria-label="spoil" ng-model="item.spoil" ui-event="{ change : 'update_box_qty(item)'}" valid-number>
+                                                    <input name="spoil" aria-label="spoil" ng-model="item.spoil" ui-event="{ change : 'update_box_qty(item)'}" only-number>
                                                 </md-input-container>
                                             </td>
                                             <td>{{ item.actual}}</td>
