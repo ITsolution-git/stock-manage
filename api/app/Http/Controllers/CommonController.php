@@ -1085,6 +1085,21 @@ class CommonController extends Controller {
                 5=>array('key' => 'asc.screen_width', 'name' => 'Frame size')
                 );
         }
+        if($post['filter']['function']=='art_notes') // SCREENSET COLOR NOTE
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'note.id';
+            }
+            $result = $this->art->getArtColorNote($post);
+            $header = array(
+                0=>array('key' => 'note.note_date', 'name' => 'Created date'),
+                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
+                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                );
+        }
+
+        
 
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
