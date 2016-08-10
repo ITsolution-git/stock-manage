@@ -371,7 +371,7 @@ md-input-container > label {
   
 }
 
-#screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th, #directToGarment.simple thead tr th, #chargesList.simple thead tr th {
+#directToGarment.simple thead tr th, #chargesList.simple thead tr th {
   min-width: 50px !important;
 }
 
@@ -1099,3 +1099,12 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
   width: 5.5% !important;
   padding: 0 !important;
 }
+#screenPrimary,#screenSecondary {
+  table-layout: fixed;
+    white-space: nowrap;
+    width: 100%;
+}
+
+#screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th {
+  width: 80px !important;
+} 
