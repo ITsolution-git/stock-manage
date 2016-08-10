@@ -1,0 +1,98 @@
+(function ()
+{
+    'use strict';
+
+    angular
+            .module('app.purchaseOrder')
+            .controller('ArtViewNoteController', ArtViewNoteController);
+
+    /** @ngInject */
+    function ArtViewNoteController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
+    {
+        var vm = this;
+         //vm.openaddNoteDialog = openaddNoteDialog;
+         $scope.company_id = sessionService.get('company_id');
+         $scope.screenset_id = $stateParams.id;
+
+        //Dummy models data
+     
+                /* TESTY PAGINATION */     
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'note.id',
+          'sortOrder': 'dsc'
+        };
+
+        $scope.reloadCallback = function () { };
+
+        $scope.filterBy = {
+          'search': '',
+          'name': '',
+          'function': 'art_notes'
+        };
+        $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+            //getResource();
+        };
+        
+
+
+       $scope.getResource = function (params, paramsObj, search)
+        {   
+            $scope.params = params;
+            $scope.params.screenset_id = $scope.screenset_id;
+            $scope.paramsObj = paramsObj;
+
+            var company_data = {};
+            company_data.cond ={params:$scope.params};
+
+            $("#ajax_loader").show();     
+           return $http.post('api/public/common/getTestyRecords',company_data).success(function(result) 
+            {
+                $("#ajax_loader").hide();
+                $scope.success  = result.success;
+                if(result.success=='1')
+                {
+                    return {
+                      'rows': result.rows,
+                      'header': result.header,
+                      'pagination': result.pagination,
+                      'sortBy': result.sortBy,
+                      'sortOrder': result.sortOrder
+                    }
+                }
+                else
+                {
+                    notifyService.notify('error',result.message);
+                }
+                
+            });
+        }
+
+
+        // DYNAMIC POPUP FOR INSERT RECORDS
+        $scope.openInsertPopup = function(path,ev)
+        {
+            var insert_params = {screenset_id:$scope.screenset_id,flag:'add'};
+            sessionService.openAddPopup($scope,path,insert_params,'art_notes');
+        }
+        $scope.openEditPopup = function(path,param,ev)
+        {
+            var edit_params = {data:param,flag:'edit'};
+            sessionService.openEditPopup($scope,path,edit_params,'art_notes');
+        }
+        // RETURN FUNCTION FROM POPUP.
+        $scope.returnFunction = function()
+        {
+            //console.log(123);
+            $scope.reloadCallback();
+        }
+
+        var originatorEv;
+        vm.openMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
+    }
+})();
