@@ -89,6 +89,32 @@
             $scope.reloadCallback();
         }
 
+        $scope.RemoveEditPopup = function(id)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table ='art_notes';
+            UpdateArray.data = {is_deleted:0};
+            UpdateArray.cond = {id:id};
+            
+            var permission = confirm(AllConstant.deleteMessage);
+            if (permission == true) 
+            {
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                {
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success', 'Record Deleted Successfully.');
+                       $scope.reloadCallback();
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
+                    }
+                });
+            }
+        }
+
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;

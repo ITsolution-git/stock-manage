@@ -13,6 +13,11 @@
             <div class="table-title-text h2 text-semibold" flex=20>
                 Notes
             </div>
+            <div class="search-block" flex=40>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                </md-input-container>
+            </div>
             <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
                 <md-button class="dark-bg chrome-weight" ng-click="openInsertPopup('art/dialogs/notes/addNote.html',$event)">
                     ADD NEW
@@ -28,8 +33,6 @@
                                 <td class="">{{note.note_date}}</td>
                                 <td class="">{{note.note_title}}</td>
                                 <td class="">{{note.note}}</td>
-                                <!-- <td><a class="font-12" class="cursor-p" >Edit</a></td>  -->
-                                <!-- <td class="" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})"> View</td> -->
                                 <td>
                                     <md-menu>
                                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
