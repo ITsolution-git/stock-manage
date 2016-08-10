@@ -144,7 +144,7 @@
                                                             <td>{{ item.remaining_to_box}}</td>
                                                             <td>
                                                                 <md-input-container flex="100" class="mrg0-TB">
-                                                                    <input placeholder="Max Pack" name="max_pack" ng-model ="item.max_pack" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,item.id)'}" valid-number>
+                                                                    <input placeholder="Max Pack" name="max_pack" ng-model ="item.max_pack" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,item.id)'}" only-number>
                                                                 </md-input-container>
                                                             </td>
                                                         </tr>                    
