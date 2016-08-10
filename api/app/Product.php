@@ -98,7 +98,8 @@ class Product extends Model {
             {
                  $sql = DB::table('products')
                         ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->where('id','=',$search)
+                        ->orWhere('id','=',$search)
+                        ->orWhere('name', 'LIKE', '%'.$search.'%')
                         ->where('vendor_id' , '=', $data['where']['vendor_id'])
                         ->get();
             }
@@ -692,6 +693,7 @@ class Product extends Model {
                         ->leftJoin('products as p', 'p.vendor_id', '=', 'v.id')
                         ->select(DB::raw('COUNT(DISTINCT p.id) as total'),'v.id','v.name_company')
                         ->where('v.company_id' , '=', $company_id)
+                        ->where('v.is_delete' , '=', '1')
                         ->orWhere('v.company_id' , '=', '0')
                         ->GroupBy('v.id')
                         ->get();
