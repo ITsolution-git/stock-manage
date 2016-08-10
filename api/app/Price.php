@@ -69,12 +69,12 @@ class Price extends Model {
 
 
         $whereConditionsScreenPrimary = ['price_id' => $priceId];
-        $listArrayPrimary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $listArrayPrimary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c','pricing_13c','pricing_14c','pricing_15c','pricing_16c'];
         $priceScreenPrimary = DB::table('price_screen_primary')->select($listArrayPrimary)->where($whereConditionsScreenPrimary)->get();
 
 
         $whereConditionsScreenSecondary = ['price_id' => $priceId];
-        $listArraySecondary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $listArraySecondary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c','pricing_13c','pricing_14c','pricing_15c','pricing_16c'];
         $priceScreenSecondary = DB::table('price_screen_secondary')->select($listArraySecondary)->where($whereConditionsScreenSecondary)->get();
 
 
@@ -411,7 +411,7 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
     public function priceSecondary($priceId) {
 
         $whereConditionsScreenSecondary = ['price_id' => $priceId];
-        $listArraySecondary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c'];
+        $listArraySecondary = ['range_high','range_low','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c','pricing_11c','pricing_12c','pricing_13c','pricing_14c','pricing_15c','pricing_16c'];
         $priceScreenSecondary = DB::table('price_screen_secondary')->select($listArraySecondary)->where($whereConditionsScreenSecondary)->get();
 
         $combine_array['allScreenSecondary'] = $priceScreenSecondary;

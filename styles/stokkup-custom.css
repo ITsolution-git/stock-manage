@@ -1095,3 +1095,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
   position: relative;
   max-height: 480px;
 }
+.pricewidth-5.5 {
+  width: 5.5% !important;
+  padding: 0 !important;
+}

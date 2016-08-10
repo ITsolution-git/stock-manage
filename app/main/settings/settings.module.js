@@ -238,7 +238,7 @@
             //state    : 'app.settings',
             class      : 'navigation-dashboards project-dashboard settings-block',
             
-            weight   : 1
+            weight   : 15
         });
 
         msNavigationServiceProvider.saveItem('fuse.settings.userProfile', {
