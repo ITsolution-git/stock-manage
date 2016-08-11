@@ -467,6 +467,13 @@ class Product extends Model {
                                      ->get();
                 $product->sizeData = $sizeData;
 
+                $total_qnty = DB::table('purchase_detail')
+                                     ->select(DB::raw('SUM(qnty) as total_qnty'))
+                                     ->where('design_product_id','=',$product->design_product_id)
+                                     ->get();
+
+                $product->total_qnty = $total_qnty[0]->total_qnty;
+
                 if($product->vendor_id >1){
                     $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
                 } else {
