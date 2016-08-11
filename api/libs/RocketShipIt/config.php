@@ -73,16 +73,16 @@ return array(
     'ups' => array(
 
         // Your UPS Developer API Key 
-        'license' => 'YOUR_UPS_API_KEY',
+        'license' => '6D12D4E045632698',
 
         // your UPS Developer username
-        'username' => 'YOUR_UPS_USERNAME',
+        'username' => 'Codal',
 
         // your UPS Developer password
-        'password' => 'YOUR_UPS_PASSWORD',
+        'password' => 'Mobile1357',
 
         // Your UPS account number
-        'accountNumber' => 'YOUR_UPS_ACCOUNT_NUMBER',
+        'accountNumber' => '11YW27',
 
         // Make sure addresses are valid before label creation
         // validate, nonvalidate
