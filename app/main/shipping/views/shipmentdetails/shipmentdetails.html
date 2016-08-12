@@ -64,7 +64,7 @@
                                 <div layout="column" flex="30" class="mrg10-R mrg15-T">
                                     <md-select ng-model="shipping.shipping_type_id" placeholder="Shipping Type" class="mrg6-TB" name="shipping_type_id" ng-change="updateShippingAll('shipping_type_id',shipping.shipping_type_id,shipping.shipping_id)">
                                         <md-option>Shipping Type</md-option>
-                                        <!-- <md-option value="1" ng-selected="shipping.shipping_type_id == 1">USPS</md-option> -->
+                                        <md-option value="1" ng-selected="shipping.shipping_type_id == 1">UPS</md-option>
                                         <md-option value="2" ng-selected="shipping.shipping_type_id == 2">FEDEX</md-option>
                                     </md-select>
                                 </div>
@@ -144,7 +144,7 @@
                                                             <td>{{ item.remaining_to_box}}</td>
                                                             <td>
                                                                 <md-input-container flex="100" class="mrg0-TB">
-                                                                    <input placeholder="Max Pack" name="max_pack" ng-model ="item.max_pack" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,item.id)'}" valid-number>
+                                                                    <input placeholder="Max Pack" name="max_pack" ng-model ="item.max_pack" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,item.id)'}" only-number>
                                                                 </md-input-container>
                                                             </td>
                                                         </tr>                    

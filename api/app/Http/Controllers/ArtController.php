@@ -377,7 +377,10 @@ class ArtController extends Controller {
                
                 foreach ($result as $value) 
                 {
-                    $value->color_name = $color_array[$value->color_name];
+                    if(!empty($value->color_name))
+                    {
+                        $value->color_name = $color_array[$value->color_name];
+                    }
                     $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
 
                     if(!empty($value->thread_color))
@@ -385,9 +388,13 @@ class ArtController extends Controller {
                         $value->thread_display = $color_array[$value->thread_color];
                     }
                 }
-                            
+                $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'allcolors'=>$allcolors);            
             }
-            $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'allcolors'=>$allcolors);
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+            }
+            
         }
         else 
         {

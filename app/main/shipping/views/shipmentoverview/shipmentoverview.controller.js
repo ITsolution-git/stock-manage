@@ -48,7 +48,7 @@
                         $scope.shipping.boxing_type = 'Standard';
                     }
                     if($scope.shipping.shipping_type_id == '1') {
-                        $scope.shipping.shipping_type_id = 'USPS';
+                        $scope.shipping.shipping_type_id = 'UPS';
                     }
                     if($scope.shipping.shipping_type_id == '2') {
                         $scope.shipping.shipping_type_id = 'Fedex';

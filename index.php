@@ -238,6 +238,7 @@
 <!--     <script src="app/main/art/dialogs/generateArtForm/generateArtForm-dialog.controller.js"></script> -->
     <script src="app/main/art/views/screensetview/screensetView.controller.js"></script>
     <script src="app/main/art/dialogs/createScreenDetail/createScreenDetail.controller.js"></script>
+    <script src="app/main/art/views/viewNote/viewNote.controller.js"></script>
 
     <!-- Invoices -->
     <script src="app/main/invoices/invoices.module.js"></script>
