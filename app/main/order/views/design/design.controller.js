@@ -256,7 +256,7 @@
         
         function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
         {
-            if($scope.order_design_position.length == '0')
+            /*if($scope.order_design_position.length == '0')
             {
                 var data = {"status": "error", "message": "Please add position"}
                 notifyService.notify(data.status, data.message);
@@ -269,7 +269,7 @@
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
                 return false;
-            }
+            }*/
 
             $mdDialog.show({
                 controller: controller,
