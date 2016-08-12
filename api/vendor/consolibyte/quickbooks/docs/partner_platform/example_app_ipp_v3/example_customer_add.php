@@ -14,10 +14,10 @@ $CustomerService = new QuickBooks_IPP_Service_Customer();
 
 $Customer = new QuickBooks_IPP_Object_Customer();
 $Customer->setTitle('Ms');
-$Customer->setGivenName('Shannon');
-$Customer->setMiddleName('B');
-$Customer->setFamilyName('Palmer');
-$Customer->setDisplayName('Shannon B Palmer ' . mt_rand(0, 1000));
+$Customer->setGivenName('Hardik');
+$Customer->setMiddleName('M');
+$Customer->setFamilyName('Deliwala');
+$Customer->setDisplayName('Hardik M Deliwala ' . mt_rand(0, 1000));
 
 // Terms (e.g. Net 30, etc.)
 $Customer->setSalesTermRef(4);

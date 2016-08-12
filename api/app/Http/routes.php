@@ -42,6 +42,7 @@ Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
 Route::get('admin/company/getAuthorizeAPI/{company_id}', 'CompanyController@getAuthorizeAPI');
 Route::get('admin/company/getUpsAPI/{company_id}', 'CompanyController@getUpsAPI');
 Route::get('admin/company/getSnsAPI/{company_id}', 'CompanyController@getSnsAPI');
+Route::get('admin/company/getQBAPI/{company_id}', 'CompanyController@getQBAPI');
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
@@ -336,13 +337,6 @@ Route::post('distribution/removeFromDistribute', 'DistributionController@removeF
 Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
 Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
 Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');
-
-/*
-Route::get('qbo/oauth','QuickBookController@qboOauth');
-Route::get('qbo/success','QuickBookController@qboSuccess');
-Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
-Route::get('qbo/qboConnect','QuickBookController@qboConnect');
-Route::get('qbo/createCustomer','QuickBookController@createCustomer');*/
 
 
 Route::get('qbo/oauth','QuickBookController@qboOauth');

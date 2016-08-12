@@ -14,7 +14,10 @@ angular.module('app.core')
         };
         $window.document.body.appendChild(script);
         scope.$on('intuitjs:loaded', function (evt) {
-          $window.intuit.ipp.anywhere.setup({ grantUrl: '/' });
+          $window.intuit.ipp.anywhere.setup({
+            menuProxy: 'http://localhost/stokkup/api/vendor/consolibyte/quickbooks/docs/partner_platform/example_app_ipp_v3/menu.php',
+            grantUrl: 'http://localhost/stokkup/api/public/qbo/oauth'
+           });
           scope.connected = true;
           scope.$apply();
         });
