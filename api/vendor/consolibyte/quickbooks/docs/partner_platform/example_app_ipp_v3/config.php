@@ -17,7 +17,7 @@ ini_set('display_errors', 1);
 require_once dirname(__FILE__) . '/../../../QuickBooks.php';
 
 // Your application token (Intuit will give you this when you register an Intuit Anywhere app)
-$token = '95555248baf11b43fbb944ab97de9134ad85';
+$token = 'def96a41bde5fb4cabbacd0b580916a046b5';
 
 // Your OAuth consumer key and secret (Intuit will give you both of these when you register an Intuit app)
 // 
@@ -27,8 +27,8 @@ $token = '95555248baf11b43fbb944ab97de9134ad85';
 // 
 // The OAuth request/access tokens will be encrypted and stored for you by the 
 //	PHP DevKit IntuitAnywhere classes automatically. 
-$oauth_consumer_key = 'qyprdfkqo3bikN2vLrLu4FWHv6GbQp';
-$oauth_consumer_secret = 'WDH56afDb1jr0ismQZAwdPuq4oDqpTmrKXc0oORz';
+$oauth_consumer_key = 'qyprd4TGMFxbSogu44AKtgNDjKsd3J';
+$oauth_consumer_secret = 'asQ05KXTDpmzaEvUjzhcHzLgJdnJ0finh4aM91qk';
 
 // If you're using DEVELOPMENT TOKENS, you MUST USE SANDBOX MODE!!!  If you're in PRODUCTION, then DO NOT use sandbox.
 $sandbox = true;     // When you're using development tokens

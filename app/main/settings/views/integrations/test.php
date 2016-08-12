@@ -18,7 +18,18 @@
                           <!--   <td class=""><md-button class="btn-width-200 connectToQuickBooksBtn" ng-click="vm.quickbookActivewearDialog($event)"><img src="assets/images/integrations/connectToQuickBooks.png" class="" /></md-button></td>  -->
 
 
-                       <td class=""><span><md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':qb.token=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':qb.token!=''}" ng-click="vm.qbActivewearDialog($event)" >CONNECT</md-button></md-button></span><span class="ml-10" ng-show="qb.token !=''"><connect-to-quickbooks /><span></td> 
+                      
+
+                       <?php
+                        $qbo_obj = new \App\Http\Controllers\QuickBookController();
+                        $qbo_connect = $qbo_obj->qboConnect();
+                        ?>
+                        @if(!$qbo_connect)
+                        <td class=""><connect-to-quickbooks /><ipp:connectToIntuit></ipp:connectToIntuit> </td> 
+                        @else
+                        <a href="{{url('qbo/disconnect')}}" title="">Disconnect</a>
+                        @endif
+
                           
                         </tr>
                         <tr class="cursor-p">
