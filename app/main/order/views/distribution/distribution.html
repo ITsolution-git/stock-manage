@@ -101,7 +101,7 @@
                         </md-card-content>
                         <md-divider ></md-divider>
                         <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                            <a>Add New</a>
+                            <a ng-click="vm.openaddAddressDialog($event)">Add New</a>
                         </div>
                     </md-card>
                 </div>
@@ -200,11 +200,11 @@
                     </md-tab>
                 </md-tabs>
             </md-content>
-            <div layout-align="end center" layout="row" flex="100">
+            <!-- <div layout-align="end center" layout="row" flex="100">
                 <md-button  class="bg-grey bg-green right-m-0 text-center line-hei " >
                     VIEW ALLOCATED </br>PRODUCT
                 </md-button>
-            </div>
+            </div> -->
         </div>
         <!-- <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
