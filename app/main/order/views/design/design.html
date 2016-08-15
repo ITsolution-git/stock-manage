@@ -270,7 +270,10 @@
 
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-show="order_number == '' && is_complete == '0' ">
 
-            <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
+            <div class="title">
+                <span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span>
+                <span class="float-right"><a class="cursor-p" ui-sref="app.settings.price-info({ id: price_id })">GO TO PRICEGRID</a></span>
+            </div>
             <div layout="row" flex="100">
                 <div layout="column" flex="20" class="mrg15-R">
                     <md-input-container class="md-block" flex="25">
@@ -376,7 +379,7 @@
                                 <p ng-bind-html="product.description"></p>
                                 
                             </div>   
-                                                    </div>
+                        </div>
                         <div layout="row" flex="80"  layout-align="space-between start" layout-padding>
                           <!--   <div layout="column" flex="10">
                                 <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
@@ -387,7 +390,7 @@
                                     <div class="h5 font-14 ">${{product.avg_garment_cost}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
-                                    <div class="h4">Markup Default 70%</div>
+                                    <div class="h4">Markup Default {{product.markup_default}}%</div>
                                     <div class="h5 font-14">
                                         <div class="form-cntnr">
                                             <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">

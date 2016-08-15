@@ -18,6 +18,14 @@
         $scope.company_id = sessionService.get('company_id');
         $scope.valid_sns = 1;
 
+        $scope.calculateAll = function(order_id,company_id)
+        {
+            $http.get('api/public/order/calculateAll/'+order_id+'/'+company_id).success(function(result) 
+            {
+
+            });
+        }
+
        $scope.designDetail = function(){
          $("#ajax_loader").show();
         var combine_array_id = {};
@@ -29,9 +37,12 @@
                 if(result.data.success == '1') {
                      
                     $scope.order_id = result.data.records[0].order_id;
+                    $scope.price_id = result.data.records[0].price_id;
                     $scope.order_number = result.data.records[0].order_number;
                     $scope.is_complete = result.data.records[0].is_complete;
                     $scope.designInforamtion = result.data.records[0];
+
+                    $scope.calculateAll($scope.order_id,$scope.company_id);
 
                 } else {
                     $state.go('app.order');
@@ -39,6 +50,8 @@
                 
             });
         }
+
+        $scope.designDetail();
 
         $scope.designProductData = function(){
             $("#ajax_loader").show();
@@ -56,6 +69,8 @@
                 }
             });
         }
+
+        $scope.designProductData();
 
        $scope.designPosition = function(){
 
@@ -81,6 +96,8 @@
                 }
             });
         }
+
+        $scope.designPosition();
 
         $scope.addPosition = function(){
 
@@ -122,9 +139,6 @@
             var obj = {};
             obj[$scope.name_filed] =  value;
             position_main_data.data = angular.copy(obj);
-
-           
-
 
             var condition_obj = {};
             condition_obj[match_condition] =  id;
@@ -205,10 +219,6 @@
                 $scope.allVendors=[];
             }
         });
-
-        $scope.designDetail();
-        $scope.designPosition();
-        $scope.designProductData();
 
         var vm = this;
 
