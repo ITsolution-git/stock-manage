@@ -85,7 +85,8 @@ class QuickBookController extends Controller
 
 
 
-    public function qboOauth(){
+    public function qboOauth($oauth_token=''){
+        /*if(!empty($oauth_token)) $_GET['oauth_token'] = $oauth_token;*/
         if ($this->IntuitAnywhere->handle(env('QBO_USERNAME'), env('QBO_TENANT')))
         {
             ; // The user has been connected, and will be redirected to QBO_SUCCESS_URL automatically.
@@ -102,6 +103,7 @@ class QuickBookController extends Controller
     public function qboSuccess(){
        
         return view('settings.qbo_success');
+        echo "self.close()";
     }
 
 
@@ -121,6 +123,8 @@ class QuickBookController extends Controller
 
 
     public function createCustomer(){
+
+        
 
 
        $IPP = new \QuickBooks_IPP(env('QBO_DSN'));
@@ -148,10 +152,10 @@ class QuickBookController extends Controller
         $Customer = new \QuickBooks_IPP_Object_Customer();
 
          $Customer->setTitle('Mr');
-         $Customer->setGivenName('Hardik Andy');
+         $Customer->setGivenName('Piyush');
          $Customer->setMiddleName('M');
-         $Customer->setFamilyName('Deliwala');
-         $Customer->setDisplayName('Hardik Andy M Deliwala' . mt_rand(0, 1000));
+         $Customer->setFamilyName('Dave');
+         $Customer->setDisplayName('Piyush M Dave' . mt_rand(0, 1000));
         // Terms (e.g. Net 30, etc.)
         $Customer->setSalesTermRef(4);
 
