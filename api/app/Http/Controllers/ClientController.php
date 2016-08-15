@@ -71,11 +71,20 @@ class ClientController extends Controller {
 			$contact['location']=!empty($post['location'])? $post['location'] : '';
 			$contact['contact_main']='1';	// SET ACTIVE CONDITION
 			
+       
 
-		$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
+       		$result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($client,$contact);
+
+	        if($result_quickbook != 0) {
+	        	$client['qid']= $result_quickbook;
+	        }
+
+
+			$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
 
 		if($result)
 			{
+				
 				$message = INSERT_RECORD;
 				$success = 1;
 				$data = $result;

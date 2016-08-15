@@ -9,18 +9,14 @@ use Illuminate\Support\Facades\Redirect;
 use App\Shipping;
 use App\Common;
 use App\Distribution;
+use App\Company;
 
 use App\Order;
 use DB;
 use App;
-//use Barryvdh\DomPDF\Facade as PDF;
 
 use Request;
 use PDF;
-
-
-
-
 
 
 class QuickBookController extends Controller
@@ -30,12 +26,18 @@ class QuickBookController extends Controller
     private $context;
     private $realm;
 
-    public function __construct(){
-        if (!\QuickBooks_Utilities::initialized(env('QBO_DSN'))) {
+    public function __construct(Company $company){
+        $this->company = $company;
+
+        if (!\QuickBooks_Utilities::initialized(QBO_DSN)) {
             // Initialize creates the neccessary database schema for queueing up requests and logging
-            \QuickBooks_Utilities::initialize(env('QBO_DSN'));
+            \QuickBooks_Utilities::initialize(QBO_DSN);
         }
-        $this->IntuitAnywhere = new \QuickBooks_IPP_IntuitAnywhere(env('QBO_DSN'), env('QBO_ENCRYPTION_KEY'), env('QBO_OAUTH_CONSUMER_KEY'), env('QBO_CONSUMER_SECRET'), env('QBO_OAUTH_URL'), env('QBO_SUCCESS_URL'));
+
+        $company_id = Session::get('company_id');
+        $result = $this->company->getQBAPI($company_id);
+        $this->IntuitAnywhere = new \QuickBooks_IPP_IntuitAnywhere(QBO_DSN,QBO_ENCRYPTION_KEY,$result[0]->consumer_key,$result[0]->consumer_secret_key,QBO_OAUTH_URL,QBO_SUCCESS_URL);
+       
     }
 
 
@@ -43,19 +45,19 @@ class QuickBookController extends Controller
     public function  qboConnect(){
 
 
-        if ($this->IntuitAnywhere->check(env('QBO_USERNAME'), env('QBO_TENANT')) && $this->IntuitAnywhere->test(env('QBO_USERNAME'), env('QBO_TENANT'))) {
+        if ($this->IntuitAnywhere->check(QBO_USERNAME, QBO_TENANT) && $this->IntuitAnywhere->test(QBO_USERNAME, QBO_TENANT)) {
 
             // Set up the IPP instance
-            $IPP = new \QuickBooks_IPP(env('QBO_DSN'));
+            $IPP = new \QuickBooks_IPP(QBO_DSN);
             // Get our OAuth credentials from the database
-            $creds = $this->IntuitAnywhere->load(env('QBO_USERNAME'), env('QBO_TENANT'));
+            $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
             // Tell the framework to load some data from the OAuth store
             $IPP->authMode(
                 \QuickBooks_IPP::AUTHMODE_OAUTH,
-                env('QBO_USERNAME'),
+                QBO_USERNAME,
                 $creds);
 
-            if (env('QBO_SANDBOX')) {
+            if (QBO_SANDBOX) {
                 // Turn on sandbox mode/URLs
                 $IPP->sandbox(true);
             }
@@ -87,7 +89,7 @@ class QuickBookController extends Controller
 
     public function qboOauth($oauth_token=''){
         /*if(!empty($oauth_token)) $_GET['oauth_token'] = $oauth_token;*/
-        if ($this->IntuitAnywhere->handle(env('QBO_USERNAME'), env('QBO_TENANT')))
+        if ($this->IntuitAnywhere->handle(QBO_USERNAME, QBO_TENANT))
         {
             ; // The user has been connected, and will be redirected to QBO_SUCCESS_URL automatically.
         }
@@ -110,7 +112,7 @@ class QuickBookController extends Controller
 
     public function qboDisconnect(){
 
-        $this->IntuitAnywhere->disconnect(env('QBO_USERNAME'), env('QBO_TENANT'),true);
+        $this->IntuitAnywhere->disconnect(QBO_USERNAME, QBO_TENANT,true);
 
         $response = array('success' => 1, 'message' => "Successful",'records' => true);
         
@@ -122,76 +124,77 @@ class QuickBookController extends Controller
 
 
 
-    public function createCustomer(){
+    public function createCustomer($client,$contact){
 
         
+       $IPP = new \QuickBooks_IPP(QBO_DSN);
 
-
-       $IPP = new \QuickBooks_IPP(env('QBO_DSN'));
         // Get our OAuth credentials from the database
-        $creds = $this->IntuitAnywhere->load(env('QBO_USERNAME'), env('QBO_TENANT'));
+        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
         // Tell the framework to load some data from the OAuth store
         $IPP->authMode(
             \QuickBooks_IPP::AUTHMODE_OAUTH,
-            env('QBO_USERNAME'),
+            QBO_USERNAME,
             $creds);
 
-        if (env('QBO_SANDBOX')) {
+        if (QBO_SANDBOX) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
         // This is our current realm
         $this->realm = $creds['qb_realm'];
+
         // Load the OAuth information from the database
         $this->context = $IPP->context();
 
 
         
+        
         $CustomerService = new \QuickBooks_IPP_Service_Customer();
 
         $Customer = new \QuickBooks_IPP_Object_Customer();
 
-         $Customer->setTitle('Mr');
-         $Customer->setGivenName('Piyush');
-         $Customer->setMiddleName('M');
-         $Customer->setFamilyName('Dave');
-         $Customer->setDisplayName('Piyush M Dave' . mt_rand(0, 1000));
+        // $Customer->setTitle('Mr');
+         $Customer->setGivenName($contact['first_name']);
+       //  $Customer->setMiddleName('M');
+         $Customer->setFamilyName($contact['last_name']);
+         $Customer->setDisplayName($contact['first_name'].' '.$contact['last_name'] . mt_rand(0, 1000));
         // Terms (e.g. Net 30, etc.)
         $Customer->setSalesTermRef(4);
 
         // Phone #
         $PrimaryPhone = new \QuickBooks_IPP_Object_PrimaryPhone();
-        $PrimaryPhone->setFreeFormNumber('123-456-7890');
+        $PrimaryPhone->setFreeFormNumber($contact['phone']);
         $Customer->setPrimaryPhone($PrimaryPhone);
 
         // Mobile #
         $Mobile = new \QuickBooks_IPP_Object_Mobile();
-        $Mobile->setFreeFormNumber('123-456-7890');
+        $Mobile->setFreeFormNumber($contact['phone']);
         $Customer->setMobile($Mobile);
 
         // Fax #
         $Fax = new \QuickBooks_IPP_Object_Fax();
-        $Fax->setFreeFormNumber('123-456-7890');
+        $Fax->setFreeFormNumber($contact['phone']);
         $Customer->setFax($Fax);
 
         // Bill address
         $BillAddr = new \QuickBooks_IPP_Object_BillAddr();
-        $BillAddr->setLine1('G.B.shah road');
-         $BillAddr->setLine2('Vasna');
-         $BillAddr->setCity('AHD');
-         $BillAddr->setCountrySubDivisionCode('IND');
-         $BillAddr->setPostalCode('380007');
+        $BillAddr->setLine1($client['pl_address']);
+         $BillAddr->setLine2($client['pl_suite']);
+         $BillAddr->setCity($client['pl_city']);
+         $BillAddr->setCountrySubDivisionCode('US');
+         $BillAddr->setPostalCode($client['pl_pincode']);
          $Customer->setBillAddr($BillAddr);
 
         // Email
         $PrimaryEmailAddr = new \QuickBooks_IPP_Object_PrimaryEmailAddr();
-        $PrimaryEmailAddr->setAddress('support@consolibyte.com');
+        $PrimaryEmailAddr->setAddress($client['billing_email']);
         $Customer->setPrimaryEmailAddr($PrimaryEmailAddr);
-
 
             
         if ($resp = $CustomerService->add($this->context, $this->realm, $Customer))
         {
+
             //print('Our new customer ID is: [' . $resp . '] (name "' . $Customer->getDisplayName() . '")');
             //return $resp;
             //echo $resp;exit;
@@ -202,6 +205,7 @@ class QuickBookController extends Controller
         }
         else
         {
+             return 0;
             //echo 'Not Added qbo';
             print($CustomerService->lastError($this->context));
         }
