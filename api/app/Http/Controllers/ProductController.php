@@ -671,9 +671,6 @@ public function create_dir($dir_path) {
 
                     $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
 
-                    $per_item = $avg_garment_price + $print_charges;
-                    $sales_total = $per_item * $line_qty;
-                    
                     if($product->extra_charges > 0)
                     {
                         $extraCharges = $product->extra_charges;
@@ -683,7 +680,8 @@ public function create_dir($dir_path) {
                         $extraCharges = 0;
                     }
 
-                    $sales_total2 = $sales_total + $extraCharges;
+                    $per_item = $avg_garment_price + $print_charges + $extraCharges;
+                    $sales_total = $per_item * $line_qty;
 
                     $update_arr = array(
                                         'avg_garment_cost' => round($avg_garment_cost,2),
@@ -691,7 +689,7 @@ public function create_dir($dir_path) {
                                         'print_charges' => round($print_charges,2),
                                         'markup' => $markup,
                                         'markup_default' => $markup_default,
-                                        'sales_total' => round($sales_total2,2),
+                                        'sales_total' => round($sales_total,2),
                                         'total_line_charge' => round($per_item,2)
                                         );
 

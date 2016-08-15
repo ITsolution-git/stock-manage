@@ -1591,12 +1591,28 @@ class OrderController extends Controller {
 
     public function calculateAll($order_id,$company_id)
     {
-        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
+        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
+
         if(!empty($design_data))
         {
             foreach ($design_data as $design) {
                 $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
             }
+        }
+        else
+        {
+          $update_order_arr = array(
+                                'screen_charge' => 0,
+                                'press_setup_charge' => 0,
+                                'order_line_total' => 0,
+                                'order_total' => 0,
+                                'tax' => 0,
+                                'grand_total' => 0,
+                                'balance_due' => 0,
+                                'order_charges_total' => 0
+                                );
+
+          $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
         }
         $data = array("success"=>1);
         return response()->json(["data" => $data]);

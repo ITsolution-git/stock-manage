@@ -424,7 +424,7 @@
                                         <div class="h4">Markup %</div>
                                         <div class="h5 font-14">{{product.markup}}%</div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
+                                    <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
                                         <div class="h4">Overide</div>
                                         <div class="h5 font-14">
                                             <div class="form-cntnr">
@@ -434,17 +434,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="">
-
-                                        <div class="h5">---</div>
-                                    </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Per Item</div>
                                         <div class="h5 font-14">${{product.total_line_charge}}</div>
-                                    </div>
-                                    <div layout="row" layout-align="space-between start" class="p-b-10">
-                                        <div class="h4">Sale Total</div>
-                                        <div class="h5 font-14">${{product.sales_total}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Sale Total</div>
@@ -468,7 +460,7 @@
                                         </md-card-title-text>
                                     </md-card-title>
                                     <md-card-content class="pad0 package-height scrollable" ms-scroll>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product.id,product.design_id)">
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product)">
                                             <div>{{order_item.item}}</div>
                                             <span>${{order_item.charge}}</span>
                                         </div>

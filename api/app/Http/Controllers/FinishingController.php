@@ -210,14 +210,12 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        $total_qnty = 0;
-
-        $design_data = $this->common->GetTableRecords('design_product',array('design_id'=>$post['design_id'],'product_id'=>$post['product_id']),array());
+        $design_data = $this->common->GetTableRecords('design_product',array('design_id'=>$post['product']['design_id'],'product_id'=>$post['product']['id']),array());
         $design = $design_data[0];
 
         if($post['item'] == 1)
         {
-            $finishing_data = $this->common->GetTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id'],'category_id' => $post['item_id']),array());
+            $finishing_data = $this->common->GetTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id'],'category_id' => $post['item_id']),array());
             
             if($finishing_data[0]->status == '1')
             {
@@ -225,37 +223,31 @@ class FinishingController extends Controller {
                 return response()->json(["data" => $data]);
             }
             
-            $extra_charges = $design->extra_charges - $post['item_charge'];
-            $subtract = $design->sales_total - $post['item_charge'];
-            $sales_total = round($subtract,2);
+            $extra_charges = $design->extra_charges - ($post['item_charge'] * $post['product']['total_qnty']);
             
             $update_arr = array('extra_charges' => $extra_charges);
             $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id,'product_id' => $design->product_id),$update_arr);
 
-            $this->common->DeleteTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id'],'item_id' => $post['item_id']));
-            $this->common->DeleteTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id'],'category_id' => $post['item_id']));
+            $this->common->DeleteTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id'],'item_id' => $post['item_id']));
+            $this->common->DeleteTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id'],'category_id' => $post['item_id']));
         }
         else
         {
-            $total_qnty = $this->order->getTotalQntyByProduct($design->design_id,$design->product_id);
-
-            if($total_qnty > 0)
+            if($post['product']['total_qnty'] > 0)
             {
-                $extra_charges = $design->extra_charges + $post['item_charge'];
-                $sum = $design->sales_total + $post['item_charge'];
-                $sales_total = round($sum,2);
+                $extra_charges = $design->extra_charges + ($post['item_charge'] * $post['product']['total_qnty']);
 
                 $update_arr = array('extra_charges' => $extra_charges);
                 $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id,'product_id' => $design->product_id),$update_arr);
             }
 
-            $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id'],'design_id' => $post['design_id'],'product_id' => $post['product_id']);
+            $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id']);
             $shipping_id = $this->common->InsertRecords('order_item_mapping',$insert_arr);
 
-            $item_data = array('category_id' => $post['item_id'],'order_id' => $post['order_id'],'qty' => $total_qnty,'design_id' => $post['design_id'],'product_id' => $post['product_id']);
+            $item_data = array('category_id' => $post['item_id'],'order_id' => $post['order_id'],'qty' => $post['product']['total_qnty'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id']);
             $result = $this->finishing->addFinishing($item_data);
         }
-        $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['design_id']);
+        $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['product']['design_id']);
 
         $data = array("success"=>1);
         return response()->json(["data" => $data]);

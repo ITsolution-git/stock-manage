@@ -402,7 +402,7 @@
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
             }
-            else if($scope.order_design_position.length == '0')
+/*            else if($scope.order_design_position.length == '0')
             {
                 var data = {"status": "error", "message": "Please add position"}
                 notifyService.notify(data.status, data.message);
@@ -413,7 +413,7 @@
                 var data = {"status": "error", "message": "Please enter position quantity"}
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
-            }
+            }*/
         }
 
         // ============= UPLOAD IMAGE ============= // 
@@ -655,7 +655,7 @@
             });
         }
 
-        $scope.assign_item = function(item,item_name,item_charge,item_id,product_id,design_id){
+        $scope.assign_item = function(item,item_name,item_charge,item_id,product){
             
             $("#ajax_loader").show();
             var item_array = {
@@ -665,8 +665,7 @@
                                 'item_id':item_id,
                                 'order_id':$scope.order_id,
                                 'company_id':sessionService.get('company_id'),
-                                'product_id':product_id,
-                                'design_id':design_id
+                                'product':product
                             };
 
             $http.post('api/public/finishing/addRemoveToFinishing',item_array).success(function(result) {
