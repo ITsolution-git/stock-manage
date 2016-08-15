@@ -653,4 +653,17 @@ public function saveColorSize($post)
 
         return $orderData[0]->total;
     }
+
+    public function getTotalPackingCharge($order_id)
+    {
+        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1'];
+        $listArray = [DB::raw('SUM(dp.extra_charges) as total')];
+        $qntyData = DB::table('order_design as od')
+                         ->leftJoin('design_product as dp','dp.design_id','=','od.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $qntyData[0]->total;
+    }
 }

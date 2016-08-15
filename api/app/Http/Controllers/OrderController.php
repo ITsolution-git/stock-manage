@@ -221,11 +221,13 @@ class OrderController extends Controller {
         $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
         $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');
         $notes_count = $this->order->getPoNotes($result['order'][0]->id);
+        $total_packing_charge = $this->order->getTotalPackingCharge($result['order'][0]->id);
 
         $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
         $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
         $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
         $result['order'][0]->notes_count = $notes_count ? $notes_count : '0';
+        $result['order'][0]->total_packing_charge = $total_packing_charge ? $total_packing_charge : '0';
 
         $result['order'][0]->purchase_orders = $purchase_orders;
         $result['order'][0]->recieve_orders = $recieve_orders;
