@@ -1598,7 +1598,8 @@ class OrderController extends Controller {
                 $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
             }
         }
-        return true;
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
     }
 
     public function snsOrder()
