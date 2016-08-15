@@ -16,6 +16,7 @@
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
             $scope.order_id = $stateParams.id;
+            $scope.company_id = sessionService.get('company_id');
             
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -383,9 +384,7 @@
             }
         }
 
-
-
-         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
         {
             var vm = this;
             var UpdateArray = {};
@@ -418,6 +417,16 @@
                     }
                    });
                  }
-        } 
+        }
+
+        $scope.calculateAll = function(order_id,company_id)
+        {
+            $("#ajax_loader").show();
+            $http.get('api/public/order/calculateAll/'+order_id+'/'+company_id).success(function(result) 
+            {
+                $("#ajax_loader").hide();
+                $scope.orderDetail();
+            });
+        }
     }
 })();
