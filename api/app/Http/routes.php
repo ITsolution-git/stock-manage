@@ -320,6 +320,7 @@ Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_
 Route::get('art/GetScreenset_detail/{position_id}', 'ArtController@GetScreenset_detail');
 Route::get('art/GetscreenColor/{screen_id}', 'ArtController@GetscreenColor');
 Route::post('art/UpdateColorScreen', 'ArtController@UpdateColorScreen');
+Route::get('art/getScreenSizes/{company_id}', 'ArtController@getScreenSizes');
 
 // AFFILIATES ROUTERS
 Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');
