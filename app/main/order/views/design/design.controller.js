@@ -679,5 +679,10 @@
                 
             });
         }
+
+        $scope.confirmPricing = function()
+        {
+            $scope.calculateAll($scope.order_id,$scope.company_id);
+        }
     }
 })();
