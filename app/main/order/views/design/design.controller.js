@@ -22,7 +22,7 @@
         {
             $http.get('api/public/order/calculateAll/'+order_id+'/'+company_id).success(function(result) 
             {
-
+                $scope.designProductData();
             });
         }
 
@@ -69,8 +69,6 @@
                 }
             });
         }
-
-        $scope.designProductData();
 
        $scope.designPosition = function(){
 
