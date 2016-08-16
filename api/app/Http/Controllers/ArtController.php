@@ -45,8 +45,7 @@ class ArtController extends Controller {
     {
         if(!empty($company_id)  && $company_id != 'undefined')
         {
-            
-            
+           
             $result = $this->art->listing($company_id);
             if(count($result)>0)
             {
@@ -334,7 +333,7 @@ class ArtController extends Controller {
             {
                 $color_array= array();
                 $allcolors = $this->common->getAllColorData();
-                $getColors = $this->common->GetTableRecords('artjob_screencolors',array('screen_id' => $result[0]->id),array());
+                $getColors = $this->common->GetTableRecords('artjob_screencolors',array('screen_id' => $result[0]->id),array(),'head_location','asc');
 
                 foreach ($allcolors as $key => $value) 
                 {
@@ -418,6 +417,26 @@ class ArtController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);        
+    }
+    public function getScreenSizes($company_id)
+    {
+        if($company_id)
+        {
+            $result = $this->art->getScreenSizes($company_id);
+            if(count($result)>0)
+            {
+                $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result);
+            }
+            else 
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+            }
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
     }
 }
 
