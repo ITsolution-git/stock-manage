@@ -105,7 +105,7 @@ class QuickBookController extends Controller
     public function qboSuccess(){
        
         return view('settings.qbo_success');
-        echo "self.close()";
+       
     }
 
 
@@ -158,7 +158,7 @@ class QuickBookController extends Controller
          $Customer->setGivenName($contact['first_name']);
        //  $Customer->setMiddleName('M');
          $Customer->setFamilyName($contact['last_name']);
-         $Customer->setDisplayName($contact['first_name'].' '.$contact['last_name'] . mt_rand(0, 1000));
+         $Customer->setDisplayName($contact['first_name'].' '.$contact['last_name'].' '. mt_rand(0, 1000));
         // Terms (e.g. Net 30, etc.)
         $Customer->setSalesTermRef(4);
 
