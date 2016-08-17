@@ -17,6 +17,10 @@
                         {
                             
                            return sessionService.AccessService('BC,CA');
+                        },
+                        shippingData: function (msApi)
+                        {
+                            return msApi.resolve('shipping@get');
                         }
                     },
                 url    : '/shipping',
