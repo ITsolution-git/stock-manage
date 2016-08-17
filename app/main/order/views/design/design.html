@@ -59,7 +59,32 @@
                 <div class="box-toolbar" layout="row" layout-align="end center">
 
                      <div flex="20" layout="row" layout-align="start center">
-                        <span class="h2 text-semibold">{{order_design_position.position_header_name}}</span>
+                        <!-- <span class="h2 text-semibold">{{order_design_position.position_header_name}}</span> -->
+                       <div layout="column"> 
+                        <table>
+                            <tr>
+                             <td>Position:</td>
+                             <td>{{order_design_position.position_header_name}}</td>
+                            </tr> 
+
+                            <tr>
+                             <td>Type:</td>
+                             <td>{{order_design_position.placement_header_name}}</td>
+                            </tr> 
+
+                            <tr>
+                             <td>Quantity:</td>
+                             <td>{{order_design_position.qnty_header_name}}</td>
+                            </tr> 
+
+                            <tr>
+                             <td>Price:</td>
+                             <td>{{order_design_position.stitch_header_name}}</td>
+                            </tr> 
+                        </table>
+                        
+                       </div> 
+
                     </div>
                   <div flex="80" layout-align="end center" layout="row">
                     <button  ng-click="position1.expanded = !position1.expanded">

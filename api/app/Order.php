@@ -452,7 +452,12 @@ public function saveColorSize($post)
             foreach ($combine_array['order_design_position'] as $key => $value) 
             {
                
-                 $combine_array['order_design_position'][$key]->position_header_name = $value->position_name.'-'.$value->qnty;
+               $combine_array['order_design_position'][$key]->position_header_name = $value->position_name;
+               $combine_array['order_design_position'][$key]->qnty_header_name = $value->qnty;
+               $combine_array['order_design_position'][$key]->stitch_header_name = $value->color_stitch_count;
+               $combine_array['order_design_position'][$key]->placement_header_name = $value->placement_type_name;
+
+                 /*$combine_array['order_design_position'][$key]->position_header_name = $value->position_name.'-'.$value->qnty;
 
                  if($value->color_stitch_count != ''){
                   $combine_array['order_design_position'][$key]->position_header_name .= '-'.$value->color_stitch_count;
@@ -460,7 +465,7 @@ public function saveColorSize($post)
 
                  if($value->placement_type_name != ''){
                    $combine_array['order_design_position'][$key]->position_header_name .= '-'.$value->placement_type_name;
-                 }
+                 }*/
                  
                 $combine_array['order_design_position'][$key]->image_1_url_photo = (!empty($value->image_1))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_1:'';
                 $combine_array['order_design_position'][$key]->image_2_url_photo = (!empty($value->image_2))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_2:'';
