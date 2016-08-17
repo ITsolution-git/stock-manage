@@ -187,5 +187,21 @@
 
             } 
         }
+
+         $scope.findTotal = function(productData,inventory)
+        {
+          
+           if(inventory == undefined || inventory == 0) {
+            return false;
+           }
+
+         combine_array_id.productData = productData;
+         $http.post('api/public/product/findTotal',combine_array_id).success(function(result) 
+            {
+                $scope.AllProductDetail[$scope.colorName].total = result.data.total;
+                
+            });
+           
+        }
     }
 })();
