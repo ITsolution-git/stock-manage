@@ -64,9 +64,9 @@
             </div>
             <div flex="25" layout="column">
                 <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div>
-                <md-select ng-model="vm.basicForm.state" aria-label="Approval Status">
-                    <md-option value="1">Approved</md-option>
-                    <md-option value="0">Pending</md-option>
+                <md-select ng-model="ScreenSets[0].approval" aria-label="Approval Status">
+                    <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}">Approved</md-option>
+                    <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}">Pending</md-option>
                 </md-select>
             </div>
         </div>
