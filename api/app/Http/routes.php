@@ -321,7 +321,7 @@ Route::get('art/GetScreenset_detail/{position_id}', 'ArtController@GetScreenset_
 Route::get('art/GetscreenColor/{screen_id}', 'ArtController@GetscreenColor');
 Route::post('art/UpdateColorScreen', 'ArtController@UpdateColorScreen');
 Route::get('art/getScreenSizes/{company_id}', 'ArtController@getScreenSizes');
-Route::post('art/change_sortcolor', 'ArtController@change_sort');
+Route::post('art/change_sortcolor', 'ArtController@change_sortcolor');
 Route::post('art/change_sortscreen', 'ArtController@change_sortscreen');
 
 // AFFILIATES ROUTERS
