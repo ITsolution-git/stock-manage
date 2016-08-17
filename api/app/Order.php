@@ -414,7 +414,7 @@ public function saveColorSize($post)
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*','o.order_number','o.is_complete'];
+        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id'];
 
         $designDetailData = DB::table('order_design as od')
                          ->leftJoin('orders as o','od.order_id','=', 'o.id')
@@ -591,7 +591,7 @@ public function saveColorSize($post)
     }
     public function getDesignTotal($order_id)
     {
-        $whereConditions = ['od.order_id' => $order_id];
+        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1'];
         $listArray = [DB::raw('SUM(dp.sales_total) as total')];
         $qntyData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp','dp.design_id','=','od.id')
@@ -652,5 +652,18 @@ public function saveColorSize($post)
                         ->get();
 
         return $orderData[0]->total;
+    }
+
+    public function getTotalPackingCharge($order_id)
+    {
+        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1'];
+        $listArray = [DB::raw('SUM(dp.extra_charges) as total')];
+        $qntyData = DB::table('order_design as od')
+                         ->leftJoin('design_product as dp','dp.design_id','=','od.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $qntyData[0]->total;
     }
 }

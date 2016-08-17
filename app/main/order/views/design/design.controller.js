@@ -18,6 +18,14 @@
         $scope.company_id = sessionService.get('company_id');
         $scope.valid_sns = 1;
 
+        $scope.calculateAll = function(order_id,company_id)
+        {
+            $http.get('api/public/order/calculateAll/'+order_id+'/'+company_id).success(function(result) 
+            {
+                $scope.designProductData();
+            });
+        }
+
        $scope.designDetail = function(){
          $("#ajax_loader").show();
         var combine_array_id = {};
@@ -29,9 +37,12 @@
                 if(result.data.success == '1') {
                      
                     $scope.order_id = result.data.records[0].order_id;
+                    $scope.price_id = result.data.records[0].price_id;
                     $scope.order_number = result.data.records[0].order_number;
                     $scope.is_complete = result.data.records[0].is_complete;
                     $scope.designInforamtion = result.data.records[0];
+
+                    $scope.calculateAll($scope.order_id,$scope.company_id);
 
                 } else {
                     $state.go('app.order');
@@ -39,6 +50,8 @@
                 
             });
         }
+
+        $scope.designDetail();
 
         $scope.designProductData = function(){
             $("#ajax_loader").show();
@@ -82,6 +95,8 @@
             });
         }
 
+        $scope.designPosition();
+
         $scope.addPosition = function(){
 
             var position_data_insert = {};
@@ -122,9 +137,6 @@
             var obj = {};
             obj[$scope.name_filed] =  value;
             position_main_data.data = angular.copy(obj);
-
-           
-
 
             var condition_obj = {};
             condition_obj[match_condition] =  id;
@@ -205,10 +217,6 @@
                 $scope.allVendors=[];
             }
         });
-
-        $scope.designDetail();
-        $scope.designPosition();
-        $scope.designProductData();
 
         var vm = this;
 
@@ -392,7 +400,7 @@
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
             }
-            else if($scope.order_design_position.length == '0')
+/*            else if($scope.order_design_position.length == '0')
             {
                 var data = {"status": "error", "message": "Please add position"}
                 notifyService.notify(data.status, data.message);
@@ -403,7 +411,7 @@
                 var data = {"status": "error", "message": "Please enter position quantity"}
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
-            }
+            }*/
         }
 
         // ============= UPLOAD IMAGE ============= // 
@@ -645,7 +653,7 @@
             });
         }
 
-        $scope.assign_item = function(item,item_name,item_charge,item_id,product_id,design_id){
+        $scope.assign_item = function(item,item_name,item_charge,item_id,product){
             
             $("#ajax_loader").show();
             var item_array = {
@@ -655,8 +663,7 @@
                                 'item_id':item_id,
                                 'order_id':$scope.order_id,
                                 'company_id':sessionService.get('company_id'),
-                                'product_id':product_id,
-                                'design_id':design_id
+                                'product':product
                             };
 
             $http.post('api/public/finishing/addRemoveToFinishing',item_array).success(function(result) {
@@ -671,6 +678,11 @@
                 }
                 
             });
+        }
+
+        $scope.confirmPricing = function()
+        {
+            $scope.calculateAll($scope.order_id,$scope.company_id);
         }
     }
 })();

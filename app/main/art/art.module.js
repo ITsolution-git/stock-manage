@@ -26,6 +26,21 @@
                            return sessionService.AccessService('BC,CA');
                         }
                 }
+            }) .state('app.screen', {
+                url    : '/screen',
+                views  : {
+                    'content@app': {
+                        templateUrl: 'app/main/art/artscreen.html',
+                        controller : 'ArtScreenController as vm'
+                    }
+                },
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                }
             }).state('app.art.orderView', {
                 resolve: {
                         checksession : function (sessionService,$stateParams,$state)

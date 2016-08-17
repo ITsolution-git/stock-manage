@@ -19,9 +19,12 @@ class Art extends Model {
 	public function Listing($post)
 	{
 
-		$search = '';
+		$search = ''; $client_filter='';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
+        }
+        if(isset($post['filter']['client'])) {
+            $client_filter = $post['filter']['client'];
         }
 
         $admindata = DB::table('orders as ord')
@@ -35,6 +38,13 @@ class Art extends Model {
 		                     {
 		                         $query->orWhere('ord.id', 'LIKE', '%'.$search.'%')
 		                               ->orWhere('cl.client_company','LIKE', '%'.$search.'%');
+		                     });
+		                }
+		                if($client_filter != '')               
+		                 {
+		                     $admindata = $admindata->Where(function($query) use($client_filter)
+		                     {
+		                         $query->whereIn('cl.client_id',$client_filter);
 		                     });
 		                }
 		                $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
@@ -136,9 +146,15 @@ class Art extends Model {
     // ART SCREEN SETS LISTING, ORDER POSITIONS
     public function Screen_Listing ($post)
     {
-    			$search = '';
+    			$search = ''; $client_filter=''; $width_filter='';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
+        }
+        if(isset($post['filter']['width'])) {
+            $width_filter = $post['filter']['width'];
+        }
+        if(isset($post['filter']['client'])) {
+            $client_filter = $post['filter']['client'];
         }
         $admindata = DB::table('order_design_position as odp')
 					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
@@ -157,10 +173,26 @@ class Art extends Model {
 	                    {
 	                        $query->orWhere('ord.id', 'LIKE', '%'.$search.'%')
 	                        	  ->orWhere('asc.screen_width', 'LIKE', '%'.$search.'%')
+	                        	  ->orWhere('asc.screen_set', 'LIKE', '%'.$search.'%')
+	                        	  ->orWhere('mt.value', 'LIKE', '%'.$search.'%')
 	                        	  ->orWhere('cl.client_company','LIKE', '%'.$search.'%');
-
 	                    });
 	                }
+	                if($client_filter != '')               
+		                {
+		                    $admindata = $admindata->Where(function($query) use($client_filter)
+		                    {
+		                        $query->whereIn('cl.client_id',$client_filter);
+		                    });
+		                }
+		            if($width_filter != '')               
+		                {
+		                    $admindata = $admindata->Where(function($query) use($width_filter)
+		                    {
+		                        $query->whereIn('asc.screen_width',$width_filter);
+		                    });
+		                }
+
 	                $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
 	                ->skip($post['start'])
 	                ->take($post['range'])
@@ -205,9 +237,9 @@ class Art extends Model {
 
     	if(!empty($post['add_screen_color']))
     	{
-    		foreach ($post['add_screen_color'] as $value) 
+    		foreach ($post['add_screen_color'] as $key=>$value) 
     		{
-    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id']));
+    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'head_location'=>$key));
     		}
     	}
     	if(!empty($post['remove_screen_color']))
@@ -232,6 +264,7 @@ class Art extends Model {
 				->where('ass.id','=',$screen_id)
 				->groupby('acol.id')
 				->orderBy('acol.head_location','asc')
+				->orderBy('acol.id','desc')
 				->get();
 				return $query;
     }
@@ -298,6 +331,19 @@ class Art extends Model {
         $returnData['count'] = $count[0]->Totalcount;		
 		//echo "<pre>"; print_r($result); die();
 		return $returnData;
+	}
+	public function getScreenSizes($company_id)
+	{
+		$query = DB::table('artjob_screensets as ass')
+				->select('ass.screen_width as label','ass.screen_width as id')
+				->join('orders as ord','ass.order_id','=','ord.id')
+				->where('ord.company_id','=',$company_id)
+				->where('ass.screen_width','<>','')
+				->where('ass.screen_active','=','1')
+				->groupby('ass.screen_width')
+				->orderBy('ass.screen_width','asc')
+				->get();
+				return $query;
 	}
 
 }

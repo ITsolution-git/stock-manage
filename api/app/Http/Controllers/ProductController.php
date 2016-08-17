@@ -681,9 +681,6 @@ public function create_dir($dir_path) {
 
                     $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
 
-                    $per_item = $avg_garment_price + $print_charges;
-                    $sales_total = $per_item * $line_qty;
-                    
                     if($product->extra_charges > 0)
                     {
                         $extraCharges = $product->extra_charges;
@@ -693,7 +690,8 @@ public function create_dir($dir_path) {
                         $extraCharges = 0;
                     }
 
-                    $sales_total2 = $sales_total + $extraCharges;
+                    $per_item = $avg_garment_price + $print_charges + $extraCharges;
+                    $sales_total = $per_item * $line_qty;
 
                     $update_arr = array(
                                         'avg_garment_cost' => round($avg_garment_cost,2),
@@ -701,7 +699,7 @@ public function create_dir($dir_path) {
                                         'print_charges' => round($print_charges,2),
                                         'markup' => $markup,
                                         'markup_default' => $markup_default,
-                                        'sales_total' => round($sales_total2,2),
+                                        'sales_total' => round($sales_total,2),
                                         'total_line_charge' => round($per_item,2)
                                         );
 
@@ -730,6 +728,14 @@ public function create_dir($dir_path) {
 
         $total_screens = 0;
         $total_press_setup = 0;
+        $total_foil = 0;
+        $total_number_on_dark = 0;
+        $total_oversize_screens = 0;
+        $total_ink_charge = 0;
+        $total_number_on_light = 0;
+        $total_discharge = 0;
+        $total_speciality = 0;
+
         foreach ($all_design as $design) {
             
             $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1'),array());
@@ -738,16 +744,39 @@ public function create_dir($dir_path) {
 
                 $press_setup_qnty = $row->press_setup_qnty;
                 $screen_fees_qnty = $row->screen_fees_qnty;
+                $foil_qnty = $row->foil_qnty;
+                $number_on_dark_qnty = $row->number_on_dark_qnty;
+                $oversize_screens_qnty = $row->oversize_screens_qnty;
+                $ink_charge_qnty = $row->ink_charge_qnty;
+                $number_on_light_qnty = $row->number_on_light_qnty;
+                $discharge_qnty = $row->discharge_qnty;
+                $speciality_qnty = $row->speciality_qnty;
+                
 
                 $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
                 $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
+                $calc_foil =  $foil_qnty * $price_grid->foil;
+                $calc_number_on_dark =  $number_on_dark_qnty * $price_grid->number_on_dark;
+                $calc_oversize_screens =  $oversize_screens_qnty * $price_grid->over_size_screens;
+                $calc_ink_charge =  $ink_charge_qnty * $price_grid->ink_changes;
+                $calc_number_on_light =  $number_on_light_qnty * $price_grid->number_on_light;
+                $calc_discharge =  $discharge_qnty * $price_grid->discharge;
+                $calc_speciality =  $speciality_qnty * $price_grid->specialty;
 
                 $total_screens += $calc_screen_fees;
                 $total_press_setup += $calc_press_setup;
+                $total_foil += $calc_foil;
+                $total_number_on_dark += $calc_number_on_dark;
+                $total_oversize_screens += $calc_oversize_screens;
+                $total_ink_charge += $calc_ink_charge;
+                $total_number_on_light += $calc_number_on_light;
+                $total_discharge += $calc_discharge;
+                $total_speciality += $calc_speciality;
             }
         }
 
-        $order_charges_total =  $total_screens + $total_press_setup + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
+        $order_charges_total =  $total_screens + $total_press_setup + $total_foil + $total_number_on_dark + $total_oversize_screens + $total_ink_charge + 
+                                $total_number_on_light + $total_discharge + $total_speciality + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
                                 $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
                                 $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
 

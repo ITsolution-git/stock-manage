@@ -25,12 +25,6 @@
                         templateUrl: 'app/main/shipping/shipping.html',
                         controller : 'shippingController as vm'
                     }
-                },
-                resolve: {
-                    shippingData: function (msApi)
-                    {
-                        return msApi.resolve('shipping@get');
-                    }
                 }
             }).state('app.shipping.orderwaitship', {
                 resolve: {

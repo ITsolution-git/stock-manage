@@ -46,9 +46,9 @@
                 </md-card>
             </div>
             <div classs="" flex="25" layout-align="end end" layout="column">
-                <!-- <md-button  class="bg-grey right-m-0 " >
+                <md-button  class="bg-grey right-m-0 " ng-click="calculateAll(order_id,company_id)">
                     CONFIRM PRICING
-                </md-button> -->
+                </md-button>
                 <!-- <md-button  class="bg-grey right-m-0 " ng-click="openEmailPopup($event)">
                     EMAIL
                 </md-button>
@@ -503,6 +503,11 @@
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Shipping Charge</div>
                         <span class="ng-binding">${{order.shipping_charge}}</span>
+                    </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Packing Charge</div>
+                        <span class="ng-binding">${{order.total_packing_charge}}</span>
                     </div>
 
                     <!-- <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">

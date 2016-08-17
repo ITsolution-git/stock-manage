@@ -1,8 +1,13 @@
 <div class="main-design-page m-r-15 m-l-20 m-b-20">
     <div class="header"  layout="column">
-        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
             <a class="link-back cursor-p" ui-sref="app.order.order-info({id:designInforamtion.order_id})">BACK TO ORDER INFO</a>
-            <h1 flex="4">Design Name - {{designInforamtion.design_name}}</h1>
+            <h1 flex="4">Design Name - {{designInforamtion.design_name}} Job - #{{order_id}}</h1>
+        </div>
+        <div class="text-right">
+            <md-button  class="bg-grey md-raised" ng-click="confirmPricing()">
+                Confirm Pricing
+            </md-button>
         </div>
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-order" flex="100">
@@ -270,7 +275,10 @@
 
         <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-show="order_number == '' && is_complete == '0' ">
 
-            <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
+            <div class="title">
+                <span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span>
+                <span class="float-right"><a target="_blank" class="cursor-p" ui-sref="app.settings.price-info({ id: price_id })">GO TO PRICEGRID</a></span>
+            </div>
             <div layout="row" flex="100">
                 <div layout="column" flex="20" class="mrg15-R">
                     <md-input-container class="md-block" flex="25">
@@ -376,7 +384,7 @@
                                 <p ng-bind-html="product.description"></p>
                                 
                             </div>   
-                                                    </div>
+                        </div>
                         <div layout="row" flex="80"  layout-align="space-between start" layout-padding>
                           <!--   <div layout="column" flex="10">
                                 <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
@@ -387,7 +395,7 @@
                                     <div class="h5 font-14 ">${{product.avg_garment_cost}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
-                                    <div class="h4">Markup Default 70%</div>
+                                    <div class="h4">Markup Default {{product.markup_default}}%</div>
                                     <div class="h5 font-14">
                                         <div class="form-cntnr">
                                             <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
@@ -421,7 +429,7 @@
                                         <div class="h4">Markup %</div>
                                         <div class="h5 font-14">{{product.markup}}%</div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
+                                    <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
                                         <div class="h4">Overide</div>
                                         <div class="h5 font-14">
                                             <div class="form-cntnr">
@@ -431,17 +439,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="">
-
-                                        <div class="h5">---</div>
-                                    </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Per Item</div>
                                         <div class="h5 font-14">${{product.total_line_charge}}</div>
-                                    </div>
-                                    <div layout="row" layout-align="space-between start" class="p-b-10">
-                                        <div class="h4">Sale Total</div>
-                                        <div class="h5 font-14">${{product.sales_total}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Sale Total</div>
@@ -465,7 +465,7 @@
                                         </md-card-title-text>
                                     </md-card-title>
                                     <md-card-content class="pad0 package-height scrollable" ms-scroll>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product.id,product.design_id)">
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product)">
                                             <div>{{order_item.item}}</div>
                                             <span>${{order_item.charge}}</span>
                                         </div>

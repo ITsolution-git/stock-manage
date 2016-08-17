@@ -221,11 +221,13 @@ class OrderController extends Controller {
         $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
         $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');
         $notes_count = $this->order->getPoNotes($result['order'][0]->id);
+        $total_packing_charge = $this->order->getTotalPackingCharge($result['order'][0]->id);
 
         $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
         $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
         $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
         $result['order'][0]->notes_count = $notes_count ? $notes_count : '0';
+        $result['order'][0]->total_packing_charge = $total_packing_charge ? $total_packing_charge : '0';
 
         $result['order'][0]->purchase_orders = $purchase_orders;
         $result['order'][0]->recieve_orders = $recieve_orders;
@@ -1591,14 +1593,31 @@ class OrderController extends Controller {
 
     public function calculateAll($order_id,$company_id)
     {
-        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
+        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
+
         if(!empty($design_data))
         {
             foreach ($design_data as $design) {
                 $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
             }
         }
-        return true;
+        else
+        {
+          $update_order_arr = array(
+                                'screen_charge' => 0,
+                                'press_setup_charge' => 0,
+                                'order_line_total' => 0,
+                                'order_total' => 0,
+                                'tax' => 0,
+                                'grand_total' => 0,
+                                'balance_due' => 0,
+                                'order_charges_total' => 0
+                                );
+
+          $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
+        }
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
     }
 
     public function snsOrder()
