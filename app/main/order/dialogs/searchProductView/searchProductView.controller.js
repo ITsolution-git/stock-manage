@@ -122,7 +122,13 @@
 
         $scope.addProduct = function (productData,size_group_id,warehouse) {
           
-             var combine_array_id = {};
+            if(size_group_id == 0)
+            {
+                var data = {"status": "error", "message": "Please select size group"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.product_id = product_id;
             combine_array_id.company_id = sessionService.get('company_id');
