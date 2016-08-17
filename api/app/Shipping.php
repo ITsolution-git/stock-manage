@@ -11,7 +11,12 @@ class Shipping extends Model {
 	
 	public function getShippingList($post)
 	{
-        $listArray = ['o.id','c.client_company','po.po_id','s.id as shipping_id'];
+        $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,c.client_company,po.po_id,s.id as shipping_id')];
 
         $shippingData = DB::table('orders as o')
                          ->leftJoin('shipping as s', 's.order_id', '=', 'o.id')
@@ -19,9 +24,16 @@ class Shipping extends Model {
                          ->leftJoin('purchase_order as po', 'o.id', '=', 'po.order_id')
                          ->select($listArray)
                          ->where('o.is_complete','=','1')
-                         ->where('o.company_id','=',$post['company_id'])
-                         ->GroupBy('o.id')
+                         ->where('o.company_id','=',$post['company_id']);
+                            if($search != '')
+                            {
+                                  $shippingData = $shippingData->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                                                ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
+                            }
+                         $shippingData = $shippingData->GroupBy('o.id')
                          ->get();
+
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
 
         $combine_array = array();
         $waiting = array();
@@ -80,6 +92,23 @@ class Shipping extends Model {
                 $data->distributed = $result2[0]->distributed;
             }
         }
+
+        $returnData = array();
+
+        if($post['type'] == 'wait') {
+            $returnData['allData'] = $waiting;
+            $returnData['count'] = count($waiting);
+        }
+        else if($post['type'] == 'progress') {
+            $returnData['allData'] = $progress;
+            $returnData['count'] = count($progress);
+        }
+        else if($post['type'] == 'shipped') {
+            $returnData['allData'] = $shipped;
+            $returnData['count'] = count($shipped);
+        }
+        
+        return $returnData;
 
         $combine_array['waiting'] = $waiting;
         $combine_array['progress'] = $progress;
