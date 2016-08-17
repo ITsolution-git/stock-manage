@@ -38,7 +38,7 @@
                 </div>
                 <div layout="column" flex="65" layout-padding>
                     <div layout="row" layout-align="space-between start" class="p-b-20">
-                        <div layout="column" flex="50">
+                        <div layout="column" flex="55">
                             <div class="h4">Vendor</div>
                             <div class="h5 p-b-10  grey-color">{{vendor_name}}</div>
                             <div class="h4">Item Number</div>
@@ -72,8 +72,9 @@
                                 <table class="tbl-typ1">
                                     <thead>
                                         <tr>
-                                            <th width="60%" class="pd5">Inventory Level</th>
+                                            <th width="35%" class="pd5">Inventory</th>
                                             <th width="40%" class="pd5">Quantity</th>
+                                            <th width="25%" class="pd5">Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,19 +90,20 @@
                                             </td>
                                             <td class="pd5">
                                                 <md-input-container class="md-block" flex-gt-sm >
-                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}">
+                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,sizedata.inventory[warehouse])">
                                                 </md-input-container>
 
                                             </td>
-
+                                            <td>{{sizedata.customerPrice}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="mrg20-T header-typ3">TOTAL COST :- {{AllProductDetail[colorName].total}}</div>
                         </div> 
                         
 
-                        <div layout="column" flex="45">
+                        <div layout="column" flex="40">
                             <div class="h4">Description</div>
                             <div class="h5  grey-color p-b-10" ng-bind-html="description"></div>
                             

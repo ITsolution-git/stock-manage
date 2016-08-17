@@ -301,6 +301,11 @@ public function create_dir($dir_path) {
 
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
 
+                if(!isset($productAllData['colorData'][$data->colorName]['total'])) {
+                    $productAllData['colorData'][$data->colorName]['total'] = 0;
+                }
+                
+
                  
                 if(count($allDetail) > 0) {
                 
@@ -318,7 +323,7 @@ public function create_dir($dir_path) {
                     }
 
                
-
+                  
 
               //  $productAllData['colorData'][$data->colorName]['sizes'][$key]['warehouse'] = $warehouse;
                
@@ -333,6 +338,11 @@ public function create_dir($dir_path) {
                 $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
                 $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
                 $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
+
+                if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
+                    $productAllData['colorData'][$data->colorName]['total'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] * $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'];
+                }
+                
             }
         }
       
@@ -1131,5 +1141,25 @@ public function create_dir($dir_path) {
         }
         $data = array("success"=>$success,"records"=>$design_product);
         return response()->json(['data'=>$data]);
+    }
+
+    public function findTotal() {
+
+        $post = Input::all();
+       
+        $total = 0;
+        
+        foreach($post['productData'] as $key => $data) {
+
+             if(isset($data['qnty'])) {
+                $total += $data['customerPrice'] * $data['qnty'];
+             }
+             
+        }
+        
+
+        $data = array("success"=>1,"message"=>'Data',"total"=>$total);
+        return response()->json(["data" => $data]);
+        
     }
 }
