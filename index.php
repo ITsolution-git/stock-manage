@@ -85,6 +85,8 @@
     <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
     <script src="scripts/other/ngDraggable.js"></script>
     <script src="scripts/angular-xeditable/xeditable.min.js"></script>
+    
+    
     <!-- inject:js -->
 
     <script src="app/quick-panel/quick-panel.module.js"></script>
@@ -285,6 +287,6 @@
     <link rel="stylesheet" href="styles/other/kendo.common.min.css">
     <link rel="stylesheet" href="styles/other/kendo.default.min.css">
     <link rel="stylesheet" href="scripts/angular-xeditable/xeditable.css">
-    
+    <script src="scripts/drag/angular-dragdrop.js"></script>
 </body>
 </html>

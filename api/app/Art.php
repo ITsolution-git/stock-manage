@@ -89,6 +89,7 @@ class Art extends Model {
 				->where('odp.is_delete','=','1')
 				->where('or.company_id','=',$post['company_id'])
 				->where('or.id','=',$post['order_id'])
+				->orderBy('ass.screen_order')
 				->get();
 
 		if(count($query)>0)
@@ -345,5 +346,26 @@ class Art extends Model {
 				->get();
 				return $query;
 	}
+	public function change_sortcolor($post)
+	{
+		foreach ($post as $key=>$value) 
+		{
+			if(!empty($value['id']))
+			{
+				DB::table('artjob_screencolors')->where('id','=',$value['id'])->update(array('head_location'=>$key));
+			}
+		}
+	}
+	public function change_sortscreen($post)
+	{
+		foreach ($post as $key=>$value) 
+		{
+			if(!empty($value['screen_id']))
+			{
+				DB::table('artjob_screensets')->where('id','=',$value['screen_id'])->update(array('screen_order'=>$key));
+			}
+		}
+	}
+	
 
 }
