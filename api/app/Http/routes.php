@@ -241,6 +241,7 @@ Route::post('order/updateOverride', 'OrderController@updateOverride');
 Route::get('order/calculateAll/{order_id}/{company_id}', 'OrderController@calculateAll');
 Route::post('order/snsOrder', 'OrderController@snsOrder');
 Route::post('order/addPosition', 'OrderController@addPosition');
+Route::post('order/addInvoice', 'OrderController@addInvoice');
 
 
 // FINISHING CONTROLLER 

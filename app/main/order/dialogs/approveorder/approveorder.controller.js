@@ -7,7 +7,7 @@
         .controller('approveOrderDiallogController', approveOrderDiallogController);
 
     /** @ngInject */
-    function approveOrderDiallogController(order_number,sns_shipping,$mdDialog,$document, $window, $timeout,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
+    function approveOrderDiallogController(order_number,sns_shipping,client_id,$mdDialog,$document, $window, $timeout,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
 
         
@@ -26,7 +26,25 @@
 
          $scope.save = function (orderData) {
 
+           
+           if(orderData.invoice == true && orderData.qb == true) {
 
+                var combine_array_id = {};
+                    combine_array_id.id = $stateParams.id;
+                    combine_array_id.company_id = sessionService.get('company_id');
+                    combine_array_id.client_id = client_id;
+                    
+                   $("#ajax_loader").show();
+                   
+                  $http.post('api/public/order/addInvoice',combine_array_id).success(function(result) 
+                    {
+                        $mdDialog.hide();
+                        $state.go($state.current, $stateParams, {reload: true, inherit: false});
+                        return false;
+                            
+                    });
+               
+           }
 
            if(orderData.sns == true) {
 

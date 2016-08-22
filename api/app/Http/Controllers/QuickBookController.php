@@ -35,6 +35,7 @@ class QuickBookController extends Controller
         }
 
         $company_id = Session::get('company_id');
+
         $result = $this->company->getQBAPI($company_id);
         $this->IntuitAnywhere = new \QuickBooks_IPP_IntuitAnywhere(QBO_DSN,QBO_ENCRYPTION_KEY,$result[0]->consumer_key,$result[0]->consumer_secret_key,QBO_OAUTH_URL,QBO_SUCCESS_URL);
        
@@ -126,7 +127,6 @@ class QuickBookController extends Controller
 
     public function createCustomer($client,$contact){
 
-        
        $IPP = new \QuickBooks_IPP(QBO_DSN);
 
         // Get our OAuth credentials from the database
@@ -230,32 +230,210 @@ class QuickBookController extends Controller
         }
     }
 
-    public function addInvoice($invoiceArray,$itemArray,$customerRef){
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef){
+
+
+         $IPP = new \QuickBooks_IPP(QBO_DSN);
+
+        // Get our OAuth credentials from the database
+        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        // Tell the framework to load some data from the OAuth store
+        $IPP->authMode(
+            \QuickBooks_IPP::AUTHMODE_OAUTH,
+            QBO_USERNAME,
+            $creds);
+
+        if (QBO_SANDBOX) {
+            // Turn on sandbox mode/URLs
+            $IPP->sandbox(true);
+        }
+        // This is our current realm
+        $this->realm = $creds['qb_realm'];
+
+        // Load the OAuth information from the database
+        $this->context = $IPP->context();
+
 
         $InvoiceService = new \QuickBooks_IPP_Service_Invoice();
 
         $Invoice = new \QuickBooks_IPP_Object_Invoice();
 
-        $Invoice = new QuickBooks_IPP_Object_Invoice();
+         $Invoice->setDocNumber('WEB' . mt_rand(0, 10000));
+         //$Invoice->setTxnDate('2015-10-11');
+         $Invoice->setTxnDate(date('Y-m-d'));
 
- $Invoice->setDocNumber('WEB' . mt_rand(0, 10000));
- $Invoice->setTxnDate('2013-10-11');
+        foreach ($invoiceArray as $key => $value) {
 
- $Line = new QuickBooks_IPP_Object_Line();
- $Line->setDetailType('SalesItemLineDetail');
- $Line->setAmount(12.95 * 2);
- $Line->setDescription('Test description goes here.');
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($value->price * $value->qnty);
+                 $Line->setDescription($value->description);
 
- $SalesItemLineDetail = new QuickBooks_IPP_Object_SalesItemLineDetail();
- $SalesItemLineDetail->setItemRef('8');
- $SalesItemLineDetail->setUnitPrice(12.95);
- $SalesItemLineDetail->setQty(2);
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice($value->price);
+                 $SalesItemLineDetail->setQty($value->qnty);
 
- $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
- $Invoice->addLine($Line);
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
- $Invoice->setCustomerRef('67');
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+           
+         }
+
+         if($chargeArray[0]->separations_charge != 0 && $chargeArray[0]->separations_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->separations_charge);
+                 $Line->setDescription('Seperation Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice(1);
+                 $SalesItemLineDetail->setQty($chargeArray[0]->separations_charge);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+          if($chargeArray[0]->rush_charge != 0 && $chargeArray[0]->rush_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->rush_charge);
+                 $Line->setDescription('Rush Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice(1);
+                 $SalesItemLineDetail->setQty($chargeArray[0]->rush_charge);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+
+         if($chargeArray[0]->distribution_charge != 0 && $chargeArray[0]->distribution_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->distribution_charge);
+                 $Line->setDescription('Distribution Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice(1);
+                 $SalesItemLineDetail->setQty($chargeArray[0]->distribution_charge);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+         if($chargeArray[0]->digitize_charge != 0 && $chargeArray[0]->digitize_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->digitize_charge);
+                 $Line->setDescription('Digitize Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice(1);
+                 $SalesItemLineDetail->setQty($chargeArray[0]->digitize_charge);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+
+         if($chargeArray[0]->shipping_charge != 0 && $chargeArray[0]->shipping_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->shipping_charge);
+                 $Line->setDescription('Shipping Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice(1);
+                 $SalesItemLineDetail->setQty($chargeArray[0]->shipping_charge);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+          if($chargeArray[0]->setup_charge != 0 && $chargeArray[0]->setup_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->setup_charge);
+                 $Line->setDescription('Setup Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice(1);
+                 $SalesItemLineDetail->setQty($chargeArray[0]->setup_charge);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+         if($chargeArray[0]->artwork_charge != 0 && $chargeArray[0]->artwork_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->artwork_charge);
+                 $Line->setDescription('Artwork Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setUnitPrice(1);
+                 $SalesItemLineDetail->setQty($chargeArray[0]->artwork_charge);
+
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+         
+         /*$Line = new \QuickBooks_IPP_Object_Line();
+         $Line->setDetailType('SalesItemLineDetail');
+         $Line->setAmount(12.95 * 2);
+         $Line->setDescription('Test description goes here.');
+
+         $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+         $SalesItemLineDetail->setItemRef('8');
+         $SalesItemLineDetail->setUnitPrice(12.95);
+         $SalesItemLineDetail->setQty(2);
+
+         $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+         $Invoice->addLine($Line);
+
+         $Invoice->setCustomerRef($customerRef);*/
 
 
         if ($resp = $InvoiceService->add($this->context, $this->realm, $Invoice))

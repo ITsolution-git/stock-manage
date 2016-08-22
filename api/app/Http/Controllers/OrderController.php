@@ -1717,6 +1717,37 @@ class OrderController extends Controller {
      }
 
 
+
+     public function addInvoice()
+     {
+        $post = Input::all();
+        $result = $this->client->GetclientDetail($post['client_id']);
+        $result_order = $this->order->GetOrderDetailAll($post['company_id'],$post['id']);
+        $result_charges = $this->order->orderInfoData($post['company_id'],$post['id']);
+        
+        if($result['main']['qid'] == 0) {
+          
+          $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
+          $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook);
+          $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('invoice_id' => $result_quickbook_invoice));
+
+        } else {
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid']);
+          $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('invoice_id' => $result_quickbook_invoice));
+
+          
+        }
+
+
+
+
+
+
+      
+     }
+
+
      /** 
  * @SWG\Definition(
  *      definition="addOrder",

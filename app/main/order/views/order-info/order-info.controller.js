@@ -216,7 +216,7 @@
                   }
             });
         }
-        function openApproveOrderDialog(ev,order_number,sns_shipping) {
+        function openApproveOrderDialog(ev,order_number,sns_shipping,client_id) {
             $mdDialog.show({
                 controller: 'approveOrderDiallogController',
                 controllerAs: 'vm',
@@ -227,6 +227,7 @@
                 locals: {
                     order_number:order_number,
                     sns_shipping:sns_shipping,
+                    client_id:client_id,
                     event: ev
                 }
             });

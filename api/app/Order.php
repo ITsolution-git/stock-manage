@@ -671,4 +671,36 @@ public function saveColorSize($post)
 
         return $qntyData[0]->total;
     }
+
+
+    public function GetOrderDetailAll($company_id,$order_id)
+        {
+          $result = DB::table('orders as o')
+                ->select('o.id as order_id','dp.product_id','pd.*','p.description')
+                ->Join('order_design as od','od.order_id','=','o.id')
+                ->Join('design_product as dp','dp.design_id','=','od.id')
+                ->Join('purchase_detail as pd','pd.design_product_id','=','dp.id')
+                ->Join('products as p','p.id','=','dp.product_id')
+                ->where('o.is_delete','=',1)
+                ->where('od.is_delete','=','1')
+                ->where('dp.is_delete','=',1)
+                ->where('o.id','=',$order_id)
+                ->where('o.company_id','=',$company_id)
+                ->get();
+         
+          return $result;
+          
+        }
+
+
+         public function orderInfoData($company_id,$order_id) {
+      
+            $whereConditions = ['is_delete' => "1",'id' => $order_id,'company_id' => $company_id];
+            $orderDetailData = DB::table('orders')
+                             ->select('*')
+                             ->where($whereConditions)
+                             ->get();
+
+           return $orderDetailData;
+      }
 }
