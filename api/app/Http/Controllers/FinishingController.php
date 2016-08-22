@@ -223,7 +223,7 @@ class FinishingController extends Controller {
                 return response()->json(["data" => $data]);
             }
             
-            $extra_charges = $design->extra_charges - ($post['item_charge'] * $post['product']['total_qnty']);
+            $extra_charges = $design->extra_charges - $post['item_charge'];
             
             $update_arr = array('extra_charges' => $extra_charges);
             $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id,'product_id' => $design->product_id),$update_arr);
@@ -235,7 +235,7 @@ class FinishingController extends Controller {
         {
             if($post['product']['total_qnty'] > 0)
             {
-                $extra_charges = $design->extra_charges + ($post['item_charge'] * $post['product']['total_qnty']);
+                $extra_charges = $design->extra_charges + $post['item_charge'];
 
                 $update_arr = array('extra_charges' => $extra_charges);
                 $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id,'product_id' => $design->product_id),$update_arr);
