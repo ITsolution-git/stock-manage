@@ -1108,3 +1108,13 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 #screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th {
   width: 80px !important;
 } 
+/**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+ul[dnd-list] .dndPlaceholder {
+    border: 1px dashed #CCC;
+    background: none;
+    min-height: 150px;
+}

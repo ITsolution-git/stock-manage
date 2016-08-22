@@ -12,16 +12,27 @@
         var vm = this;
         $scope.company_id = sessionService.get('company_id');
 
-
+        // Model to JSON for demo purpose
+        $scope.$watch('models', function(model) {
+            $scope.modelAsJson = angular.toJson(model, true);
+        }, true);
+       
         $scope.screenset_id = $stateParams.id;
 
         $scope.GetOrderScreenSet = function() 
         {
+            $("#ajax_loader").show();
             $http.get('api/public/art/GetscreenColor/'+$scope.screenset_id).success(function(result) 
             {
                 if(result.data.success == '1') 
                 {
                     $scope.ScreenSets = result.data.records;
+                    $scope.ScreenSets_new = 
+                    {
+                        data_all: result.data.records,
+                        selected: null,
+                    };
+
                     $scope.getColors = result.data.getColors;
                     $scope.screen_allcolors = result.data.allcolors;
                     
@@ -32,10 +43,19 @@
                     /*$state.go('app.art');
                     return false;*/
                 }
+                $("#ajax_loader").hide();
             });
         }
         $scope.GetOrderScreenSet();
 
+        $scope.change_sort = function ()
+        {
+            $("#ajax_loader").show();
+            $http.post('api/public/art/change_sortcolor',$scope.ScreenSets_new.data_all).success(function(result) 
+            {
+                $scope.GetOrderScreenSet();
+            });
+        }
 
          $scope.UpdateColorScreen = function(ev, colordata) 
          {
