@@ -15,11 +15,12 @@
             "attn":"",
             "address":"",
             "address2":"",
-            "city":"USA",
+            "city":"",
             "zipcode":"",
             "phone":"",
             "state":"",
-            "client_id":$scope.client_id
+            "client_id":$scope.client_id,
+            "country":"USA"
         };
 
         var state = {};
@@ -35,8 +36,6 @@
 
         $scope.save = function()
         {
-            console.log($scope.addAddress);
-
             if($scope.addAddress.description == '')
             {
                 notifyService.notify('error','Please enter description');
