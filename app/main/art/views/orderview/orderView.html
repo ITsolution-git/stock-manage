@@ -1,5 +1,26 @@
 <style type="text/css">
     .trans-box{width: 20% !important;}
+     .handles {
+            padding-left: 0px !important;
+        }
+        .handles li {
+            list-style: none;
+             padding-bottom: 10px !important;
+        }
+        .fs22 {
+            cursor: move;
+        }
+        li.disabled {
+            opacity: 0.5;
+        }
+        li.highlight {
+            background: #FEE25F;
+        }
+
+        li.sortable-placeholder {
+            border: 1px dashed #CCC;
+            background: none;
+        }
 </style>
 <div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
     <div class="header "  layout="column" >
@@ -41,9 +62,9 @@
             </div>
             <div flex="25" layout="column">
                  <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div>
-                <md-select ng-model="screensetPOinfo" aria-label="Approval Status">
-                    <md-option value="1">Approved</md-option>
-                    <md-option value="0">Pending</md-option>
+                <md-select ng-model="ScreenSets[0].approval" aria-label="Approval Status">
+                    <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}">Approved</md-option>
+                    <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}">Pending</md-option>
                 </md-select>
             </div>
         </div>
@@ -53,78 +74,89 @@
 <!--         <div flex="25" class="text-right"><md-button class="md-raised md-primary" ng-click="vm.createNewScreen()">Create New Screen</md-button></div> -->
     </div>
     <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15" >
-        <table class="tbl-typ2" ng-repeat="sets in ScreenSets">
-            <tr>
-                <td width="97%">
-                    <div class="header-typ1">{{ sets.screen_set}}</div>
-                    <div layout="row"  ng-show="sets.screen_active==1">
-                        <div flex="95" layout="column">
-                            <div layout="row" layout-wrap>
-                                <div class="trans-box">
-                                    <div>Position</div>
-                                    <span class="chrome-weight font-14">{{sets.position_name}}</span>
+     <ul class="handles" dnd-list="ScreenSets_new.data_all"  dnd-inserted="change_sort()">
+            <li ng-repeat="sets in ScreenSets_new.data_all"
+                dnd-draggable="sets"
+                dnd-moved="ScreenSets_new.data_all.splice($index, 1)"
+                dnd-effect-allowed="move"
+                dnd-selected="ScreenSets_new.data_all.selected = sets"
+                ng-class="{'selected': ScreenSets_new.data_all.selected === sets}">
+                <dnd-nodrag>
+                <table class="tbl-typ2">
+                    <tr>
+                        <td width="97%">
+                            <div class="header-typ1">{{ sets.screen_set}}</div>
+                            <div layout="row"  ng-show="sets.screen_active==1">
+                                <div flex="95" layout="column">
+                                    <div layout="row" layout-wrap>
+                                        <div class="trans-box">
+                                            <div>Position</div>
+                                            <span class="chrome-weight font-14">{{sets.position_name}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <div>Number of Colors</div>
+                                            <span class="chrome-weight font-14">{{sets.color_stitch_count}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <div>Frame Size</div>
+                                            <span class="chrome-weight font-14">{{sets.frame_size}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <div>Width</div>
+                                            <span class="chrome-weight font-14">{{sets.screen_width}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
+                                        </div>
+                                        <div class="trans-box">
+                                            <div>Print Location</div>
+                                            <span class="chrome-weight font-14">{{sets.screen_location}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <div>Number of Screens</div>
+                                            <span class="chrome-weight font-14">{{sets.screen_total}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <div>Lines Per Inch</div>
+                                            <span class="chrome-weight font-14">{{sets.line_per_inch}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <div>Height</div>
+                                            <span class="chrome-weight font-14">{{sets.screen_height}}</span>
+                                        </div>
+                                        <div class="trans-box">
+                                            <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="trans-box">
-                                    <div>Number of Colors</div>
-                                    <span class="chrome-weight font-14">{{sets.color_stitch_count}}</span>
+                                <!-- <div layout-align="end start"  flex="5" layout="row">
+                                    <md-button  ng-click="vm.createNewScreen($event,sets.screen_id)" class="md-icon-button" aria-label="View Details">
+                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                </div> -->
+                            </div>
+                            <div layout="row" ng-show="sets.screen_active==0">
+                                <div flex="80" layout="column">
+                                    <div layout="row" layout-wrap>
+                                        <h1 style="color:#cccccc; padding-left: 10px;"> Screen Set Not Yet Created </h1>
+                                    </div>
                                 </div>
-                                <div class="trans-box">
-                                    <div>Frame Size</div>
-                                    <span class="chrome-weight font-14">{{sets.frame_size}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Width</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_width}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Print Location</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_location}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Number of Screens</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_total}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Lines Per Inch</div>
-                                    <span class="chrome-weight font-14">{{sets.line_per_inch}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Height</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_height}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
+                                <div flex="20" layout="column">
+                                    <div layout="row" layout-wrap style="margin-top: 10px;">
+                                    <div flex="25" class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Create Screen Set</md-button></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- <div layout-align="end start"  flex="5" layout="row">
-                            <md-button  ng-click="vm.createNewScreen($event,sets.screen_id)" class="md-icon-button" aria-label="View Details">
-                                <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                            </md-button>
-                        </div> -->
-                    </div>
-                    <div layout="row" ng-show="sets.screen_active==0">
-                        <div flex="80" layout="column">
-                            <div layout="row" layout-wrap>
-                                <h1 style="color:#cccccc; padding-left: 10px;"> Screen Set Not Yet Created </h1>
-                            </div>
-                        </div>
-                        <div flex="20" layout="column">
-                            <div layout="row" layout-wrap style="margin-top: 10px;">
-                            <div flex="25" class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Create Screen Set</md-button></div>
-                            </div>
-                        </div>
-                    </div>
 
-                </td>
-                <td width="3%" class="text-center">
-                    <span class="icon icon-menu fs22"></span>
-                </td>
-            </tr>
-        </table>
+                        </td>
+                        <td width="3%" class="text-center" dnd-handle>
+                            <span class="icon icon-menu fs22"></span>
+                        </td>
+                    </tr>
+                </table>
+        </dnd-nodrag>
+        </li>
+        </ul>
     </div>
     <!-- <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
         <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>

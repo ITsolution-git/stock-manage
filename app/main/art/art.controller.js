@@ -186,6 +186,7 @@
          vm.companyfilter = false;
          vm.searchOrder;
 
+         
         // Data
         $scope.company_id = sessionService.get('company_id');
         /* TESTY PAGINATION */     

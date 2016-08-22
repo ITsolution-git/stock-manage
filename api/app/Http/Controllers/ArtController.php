@@ -438,6 +438,22 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
+    public function change_sortcolor()
+    {
+        $post = Input::all();
+        if(count($post)>0)
+        {
+             $result = $this->art->change_sortcolor($post);
+        }
+    }
+    public function change_sortscreen()
+    {
+         $post = Input::all();
+        if(count($post)>0)
+        {
+             $result = $this->art->change_sortscreen($post);
+        }
+    }
 }
 
 

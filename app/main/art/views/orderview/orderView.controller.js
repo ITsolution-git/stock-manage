@@ -17,12 +17,20 @@
 
         $scope.GetOrderScreenSet = function() 
         {
+            $("#ajax_loader").show();
             var GetScreenArray = {company_id:$scope.company_id, order_id:$scope.order_id};
             $http.post('api/public/art/ScreenSets',GetScreenArray).success(function(result) 
             {
                 if(result.data.success == '1') 
                 {
                     $scope.ScreenSets = result.data.records;
+                    $scope.ScreenSets_new = 
+                    {
+                        data_all: result.data.records,
+                        selected: null,
+                    };
+
+
                 }
                 else
                 {
@@ -30,9 +38,20 @@
                     $state.go('app.art');
                     return false;
                 }
+                $("#ajax_loader").hide();
             });
         }
         $scope.GetOrderScreenSet();
+    
+        $scope.change_sort = function ()
+        {
+            $("#ajax_loader").show();
+            $http.post('api/public/art/change_sortscreen',$scope.ScreenSets_new.data_all).success(function(result) 
+            {
+                $scope.GetOrderScreenSet();
+            });
+        }
+
 
 
         function createNewScreen(ev, position_id) {
