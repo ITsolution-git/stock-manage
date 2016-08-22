@@ -66,8 +66,6 @@
 
         $scope.update_box_qty = function(box)
         {
-            $("#ajax_loader").show();
-            
             if(box.md == '' || box.md == undefined)
             {
                 box.md = 0;            
@@ -76,6 +74,19 @@
             {
                 box.spoil = 0;       
             }
+            if(parseInt(box.spoil) > parseInt(box.actual))
+            {
+                var data = {"status": "error", "message": "Spoil can not be greater than actual."}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(parseInt(box.md) > parseInt(box.actual))
+            {
+                var data = {"status": "error", "message": "MD can not be greater than actual."}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+
 
             var combine = parseInt(box.md) + parseInt(box.spoil);
             box.actual =  parseInt(box.boxed_qnty) - parseInt(combine);
@@ -85,6 +96,7 @@
             ship_data.data = {'actual':box.actual, 'md':box.md, 'spoil':box.spoil};
             ship_data.cond = {'id' : box.box_id};
 
+            $("#ajax_loader").show();
             $http.post('api/public/common/UpdateTableRecords',ship_data).success(function(result) {
                 if(result.data.success == 1)
                 {
