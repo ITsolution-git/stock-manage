@@ -27,8 +27,11 @@ class Shipping extends Model {
                          ->where('o.company_id','=',$post['company_id']);
                             if($search != '')
                             {
-                                  $shippingData = $shippingData->orWhere('o.id', 'LIKE', '%'.$search.'%')
-                                                                ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
+                              $shippingData = $shippingData->Where(function($query) use($search)
+                              {
+                                  $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                        ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
+                              });
                             }
                          $shippingData = $shippingData->GroupBy('o.id')
                          ->get();
