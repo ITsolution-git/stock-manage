@@ -1802,4 +1802,14 @@ class OrderController extends Controller {
 
     }
 
+    public function createInvoice()
+    {
+        $post = Input::all();
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'));
+        $id = $this->common->InsertRecords('invoice',$orderData);
+
+        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id);
+        return response()->json(['data'=>$data]);
+    }
+
 }

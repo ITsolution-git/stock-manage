@@ -288,5 +288,6 @@
     <link rel="stylesheet" href="styles/other/kendo.default.min.css">
     <link rel="stylesheet" href="scripts/angular-xeditable/xeditable.css">
     <script src="scripts/drag/angular-dragdrop.js"></script>
+    <script src="scripts/clipboard.js"></script>
 </body>
 </html>
