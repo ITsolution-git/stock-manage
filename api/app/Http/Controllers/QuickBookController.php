@@ -236,7 +236,7 @@ class QuickBookController extends Controller
         $this->context = $IPP->context();
 
         $static_charge = array('0' => 'S&S','1' => 'Custom Product','2' => 'Separations Charge','3' => 'Rush Charge','4' => 'Distribution Charge',
-                        '5' => 'Digitize Charge','6' => 'Shipping Charge','7' => 'Setup Charge','8' => 'Artwork Charge','9' => 'Tax','10' => 'Discount');
+                        '5' => 'Digitize Charge','6' => 'Shipping Charge','7' => 'Setup Charge','8' => 'Artwork Charge','9' => 'Tax','10' => 'Discount','11' => 'Screen Charge','12' => 'Press Setup Charge');
 
           
           foreach($static_charge as $charge) {
@@ -286,6 +286,12 @@ class QuickBookController extends Controller
                     }elseif ($charge == 'Discount') {
                          $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('discount_charge' => $id));
 
+                    }elseif ($charge == 'Screen Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('screen_charge' => $id));
+
+                    }elseif ($charge == 'Press Setup Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('press_setup_charge' => $id));
+
                     }
 
                 } else {
@@ -314,7 +320,7 @@ class QuickBookController extends Controller
         }*/
     }
 
-    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product){
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id){
       
 
          $IPP = new \QuickBooks_IPP(QBO_DSN);
@@ -348,15 +354,31 @@ class QuickBookController extends Controller
 
         foreach ($invoiceArray as $key => $value) {
 
+                $desc = array();
+
+                foreach ($value->sizeData as  $sizeAll) {
+                   $desc[] = $sizeAll->size.'('.$sizeAll->qnty.')'; 
+                }
+
+                $description = implode(', ' , $desc);
+
+                $product_name_desc_display = $value->product_name.' : '.$value->color_name.' : '.$description;
+
+                
                  $Line = new \QuickBooks_IPP_Object_Line();
                  $Line->setDetailType('SalesItemLineDetail');
-                 $Line->setAmount($value->price * $value->qnty);
-                 $Line->setDescription($value->description);
+                 $Line->setAmount($value->total_line_charge * $value->total_qnty);
+                 $Line->setDescription($product_name_desc_display);
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
-                 $SalesItemLineDetail->setUnitPrice($value->price);
-                 $SalesItemLineDetail->setQty($value->qnty);
+                 if($value->vendor_id == 1) {
+                     $SalesItemLineDetail->setItemRef($db_product[0]->ss);
+                 } else {
+                     $SalesItemLineDetail->setItemRef($db_product[0]->custom_product);
+                 }
+                
+                 $SalesItemLineDetail->setUnitPrice($value->total_line_charge);
+                 $SalesItemLineDetail->setQty($value->total_qnty);
 
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
@@ -367,6 +389,47 @@ class QuickBookController extends Controller
            
          }
 
+         if($chargeArray[0]->screen_charge != 0 && $chargeArray[0]->screen_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->screen_charge);
+                 $Line->setDescription('Screen Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->screen_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->screen_charge);
+                 $SalesItemLineDetail->setQty(1);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+
+         if($chargeArray[0]->press_setup_charge != 0 && $chargeArray[0]->press_setup_charge != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(1 * $chargeArray[0]->press_setup_charge);
+                 $Line->setDescription('Screen Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->press_setup_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->press_setup_charge);
+                 $SalesItemLineDetail->setQty(1);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+
+
          if($chargeArray[0]->separations_charge != 0 && $chargeArray[0]->separations_charge != '') {
 
                  $Line = new \QuickBooks_IPP_Object_Line();
@@ -376,8 +439,8 @@ class QuickBookController extends Controller
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->separations_charge);
-                 $SalesItemLineDetail->setUnitPrice(1);
-                 $SalesItemLineDetail->setQty($chargeArray[0]->separations_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->separations_charge);
+                 $SalesItemLineDetail->setQty(1);
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
@@ -395,8 +458,8 @@ class QuickBookController extends Controller
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->rush_charge);
-                 $SalesItemLineDetail->setUnitPrice(1);
-                 $SalesItemLineDetail->setQty($chargeArray[0]->rush_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->rush_charge);
+                 $SalesItemLineDetail->setQty(1);
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
@@ -415,8 +478,8 @@ class QuickBookController extends Controller
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->distribution_charge);
-                 $SalesItemLineDetail->setUnitPrice(1);
-                 $SalesItemLineDetail->setQty($chargeArray[0]->distribution_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->distribution_charge);
+                 $SalesItemLineDetail->setQty(1);
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
@@ -434,8 +497,8 @@ class QuickBookController extends Controller
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->digitize_charge);
-                 $SalesItemLineDetail->setUnitPrice(1);
-                 $SalesItemLineDetail->setQty($chargeArray[0]->digitize_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->digitize_charge);
+                 $SalesItemLineDetail->setQty(1);
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
@@ -454,8 +517,8 @@ class QuickBookController extends Controller
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->shipping_charge);
-                 $SalesItemLineDetail->setUnitPrice(1);
-                 $SalesItemLineDetail->setQty($chargeArray[0]->shipping_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->shipping_charge);
+                 $SalesItemLineDetail->setQty(1);
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
@@ -473,8 +536,8 @@ class QuickBookController extends Controller
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->setup_charge);
-                 $SalesItemLineDetail->setUnitPrice(1);
-                 $SalesItemLineDetail->setQty($chargeArray[0]->setup_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->setup_charge);
+                 $SalesItemLineDetail->setQty(1);
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
 
@@ -492,8 +555,8 @@ class QuickBookController extends Controller
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->artwork_charge);
-                 $SalesItemLineDetail->setUnitPrice(1);
-                 $SalesItemLineDetail->setQty($chargeArray[0]->artwork_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->artwork_charge);
+                 $SalesItemLineDetail->setQty(1);
 
 
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
@@ -502,6 +565,43 @@ class QuickBookController extends Controller
 
                  $Invoice->setCustomerRef($customerRef);
          }
+
+         if($chargeArray[0]->order_total != 0 && $chargeArray[0]->order_total != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                // $calc = ($chargeArray[0]->order_total * $chargeArray[0]->tax_rate) / 100;
+                 $Line->setAmount($chargeArray[0]->tax);
+                 $Line->setDescription('Tax');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->tax_charge);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->tax_rate);
+                 //$SalesItemLineDetail->setQty($chargeArray[0]->order_total);
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+                 $Invoice->addLine($Line);
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+         if($chargeArray[0]->discount != 0 && $chargeArray[0]->discount != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount(-$chargeArray[0]->discount);
+                 $Line->setDescription('Discount');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->discount_charge);
+                 $SalesItemLineDetail->setUnitPrice(-$chargeArray[0]->discount);
+                 $SalesItemLineDetail->setQty(1);
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+                 $Invoice->addLine($Line);
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+        
+
+
          
          /*$Line = new \QuickBooks_IPP_Object_Line();
          $Line->setDetailType('SalesItemLineDetail');
@@ -522,11 +622,18 @@ class QuickBookController extends Controller
 
         if ($resp = $InvoiceService->add($this->context, $this->realm, $Invoice))
         {
-            return $this->getId($resp);
+            $qb_invoice_id =  $this->getId($resp);
+             $this->common->UpdateTableRecords('invoice',array('id' => $invoice_id),array('qb_id' => $qb_invoice_id));
+
+            $data_record = array("success"=>1,"message"=>"Success");
+            return response()->json(["data" => $data_record]);
         }
         else
         {
-            print($InvoiceService->lastError());
+            return 0;
+              $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
+            return response()->json(["data" => $data_record]);
+           // print($InvoiceService->lastError());
         }
     }
 

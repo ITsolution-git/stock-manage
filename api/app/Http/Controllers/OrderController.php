@@ -1723,13 +1723,12 @@ class OrderController extends Controller {
      public function addInvoice()
      {
         $post = Input::all();
+
         $result = $this->client->GetclientDetail($post['client_id']);
         $result_qbProductId = $this->company->getQBAPI($post['company_id']);
         $result_order = $this->order->GetOrderDetailAll($post['id']);
-        print_r($result_order);exit;
         $result_charges = $this->order->orderInfoData($post['company_id'],$post['id']);
 
-        
         if($result_qbProductId[0]->ss =='') {
 
             $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
@@ -1740,15 +1739,18 @@ class OrderController extends Controller {
           
           $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
           $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id']);
           $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('invoice_id' => $result_quickbook_invoice));
 
         } else {
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id']);
           $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('invoice_id' => $result_quickbook_invoice));
 
           
         }
+
+         $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");
+         return response()->json(["data" => $data_record]);
 
 
 
