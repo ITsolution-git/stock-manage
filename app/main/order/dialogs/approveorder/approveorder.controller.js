@@ -38,6 +38,15 @@
                    
                   $http.post('api/public/order/addInvoice',combine_array_id).success(function(result) 
                     {
+
+                       if(result.data.success=='0') {
+                   
+                          notifyService.notify('error',result.data.message);
+                           $mdDialog.hide();
+                           $state.go($state.current, $stateParams, {reload: true, inherit: false});
+                           return false;
+                        }
+
                         $mdDialog.hide();
                         $state.go($state.current, $stateParams, {reload: true, inherit: false});
                         return false;

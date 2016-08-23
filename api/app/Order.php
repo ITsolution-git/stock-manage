@@ -673,24 +673,7 @@ public function saveColorSize($post)
     }
 
 
-    public function GetOrderDetailAll($company_id,$order_id)
-        {
-          $result = DB::table('orders as o')
-                ->select('o.id as order_id','dp.product_id','pd.*','p.description')
-                ->Join('order_design as od','od.order_id','=','o.id')
-                ->Join('design_product as dp','dp.design_id','=','od.id')
-                ->Join('purchase_detail as pd','pd.design_product_id','=','dp.id')
-                ->Join('products as p','p.id','=','dp.product_id')
-                ->where('o.is_delete','=',1)
-                ->where('od.is_delete','=','1')
-                ->where('dp.is_delete','=',1)
-                ->where('o.id','=',$order_id)
-                ->where('o.company_id','=',$company_id)
-                ->get();
-         
-          return $result;
-          
-        }
+   
 
 
          public function orderInfoData($company_id,$order_id) {
@@ -703,4 +686,55 @@ public function saveColorSize($post)
 
            return $orderDetailData;
       }
+
+
+       public function GetOrderDetailAll($orderId) {
+
+     
+        
+        $where = ['o.id' => $orderId,'o.is_delete' => '1','od.is_delete' => '1','dp.is_delete' => '1','pcs.is_delete' => '1','p.is_delete' => '1','v.is_delete' => '1'];
+
+        $listArray = ['p.id','p.name as product_name','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
+                        'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse'];
+
+        $productData = DB::table('orders as o')
+                         ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
+                         ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                         ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
+                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                         ->leftJoin('purchase_detail as pcs', 'dp.id', '=', 'pcs.design_product_id')
+                         ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
+                         ->select($listArray)
+                         ->where($where)
+                         ->GroupBy('dp.product_id')
+                         ->orderBy('dp.id','desc')
+                         ->get();
+
+        $combine_array = array();
+
+        if(!empty($productData) && $productData[0]->id > 0)
+        {
+            foreach ($productData as $product) {
+                $sizeData = DB::table('purchase_detail as pd')
+                                     ->where('pd.design_product_id','=',$product->design_product_id)
+                                     ->get();
+                $product->sizeData = $sizeData;
+
+                $total_qnty = DB::table('purchase_detail')
+                                     ->select(DB::raw('SUM(qnty) as total_qnty'))
+                                     ->where('design_product_id','=',$product->design_product_id)
+                                     ->get();
+
+                $product->total_qnty = $total_qnty[0]->total_qnty; 
+                $combine_array[$product->id] = $product;
+            }
+        }
+        else
+        {
+            return array();
+        }
+
+        return $combine_array;
+    }
 }

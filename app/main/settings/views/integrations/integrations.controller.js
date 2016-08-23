@@ -20,6 +20,8 @@
             vm.authorizeNet = authorizeNet ;
             vm.upsDialog = upsDialog ;
             vm.qbActivewearDialog = qbActivewearDialog ;
+            vm.qbActivewearSetup = qbActivewearSetup ;
+
             
             vm.quickbookDisconnect = quickbookDisconnect;
 
@@ -314,6 +316,33 @@
                         event: ev
                     }
                 });
+            }
+
+            function qbActivewearSetup(ev,id) {
+
+                 var company_list_data = {};
+                    var condition_obj = {};
+                    condition_obj['company_id'] =  sessionService.get('company_id');
+                    condition_obj['id'] =  id;
+                    company_list_data.cond = angular.copy(condition_obj);
+
+                $("#ajax_loader").show();
+                $http.post('api/public/qbo/AddItem',company_list_data).success(function(result) {
+                    $("#ajax_loader").hide();
+                            if(result != '0')
+                            {
+                                notifyService.notify('success',"Setup successful");   
+                            }
+                            else
+                            {
+                                notifyService.notify('error',"Please connect to quickbook first");
+                            }
+
+                            $mdDialog.hide();
+                            $state.go($state.current,'', {reload: true, inherit: false});
+                            return false;
+
+                           });
             }
         
     }

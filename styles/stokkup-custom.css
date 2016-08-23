@@ -805,11 +805,11 @@ md-button.on {
 
 #integrations tr > td:first-child, #integrations tr > th:first-child {
     width: 15% !important;
-    height: 105px;
+    height: 150px;
 }
 
 #integrations td {
-  height: 105px ;
+  height: 150px ;
 }
 
 .integrationsTd2 {

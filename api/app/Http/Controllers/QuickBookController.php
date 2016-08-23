@@ -26,8 +26,9 @@ class QuickBookController extends Controller
     private $context;
     private $realm;
 
-    public function __construct(Company $company){
+    public function __construct(Company $company,Common $common){
         $this->company = $company;
+        $this->common = $common;
 
         if (!\QuickBooks_Utilities::initialized(QBO_DSN)) {
             // Initialize creates the neccessary database schema for queueing up requests and logging
@@ -212,13 +213,96 @@ class QuickBookController extends Controller
     }
 
     public function addItem(){
-        $ItemService = new \QuickBooks_IPP_Service_Item();
+        $post = Input::all();
+
+        $IPP = new \QuickBooks_IPP(QBO_DSN);
+
+        // Get our OAuth credentials from the database
+        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        // Tell the framework to load some data from the OAuth store
+        $IPP->authMode(
+            \QuickBooks_IPP::AUTHMODE_OAUTH,
+            QBO_USERNAME,
+            $creds);
+
+        if (QBO_SANDBOX) {
+            // Turn on sandbox mode/URLs
+            $IPP->sandbox(true);
+        }
+        // This is our current realm
+        $this->realm = $creds['qb_realm'];
+
+        // Load the OAuth information from the database
+        $this->context = $IPP->context();
+
+        $static_charge = array('0' => 'S&S','1' => 'Custom Product','2' => 'Separations Charge','3' => 'Rush Charge','4' => 'Distribution Charge',
+                        '5' => 'Digitize Charge','6' => 'Shipping Charge','7' => 'Setup Charge','8' => 'Artwork Charge','9' => 'Tax','10' => 'Discount');
+
+          
+          foreach($static_charge as $charge) {
+            
+                $ItemService = new \QuickBooks_IPP_Service_Item();
+
+                $Item = new \QuickBooks_IPP_Object_Item();
+
+                 $Item->setName($charge);
+                 $Item->setType('Inventory');
+                 $Item->setIncomeAccountRef('53');
+
+                if ($resp = $ItemService->add($this->context, $this->realm, $Item))
+                {
+                    $id = $this->getId($resp);
+
+                    if($charge == 'S&S') {
+                            $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('ss' => $id));
+
+                    } elseif ($charge == 'Custom Product') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('custom_product' => $id));
+
+                    }elseif ($charge == 'Separations Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('separations_charge' => $id));
+
+                    }elseif ($charge == 'Rush Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('rush_charge' => $id));
+
+                    }elseif ($charge == 'Distribution Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('distribution_charge' => $id));
+
+                    }elseif ($charge == 'Digitize Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('digitize_charge' => $id));
+
+                    }elseif ($charge == 'Shipping Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('shipping_charge' => $id));
+
+                    }elseif ($charge == 'Setup Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('setup_charge' => $id));
+
+                    }elseif ($charge == 'Artwork Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('artwork_charge' => $id));
+
+                    }elseif ($charge == 'Tax') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('tax_charge' => $id));
+
+                    }elseif ($charge == 'Discount') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('discount_charge' => $id));
+
+                    }
+
+                } else {
+                    return 0;
+                }
+
+          }
+          return 1;
+
+
+        /*$ItemService = new \QuickBooks_IPP_Service_Item();
 
         $Item = new \QuickBooks_IPP_Object_Item();
 
-        $Item->setName('My Item');
- $Item->setType('Inventory');
- $Item->setIncomeAccountRef('53');
+        $Item->setName('My Item123456');
+        $Item->setType('Inventory');
+        $Item->setIncomeAccountRef('53');
 
         if ($resp = $ItemService->add($this->context, $this->realm, $Item))
         {
@@ -226,12 +310,12 @@ class QuickBookController extends Controller
         }
         else
         {
-            print($ItemService->lastError($this->context));
-        }
+           return 0;
+        }*/
     }
 
-    public function addInvoice($invoiceArray,$chargeArray,$customerRef){
-
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product){
+      
 
          $IPP = new \QuickBooks_IPP(QBO_DSN);
 
@@ -291,7 +375,7 @@ class QuickBookController extends Controller
                  $Line->setDescription('Seperation Charges');
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setItemRef($db_product[0]->separations_charge);
                  $SalesItemLineDetail->setUnitPrice(1);
                  $SalesItemLineDetail->setQty($chargeArray[0]->separations_charge);
 
@@ -310,7 +394,7 @@ class QuickBookController extends Controller
                  $Line->setDescription('Rush Charges');
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setItemRef($db_product[0]->rush_charge);
                  $SalesItemLineDetail->setUnitPrice(1);
                  $SalesItemLineDetail->setQty($chargeArray[0]->rush_charge);
 
@@ -330,7 +414,7 @@ class QuickBookController extends Controller
                  $Line->setDescription('Distribution Charges');
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setItemRef($db_product[0]->distribution_charge);
                  $SalesItemLineDetail->setUnitPrice(1);
                  $SalesItemLineDetail->setQty($chargeArray[0]->distribution_charge);
 
@@ -349,7 +433,7 @@ class QuickBookController extends Controller
                  $Line->setDescription('Digitize Charges');
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setItemRef($db_product[0]->digitize_charge);
                  $SalesItemLineDetail->setUnitPrice(1);
                  $SalesItemLineDetail->setQty($chargeArray[0]->digitize_charge);
 
@@ -369,7 +453,7 @@ class QuickBookController extends Controller
                  $Line->setDescription('Shipping Charges');
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setItemRef($db_product[0]->shipping_charge);
                  $SalesItemLineDetail->setUnitPrice(1);
                  $SalesItemLineDetail->setQty($chargeArray[0]->shipping_charge);
 
@@ -388,7 +472,7 @@ class QuickBookController extends Controller
                  $Line->setDescription('Setup Charges');
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setItemRef($db_product[0]->setup_charge);
                  $SalesItemLineDetail->setUnitPrice(1);
                  $SalesItemLineDetail->setQty($chargeArray[0]->setup_charge);
 
@@ -407,7 +491,7 @@ class QuickBookController extends Controller
                  $Line->setDescription('Artwork Charges');
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-                 $SalesItemLineDetail->setItemRef('8');
+                 $SalesItemLineDetail->setItemRef($db_product[0]->artwork_charge);
                  $SalesItemLineDetail->setUnitPrice(1);
                  $SalesItemLineDetail->setQty($chargeArray[0]->artwork_charge);
 

@@ -347,4 +347,5 @@ Route::get('qbo/success','QuickBookController@qboSuccess');
 Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
 Route::get('qbo/qboConnect','QuickBookController@qboConnect');
 Route::get('qbo/createCustomer','QuickBookController@createCustomer');
+Route::post('qbo/AddItem', 'QuickBookController@addItem');
 
