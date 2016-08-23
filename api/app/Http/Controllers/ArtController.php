@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
+use App\Login;
 use Input;
+use Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Art;
 use DB;
 use File;
-
+use PDF;
 use Request;
+use Response;
 
 class ArtController extends Controller { 
 
@@ -381,6 +384,7 @@ class ArtController extends Controller {
                         $value->color_name = $color_array[$value->color_name];
                     }
                     $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+                    $value->mokup_logo_url = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
 
                     if(!empty($value->thread_color))
                     {
@@ -454,6 +458,49 @@ class ArtController extends Controller {
              $result = $this->art->change_sortscreen($post);
         }
     }
+
+       /**
+   * Save Color size.
+   * @return json data
+    */
+    public function PressInstructionPDF()
+    {
+
+        $screenArray= json_decode($_POST['art']);
+        
+        if(count($screenArray)>0)
+        {
+            $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
+            if(!empty($pdf_data[0]))
+            {
+                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+               
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0]))->render());
+           
+                $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+                PDF::Output($filename, 'F');
+                return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
+    
 }
 
 

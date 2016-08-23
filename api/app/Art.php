@@ -78,7 +78,7 @@ class Art extends Model {
     public function ScreenSets($post) // ART SCREEN DETAIL PAGE FOR SCREEN SETS
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('art.approval','or.name as order_name','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+				->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
 				->join('art as art','art.order_id','=','ass.order_id')
 				->join('orders as or','art.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -257,7 +257,7 @@ class Art extends Model {
     public function GetscreenColor($screen_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','acol.*')
+				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','ass.mokup_logo','acol.*')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -366,6 +366,36 @@ class Art extends Model {
 			}
 		}
 	}
-	
+	public function getArtApprovalPDFdata($order_id,$company_id)
+	{
+		$query = DB::table('artjob_screensets as ass')
+				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','ass.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname')
+				->join('orders as or','ass.order_id','=','or.id')
+				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
+				->leftjoin('color as col','col.id','=','acol.color_name')
+				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
+				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
+				->leftJoin('users as usr','usr.id','=','or.company_id')
+				->leftJoin('staff as stf','stf.user_id','=','usr.id')
+				->where('or.id','=',$order_id)
+				->where('or.company_id','=',$company_id)
+				->where('ass.screen_active','=','1')
+				->groupby('acol.id')
+				->orderBy('ass.screen_order','asc')
+				->orderBy('acol.head_location','asc')
+				->orderBy('acol.id','desc')
+				->get();
+				$temp = array();
+		foreach ($query as $key=>$value) 
+		{
+				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+				$value->companyphoto = (!empty($value->companyphoto))?UPLOAD_PATH.$value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto:'';
+				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
+				$temp[$value->screen_id][] = $value;
+		}
+		$temp = array_values($temp);
+		return $temp;
+	}
 
 }
