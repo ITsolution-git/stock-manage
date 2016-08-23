@@ -6,16 +6,15 @@
     </div>
 </md-toolbar>
 <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
-    <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start">
-        <div layout="column"  flex="100"><a href="#" class="f-black font-15">https://pay.stokkup.paymentlink.com/linktopay</a></div>
-    </div>
+    <md-input-container class="md-block first-box margin-0" flex-gt-sm>
+        <input placeholder="ATTN" ng-model="addAddress.attn">
+    </md-input-container>
 </div>
 <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
     <button ng-transclude="" type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
     <div class="md-ripple-container" style=""></div>
     </button>
-    <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Copy"><span class="ng-scope">Copy</span></button>
+    <button type="button" class="md-accent md-raised md-button md-ink-ripple" clipboard supported="supported" text="textToCopy" on-copied="success()" on-error="fail(err)" aria-label="Copy"><span class="ng-scope">Copy</span></button>
 </md-dialog-actions>
 
 </md-dialog>

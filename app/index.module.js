@@ -73,6 +73,7 @@
 
             //Misc data
             'app.misc',
-            'xeditable'
+            'xeditable',
+            'angular-clipboard'
         ]);
 })();

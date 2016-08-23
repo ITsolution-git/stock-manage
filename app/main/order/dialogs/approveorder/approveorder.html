@@ -11,10 +11,10 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="wrap" class="design-add-modal">
                 <div layout="row" flex="100">
-                    <md-checkbox aria-label="S&amp;S Order" aria-label="Select All" ng-model="order.sns">S&amp;S Order</md-checkbox>
+                    <md-checkbox aria-label="S&amp;S Order" aria-label="Select All" ng-model="sns">S&amp;S Order</md-checkbox>
                 </div>
                 <div layout="row" flex="100">
-                    <md-checkbox aria-label="Create Invoice" aria-label="Select All" ng-model="order.invoice">Create Invoice</md-checkbox>
+                    <md-checkbox aria-label="Create Invoice" aria-label="Select All" ng-model="invoice">Create Invoice</md-checkbox>
                 </div>
                 <div layout="row" flex="100">
                     <md-select flex="30" ng-model="company.prime_address_state" placeholder="Payment Terms" class="mrg6-TB">
@@ -24,13 +24,15 @@
                     </md-select>
                 </div>
                 <div layout="row" flex="100">
-                    <md-checkbox aria-label="Create Invoice" aria-label="Select All" checked>Sync to Quickbooks</md-checkbox>
+
+                    <md-checkbox aria-label="Create Invoice" aria-label="Select All" ng-model="qb">Sync to Quickbooks</md-checkbox>
+
                 </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised " ng-click="save(order)">Save</md-button>
+            <md-button class="md-accent md-raised " ng-click="save()">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

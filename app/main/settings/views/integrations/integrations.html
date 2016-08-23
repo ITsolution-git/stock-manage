@@ -18,7 +18,17 @@
                           <!--   <td class=""><md-button class="btn-width-200 connectToQuickBooksBtn" ng-click="vm.quickbookActivewearDialog($event)"><img src="assets/images/integrations/connectToQuickBooks.png" class="" /></md-button></td>  -->
 
 
-                       <td class=""><span><md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':qb.consumer_key=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':qb.consumer_key!=''}" ng-click="vm.qbActivewearDialog($event)" >CONNECT</md-button></md-button></span><span class="ml-10" ng-show="qb.consumer_key !=''"><connect-to-quickbooks /><span></td> 
+                       <td class="">
+                            <span>
+                                <md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':qb.consumer_key=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':qb.consumer_key!=''}" ng-click="vm.qbActivewearDialog($event)" >CONNECT</md-button></md-button>
+                            </span>
+                            <span class="ml-10" ng-show="qb.consumer_key !=''"><connect-to-quickbooks /></span>
+
+                            <span>
+                                <md-button ng-show="qb.ss =='0'" class="md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple" ng-click="vm.qbActivewearSetup($event,qb.id)" >Setup</md-button>
+                                </md-button>
+                            </span>
+                            </td> 
                           
                         </tr>
                         <tr class="cursor-p">

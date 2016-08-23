@@ -13,6 +13,7 @@ use App\Common;
 use App\Purchase;
 use App\Product;
 use App\Client;
+use App\Company;
 use App\Affiliate;
 use DB;
 use App;
@@ -24,7 +25,7 @@ use PDF;
 
 class OrderController extends Controller { 
 
-    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api)
+    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company)
     {
         $this->order = $order;
         $this->purchase = $purchase;
@@ -33,6 +34,7 @@ class OrderController extends Controller {
         $this->client = $client;
         $this->affiliate = $affiliate;
         $this->api = $api;
+        $this->company = $company;
     }
 
 /** 
@@ -1717,6 +1719,46 @@ class OrderController extends Controller {
      }
 
 
+
+     public function addInvoice()
+     {
+        $post = Input::all();
+        $result = $this->client->GetclientDetail($post['client_id']);
+        $result_qbProductId = $this->company->getQBAPI($post['company_id']);
+        $result_order = $this->order->GetOrderDetailAll($post['id']);
+        print_r($result_order);exit;
+        $result_charges = $this->order->orderInfoData($post['company_id'],$post['id']);
+
+        
+        if($result_qbProductId[0]->ss =='') {
+
+            $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
+            return response()->json(["data" => $data_record]);
+        }
+
+        if($result['main']['qid'] == 0) {
+          
+          $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
+          $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId);
+          $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('invoice_id' => $result_quickbook_invoice));
+
+        } else {
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId);
+          $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('invoice_id' => $result_quickbook_invoice));
+
+          
+        }
+
+
+
+
+
+
+      
+     }
+
+
      /** 
  * @SWG\Definition(
  *      definition="addOrder",
@@ -1800,6 +1842,16 @@ class OrderController extends Controller {
            $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$id);
            return response()->json(['data'=>$data]);
 
+    }
+
+    public function createInvoice()
+    {
+        $post = Input::all();
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'));
+        $id = $this->common->InsertRecords('invoice',$orderData);
+
+        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id);
+        return response()->json(['data'=>$data]);
     }
 
 }

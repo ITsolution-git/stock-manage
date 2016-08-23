@@ -165,6 +165,7 @@ class Client extends Model {
     		foreach ($retArray as $key => $value) 
     		{
     			$result['main']['client_id'] = $value->client_id;
+          $result['main']['qid'] = $value->qid;
     			$result['main']['client_company'] = $value->client_company;
     			//$result['main']['created_date'] = $value->created_date;
     			$result['main']['billing_email'] = $value->billing_email;

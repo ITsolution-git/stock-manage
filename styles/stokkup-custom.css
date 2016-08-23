@@ -411,6 +411,9 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .mrg10-R {
 	margin-right:10px;
 }
+.mrg10 {
+  margin: 10px !important;
+}
 .mrg15-R {
   margin-right: 15px;
 }
@@ -805,11 +808,11 @@ md-button.on {
 
 #integrations tr > td:first-child, #integrations tr > th:first-child {
     width: 15% !important;
-    height: 105px;
+    height: 150px;
 }
 
 #integrations td {
-  height: 105px ;
+  height: 150px ;
 }
 
 .integrationsTd2 {
@@ -1117,4 +1120,56 @@ ul[dnd-list] .dndPlaceholder {
     border: 1px dashed #CCC;
     background: none;
     min-height: 150px;
+}
+
+
+.text-bold {
+  font-weight: bold !important;
+}
+.text-bold-center {
+  font-weight: bold;
+  text-align: center;
+}
+.text-bold-right {
+  font-weight: bold;
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+#billtoShipto tr td:nth-child(1), #billtoShipto tr td:nth-child(3) {
+  height:122px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  width: 50%;
+}
+#billtoShipto tr td table {
+  width: 100%;
+}
+.no-border {
+  border: 0 none !important;
+}
+.no-border img {
+  height: 125px;
+}
+.pad10-T {
+  padding-top: 10px;
+}
+.pad20-L {
+  padding-left: 20px;
+}
+.v-TOP {
+  vertical-align: top;
+}
+.width-50 {
+  width: 50px;
+}
+.pad-0 {
+  padding: 0;
+}
+.border-col {
+  border-collapse: collapse;
+}
+.h100 {
+  height: 100%;
 }
