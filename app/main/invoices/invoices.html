@@ -19,8 +19,8 @@
                             <td>{{inv.created_date}}</td>
                             <td>${{inv.grand_total}}</td>
                             <td>{{inv.in_hands_by}}</td>
-                            <td ng-if="inv.qb_id == '0'"><a href="#" class="icon  icon-rotate-3d font-18"></a></td>
-                            <td ng-if="inv.qb_id > '0'"><a href="#" class="icon font-18"></a></td>
+                            <td ng-if="inv.qb_id == '0'"><a href="#" class="icon font-18"></a></td>
+                            <td ng-if="inv.qb_id > '0'"><a href="#" class="icon  icon-rotate-3d font-18"></a></td>
                             <td ui-sref="app.invoices.singleInvoice({id:inv.id})"><a>Pay</a></td>
                             <td>
                                 <md-menu>
