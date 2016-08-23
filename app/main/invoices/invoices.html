@@ -20,7 +20,7 @@
                             <td>{{ inv.grand_total}}</td>
                             <td>{{ inv.in_hands_by}}</td>
                             <td><a href="#" class="icon  icon-rotate-3d font-18"></a></td>
-                            <td ui-sref="app.invoices.singleInvoice"><a>Pay</a></td>
+                            <td ui-sref="app.invoices.singleInvoice({id:inv.id})"><a>Pay</a></td>
                             <td>
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
