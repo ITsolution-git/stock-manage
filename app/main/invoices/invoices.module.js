@@ -31,9 +31,19 @@
                     purchaseOrderData: function (msApi)
                     {
                         return msApi.resolve('purchaseDetail@get');
+                    },
+                    checksession : function (sessionService)
+                    {
+                       return sessionService.AccessService('BC,CA');
                     }
                 }
             }).state('app.invoices.singleInvoice', {
+                resolve: {
+                    checksession : function (sessionService)
+                    {
+                       return sessionService.AccessService('BC,CA');
+                    },
+                },
                 url  : '/singleInvoice/:id',
                 views: {
                     'content@app': {
@@ -42,6 +52,12 @@
                     }
                 }
             }).state('app.invoices.linktopay', {
+                resolve: {
+                    checksession : function (sessionService)
+                    {
+                       return sessionService.AccessService('BC,CA');
+                    },
+                },
                 url  : '/linktopay',
                 views: {
                     'content@app': {
@@ -67,7 +83,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.invoices', {
-           // title    : 'Invoices',
+            title    : 'Invoices',
             icon     : 'icon-file-document',
             state    : 'app.invoices',
             /*stateParams: {

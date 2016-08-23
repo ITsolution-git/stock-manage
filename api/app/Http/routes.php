@@ -345,7 +345,6 @@ Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDist
 Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
 Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');
 
-
 Route::get('qbo/oauth','QuickBookController@qboOauth');
 Route::get('qbo/success','QuickBookController@qboSuccess');
 Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
@@ -353,3 +352,4 @@ Route::get('qbo/qboConnect','QuickBookController@qboConnect');
 Route::get('qbo/createCustomer','QuickBookController@createCustomer');
 Route::post('qbo/AddItem', 'QuickBookController@addItem');
 
+Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');

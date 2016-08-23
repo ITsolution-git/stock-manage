@@ -5,11 +5,10 @@
             .module('app.invoices')
             .controller('invoiceController', invoiceController);
     /** @ngInject */
-    function invoiceController(invoiceData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder) {
+    function invoiceController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
         var vm = this;
         vm.searchQuery = "";
         // Data
-        vm.invoices = invoiceData.data;
         //Datatable
         vm.dtOptions = {
             dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -34,5 +33,46 @@
             //originatorEv = ev;
             $mdOpenMenu(ev);
         };
+
+        $scope.init = {
+          'count': 10,
+          'page': 1,
+          'sortBy': 'order.id',
+          'sortOrder': 'dsc'
+        };
+
+        $scope.reloadCallback = function () { };
+
+
+        $scope.filterBy = {
+          'search': ''
+        };
+        
+        $scope.search = function ($event){
+            $scope.filterBy.name = $event.target.value;
+        };
+        
+        $scope.getResource = function (params, paramsObj, search) {
+            
+            $scope.params = params;
+            $scope.paramsObj = paramsObj;
+            $("#ajax_loader").show();
+            var orderData = {};
+
+              orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
+
+              return $http.post('api/public/invoice/listInvoice',orderData).success(function(response) {
+                $("#ajax_loader").hide();
+                var header = response.header;
+                $scope.success = response.success;
+                return {
+                  'rows': response.rows,
+                  'header': header,
+                  'pagination': response.pagination,
+                  'sortBy': response.sortBy,
+                  'sortOrder': response.sortOrder
+                }
+              });
+        }
     }
 })();
