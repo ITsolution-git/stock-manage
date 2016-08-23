@@ -19,6 +19,7 @@
        
         $scope.screenset_id = $stateParams.id;
 
+        // INTIAL CALL TO RETRIVE ALL SCREENSET DATA
         $scope.GetOrderScreenSet = function() 
         {
             $("#ajax_loader").show();
@@ -46,8 +47,9 @@
                 $("#ajax_loader").hide();
             });
         }
-        $scope.GetOrderScreenSet();
+        $scope.GetOrderScreenSet(); /// CALL WHEN PAGE LOAD FIRST TIME.
 
+        // DRAG AND DROP FUNCTION CALL WHEN EVEN CALL
         $scope.change_sort = function ()
         {
             $("#ajax_loader").show();
@@ -55,104 +57,94 @@
             {
                 $scope.GetOrderScreenSet();
             });
-        }
+            }
 
-         $scope.UpdateColorScreen = function(ev, colordata) 
-         {
-            $mdDialog.show({
-                controller: function ($scope, params,colordata)
-                            {
-                                //alert(position_id);
-                                $scope.params = params;
-                                $scope.color_screen = colordata;
-                                //console.log($scope.color_screen); 
-                                $scope.screen_allcolors = $scope.params.screen_allcolors;
-                                $scope.simulateQuery = false;
-                                $scope.isDisabled    = false;
-                                $scope.states        = loadAll();
-                                $scope.querySearch   = querySearch;
-                      
-                                function querySearch (query) 
+        // UPDATE COLOR SCREEN DETAIL
+        $scope.UpdateColorScreen = function(ev, colordata) 
+        {
+                $mdDialog.show({
+                    controller: function ($scope, params,colordata)
                                 {
-                                    var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states, deferred;
-                                    if ($scope.simulateQuery) 
+                                    //alert(position_id);
+                                    $scope.params = params;
+                                    $scope.color_screen = colordata;
+                                    //console.log($scope.color_screen); 
+                                    $scope.screen_allcolors = $scope.params.screen_allcolors;
+                                    $scope.simulateQuery = false;
+                                    $scope.isDisabled    = false;
+                                    $scope.states        = loadAll();
+                                    $scope.querySearch   = querySearch;
+                          
+                                    function querySearch (query) 
                                     {
-                                        deferred = $q.defer();
-                                        $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-                                        return deferred.promise;
-                                    } 
-                                    else 
-                                    {
-                                        return results;
+                                        var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states, deferred;
+                                        if ($scope.simulateQuery) 
+                                        {
+                                            deferred = $q.defer();
+                                            $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
+                                            return deferred.promise;
+                                        } 
+                                        else 
+                                        {
+                                            return results;
+                                        }
                                     }
-                                }
-                                function loadAll() 
-                                {
-                                    var allStates = $scope.screen_allcolors;
-                                    return allStates;
-                                }
-                                function createFilterFor(query) 
-                                {
-                                    var lowercaseQuery = angular.lowercase(query);
-                                    return function filterFn(state) 
+                                    function loadAll() 
                                     {
-                                        return (state.name.indexOf(lowercaseQuery) === 0);
-                                    };
-                                }
-                                $scope.closeDialog = function() 
-                                {
-                                    $mdDialog.hide();
-                                } 
-                                $scope.Savecolor_screen = function (var_all)
-                                {
-                                   // console.log(var_all);
-                                    $http.post('api/public/art/UpdateColorScreen',var_all).success(function(result) 
+                                        var allStates = $scope.screen_allcolors;
+                                        return allStates;
+                                    }
+                                    function createFilterFor(query) 
                                     {
-                                        if(result.data.success == '1') 
+                                        var lowercaseQuery = angular.lowercase(query);
+                                        return function filterFn(state) 
                                         {
-                                            $scope.closeDialog();
-                                            notifyService.notify('success','Screen Updated successfully.');
-                                        }
-                                        else
+                                            return (state.name.indexOf(lowercaseQuery) === 0);
+                                        };
+                                    }
+                                    $scope.closeDialog = function() 
+                                    {
+                                        $mdDialog.hide();
+                                    } 
+                                    $scope.Savecolor_screen = function (var_all)
+                                    {
+                                       // console.log(var_all);
+                                        $http.post('api/public/art/UpdateColorScreen',var_all).success(function(result) 
                                         {
-                                            notifyService.notify('error',result.data.message);
-                                        }
-                                    });
-                                }
+                                            if(result.data.success == '1') 
+                                            {
+                                                $scope.closeDialog();
+                                                notifyService.notify('success','Screen Updated successfully.');
+                                            }
+                                            else
+                                            {
+                                                notifyService.notify('error',result.data.message);
+                                            }
+                                        });
+                                    }
 
+                        },
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/art/dialogs/createScreenDetail/createScreenDetail.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        params:$scope,
+                        colordata:colordata,
+                        event: ev
                     },
-                controllerAs: 'vm',
-                templateUrl: 'app/main/art/dialogs/createScreenDetail/createScreenDetail.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    params:$scope,
-                    colordata:colordata,
-                    event: ev
-                },
-                onRemoving : $scope.GetOrderScreenSet
-            });
+                    onRemoving : $scope.GetOrderScreenSet
+                });
         }
-        //        Datatable Options
-        vm.dtOptions = {
-            dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            pagingType: 'simple',
-            autoWidth: false,
-            responsive: true
-        };
+        
+        // MENO OPTION OPEN CODE
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
             $mdOpenMenu(ev);
         };
-        vm.dtInstanceCB = dtInstanceCB;
-        //methods
-        function dtInstanceCB(dt) {
-            var datatableObj = dt.DataTable;
-            vm.tableInstance = datatableObj;
-        }
-    
+       
     
     // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,extra_params) 
@@ -225,7 +217,7 @@
                 });
 
         };
-// ============= DELETE IMAGE ============= // 
+    // ============= DELETE IMAGE ============= // 
         $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,extra_params)
         {
             if(default_image == '') 
@@ -269,7 +261,7 @@
                 });
             }
         }
-    
+        
 
 }
 })();

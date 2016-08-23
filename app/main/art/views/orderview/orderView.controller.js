@@ -197,5 +197,26 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
+        $scope.printPdf=function()
+        {
+            
+            var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id}
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/art/PressInstructionPDF';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var input_screenset = document.createElement('input');
+            input_screenset.name = 'art';
+            input_screenset.setAttribute('value', JSON.stringify(pass_array));
+            form.appendChild(input_screenset);
+
+            
+
+            document.body.appendChild(form);
+            form.submit();  
+        };
     }
 })();
