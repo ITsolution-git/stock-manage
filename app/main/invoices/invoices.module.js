@@ -34,7 +34,7 @@
                     }
                 }
             }).state('app.invoices.singleInvoice', {
-                url  : '/singleInvoice',
+                url  : '/singleInvoice/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/invoices/views/singleInvoice/singleInvoice.html',

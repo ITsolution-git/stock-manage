@@ -69,10 +69,11 @@
             'app.navigation',
 
             // DRAG AND UPLOAD
-            'ngDraggable',
+            'dndLists',
 
             //Misc data
             'app.misc',
-            'xeditable'
+            'xeditable',
+            'angular-clipboard'
         ]);
 })();

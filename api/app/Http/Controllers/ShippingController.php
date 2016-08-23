@@ -110,10 +110,47 @@ class ShippingController extends Controller {
  */
     public function listShipping()
     {
-        $post = Input::all();
+        $post_all = Input::all();
+        $post = array();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+        $post['type'] = $post_all['cond']['type'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'f.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'f.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
 
     	$result = $this->shipping->getShippingList($post);
-    	return $this->return_response($result);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        2=>array('key' => 'po.po_id', 'name' => 'PO #'),
+                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return response()->json($data);
 
     }
 
