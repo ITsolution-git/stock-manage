@@ -15,7 +15,7 @@ class Invoice extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,i.id,o.grand_total,o.in_hands_by,i.created_date')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,i.id,i.qb_id,o.grand_total,o.in_hands_by,i.created_date')];
 
         $invoiceData = DB::table('invoice as i')
                         ->leftJoin('orders as o', 'o.id', '=', 'i.order_id')

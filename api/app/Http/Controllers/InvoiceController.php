@@ -72,10 +72,10 @@ class InvoiceController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Invoice'),
                         1=>array('key' => 'i.created_date', 'name' => 'Date'),
-                        2=>array('key' => 'i.grand_total', 'name' => 'Invoice Amount($)'),
+                        2=>array('key' => 'i.grand_total', 'name' => 'Invoice $ Amount'),
                         3=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
-                        4=>array('key' => 'null', 'name' => 'In Hands By', 'sortable' => false),
-                        5=>array('key' => 'null', 'name' => 'Synced with Quickbooks', 'sortable' => false),
+                        4=>array('key' => 'null', 'name' => 'Synced with Quickbooks', 'sortable' => false),
+                        5=>array('key' => 'null', 'name' => '', 'sortable' => false),
                         6=>array('key' => 'null', 'name' => 'Option', 'sortable' => false),
                         );
 

@@ -6,11 +6,10 @@
             .module('app.invoices')
             .controller('singleInvoiceController', singleInvoiceController);
     /** @ngInject */
-    function singleInvoiceController(singleInvoiceData, purchaseOrderData, $document, $window, $timeout, $mdDialog,$scope) {
+    function singleInvoiceController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
         var vm = this;
         vm.linktopay = linktopay;
-        $scope.siData = singleInvoiceData.data;
-        $scope.pmntHistry = purchaseOrderData.data;
+
         // JS FOR MODAL LINK TO PAY
         function linktopay(ev, settings) {
             $mdDialog.show({
