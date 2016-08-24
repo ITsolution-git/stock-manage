@@ -472,6 +472,27 @@ public function saveColorSize($post)
                 $combine_array['order_design_position'][$key]->image_3_url_photo = (!empty($value->image_3))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_3:'';
                 $combine_array['order_design_position'][$key]->image_4_url_photo = (!empty($value->image_4))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_4:'';
                 $total_pos_qnty += $value->qnty;
+
+                if($value->image_1_url_photo != '')
+                {
+                  $value->position_image = $value->image_1_url_photo;
+                }
+                else if($value->image_1_url_photo != '')
+                {
+                  $value->position_image = $value->image_1_url_photo;
+                }
+                else if($value->image_1_url_photo != '')
+                {
+                  $value->position_image = $value->image_1_url_photo;
+                }
+                else if($value->image_1_url_photo != '')
+                {
+                  $value->position_image = $value->image_1_url_photo;
+                }
+                else
+                {
+                  $value->position_image = '';
+                }
             }
             $combine_array['total_pos_qnty'] = $total_pos_qnty;
          }
