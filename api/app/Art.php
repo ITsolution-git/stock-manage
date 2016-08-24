@@ -31,6 +31,7 @@ class Art extends Model {
         				->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
         				->select(DB::raw('SQL_CALC_FOUND_ROWS ord.id,cl.client_company'),DB::raw("(SELECT count(*) from artjob_screensets ass WHERE ass.order_id = ord.id AND ass.screen_active='1') as total_screen"))
         				->where('ord.is_delete','=','1')
+        				->where('ord.is_complete','=','1')
 		                ->where('ord.company_id','=',$post['company_id']);
 		                if($search != '')               
 		                 {
@@ -84,9 +85,11 @@ class Art extends Model {
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
 				->join('order_design_position as odp','odp.id','=','ass.positions')
+				->join('order_design as od','od.id','=','odp.design_id')
 				->Join('misc_type as mt', 'mt.id', '=', 'odp.position_id')
 				->where('or.is_delete','=','1')
 				->where('odp.is_delete','=','1')
+				->where('od.is_delete','=','1')
 				->where('or.company_id','=',$post['company_id'])
 				->where('or.id','=',$post['order_id'])
 				->orderBy('ass.screen_order')
@@ -166,6 +169,7 @@ class Art extends Model {
 					->Join('misc_type as mt', 'mt.id', '=', 'odp.position_id')
 					->where('ord.is_delete','=','1')
 					->where('odp.is_delete','=','1')
+					->where('ord.is_complete','=','1')
 			        ->where('ord.company_id','=',$post['company_id']);
 		            
 		            if($search != '')               
@@ -257,7 +261,7 @@ class Art extends Model {
     public function GetscreenColor($screen_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','ass.mokup_logo','acol.*')
+				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','ass.mokup_logo','ass.approval','acol.*')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -396,6 +400,48 @@ class Art extends Model {
 		}
 		$temp = array_values($temp);
 		return $temp;
+	}
+	public function getPressInstructionPDFdata($screen_id,$company_id)
+	{
+		$query = DB::table('artjob_screencolors as acol')
+				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','ass.mokup_logo','acol.*','acol.id as color_id','col.name as color_name','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color')
+				->leftjoin('artjob_screensets as ass','acol.screen_id','=','ass.id')
+				->join('order_design_position as odp','ass.positions','=','odp.id')	
+				->join('order_design as od','od.id','=','odp.design_id')
+				->leftjoin('design_product as dp','dp.design_id','=','od.id')
+				->leftjoin('products as p','dp.product_id','=','p.id')
+				->leftjoin('purchase_detail as pdtl','pdtl.design_id','=','od.id')
+				->join('orders as or','ass.order_id','=','or.id')
+				->leftjoin('color as col','col.id','=','acol.color_name')
+				->leftjoin('color as col1','col1.id','=','pdtl.color_id')
+				->join('users as usr','usr.id','=','or.company_id')
+				->leftJoin('staff as stf','stf.user_id','=','usr.id')
+				->where('ass.id','=',$screen_id)
+				->where('or.company_id','=',$company_id)
+				->where('acol.is_complete','=','1')
+				->where('or.is_delete','=','1')
+				->where('pdtl.is_delete','=','1')
+				->where('odp.is_delete','=','1')
+				->where('od.is_delete','=','1')
+				->orderBy('ass.screen_order','asc')
+				->orderBy('acol.head_location','asc')
+				->orderBy('acol.id','desc')
+				->get();
+				$color = array();
+				$size = array();
+			foreach ($query as $key=>$value) 
+			{
+				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+				$value->companyphoto = (!empty($value->companyphoto))?UPLOAD_PATH.$value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto:'';
+				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
+				$color[$value->color_id] = $value;
+				$size[$value->size] = $value;
+			}
+		$color = array_values($color);
+		$size = array_values($size);
+		$pass = array('color'=>$color,'size'=>$size);
+		return $pass;
 	}
 
 }
