@@ -330,12 +330,12 @@
             <table class="simple hover simple-tbl1">
                 <thead>
                     <tr>
-                        <th class="secondary-text" width="15%">Order ID</th>
-                        <th class="secondary-text" width="20%">Estimated Shipping Date</th>
-                        <th class="secondary-text text-center" width="15%">Payment Status</th>
-                        <th class="secondary-text text-center" width="15%">Shipment Method</th>
-                        <th class="secondary-text text-center" width="20%">In Hands By</th>
-                        <th class="secondary-text text-center" width="15%">Action</th>
+                        <th class="secondary-text text-bold" width="15%">Order ID</th>
+                        <th class="secondary-text text-bold" width="20%">Estimated Shipping Date</th>
+                        <th class="secondary-text text-center text-bold" width="15%">Payment Status</th>
+                        <th class="secondary-text text-center text-bold" width="15%">Shipment Method</th>
+                        <th class="secondary-text text-center text-bold" width="20%">In Hands By</th>
+                        <th class="secondary-text text-center text-bold" width="15%">Action</th>
                     </tr>
                 </thead>
                 <tbody> 
@@ -353,7 +353,7 @@
         </div>
         <div ng-repeat="design in allData.all_design">
         <!-- design1 -->
-            <h2 class="mrg20-T">Design: {{design.design_name}}</h2>
+            <h2 class="mrg40-T">Design: {{design.design_name}}</h2>
             <div class="ms-responsive-table-wrapper">
                 <table class="simple hover simple-tbl1">
                     <thead>
@@ -378,7 +378,7 @@
                 </table>
             </div>
 
-            <div class="ms-responsive-table-wrapper mrg20-T">
+            <div class="ms-responsive-table-wrapper">
                 <table class="simple hover simple-tbl1">
                     <thead>
                         <tr>
@@ -400,56 +400,63 @@
                     </tbody>
                 </table>
             </div>
-            <md-card flex="50" class="mrg10">
-                <md-card-content class="recap">
-                    <div ng-repeat="position in design.positions.order_design_position">
-                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding"><b>Position : </b></div>
-                            <span class="ng-binding">{{position.position_name}}</span>
-                        </div>
-                        <div ng-if="position.discharge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding">Discharge Ink @ </div>
-                            <span class="ng-binding">{{allData.price_grid_data[0].discharge}}</span>
-                        </div>
 
-                        <div ng-if="position.foil_qnty > 0"  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding">Foil @ </div>
-                            <span class="ng-binding">{{allData.price_grid_data[0].foil}}</span>
-                        </div>
+            <div layout="row">
+                <div layout="column" flex="50">
+                    <md-card class="mrg10">
+                        <md-card-content class="recap">
+                            <div ng-repeat="position in design.positions.order_design_position">
+                                <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding"><b>Position : </b></div>
+                                    <span class="ng-binding">{{position.position_name}}</span>
+                                </div>
+                                <div ng-if="position.discharge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding">Discharge Ink @ </div>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].discharge}}</span>
+                                </div>
 
-                        <div ng-if="position.ink_charge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding">Ink Charge @ </div>
-                            <span class="ng-binding">{{allData.price_grid_data[0].ink_changes}}</span>
-                        </div>
+                                <div ng-if="position.foil_qnty > 0"  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding">Foil @ </div>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].foil}}</span>
+                                </div>
 
-                        <div ng-if="position.number_on_dark_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding"># on Dark @ </div>
-                            <span class="ng-binding">{{allData.price_grid_data[0].number_on_dark}}</span>
-                        </div>
+                                <div ng-if="position.ink_charge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding">Ink Charge @ </div>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].ink_changes}}</span>
+                                </div>
 
-                        <div ng-if="position.number_on_light_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding"># on Light @ </div>
-                            <span class="ng-binding">{{allData.price_grid_data[0].number_on_light}}</span>
-                        </div>
-                    </div>
-                    <div>&nbsp;</div>
-                </md-card-content>
-            </md-card>
-            <md-card flex="50" class="mrg10">
-                <md-card-content class="recap">
-                    <div ng-repeat="product in design.products">
-                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding"><b>Product : </b></div>
-                            <span class="ng-binding">{{product.product_name}}</span>
-                        </div>
-                        <div ng-repeat="oitem in product.order_items" ng-if="oitem.selected > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding">{{oitem.item}}</div>
-                            <span class="ng-binding">${{oitem.charge}}</span>
-                        </div>
-                    </div>
-                    <div>&nbsp;</div>
-                </md-card-content>
-            </md-card>
+                                <div ng-if="position.number_on_dark_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding"># on Dark @ </div>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_dark}}</span>
+                                </div>
+
+                                <div ng-if="position.number_on_light_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding"># on Light @ </div>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_light}}</span>
+                                </div>
+                            </div>
+                            <div>&nbsp;</div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+                <div layout="column" flex="50">
+                    <md-card class="mrg10">
+                        <md-card-content class="recap">
+                            <div ng-repeat="product in design.products">
+                                <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding"><b>Product : </b></div>
+                                    <span class="ng-binding">{{product.product_name}}</span>
+                                </div>
+                                <div ng-repeat="oitem in product.order_items" ng-if="oitem.selected > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding">{{oitem.item}}</div>
+                                    <span class="ng-binding">${{oitem.charge}}</span>
+                                </div>
+                            </div>
+                            <div>&nbsp;</div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
         </div>
     </div>
 
