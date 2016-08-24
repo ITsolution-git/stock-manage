@@ -468,11 +468,12 @@ class Product extends Model {
                 $product->sizeData = $sizeData;
 
                 $total_qnty = DB::table('purchase_detail')
-                                     ->select(DB::raw('SUM(qnty) as total_qnty'))
+                                     ->select(DB::raw('SUM(qnty) as total_qnty'),DB::raw('SUM(price) as total_price'))
                                      ->where('design_product_id','=',$product->design_product_id)
                                      ->get();
 
                 $product->total_qnty = $total_qnty[0]->total_qnty;
+                $product->total_price = round($total_qnty[0]->total_price,2);
 
                 if($product->vendor_id >1){
                     $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
