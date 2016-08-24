@@ -261,6 +261,44 @@
                 });
             }
         }
+        $scope.printPdf=function()
+        {
+            
+            var pass_array = {order_id:$scope.ScreenSets[0].order_id,company_id:$scope.company_id,screen_id:$scope.screenset_id }
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/art/PressInstructionPDF';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var input_screenset = document.createElement('input');
+            input_screenset.name = 'art';
+            input_screenset.setAttribute('value', JSON.stringify(pass_array));
+            form.appendChild(input_screenset);
+
+            document.body.appendChild(form);
+            form.submit();  
+        };
+        $scope.UpdateTableField = function(field_value)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table ='artjob_screensets';
+            UpdateArray.data = {approval:field_value};
+            UpdateArray.cond = {id:$scope.screenset_id};
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success', result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error', result.data.message);
+                }
+            });
+        }
         
 
 }

@@ -326,6 +326,7 @@ Route::post('art/UpdateColorScreen', 'ArtController@UpdateColorScreen');
 Route::get('art/getScreenSizes/{company_id}', 'ArtController@getScreenSizes');
 Route::post('art/change_sortcolor', 'ArtController@change_sortcolor');
 Route::post('art/change_sortscreen', 'ArtController@change_sortscreen');
+Route::post('art/ArtApprovalPDF', 'ArtController@ArtApprovalPDF');
 Route::post('art/PressInstructionPDF', 'ArtController@PressInstructionPDF');
 
 // AFFILIATES ROUTERS
