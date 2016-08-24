@@ -41,6 +41,11 @@
         });
 
         $scope.save = function () {
+          
+            if($scope.invoice ==  undefined && $scope.qb == true) {
+                notifyService.notify('error','Please select Create Invoice to sync with Quickbook');
+                    return false;
+            }
 
 
             if($scope.sns == true) {
@@ -75,6 +80,7 @@
 
              if($scope.invoice == true && $scope.invoice_id == 0)
             {
+               
                 var combine_array = {};
                 combine_array.order_id = $stateParams.id;
                 
@@ -86,9 +92,38 @@
                     if(result.data.success=='1')
                     {
                         $scope.invoice_id = result.data.invoice_id;
+                        $scope.qb_invoice_id = result.data.qb_invoice_id;
 
                         $mdDialog.hide();
                         $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+
+                         if($scope.invoice == true && $scope.qb == true && $scope.qb_invoice_id == 0) {
+
+                            var combine_array_id = {};
+                                combine_array_id.id = $stateParams.id;
+                                combine_array_id.company_id = sessionService.get('company_id');
+                                combine_array_id.client_id = client_id;
+                                combine_array_id.invoice_id = $scope.invoice_id;
+                                
+                               $("#ajax_loader").show();
+                               
+                                 $http.post('api/public/order/addInvoice',combine_array_id).success(function(result) 
+                                {
+                                  $("#ajax_loader").hide();
+
+                                   if(result.data.success=='0') {
+                                      notifyService.notify('error',result.data.message);
+                                    }
+
+                                    $mdDialog.hide();
+                                    $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                                  
+                                });
+                        } else {
+
+                             $mdDialog.hide();
+                             $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                        }
                     }
                 });
             }

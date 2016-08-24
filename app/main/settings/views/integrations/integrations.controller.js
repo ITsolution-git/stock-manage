@@ -331,7 +331,7 @@
                     $("#ajax_loader").hide();
                             if(result != '0')
                             {
-                                notifyService.notify('success',"Setup successful");   
+                                notifyService.notify('success',"Setup successfully");   
                             }
                             else
                             {
