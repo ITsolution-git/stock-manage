@@ -1869,7 +1869,10 @@ class OrderController extends Controller {
         $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'));
         $id = $this->common->InsertRecords('invoice',$orderData);
 
-        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id);
+        $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
+        $qb_id = $qb_data[0]->qb_id;
+
+        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id,"qb_invoice_id" => $qb_id);
         return response()->json(['data'=>$data]);
     }
 
