@@ -236,7 +236,9 @@ class QuickBookController extends Controller
         $this->context = $IPP->context();
 
         $static_charge = array('0' => 'S&S','1' => 'Custom Product','2' => 'Separations Charge','3' => 'Rush Charge','4' => 'Distribution Charge',
-                        '5' => 'Digitize Charge','6' => 'Shipping Charge','7' => 'Setup Charge','8' => 'Artwork Charge','9' => 'Tax','10' => 'Discount','11' => 'Screen Charge','12' => 'Press Setup Charge');
+                        '5' => 'Digitize Charge','6' => 'Shipping Charge','7' => 'Setup Charge','8' => 'Artwork Charge','9' => 'Tax','10' => 'Discount',
+                        '11' => 'Screen Charge','12' => 'Press Setup Charge','13' => 'Foil','14' => 'Number On Dark','15' => 'Ink Charge','16' => 'Number On Light',
+                        '17' => 'Discharge','18' => 'Speciality','19' => 'Oversize screen');
 
           
           foreach($static_charge as $charge) {
@@ -291,6 +293,27 @@ class QuickBookController extends Controller
 
                     }elseif ($charge == 'Press Setup Charge') {
                          $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('press_setup_charge' => $id));
+
+                    }elseif ($charge == 'Foil') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('foil_charge' => $id));
+
+                    }elseif ($charge == 'Number On Dark') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('number_on_dark_charge' => $id));
+
+                    }elseif ($charge == 'Ink Charge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('ink_charge' => $id));
+
+                    }elseif ($charge == 'Number On Light') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('number_on_light_charge' => $id));
+
+                    }elseif ($charge == 'Discharge') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('discharge_charge' => $id));
+
+                    }elseif ($charge == 'Speciality') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('speciality_charge' => $id));
+
+                    }elseif ($charge == 'Oversize screen') {
+                         $this->common->UpdateTableRecords('quickbook_detail',array('id' => $post['cond']['id']),array('oversize_screen_charge' => $id));
 
                     }
 
