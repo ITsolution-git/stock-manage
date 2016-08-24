@@ -32,6 +32,7 @@
             if(result.data.success == '1') 
             {
                 $scope.invoice_id = result.data.records[0].id;
+                $scope.qb_invoice_id = result.data.records[0].qb_id;
             } 
             else
             {
@@ -44,7 +45,6 @@
 
             if($scope.sns == true) {
 
-                console.log('sns');
                 if(order_number != '') {
                     notifyService.notify('error','You have already posted order to S&S');
                     return false;
@@ -93,7 +93,7 @@
                 });
             }
 
-            if($scope.invoice == true && $scope.qb == true) {
+            if($scope.invoice == true && $scope.qb == true && $scope.qb_invoice_id == 0) {
 
                 var combine_array_id = {};
                     combine_array_id.id = $stateParams.id;

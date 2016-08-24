@@ -570,14 +570,13 @@ class QuickBookController extends Controller
 
                  $Line = new \QuickBooks_IPP_Object_Line();
                  $Line->setDetailType('SalesItemLineDetail');
-                // $calc = ($chargeArray[0]->order_total * $chargeArray[0]->tax_rate) / 100;
                  $Line->setAmount($chargeArray[0]->tax);
-                 $Line->setDescription('Tax');
+                 $Line->setDescription('Tax-'.$chargeArray[0]->tax_rate);
 
                  $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
                  $SalesItemLineDetail->setItemRef($db_product[0]->tax_charge);
-                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->tax_rate);
-                 //$SalesItemLineDetail->setQty($chargeArray[0]->order_total);
+                 $SalesItemLineDetail->setUnitPrice($chargeArray[0]->tax);
+                 $SalesItemLineDetail->setQty(1);
                  $Line->addSalesItemLineDetail($SalesItemLineDetail);
                  $Invoice->addLine($Line);
                  $Invoice->setCustomerRef($customerRef);
@@ -625,14 +624,15 @@ class QuickBookController extends Controller
             $qb_invoice_id =  $this->getId($resp);
              $this->common->UpdateTableRecords('invoice',array('id' => $invoice_id),array('qb_id' => $qb_invoice_id));
 
-            $data_record = array("success"=>1,"message"=>"Success");
-            return response()->json(["data" => $data_record]);
+           // $data_record = array("success"=>1,"message"=>"Success");
+            return 1; 
         }
         else
         {
-            return 0;
-              $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
-            return response()->json(["data" => $data_record]);
+
+          //  $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
+           // return response()->json(["data" => $data_record]);
+            return 0; 
            // print($InvoiceService->lastError());
         }
     }
