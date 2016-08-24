@@ -1727,7 +1727,13 @@ class OrderController extends Controller {
         $result = $this->client->GetclientDetail($post['client_id']);
         $result_qbProductId = $this->company->getQBAPI($post['company_id']);
         $result_order = $this->order->GetOrderDetailAll($post['id']);
+
         $result_charges = $this->order->orderInfoData($post['company_id'],$post['id']);
+        $other_charges = $this->order->orderChargeData($post['id']);
+
+        $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $result_charges[0]->price_id),array());
+        $price_grid = $price_grid_data[0];
+
 
         if($result_qbProductId[0]->ss =='') {
 
@@ -1739,7 +1745,7 @@ class OrderController extends Controller {
           
           $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
           $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id']);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid);
           
           
           if($result_quickbook_invoice == '1') {
@@ -1753,7 +1759,7 @@ class OrderController extends Controller {
 
         } else {
           
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id']);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid);
           
           if($result_quickbook_invoice == '1') {
             $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");

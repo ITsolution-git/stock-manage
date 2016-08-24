@@ -740,4 +740,21 @@ public function saveColorSize($post)
 
         return $combine_array;
     }
+
+
+     public function orderChargeData($orderId) {
+
+        $where = ['o.id' => $orderId,'o.is_delete' => '1','od.is_delete' => '1','odp.is_delete' => '1'];
+
+
+        $productData = DB::table('orders as o')
+                         ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
+                         ->leftJoin('order_design_position as odp', 'od.id', '=', 'odp.design_id')
+                          ->select(DB::raw('sum(foil_qnty) as foil_qnty'),DB::raw('sum(number_on_dark_qnty) as number_on_dark_qnty'),DB::raw('sum(oversize_screens_qnty) as oversize_screens_qnty'),DB::raw('sum(ink_charge_qnty) as ink_charge_qnty'),DB::raw('sum(number_on_light_qnty) as number_on_light_qnty'),DB::raw('sum(discharge_qnty) as discharge_qnty'),DB::raw('sum(speciality_qnty) as speciality_qnty'))
+                         ->where($where)
+                         ->get();
+
+        return $productData;
+        
+    }
 }
