@@ -418,7 +418,7 @@ class Art extends Model {
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->where('ass.id','=',$screen_id)
 				->where('or.company_id','=',$company_id)
-				->where('acol.is_complete','=','1')
+				/*->where('acol.is_complete','=','1')*/
 				->where('or.is_delete','=','1')
 				->where('pdtl.is_delete','=','1')
 				->where('odp.is_delete','=','1')
