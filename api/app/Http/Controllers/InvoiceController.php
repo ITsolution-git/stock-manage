@@ -7,6 +7,7 @@ use App\Order;
 use App\Product;
 use App\Invoice;
 use App\Common;
+use App\Client;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -16,12 +17,13 @@ use Request;
 
 class InvoiceController extends Controller { 
 
-    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice)
+    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client)
     {
         $this->common = $common;
         $this->order = $order;
         $this->product = $product;
         $this->invoice = $invoice;
+        $this->client = $client;
     }
 
     public function listInvoice()
@@ -86,6 +88,43 @@ class InvoiceController extends Controller {
     {
     	$post = Input::all();
 
+        $retutn_arr = array();
+        
+        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array());
+        $order_id = $invoice_data[0]->order_id;
 
+        $retutn_arr['invoice_data'] = $invoice_data;
+        $retutn_arr['invoice_data'][0]->created_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->created_date));
+
+        $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
+        $retutn_arr['company_data'] = $this->common->getCompanyDetail($post['company_id']);
+
+        if($retutn_arr['company_data'][0]->photo != '')
+        {
+            $retutn_arr['company_data'][0]->photo = FILEUPLOAD."/".$post['company_id']."/staff".$post['company_id'].$retutn_arr['company_data'][0]->photo;
+        }
+        $retutn_arr['addresses'] = $this->client->getAddress($order_data[0]->client_id);
+        $retutn_arr['client_data'] = $this->common->GetTableRecords('client_contact',array('client_id' => $order_data[0]->client_id,'contact_main' => 1),array());
+        $retutn_arr['price_grid_data'] = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $order_data[0]->price_id),array());
+
+        $retutn_arr['order_data'] = $order_data;
+
+        $retutn_arr['shipping_detail'] = $this->common->GetTableRecords('shipping',array('order_id' => $order_id),array());
+        $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
+
+        foreach ($all_design as $design) {
+            $data = array('company_id' => $post['company_id'],'id' => $design->id);
+            $design->positions = $this->order->getDesignPositionDetail($data);
+            $design->products = $this->product->designProduct($data);
+        }
+
+        $retutn_arr['all_design'] = $all_design;
+
+        $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'allData' => $retutn_arr
+                                );
+        return response()->json(["data" => $response]);
     }
 }
