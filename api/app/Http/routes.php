@@ -326,6 +326,7 @@ Route::post('art/UpdateColorScreen', 'ArtController@UpdateColorScreen');
 Route::get('art/getScreenSizes/{company_id}', 'ArtController@getScreenSizes');
 Route::post('art/change_sortcolor', 'ArtController@change_sortcolor');
 Route::post('art/change_sortscreen', 'ArtController@change_sortscreen');
+Route::post('art/PressInstructionPDF', 'ArtController@PressInstructionPDF');
 
 // AFFILIATES ROUTERS
 Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');
@@ -344,7 +345,6 @@ Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDist
 Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
 Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');
 
-
 Route::get('qbo/oauth','QuickBookController@qboOauth');
 Route::get('qbo/success','QuickBookController@qboSuccess');
 Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
@@ -352,3 +352,4 @@ Route::get('qbo/qboConnect','QuickBookController@qboConnect');
 Route::get('qbo/createCustomer','QuickBookController@createCustomer');
 Route::post('qbo/AddItem', 'QuickBookController@addItem');
 
+Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
