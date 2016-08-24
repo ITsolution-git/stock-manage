@@ -463,7 +463,7 @@ class ArtController extends Controller {
    * Save Color size.
    * @return json data
     */
-    public function PressInstructionPDF()
+    public function ArtApprovalPDF()
     {
 
         $screenArray= json_decode($_POST['art']);
@@ -490,6 +490,44 @@ class ArtController extends Controller {
             else
             {
                 $response = array('success' => 0, 'message' => NO_RECORDS);
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
+    public function PressInstructionPDF()
+    {
+
+        $screenArray= json_decode($_POST['art']);
+        
+        if(count($screenArray)>0)
+        {
+            $pdf_data = $this->art->getPressInstructionPDFdata($screenArray->screen_id,$screenArray->company_id);
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            if(!empty($pdf_data['size']))
+            {
+                
+                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+               
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size']))->render());
+           
+                $pdf_url = "PresInstruction-".$screenArray->screen_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+                PDF::Output($filename, 'F');
+                return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Error, No Size selected.");
                 return  response()->json(["data" => $response]);
             }
         }
