@@ -694,9 +694,8 @@ public function saveColorSize($post)
         
         $where = ['o.id' => $orderId,'o.is_delete' => '1','od.is_delete' => '1','dp.is_delete' => '1','pcs.is_delete' => '1','p.is_delete' => '1','v.is_delete' => '1'];
 
-        $listArray = ['p.id','p.name as product_name','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
-                        'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse'];
+        $listArray = ['p.id','p.name as product_name','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
+                        'c.name as color_name','dp.id as design_product_id','p.vendor_id'];
 
         $productData = DB::table('orders as o')
                          ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
@@ -707,7 +706,7 @@ public function saveColorSize($post)
                          ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
                          ->select($listArray)
                          ->where($where)
-                         ->GroupBy('dp.product_id')
+                         ->GroupBy('dp.id')
                          ->orderBy('dp.id','desc')
                          ->get();
 
@@ -715,11 +714,14 @@ public function saveColorSize($post)
 
         if(!empty($productData) && $productData[0]->id > 0)
         {
-            foreach ($productData as $product) {
+            
+            foreach ($productData as  $key=>$product) {
+
                 $sizeData = DB::table('purchase_detail as pd')
                                      ->where('pd.design_product_id','=',$product->design_product_id)
                                      ->get();
                 $product->sizeData = $sizeData;
+
 
                 $total_qnty = DB::table('purchase_detail')
                                      ->select(DB::raw('SUM(qnty) as total_qnty'))
@@ -727,7 +729,8 @@ public function saveColorSize($post)
                                      ->get();
 
                 $product->total_qnty = $total_qnty[0]->total_qnty; 
-                $combine_array[$product->id] = $product;
+               
+                $combine_array[] = $product;
             }
         }
         else
