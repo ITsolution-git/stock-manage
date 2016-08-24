@@ -82,11 +82,48 @@
 <?php  if(($key+1)%2==0)
 { ?>
 <div style="page-break-before: always;"></div>
-
+  <table >
+    <tr >
+      <td>
+      <br>
+        <p><b>{{$company->companyname}}</b></p>
+        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
+        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
+        <span>P: {{$company->prime_phone_main}}</span>
+        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
+      </td>
+      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td>
+        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
+        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
+        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
+      </td>
+    </tr>
+  </table>
+<hr style="border:1px solid #000;">
 <?php }}
 ?>
 
 <div style="page-break-before: always;"></div>
+  <table >
+    <tr >
+      <td>
+      <br>
+        <p><b>{{$company->companyname}}</b></p>
+        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
+        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
+        <span>P: {{$company->prime_phone_main}}</span>
+        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
+      </td>
+      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td>
+        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
+        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
+        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
+      </td>
+    </tr>
+  </table>
+  <hr style="border:1px solid #000;">
 <table style="margin-top:50px;">
 <tr><td align="center"><b>Mokup Image</b></td></tr>
   <?php foreach($data as $key=>$value){ ?>

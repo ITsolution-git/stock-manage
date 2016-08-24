@@ -203,7 +203,7 @@
             var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id}
             var target;
             var form = document.createElement("form");
-            form.action = 'api/public/art/PressInstructionPDF';
+            form.action = 'api/public/art/ArtApprovalPDF';
             form.method = 'post';
             form.target = target || "_blank";
             form.style.display = 'none';
@@ -213,10 +213,29 @@
             input_screenset.setAttribute('value', JSON.stringify(pass_array));
             form.appendChild(input_screenset);
 
-            
-
             document.body.appendChild(form);
             form.submit();  
         };
+
+        $scope.UpdateTableField = function(field_value,order_id)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table ='art';
+            UpdateArray.data = {approval:field_value};
+            UpdateArray.cond = {order_id:order_id};
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success', result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error', result.data.message);
+                }
+            });
+        }
+
     }
 })();
