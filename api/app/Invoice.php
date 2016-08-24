@@ -48,4 +48,9 @@ class Invoice extends Model {
         return $invoiceData;  
     }
 
+    public function getShippingByOrder($order_id)
+    {
+        
+    }
+
 }

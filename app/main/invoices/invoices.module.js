@@ -93,12 +93,12 @@
             weight   : 1
         });
 
-        msNavigationServiceProvider.saveItem('fuse.invoices.linktopay', {
+/*        msNavigationServiceProvider.saveItem('fuse.invoices.linktopay', {
            // title      : 'Link To Pay',
             state      : 'app.invoices.linktopay',
             stateParams: {'id': 1},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 1
-        });
+        });*/
     }
 })();
