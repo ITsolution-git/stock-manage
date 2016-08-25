@@ -70,7 +70,7 @@
               <td align="center"><?php echo $sec_key+1; ?></td>
               <td align="center"><?php echo $sec_value->inq; ?></td>
               <td align="center"><?php echo $sec_value->color_name; ?></td>
-              <td align="center"><?php echo $sec_key; ?></td>
+              <td align="center"><?php echo $sec_value->pantone; ?></td>
             </tr>
             <?php } ?>
           </table>
