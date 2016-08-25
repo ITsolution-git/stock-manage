@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Company;
 use App\Vendor;
+use App\Client;
 use App\Purchase;
 use App\Art;
 use DB;
@@ -22,13 +23,14 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client ) 
     {
         $this->common = $common;
         $this->company = $company;
         $this->vendor = $vendor;
         $this->purchase = $purchase;
         $this->art = $art;
+        $this->client = $client;
 
     }
 
@@ -1111,6 +1113,40 @@ class CommonController extends Controller {
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$post['sorts']['sortBy'],'sortOrder' => $post['sorts']['sortOrder'],'success'=>$success,'message'=>$message);
         return  response()->json($data);
+    }
+
+
+    public function addEditClient()
+    {
+         $post = Input::all();
+         $result = $this->client->GetAllclientDetailCompany($post['company_id']);
+
+         foreach ($result as $key => $clientData) {
+            
+             if($clientData['main']['qid'] == 0) {
+
+                $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($clientData['main'],$clientData['contact']);
+                $this->common->UpdateTableRecords('client',array('client_id' => $key),array('qid' => $result_quickbook));
+
+               
+
+             } else {
+
+                $result_quickbook = app('App\Http\Controllers\QuickBookController')->updateCustomer($clientData['main'],$clientData['contact']);
+                
+             }
+         }
+
+          if($result_quickbook == '0') {
+                    return 0;
+                    
+                  } else {
+                    return 1;
+                    
+                  }
+         
+
+       
     }
 
 

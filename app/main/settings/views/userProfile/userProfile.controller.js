@@ -259,5 +259,28 @@
 
         };
 
+           $scope.qbClientSetup = function(){
+
+                $("#ajax_loader").show();
+                var companyId = {};
+
+                companyId ={company_id :sessionService.get('company_id')};
+
+                $http.post('api/public/common/AddEditClient',companyId).success(function(result) {
+                    $("#ajax_loader").hide();
+                            if(result != '0')
+                            {
+                                notifyService.notify('success',"Client Sync successfully");   
+                            }
+                            else
+                            {
+                                notifyService.notify('error',"Please connect to quickbook first");
+                            }
+
+                           
+
+                           });
+            }
+
     }
 })();
