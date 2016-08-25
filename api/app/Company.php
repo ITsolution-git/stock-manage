@@ -444,7 +444,7 @@ class Company extends Model {
         				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
                  ->leftJoin('staff as st', 'usr.id', '=', 'st.user_id')
                  ->leftJoin('state as state', 'state.id', '=', 'st.prime_address_state')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.id as staff_id','st.prime_phone_main','state.name as state_name')
+        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.cron_runtime','st.id as staff_id','st.prime_phone_main','state.name as state_name')
         				 ->where($whereConditions)
         				 ->get();
         return $admindata;
@@ -602,7 +602,23 @@ class Company extends Model {
 
       return $result;
     }
-    
+
+    public function InsertFedexAPI($company_id)
+    {
+       $result  = DB::table('api_link_table')->insert(array("api_id"=>"5","company_id"=>$company_id));
+       $link_id = DB::getPdo()->lastInsertId();
+       $result  = DB::table('fedex_detail')->insert(array("link_id"=>$link_id));
+    }
+    public function getFedexAPI($company_id)
+    {
+        $result = DB::table('api_link_table as alt')
+            ->select('fd.*')
+            ->Join('fedex_detail as fd','fd.link_id','=','alt.id')
+            ->where("alt.company_id","=",$company_id)
+            ->where("alt.api_id","=","5")
+            ->get();
+        return $result;
+    }
     public function getColors($post)
     {
         $search = '';

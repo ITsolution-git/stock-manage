@@ -43,6 +43,7 @@ Route::get('admin/company/getAuthorizeAPI/{company_id}', 'CompanyController@getA
 Route::get('admin/company/getUpsAPI/{company_id}', 'CompanyController@getUpsAPI');
 Route::get('admin/company/getSnsAPI/{company_id}', 'CompanyController@getSnsAPI');
 Route::get('admin/company/getQBAPI/{company_id}', 'CompanyController@getQBAPI');
+Route::get('admin/company/getFedexAPI/{company_id}', 'CompanyController@getFedexAPI');
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
