@@ -484,7 +484,7 @@ class ArtController extends Controller {
            
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
-                PDF::Output($filename);
+                PDF::Output($filename,'F');
 
                 if(!empty($screenArray->mail) && $screenArray->mail=='1' && !empty($pdf_data[0][0]->billing_email))
                 {
@@ -495,7 +495,7 @@ class ArtController extends Controller {
                     });
                 }
 
-                //return Response::download($filename);
+                return Response::download($filename);
 
             }
             else
