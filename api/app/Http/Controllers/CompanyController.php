@@ -450,8 +450,8 @@ $this->common = $common;
 			//echo count($result);
 			if(count($result)==0)
 			{
-				$this->company->InsertSnsAPI($company_id);
-				$result = $this->company->InsertQBAPI($company_id); // GET API DETAILS
+				$this->company->InsertQBAPI($company_id);
+				$result = $this->company->getQBAPI($company_id); // GET API DETAILS
 			}
 			$message = GET_RECORDS;
 			$success = 1;
@@ -465,6 +465,30 @@ $this->common = $common;
 		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
 		return response()->json(['data'=>$data]);
 	}
+	public function getFedexAPI($company_id)
+	{
+		if(!empty($company_id))
+		{
+			$result = $this->company->getFedexAPI($company_id); // GET API DETAILS
+			//echo count($result);
+			if(count($result)==0)
+			{
+				$this->company->InsertFedexAPI($company_id);
+				$result = $this->company->getFedexAPI($company_id); // GET API DETAILS
+			}
+			$message = GET_RECORDS;
+			$success = 1;
+		}
+		else
+		{
+			$message = MISSING_PARAMS."- company_id";
+			$success = 0;
+			$result = '';
+		}
+		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
+		return response()->json(['data'=>$data]);
+	}
+	
 
 	
 }
