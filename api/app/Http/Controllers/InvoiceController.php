@@ -144,6 +144,6 @@ class InvoiceController extends Controller {
 
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
-        PDF::Output('order_invoice.pdf');
+        PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');
     }
 }
