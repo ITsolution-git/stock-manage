@@ -142,6 +142,7 @@ Route::post('common/updateRecordsEmailVal', 'CommonController@updateRecordsEmail
 Route::post('common/insertRecordsEmail', 'CommonController@insertRecordsEmail'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/allColor', 'CommonController@allColor'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/getTestyRecords', 'CommonController@getTestyRecords'); // GET RECORDS WITH PAGINATION PARAMETERS.
+Route::post('common/AddEditClient', 'CommonController@addEditClient');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');

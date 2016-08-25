@@ -444,5 +444,99 @@ public function saveTaxDoc($post)
     }
 
 
+    public function GetAllclientDetailCompany($company_id)
+    {
+
+      $retArray = DB::table('users as u')
+            ->select('c.client_id as client_id_display','st.name as state_name','st.id as state_id','pg.name as price_grid','stf.sales_name','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*')
+            ->leftJoin('client as c','c.company_id','=',"u.id")
+            ->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
+            ->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
+            ->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
+            ->leftJoin('sales as stf','stf.id','=',"c.salesperson")
+            ->leftJoin('type as tp','tp.id','=',"c.client_companytype")
+            ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
+            ->leftJoin('state as st','st.id','=',"c.pl_state")
+            ->where('u.id','=',$company_id)
+            ->get();
+      $result = array();
+      $combine_array = array();
+
+      
+      if(count($retArray)>0)
+      {
+        foreach ($retArray as $key => $value) 
+        {
+          $result['main']['client_id'] = $value->client_id;
+          $result['main']['qid'] = $value->qid;
+          $result['main']['client_company'] = $value->client_company;
+          //$result['main']['created_date'] = $value->created_date;
+          $result['main']['billing_email'] = $value->billing_email;
+          $result['main']['company_phone'] = $value->company_phone;
+          $result['main']['salesweb'] = $value->salesweb;
+
+          $result['main']['type_id'] = $value->type_id;
+          $result['main']['client_companytype'] = $value->type_name;
+
+          $result['main']['misc_id'] = $value->misc_id;
+          $result['main']['client_desposition'] = $value->misc_value_p;
+          
+          $result['main']['color_logo'] = $value->color_logo;
+          $result['main']['b_w_logo'] = $value->b_w_logo;
+          $result['main']['shipping_logo'] = $value->shipping_logo;
+          $result['main']['blind_text'] = $value->blind_text;
+          $result['main']['company_url'] = $value->company_url;
+
+          $result['main']['client_address']  = !empty($value->pl_address)?$value->pl_address.",":'' ; 
+          $result['main']['client_address'] .= !empty($value->pl_city)?$value->pl_city.", ":''; 
+          $result['main']['client_address'] .= !empty($value->pl_suite)?$value->pl_suite.", ":''; 
+          $result['main']['client_address'] .= !empty($value->state_name)?$value->state_name.", ":'';
+          $result['main']['client_address'] .= !empty($value->pl_pincode)?$value->pl_pincode:'' ;
+
+          $result['main']['pl_address'] = !empty($value->pl_address)?$value->pl_address:'' ;
+          $result['main']['pl_city']    = !empty($value->pl_city)?$value->pl_city:'' ;
+          $result['main']['pl_suite']   = !empty($value->pl_suite)?$value->pl_suite:'' ;
+          $result['main']['state_name'] = !empty($value->state_name)?$value->state_name:'' ;
+          $result['main']['pl_pincode'] = !empty($value->pl_pincode)?$value->pl_pincode:'' ;
+          $result['main']['state_id']   = !empty($value->state_id)?$value->state_id:'' ;
+
+          $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']:'';
+          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']:'';
+          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']:'';
+
+          $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
+          $result['contact']['email'] = $value->email;
+          $result['contact']['first_name'] = $value->first_name;
+          $result['contact']['last_name'] = $value->last_name;
+          $result['contact']['location'] = $value->location;
+          $result['contact']['phone'] = $value->phone;
+
+
+          $result['sales']['salesweb'] = $value->salesweb;
+          $result['sales']['anniversarydate'] = $value->anniversarydate;
+          $result['sales']['salesperson'] = $value->salesperson;
+          $result['sales']['sales_name'] = $value->sales_name;
+          $result['sales']['salespricegrid'] = $value->salespricegrid;
+          $result['sales']['price_grid'] = $value->price_grid;
+          $result['sales']['anniversarydate'] = ($result['sales']['anniversarydate']=='0000-00-00')? '': date('m/d/Y',strtotime($result['sales']['anniversarydate']));
+
+          $result['tax']['tax_id'] = $value->tax_id;
+          $result['tax']['tax_rate'] = $value->tax_rate;
+          $result['tax']['tax_exempt'] = $value->tax_exempt;
+          $result['tax']['tax_exempt_show'] = ($value->tax_exempt=='0')? "No" : "Yes";
+          $result['tax']['tax_document'] = (empty($value->tax_document))? "1" : $value->tax_document ;
+          $result['tax']['tax_document_url'] = (!empty($value->tax_document))?UPLOAD_PATH.$value->company_id."/tax/".$value->client_id."/".$value->tax_document:'';
+          $result['tax']['tax_unlink_url'] = $value->tax_document;
+
+          
+          $combine_array[$value->client_id] = $result;
+
+        }
+
+      }
+      return $combine_array;
+    }
+
+
 
 }

@@ -212,6 +212,87 @@ class QuickBookController extends Controller
         }
     }
 
+
+    public function updateCustomer($client,$contact){
+
+       $IPP = new \QuickBooks_IPP(QBO_DSN);
+
+        // Get our OAuth credentials from the database
+        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        // Tell the framework to load some data from the OAuth store
+        $IPP->authMode(
+            \QuickBooks_IPP::AUTHMODE_OAUTH,
+            QBO_USERNAME,
+            $creds);
+
+        if (QBO_SANDBOX) {
+            // Turn on sandbox mode/URLs
+            $IPP->sandbox(true);
+        }
+        // This is our current realm
+        $this->realm = $creds['qb_realm'];
+
+        // Load the OAuth information from the database
+        $this->context = $IPP->context();
+
+        $CustomerService = new \QuickBooks_IPP_Service_Customer();
+
+        // Get the existing customer first (you need the latest SyncToken value)
+        $customers = $CustomerService->query($this->context,$this->realm, "SELECT * FROM Customer WHERE Id = '".$client['qid']."' ");
+       
+        $Customer = $customers[0];
+        // $Customer->setTitle('Mr');
+         $Customer->setGivenName($contact['first_name']);
+       //  $Customer->setMiddleName('M');
+         $Customer->setFamilyName($contact['last_name']);
+         $Customer->setDisplayName($contact['first_name'].' '.$contact['last_name'].' '. mt_rand(0, 1000));
+        // Terms (e.g. Net 30, etc.)
+        $Customer->setSalesTermRef(4);
+
+        // Phone #
+        $PrimaryPhone = new \QuickBooks_IPP_Object_PrimaryPhone();
+        $PrimaryPhone->setFreeFormNumber($contact['phone']);
+        $Customer->setPrimaryPhone($PrimaryPhone);
+
+        // Mobile #
+        $Mobile = new \QuickBooks_IPP_Object_Mobile();
+        $Mobile->setFreeFormNumber($contact['phone']);
+        $Customer->setMobile($Mobile);
+
+        // Fax #
+        $Fax = new \QuickBooks_IPP_Object_Fax();
+        $Fax->setFreeFormNumber($contact['phone']);
+        $Customer->setFax($Fax);
+
+        // Bill address
+        $BillAddr = new \QuickBooks_IPP_Object_BillAddr();
+        $BillAddr->setLine1($client['pl_address']);
+         $BillAddr->setLine2($client['pl_suite']);
+         $BillAddr->setCity($client['pl_city']);
+         $BillAddr->setCountrySubDivisionCode('US');
+         $BillAddr->setPostalCode($client['pl_pincode']);
+         $Customer->setBillAddr($BillAddr);
+
+        // Email
+        $PrimaryEmailAddr = new \QuickBooks_IPP_Object_PrimaryEmailAddr();
+        $PrimaryEmailAddr->setAddress($client['billing_email']);
+        $Customer->setPrimaryEmailAddr($PrimaryEmailAddr);
+
+        if ($CustomerService->update($this->context,$this->realm, $Customer->getId(), $Customer))
+        {
+            return 1;
+            print('&nbsp; Updated!<br>');
+        }
+        else
+        {
+            return 0;
+            print('&nbsp; Error: ' . $CustomerService->lastError($Context));
+        }
+
+    }
+
+
+
     public function addItem(){
         $post = Input::all();
 
