@@ -538,7 +538,7 @@ class ArtController extends Controller {
             }
             else
             {
-                $response = array('success' => 0, 'message' => "Error, No Size selected.");
+                $response = array('success' => 0, 'message' => "Error, No Product or Size selected.");
                 return  response()->json(["data" => $response]);
             }
         }
