@@ -125,7 +125,7 @@
   </table>
   <hr style="border:1px solid #000;">
 <table style="margin-top:50px;">
-<tr><td align="center"><b>Mokup Image</b></td></tr>
+<tr><td align="center"><b>Mockup Image</b></td></tr>
   <?php foreach($data as $key=>$value){ ?>
     <tr>
       <td align="center"><img src="<?php echo $value[0]->mokup_image; ?>"  ></td>
@@ -138,8 +138,8 @@
       <td>Job Name : {{$company->order_name}}</td>
     </tr>
     <tr>
-      <td>Brand Coordinator : Anabel Ruiz</td>
-      <td>Client PO# : 3954710m2780test1</td>
+      <td>Brand Coordinator : {{Session::get('name')}}</td>
+      <td>Client PO# : {{$company->order_name}}</td>
     </tr>
     <tr>
       <td>In Hands Date: {{$company->in_hands_by}}</td>
