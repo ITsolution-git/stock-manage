@@ -197,10 +197,18 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
-        $scope.printPdf=function()
+        $scope.printPdf=function(mail)
         {
             
-            var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id}
+            var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,mail:mail}
+            if(mail=='1')
+            {
+                var k = confirm("Do you want to send Art approval PDF to client?");
+                if(k==false)
+                {
+                    return false;
+                }
+            }
             var target;
             var form = document.createElement("form");
             form.action = 'api/public/art/ArtApprovalPDF';
