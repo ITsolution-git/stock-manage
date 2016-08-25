@@ -48,9 +48,15 @@
                                 <span class="chrome-weight font-14">{{ScreenSets[0].created_date}}</span>
                             </div>
                             <div class="trans-box">
-                                <div>Contract</div>
+                                <div>Client Contact</div>
                                 <span class="chrome-weight font-14">{{ScreenSets[0].first_name}} {{ScreenSets[0].last_name}}</span>
                             </div>
+                            <div class="trans-box">
+                                <div>Client Email</div>
+                                <span class="chrome-weight font-14">{{ScreenSets[0].billing_email}}</span>
+                            </div>
+
+                            
                         </div>
                     </md-card-content>
                    <!--  <div layout-align="end start"  flex="5" layout="row">
@@ -159,9 +165,7 @@
         </ul>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-        <div class="md-ripple-container" style=""></div>
-        </button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf()"><span class="ng-scope">Generate Art Approval Form</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf('1')"><span class="ng-scope">Send Art Approval to Client</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf('0')"><span class="ng-scope">Generate Art Approval Form</span></button>
     </md-dialog-actions>
 </div>

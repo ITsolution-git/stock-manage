@@ -79,7 +79,7 @@ class Art extends Model {
     public function ScreenSets($post) // ART SCREEN DETAIL PAGE FOR SCREEN SETS
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+				->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
 				->join('art as art','art.order_id','=','ass.order_id')
 				->join('orders as or','art.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -108,43 +108,31 @@ class Art extends Model {
 	// CLIENT MODULE ART LISTING.
     public function Client_art_screen($client_id,$company_id)
     {
-    	$Misc_data = $this->AllMsiData($company_id);
-
-    	$query = DB::table('orders as or')
-		->select('or.id as order_id','art.art_id','ass.graphic_size','ass.screen_logo','aaw.id as wp_id','ass.id as screen_id','ass.screen_set','aaw.wp_image')
-		->join('art as art','art.order_id','=','or.id')
-		->leftJoin('order_orderlines as ol','ol.order_id','=','or.id')
-		->leftJoin('artjob_artworkproof as aaw','ol.id','=','aaw.orderline_id')
-		->leftJoin('artjob_screensets as ass','ass.art_id','=','art.art_id')
-		->where('or.is_delete','=','1')
-		->where('or.company_id','=',$company_id)
-		->where('or.client_id','=',$client_id)
-		->get();
-		//echo "<pre>"; print_r($query); echo "</pre>"; die;
-		$client_array = array();
+    	$query = DB::table('artjob_screensets as ass')
+				->select('ass.screen_set','ass.screen_width','ass.screen_height','or.id as order_id','or.company_id','ass.id as screen_id','ass.mokup_image','ass.mokup_logo')
+				->join('order_design_position as odp','ass.positions','=','odp.id')	
+				->join('order_design as od','od.id','=','odp.design_id')
+				->join('orders as or','ass.order_id','=','or.id')
+				->where('or.client_id','=',$client_id)
+				->where('or.company_id','=',$company_id)
+				->where('or.is_complete','=','1')
+				->where('or.is_delete','=','1')
+				->where('odp.is_delete','=','1')
+				->where('od.is_delete','=','1')
+				->where('ass.screen_active','=','1')
+				->orderBy('ass.screen_order','asc')
+				->orderBy('ass.screen_order','asc')
+				->orderBy('ass.id','desc')
+				->get();
 		if(count($query)>0)
 		{
-			foreach ($query as $key => $value) 
+			foreach ($query as $value) 
 			{
-				if(!empty($value->screen_id))
-				{
-					$client_array['screen'][$value->screen_id]['screen_set'] = $value->screen_set; 		
-					$client_array['screen'][$value->screen_id]['graphic_size'] = (!empty($value->graphic_size))? $Misc_data[$value->graphic_size] : '';		
-					$client_array['screen'][$value->screen_id]['screen_logo'] = (!empty($value->screen_logo))? UPLOAD_PATH.$company_id.'/art/'.$value->screen_id.'/'.$value->screen_logo : '';
-					$client_array['screen'][$value->screen_id]['art_id'] = $value->art_id; 	
-					$client_array['screen'][$value->screen_id]['screen_id'] = $value->screen_id; 	
-				} 
-				if(!empty($value->wp_id))
-				{
-					$client_array['art'][$value->wp_id]['wp_image'] = (!empty($value->wp_image))? UPLOAD_PATH.$company_id.'/art/'.$value->wp_id.'/'.$value->wp_image : '';
-					$client_array['art'][$value->wp_id]['type'] = 'Art Work Screen'; 
-					$client_array['art'][$value->wp_id]['art_id'] = $value->art_id;		
-					$client_array['art'][$value->wp_id]['wp_id'] = $value->wp_id; 				
-				}
+				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
 			}
 		}
-
-		return $client_array;
+		return $query;
     }
 
     // ART SCREEN SETS LISTING, ORDER POSITIONS
@@ -373,7 +361,7 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','ass.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname')
+				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','ass.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email')
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->leftjoin('color as col','col.id','=','acol.color_name')
