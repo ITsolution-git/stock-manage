@@ -343,7 +343,7 @@ class QuickBookController extends Controller
         }*/
     }
 
-    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id){
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid){
       
 
          $IPP = new \QuickBooks_IPP(QBO_DSN);
@@ -411,6 +411,142 @@ class QuickBookController extends Controller
                  $Invoice->setCustomerRef($customerRef);
            
          }
+
+
+          if($other_charges[0]->foil_qnty != 0 && $other_charges[0]->foil_qnty != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($other_charges[0]->foil_qnty * $price_grid->foil);
+                 $Line->setDescription('Foil Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->foil_charge);
+                 $SalesItemLineDetail->setUnitPrice($price_grid->foil);
+                 $SalesItemLineDetail->setQty($other_charges[0]->foil_qnty);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+          if($other_charges[0]->number_on_dark_qnty != 0 && $other_charges[0]->number_on_dark_qnty != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($other_charges[0]->number_on_dark_qnty * $price_grid->number_on_dark);
+                 $Line->setDescription('Number On Dark Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->number_on_dark_charge);
+                 $SalesItemLineDetail->setUnitPrice($price_grid->number_on_dark);
+                 $SalesItemLineDetail->setQty($other_charges[0]->number_on_dark_qnty);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+         if($other_charges[0]->oversize_screens_qnty != 0 && $other_charges[0]->oversize_screens_qnty != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($other_charges[0]->oversize_screens_qnty * $price_grid->over_size_screens);
+                 $Line->setDescription('Oversize Screen Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->oversize_screen_charge);
+                 $SalesItemLineDetail->setUnitPrice($price_grid->over_size_screens);
+                 $SalesItemLineDetail->setQty($other_charges[0]->oversize_screens_qnty);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+         if($other_charges[0]->ink_charge_qnty != 0 && $other_charges[0]->ink_charge_qnty != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($other_charges[0]->ink_charge_qnty * $price_grid->ink_changes);
+                 $Line->setDescription('Ink Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->ink_charge);
+                 $SalesItemLineDetail->setUnitPrice($price_grid->ink_changes);
+                 $SalesItemLineDetail->setQty($other_charges[0]->ink_charge_qnty);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+         if($other_charges[0]->number_on_light_qnty != 0 && $other_charges[0]->number_on_light_qnty != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($other_charges[0]->number_on_light_qnty * $price_grid->number_on_light);
+                 $Line->setDescription('Number On Light Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->number_on_light_charge);
+                 $SalesItemLineDetail->setUnitPrice($price_grid->number_on_light);
+                 $SalesItemLineDetail->setQty($other_charges[0]->number_on_light_qnty);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+          if($other_charges[0]->discharge_qnty != 0 && $other_charges[0]->discharge_qnty != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($other_charges[0]->discharge_qnty * $price_grid->discharge);
+                 $Line->setDescription('Discharge Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->discharge_charge);
+                 $SalesItemLineDetail->setUnitPrice($price_grid->discharge);
+                 $SalesItemLineDetail->setQty($other_charges[0]->discharge_qnty);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+         if($other_charges[0]->speciality_qnty != 0 && $other_charges[0]->speciality_qnty != '') {
+
+                 $Line = new \QuickBooks_IPP_Object_Line();
+                 $Line->setDetailType('SalesItemLineDetail');
+                 $Line->setAmount($other_charges[0]->speciality_qnty * $price_grid->specialty);
+                 $Line->setDescription('Speciality Charges');
+
+                 $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
+                 $SalesItemLineDetail->setItemRef($db_product[0]->speciality_charge);
+                 $SalesItemLineDetail->setUnitPrice($price_grid->specialty);
+                 $SalesItemLineDetail->setQty($other_charges[0]->speciality_qnty);
+
+                 $Line->addSalesItemLineDetail($SalesItemLineDetail);
+
+                 $Invoice->addLine($Line);
+
+                 $Invoice->setCustomerRef($customerRef);
+         }
+
+
 
          if($chargeArray[0]->screen_charge != 0 && $chargeArray[0]->screen_charge != '') {
 
