@@ -337,11 +337,10 @@
                         <th class="secondary-text text-center" width="20%">In Hands By</th>
                     </tr>
                 </thead>
-                <tbody> 
-                    <tr ng-repeat="shipping in allData.shipping_detail">
-                        <td>{{allData.order_data[0].id}}</td>
-                        <td ng-if="shipping.shipping_by == '0000-00-00'"></td>
-                        <td ng-if="shipping.shipping_by != '0000-00-00'">{{shipping.shipping_by}}</td>
+                <tbody>
+                    <tr ng-repeat="shipping in allData.shipping_detail" class="cursor-p">
+                        <td>{{shippping.order_id}}</td>
+                        <td>{{shipping.shipping_by}}</td>
                         <td class="text-center">Pending</td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 0"></td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 1">UPS</td>
@@ -366,7 +365,7 @@
                             <th class="secondary-text text-center text-bold" width="20%">Image</th>
                         </tr>
                     </thead>
-                    <tbody> 
+                    <tbody>
                         <tr class="cursor-p" ng-repeat="position in design.positions.order_design_position">
                             <td height="72">{{position.position_name}}</td>
                             <td>{{position.placement_type_name}}</td>
