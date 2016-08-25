@@ -484,8 +484,19 @@ class ArtController extends Controller {
            
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
-                PDF::Output($filename, 'F');
-                return Response::download($filename);
+                PDF::Output($filename);
+
+                if(!empty($screenArray->mail) && $screenArray->mail=='1' && !empty($pdf_data[0][0]->billing_email))
+                {
+                    Mail::send('emails.artapproval', ['email'=>$pdf_data[0][0]->billing_email], function($message) use ($pdf_data,$filename)
+                    {
+                         $message->to($pdf_data[0][0]->billing_email)->subject('Art Approval for the order '.$pdf_data[0][0]->order_name);
+                         $message->attach($filename);
+                    });
+                }
+
+                //return Response::download($filename);
+
             }
             else
             {
@@ -508,7 +519,7 @@ class ArtController extends Controller {
         if(count($screenArray)>0)
         {
             $pdf_data = $this->art->getPressInstructionPDFdata($screenArray->screen_id,$screenArray->company_id);
-            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
             if(!empty($pdf_data['size']))
             {
                 
