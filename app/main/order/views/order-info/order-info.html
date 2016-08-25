@@ -49,7 +49,7 @@
                 <md-button  class="bg-grey right-m-0 " ng-click="calculateAll(order_id,company_id)">
                     CONFIRM PRICING
                 </md-button>
-                <md-button  class="bg-grey right-m-0 " ng-click="openEmailPopup($event)">
+                <md-button  class="bg-grey right-m-0 " ng-show="order.invoice_id > 0" ng-click="openEmailPopup($event)">
                     EMAIL
                 </md-button>
                 <md-button  class="bg-grey right-m-0 " ng-show="order.invoice_id > 0" ng-click="printPdf()">
