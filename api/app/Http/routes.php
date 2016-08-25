@@ -354,4 +354,5 @@ Route::get('qbo/createCustomer','QuickBookController@createCustomer');
 Route::post('qbo/AddItem', 'QuickBookController@addItem');
 
 Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
-Route::post('invoice/getInvoiceDetail', 'InvoiceController@getInvoiceDetail');
+Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceDetail');
+Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');
