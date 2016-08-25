@@ -81,13 +81,14 @@ class Order extends Model {
         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
         $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','sales.sales_name',
-                      'users.name','cc.first_name as client_first_name',
+                      'users.name','cc.first_name as client_first_name','i.id as invoice_id',
                       'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
 
         $orderDetailData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
+                         ->leftJoin('invoice as i','order.id','=', 'i.order_id')
                          ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "));
                          if(isset($data['is_affiliate']))
                          {
@@ -102,6 +103,7 @@ class Order extends Model {
                          $orderDetailData = $orderDetailData->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
                          ->select($listArray)
                          ->where($whereConditions)
+                         ->GroupBy('order.id')
                          ->get();
 
         $combine_array = array();

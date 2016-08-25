@@ -1045,7 +1045,7 @@ class OrderController extends Controller {
         $email_array = explode(",",$email);
         $attached_url = UPLOAD_PATH.$post['company_id'].'/pdf/order-'.$post['order_id'].'.pdf';
        
-       $uploaddir = base_path() . "/public/uploads/".$post['company_id']."/pdf/order-".$post['order_id'].'.pdf';
+        $uploaddir = base_path() . "/public/uploads/".$post['company_id']."/pdf/order-".$post['order_id'].'.pdf';
        
        if (file_exists($uploaddir)) {
          
