@@ -9,13 +9,13 @@
 <body>
 	<table id="header" style="width:100%">
 		<tr>
-			<td><img src="" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+			<td><img src="{{$company_data[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
 			<td>
 				<span style="text-align:center;margin:0;font-weight:bold;">{{$company_data[0]->name}}</span>
 				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address1}}</span>
 				<span style="text-align:center;margin:0;">{{$company_data[0]->city}}, {{$company_data[0]->state}} {{$company_data[0]->zip}}</span>
 				<span style="text-align:center;margin:0;">P: 312 243-8304  F: 312 243-9015</span><br>
-				<span style="text-align:center;margin:0;"><a href="#" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
+				<span style="text-align:center;margin:0;"><a href="{{$company_data[0]->url}}" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
 			</td>
 			<td>
 				<span style="font-weight:bold;text-align:right;">Order Acknoledgement # {{$order_data[0]->id}}</span>

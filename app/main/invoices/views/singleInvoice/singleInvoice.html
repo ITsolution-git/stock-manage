@@ -338,7 +338,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="shipping in allData.shipping_detail" class="cursor-p">
+                    <tr ng-repeat="shipping in allData.shipping_detail">
                         <td>{{shippping.order_id}}</td>
                         <td>{{shipping.shipping_by}}</td>
                         <td class="text-center">Pending</td>
@@ -366,12 +366,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="cursor-p" ng-repeat="position in design.positions.order_design_position">
+                        <tr ng-repeat="position in design.positions.order_design_position">
                             <td height="72">{{position.position_name}}</td>
                             <td>{{position.placement_type_name}}</td>
                             <td class="text-center">{{position.qnty}}</td>
                             <td class="text-center">1.5</td>
-                            <td class="text-center" ng-if="position.position_image != ''"><img src="position.position_image" height="40" width="40" /></td>
+                            <td class="text-center" ng-if="position.position_image != ''"><img src="{{position.position_image}}" title="Position Image" alt="Position Image" height="40" width="40" /></td>
                             <td class="text-center" ng-if="position.position_image == ''"></td>
                         </tr>
                     </tbody>
@@ -390,7 +390,7 @@
                         </tr>
                     </thead>
                     <tbody> 
-                        <tr class="cursor-p" ng-repeat="product in design.products">
+                        <tr ng-repeat="product in design.products">
                             <td>{{product.product_name}}</td>
                             <td class="text-center">{{product.color_name}}</td>
                             <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
