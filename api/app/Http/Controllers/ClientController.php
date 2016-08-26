@@ -78,7 +78,7 @@ class ClientController extends Controller {
        		$result = $this->company->getQBAPI($post['company_id']);
         
 	         if($result) {
-	          	
+	          
 	          	$result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($client,$contact);
 
 		        if($result_quickbook != 0) {
