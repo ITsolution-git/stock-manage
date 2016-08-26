@@ -64,17 +64,17 @@ return [
 			'strict'    => false,
 		],
 
-//		'mysql' => [
-//			'driver'    => 'mysql',
-//			'host'      => env('DB_HOST', 'localhost'),
-//			'database'  => env('DB_DATABASE', 'cs'),
-//			'username'  => env('DB_USERNAME', 'root'),
-//			'password'  => env('DB_PASSWORD', ''),
-//			'charset'   => 'utf8',
-//			'collation' => 'utf8_unicode_ci',
-//			'prefix'    => '',
-//			'strict'    => false,
-//		],
+/*		'mysql' => [
+			'driver'    => 'mysql',
+			'host'      => env('DB_HOST', '192.168.1.13'),
+			'database'  => env('DB_DATABASE', 'stokkup'),
+			'username'  => env('DB_USERNAME', 'csuser'),
+			'password'  => env('DB_PASSWORD', 'codal123'),
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+			'strict'    => false,
+		],*/
 
 		'pgsql' => [
 			'driver'   => 'pgsql',

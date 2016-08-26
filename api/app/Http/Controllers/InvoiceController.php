@@ -75,11 +75,11 @@ class InvoiceController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Invoice'),
                         1=>array('key' => 'i.created_date', 'name' => 'Date'),
-                        2=>array('key' => 'i.grand_total', 'name' => 'Invoice $ Amount'),
+                        2=>array('key' => 'o.grand_total', 'name' => 'Invoice $ Amount'),
                         3=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
-                        4=>array('key' => 'null', 'name' => 'Synced with Quickbooks', 'sortable' => false),
-                        5=>array('key' => 'null', 'name' => '', 'sortable' => false),
-                        6=>array('key' => 'null', 'name' => 'Option', 'sortable' => false),
+                        4=>array('key' => '', 'name' => 'Synced with Quickbooks', 'sortable' => false),
+                        5=>array('key' => '', 'name' => '', 'sortable' => false),
+                        6=>array('key' => '', 'name' => 'Option', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -104,7 +104,7 @@ class InvoiceController extends Controller {
 
         if($retutn_arr['company_data'][0]->photo != '')
         {
-            $retutn_arr['company_data'][0]->photo = FILEUPLOAD.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
+            $retutn_arr['company_data'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
         }
 
         $retutn_arr['addresses'] = $this->client->getAddress($order_data[0]->client_id);
