@@ -14,14 +14,14 @@
                 <table class="simple hover simple-tbl1">
                     <thead tasty-thead></thead>
                     <tbody> 
-                        <tr ng-repeat="inv in rows" class="cursor-p">
-                            <td>{{inv.order_id}}</td>
+                        <tr ng-repeat="inv in rows">
+                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.id})">{{inv.order_id}}</td>
                             <td>{{inv.created_date}}</td>
                             <td>${{inv.grand_total}}</td>
                             <td>{{inv.in_hands_by}}</td>
                             <td ng-if="inv.qb_id == '0'"><a href="#" class="icon font-18"></a></td>
                             <td ng-if="inv.qb_id > '0'"><a href="#" class="icon  icon-rotate-3d font-18"></a></td>
-                            <td ui-sref="app.invoices.singleInvoice({id:inv.id})"><a>Pay</a></td>
+                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.id})"><a>Pay</a></td>
                             <td>
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -29,7 +29,7 @@
                                     </md-button>
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
-                                            <md-button ng-click="openEditEmployeeDialog($event,user.id)">
+                                            <md-button ng-click="print_pdf(inv.id)">
                                                 Download PDF
                                             </md-button>
                                         </md-menu-item>

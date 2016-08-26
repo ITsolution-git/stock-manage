@@ -337,11 +337,10 @@
                         <th class="secondary-text text-center" width="20%">In Hands By</th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                     <tr ng-repeat="shipping in allData.shipping_detail">
-                        <td>{{allData.order_data[0].id}}</td>
-                        <td ng-if="shipping.shipping_by == '0000-00-00'"></td>
-                        <td ng-if="shipping.shipping_by != '0000-00-00'">{{shipping.shipping_by}}</td>
+                        <td>{{shippping.order_id}}</td>
+                        <td>{{shipping.shipping_by}}</td>
                         <td class="text-center">Pending</td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 0"></td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 1">UPS</td>
@@ -366,13 +365,13 @@
                             <th class="secondary-text text-center text-bold" width="20%">Image</th>
                         </tr>
                     </thead>
-                    <tbody> 
-                        <tr class="cursor-p" ng-repeat="position in design.positions.order_design_position">
+                    <tbody>
+                        <tr ng-repeat="position in design.positions.order_design_position">
                             <td height="72">{{position.position_name}}</td>
                             <td>{{position.placement_type_name}}</td>
                             <td class="text-center">{{position.qnty}}</td>
                             <td class="text-center">1.5</td>
-                            <td class="text-center" ng-if="position.position_image != ''"><img src="position.position_image" height="40" width="40" /></td>
+                            <td class="text-center" ng-if="position.position_image != ''"><img src="{{position.position_image}}" title="Position Image" alt="Position Image" height="40" width="40" /></td>
                             <td class="text-center" ng-if="position.position_image == ''"></td>
                         </tr>
                     </tbody>
@@ -391,7 +390,7 @@
                         </tr>
                     </thead>
                     <tbody> 
-                        <tr class="cursor-p" ng-repeat="product in design.products">
+                        <tr ng-repeat="product in design.products">
                             <td>{{product.product_name}}</td>
                             <td class="text-center">{{product.color_name}}</td>
                             <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>

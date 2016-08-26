@@ -73,6 +73,10 @@
                              <input placeholder="Oversize Value" ng-model="company.oversize_value" valid-number name="oversize_value"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
                         </md-input-container>
 
+                        <md-input-container class="md-block first-box settings-margin-0">
+                             <input placeholder="QB Cron Time (in Hours)" ng-model="company.cron_runtime" valid-number name="cron_runtime"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                        </md-input-container>
+
 
 
                              <span>

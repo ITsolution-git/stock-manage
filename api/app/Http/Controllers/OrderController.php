@@ -1043,18 +1043,29 @@ class OrderController extends Controller {
         $post = Input::all();
         $email = trim($post['email']);
         $email_array = explode(",",$email);
-        $attached_url = UPLOAD_PATH.$post['company_id'].'/pdf/order-'.$post['order_id'].'.pdf';
-       
-        $uploaddir = base_path() . "/public/uploads/".$post['company_id']."/pdf/order-".$post['order_id'].'.pdf';
-       
-       if (file_exists($uploaddir)) {
-         
-       } else {
-        $response = array('success' => 0, 'message' => "Email Attachement is blank");
-        return response()->json(["data" => $response]);
-        exit;
-       }
 
+        $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+
+        $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';
+
+        if(!file_exists($file_path))
+        {
+            PDF::AddPage('P','A4');
+            PDF::writeHTML(view('pdf.invoice',$data)->render());
+            PDF::Output($file_path,'F');
+        }
+
+        foreach ($email_array as $email)
+        {
+            Mail::send('emails.invoice', ['email'=>$email], function($message) use ($file_path,$email)
+            {
+                 $message->to($email)->subject('Invoice PDF');
+                 $message->attach($file_path);
+            });                
+        }
+
+        $response = array('success' => 1, 'message' => MAIL_SEND);
+        return response()->json(["data" => $response]);
 
       /* Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
         {
