@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Client;
 use App\Common;
+use App\Company;
+
 use App\Art;
 use DB;
 
@@ -15,11 +17,12 @@ use Request;
 
 class ClientController extends Controller { 
 
-	public function __construct(Client $client,Common $common,Art $art) 
+	public function __construct(Client $client,Common $common,Art $art,Company $company) 
  	{
         $this->client = $client;
         $this->common = $common;
         $this->art = $art;
+        $this->company = $company;
     }
 
     /**
@@ -72,12 +75,19 @@ class ClientController extends Controller {
 			$contact['contact_main']='1';	// SET ACTIVE CONDITION
 			
        
+       		$result = $this->company->getQBAPI($post['company_id']);
+        
+	         if($result) {
+	          	
+	          	$result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($client,$contact);
 
-       		$result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($client,$contact);
+		        if($result_quickbook != 0) {
+		        $client['qid']= $result_quickbook;
+	           }
+	         }
 
-	        if($result_quickbook != 0) {
-	        	$client['qid']= $result_quickbook;
-	        }
+
+       		
 
 
 			$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.

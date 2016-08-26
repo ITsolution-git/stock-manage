@@ -74,7 +74,7 @@
                     if(result.data.success=='1')
                     {
                         $scope.qb = result.data.data[0];
-
+                       
 
                     }
                     else

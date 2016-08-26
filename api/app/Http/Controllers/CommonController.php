@@ -1118,7 +1118,14 @@ class CommonController extends Controller {
 
     public function addEditClient()
     {
-         $post = Input::all();
+
+        $post = Input::all();
+        $result = $this->company->getQBAPI($post['company_id']);
+
+       if(empty($result)) {
+             return 0;
+         }
+
          $result = $this->client->GetAllclientDetailCompany($post['company_id']);
 
          foreach ($result as $key => $clientData) {
