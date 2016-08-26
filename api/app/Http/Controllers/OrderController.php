@@ -1448,6 +1448,9 @@ class OrderController extends Controller {
             $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
         }
 
+        unset($post['designData']['price_id']);
+
+
        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['designData']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
             return response()->json(['data'=>$data]);
@@ -1763,7 +1766,7 @@ class OrderController extends Controller {
             $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");
             return response()->json(["data" => $data_record]);
           } else {
-             $data_record = array("success"=>0,"message"=>"Please connect Quickbook again");
+             $data_record = array("success"=>0,"message"=>"Please connect Quickbook");
             return response()->json(["data" => $data_record]);
           }
 
