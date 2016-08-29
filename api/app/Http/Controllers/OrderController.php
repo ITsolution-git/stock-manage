@@ -1470,14 +1470,16 @@ class OrderController extends Controller {
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'order_design_position' => $result['order_design_position'],
-                                'total_pos_qnty' => $result['total_pos_qnty']
+                                'total_pos_qnty' => $result['total_pos_qnty'],
+                                'total_screen_fees' => $result['total_screen_fees']
                             );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'order_design_position' => $result['order_design_position'],
-                                'total_pos_qnty' => 0
+                                'total_pos_qnty' => 0,
+                                'total_screen_fees' => 0
                             );
         }
         return response()->json(["data" => $response]);

@@ -461,6 +461,8 @@ class Product extends Model {
 
         if(!empty($productData) && $productData[0]->id > 0)
         {
+            $total_price = 0;
+            $total_product = 0;
             foreach ($productData as $product) {
                 $sizeData = DB::table('purchase_detail as pd')
                                      ->where('pd.design_product_id','=',$product->design_product_id)
@@ -475,13 +477,16 @@ class Product extends Model {
                 $product->total_qnty = $total_qnty[0]->total_qnty;
                 $product->total_price = round($total_qnty[0]->total_price,2);
 
+                $total_price += $product->total_price;
+                $total_product += $product->total_qnty;
+
                 if($product->vendor_id >1){
                     $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
                 } else {
                     $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
                 }
                 
-                $combine_array[$product->id] = $product;
+                $combine_array['productData'][$product->id] = $product;
 
                 $whereConditions = ['order_id' => $product->order_id,'design_id' => $product->design_id,'product_id'=>$product->id];
                 $items = DB::table('order_item_mapping')->where($whereConditions)->get();
@@ -515,6 +520,8 @@ class Product extends Model {
                     }
                 }
             }
+            $combine_array['total_product'] = $total_product;
+            $combine_array['total_price'] = $total_price;
         }
         else
         {

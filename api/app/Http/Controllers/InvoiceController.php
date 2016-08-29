@@ -119,7 +119,8 @@ class InvoiceController extends Controller {
         foreach ($all_design as $design) {
             $data = array('company_id' => $company_id,'id' => $design->id);
             $design->positions = $this->order->getDesignPositionDetail($data);
-            $design->products = $this->product->designProduct($data);
+            $productData = $this->product->designProduct($data);
+            $design->products = $productData['productData'];
         }
 
         $retutn_arr['all_design'] = $all_design;
