@@ -97,6 +97,7 @@ class QuickBookController extends Controller
         }
         else
         {
+             
             // If this happens, something went wrong with the OAuth handshake
             die('Oh no, something bad happened: ' . $this->IntuitAnywhere->errorNumber() . ': ' . $this->IntuitAnywhere->errorMessage());
         }

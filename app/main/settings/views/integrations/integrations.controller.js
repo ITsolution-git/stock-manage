@@ -74,6 +74,7 @@
                     if(result.data.success=='1')
                     {
                         $scope.qb = result.data.data[0];
+
                     }
                     else
                     {
@@ -86,6 +87,7 @@
                     if(result.data.success=='1')
                     {
                         $scope.fedex = result.data.data[0];
+
                     }
                     else
                     {
