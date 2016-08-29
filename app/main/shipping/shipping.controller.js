@@ -17,7 +17,7 @@
         $scope.init = {
           'count': 10,
           'page': 1,
-          'sortBy': 'order.id',
+          'sortBy': 'o.id',
           'sortOrder': 'dsc'
         };
 
