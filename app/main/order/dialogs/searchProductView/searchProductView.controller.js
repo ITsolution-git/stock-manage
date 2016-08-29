@@ -205,6 +205,7 @@
          $http.post('api/public/product/findTotal',combine_array_id).success(function(result) 
             {
                 $scope.AllProductDetail[$scope.colorName].total = result.data.total;
+                $scope.AllProductDetail[$scope.colorName].total_qnty = result.data.total_qnty;
                 
             });
            

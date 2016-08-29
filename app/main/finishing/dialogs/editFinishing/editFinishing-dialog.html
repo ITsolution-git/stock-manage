@@ -55,12 +55,7 @@
                             </md-input-container>
                         </div>
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Notes" name="" ui-event="" ng-model="finishing_data.note">
-                            <div ng-messages=" " role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
+                            <textarea ng-model="finishing_data.note" md-maxlength="150" rows="5" md-select-on-focus placeholder="Notes"></textarea>
                         </md-input-container>
                     </div>
                 </div>
