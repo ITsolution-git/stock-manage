@@ -304,6 +304,10 @@ public function create_dir($dir_path) {
                 if(!isset($productAllData['colorData'][$data->colorName]['total'])) {
                     $productAllData['colorData'][$data->colorName]['total'] = 0;
                 }
+
+                if(!isset($productAllData['colorData'][$data->colorName]['total_qnty'])) {
+                    $productAllData['colorData'][$data->colorName]['total_qnty'] = 0;
+                }
                 
 
                  
@@ -323,7 +327,7 @@ public function create_dir($dir_path) {
                     }
 
                
-                  
+                 
 
               //  $productAllData['colorData'][$data->colorName]['sizes'][$key]['warehouse'] = $warehouse;
                
@@ -341,6 +345,10 @@ public function create_dir($dir_path) {
 
                 if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
                     $productAllData['colorData'][$data->colorName]['total'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] * $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'];
+                }
+
+                if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
+                    $productAllData['colorData'][$data->colorName]['total_qnty'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'];
                 }
                 
             }
@@ -1177,17 +1185,19 @@ public function create_dir($dir_path) {
         $post = Input::all();
        
         $total = 0;
+        $total_qnty = 0;
         
         foreach($post['productData'] as $key => $data) {
 
              if(isset($data['qnty'])) {
                 $total += $data['customerPrice'] * $data['qnty'];
+                $total_qnty += $data['qnty'];
              }
              
         }
         
 
-        $data = array("success"=>1,"message"=>'Data',"total"=>$total);
+        $data = array("success"=>1,"message"=>'Data',"total"=>$total,"total_qnty"=>$total_qnty);
         return response()->json(["data" => $data]);
         
     }
