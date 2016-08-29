@@ -38,6 +38,27 @@
                      
                     $scope.order_id = result.data.records[0].order_id;
                     $scope.price_id = result.data.records[0].price_id;
+
+
+                     var allData = {};
+                    allData.table ='price_grid';
+                    allData.cond ={id:result.data.records[0].price_id}
+
+                    
+                    $http.post('api/public/common/GetTableRecords',allData).success(function(result) 
+                    {   
+                        if(result.data.success=='1')
+                        {   
+                            $scope.all_price_grid = result.data.records[0];
+                        }
+                        else
+                        {
+                           $scope.all_price_grid = '';
+                        }
+                    });
+
+
+
                     $scope.order_number = result.data.records[0].order_number;
                     $scope.is_complete = result.data.records[0].is_complete;
                     $scope.designInforamtion = result.data.records[0];
@@ -63,9 +84,13 @@
                 $("#ajax_loader").hide();
                 if(result.data.success == '1') {
                     $scope.productData = result.data.productData;
+                    $scope.total_product = result.data.total_product;
+                    $scope.total_price = result.data.total_price;
                 }
                 else{
-                    $scope.productData = [];                    
+                    $scope.productData = [];
+                    $scope.total_product = 0;
+                    $scope.total_price = 0;
                 }
             });
         }
@@ -87,10 +112,12 @@
 
                     $scope.order_design_position = result.data.order_design_position;
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
+                    $scope.total_screen_fees = result.data.total_screen_fees;
                 }
                 else{
                     $scope.order_design_position = [];
                     $scope.total_pos_qnty = 0;
+                    $scope.total_screen_fees = 0;
                 }
             });
         }
@@ -124,6 +151,12 @@
                 if(result.data.success == '1') {
                    
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
+                    $scope.total_screen_fees = result.data.total_screen_fees;
+                }
+                else
+                {
+                    $scope.total_pos_qnty = 0;
+                    $scope.total_screen_fees = 0;
                 }
             });
         }
@@ -177,10 +210,14 @@
                   
                 }
 
-                if(column_name == 'placement_type') {
-                    $scope.order_design_position[key].placement_header_name = $scope.miscData.placement_type[value].value;
-                }
+                $scope.order_design_position[key].total_price = ($scope.order_design_position[key].number_on_dark_qnty * $scope.all_price_grid['number_on_dark'] ) + ($scope.order_design_position[key].oversize_screens_qnty * $scope.all_price_grid['over_size_screens']) + ($scope.order_design_position[key].ink_charge_qnty * $scope.all_price_grid['ink_changes']) + ($scope.order_design_position[key].number_on_light_qnty * $scope.all_price_grid['number_on_light']) + ($scope.order_design_position[key].press_setup_qnty * $scope.all_price_grid['press_setup']) + ($scope.order_design_position[key].discharge_qnty * $scope.all_price_grid['discharge']) + ($scope.order_design_position[key].speciality_qnty * $scope.all_price_grid['specialty']) + ($scope.order_design_position[key].screen_fees_qnty * $scope.all_price_grid['screen_fees']) + ($scope.order_design_position[key].foil_qnty * $scope.all_price_grid['foil']);
+                
+                if($scope.order_design_position[key].total_price > 0) {
 
+                  
+                       $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price.toFixed(2); 
+
+                }
                 if(column_name == 'qnty') {
                     $scope.order_design_position[key].qnty_header_name = value ;
                   

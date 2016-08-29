@@ -7,7 +7,7 @@
                 <form name="copmpany_profile">
                 <md-card layout="row">
                     
-                    <md-card-content flex="50" layout="column">
+                    <md-card-content flex="70" layout="column">
                         
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
                             <input placeholder="Company Name" name="name" ng-model="company.name"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }" >
@@ -18,7 +18,7 @@
                         </md-input-container>
                 
                         <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                            <md-input-container flex="30">
+                            <md-input-container style="margin-left: 10px;" flex="30">
                                 <input placeholder="City" ng-model="company.prime_address_city" name="prime_address_city" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
                             </md-input-container>
                             <md-input-container flex=30 class="m-b-20">
@@ -64,19 +64,20 @@
 
                         </md-input-container>
 
-                        <md-input-container class="md-block first-box settings-margin-0 ">
-                            <input placeholder="Tax Rate" ng-model="company.tax_rate" valid-number  name="tax_rate" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
-                        </md-input-container>
+                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                            <md-input-container  style="margin-left: 10px;" flex="30" >
+                                <input placeholder="Tax Rate" ng-model="company.tax_rate" valid-number  name="tax_rate" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            </md-input-container>
 
 
-                        <md-input-container class="md-block first-box settings-margin-0">
-                             <input placeholder="Oversize Value" ng-model="company.oversize_value" valid-number name="oversize_value"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
-                        </md-input-container>
+                            <md-input-container  flex="30" >
+                                 <input placeholder="Oversize Value" ng-model="company.oversize_value" valid-number name="oversize_value"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            </md-input-container>
 
-                        <md-input-container class="md-block first-box settings-margin-0">
-                             <input placeholder="QB Cron Time (in Hours)" ng-model="company.cron_runtime" valid-number name="cron_runtime"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
-                        </md-input-container>
-
+                            <md-input-container  flex="30" >
+                                 <input placeholder="QB Cron Time" ng-model="company.cron_runtime" valid-number name="cron_runtime"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            </md-input-container>
+                        </div>
 
 
                              <span>
@@ -92,9 +93,10 @@
 
                     </md-card-content>
 
-                    <md-card-content flex="50" layout="column">
+                    <md-card-content flex="30" layout="column">
 
-                        <md-card-content flex="50" layout="column" class="max-height-350 m-b-30"  ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
+
+                        <md-card-content flex="50" layout="column" class="max-height-350 m-b-30"  ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo,'image',company.photo)">
                             <img ng-if="company.company_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
                             <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="Image" class="popup-image" >
                         </md-card-content>
@@ -107,14 +109,30 @@
                               </div>
                             </div>  
                         </md-card-content> -->
-
-                        <div class='container' ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
-                            <div class='button-wrapper' style='height:200px'>
+                            <div class="container" style="position: relative;">
+                            <input style="height: 100%;
+                                            left: 0;
+                                            position: absolute;
+                                            top: 0;
+                                            width: 100%;
+                                            z-index: 10;
+                                            cursor: pointer;
+                                            opacity: 0;
+                                            padding: 0 12px !important;
+                                            text-indent: -100%;" type="file" multiple="" accept="image/*" base-sixty-four-input ng-model="logo_image" ng-change="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo,'image_drag',logo_image)" style="">
+                              <div class='button-wrapper' style='height:200px'>
                                 <label class="text-center dragDropLabel">Drag & Drop your File here</label>
                                 <!-- <input class="" type="button" value="submit"  /> -->
                                 <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
+                                </div>
                             </div>
-                        </div>
+
+                       <!--  <div class='container' ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
+                            <div class='button-wrapper' style='height:200px'>
+                                <label class="text-center dragDropLabel">Drag & Drop your File here</label>
+                                <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
+                            </div>
+                        </div> -->
 
 
                     </md-card-content>
