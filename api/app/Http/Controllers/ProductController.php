@@ -893,7 +893,9 @@ public function create_dir($dir_path) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
-                                'productData' => $result,
+                                'productData' => $result['productData'],
+                                'total_product' => $result['total_product'],
+                                'total_price' => $result['total_price']
                                 );
         
         return response()->json(["data" => $response]);
