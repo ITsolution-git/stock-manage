@@ -79,7 +79,7 @@
 
                             <tr>
                              <td>Price:</td>
-                             <td>{{order_design_position.stitch_header_name}}</td>
+                             <td>{{order_design_position.total_price}}</td>
                             </tr> 
                         </table>
                         
@@ -225,12 +225,12 @@
                                     <input ng-model="order_design_position.speciality_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'speciality_qnty\',order_design_position.id,order_design_position.speciality_qnty,\'order_design_position\',\'id\',key)' }">
                                 </md-input-container>
                             </div>
-                            <div flex="25" class="pad-r">
+                           <!--  <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Oversize</label>
                                     <input ng-model="order_design_position.oversize" valid-number  ui-event="{ change : 'updateDesignPosition(\'oversize\',order_design_position.id,order_design_position.oversize,\'order_design_position\',\'id\',key)' }">
                                 </md-input-container>
-                            </div>
+                            </div> -->
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Screen Fee</label>

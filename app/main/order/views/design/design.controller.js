@@ -38,6 +38,27 @@
                      
                     $scope.order_id = result.data.records[0].order_id;
                     $scope.price_id = result.data.records[0].price_id;
+
+
+                     var allData = {};
+                    allData.table ='price_grid';
+                    allData.cond ={id:result.data.records[0].price_id}
+
+                    
+                    $http.post('api/public/common/GetTableRecords',allData).success(function(result) 
+                    {   
+                        if(result.data.success=='1')
+                        {   
+                            $scope.all_price_grid = result.data.records[0];
+                        }
+                        else
+                        {
+                           $scope.all_price_grid = '';
+                        }
+                    });
+
+
+
                     $scope.order_number = result.data.records[0].order_number;
                     $scope.is_complete = result.data.records[0].is_complete;
                     $scope.designInforamtion = result.data.records[0];
@@ -177,9 +198,52 @@
                   
                 }
 
-                if(column_name == 'placement_type') {
-                    $scope.order_design_position[key].placement_header_name = $scope.miscData.placement_type[value].value;
+                $scope.order_design_position[key].total_price = ($scope.order_design_position[key].number_on_dark_qnty * $scope.all_price_grid['number_on_dark'] ) + ($scope.order_design_position[key].oversize_screens_qnty * $scope.all_price_grid['over_size_screens']) + ($scope.order_design_position[key].ink_charge_qnty * $scope.all_price_grid['ink_changes']) + ($scope.order_design_position[key].number_on_light_qnty * $scope.all_price_grid['number_on_light']) + ($scope.order_design_position[key].press_setup_qnty * $scope.all_price_grid['press_setup']) + ($scope.order_design_position[key].discharge_qnty * $scope.all_price_grid['discharge']) + ($scope.order_design_position[key].speciality_qnty * $scope.all_price_grid['specialty']) + ($scope.order_design_position[key].screen_fees_qnty * $scope.all_price_grid['screen_fees']) + ($scope.order_design_position[key].foil_qnty * $scope.all_price_grid['foil']);
+                
+                if($scope.order_design_position[key].total_price > 0) {
+
+                  
+                       $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price.toFixed(2); 
+
                 }
+               // $scope.order_design_position[key].total_price.toFixed( 2 ));
+                /*if(column_name == 'foil_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].number_on_dark_qnty + $scope.order_design_position[key].oversize_screens_qnty + $scope.order_design_position[key].ink_charge_qnty + $scope.order_design_position[key].number_on_light_qnty + $scope.order_design_position[key].press_setup_qnty + $scope.order_design_position[key].discharge_qnty + $scope.order_design_position[key].speciality_qnty + $scope.order_design_position[key].screen_fees_qnty + ($scope.order_design_position[key].foil_qnty * $scope.all_price_grid['foil']);
+                }
+
+                if(column_name == 'number_on_dark_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['number_on_dark']);
+                }
+
+                if(column_name == 'oversize_screens_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['over_size_screens']);
+                }
+
+                if(column_name == 'ink_charge_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['ink_changes']);
+                }
+
+                if(column_name == 'number_on_light_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['number_on_light']);
+                }
+
+                 if(column_name == 'press_setup_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['press_setup']);
+                }
+
+                if(column_name == 'discharge_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['discharge']);
+                }
+
+                if(column_name == 'speciality_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['specialty']);
+                }
+
+                 if(column_name == 'screen_fees_qnty') {
+                   $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price + (value * $scope.all_price_grid['screen_fees']);
+                }
+*/
+               
 
                 if(column_name == 'qnty') {
                     $scope.order_design_position[key].qnty_header_name = value ;

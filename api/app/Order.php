@@ -435,11 +435,15 @@ public function saveColorSize($post)
 
         $whereOrderPositionConditions = ['odp.design_id' => $data['id'],'odp.is_delete' => "1"];
 
-        $listArray = ['odp.*','m.value as position_name','mt.value as placement_type_name','odp.position_id as duplicate_position_id'];
+        $listArray = ['odp.*','m.value as position_name','mt.value as placement_type_name','odp.position_id as duplicate_position_id','o.price_id','p.foil',
+                      'p.number_on_dark','p.number_on_dark','p.over_size_screens','p.ink_changes','p.number_on_light','p.discharge','p.discharge','p.specialty','p.press_setup','p.screen_fees'];
 
         $orderPositionData = DB::table('order_design_position as odp')
                             ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
                             ->leftJoin('misc_type as mt','odp.placement_type','=', 'mt.id')
+                            ->leftJoin('order_design as od','odp.design_id','=', 'od.id')
+                            ->leftJoin('orders as o','od.order_id','=', 'o.id')
+                            ->leftJoin('price_grid as p','o.price_id','=', 'p.id')
                             ->where($whereOrderPositionConditions)
                             ->select($listArray)
                             ->get();
@@ -453,7 +457,10 @@ public function saveColorSize($post)
             $total_pos_qnty = 0;
             foreach ($combine_array['order_design_position'] as $key => $value) 
             {
+
                
+               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup) + ($value->screen_fees_qnty * $value->screen_fees);
+               $combine_array['order_design_position'][$key]->total_price = round($combine_array['order_design_position'][$key]->total_price, 2);
                $combine_array['order_design_position'][$key]->position_header_name = $value->position_name;
                $combine_array['order_design_position'][$key]->qnty_header_name = $value->qnty;
                $combine_array['order_design_position'][$key]->stitch_header_name = $value->color_stitch_count;
