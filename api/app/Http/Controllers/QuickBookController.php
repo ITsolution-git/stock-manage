@@ -885,4 +885,101 @@ class QuickBookController extends Controller
         return $resp;
     }  
 
+
+     public function updateInvoicePayment(){
+
+        $IPP = new \QuickBooks_IPP(QBO_DSN);
+
+        // Get our OAuth credentials from the database
+        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        // Tell the framework to load some data from the OAuth store
+        $IPP->authMode(
+            \QuickBooks_IPP::AUTHMODE_OAUTH,
+            QBO_USERNAME,
+            $creds);
+
+        if (QBO_SANDBOX) {
+            // Turn on sandbox mode/URLs
+            $IPP->sandbox(true);
+        }
+        // This is our current realm
+        $this->realm = $creds['qb_realm'];
+
+        // Load the OAuth information from the database
+        $this->context = $IPP->context();
+
+
+        $PaymentService = new \QuickBooks_IPP_Service_Payment();
+
+        // Create payment object
+        $Payment = new \QuickBooks_IPP_Object_Payment();
+
+
+        // Get invoice IDs
+        $post = Input::all();
+        $company_id=$post['company_id'];
+
+        $company_data = $this->common->GetTableRecords('company_info',array('user_id' => $company_id),array());
+        $result = $this->GetAllclientInovices($company_id);
+
+        foreach ($result as $key => $all_data) 
+        {
+
+        }
+
+        $Payment->setPaymentRefNum('WEB' . mt_rand(0, 10000));
+        $Payment->setTxnDate(date('Y-m-d'));
+        //$Payment->setTotalAmt(7870);
+        $Payment->setTotalAmt($totalAmount);
+
+        // Create line for payment (this details what it's applied to)
+        $Line = new \QuickBooks_IPP_Object_Line();
+        //$Line->setAmount(500);
+        $Line->setAmount($payAmount);
+
+        // The line has a LinkedTxn node which links to the actual invoice
+        $LinkedTxn = new \QuickBooks_IPP_Object_LinkedTxn();
+        //$LinkedTxn->setTxnId(152);
+        $LinkedTxn->setTxnId($invoiceId);
+        $LinkedTxn->setTxnType('Invoice');
+
+        $Line->setLinkedTxn($LinkedTxn);
+
+        $Payment->addLine($Line);
+
+        //$Payment->setCustomerRef(1);
+        $Payment->setCustomerRef($CustomerRef);
+        //print_r($Payment);exit;
+
+        // Send payment to QBO 
+        if ($resp = $PaymentService->add($this->context, $this->realm, $Payment))
+        {
+            print('Our new Payment ID is: [' . $resp . ']');
+            //return 1;
+        }
+        else
+        {
+            print($PaymentService->lastError());
+            //return 0;
+        }
+        exit;
+    }
+
+
+
+    public function GetAllclientInovices($company_id){
+        $retArray = DB::table('users as u')
+            ->select('i.qb_id as invoiceId')
+            ->leftJoin('client as c','c.company_id','=',"u.id")
+            ->leftJoin('orders as o','o.client_id','=',"c.client_id")
+            ->leftJoin('invoice_temp as i','i.order_id','=',"o.id")
+            ->leftJoin('payment_history as p','p.qb_id','=',"i.qb_id")
+            ->where('u.id','=',$company_id)
+            ->where('i.qb_id','!=',0)
+            ->where('p.qb_flag','=',0)
+            ->get();
+        return $retArray;
+    }
+
+
 }
