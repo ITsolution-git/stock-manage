@@ -1,0 +1,32 @@
+<md-dialog class="task-dialog" >
+    <form name="imageform" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Upload Image</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Close</span>
+                </md-button> 
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
+                <md-input-container class="md-block first-box"></md-input-container>
+                <div layout-wrap="nowrap" flex="50">
+                    <md-card class="card ">
+                        <div class="height-image">
+                            <img  ng-src="data:{{logo_image.filetype}};base64, {{logo_image.base64}}"   alt="Wait..." class="popup-image">
+                        </div>
+                        <!-- <md-button class="md-primary md-hue-1 md-accent btn-small">Delete</md-button> -->
+                    </md-card>
+
+                </div>
+             </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            
+                    <!-- <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
+                    <md-button class="md-accent md-raised" ng-click="SaveImageAll(logo_image);">Save</md-button>
+             
+        </md-dialog-actions>
+    </form>
+</md-dialog>

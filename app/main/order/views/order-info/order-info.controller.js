@@ -410,6 +410,7 @@
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success','Record Deleted Successfully.');
+                        $scope.orderDetail();
                         $scope.designDetail();
                     }
                     else
