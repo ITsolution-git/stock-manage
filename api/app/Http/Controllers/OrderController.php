@@ -1616,18 +1616,37 @@ class OrderController extends Controller {
         }
         else
         {
-          $update_order_arr = array(
-                                'screen_charge' => 0,
-                                'press_setup_charge' => 0,
-                                'order_line_total' => 0,
-                                'order_total' => 0,
-                                'tax' => 0,
-                                'grand_total' => 0,
-                                'balance_due' => 0,
-                                'order_charges_total' => 0
-                                );
+            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
 
-          $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
+            $order_charges_total =  $order_data[0]->separations_charge + $order_data[0]->rush_charge + $order_data[0]->distribution_charge + 
+                                    $order_data[0]->digitize_charge + $order_data[0]->shipping_charge + $order_data[0]->setup_charge + 
+                                    $order_data[0]->artwork_charge;
+
+            if($order_charges_total > 0)
+            {
+                $order_total = $order_charges_total - $order_data[0]->discount;    
+            }
+            else
+            {
+                $order_total = $order_charges_total;
+            }
+
+            $tax = $order_total * $order_data[0]->tax_rate/100;
+            $grand_total = $order_total + $tax;
+            $balance_due = $grand_total - $order_data[0]->total_payments;
+
+            $update_order_arr = array(
+                                    'screen_charge' => 0,
+                                    'press_setup_charge' => 0,
+                                    'order_line_total' => 0,
+                                    'order_total' => round($order_total,2),
+                                    'tax' => round($tax,2),
+                                    'grand_total' => round($grand_total,2),
+                                    'balance_due' => round($balance_due,2),
+                                    'order_charges_total' => round($order_charges_total,2)
+                                    );
+
+            $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
         }
         $data = array("success"=>1);
         return response()->json(["data" => $data]);

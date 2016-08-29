@@ -33,8 +33,11 @@ class Shipping extends Model {
                                         ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                               });
                             }
-                         $shippingData = $shippingData->GroupBy('o.id')
-                         ->get();
+                            $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                            ->GroupBy('o.id')
+                            ->skip($post['start'])
+                            ->take($post['range'])
+                            ->get();
 
         $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
 
