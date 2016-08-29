@@ -455,6 +455,7 @@ public function saveColorSize($post)
         if(count($combine_array['order_design_position'])>0)
         {
             $total_pos_qnty = 0;
+            $total_screen_fees = 0;
             foreach ($combine_array['order_design_position'] as $key => $value) 
             {
 
@@ -480,7 +481,9 @@ public function saveColorSize($post)
                 $combine_array['order_design_position'][$key]->image_2_url_photo = (!empty($value->image_2))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_2:'';
                 $combine_array['order_design_position'][$key]->image_3_url_photo = (!empty($value->image_3))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_3:'';
                 $combine_array['order_design_position'][$key]->image_4_url_photo = (!empty($value->image_4))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_4:'';
+                
                 $total_pos_qnty += $value->qnty;
+                $total_screen_fees += $value->screen_fees_qnty * $value->screen_fees;
 
                 $value->position_image = '';
                 
@@ -502,6 +505,7 @@ public function saveColorSize($post)
                 }
             }
             $combine_array['total_pos_qnty'] = $total_pos_qnty;
+            $combine_array['total_screen_fees'] = $total_screen_fees;
          }
          
         return $combine_array;

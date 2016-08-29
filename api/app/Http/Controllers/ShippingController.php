@@ -129,10 +129,10 @@ class ShippingController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'f.id';
+            $post['sorts']['sortBy'] = 'o.id';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'f.id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
 
     	$result = $this->shipping->getShippingList($post);
@@ -147,6 +147,7 @@ class ShippingController extends Controller {
                         1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
                         2=>array('key' => 'po.po_id', 'name' => 'PO #'),
                         3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        4=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
