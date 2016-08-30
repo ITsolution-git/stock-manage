@@ -1488,6 +1488,22 @@ class OrderController extends Controller {
      public function editOrder()
     {
         $post = Input::all();
+
+       
+        if($post['orderDataDetail']['in_hands_by'] != '')
+        {
+            $post['orderDataDetail']['in_hands_by'] = date("Y-m-d", strtotime($post['orderDataDetail']['in_hands_by']));
+        }
+        if($post['orderDataDetail']['date_shipped'] != '')
+        {
+            $post['orderDataDetail']['date_shipped'] = date("Y-m-d", strtotime($post['orderDataDetail']['date_shipped']));
+        }
+        if($post['orderDataDetail']['date_start'] != '')
+        {
+            $post['orderDataDetail']['date_start'] = date("Y-m-d", strtotime($post['orderDataDetail']['date_start']));
+        }
+
+
        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
             return response()->json(['data'=>$data]);
@@ -1504,6 +1520,22 @@ class OrderController extends Controller {
         $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','company_id' =>$result['order'][0]->company_id),array());
         $staff = $this->common->getStaffList($result['order'][0]->company_id);
         $brandCo = $this->common->getBrandCordinator($result['order'][0]->company_id);
+
+         if($result['order'][0]->in_hands_by != '0000-00-00' && $result['order'][0]->in_hands_by != '') {
+            $result['order'][0]->in_hands_by = date("n/d/Y", strtotime($result['order'][0]->in_hands_by));
+         } else {
+            $result['order'][0]->in_hands_by = '';
+         }
+         if($result['order'][0]->date_shipped != '0000-00-00' && $result['order'][0]->date_shipped != '') {
+            $result['order'][0]->date_shipped = date("n/d/Y", strtotime($result['order'][0]->date_shipped));
+         }else{
+            $result['order'][0]->date_shipped = '';
+         }
+         if($result['order'][0]->date_start != '0000-00-00' && $result['order'][0]->date_start != '') {
+            $result['order'][0]->date_start = date("n/d/Y", strtotime($result['order'][0]->date_start));
+         } else {
+            $result['order'][0]->date_start = '';
+         }
 
         if (count($result) > 0) {
             $response = array(
