@@ -445,7 +445,8 @@
                     </md-card-title>
                     <md-card-content  layout="column" layout-padding>
                         <div layout="row" layout-wrap layout-align="center center" flex="60">
-                            <span class="h2 semibold f-52">{{ vm.artwork.approved}}</span>
+                            <span ng-if="order.art_approval > 0" class="h2 semibold f-52">{{ vm.artwork.approved}}</span>
+                            <span ng-if="order.art_approval == '0'" class="h2 semibold f-52">Pending</span>
                         </div>
                         <div class="text-center"> <span class="font-18">&nbsp</span></div>
                     </md-card-content>
