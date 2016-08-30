@@ -30,15 +30,8 @@
 
 
                 <md-input-container>
-                    <input placeholder="Tax Rate" name="tax_rate" required ng-maxlength="3" only-number ng-model="client_tax.tax_rate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\',\'\',clientForm.tax_rate.$error)' }"  >
-                        <div ng-messages="clientForm.tax_rate.$error" role="alert" multiple>
-                            <div ng-message="required">
-                                <span >This field is required</span>
-                            </div>
-                            <div ng-message="maxlength">
-                                <span >This Tax rate is not allow.</span>
-                            </div>
-                        </div>
+                    <input placeholder="Tax Rate" name="tax_rate" valid-number ng-model="client_tax.tax_rate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\',\'\',clientForm.tax_rate.$error)' }"  >
+                        
                 </md-input-container>
 
                  <md-input-container flex=45 class="m-b-20">
