@@ -11,17 +11,6 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
- 				<md-input-container class="m-b-30">
-                    <label>Vendor</label>
-                    <md-select ng-model="main_po.vendor_id" name="vendor_id"  ng-change='UpdateTableField("vendor_id",main_po.vendor_id,"vendor")'>
-                        <md-option value="0">
-                            Select Vendor
-                        </md-option>
-                        <md-option ng-repeat="vendor in vendor_all" ng-selected="{{main_po.vendor_id==vendor.id}}" value="{{vendor.id}}">
-                            {{vendor.name_company}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
 
                 <!-- <md-input-container class="md-block date-input m-b-30">
                     <input placeholder="Date Created" kendo-date-picker k-ng-model="dateObject" name="date" ng-model="main_po.date"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'date\')' }"  >
