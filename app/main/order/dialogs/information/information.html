@@ -70,6 +70,36 @@
                 </md-input-container>
             </div>
 
+
+                <div class="margin-top-25">
+                    <span class="grey-color">
+                        Start Date
+                    </span>
+                </div>
+                <div class="date-input">
+                     <input kendo-date-picker ng-model="order_data.date_start" k-ng-model="dateObject" />
+                </div>
+
+
+                <div class="margin-top-25">
+                    <span class="grey-color">
+                        Shipped Date
+                    </span>
+                </div>
+                <div class="date-input">
+                     <input kendo-date-picker ng-model="order_data.date_shipped" k-ng-model="dateObject1" />
+                </div>
+
+
+                <div class="margin-top-25">
+                    <span class="grey-color">
+                        In Hands By
+                    </span>
+                </div>
+                <div class="date-input">
+                      <input kendo-date-picker  ng-model="order_data.in_hands_by" k-ng-model="dateObject2">
+                </div>
+
             
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
