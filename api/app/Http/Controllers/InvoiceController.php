@@ -147,4 +147,27 @@ class InvoiceController extends Controller {
         PDF::writeHTML(view('pdf.invoice',$data)->render());
         PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');
     }
+
+    public function getInvoiceHistory($invoice_id,$company_id,$type=0){
+
+        $post = Input::all();
+
+        $retutn_arr = array();
+        
+        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+        $order_id = $invoice_data[0]->order_id;
+
+        $retArray = DB::table('payment_history')
+            ->select('payment_amount', 'payment_date', 'payment_method')
+            ->where('order_id','=',$order_id)
+            ->where('is_delete','=',1)
+            ->get();
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+            );
+        return response()->json(["data" => $response]);
+    }
 }

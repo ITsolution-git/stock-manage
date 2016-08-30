@@ -117,19 +117,7 @@
                 return (state.name.indexOf(lowercaseQuery) === 0);
             };
         }
-  vm.createDate1="",
-        vm.createDate2="",
-        vm.createDate3="",
-        vm.monthSelectorOptions = {
-            start: "year",
-            depth: "year"
-          };
-          vm.getType = function(x) {
-            return typeof x;
-          };
-          vm.isDate = function(x) {
-            return x instanceof Date;
-          };
+
        
     }
 })();

@@ -479,9 +479,9 @@
                                     </thead>
                                     <tbody> 
                                         <tr ng-repeat="pmntHis in siData" class="cursor-p">
-                                            <td>{{ pmntHis.date }}</td>
-                                            <td>{{ pmntHis.amountPaid }}</td>
-                                            <td>{{ pmntHis.methodPaid }}</td>
+                                            <td>{{ pmntHis.payment_date }}</td>
+                                            <td>{{ pmntHis.payment_amount }}</td>
+                                            <td>{{ pmntHis.payment_method }}</td>
                                             <td class="text-center"><a href="#" class="icon icon-cancel font-19 f-red"></a></td>
                                         </tr>                    
                                     </tbody>
@@ -510,15 +510,32 @@
                                                         <md-option>JAN</md-option>
                                                         <md-option>FEB</md-option>
                                                         <md-option>MAR</md-option>
+                                                        <md-option>APR</md-option>
+                                                        <md-option>MAY</md-option>
+                                                        <md-option>JUN</md-option>
+                                                        <md-option>JUL</md-option>
+                                                        <md-option>AUG</md-option>
+                                                        <md-option>SEP</md-option>
+                                                        <md-option>OCT</md-option>
+                                                        <md-option>NOV</md-option>
+                                                        <md-option>DEC</md-option>
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex=30 class="m-b-20">
                                                    <md-select ng-model="company.prime_address_state" placeholder="YY">
                                                         <md-option value="0">YY</md-option>
-                                                        <md-option>12</md-option>
-                                                        <md-option>13</md-option>
-                                                        <md-option>14</md-option>
-                                                        <md-option>15</md-option>
+                                                        <md-option>16</md-option>
+                                                        <md-option>17</md-option>
+                                                        <md-option>18</md-option>
+                                                        <md-option>19</md-option>
+                                                        <md-option>20</md-option>
+                                                        <md-option>21</md-option>
+                                                        <md-option>22</md-option>
+                                                        <md-option>23</md-option>
+                                                        <md-option>24</md-option>
+                                                        <md-option>25</md-option>
+                                                        <md-option>26</md-option>
+                                                        <md-option>27</md-option>
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
@@ -557,7 +574,7 @@
                                             <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
                                                 <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
                                                 </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
+                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net"><span class="ng-scope">Pay</span></button>
                                             </md-dialog-actions>
                                        </div>
                                    </div>
@@ -565,7 +582,7 @@
                             </div> 
                         </md-tab>
                         <!-----------------Pay By Cash-------------------->
-                        <md-tab label="Pay By Credit Card">
+                        <md-tab label="Pay By Cash">
                             <div class="ms-responsive-table-wrapper">
                               <div class="pd15">
                                    <div layout="row">
@@ -573,13 +590,13 @@
                                             <div class="title" layout-padding><span class="basicInfoStyle">Amount Paid</span></div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="30">
-                                                     <input placeholder="$" name="$">
+                                                     <input placeholder="$" name="$" ng-model="pay.cashAmount">
                                                 </md-input-container>
                                             </div>
                                             <md-dialog-actions layout="row" class="layout-row">
                                                 <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
                                                 </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
+                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay Cash" ng-click="pay_cash(pay)"><span class="ng-scope">Pay</span></button>
                                             </md-dialog-actions>
                                        </div>
                                    </div>
@@ -667,12 +684,12 @@
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">0</span>
+                        <span class="ng-binding">${{allData.order_data[0].total_payments}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Balance Due</div>
-                        <span class="ng-binding">${{allData.order_data[0].grand_total}}</span>
+                        <span class="ng-binding">${{allData.order_data[0].balance_due}}</span>
                     </div>
                 </md-card-content>
             </md-card>

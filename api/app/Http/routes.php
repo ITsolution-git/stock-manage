@@ -245,6 +245,7 @@ Route::post('order/snsOrder', 'OrderController@snsOrder');
 Route::post('order/addPosition', 'OrderController@addPosition');
 Route::post('order/addInvoice', 'OrderController@addInvoice');
 Route::post('order/createInvoice', 'OrderController@createInvoice');
+Route::post('order/paymentInvoiceCash', 'OrderController@paymentInvoiceCash');
 
 
 // FINISHING CONTROLLER 
@@ -354,7 +355,9 @@ Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
 Route::get('qbo/qboConnect','QuickBookController@qboConnect');
 Route::get('qbo/createCustomer','QuickBookController@createCustomer');
 Route::post('qbo/AddItem', 'QuickBookController@addItem');
+Route::post('qbo/updateInvoicePayment', 'QuickBookController@updateInvoicePayment');
 
 Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
 Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceDetail');
+Route::get('invoice/getInvoiceHistory/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceHistory');
 Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');

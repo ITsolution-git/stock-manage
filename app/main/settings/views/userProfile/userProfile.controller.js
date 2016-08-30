@@ -297,5 +297,24 @@
                            });
             }
 
+            $scope.qbUpdateInovice = function(){
+                $("#ajax_loader").show();
+                var company_id = {};
+
+                company_id ={company_id :sessionService.get('company_id')};
+
+                $http.post('api/public/qbo/updateInvoicePayment',company_id).success(function(result) {
+                $("#ajax_loader").hide();
+                    if(result != '0')
+                    {
+                        notifyService.notify('success',"Invoice Payments Sync successfully");   
+                    }
+                    else
+                    {
+                        notifyService.notify('error',"Please connect to quickbook first");
+                    }
+                   });
+            }
+
     }
 })();
