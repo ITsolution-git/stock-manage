@@ -491,6 +491,7 @@
 
     function CompanyInfo($mdDialog, $stateParams,$resource,sessionService,$scope,Params,$http,$controller,$state,notifyService)
     {
+        $scope.validation_message = 'Please enter valid Input.';
         $("#ajax_loader").hide();
         $scope.client = Params.client;
         $scope.ArrCleintType = Params.ArrCleintType;
@@ -506,8 +507,16 @@
         $scope.client_id = Params.client_id;
         $scope.company_id = Params.company_id;
         $scope.client_tax = Params.client_tax;
-        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
         {
+            //console.log(validation);
+            // console.log(Object.keys(validation).length);
+            if(!angular.isUndefined(validation) && Object.keys(validation).length>0 )
+            {
+                notifyService.notify('error',$scope.validation_message);
+                return false;
+            }
+            
             var vm = this;
             var UpdateArray = {};
             UpdateArray.table =table_name;
