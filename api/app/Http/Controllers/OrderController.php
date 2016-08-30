@@ -1464,8 +1464,8 @@ class OrderController extends Controller {
     {
         $data = Input::all();
         $result = $this->order->getDesignPositionDetail($data);
-        
-        if (count($result) > 0) {
+       
+        if (count($result['order_design_position']) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
