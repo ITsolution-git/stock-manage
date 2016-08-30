@@ -1064,7 +1064,7 @@ class OrderController extends Controller {
             });                
         }
 
-        $response = array('success' => 1, 'message' => MAIL_SEND);
+        $response = array('success' => 1, 'message' => 'Email has been sent Sucessfully');
         return response()->json(["data" => $response]);
 
       /* Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
