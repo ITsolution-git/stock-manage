@@ -111,7 +111,7 @@
                             <td>{{ row.approval}}</td>
                             <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
                             <td>{{ row.sales_name}}</td>
-                            <td>{{ row.date_shipped}}</td>
+                            <td>{{ row.date_shipped | date:"M/d/yyyy" }}</td>
                                  <td class="accor" ng-show="row.design_pos.length > 0">
                             <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
                             <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>

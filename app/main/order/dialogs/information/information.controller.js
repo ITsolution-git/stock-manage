@@ -32,6 +32,15 @@
 
           }
 
+          var misc_list_data = {};
+          var condition_obj = {};
+          condition_obj['company_id'] =  sessionService.get('company_id');
+          misc_list_data.cond = angular.copy(condition_obj);
+
+          $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                    $scope.miscData = result.data.records;
+          });
+
 
        /*    $scope.updateStartDate = function(){
             $scope.minDate = new Date($scope.order_data.date_start);
