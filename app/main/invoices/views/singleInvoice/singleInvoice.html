@@ -482,7 +482,7 @@
                                             <td>{{ pmntHis.payment_date }}</td>
                                             <td>{{ pmntHis.payment_amount }}</td>
                                             <td>{{ pmntHis.payment_method }}</td>
-                                            <td class="text-center"><a href="#" class="icon icon-cancel font-19 f-red"></a></td>
+                                            <td class="text-center"><a href="#" ng-click="deleteHistory(pmntHis.payment_id)" class="icon icon-cancel font-19 f-red"></a></td>
                                         </tr>                    
                                     </tbody>
                                 </table>
@@ -496,85 +496,97 @@
                                        <div layout="column" flex="45">
                                             <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="100">
-                                                     <input placeholder="Name On Card" name="Name On Card">
+                                                <md-input-container flex="50">
+                                                     <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
+                                                </md-input-container>
+                                                <md-input-container flex="50">
+                                                     <input placeholder="Last Name On Card" name="Last Name On Card" ng-model="company.creditLname">
                                                 </md-input-container>
                                                 <md-input-container flex="100">
-                                                    <input placeholder="Credit Card Number" name="Credit Card Number">
+                                                    <input placeholder="Credit Card Number" name="Credit Card Number" ng-model="company.creditCard">
+                                                </md-input-container>
+                                                <md-input-container flex="100">
+                                                    <input placeholder="Amount" name="Amount" ng-model="company.amount">
                                                 </md-input-container>
                                             </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="MM">
+                                                    <md-select ng-model="company.expMonth" placeholder="MM">
                                                         <md-option value="0">MM</md-option>
-                                                        <md-option>JAN</md-option>
-                                                        <md-option>FEB</md-option>
-                                                        <md-option>MAR</md-option>
-                                                        <md-option>APR</md-option>
-                                                        <md-option>MAY</md-option>
-                                                        <md-option>JUN</md-option>
-                                                        <md-option>JUL</md-option>
-                                                        <md-option>AUG</md-option>
-                                                        <md-option>SEP</md-option>
-                                                        <md-option>OCT</md-option>
-                                                        <md-option>NOV</md-option>
-                                                        <md-option>DEC</md-option>
+                                                        <md-option value="01">JAN</md-option>
+                                                        <md-option value="02">FEB</md-option>
+                                                        <md-option value="03">MAR</md-option>
+                                                        <md-option value="04">APR</md-option>
+                                                        <md-option value="05">MAY</md-option>
+                                                        <md-option value="06">JUN</md-option>
+                                                        <md-option value="07">JUL</md-option>
+                                                        <md-option value="08">AUG</md-option>
+                                                        <md-option value="09">SEP</md-option>
+                                                        <md-option value="10">OCT</md-option>
+                                                        <md-option value="11">NOV</md-option>
+                                                        <md-option value="12">DEC</md-option>
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex=30 class="m-b-20">
-                                                   <md-select ng-model="company.prime_address_state" placeholder="YY">
+                                                   <md-select ng-model="company.expYear" placeholder="YY">
                                                         <md-option value="0">YY</md-option>
-                                                        <md-option>16</md-option>
-                                                        <md-option>17</md-option>
-                                                        <md-option>18</md-option>
-                                                        <md-option>19</md-option>
-                                                        <md-option>20</md-option>
-                                                        <md-option>21</md-option>
-                                                        <md-option>22</md-option>
-                                                        <md-option>23</md-option>
-                                                        <md-option>24</md-option>
-                                                        <md-option>25</md-option>
-                                                        <md-option>26</md-option>
-                                                        <md-option>27</md-option>
+                                                        <md-option value="16">16</md-option>
+                                                        <md-option value="17">17</md-option>
+                                                        <md-option value="18">18</md-option>
+                                                        <md-option value="19">19</md-option>
+                                                        <md-option value="20">20</md-option>
+                                                        <md-option value="21">21</md-option>
+                                                        <md-option value="22">22</md-option>
+                                                        <md-option value="23">23</md-option>
+                                                        <md-option value="24">24</md-option>
+                                                        <md-option value="25">25</md-option>
+                                                        <md-option value="26">26</md-option>
+                                                        <md-option value="27">27</md-option>
+                                                        <md-option value="28">28</md-option>
+                                                        <md-option value="29">29</md-option>
+                                                        <md-option value="30">30</md-option>
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="CVV">
+                                                    <input placeholder="CVV" name="CVV" ng-model="company.cvv">
                                                 </md-input-container>
                                             </div>
-                                            <md-checkbox  aria-label="Checkbox 1">Store Credit Card for Future Payments</md-checkbox>
+                                            <md-checkbox  aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>
                                        </div>
                                        <div flex="10">&nbsp;</div>
                                        <div layout="column" flex="45">
                                             <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="75">
-                                                    <input placeholder="Street Address" name="Street Address">
+                                                    <input placeholder="Street Address" name="Street Address" ng-model="company.street">
                                                 </md-input-container>
                                                 <md-input-container flex="25">
-                                                    <input placeholder="Suite" name="Suite">
+                                                    <input placeholder="Suite" name="Suite" ng-model="company.suite">
                                                 </md-input-container>
                                             </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="40">
-                                                    <input placeholder="City" name="City">
+                                                    <input placeholder="City" name="City" ng-model="company.city">
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="State">
-                                                        <md-option value="0">State1</md-option>
-                                                        <md-option>State2</md-option>
-                                                        <md-option>State3</md-option>
-                                                        <md-option>State4</md-option>
+                                                    <md-select placeholder="State" name="State" aria-label="State" ng-model="company.state">
+                                                        <md-option value="">
+                                                            Select State
+                                                        </md-option>
+                                                        <md-option ng-repeat="state in states_all" value="{{state.code}}" >
+                                                            {{state.name}}
+                                                        </md-option>
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <input placeholder="Zip" name="Zip">
+                                                    <input placeholder="Zip" name="Zip" ng-model="company.zip">
                                                 </md-input-container>
                                             </div>
+                                            <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
                                             <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
                                                 <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
                                                 </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net"><span class="ng-scope">Pay</span></button>
+                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Pay</span></button>
                                             </md-dialog-actions>
                                        </div>
                                    </div>

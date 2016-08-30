@@ -1945,4 +1945,32 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
+    public function paymentLinkToPay(){
+      $post = Input::all();
+
+      $retArray = DB::table('invoice as p')
+            ->select('p.order_id', 'o.balance_due')
+            ->leftJoin('orders as o','o.id','=',"p.order_id")
+            ->where('p.id','=',$post['invoice_id'])
+            ->get();
+        
+        $date = date_create();
+        //echo date_timestamp_get($date);
+        $length = 25;
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
+
+        $orderData = array('order_id' => $retArray[0]->order_id,'balance_amount' => $retArray[0]->balance_due , 'session_link' => $session_link);
+
+        $id = $this->common->InsertRecords('link_to_pay',$orderData);
+        
+
+        //$session_link="http://localhost/stokkup/link_to_pay.php?link=".$session_link;
+        $session_link="http://".$_SERVER['SERVER_NAME']."/stokkup/link_to_pay.php?link=".$session_link;
+        
+
+        $data = array("success"=>1,'session_link' =>$session_link);
+        return response()->json(['data'=>$data]);
+    }
+
 }
