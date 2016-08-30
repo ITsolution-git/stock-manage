@@ -12,7 +12,12 @@
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
                 <md-input-container class="md-block first-box">
-                    <input placeholder="First name" name="first_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" ng-model="contact_arr.first_name">
+                    <input placeholder="First name" name="first_name" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\',\'\',clientForm.first_name.$error)' }" ng-model="contact_arr.first_name">
+                    <div ng-messages="clientForm.first_name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                    </div>
                 </md-input-container>
                 <md-input-container>
                     <input placeholder="Last Name" name="last_name" ng-model="contact_arr.last_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
@@ -21,10 +26,27 @@
                     <input placeholder="Location" name="location"  ng-model="contact_arr.location" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Phone"  name="phone" ng-model="contact_arr.phone" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
+                    <input placeholder="Phone" only-number ng-maxlength="10" ng-minlength="10"  name="phone" ng-model="contact_arr.phone" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\',\'\',clientForm.phone.$error)' }" >
+                    <div ng-messages="clientForm.phone.$error" role="alert" multiple>
+                        <div ng-message="maxlength">
+                            <span>Phone number must be have 10 digits.</span>
+                        </div>
+                        <div ng-message="minlength">
+                            <span>Phone number must be have 10 digits.</span>
+                        </div>
+                    </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Email"  name="email" ng-model="contact_arr.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\')' }" >
+                    <input placeholder="Email"  name="email" ng-model="contact_arr.email" ng-pattern="/^.+@.+\..+$/" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_contact\',\'id\',contact_arr.id,\'contact\',\'\',clientForm.email.$error)' }" >
+                    <div ng-messages="clientForm.email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span >Email must be a valid e-mail address</span>
+                        </div>
+                    </div>
+
                 </md-input-container>
               </div>
         </md-dialog-content>

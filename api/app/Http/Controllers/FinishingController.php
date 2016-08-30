@@ -93,6 +93,28 @@ class FinishingController extends Controller {
 
         foreach ($result['allData'] as $data) {
             $inner_data = $this->finishing->getFinishingByOrder($data->order_id);
+
+            foreach ($inner_data as $row) {
+                if($row->start_time != '00:00:00') {
+                    $row->start_time = date('h:i A', strtotime($row->start_time));
+                }
+                else {
+                    $row->start_time = '';   
+                }
+                if($row->end_time != '00:00:00') {
+                    $row->end_time = date('h:i A', strtotime($row->end_time));
+                }
+                else {
+                    $row->end_time = '';
+                }
+                if($row->est != '00:00:00') {
+                    $row->est = date('h:i A', strtotime($row->est));
+                }
+                else {
+                    $row->est = '';
+                }
+            }
+
             $data->order_finishing = $inner_data;
         }
 
