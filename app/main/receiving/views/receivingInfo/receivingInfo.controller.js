@@ -12,6 +12,11 @@
     {
 
     	var vm = this;
+         var originatorEv;
+        vm.openMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
         vm.openReceivingInformationDialog = openReceivingInformationDialog;
         $scope.po_id = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
@@ -112,6 +117,65 @@
                 onRemoving : $scope.orderDetail
             });
         }
+
+        $scope.changeReceiveData = function (ev)
+        {
+        
+
+            $("#ajax_loader").show();
+            $mdDialog.show({
+                controllerAs: $scope,
+                controller:function ($scope, params)
+                {
+                    $scope.params = params;
+                    
+                    $scope.main_po =  $scope.params.po_data;
+
+                    $("#ajax_loader").hide();
+                    $scope.UpdateTableField = function(field_name,field_value,extra)
+                    {
+                        var UpdateArray = {};
+
+                        UpdateArray.table ='purchase_order';
+
+                        var condition_obj = {};
+                        condition_obj[field_name] =  field_value;
+                        UpdateArray.data = angular.copy(condition_obj);
+
+                        UpdateArray.cond = {po_id: $scope.params.po_id};
+                        UpdateArray.date_field = extra;
+                        $("#ajax_loader").show();
+                       // console.log(UpdateArray); return false;
+                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                            if(result.data.success=='1')
+                            {
+                                notifyService.notify('success', result.data.message);
+                                //$scope.closeDialog();
+                            }
+                            else
+                            {
+                                notifyService.notify('error', result.data.message);
+                               // $scope.closeDialog();
+                            }
+                            $("#ajax_loader").hide();
+                        });
+                    }
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    } 
+                },
+                templateUrl: 'app/main/receiving/dialogs/receivedata.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                    locals: {
+                        params:$scope,
+                        event: ev
+                    },
+                onRemoving : $scope.GetPodata
+            });
+        } 
     }
     
     
