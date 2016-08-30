@@ -14,7 +14,7 @@
                     <span class="md-title">Company Information</span>
                 </div>
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Company Name *" name="client_company" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }"  required ng-model="client.client_company">
+                    <input placeholder="Company Name *" name="client_company" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\',\'\',clientForm.client_company.$error)' }"  required ng-model="client.client_company">
                     <div ng-messages="clientForm.client_company.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>This field is required</span>
@@ -65,9 +65,9 @@
 
                 <md-input-container>
                     <label>Billing Email *</label>
-                    <input requiredname="email" type="email" name="billing_email" required ng-pattern="/^.+@.+\..+$/" ng-model="client.billing_email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                    <input  type="email" name="billing_email" required ng-pattern="/^.+@.+\..+$/" ng-model="client.billing_email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\',\'\',clientForm.billing_email.$error)' }" >
                     
-                    <div ng-messages="clientForm.email.$error" role="alert" multiple>
+                    <div ng-messages="clientForm.billing_email.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span >This field is required</span>
                         </div>
@@ -77,8 +77,19 @@
                     </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Company Phone"  name="company_phone" ng-model="client.company_phone" 
-                        ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                    <input placeholder="Company Phone"  name="company_phone" ng-model="client.company_phone" required only-number ng-maxlength="10" ng-minlength="10"
+                        ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\',\'\',clientForm.company_phone.$error)' }" >
+                        <div ng-messages="clientForm.company_phone.$error" role="alert" multiple>
+                            <div ng-message="required">
+                                <span >This field is required</span>
+                            </div>
+                            <div ng-message="maxlength">
+                                <span >Phone number must be have 10 digits.</span>
+                            </div>
+                            <div ng-message="minlength">
+                                <span >Phone number must be have 10 digits.</span>
+                            </div>
+                        </div>
                 </md-input-container>
                 <md-input-container>
                     <input placeholder="Company Website URL"  name="company_url" ng-model="client.company_url" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >

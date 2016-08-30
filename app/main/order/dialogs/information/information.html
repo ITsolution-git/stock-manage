@@ -33,6 +33,14 @@
                     </md-select>
                 </md-input-container>
             </div>
+            <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Approval</label>
+                    <md-select ng-model="order_data.approval_id" flex="100"  class="select-width font-16 font-weight"  >
+                        <md-option ng-selected="order_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
 
             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
                 <md-input-container class="margin-0 p-l-0" layout="row">
@@ -69,6 +77,36 @@
                     </md-select>
                 </md-input-container>
             </div>
+
+
+                <div class="margin-top-25">
+                    <span class="grey-color">
+                        Start Date
+                    </span>
+                </div>
+                <div class="date-input">
+                     <input kendo-date-picker ng-model="order_data.date_start" k-ng-model="dateObject" />
+                </div>
+
+
+                <div class="margin-top-25">
+                    <span class="grey-color">
+                        Shipped Date
+                    </span>
+                </div>
+                <div class="date-input">
+                     <input kendo-date-picker ng-model="order_data.date_shipped" k-ng-model="dateObject1" />
+                </div>
+
+
+                <div class="margin-top-25">
+                    <span class="grey-color">
+                        In Hands By
+                    </span>
+                </div>
+                <div class="date-input">
+                      <input kendo-date-picker  ng-model="order_data.in_hands_by" k-ng-model="dateObject2">
+                </div>
 
             
         </md-dialog-content>

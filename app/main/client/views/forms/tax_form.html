@@ -12,14 +12,26 @@
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Tax ID" name="tax_id" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\')' }"  ng-model="client_tax.tax_id">
+                    <input placeholder="Tax ID" name="tax_id" required ng-maxlength="9" ng-minlength="9" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\',\'\',clientForm.tax_id.$error)' }"  ng-model="client_tax.tax_id">
+                        <div ng-messages="clientForm.tax_id.$error" role="alert" multiple>
+                            <div ng-message="required">
+                                <span >This field is required</span>
+                            </div>
+                            <div ng-message="maxlength">
+                                <span >TaxId must have 9 characters.</span>
+                            </div>
+                            <div ng-message="minlength">
+                                <span >TaxId must have 9 characters.</span>
+                            </div>
+                        </div>
                 </md-input-container>
 
                  
 
 
                 <md-input-container>
-                    <input placeholder="Tax Rate" name="tax_rate" ng-model="client_tax.tax_rate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\')' }"  >
+                    <input placeholder="Tax Rate" name="tax_rate" valid-number ng-model="client_tax.tax_rate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'tax\',\'\',clientForm.tax_rate.$error)' }"  >
+                        
                 </md-input-container>
 
                  <md-input-container flex=45 class="m-b-20">
