@@ -1,19 +1,18 @@
-<div class="content client-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20>
                 Clients
             </div>
-            <div class="search-block" flex=40>
-
-                <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                </md-input-container>
-            </div> 
-
-               
-            <div class="client-modal-title " ng-if="role=='CA' || role=='BC'" flex=50>
-                <span class="cursor-p" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
+            <div class="pull-right right-search-box">
+                <div class="client-modal-title pull-right" ng-if="role=='CA' || role=='BC'">
+                    <span class="cursor-p stokkup-btn-style1" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
+                </div>
+                <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <input ng-model="name" ui-event="{ change : 'search($event)' }" placeholder="Search clients..." >
+                    </md-input-container>
+                </div> 
             </div>
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">

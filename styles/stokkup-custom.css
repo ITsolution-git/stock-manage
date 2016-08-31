@@ -258,9 +258,9 @@ hr .style1 {
       margin-top: 25px !important;
 }
 
-md-input-container > label {
+/*md-input-container > label {
   color : #000 !important;
-}
+}*/
 
 [md-theme="default"] .md-accent-bg {
     background-color: rgb(3,155,229);
@@ -1178,9 +1178,14 @@ ul[dnd-list] .dndPlaceholder {
   margin-top: 40px;
 }
 
+
 .k-picker-wrap, .k-picker-wrap .k-select,.k-picker-wrap .k-state-default{
   border:0 none !important;
 }
 span.k-picker-wrap.k-state-border-down {
   padding-bottom: 0;
 }
+
+ md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
+      padding-left: 0; }
+
