@@ -166,6 +166,17 @@ class InlineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @requires function Symfony\Bridge\PhpUnit\ErrorAssert::assertDeprecationsAreTriggered
+     * throws \Symfony\Component\Yaml\Exception\ParseException in 4.0
+     */
+    public function testParseMappingKeyWithColonNotFollowedBySpace()
+    {
+        ErrorAssert::assertDeprecationsAreTriggered('Omitting the space after the colon that follows a mapping key definition is deprecated since version 3.2 and will throw a ParseException in 4.0.', function () {
+            Inline::parse('{1:""}');
+        });
+    }
+
+    /**
      * @expectedException \Symfony\Component\Yaml\Exception\ParseException
      */
     public function testParseInvalidMappingShouldThrowException()
@@ -298,7 +309,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
      */
     public function testParseUnquotedScalarStartingWithPercentCharacter()
     {
-        ErrorAssert::assertDeprecationsAreTriggered('Not quoting a scalar starting with the "%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', function () {
+        ErrorAssert::assertDeprecationsAreTriggered('Not quoting the scalar "%foo " starting with the "%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', function () {
             Inline::parse('{ foo: %foo }');
         });
     }
@@ -376,7 +387,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             array('[\'foo,bar\', \'foo bar\']', array('foo,bar', 'foo bar')),
 
             // mappings
-            array('{foo:bar,bar:foo,false:false,null:null,integer:12}', array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
+            array('{foo: bar,bar: foo,false: false,null: null,integer: 12}', array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{ foo  : bar, bar : foo,  false  :   false,  null  :   null,  integer :  12  }', array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{foo: \'bar\', bar: \'foo: bar\'}', array('foo' => 'bar', 'bar' => 'foo: bar')),
             array('{\'foo\': \'bar\', "bar": \'foo: bar\'}', array('foo' => 'bar', 'bar' => 'foo: bar')),
@@ -443,7 +454,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             array('[\'foo,bar\', \'foo bar\']', array('foo,bar', 'foo bar')),
 
             // mappings
-            array('{foo:bar,bar:foo,false:false,null:null,integer:12}', (object) array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
+            array('{foo: bar,bar: foo,false: false,null: null,integer: 12}', (object) array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{ foo  : bar, bar : foo,  false  :   false,  null  :   null,  integer :  12  }', (object) array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{foo: \'bar\', bar: \'foo: bar\'}', (object) array('foo' => 'bar', 'bar' => 'foo: bar')),
             array('{\'foo\': \'bar\', "bar": \'foo: bar\'}', (object) array('foo' => 'bar', 'bar' => 'foo: bar')),

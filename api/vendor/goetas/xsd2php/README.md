@@ -22,7 +22,8 @@ There is one recommended way to install xsd2php via [Composer](https://getcompos
 ```js
   "require": {
       ..
-      "goetas/xsd2php":"^2.0",
+      "goetas/xsd2php":"2.*@dev",
+      "goetas/xsd-reader":"2.*@dev",
       "jms/serializer": "serializer-master-dev as 1.0",
       ..
   },
@@ -31,6 +32,7 @@ There is one recommended way to install xsd2php via [Composer](https://getcompos
       "url": "https://github.com/goetas/serializer.git"
   }],
 ```
+
 
 This package requires a patched version of JMS Serializer.
 In the last year the activity of JMS serializer was very low and some features
@@ -107,20 +109,12 @@ will instruct XSD2PHP to not generate any metadata information for `CustomOTADat
 All reference to this type are replaced with the `Vendor/Project/CustomDateClass` class. You have to provide a [custom serializer](http://jmsyst.com/libs/serializer/master/handlers#subscribing-handlers) for this type
 
 
-* Add xsd2php dependency to satisfy BaseTypesHandler and XmlSchemaDateHandler.
-
-```js
-"require" : {
-    "goetas-webservices/xsd2php-runtime":"^0.1",
-}
-```
-
 ```php
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Handler\HandlerRegistryInterface;
 
-use GoetasWebservices\Xsd\XsdToPhpRuntime\Jms\Handler\BaseTypesHandler;
-use GoetasWebservices\Xsd\XsdToPhpRuntime\Jms\Handler\XmlSchemaDateHandler;
+use Goetas\Xsd\XsdToPhp\Jms\Handler\BaseTypesHandler;
+use Goetas\Xsd\XsdToPhp\Jms\Handler\XmlSchemaDateHandler;
 
 $serializerBuilder = SerializerBuilder::create();
 $serializerBuilder->addMetadataDir('metadata dir', 'DemoNs');
@@ -211,8 +205,8 @@ There are two types of naming strategies: `short` and `long`. The default is `sh
 
 The `long` naming strategy will suffix elements with `Element` and types with `Type`.
 
-* `MyNamespace\User` will become `MyNamespace\UserElement`
-* `MyNamespace\UserType` will become `MyNamespace\UserTypeType`
+* `MyNamesapce\User` will become `MyNamesapce\UserElement`
+* `MyNamesapce\UserType` will become `MyNamesapce\UserTypeType`
 
 An XSD for instance with a type named `User`, a type named `UserType`, a root element named `User` and `UserElement`, will only work when using the `long` naming strategy.
 
