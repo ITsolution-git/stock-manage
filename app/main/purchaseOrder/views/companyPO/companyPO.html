@@ -6,7 +6,7 @@
             
         </div>
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="75">
+            <div class="info-order" flex="75" layout="column">
                 <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
                 <md-card layout="row">
                     <md-card-content flex="95" layout="column">
@@ -38,7 +38,7 @@
                             <div class="trans-box">
                                 <div>Receive Date</div>
                                 <span class="chrome-weight font-14">{{ po_data.arrival_date}}</span>
-                            </div>
+                            </div>z
                         </div>
                     </md-card-content>
                     <div layout-align="end start" ng-if="po_data.complete==0" flex="5" layout="row">
@@ -56,6 +56,12 @@
                         </md-menu>
                     </div>
                 </md-card>
+            </div>
+            <div flex="25" layout="column" style="max-height:50%;">
+                <div class="title"><span class="h2 text-semibold">Approval Status</span></div>
+                <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
+                    <md-option ng-selected="po_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                </md-select>
             </div>
         </div>
     </div>
