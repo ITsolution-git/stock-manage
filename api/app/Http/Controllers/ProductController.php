@@ -455,6 +455,15 @@ public function create_dir($dir_path) {
         {
             foreach ($design_product as $product) {
                 
+                $product_detail = $this->common->GetTableRecords('products',array('id' => $product->product_id),array());
+                
+                $find = 'supplied';
+                $supplied = 0;
+
+                if (strpos($product_detail[0]->name,$find) !== false) {
+                    $supplied = 1;
+                }
+
                 $total_qnty = 0;
                 $purchase_detail = array();
                 $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_product_id' => $product->id,'is_delete' => '1'),array());
@@ -573,6 +582,7 @@ public function create_dir($dir_path) {
                             }
                             elseif($miscData['placement_type'][$placement_type_id]->slug == 45)
                             {
+                                $switch_id = 0;
                                 foreach($embroidery_switch_count as $embroidery) {
                                     
                                     $price_field = 'pricing_'.$color_stitch_count.'c';
@@ -654,42 +664,45 @@ public function create_dir($dir_path) {
                             }
                             elseif($miscData['placement_type'][$placement_type_id]->slug == 46)
                             {
-                                $dtg_size_id =  $position->dtg_size;
-                                $miscData['dir_to_garment_sz'][$dtg_size_id]->slug;
+                                if($position->dtg_size > 0 && $position->dtg_on > 0)
+                                {
+                                    $dtg_size_id =  $position->dtg_size;
+                                    $miscData['dir_to_garment_sz'][$dtg_size_id]->slug;
 
-                                $dtg_on_id = $position->dtg_on;
-                                $miscData['direct_to_garment'][$dtg_on_id]->slug;
+                                    $dtg_on_id = $position->dtg_on;
+                                    $miscData['direct_to_garment'][$dtg_on_id]->slug;
 
-                                if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 17 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
-                                    $garment_field = 'pricing_1c';
-                                }
-                                else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 17 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
-                                    $garment_field = 'pricing_2c';
-                                }
-                                else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 18 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
-                                    $garment_field = 'pricing_3c';
-                                }
-                                else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 18 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
-                                    $garment_field = 'pricing_4c';
-                                }
-                                else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 19 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
-                                    $garment_field = 'pricing_5c';
-                                }
-                                else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 19 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
-                                    $garment_field = 'pricing_6c';
-                                }
-                                else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 20 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
-                                    $garment_field = 'pricing_7c';
-                                }
-                                else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 20 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
-                                    $garment_field = 'pricing_8c';
-                                }
+                                    if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 17 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                        $garment_field = 'pricing_1c';
+                                    }
+                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 17 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                        $garment_field = 'pricing_2c';
+                                    }
+                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 18 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                        $garment_field = 'pricing_3c';
+                                    }
+                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 18 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                        $garment_field = 'pricing_4c';
+                                    }
+                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 19 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                        $garment_field = 'pricing_5c';
+                                    }
+                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 19 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                        $garment_field = 'pricing_6c';
+                                    }
+                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 20 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                        $garment_field = 'pricing_7c';
+                                    }
+                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 20 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                        $garment_field = 'pricing_8c';
+                                    }
 
-                                foreach($price_direct_garment as $garment) {
-                                    
-                                    if($position_qty >= $garment->range_low && $position_qty <= $garment->range_high)
-                                    {
-                                        $print_charges += $garment->$garment_field;
+                                    foreach($price_direct_garment as $garment) {
+                                        
+                                        if($position_qty >= $garment->range_low && $position_qty <= $garment->range_high)
+                                        {
+                                            $print_charges += $garment->$garment_field;
+                                        }
                                     }
                                 }
                             }
@@ -724,7 +737,12 @@ public function create_dir($dir_path) {
                         if($pd->qnty > 0)
                         {
                             $price = $pd->price;
-                            $sum = $price + $price_grid->shipping_charge;
+                            if($supplied > 0) {
+                                $sum = $price;
+                            }
+                            else {
+                                $sum = $price + $price_grid->shipping_charge;
+                            }
                             $avg_garment_cost += $sum;
                             $line_qty += $pd->qnty;
                         }
@@ -732,7 +750,13 @@ public function create_dir($dir_path) {
 
                     if($avg_garment_cost == 0)
                     {
-                        $avg_garment_cost = $price_grid->shipping_charge;
+                        if($supplied > 0) {
+                            $avg_garment_cost = 0;
+                        }
+                        else {
+                            $avg_garment_cost = $price_grid->shipping_charge;
+                        }
+
                     }
 
                     if($markup > 0)

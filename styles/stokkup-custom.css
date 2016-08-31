@@ -1177,3 +1177,10 @@ ul[dnd-list] .dndPlaceholder {
 .mrg40-T {
   margin-top: 40px;
 }
+
+.k-picker-wrap, .k-picker-wrap .k-select,.k-picker-wrap .k-state-default{
+  border:0 none !important;
+}
+span.k-picker-wrap.k-state-border-down {
+  padding-bottom: 0;
+}

@@ -25,7 +25,7 @@
                             </div>
                             <div class="trans-box">
                                 <div>Main Contact</div>
-                                <span class="chrome-weight font-14">{{ po_data.mainContact}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.first_name}} {{ po_data.last_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Date Created</div>
@@ -33,7 +33,7 @@
                             </div>
                             <div class="trans-box">
                                 <div>Ship Date</div>
-                                <span class="chrome-weight font-14">{{ po_data.ship_date}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.date_shipped}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Receive Date</div>
@@ -141,7 +141,7 @@
                 <div class="text-center pad0"><span class="font-18">Total Notes </span></div>
             </md-card-content>
             <md-divider ></md-divider>
-            <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+            <div  layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
                 <a class="font-14 chrome-weight" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a>
             </div>
         </md-card>

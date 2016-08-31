@@ -82,13 +82,14 @@ class Order extends Model {
         
         $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','sales.sales_name',
                       'users.name','cc.first_name as client_first_name','i.id as invoice_id',
-                      'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
+                      'cc.last_name as client_last_name','price_grid.name as price_grid_name','a.approval as art_approval'];
 
         $orderDetailData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
                          ->leftJoin('invoice as i','order.id','=', 'i.order_id')
+                         ->leftJoin('art as a','order.id','=', 'a.order_id')
                          ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "));
                          if(isset($data['is_affiliate']))
                          {
@@ -540,7 +541,7 @@ public function saveColorSize($post)
     public function orderDetailInfo($data) {
       
         $whereConditions = ['is_delete' => "1",'id' => $data['id'],'company_id' => $data['company_id']];
-        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping'];
+        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping','date_start','date_shipped','in_hands_by','approval_id'];
 
         $orderDetailData = DB::table('orders')
                          ->select($listArray)

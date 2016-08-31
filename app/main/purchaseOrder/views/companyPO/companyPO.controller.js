@@ -219,7 +219,9 @@
 
                     var vendor = {};
                     vendor.table ='vendors';
-                    vendor.cond ={company_id:$scope.params.company_id};
+                    vendor.cond ={company_id:$scope.params.company_id,company_id:'0'};
+                    vendor.sort='name_company';
+                    vendor.sortcond='asc';
 
                     $http.post('api/public/common/GetTableRecords',vendor).success(function(result) 
                     {   

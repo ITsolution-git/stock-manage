@@ -1068,7 +1068,8 @@ class CommonController extends Controller {
             $header = array(
                 0=>array('key' => 'ord.id', 'name' => 'Order Id'),
                 1=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets','sortable' => false)
+                2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets','sortable' => false),
+                3=>array('key' => '', 'name' => '','sortable' => false)
                 );
         }
         if($post['filter']['function']=='art_list_screen') // ART SCREEN LISTING CONDITION

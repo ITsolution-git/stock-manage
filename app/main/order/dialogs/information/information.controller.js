@@ -23,11 +23,35 @@
                    $scope.allGrid = result.data.price_grid;
                    $scope.staffList =result.data.staff;
                    $scope.brandCoList =result.data.brandCo;
+                  
+                   //$scope.minDate = new Date(result.data.records[0].date_start);
+                   //$scope.minShipDate = new Date(result.data.records[0].date_shipped);
                 }
                
             });
 
           }
+
+          var misc_list_data = {};
+          var condition_obj = {};
+          condition_obj['company_id'] =  sessionService.get('company_id');
+          misc_list_data.cond = angular.copy(condition_obj);
+
+          $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                    $scope.miscData = result.data.records;
+          });
+
+
+       /*    $scope.updateStartDate = function(){
+            $scope.minDate = new Date($scope.order_data.date_start);
+            $scope.minShipDate = new Date($scope.order_data.date_start);
+          }
+
+          $scope.updateshipDate = function(){
+            $scope.minShipDate = new Date($scope.order_data.date_shipped);
+          }
+*/
+
 
      $scope.orderDetailInfo(order_id);
 
@@ -37,6 +61,46 @@
 
         $scope.saveOrderInfo = function (orderDataDetail) {
          
+
+         var date_shipped;
+         var date_start ;
+         var in_hands_by;
+
+
+        if(orderDataDetail.date_shipped != '') {
+            date_shipped = new Date(orderDataDetail.date_shipped);
+        }
+
+        if(orderDataDetail.date_start != '') {
+            date_start = new Date(orderDataDetail.date_start);
+        }
+
+        if(orderDataDetail.in_hands_by != '') {
+            in_hands_by = new Date(orderDataDetail.in_hands_by);
+        }
+          
+      
+              
+        if(date_shipped < date_start) {
+           var data = {"status": "error", "message": "Shipped Date must be greater then Start Date."}
+            notifyService.notify(data.status, data.message);
+            return false;
+        }
+
+        if(in_hands_by < date_shipped) {
+           var data = {"status": "error", "message": "Hands Date must be greater then Shipped Date."}
+            notifyService.notify(data.status, data.message);
+            return false;
+        }
+
+        if(in_hands_by < date_start) {
+           var data = {"status": "error", "message": "Hands Date must be greater then Start Date."}
+            notifyService.notify(data.status, data.message);
+            return false;
+        }
+
+
+        
                 var order_data = {};
                 order_data.table ='orders'
                 order_data.orderDataDetail =orderDataDetail
