@@ -464,6 +464,14 @@ class Product extends Model {
             $total_price = 0;
             $total_product = 0;
             foreach ($productData as $product) {
+
+                $find = 'supplied';
+                $product->supplied = 0;
+
+                if (strpos($product->product_name,$find) !== false) {
+                    $product->supplied = 1;
+                }
+
                 $sizeData = DB::table('purchase_detail as pd')
                                      ->where('pd.design_product_id','=',$product->design_product_id)
                                      ->get();
@@ -709,6 +717,7 @@ class Product extends Model {
                         ->select(DB::raw('COUNT(DISTINCT p.id) as total'),'v.id','v.name_company')
                         ->where('v.company_id' , '=', $company_id)
                         ->where('v.is_delete' , '=', '1')
+                        ->where('p.is_delete' , '=', '1')
                         ->orWhere('v.company_id' , '=', '0')
                         ->GroupBy('v.id')
                         ->get();

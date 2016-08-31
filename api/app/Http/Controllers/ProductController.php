@@ -455,6 +455,15 @@ public function create_dir($dir_path) {
         {
             foreach ($design_product as $product) {
                 
+                $product_detail = $this->common->GetTableRecords('products',array('id' => $product->product_id),array());
+                
+                $find = 'supplied';
+                $supplied = 0;
+
+                if (strpos($product_detail[0]->name,$find) !== false) {
+                    $supplied = 1;
+                }
+
                 $total_qnty = 0;
                 $purchase_detail = array();
                 $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_product_id' => $product->id,'is_delete' => '1'),array());
@@ -728,7 +737,12 @@ public function create_dir($dir_path) {
                         if($pd->qnty > 0)
                         {
                             $price = $pd->price;
-                            $sum = $price + $price_grid->shipping_charge;
+                            if($supplied > 0) {
+                                $sum = $price;
+                            }
+                            else {
+                                $sum = $price + $price_grid->shipping_charge;
+                            }
                             $avg_garment_cost += $sum;
                             $line_qty += $pd->qnty;
                         }
@@ -736,7 +750,13 @@ public function create_dir($dir_path) {
 
                     if($avg_garment_cost == 0)
                     {
-                        $avg_garment_cost = $price_grid->shipping_charge;
+                        if($supplied > 0) {
+                            $avg_garment_cost = 0;
+                        }
+                        else {
+                            $avg_garment_cost = $price_grid->shipping_charge;
+                        }
+
                     }
 
                     if($markup > 0)
