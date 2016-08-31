@@ -22,6 +22,71 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
+            if(paymentData == undefined ) {
+                var data = {"status": "error", "message": "Please enter Payment Information"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.creditFname == undefined) {
+                var data = {"status": "error", "message": "Please enter First Name"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.creditLname == undefined) {
+                var data = {"status": "error", "message": "Please enter Last Name"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.creditCard == undefined) {
+                var data = {"status": "error", "message": "Please enter Credit Card number"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.amount == undefined) {
+                var data = {"status": "error", "message": "Please enter Amount for Payment"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.expMonth == undefined) {
+                var data = {"status": "error", "message": "Please select Month of Expiration"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.expYear == undefined) {
+                var data = {"status": "error", "message": "Please select Year of Expiration"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.cvv == undefined) {
+                var data = {"status": "error", "message": "Please enter CVV"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.street == undefined) {
+                var data = {"status": "error", "message": "Please enter Street Address"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.suite == undefined) {
+                var data = {"status": "error", "message": "Please enter Suite"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.city == undefined) {
+                var data = {"status": "error", "message": "Please enter City"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.state == undefined) {
+                var data = {"status": "error", "message": "Please select State"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(paymentData.zip == undefined) {
+                var data = {"status": "error", "message": "Please enter Zip"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
                 
             var combine_array_id = {};
             combine_array_id.creditFname = paymentData.creditFname;

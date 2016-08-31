@@ -284,12 +284,21 @@
             {
                 if(result.data.success=='1')
                 {
-                   $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
-                    $scope.siData = result.data.allData;
+                   $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                    $scope.siData = result123.data.allData;
+
+                    var combine_array_id = {};
+                    combine_array_id.invoice_id = $stateParams.id;
+
+                    $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
+                    {
+                        $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
+                        $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
+
                     });
+                });
+
                    notifyService.notify('success', "Record Deleted Successfully!");
-
-
 
                    //$scope.reloadCallback(); // CALL COMPANY LIST
                 }
