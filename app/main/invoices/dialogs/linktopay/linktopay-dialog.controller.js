@@ -7,10 +7,11 @@
         .controller('linktoPayController', linktoPayController);
 
     /** @ngInject */
-    function linktoPayController($mdDialog,$controller,$state,  event,$scope,sessionService,$resource)
+    function linktoPayController(result, $mdDialog,$controller,$state,  event,$scope,sessionService,$resource)
     {
         var vm = this;
-
+        console.log(result);
+       $scope.attn = result.data.session_link;
        this.userState = '';
 
         this.states = ('AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS ' +

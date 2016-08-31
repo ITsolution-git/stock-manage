@@ -2,7 +2,6 @@
 namespace Goetas\Xsd\XsdToPhp\Tests\Converter;
 
 use Goetas\Xsd\XsdToPhp\Naming\ShortNamingStrategy;
-
 class AbstractXsdConverterTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -19,7 +18,8 @@ class AbstractXsdConverterTest extends \PHPUnit_Framework_TestCase
 
     public function testAliases()
     {
-        $f = function () {
+        $f = function ()
+        {
         };
         $this->converter->addAliasMap('http://www.example.com', "myType", $f);
 
