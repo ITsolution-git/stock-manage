@@ -51,7 +51,7 @@
   <table style="margin-top:15px;">
     <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
       <td><?php echo (!empty($value[0]->screen_set))?$value[0]->screen_set:''; ?></td>
-      <td>h:<?php echo $value[0]->screen_height; ?> X w:<?php echo $value[0]->screen_width; ?></td>
+      <td>w:<?php echo $value[0]->screen_width; ?> X h:<?php echo $value[0]->screen_height; ?></td>
     </tr>
     <tr>
       <td>
