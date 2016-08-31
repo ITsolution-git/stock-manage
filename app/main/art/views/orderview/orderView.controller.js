@@ -244,6 +244,121 @@
                 }
             });
         }
+         // ============= UPLOAD IMAGE ============= // 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,extra_params) 
+        {
+
+                $scope.column_name=column_name;
+                $scope.table_name=table_name;
+                $scope.folder_name=folder_name;
+                $scope.primary_key_name=primary_key_name;
+                $scope.primary_key_value=primary_key_value;
+                $scope.default_image=default_image;
+                $scope.unlink_url = image_name;
+                $scope.extra_params = extra_params;
+
+                $mdDialog.show({
+                   //controllerAs: $scope,
+                    controller: function($scope,params){
+                            $scope.params = params;
+                            $scope.SaveImageAll=function(image_array)
+                            {
+                                if(image_array == null)
+                                {
+                                    $mdDialog.hide();
+                                    return false;
+                                }
+
+                                var Image_data = {};
+                                Image_data.image_array = image_array;
+                                Image_data.field = params.column_name;
+                                Image_data.table = params.table_name;
+                                Image_data.image_name = params.table_name+"-logo";
+                                Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.extra_params;
+                                Image_data.cond = params.primary_key_name;
+                                Image_data.value = params.primary_key_value;
+                                Image_data.unlink_url = params.unlink_url;
+                                //console.log(Image_data); return false;
+                                $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
+                                    if(result.data.success=='1')
+                                    {
+                                        notifyService.notify("success", result.data.message);
+                                        $mdDialog.hide();
+                                    }
+                                    else
+                                    {
+                                        notifyService.notify("error", result.data.message); 
+                                    }
+                                });
+                            };
+                            $scope.showtcprofileimg = false;
+                            $scope.onLoad=function()
+                                {
+                                    $scope.showtcprofileimg = true;
+                                }; 
+                            $scope.removeProfileImage=function()
+                                {
+                                    $scope.showtcprofileimg = false;
+                                }; 
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                        },
+                    templateUrl: 'app/main/image/image.html',
+                    parent: angular.element($document.body),
+                    clickOutsideToClose: false,
+                        locals: {
+                            params:$scope
+                        },
+                    onRemoving : $scope.GetOrderScreenSet
+                });
+
+        };
+    // ============= DELETE IMAGE ============= // 
+        $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,extra_params)
+        {
+            if(default_image == '') 
+            {
+
+                var data = {"status": "error", "message": "Please upload image first."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+            }
+              var permission = confirm(AllConstant.deleteMessage);
+
+            if (permission == true) {
+
+                var image_data = {};
+                image_data.table =table_name
+
+                var obj = {};
+                obj[column_name] =  '';
+                image_data.data = angular.copy(obj);
+
+                var cond_arr = {};
+                cond_arr[primary_key_name] =  primary_key_value;
+                image_data.cond =angular.copy(cond_arr);
+
+
+                image_data.image_delete =  $scope.company_id+'/'+folder_name+'/' + extra_params +'/'+default_image;
+            
+                $http.post('api/public/common/deleteImage',image_data).success(function(result) 
+                {
+
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify("success", result.data.message);
+                        $scope.GetOrderScreenSet();
+                    }
+                    else
+                    {
+                        notifyService.notify("error", result.data.message); 
+                    }
+ 
+                });
+            }
+        }
 
     }
 })();
