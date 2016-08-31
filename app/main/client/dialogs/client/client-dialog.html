@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add New Client</span>
-                <md-button  ng-click="vm.closeDialog()">
+                <md-button  ng-click="vm.closeDialog()" class="close-stokkup-dialog">
                     <span>Close</span>
                 </md-button>
             </div>
@@ -16,12 +16,12 @@
                 <md-input-container class="md-block first-box">
                     <input placeholder="Company Name *" name="client_company" required ng-model="vm.client.client_company">
                     <div ng-messages="clientForm.client_company.$error" role="alert" multiple>
-                        <div ng-message="required">
+                        <div ng-message="required" class="red-alert-msge">
                             <span>This field is required</span>
                         </div>
                     </div>
                 </md-input-container>
-                <md-input-container class="m-b-30">
+                <md-input-container class="m-b-20">
                     <label>Type</label>
                     <md-select ng-model="vm.client.client_companytype">
                         <md-option value="0">
@@ -78,7 +78,7 @@
                 <md-input-container>
                     <input placeholder="Company Website URL" ng-model="vm.client.company_url">
                 </md-input-container>
-                <md-input-container class="m-b-30">
+                <md-input-container class="">
                     <label>Desposition</label>
                     <md-select ng-model="vm.client.client_desposition">
                         <md-option value="0">
@@ -89,7 +89,7 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
-                <div class="content-heading p-t-30" layout-padding >
+                <div class="content-heading" layout-padding >
                     <span class="md-title">Main Contact Information</span>
                 </div>
                 <md-input-container class="first-box">
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                 </md-input-container>
-                <div class="content-heading p-t-30" layout-padding >
+                <div class="content-heading" layout-padding >
                     <span class="md-title">Sales Information</span>
                 </div>
                 <md-input-container class="first-box">
@@ -122,7 +122,7 @@
                 <md-input-container class="md-block date-input m-b-30">
                     <input placeholder="Anniversary date" kendo-date-picker k-ng-model="dateObject2" ng-model="vm.client.anniversarydate"   >
                 </md-input-container>
-                <md-input-container class="m-b-30">
+                <md-input-container class="m-b-10">
                     <label>Sales Person</label>
                     <md-select ng-model="vm.client.salesperson">
                         <md-option value="0">

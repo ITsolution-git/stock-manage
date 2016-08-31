@@ -1,15 +1,21 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="header "  layout="column" >
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back" ui-sref="app.purchaseOrder">BACK TO PO's</a>
-            <h2 flex="4" class="font-500">Purchase Order #{{po_data.po_id}} for Client {{po_data.client_company}}</h2>
-            
+<div class="order-info-page company-po-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview m-b-30">
+
+        <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+                Purchase Order #{{po_data.po_id}} for Client {{po_data.client_company}}
+            </div>
+            <div class="pull-right right-search-box">
+                <a class="pull-right common-header-links" ui-sref="app.purchaseOrder">BACK TO PO's</a>
+            </div>
         </div>
+    </div>
+        
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="75">
-                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
+            <div class="info-order inner-full-box">
+                <div class="title box-title m-b-20"><span class="stokkup-title-h4">Information</span></div>
                 <md-card layout="row">
-                    <md-card-content flex="95" layout="column">
+                    <md-card-content flex="100" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>PO Type</div>
@@ -58,8 +64,8 @@
                 </md-card>
             </div>
         </div>
-    </div>
-    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15" >
+
+    <div class="simple-table-container md-whiteframe-4dp m-b-20 stokkup-main-tableview" >
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text h2 text-semibold">
                 Products
@@ -73,9 +79,9 @@
                         <th>SKU</th>
                         <th>Size</th>
                         <th>Color</th>
-                        <th>Ordered/ Recevied</th>
-                        <th>Unit Price</th>
-                        <th></th>
+                        <th>Ordered<br /> Recevied</th>
+                        <th>Unit $</th>
+                        <!-- <th></th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -86,20 +92,23 @@
                         <td>{{ line_item.product_color}}</td>
                         <td>{{ line_item.qnty_ordered}} / {{ line_item.qnty_purchased}}</td>
                         <td>${{ line_item.unit_price}}</td>
-                        <td ng-if="po_data.complete==0"><a class="font-12" class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
+                        <!-- <td ng-if="po_data.complete==0"><a class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td>  -->
                     </tr>
                 </tbody> 
             </table>
-            <div class="p-23 border-t-grey">
-            </div>
+           <!--  <div class="p-23 border-t-grey">
+            </div> -->
         </div>
     </div>
-    <div layout="row" layout="wrap" layout-align="space-between center" class="p-b-20">
-        <md-card class="m-b-20 m-l-20" flex="27">
+    <div layout="row" layout="wrap" layout-align="space-between center" class="inner-full-box">
+        <md-card class="box-3 firstbox">
             <md-card-title>
-                <md-card-title-text class="text-left">
+                <md-card-title-text class="stokkup-title-h4">
                     Web Portal
                 </md-card-title-text>
+                <div>
+                    <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a>
+                </div>
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height">
                 <div layout="row" layout-wrap layout-align="start start" flex="60">
@@ -107,32 +116,34 @@
                 </div>
                 <div class="text-center"><span class="font-18">&nbsp;</span></div>
             </md-card-content>
-            <md-divider ></md-divider>
-            <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight" href="{{po_data.url}}" target="_blank">View</a>
-            </div>
+            <!-- <md-divider ></md-divider> -->
+            
         </md-card>
-        <md-card class="m-b-20 m-l-20" flex="27">
+        <md-card class="box-3">
             <md-card-title>
-                <md-card-title-text class="text-left">
+                <md-card-title-text class="stokkup-title-h4">
                     Dropship Instructions
                 </md-card-title-text>
+                <div ng-if="po_data.complete==0">
+                    <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
+                </div>
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height" layout-align="start center">
                 <div layout="row" layout-wrap flex="60" class="width-text">
                     <span class="font-16 ">{{po_data.vendor_instruction}}</span>
                 </div>
             </md-card-content>
-            <md-divider ></md-divider>
-            <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
-            </div>
+            <!-- <md-divider ></md-divider> -->
+            
         </md-card>
-        <md-card class="m-b-20 m-l-20 m-r-15 " flex="27">
+        <md-card class="box-3 lastbox">
             <md-card-title>
-                <md-card-title-text class="text-left">
+                <md-card-title-text class="stokkup-title-h4">
                     Notes
                 </md-card-title-text>
+                <div ng-if="po_data.complete==0">
+                    <a class="common-header-links" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a>
+                </div>
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height">
                 <div layout="row" layout-wrap layout-align="center center" flex="60">
@@ -140,10 +151,7 @@
                 </div>
                 <div class="text-center pad0"><span class="font-18">Total Notes </span></div>
             </md-card-content>
-            <md-divider ></md-divider>
-            <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a>
-            </div>
+            <!-- <md-divider ></md-divider> -->
         </md-card>
     </div>
 </div>

@@ -258,9 +258,9 @@ hr .style1 {
       margin-top: 25px !important;
 }
 
-md-input-container > label {
+/*md-input-container > label {
   color : #000 !important;
-}
+}*/
 
 [md-theme="default"] .md-accent-bg {
     background-color: rgb(3,155,229);
@@ -1177,3 +1177,5 @@ ul[dnd-list] .dndPlaceholder {
 .mrg40-T {
   margin-top: 40px;
 }
+ md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
+      padding-left: 0; }
