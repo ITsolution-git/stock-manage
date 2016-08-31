@@ -31,10 +31,10 @@
     <tr style="margin-top: 20px;"> 
     	<td width="30%" style="border: 1px solid #000;"> 
     		<table>
-    			<tr><td align="center">Mockup Logo</td></tr>
+    			<tr><td align="center">Screenset Image</td></tr>
     			<tr><td align="center"><img src="{{$size[0]->mokup_logo}}" title="Culture Studio" height="150" width="150" alt="Culture Studio"></td></tr>
-    			<tr><td align="center">Mockup Image</td></tr>
-    			<tr><td align="center"><img src="{{$size[0]->mokup_image}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td></tr>
+    			<!-- <tr><td align="center">Mockup Image</td></tr>
+    			<tr><td align="center"><img src="{{$size[0]->mokup_image}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td></tr> -->
     		</table>
     	</td>
     	<td width="70%" style="border: 1px solid #000;">
