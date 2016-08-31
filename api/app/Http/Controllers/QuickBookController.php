@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
+require_once(app_path() . '/quickbook_constants.php');
 use App\Login;
 use Input;
 use Illuminate\Support\Facades\Session;

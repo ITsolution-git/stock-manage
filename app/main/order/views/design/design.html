@@ -477,7 +477,8 @@
                                 </div>
                             </div>
                             <div layout="column" flex="25">
-                                <md-card class="m-b-20 newbox-typ" ng-show="order_number == '' && is_complete == '0' ">
+                                <!-- <md-card class="m-b-20 newbox-typ" ng-show="order_number == '' && is_complete == '0' "> -->
+                                <md-card class="m-b-20 newbox-typ">
                                     <md-card-title>
                                         <md-card-title-text>
                                             Packing Information
@@ -491,7 +492,7 @@
                                     </md-card-content>
                                 </md-card>
 
-                                <md-card class="m-b-20 newbox-typ" ng-show="order_number != '' || is_complete == '1' ">
+                                <!-- <md-card class="m-b-20 newbox-typ" ng-show="order_number != '' || is_complete == '1' ">
                                     <md-card-title>
                                         <md-card-title-text>
                                             Packing Information
@@ -503,7 +504,7 @@
                                             <span>${{order_item.charge}}</span>
                                         </div>
                                     </md-card-content>
-                                </md-card>
+                                </md-card> -->
 
                             </div>
                         </div>  
