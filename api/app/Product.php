@@ -468,7 +468,9 @@ class Product extends Model {
                 $find = 'supplied';
                 $product->supplied = 0;
 
-                if (strpos($product->product_name,$find) !== false) {
+                $product_name = strtolower($product->product_name);
+
+                if (strpos($product_name,$find) !== false) {
                     $product->supplied = 1;
                 }
 

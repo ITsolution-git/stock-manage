@@ -460,7 +460,9 @@ public function create_dir($dir_path) {
                 $find = 'supplied';
                 $supplied = 0;
 
-                if (strpos($product_detail[0]->name,$find) !== false) {
+                $product_name = strtolower($product_detail->name);
+
+                if (strpos($product_name,$find) !== false) {
                     $supplied = 1;
                 }
 
