@@ -6,7 +6,8 @@
     #header { position: fixed; left: 0px; top: -180px; right: 0px; height: 150px; background-color: orange; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -180px; right: 0px; height: 150px; background-color: lightblue; }
     #footer .page:after { content: counter(page, upper-roman); }
-    img{width: 250px; height:220px;}
+    #header_logo{width: 120px; height:100px;}
+    
   </style>
   <title>Order Info</title>
 </head>
@@ -15,18 +16,28 @@
   <table >
     <tr >
       <td>
-      <br>
-        <p><b>{{$company->companyname}}</b></p>
-        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
-        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
-        <span>P: {{$company->prime_phone_main}}</span>
-        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
+          <table>
+              <tr><td><b>{{$company->companyname}}</b></td></tr>
+              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
+                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
+                  </td>
+              </tr>
+              <tr>
+                  <td>P: {{$company->prime_phone_main}}</td>
+              </tr>
+              <tr>
+                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
+              </tr>
+          </table>
       </td>
-      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+        <td style="padding-top:0;"><img id="header_logo" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
       <td>
-        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
-        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
-        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
+          <table>
+              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
+              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
+          </table>
       </td>
     </tr>
   </table>
