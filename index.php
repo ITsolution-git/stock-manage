@@ -1,14 +1,14 @@
 <!doctype html>
 <html ng-app="fuse">
     <head>
-        <base href="/stokkup/">
+        <base href="/">
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <title>STOKKUP</title>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="shortcut icon" type="image/x-icon" href="/stokkup/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="stylesheet" href="styles/vendor.css">
 
         <link rel="stylesheet" href="styles/app.css">
