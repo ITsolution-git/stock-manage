@@ -16,6 +16,14 @@
 	padding: 5px;
 }
 
+.product-popup-image{
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  max-height: 300px;
+}
+
+
 .mdslider md-slider {
   margin-top: -14px; 
 }
@@ -53,6 +61,18 @@
     /* height: auto; */
     width: auto;
     height: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.img-container-product {
+  box-sizing: border-box;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 25%;
+    -ms-flex: 1 1 25%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     position: relative;
     z-index: 1;
 }
@@ -351,7 +371,7 @@ md-input-container > label {
   
 }
 
-#screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th, #directToGarment.simple thead tr th, #chargesList.simple thead tr th {
+#directToGarment.simple thead tr th, #chargesList.simple thead tr th {
   min-width: 50px !important;
 }
 
@@ -390,6 +410,9 @@ md-input-container .md-errors-spacer { min-height: 1px; }
 md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .mrg10-R {
 	margin-right:10px;
+}
+.mrg10 {
+  margin: 10px !important;
 }
 .mrg15-R {
   margin-right: 15px;
@@ -558,7 +581,7 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 	display:inline-block;
 }
 .filter-cntnr {
-	height:150px;
+	height:250px;
 	padding:10px 10px 0;
 }
 .mrg15-T { margin-top: 15px;}
@@ -605,6 +628,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     border-radius: 5px;
 }
 .order-container { max-height: 610px; overflow: auto; position: relative;}
+.order-container1 { max-height: 330px; overflow: auto; position: relative;}
 .fileUpload span, .btn-typ-submit span {
     color: #fff !important;
     font-size: 15px !important;
@@ -640,6 +664,10 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .order-container .trans-box { padding: 0px 2px; }
 .order-container .trans-box > div { font-size: 13px; line-height: 13px; }
 .order-container .trans-box span.font-14 { font-size: 13px !important; }
+.md-input-container1 {
+    position: relative;
+    vertical-align: middle;
+}
 /*****************************/	
 .loaderouter{
     position:fixed;
@@ -780,11 +808,11 @@ md-button.on {
 
 #integrations tr > td:first-child, #integrations tr > th:first-child {
     width: 15% !important;
-    height: 105px;
+    height: 150px;
 }
 
 #integrations td {
-  height: 105px ;
+  height: 150px ;
 }
 
 .integrationsTd2 {
@@ -989,4 +1017,163 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
     background-color: #3f51b5;
     border-color: #3f51b5;
     color: #ffffff !important;
+}
+.newbox-typ {
+  box-shadow: none !important;
+  border: 1px solid #ddd;
+}
+.disable-click {
+  pointer-events:none;
+}
+.orderitem-detail {
+  width: 631px;
+}
+.order-box-header {
+  background: #f2f2f2 none repeat scroll 0 0;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px;
+  width: 100%;
+   border:1px solid #ccc;
+}
+.order-box-cntnr {
+  border:1px solid #ccc;
+  border-top:0px;
+  padding:15px;
+}
+.order-box-header .md-button {
+  margin-top: -6px;
+}
+.order-box-header:before, .order-box-header:after {
+  clear: both;
+}
+.orderbox-head {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 0px 15px;
+}
+.orderitem-detail .box-typ3 {
+  border-bottom: 0px;
+}
+.orderitem-detail .order-container {
+  max-height: 380px;
+}
+.mrg15-TB {
+  margin: 15px 0;
+}
+.orderitem-detail .bg-green {
+  padding: 8px 10px;
+}
+.orderitem-detail .bg-blue, .orderitem-detail .bg-blue:hover {
+  background: #3399FF !important;
+  padding: 8px 10px;
+}
+.abs20-L {
+  position: absolute;
+  right: 20px;
+}
+.remain-qtybox {
+  padding:15px;
+  border-top:1px solid #ccc;
+}
+.dprodct.disrtubtd-pro-page.orderitem-detail .mrg15-TB.layout-row.flex-100 {
+  min-height: 47px;
+}
+.order-box-header button.md-button.md-ink-ripple.pull-right {
+  min-width: 1px;
+  font-size: 18px;
+  color:#757576;
+}
+.active-color {
+  border : 2px solid #424141;
+}
+.deactivate-color{
+  border : 2px solid #FFFFFF;
+}
+.activeAddress {
+  background-color: rgba(0,0,0,0.1); 
+}
+.tbl-scroll-cntnr {
+  position: relative;
+  max-height: 480px;
+}
+.pricewidth-5.5 {
+  width: 5.5% !important;
+  padding: 0 !important;
+}
+#screenPrimary,#screenSecondary {
+  table-layout: fixed;
+    white-space: nowrap;
+    width: 100%;
+}
+
+#screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th {
+  width: 80px !important;
+} 
+/**
+ * An element with .dndPlaceholder class will be
+ * added to the dnd-list while the user is dragging
+ * over it.
+ */
+ul[dnd-list] .dndPlaceholder {
+    border: 1px dashed #CCC;
+    background: none;
+    min-height: 150px;
+}
+
+
+.text-bold {
+  font-weight: bold !important;
+  color: #000 !important;
+}
+.text-bold-center {
+  font-weight: bold;
+  text-align: center;
+}
+.text-bold-right {
+  font-weight: bold;
+  text-align: right;
+}
+.text-center {
+  text-align: center;
+}
+#billtoShipto tr td:nth-child(1), #billtoShipto tr td:nth-child(3) {
+  height:122px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  width: 50%;
+}
+#billtoShipto tr td table {
+  width: 100%;
+}
+.no-border {
+  border: 0 none !important;
+}
+.no-border img {
+  height: 125px;
+}
+.pad10-T {
+  padding-top: 10px;
+}
+.pad20-L {
+  padding-left: 20px;
+}
+.v-TOP {
+  vertical-align: top;
+}
+.width-50 {
+  width: 50px;
+}
+.pad-0 {
+  padding: 0;
+}
+.border-col {
+  border-collapse: collapse;
+}
+.h100 {
+  height: 100%;
+}
+.mrg40-T {
+  margin-top: 40px;
 }

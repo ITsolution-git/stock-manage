@@ -31,7 +31,8 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td align="left" valign="top" width="25%">
-                        <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" />
+                        <!-- <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" /> -->
+                        <img alt="Logo" style="display:block; max-width:100%;" width="80" />
                     </td>
                     <td align="center" valign="top" width="25%" class="tableCol">
                         <span style="font-size:15px; line-height:15px;">
@@ -64,7 +65,7 @@
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
             <td align="left" valign="top" width="40%"><br /><br /><br /><span><strong>PO Number : #</strong></span><br />
-                <span><strong>{{$shipping->job_name}}</strong></span><br />
+                <span><strong>{{$shipping->name}}</strong></span><br />
                 <span>Shipped On : {{$shipping->shipping_by}}</span>
             </td>
           </tr>
@@ -76,7 +77,7 @@
       <td align="left" valign="top" width="100%">          
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
-            <td align="left" valign="top" width="100%" style="font-size:14px;"><span>Garments For Job:{{$shipping->job_name}}</span></td>
+            <td align="left" valign="top" width="100%" style="font-size:14px;"><span>Garments For Job:{{$shipping->name}}</span></td>
           </tr>
         </table>
       </td>            

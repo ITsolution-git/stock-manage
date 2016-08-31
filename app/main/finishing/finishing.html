@@ -1,95 +1,91 @@
-<div class="content order-list-page receving">
+<div class="content order-list-page">
     <div class="simple-table-container md-whiteframe-4dp">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20 class="cursor-p" >
-                Finishing
+            <div class="table-title-text" flex=20 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
+                Finishing 
             </div>
-            <div class="search-block" flex=25>
+           
+            <div class="search-block" flex=40>
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                    <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
-            <!-- <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon>  -->
+           
         </div>
-        <div class="ms-responsive-table-wrapper">
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
-                <table class="dataTable row-border hover" id="finishing">
-                    <!-- <thead>
-                        <tr>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title color-b-grey">Order #</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header" >
-                                    <span class="column-title color-b-grey">Qty</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title color-b-grey">Finishing Item</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title color-b-grey">Client</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title color-b-grey">Start</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title color-b-grey">End</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title color-b-grey">EST Completion Time</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title color-b-grey">Done?</span>
-                                </div>
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead> -->
+                <table class="dataTable row-border hover">
+                    
                     <thead tasty-thead></thead>
                     <tbody>
-                        <tr ng-repeat="order in rows">
-                            <td>{{order.order_id}}</td>
-                            <td>{{order.qty}}</td>
-                            <td>{{order.category_name}}</td>
-                            <td>{{order.client_company}}</td>
-                            <td>{{order.start_time}}</td>
-                            <td>{{order.end_time}}</td>
-                            <td>{{order.est}}</td>
-                            <td>
-                                <md-input-container flex=30 class="m-b-20 m-t-25">
-                                    <md-select ng-model="order.status" aria-label="r1">
-                                      <md-option ng-selected="{{order.status==1}}">
-                                        Yes
-                                       </md-option>
-                                       <md-option ng-selected="{{order.status==0}}">
-                                        No
-                                       </md-option>
-                                    </md-select>                                
-                                </md-input-container>
+                        <tr  ng-repeat-start="row in rows"  >
+                            
+                            <td>{{ row.order_id}}</td>
+                            <td>{{ row.name}}</td>
+                            <td>{{ row.client_company}}</td>
+                            
+                            <td class="accor" ng-show="row.order_finishing.length > 0">
+                                <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                                <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
                             </td>
-                            <td class="accor details-control text-right">
-                                <a ng-click="vm.editFinishing($event)">EDIT</a>
+                            <td  ng-show="row.order_finishing.length == 0">
+                                &nbsp;
                             </td>
                         </tr>
+                        <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
+                            <td colspan="8" class="collpas">
+                                <table class="dataTable row-border hover" >
+                                    <thead>
+                                        <th>Design</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Finishing Item</th>
+                                        <th>Start</th>
+                                        <th>End</th>
+                                        <th>EST Completion Time</th>
+                                        <th>Done?</th>
+                                        <th>Operation</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="finishing in row.order_finishing">
+                                            <td class="cursor-p">{{finishing.design_name}}</td>
+                                            <td class="cursor-p">{{finishing.product_name}}</td>
+                                            <td class="cursor-p">{{finishing.qty}}</td>
+                                            <td class="cursor-p">{{finishing.category_name}}</td>
+                                            <td class="cursor-p">{{finishing.start_time}}</td>
+                                            <td class="cursor-p">{{finishing.end_time}}</td>
+                                            <td class="cursor-p">{{finishing.est}}</td>
+                                            <td>
+                                                <md-input-container flex=30 class="m-b-20 m-t-25">
+                                                    <md-select ng-model="finishing.status" aria-label="r1" ng-change="changeStatus(finishing)">
+                                                      <md-option ng-selected="{{finishing.status==1}}" value="1">
+                                                        Yes
+                                                       </md-option>
+                                                       <md-option ng-selected="{{finishing.status==0}}" value="0">
+                                                        No
+                                                       </md-option>
+                                                    </md-select>                                
+                                                </md-input-container>
+                                            </td>
+                                            <td class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">EDIT</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>                    
                     </tbody>
                 </table>
-            <div tasty-pagination class="tasty-page"></div>
+                <div tasty-pagination class="tasty-page"></div>
             </div>
         </div>
-    </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
+                <thead>
+                    <tr>
+                        <th>No Records Found</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div> 
 </div>

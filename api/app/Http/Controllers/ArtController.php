@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
+use App\Login;
 use Input;
+use Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Art;
 use DB;
 use File;
-
+use PDF;
 use Request;
+use Response;
 
 class ArtController extends Controller { 
 
@@ -45,8 +48,7 @@ class ArtController extends Controller {
     {
         if(!empty($company_id)  && $company_id != 'undefined')
         {
-            
-            
+           
             $result = $this->art->listing($company_id);
             if(count($result)>0)
             {
@@ -164,23 +166,24 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
 
     }
-    public function ScreenListing($company_id)
+    public function ScreenSets()
     {
-        if(!empty($company_id) && $company_id != 'undefined')
+        $post = Input::all();
+        if(!empty($post['company_id']) && !empty($post['order_id']))
         {
-            $scren_listing = $this->art->ScreenListing($company_id);
+            $scren_listing = $this->art->ScreenSets($post);
             if(count($scren_listing)>0)
             {
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $scren_listing);
             }
             else
             {
-                $response = array('success' => 0, 'message' => NO_RECORDS);
+                $response = array('success' => 0, 'message' => 'No Positions are assign to this Order.');
             }
         }
         else 
         {
-            $response = array('success' => 2, 'message' => MISSING_PARAMS);
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
         return  response()->json(["data" => $response]);
     }
@@ -251,30 +254,20 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
-    public function Insert_artworkproof($line_id)
-    {
-        if(!empty($line_id) && $line_id != 'undefined')
-        {
-            $wp_id = $this->art->Insert_artworkproof($line_id);
-            $response = array('success' => 1, 'message' => INSERT_RECORD,'records'=>$wp_id);
-        }
-        else 
-        {
-            $response = array('success' => 0, 'message' => MISSING_PARAMS);
-        }
-        return  response()->json(["data" => $response]);
-    }
+ 
     public function screen_colorpopup ($screen_id,$company_id)
     {
         if(!empty($company_id) && !empty($screen_id)    && $company_id != 'undefined')
         {
             $screen_colorpopup = $this->art->screen_colorpopup($screen_id,$company_id);
-            $allcolors = $this->common->getAllColorData();
+            
             $graphic_size = $this->common->GetMicType('graphic_size',$company_id);
             $screen_arts = $this->art->screen_arts($screen_id,$company_id);
             $screen_garments = $this->art->screen_garments($screen_id,$company_id);
             $art_approval = $this->common->GetMicType('approval',$company_id);
+           
             $color_array= array();
+            $allcolors = $this->common->getAllColorData();
             foreach ($allcolors as $key => $value) 
             {
                 $color_array[$value->id]= $value->name;
@@ -320,11 +313,10 @@ class ArtController extends Controller {
     {
         $post = Input::all();
 
-        //echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
-        if(!empty($post['data']['art_id']))
+        if(!empty($post['alldata']['id']))
         {
-            $this->art->create_screen($post['data']);
-            $response = array('success' => 1, 'message' => INSERT_RECORD);
+            $this->art->create_screen($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD);
         }
         else 
         {
@@ -333,15 +325,116 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
 
     }
-    public function DeleteScreenRecord()
+ 
+
+    public function GetScreenset_detail($position_id)
+    {
+        if(!empty($position_id))
+        {
+            $result = $this->art->GetScreenset_detail($position_id);
+            if(count($result)>0)
+            {
+                $color_array= array();
+                $allcolors = $this->common->getAllColorData();
+                $getColors = $this->common->GetTableRecords('artjob_screencolors',array('screen_id' => $result[0]->id),array(),'head_location','asc');
+
+                foreach ($allcolors as $key => $value) 
+                {
+                    $color_array[$value->id]= $value->name;
+                    $allcolors[$key]->name = strtolower($value->name);
+                }
+                if(count($getColors)>0)
+                {
+                    foreach ($getColors as $value) 
+                    {
+                        $value->color_display_name = $color_array[$value->color_name];
+                    }
+                }
+            
+            }
+            $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'getColors'=>$getColors,'allcolors'=>$allcolors);
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+
+    public function GetscreenColor($screen_id)
+    {
+        if(!empty($screen_id))
+        {
+            $result = $this->art->GetscreenColor($screen_id);
+            $allcolors = array();
+            if(count($result)>0)
+            {
+                $color_array= array();
+                $allcolors = $this->common->getAllColorData();
+                foreach ($allcolors as $key => $value) 
+                {
+                    $color_array[$value->id]= $value->name;
+                    $allcolors[$key]->name = strtolower($value->name);
+                }
+               
+                foreach ($result as $value) 
+                {
+                    if(!empty($value->color_name))
+                    {
+                        $value->color_name = $color_array[$value->color_name];
+                    }
+                    $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+                    $value->mokup_logo_url = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+
+                    if(!empty($value->thread_color))
+                    {
+                        $value->thread_display = $color_array[$value->thread_color];
+                    }
+                }
+                $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'allcolors'=>$allcolors);            
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+            }
+            
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);
+    }
+    public function UpdateColorScreen()
     {
         $post = Input::all();
 
-        //echo "<pre>"; print_r($post['data']['art_id']); echo "</pre>"; die;
-        if(!empty($post['cond']['id']))
+        //echo "<pre>"; print_r($post); echo "</pre>"; die;
+
+        if(!empty($post['id']))
         {
-            $this->art->DeleteScreenRecord($post['cond']);
-            $response = array('success' => 1, 'message' => DELETE_RECORD);
+            $result = $this->art->UpdateColorScreen($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD);
+        }
+        else 
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+        return  response()->json(["data" => $response]);        
+    }
+    public function getScreenSizes($company_id)
+    {
+        if($company_id)
+        {
+            $result = $this->art->getScreenSizes($company_id);
+            if(count($result)>0)
+            {
+                $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result);
+            }
+            else 
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+            }
         }
         else 
         {
@@ -349,19 +442,115 @@ class ArtController extends Controller {
         }
         return  response()->json(["data" => $response]);
     }
-    public function art_worklist_listing($art_id,$company_id)
+    public function change_sortcolor()
     {
-        if(!empty($company_id) && !empty($art_id)   && $company_id != 'undefined')
+        $post = Input::all();
+        if(count($post)>0)
         {
-            $art_worklist = $this->art->art_worklist($art_id,$company_id);  // ART WORK LISTING DATA
-            $art_position = $this->art->art_position($art_id,$company_id);
-
-            $response = array('success' => 1, 'message' => GET_RECORDS,'art_worklist' => $art_worklist,'art_position'=>$art_position);
+             $result = $this->art->change_sortcolor($post);
         }
-        else 
-        {
-            $response = array('success' => 2, 'message' => MISSING_PARAMS);
-        }
-        return  response()->json(["data" => $response]);
     }
+    public function change_sortscreen()
+    {
+         $post = Input::all();
+        if(count($post)>0)
+        {
+             $result = $this->art->change_sortscreen($post);
+        }
+    }
+
+       /**
+   * Save Color size.
+   * @return json data
+    */
+    public function ArtApprovalPDF()
+    {
+
+        $screenArray= json_decode($_POST['art']);
+        
+        if(count($screenArray)>0)
+        {
+            $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
+            if(!empty($pdf_data[0]))
+            {
+                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+               
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0]))->render());
+           
+                $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+                PDF::Output($filename,'F');
+
+                if(!empty($screenArray->mail) && $screenArray->mail=='1' && !empty($pdf_data[0][0]->billing_email))
+                {
+                    Mail::send('emails.artapproval', ['email'=>$pdf_data[0][0]->billing_email], function($message) use ($pdf_data,$filename)
+                    {
+                         $message->to($pdf_data[0][0]->billing_email)->subject('Art Approval for the order '.$pdf_data[0][0]->order_name);
+                         $message->attach($filename);
+                    });
+                }
+
+                return Response::download($filename);
+
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
+    public function PressInstructionPDF()
+    {
+
+        $screenArray= json_decode($_POST['art']);
+        
+        if(count($screenArray)>0)
+        {
+            $pdf_data = $this->art->getPressInstructionPDFdata($screenArray->screen_id,$screenArray->company_id);
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            if(!empty($pdf_data['size']))
+            {
+                
+                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+               
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size']))->render());
+           
+                $pdf_url = "PresInstruction-".$screenArray->screen_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+                PDF::Output($filename, 'F');
+                return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Error, No Product or Size selected.");
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
+    
 }
+
+
+

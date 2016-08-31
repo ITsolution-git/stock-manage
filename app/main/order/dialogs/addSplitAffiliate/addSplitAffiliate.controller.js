@@ -20,9 +20,22 @@
         $scope.additional_charges = 0;
         $scope.total_not_assign = 0;
         $scope.notes = '';
-        $scope.shop_invoice = 0;
+        $scope.shop_invoice = Order.order.grand_total;
         $scope.affiliate_invoice = 0;
         $scope.total = 0;
+        $scope.design_product_id = 0;
+
+        $scope.finalCalcualtion = function()
+        {
+            if($scope.additional_charges < 0 || $scope.additional_charges == ''){
+                $scope.additional_charges = 0;
+            }
+            
+            var total = parseFloat($scope.shop_invoice) - parseFloat($scope.affiliate_invoice) + parseFloat($scope.additional_charges);
+            $scope.total = total.toFixed(2);
+        }
+
+        $scope.finalCalcualtion();
 
         var affiliate_data = {};
         affiliate_data.table ='affiliates';
@@ -42,10 +55,57 @@
 
         $scope.getDesignProduct = function(design_id)
         {
-            $scope.sizes = angular.copy($scope.allDesign[design_id].size_data);
+            var combine_array_id = {};
+            combine_array_id.id = design_id;
+            
+            $http.post('api/public/affiliate/getAffiliateDesignProduct',combine_array_id).success(function(response, status, headers, config) {
+                if(response.data.success == '1') {
+                    $scope.productData = response.data.records;
+                }
+                else{
+                    $scope.productData = [];                    
+                }
+            });
         }
 
-        $scope.save = function(total)
+        $scope.calculateAffiliate = function()
+        {
+            if($scope.affiliate > 0)
+            {
+                var affiliate_data = {};
+                affiliate_data ={'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizeData':$scope.sizes}
+                $http.post('api/public/affiliate/affiliateCalculation',affiliate_data).success(function(result) {
+                    if(result.success == '1')
+                    {
+                        $scope.affiliate_invoice = result.affiliate_invoice;
+                        $scope.finalCalcualtion();
+                    }
+                });
+            }
+        }
+
+        $scope.getProductSize = function(design_product_id)
+        {
+            var size_data = {};
+            size_data ={design_product_id:design_product_id}
+            $scope.design_product_id = design_product_id;
+
+            // GET CLIENT TABLE CALL
+            $http.post('api/public/product/getProductSize',size_data).success(function(result)
+            {   
+                if(result.data.success=='1')
+                {   
+                    $scope.sizes = result.data.records;
+                    $scope.calculateAffiliate();
+                }
+                else
+                {
+                    $scope.sizes = [];
+                }
+            });
+        }
+
+        $scope.save = function()
         {
             if($scope.design == '0')
             {
@@ -56,6 +116,12 @@
             if($scope.affiliate == '0')
             {
                 var data = {"status": "error", "message": "Please select affiliate"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if($scope.design_product_id == '0')
+            {
+                var data = {"status": "error", "message": "Please select product"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
@@ -74,11 +140,14 @@
             }
             else
             {
-                var affiliate_data = {'order_id':$scope.order_id,'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizes':$scope.sizes,
+                var affiliate_data = {'order_id':$scope.order_id,'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizes':$scope.sizes,'design_product_id':$scope.design_product_id,
                                     'total_affiliate':$scope.total_affiliate,'additional_charges':$scope.additional_charges,'total_not_assign':$scope.total_not_assign,
                                     'notes':$scope.notes,'shop_invoice':$scope.shop_invoice,'affiliate_invoice':$scope.affiliate_invoice,'total':$scope.total};
+
+                //$("#ajax_loader").show();
                 
                 $http.post('api/public/affiliate/addAffiliate',affiliate_data).success(function(result) {
+                    $("#ajax_loader").hide();
                     if(result.data.success == '1') 
                     {
                         $mdDialog.hide();

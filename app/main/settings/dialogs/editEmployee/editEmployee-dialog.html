@@ -45,6 +45,18 @@
                     </div> 
                 </md-input-container>
 
+                <md-input-container flex=30 class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <label class="state-label-color">Status</label>
+                    <md-select  name="status" ng-model="users.status">
+                        <md-option value="1" ng-selected="{{users.status=='1'}}">
+                            Active
+                        </md-option>
+                        <md-option value="0" ng-selected="{{users.status=='0'}}">
+                            Inactive
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
         </div>
     </md-card-content>
        

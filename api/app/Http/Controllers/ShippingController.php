@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Shipping;
 use App\Common;
-use App\Purchase;
+use App\Distribution;
+
 use App\Order;
 use DB;
 use App;
@@ -18,10 +19,10 @@ use Request;
 use PDF;
 class ShippingController extends Controller { 
 
-    public function __construct(Shipping $shipping,Common $common,Purchase $purchase,Order $order) 
+    public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order) 
     {
         $this->shipping = $shipping;
-        $this->purchase = $purchase;
+        $this->distribution = $distribution;
         $this->common = $common;
     }
 
@@ -109,10 +110,48 @@ class ShippingController extends Controller {
  */
     public function listShipping()
     {
-        $post = Input::all();
+        $post_all = Input::all();
+        $post = array();
 
-    	$result = $this->shipping->getShippingdata($post);
-    	return $this->return_response($result);
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+        $post['type'] = $post_all['cond']['type'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
+    	$result = $this->shipping->getShippingList($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        2=>array('key' => 'po.po_id', 'name' => 'PO #'),
+                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        4=>array('key' => '', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return response()->json($data);
 
     }
 
@@ -190,8 +229,8 @@ class ShippingController extends Controller {
                                 'message' => GET_RECORDS,
                                 'records' => $result['shipping'],
                                 'shipping_type' => $shipping_type,
-                                'shippingItems' => $result['shippingItems'],
-                                'shippingBoxes' => $result['shippingBoxes']
+                                'shippingItems' => $result['shippingItems']
+//                                'shippingBoxes' => $result['shippingBoxes']
                                 );
         } else {
             $response = array(
@@ -199,8 +238,8 @@ class ShippingController extends Controller {
                                 'message' => NO_RECORDS,
                                 'records' => $result['shipping'],
                                 'shipping_type' => $shipping_type,
-                                'shippingItems' => $result['shippingItems'],
-                                'shippingBoxes' => $result['shippingBoxes']
+                                'shippingItems' => $result['shippingItems']
+//                                'shippingBoxes' => $result['shippingBoxes']
                                 );
         } 
         return response()->json(["data" => $response]);
@@ -244,7 +283,7 @@ class ShippingController extends Controller {
                 {
                     $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['qnty'], 'actual' => $value['qnty'], 'md' => '0', 'spoil' => '0');
                     $id = $this->common->InsertRecords('shipping_box',$insert_data);
-                    $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id'],'shipping_id' => $value['shipping_id']));
+                    $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id'],'shipping_id' => $value['shipping_id']));
                 }
                 else
                 {
@@ -262,7 +301,7 @@ class ShippingController extends Controller {
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
                         }
                         $id = $this->common->InsertRecords('shipping_box',$insert_data);
-                        $this->common->InsertRecords('box_item_mapping',array('box_id' => $id,'item_id' => $value['id']));
+                        $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
                 }
                 $this->common->UpdateTableRecords('distribution_detail',array('id' => $value['id']),array('boxed_qnty' => $value['qnty']));
@@ -354,8 +393,9 @@ class ShippingController extends Controller {
     public function createPDF()
     {
         $post = Input::all();
+
         $shipping['shipping'] = json_decode($post['shipping']);
-        $shipping['shipping_type'] = json_decode($post['shipping_type']);
+//        $shipping['shipping_type'] = json_decode($post['shipping_type']);
         $shipping['shipping_items'] = json_decode($post['shipping_items']);
         $shipping['company_detail'] = json_decode($_POST['company_detail']);
         $shipping_boxes = json_decode($post['shipping_boxes']);
@@ -377,10 +417,10 @@ class ShippingController extends Controller {
         foreach ($shipping_boxes as $row) {
 
             $color_all_data[$row->color_name][$row->size] = $row->size;
-            $color_all_data[$row->color_name]['desc'] = $row->product_desc;
-            $color_all_data[$row->color_name][$row->size] = $row->qnty;
+            $color_all_data[$row->color_name]['desc'] = strip_tags($row->product_desc);
+            $color_all_data[$row->color_name][$row->size] = $row->box_qnty;
 
-            $total_qnty += $row->qnty;
+            $total_qnty += $row->box_qnty;
             $actual_total += $row->actual;
             $total_md += $row->md;
             $total_spoil += $row->spoil;
@@ -469,5 +509,269 @@ class ShippingController extends Controller {
         
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
+    }
+
+    public function shipOrder()
+    {
+        $post = Input::all();
+
+        $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id']),array());
+        $combine_arr = array();
+
+        $unshippedProducts = $this->shipping->getUnshippedProducts($post['order_id']);
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'unshippedProducts' => $unshippedProducts
+                    );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getProductByAddress()
+    {
+        $post = Input::all();
+        $result = $this->shipping->getProductByAddress($post);
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'products' => $result
+                    );
+        return response()->json(["data" => $response]);
+    }
+
+    public function addProductToShip()
+    {
+        $post = Input::all();
+
+        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+
+        $remaining_qty = $post['product']['remaining_qnty'] - $post['product']['distributed_qnty'];
+
+        if(!empty($shipping_data)) {
+
+            $product_address_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'product_id' => $post['product']['product_id']),array());
+
+            if(empty($product_address_data))
+            {
+                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product']['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
+            }
+            else
+            {
+                $product_address_id = $shipping_data[0]->id;
+            }
+
+            $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id']),array());
+
+            if(empty($product_data))
+            {
+                $distributed_qnty = 0;
+                $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
+            }
+            else
+            {
+                $updated_qnty = $product_data[0]->distributed_qnty + $post['product']['distributed_qnty'];
+                $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id']),array('distributed_qnty' => $updated_qnty));
+            }
+        }
+        else
+        {
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+            $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
+            $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
+        }
+        $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['product']['id']),array('remaining_qnty' => $remaining_qty));
+
+        $success=1;
+        $message=UPDATE_RECORD;
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
+    public function getShippingAddress()
+    {
+        $post = Input::all();
+
+        $allocatedAddress = $this->shipping->getAllocatedAddress($post);
+
+        $allAddress = $this->distribution->getDistAddress($post);
+
+        $assignAddresses = array();
+        $unAssignAddresses = array();
+
+        foreach ($allAddress as $address) {
+            
+            $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
+            $address->selected = 0;
+
+            $allocatedAddress2 = array();
+            if(!empty($allocatedAddress))
+            {
+                $allocatedAddress2 = explode(",", $allocatedAddress[0]->id);    
+            }
+
+            if(in_array($address->id, $allocatedAddress2))
+            {
+                $shipping = $this->common->GetTableRecords('product_address_mapping',array('address_id' => $address->id,'order_id' => $post['id']),array());
+                $address->shipping_id = $shipping[0]->shipping_id;
+                $assignAddresses[] = $address;
+            }
+            else
+            {
+                $unAssignAddresses[] = $address;
+            }
+        }
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'assignAddresses' => $assignAddresses,
+                        'unAssignAddresses' => $unAssignAddresses
+                    );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getShippingBoxes()
+    {
+        $post = Input::all();
+        $boxes = $this->shipping->getShippingBoxes($post);
+        $shippingBoxes = array();
+
+        foreach ($boxes as $box) {
+            $box->boxItems = $this->shipping->getBoxItems($box->id);
+            $shippingBoxes[$box->id] = $box;
+        }
+
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'shippingBoxes' => $shippingBoxes
+                    );
+
+        return response()->json(["data" => $response]);
+    }
+
+    public function getShippingOverview()
+    {
+        $data = Input::all();
+        $data['overview'] = 1;
+
+        $result = $this->shipping->shippingDetail($data);
+        $boxes = $this->shipping->getShippingBoxes($data);
+
+        foreach ($result['shippingItems'] as $item) {
+            $item->description = strip_tags($item->description);
+        }
+
+        $response = array(
+                        'success' => 1, 
+                        'message' => GET_RECORDS,
+                        'shippingBoxes' => $boxes,
+                        'records' => $result['shipping'],
+                        'shippingItems' => $result['shippingItems']
+                    );
+
+        return response()->json(["data" => $response]);
+    }
+
+    public function createLabel()
+    {
+        $post = Input::all();
+        $shipping = json_decode($post['shipping']);
+
+        if($shipping->shipping_type_id == 'Fedex')
+        {
+            $shipment = new \RocketShipIt\Shipment('fedex');
+
+            $shipment->setParameter('toCompany', $shipping->client_company);
+            $shipment->setParameter('toName', $shipping->description);
+            $shipment->setParameter('toPhone', $shipping->phone);
+            $shipment->setParameter('toAddr1', $shipping->address.' '.$shipping->address2);
+            $shipment->setParameter('toCity', $shipping->city);
+            $shipment->setParameter('toState', $shipping->state);
+            $shipment->setParameter('toCode', $shipping->zipcode);
+
+            $shipment->setParameter('length', '5');
+            $shipment->setParameter('width', '5');
+            $shipment->setParameter('height', '5');
+            $shipment->setParameter('weight','5');
+        }
+        else
+        {
+            $shipment = new \RocketShipIt\Shipment('UPS');
+
+            $shipment->setParameter('toCompany', $shipping->client_company);
+            $shipment->setParameter('toName', $shipping->description);
+            $shipment->setParameter('toPhone', $shipping->phone);
+            $shipment->setParameter('toAddr1', $shipping->address.' '.$shipping->address2);
+            $shipment->setParameter('toCity', $shipping->city);
+            $shipment->setParameter('toState', $shipping->state);
+            $shipment->setParameter('toCode', $shipping->zipcode);
+
+            $package = new \RocketShipIt\Package('UPS');
+            $package->setParameter('length','5');
+            $package->setParameter('width','5');
+            $package->setParameter('height','5');
+            $package->setParameter('weight','5');
+
+            $shipment->addPackageToShipment($package);
+        }
+
+        $response = $shipment->submitShipment();
+
+        foreach ($response['pkgs'] as $package) {
+            $label = $package['label_img'];
+
+            if($shipping->shipping_type_id == 'Fedex')
+            {
+                header('Content-Disposition: attachment;filename="shipping_label.png"');
+            }
+            else
+            {
+                header('Content-Disposition: attachment;filename="shipping_label.GIF"');
+            }
+            header('Content-Type: application/force-download');
+            echo base64_decode($label);
+            //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+        }
+    }
+
+    public function checkAddressValid()
+    {
+        $post = Input::all();
+
+        if($post['shipping_type_id'] == 'Fedex')
+        {
+            $av = new \RocketShipIt\AddressValidate('FedEx');
+        }
+        else
+        {
+            $av = new \RocketShipIt\AddressValidate('USPS');
+        }
+
+        $av->setParameter('toAddr1', $post['address']);
+        $av->setParameter('toAddr2', $post['address2']);
+        $av->setParameter('toCity', $post['city']);
+        $av->setParameter('toState', $post['state']);
+        $av->setParameter('toCode', $post['zipcode']);
+
+        $response = $av->validate();
+
+        $success = 0;
+        if($response['Meta']['ErrorMessage'] == '')
+        {
+            $success = 1;
+        }
+
+        $response = array(
+                        'success' => $success, 
+                        'message' => $response['Meta']['ErrorMessage']
+                    );
+
+        return response()->json(["data" => $response]);
     }
 }

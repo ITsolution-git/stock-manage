@@ -7,25 +7,85 @@
             .controller('shipmentController', shipmentController);
 
     /** @ngInject */
-    function shipmentController($document, $window, $timeout, $mdDialog)
+    function shipmentController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
-        //Dummy models data
-        vm.shipDetail = [{
-                "shippingId": "1234",
-                "orderId": "1234",
-                "product": "Product1",
-                "clientId": "1234",
-                "client": "Codal",
-                "shippingby": "xx/xx/xx",
-                "inHandBy": "xx/xx/xx",
-             }];
-        vm.productDetail = [
-            {"sizeGroup": "Mens", "product": "12345", "size": "M", "color": "Black", "distributed":"20", "shipped": "0", "boxedQty":"72", "remainingtoBox":"0"},
-            {"sizeGroup": "Mens", "product": "12345", "size": "M", "color": "Black", "distributed":"20", "shipped": "0", "boxedQty":"72", "remainingtoBox":"0"}
-        ];
-        vm.selectedOrderItems = [
-            {"sizeGroup": "Mens", "product": "12345", "size": "M", "color": "Black"}
-        ];
+
+        var combine_array_id = {};
+        combine_array_id.shipping_id = $stateParams.id;
+        combine_array_id.company_id = sessionService.get('company_id');
+
+        $http.post('api/public/shipping/shippingDetail',combine_array_id).success(function(result, status, headers, config) {
+            if(result.data.success == '1') {
+                $scope.shippingItems = result.data.shippingItems;
+                $scope.shipping_type = result.data.shipping_type;
+                $scope.shipping = result.data.records[0];
+            }
+            else {
+                $scope.shippingItems = [];
+            }
+        });
+
+        $scope.updateShippingAll = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            if(name == 'max_pack')
+            {
+                order_main_data.table ='purchase_detail';
+            }
+            else
+            {
+                order_main_data.table ='shipping';
+            }
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
+        $scope.box_shipment = function(shipping_items)
+        {
+            $("#ajax_loader").show();
+            if($scope.shipping.shipping_type_id == 0 || $scope.shipping.shipping_type_id == '')
+            {
+                var data = {"status": "error", "message": "Please select any shipping method."}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(shipping_items.length == 0){
+                $("#ajax_loader").hide();
+                    var data = {"status": "error", "message": "There are no items for boxing."}
+                    notifyService.notify(data.status, data.message);
+                    return false;
+            }
+            
+            $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
+
+                if(result.data.success == '1') {
+                    var data = {"status": "success", "message": "Boxes created Successfully."}
+                    notifyService.notify(data.status, data.message);
+                }
+                else
+                {
+                    var data = {"status": "info", "message": "Delete all boxes in the boxes tab to rebox shipment."}
+                    notifyService.notify(data.status, data.message);
+                }
+                $("#ajax_loader").hide();
+                $state.go('app.shipping.boxingdetail',{id: $stateParams.id});
+            });
+                      
+        }
     }
 })();

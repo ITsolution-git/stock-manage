@@ -20,24 +20,10 @@
                     }
                 },
                 resolve: {
-                    OrderData: function (msApi,sessionService)
+                    checksession : function (sessionService,$stateParams,$state)
                     {
-                       
-                         /*var order_list_data = {};
-                         order_list_data.cond ={company_id :sessionService.get('company_id')};*/
-                        //    return msApi.resolve('order@post',order_list_data);
-                    },OrderUserData: function (msApi,sessionService)
-                    {
-                       return msApi.resolve('orderUser@get',{id:sessionService.get('company_id')});
-                       
-                    },OrderCompanyData: function (msApi,sessionService)
-                    {
-                         var order_comp_data = {};
-                         order_comp_data.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
-                         order_comp_data.table ="client";
-
-                         //return msApi.resolve('orderClient@post',order_comp_data);
-                       //return msApi.resolve('order@post',order_list_data);
+                        
+                       return sessionService.AccessService('BC,CA');
                     }
                 }
             }).state('app.order.order-info', {
@@ -145,18 +131,7 @@
                         controller : 'AffiliateViewController as vm'
                     }
                 }
-            })
-            ;
-
-        // Translation
-       // $translatePartialLoaderProvider.addPart('app/main/order');
-
-      // Api
-      msApiProvider.register('orderUser',['api/public/common/getStaffList/:id',null, {get:{method:'get'}}]);
-      //msApiProvider.register('orderClient',['api/public/common/GetTableRecords',null, {post:{method:'post'}}]);
-  
-     
-
+            });
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

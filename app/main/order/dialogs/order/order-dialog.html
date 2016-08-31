@@ -21,6 +21,18 @@
                 <md-input-container class="first-box">
                     <input placeholder="Job Name" ng-model="order.name">
                 </md-input-container>
+
+                <md-input-container class="md-block first-box" flex-gt-sm>
+                <label>S&S Shipping method</label>
+                    <md-select ng-model="order.sns_shipping">
+                        <md-option value="1">Ground</md-option>
+                        <md-option value="2">Next Day Air</md-option>
+                        <md-option value="3">2nd Day Air</md-option>
+                        <md-option value="16">3 Day Select</md-option>
+                        <md-option value="6">Will Call / PickUp</md-option>
+                    </md-select>
+                </md-input-container>
+
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">

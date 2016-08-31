@@ -43,7 +43,7 @@
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
                     <td align="left" valign="top" width="25%">
-                        <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" />
+                        <!-- <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" /> -->
                     </td>
                     <td align="center" valign="top" width="25%" class="tableCol">
                         <span style="font-size:15px; line-height:15px;">
@@ -112,27 +112,30 @@
       else
       {
       ?>
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-          <thead class="title">
-            <tr>
-              <th align="left" valign="top" width="10%" style="border:1px solid #000000;"> Qty.</th>
-              <th align="center" valign="top" width="20%" style="border:1px solid #000000;"> Type</th>
-              <th align="left" valign="top" width="20%" style="border:1px solid #000000;"> Size</th>
-              <th align="left" valign="top" width="20%" style="border:1px solid #000000;"> Color</th>
-              <th align="left" valign="top" width="30%" style="border:1px solid #000000;"> Description</th>
-            </tr>
-          </thead>
-          <tbody class="color-grey">
-          @foreach ($shipping_boxes as $box)
-            <tr>
-              <td align="center" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
-              <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
-              <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->color_name}}</td>
-              <td align="left" valign="top" class="brdrBox" width="30%" style="border:1px solid #000000;"> {{$box->product_name}}</td>
-            </tr>
-          @endforeach
-          </tbody>
-        </table>
+        <td align="left" valign="top" width="100%">        
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <thead class="title">
+              <tr>
+                <th align="left" valign="top" width="10%" style="border:1px solid #000000;"> Qty.</th>
+                <th align="center" valign="top" width="20%" style="border:1px solid #000000;"> Type</th>
+                <th align="left" valign="top" width="20%" style="border:1px solid #000000;"> Size</th>
+                <th align="left" valign="top" width="20%" style="border:1px solid #000000;"> Color</th>
+                <th align="left" valign="top" width="30%" style="border:1px solid #000000;"> Description</th>
+              </tr>
+            </thead>
+            <tbody class="color-grey">
+            @foreach ($shipping_boxes as $box)
+              <tr>
+                <td align="center" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->boxed_qnty}}</td>
+                <td align="center" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
+                <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
+                <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->color_name}}</td>
+                <td align="left" valign="top" class="brdrBox" width="30%" style="border:1px solid #000000;"> {{$box->product_name}}</td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </td>
       <?php
       }
       ?>

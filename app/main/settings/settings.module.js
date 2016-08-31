@@ -190,7 +190,41 @@
                     }
                 }
             })
-            ;
+            .state('app.settings.vendor.contact', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
+                url  : '/contact/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/vendor/viewContact/viewContact.html',
+                        controller : 'vendordetailController as vm'
+                    }
+                }
+            }).state('app.settings.sales', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
+                url  : '/sales',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/sales/sales.html',
+                        controller : 'salesController as vm'
+                    }
+                }
+            });
         // Navigation
        /* msNavigationServiceProvider.saveItem('fuse', {
             title : '',
@@ -204,7 +238,7 @@
             //state    : 'app.settings',
             class      : 'navigation-dashboards project-dashboard settings-block',
             
-            weight   : 1
+            weight   : 15
         });
 
         msNavigationServiceProvider.saveItem('fuse.settings.userProfile', {
@@ -268,6 +302,13 @@
             stateParams: {'id': 8},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 8
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.sales', {
+            title      : 'Sales',
+            state      : 'app.settings.sales',
+            stateParams: {'id': 9},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 9
         });/*
         msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',

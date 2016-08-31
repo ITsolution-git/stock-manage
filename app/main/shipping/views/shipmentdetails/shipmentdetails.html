@@ -3,13 +3,13 @@
         <table class="tbl-typ2">
             <tr>
                 <td>
-                    <div class="header-typ1">Shipping Details for Shipment #18750</div>
+                    <div class="header-typ1">Shipping Details for Shipment #{{shipping.shipping_id}}</div>
                     <div layout="row" class="pd10">
-                        <div flex="30" layout="column" ng-repeat="ship in vm.shipDetail" class="pd10-R bdr1-R">
+                        <div flex="30" layout="column" class="pd10-R bdr1-R">
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Shipping ID</div>
-                                    <div class="gray-text">{{ ship.shippingId }}</div>
+                                    <div class="gray-text">{{ shipping.shipping_id }}</div>
                                 </div>
                                 <div layout="column" flex="50">
                                     <md-select ng-model="company.prime_address_state" placeholder="Status" class="mrg6-TB">
@@ -22,65 +22,89 @@
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Order ID</div>
-                                    <div class="gray-text">{{ ship.orderId }}</div>
+                                    <div class="gray-text">{{ shipping.order_id }}</div>
                                 </div>
-                                <div layout="column" flex="50">
-                                    <div>Product</div>
-                                    <div class="gray-text">{{ ship.product }}</div>
-                                </div>
-                            </div>
-                            <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <div>Client ID</div>
-                                    <div class="gray-text">{{ ship.clientId }}</div>
-                                </div>
-                                <div layout="column" flex="50">
-                                    <div>Client</div>
-                                    <div class="gray-text">{{ ship.client }}</div>
-                                </div>
-                            </div>
-                            <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <div>Shipping By</div>
-                                    <div class="gray-text">{{ ship.shippingby }}</div>
-                                </div>
-                                <div layout="column" flex="50">
-                                    <div>In Hand By</div>
-                                    <div class="gray-text">{{ ship.inHandBy }}</div>
-                                </div>
-                            </div>
-                            <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Boxing Type" class="mrg6-TB">
-                                        <md-option value="0">Boxing Type</md-option>
-                                        <md-option>Type1</md-option>
-                                        <md-option>Type2</md-option>
-                                    </md-select>
+                                    <div class="gray-text">{{ shipping.client_id }}</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="100">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Shipping Type" class="mrg6-TB">
-                                        <md-option value="0">Shipping Type</md-option>
-                                        <md-option>Type1</md-option>
-                                        <md-option>Type2</md-option>
-                                    </md-select>
+                                    <div>Client</div>
+                                    <div class="gray-text">{{ shipping.client_company }}</div>
                                 </div>
                             </div>
-                            <div layout="row" flex="100">
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Fully Shipped" class="mrg6-TB">
-                                        <md-option value="0">Fully Shipped</md-option>
-                                        <md-option>Yes</md-option>
-                                        <md-option>No</md-option>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <div>Client Distribution</div>
+                                    <div class="gray-text">Chris niswandee</div>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="30" class="mrg10-R mrg15-T">
+                                    <md-select ng-model="shipping.boxing_type" placeholder="Boxing Type" class="mrg6-TB" name="boxing_type" ng-change="updateShippingAll('boxing_type',shipping.boxing_type,shipping.shipping_id)">
+                                        <md-option value="">Boxing Type</md-option>
+                                        <md-option ng-selected="shipping.boxing_type==0" value="0">Retail</md-option>
+                                        <md-option ng-selected="shipping.boxing_type==1" value="1">Standard</md-option>
                                     </md-select>
                                 </div>
-                                <div layout="column" flex="50">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Date Shipped" class="mrg6-TB">
-                                        <md-option value="0">Date Shipped</md-option>
-                                        <md-option>Date1</md-option>
-                                        <md-option>Date2</md-option>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Shipping By" name="Shipping By">
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="In Hands By" name="In Hands By">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="30" class="mrg10-R mrg15-T">
+                                    <md-select ng-model="shipping.shipping_type_id" placeholder="Shipping Type" class="mrg6-TB" name="shipping_type_id" ng-change="updateShippingAll('shipping_type_id',shipping.shipping_type_id,shipping.shipping_id)">
+                                        <md-option>Shipping Type</md-option>
+                                        <md-option value="1" ng-selected="shipping.shipping_type_id == 1">UPS</md-option>
+                                        <md-option value="2" ng-selected="shipping.shipping_type_id == 2">FEDEX</md-option>
                                     </md-select>
+                                </div>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Date Shipped" name="Date Shipped">
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="35" class="mrg10-R">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Fully Shipped" name="Fully Shipped">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100">
+                                        <textarea>{{shipping.description}} {{shipping.attn}} {{shipping.address}} {{shipping.address2}} {{shipping.city}} {{shipping.zipcode}} {{shipping.state}} {{shipping.country}}</textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100">
+                                        <input placeholder="SKUs" name="SKUs">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100">
+                                        <textarea placeholder="Note" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">{{shipping.shipping_note}}</textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100">
+                                        <input placeholder="Cost To Ship" ng-model="shipping.cost_to_ship" name="cost_to_ship" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">
+                                    </md-input-container>
                                 </div>
                             </div>
                         </div>
@@ -90,9 +114,9 @@
                                     <td>
                                         <div class="header-typ1 font-13">
                                             United Center
-                                            <div class="gray-text font-11 mrg5-T">Client Distribution ID: 123456</div>
+                                            <div class="gray-text font-11 mrg5-T">Client Distribution ID: {{shipping.shipping_id}}</div>
                                         </div>
-                                        <div class="pd10-LR">
+                                        <div class="pd10-LR tbl-scroll-cntnr" ms-scroll>
                                             <div class="ms-responsive-table-wrapper">
                                                 <table class="simple hover simple-tbl1 tbl-typ3">
                                                     <thead>
@@ -109,26 +133,24 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody> 
-                                                        <tr ng-repeat="item in vm.productDetail" class="cursor-p">
-                                                            <td>{{ item.sizeGroup}}</td>
-                                                            <td>{{ item.product}}</td>
-                                                            <td>{{ item.color}}</td>
+                                                        <tr ng-repeat="item in shippingItems" class="cursor-p">
+                                                            <td>{{ item.misc_value}}</td>
+                                                            <td>{{ item.name}}</td>
+                                                            <td>{{ item.color_name}}</td>
                                                             <td>{{ item.size}}</td>
-                                                            <td>{{ item.distributed}}</td>
-                                                            <td>{{ item.shipped}}</td>
-                                                            <td>{{ item.boxedQty}}</td>
-                                                            <td>{{ item.remainingtoBox}}</td>
+                                                            <td>{{ item.qnty}}</td>
+                                                            <td>{{ item.qnty}}</td>
+                                                            <td>{{ item.boxed_qnty}}</td>
+                                                            <td>{{ item.remaining_to_box}}</td>
                                                             <td>
                                                                 <md-input-container flex="100" class="mrg0-TB">
-                                                                    <input placeholder="Max Pack" name="Max Pack">
+                                                                    <input placeholder="Max Pack" name="max_pack" ng-model ="item.max_pack" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,item.id)'}" only-number>
                                                                 </md-input-container>
                                                             </td>
                                                         </tr>                    
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="mrg10-T">Product Description</div>
-                                            <div class="gray-text mrg10-B">The text describes the product that you are going to select.</div>
                                         </div>
                                     </td>
                                 </tr>
@@ -140,8 +162,8 @@
         </table>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button aria-label="Back" ng-click="cancel()" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ng-transclude="" ui-sref="app.shipping.orderwaitship"><span class="ng-scope">Back</span>
+        <button aria-label="Back" ng-click="cancel()" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.orderwaitship({id:shipping.order_id})"><span class="ng-scope">Back</span>
         </button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Box Shipment" ui-sref="app.shipping.boxingdetail"><span class="ng-scope">Box Shipment</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Box Shipment" ng-click="box_shipment(shippingItems)"><span class="ng-scope">Box Shipment</span></button>
     </md-dialog-actions>
 </div>

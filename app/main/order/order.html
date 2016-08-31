@@ -1,21 +1,15 @@
 <div class="content order-list-page">
     <div class="simple-table-container md-whiteframe-4dp">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
+            <div class="table-title-text" flex=20 class="cursor-p">
                 Orders
             </div>
-            <!-- <div class="search-block" flex=40>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                    <input ng-model="filterBy.name" placeholder="Search by Job name or Company">
-                </md-input-container>
-            </div> -->
             <div class="search-block" flex=40>
                 <md-input-container class="md-block" flex-gt-sm>
                     <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
-            <md-icon ng-show="success==1" ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
+            <md-icon  ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
             </md-tooltip></md-icon>   
             <!--Filter Sidebar Start-->
@@ -45,25 +39,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div layout="column" class="f-box-2">
-                                <div class="f-header">
-                                    <span>
-                                        SHIP DATE 
-                                        <button ng-if="vm.shipdate" ng-click="vm.shipdate = false">
-                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                        </button>
-                                        <button ng-if="!vm.shipdate" ng-click="vm.shipdate = true">
-                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                        </button>
-                                    </span>
-                                    <md-divider ></md-divider>
-                                </div>
-                                <div class="f-body"  ng-if="vm.shipdate">
-                                    <div layout="column">
-                                        <md-datepicker ng-model="vm.shipDate" md-placeholder="Date"></md-datepicker>
-                                    </div>
-                                </div>
-                            </div> -->
                             <div layout="column" class="f-box-2">
                                 <div class="f-header">
                                     <span>
@@ -104,59 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div layout="column" class="f-box-1">
-                                <div class="f-header">
-                                    <span>
-                                        ORDER ID  
-                                        <button ng-if="vm.orderfilter" ng-click="vm.orderfilter = false">
-                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                        </button>
-                                        <button ng-if="!vm.orderfilter" ng-click="vm.orderfilter = true">
-                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                        </button>
-                                    </span>
-                                    <md-divider ></md-divider>
-                                </div>
-                                <div class="f-body scrollable"  ms-scroll ng-if="vm.orderfilter">
-                                    <div layout="column" >
-                                        <md-input-container class="md-block" flex-gt-sm>
-                                            <label>
-                                                <md-icon md-font-icon="icon-magnify"></md-icon>
-                                            </label>
-                                            <input ng-model="vm.searchOrder" >
-                                        </md-input-container>
-                                        <md-button  ng-repeat="orderId in ::vm.ordersId">
-                                            {{orderId.id}}
-                                        </md-button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div layout="column" class="f-box-2">
-                                <div class="f-header">
-                                    <span>
-                                        DATE RANGE 
-                                        <button ng-if="vm.datefilter" ng-click="vm.datefilter = false">
-                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
-                                        </button>
-                                        <button ng-if="!vm.datefilter" ng-click="vm.datefilter = true">
-                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
-                                        </button>
-                                    </span>
-                                    <md-divider ></md-divider>
-                                </div>
-                                <div class="f-body" ng-if="vm.datefilter">
-                                    <div layout="column" >
-                                        <label class="f-14">FROM</label>
-                                        <div class="date-input width100">
-                                            <input kendo-date-picker ng-model="vm.rangeFrom" k-ng-model="dateObject5" placeholder="Dates"/>
-                                    </div>
-                                    </div>
-                                    <label class="f-14">TO</label>
-                                    <div class="date-input width100">
-                                        <input kendo-date-picker ng-model="vm.rangeTo" k-ng-model="dateObject4" placeholder="Dates"/>
-                                    </div>
-                                </div>
-                            </div> -->
+                           
                         </div>
                     </md-content>
                     <div class="filter-footer" layout="row">
@@ -178,46 +101,6 @@
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
                 <table class="dataTable row-border hover">
-                    <!-- <thead>
-                        <tr>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Order ID</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Order Name</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Company</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Approval</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Date Created</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Sales Rep</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Ship Date</span>
-                                </div>
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead> -->
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr  ng-repeat-start="row in rows"  >
@@ -227,7 +110,7 @@
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>
                             <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
-                            <td>{{ row.first_name}} &nbsp; {{ row.last_name}}</td>
+                            <td>{{ row.sales_name}}</td>
                             <td>{{ row.date_shipped}}</td>
                                  <td class="accor" ng-show="row.design_pos.length > 0">
                             <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>

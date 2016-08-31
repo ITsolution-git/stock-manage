@@ -25,9 +25,12 @@ class Inline
 {
     const REGEX_QUOTED_STRING = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\']*(?:\'\'[^\']*)*)\')';
 
+    public static $parsedLineNumber;
+
     private static $exceptionOnInvalidType = false;
     private static $objectSupport = false;
     private static $objectForMap = false;
+    private static $constantSupport = false;
 
     /**
      * Converts a YAML string to a PHP array.
@@ -77,6 +80,7 @@ class Inline
         self::$exceptionOnInvalidType = (bool) (Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE & $flags);
         self::$objectSupport = (bool) (Yaml::PARSE_OBJECT & $flags);
         self::$objectForMap = (bool) (Yaml::PARSE_OBJECT_FOR_MAP & $flags);
+        self::$constantSupport = (bool) (Yaml::PARSE_CONSTANT & $flags);
 
         $value = trim($value);
 
@@ -216,6 +220,28 @@ class Inline
     }
 
     /**
+     * Check if given array is hash or just normal indexed array.
+     *
+     * @internal
+     *
+     * @param array $value The PHP array to check
+     *
+     * @return bool true if value is hash array, false otherwise
+     */
+    public static function isHash(array $value)
+    {
+        $expectedKey = 0;
+
+        foreach ($value as $key => $val) {
+            if ($key !== $expectedKey++) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Dumps a PHP array to a YAML string.
      *
      * @param array $value The PHP array to dump
@@ -226,11 +252,7 @@ class Inline
     private static function dumpArray($value, $flags)
     {
         // array
-        $keys = array_keys($value);
-        $keysCount = count($keys);
-        if ((1 === $keysCount && '0' == $keys[0])
-            || ($keysCount > 1 && array_reduce($keys, function ($v, $w) { return (int) $v + $w; }, 0) === $keysCount * ($keysCount - 1) / 2)
-        ) {
+        if ($value && !self::isHash($value)) {
             $output = array();
             foreach ($value as $val) {
                 $output[] = self::dump($val, $flags);
@@ -239,7 +261,7 @@ class Inline
             return sprintf('[%s]', implode(', ', $output));
         }
 
-        // mapping
+        // hash
         $output = array();
         foreach ($value as $key => $val) {
             $output[] = sprintf('%s: %s', self::dump($key, $flags), self::dump($val, $flags));
@@ -300,7 +322,7 @@ class Inline
             }
 
             if ($output && '%' === $output[0]) {
-                @trigger_error('Not quoting a scalar starting with the "%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', E_USER_DEPRECATED);
+                @trigger_error(sprintf('Not quoting the scalar "%s" starting with the "%%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', $output), E_USER_DEPRECATED);
             }
 
             if ($evaluate) {
@@ -380,7 +402,7 @@ class Inline
                     $value = self::parseScalar($sequence, $flags, array(',', ']'), array('"', "'"), $i, true, $references);
 
                     // the value can be an array if a reference has been resolved to an array var
-                    if (!is_array($value) && !$isQuoted && false !== strpos($value, ': ')) {
+                    if (is_string($value) && !$isQuoted && false !== strpos($value, ': ')) {
                         // embedded mapping?
                         try {
                             $pos = 0;
@@ -436,6 +458,11 @@ class Inline
 
             // key
             $key = self::parseScalar($mapping, $flags, array(':', ' '), array('"', "'"), $i, false);
+            $i = strpos($mapping, ':', $i);
+
+            if (!isset($mapping[$i + 1]) || ' ' !== $mapping[$i + 1]) {
+                @trigger_error('Omitting the space after the colon that follows a mapping key definition is deprecated since version 3.2 and will throw a ParseException in 4.0.', E_USER_DEPRECATED);
+            }
 
             // value
             $done = false;
@@ -450,6 +477,8 @@ class Inline
                         // are processed sequentially.
                         if (!isset($output[$key])) {
                             $output[$key] = $value;
+                        } else {
+                            @trigger_error(sprintf('Duplicate key "%s" detected on line %d whilst parsing YAML. Silent handling of duplicate mapping keys in YAML is deprecated since version 3.2 and will throw \Symfony\Component\Yaml\Exception\ParseException in 4.0.', $key, self::$parsedLineNumber + 1), E_USER_DEPRECATED);
                         }
                         $done = true;
                         break;
@@ -461,6 +490,8 @@ class Inline
                         // are processed sequentially.
                         if (!isset($output[$key])) {
                             $output[$key] = $value;
+                        } else {
+                            @trigger_error(sprintf('Duplicate key "%s" detected on line %d whilst parsing YAML. Silent handling of duplicate mapping keys in YAML is deprecated since version 3.2 and will throw \Symfony\Component\Yaml\Exception\ParseException in 4.0.', $key, self::$parsedLineNumber + 1), E_USER_DEPRECATED);
                         }
                         $done = true;
                         break;
@@ -474,6 +505,8 @@ class Inline
                         // are processed sequentially.
                         if (!isset($output[$key])) {
                             $output[$key] = $value;
+                        } else {
+                            @trigger_error(sprintf('Duplicate key "%s" detected on line %d whilst parsing YAML. Silent handling of duplicate mapping keys in YAML is deprecated since version 3.2 and will throw \Symfony\Component\Yaml\Exception\ParseException in 4.0.', $key, self::$parsedLineNumber + 1), E_USER_DEPRECATED);
                         }
                         $done = true;
                         --$i;
@@ -560,6 +593,19 @@ class Inline
 
                         if (self::$exceptionOnInvalidType) {
                             throw new ParseException('Object support when parsing a YAML file has been disabled.');
+                        }
+
+                        return;
+                    case 0 === strpos($scalar, '!php/const:'):
+                        if (self::$constantSupport) {
+                            if (defined($const = substr($scalar, 11))) {
+                                return constant($const);
+                            }
+
+                            throw new ParseException(sprintf('The constant "%s" is not defined.', $const));
+                        }
+                        if (self::$exceptionOnInvalidType) {
+                            throw new ParseException(sprintf('The string "%s" could not be parsed as a constant. Have you forgotten to pass the "Yaml::PARSE_CONSTANT" flag to the parser?', $scalar));
                         }
 
                         return;

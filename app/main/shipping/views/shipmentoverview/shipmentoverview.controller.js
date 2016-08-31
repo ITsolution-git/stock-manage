@@ -7,33 +7,173 @@
             .controller('shipmentOverviewController', shipmentOverviewController);
 
     /** @ngInject */
-    function shipmentOverviewController($document, $window, $timeout, $mdDialog)
+    function shipmentOverviewController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
-        //Dummy models data
-        vm.shipDetails = [{
-                "orderId": "1234",
-                "orderName": "Name of Order",
-                "shippingBy": "xx/xx/xxxx",
-                "inHandBy": "xx/xx/xxxx",
-                "status": "Ready To Ship",
-                "shippingId": "1234",
-                "product": "Stoli Tech hood",
-                "boxType": "Standard",
-                "shippingType": "UPS",
-                "clientId": "12345",
-                "clientName": "Codal",
-                "fullyShipped": "xx/xx/xxxx",
-                "dateShipped": "xx/xx/xxxx",
-             }];
-        vm.distrLoc = [
-            {"locationName": "Location Name", "locationAttn": "Name", "locationAddress": "1234 N Main St. Chicago, IL 60611 - USA", "locationPhone": "+91 123456789"},
-            {"locationName": "Location Name", "locationAttn": "Name", "locationAddress": "1234 N Main St. Chicago, IL 60611 - USA", "locationPhone": "+91 123456789"}
-        ];
-        vm.boxShipmnt = [
-            {"boxId": "34", "unitPacked": "72", "trackNo": "xxxxxxxxxxxxxx"},
-            {"boxId": "34", "unitPacked": "72", "trackNo": "xxxxxxxxxxxxxx"},
-            {"boxId": "34", "unitPacked": "72", "trackNo": "xxxxxxxxxxxxxx"}
-        ];
+
+        $scope.shipping_id = $stateParams.id;
+        var company_id = sessionService.get('company_id');
+
+        $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+                            
+            if(result.data.success == '1') 
+            {
+                $scope.allCompanyDetail =result.data.records;
+            } 
+            else
+            {
+                $scope.allCompanyDetail=[];
+            }
+        });
+
+        $scope.getShippingOverview = function()
+        {
+            $("#ajax_loader").show();
+            var combine_array = {};
+            combine_array.shipping_id = $scope.shipping_id;
+
+            $http.post('api/public/shipping/getShippingOverview',combine_array).success(function(result) {
+
+                $("#ajax_loader").hide();
+                if(result.data.success == '1') 
+                {
+                    $scope.shippingBoxes =result.data.shippingBoxes;
+                    $scope.shippingItems =result.data.shippingItems;
+                    $scope.shipping =result.data.records[0];
+
+                    if($scope.shipping.boxing_type == '0') {
+                        $scope.shipping.boxing_type = 'Retail';
+                    }
+                    if($scope.shipping.boxing_type == '1') {
+                        $scope.shipping.boxing_type = 'Standard';
+                    }
+                    if($scope.shipping.shipping_type_id == '1') {
+                        $scope.shipping.shipping_type_id = 'UPS';
+                    }
+                    if($scope.shipping.shipping_type_id == '2') {
+                        $scope.shipping.shipping_type_id = 'Fedex';
+                    }
+                }
+            });
+        }
+        $scope.getShippingOverview();
+
+        $scope.submitForm = function()
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/createLabel';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var shipping = document.createElement('input');
+            shipping.name = 'shipping';
+            shipping.setAttribute('value', JSON.stringify($scope.shipping));
+            form.appendChild(shipping);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        $scope.printLAbel = function()
+        {
+            if($scope.shipping.address == '')
+            {
+                notifyService.notify('error','address is compulsory');
+                return false;
+            }
+            if($scope.shipping.address2 == '')
+            {
+                notifyService.notify('error','address2 is compulsory');
+                return false;
+            }
+            if($scope.shipping.city == '')
+            {
+                notifyService.notify('error','city is compulsory');
+                return false;
+            }
+            if($scope.shipping.state == '')
+            {
+                notifyService.notify('error','state is compulsory');
+                return false;
+            }
+            if($scope.shipping.zipcode == '')
+            {
+                notifyService.notify('error','zipcode is compulsory');
+                return false;
+            }
+            if($scope.shipping.shipping_type_id == '' || $scope.shipping.shipping_type_id == 0)
+            {
+                notifyService.notify('error','Please select shipping method');
+                return false;
+            }
+
+            $http.post('api/public/shipping/checkAddressValid',$scope.shipping).success(function(result) {
+
+                if(result.data.success == '1')
+                {
+                    $scope.submitForm();
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                    return false;
+                }
+            });
+
+            /*var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/createLabel';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var shipping = document.createElement('input');
+            shipping.name = 'shipping';
+            shipping.setAttribute('value', JSON.stringify($scope.shipping));
+            form.appendChild(shipping);
+
+            document.body.appendChild(form);
+            form.submit();*/
+        }
+
+        $scope.print_pdf = function(method)
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/createPDF';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var print_type = document.createElement('input');
+            print_type.name = 'print_type';
+            print_type.setAttribute('value', method);
+            form.appendChild(print_type);
+
+            var shipping = document.createElement('input');
+            shipping.name = 'shipping';
+            shipping.setAttribute('value', JSON.stringify($scope.shipping));
+            form.appendChild(shipping);
+
+            var shipping_items = document.createElement('input');
+            shipping_items.name = 'shipping_items';
+            shipping_items.setAttribute('value', JSON.stringify($scope.shippingItems));
+            form.appendChild(shipping_items);
+
+            var shipping_boxes = document.createElement('input');
+            shipping_boxes.name = 'shipping_boxes';
+            shipping_boxes.setAttribute('value', JSON.stringify($scope.shippingBoxes));
+            form.appendChild(shipping_boxes);
+
+            var input_company_detail = document.createElement('input');
+            input_company_detail.name = 'company_detail';
+            input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
+            form.appendChild(input_company_detail);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
     }
 })();

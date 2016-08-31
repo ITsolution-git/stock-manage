@@ -8,21 +8,29 @@
 
     /** @ngInject */
 
-    function OrderController(OrderData,OrderUserData,OrderCompanyData, $q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function OrderController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
         var vm = this;
         vm.resetFilter = resetFilter;
         vm.showDatePicker = showDatePicker;
         $scope.role = sessionService.get('role_slug');
         // Data
 
-        vm.salesCheckData = OrderUserData.data.records;
-        //vm.companyCheck = OrderCompanyData.data.records;
+        var company_id = sessionService.get('company_id');
+        
+
+           $http.get('api/public/common/getStaffList/'+company_id).success(function(result, status, headers, config) 
+              {
+                  if(result.data.success == '1') 
+                  {
+                      vm.salesCheckData = result.data.records;
+                  } 
+                  
+              });
+
+       
 //1. sales rep
         vm.salesCheckModal = [];
-        //vm.salesCheckData = [{id: 1, "label": "Nick Santo"}, {id: 2, "label": "Kemal Baxi"}, {id: 3, "label": "Kemal Baxi"}, {id: 4, "label": "Kemal Baxi"}, {id: 5, "label": "Kemal Baxi"}, {id: 6, "label": "Nick Santo"}, {id: 7, "label": "Nick Santo"}, ];
-        
-/*        vm.shipDate;
-        vm.shipdate = false;*/
+       
         //3. create date
         vm.createDate;
         vm.createdate = false;

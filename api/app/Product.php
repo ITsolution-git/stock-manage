@@ -82,11 +82,50 @@ class Product extends Model {
         if(isset($data['where']['search']))
         {
             $search = $data['where']['search'];
-            $sql = DB::table('products')
+
+             $brand = DB::table('brand')
+                        ->select(DB::raw('GROUP_CONCAT(id) as brand_id'))
+                        ->where('brand_name', 'LIKE', '%'.$search.'%')
+                        ->get();
+
+            if($brand[0]->brand_id == '')
+            {
+                $brand = array();
+            }
+
+
+            if(is_numeric($search) && $data['where']['vendor_id'] == 1)
+            {
+                 $sql = DB::table('products')
+                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                        ->orWhere('id','=',$search)
+                        ->orWhere('name', 'LIKE', '%'.$search.'%')
+                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
+                        ->get();
+            }
+            else if($data['where']['vendor_id'] == 1 && count($brand)>0)
+            {
+                $brand_id_array = explode(",",$brand[0]->brand_id);
+
+                $sql = DB::table('products')
+                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                        ->where('vendor_id' , '=', $data['where']['vendor_id']);
+                        $sql = $sql->Where(function($query) use($search)
+                        {
+                            $query->orWhere('name', 'LIKE', '%'.$search.'%');
+                        });
+                        $sql = $sql->orWhereIn('brand_id' ,$brand_id_array)
+                        ->get();
+            }
+            else
+            {
+                $sql = DB::table('products')
                         ->select(DB::raw('GROUP_CONCAT(id) as products'))
                         ->where('name', 'LIKE', '%'.$search.'%')
                         ->where('vendor_id' , '=', $data['where']['vendor_id'])
                         ->get();
+            }
+            
             if(count($sql)>0)
             {
                 $product_id_array = explode(",",$sql[0]->products);
@@ -287,12 +326,17 @@ class Product extends Model {
 
     public function addProduct($post) {
 
+         if(!isset($post['warehouse']))
+            {
+                $post['warehouse'] = '';
+            }
+
         if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
         }
         else
         {
-            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
         }
 
         if($post['action'] == 'Add') {
@@ -312,27 +356,36 @@ class Product extends Model {
                             ->get();
             $design_product_id = $result_design[0]->id;
         }
+
+
        
         $delete = DB::table('purchase_detail')->where('design_product_id','=',$design_product_id)->delete();
 
         foreach($post['productData'] as $row) {
 
+
+
             $sku = 0;
             if(isset($row['sku'])) {
                 $sku = $row['sku'];
             }
+
             if(!isset($row['qnty']))
             {
                 $row['qnty'] = 0;
             }
+            
             if(isset($row['customerPrice'])) {
                 $price = $row['customerPrice'];
             }
+            
             if(isset($row['customer_price'])) {
                 $price = $row['customer_price'];
             }
             
-            $insert_purchase_array = array('design_id'=>$post['id'],
+            if($row['qnty'] > 0) {
+
+                  $insert_purchase_array = array('design_id'=>$post['id'],
                 'design_product_id'=>$design_product_id,
                 'product_id'=>$post['product_id'],
                 'size'=>$row['sizeName'],
@@ -343,6 +396,10 @@ class Product extends Model {
                 'date'=>$post['created_date']);
 
             $result = DB::table('purchase_detail')->insert($insert_purchase_array);
+            
+            }
+            
+              
         }
         return true;
     }
@@ -386,13 +443,13 @@ class Product extends Model {
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id'];
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
                          ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
                          ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
-                         ->leftJoin('purchase_detail as pcs', 'p.id', '=', 'pcs.product_id')
+                         ->leftJoin('purchase_detail as pcs', 'dp.id', '=', 'pcs.design_product_id')
                          ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
                          ->select($listArray)
                          ->where($where)
@@ -404,19 +461,73 @@ class Product extends Model {
 
         if(!empty($productData) && $productData[0]->id > 0)
         {
+            $total_price = 0;
+            $total_product = 0;
             foreach ($productData as $product) {
                 $sizeData = DB::table('purchase_detail as pd')
                                      ->where('pd.design_product_id','=',$product->design_product_id)
                                      ->get();
                 $product->sizeData = $sizeData;
-                $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
-                $combine_array[$product->id] = $product;
+
+                $total_qnty = DB::table('purchase_detail')
+                                     ->select(DB::raw('SUM(qnty) as total_qnty'),DB::raw('SUM(price) as total_price'))
+                                     ->where('design_product_id','=',$product->design_product_id)
+                                     ->get();
+
+                $product->total_qnty = $total_qnty[0]->total_qnty;
+                $product->total_price = round($total_qnty[0]->total_price,2);
+
+                $total_price += $product->total_price;
+                $total_product += $product->total_qnty;
+
+                if($product->vendor_id >1){
+                    $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
+                } else {
+                    $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
+                }
+                
+                $combine_array['productData'][$product->id] = $product;
+
+                $whereConditions = ['order_id' => $product->order_id,'design_id' => $product->design_id,'product_id'=>$product->id];
+                $items = DB::table('order_item_mapping')->where($whereConditions)->get();
+
+                $order = DB::table('orders')->where('id','=',$product->order_id)->get();
+
+                $whereConditions = ['price_id' => $order[0]->price_id,'is_per_order' => '1'];
+                $order_items = DB::table('price_grid_charges')->where($whereConditions)->get();
+
+                $product_finishing_data = array();
+                foreach ($order_items as $order_item)
+                {
+                    $i = 0;
+                    foreach ($items as $item)
+                    {
+                        if($item->item_id == $order_item->id)
+                        {
+                            $i = 1;
+                        }
+                    }
+                    
+                    if($i == 1)
+                    {
+                        $order_item->selected = '1';
+                        $product->order_items[] = $order_item;
+                    }
+                    else
+                    {
+                        $order_item->selected = '0';
+                        $product->order_items[] = $order_item;
+                    }
+                }
             }
+            $combine_array['total_product'] = $total_product;
+            $combine_array['total_price'] = $total_price;
         }
         else
         {
             return array();
         }
+
         return $combine_array;
     }
 
@@ -430,7 +541,7 @@ class Product extends Model {
         $purchaseDetail = array();
         foreach ($result as $key=>$alldata){
           
-                 $purchaseDetail[$alldata->size] = $alldata->qnty;
+                 $purchaseDetail[$alldata->color_id][$alldata->size] = $alldata->qnty;
           }
         
         return $purchaseDetail;
@@ -464,9 +575,10 @@ class Product extends Model {
 
         $whereConditions = ['product.is_delete' => "1",'product.company_id' => $post['company_id']];
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS product.*')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS product.*,v.name_company')];
 
         $productData = DB::table('products as product')
+                         ->leftJoin('vendors as v', 'v.id', '=', 'product.vendor_id')
                          ->select($listArray)
                          ->where($whereConditions);
                         
@@ -476,6 +588,8 @@ class Product extends Model {
                           {
                               $query->orWhere('product.name', 'LIKE', '%'.$search.'%');
                               $query->orWhere('product.id', '=', $search);
+                               $query->orWhere('v.name_company', 'LIKE', '%'.$search.'%');
+
                           });
                         }
                         
@@ -531,11 +645,15 @@ class Product extends Model {
         }
 
 
+        $combine_array['product_image_url'] = UPLOAD_PATH.$post['company_id']."/products/".$productName[0]->id."/".$productName[0]->product_image;
         $combine_array['productColorSizeData'] = $all_array;
         $combine_array['vendor_id'] = $productName[0]->vendor_id;
         $combine_array['product_name'] = $productName[0]->name;
         $combine_array['product_id'] = $productName[0]->id;
         $combine_array['product_description'] = $productName[0]->description;
+        $combine_array['product_image'] = $productName[0]->product_image;
+        
+
 
         return $combine_array;
     }
@@ -590,9 +708,44 @@ class Product extends Model {
                         ->leftJoin('products as p', 'p.vendor_id', '=', 'v.id')
                         ->select(DB::raw('COUNT(DISTINCT p.id) as total'),'v.id','v.name_company')
                         ->where('v.company_id' , '=', $company_id)
+                        ->where('v.is_delete' , '=', '1')
+                        ->orWhere('v.company_id' , '=', '0')
                         ->GroupBy('v.id')
                         ->get();
 
         return $vendorData;
+    }
+
+    public function getAffiliateDesignProduct($design_id)
+    {
+        $whereConditions = ['dp.design_id' => $design_id,'dp.assign_to_affiliate' => '0'];
+        $productData = DB::table('products as p')
+                         ->leftJoin('design_product as dp', 'p.id', '=', 'dp.product_id')
+                         ->select('p.name as product_name','dp.id as design_product_id')
+                         ->where($whereConditions)
+                         ->get();
+        
+        return $productData;
+    }
+
+    public function getSnsProductDetail($id) {
+
+     
+        $where = ['od.order_id' => $id,'dp.is_delete' => '1','pcs.sku' => '!=0','pcs.is_distribute' => '0','pcs.qnty' => '>0'];
+      
+        $listArray = ['pcs.*','dp.warehouse'];
+
+        $productData = DB::table('order_design as od')
+                         ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                         ->leftJoin('purchase_detail as pcs', 'dp.id', '=', 'pcs.design_product_id')
+                         ->select($listArray)
+                         ->where('od.order_id','=',$id)
+                         ->where('dp.is_delete','=','1')
+                         ->where('pcs.sku','!=','0')
+                         ->where('pcs.is_distribute','=','0')
+                         ->where('pcs.qnty','>','0')
+                         ->get();
+        
+        return $productData;
     }
 }

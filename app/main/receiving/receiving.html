@@ -1,4 +1,4 @@
-<div class="content order-list-page receving">
+<div class="content order-list-page puchase-order-page">
     <div class="simple-table-container md-whiteframe-4dp">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20 class="cursor-p" >
@@ -6,56 +6,39 @@
             </div>
             <div class="search-block" flex=25>
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                    <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
-            <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon> 
+           <!--  <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon>  -->
         </div>
-        <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions" >
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
+            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                 <table class="dataTable row-border hover">
+
+                    <thead tasty-thead></thead>
+                    <tbody >
+                        <tr ng-repeat="purchase in rows">
+                            <td class="">{{purchase.po_id}}</td>
+                            <td class="">{{purchase.id}}</td>
+                            <td class="">{{purchase.po_type}}</td>
+                            <td class="">{{purchase.client_company}}</td>
+                            <td class="">{{purchase.name_company}}</td>
+                            <td class=""> {{purchase.date}}</td>
+                            <td><a class="font-12" class="cursor-p" ui-sref="app.receiving.receivingInfo({id:purchase.po_id})">View</a></td> 
+                            <!-- <td class="" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})"> View</td> -->
+                        </tr>
+                    </tbody> 
+                </table>
+                <div tasty-pagination class="tasty-page"></div>
+            </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
                 <thead>
                     <tr>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">RO #</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header" >
-                                <span class="column-title color-b-grey">Order ID</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Client Name</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Vendor/Affiliate</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title color-b-grey">Date Created</span>
-                            </div>
-                        </th>
-                        <th></th>
+                        <th>No Records Found</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr ng-repeat="receivings in ::vm.receiving"  class="cursor-p"  >
-                        <td>{{ receivings.rid}}</td>
-                        <td>{{ receivings.orderId}}</td>
-                        <td>{{ receivings.clientName}}</td>
-                        <td>{{ receivings.vender}}</td>
-                        <td>{{ receivings.dateCreated}}</td>
-                        <td class="accor details-control text-right">
-                            <a ui-sref="app.receiving.receivingInfo({id:receivings.rid})">RECEIVE PO</a>
-                        </td>
-                    </tr>                    
-                </tbody>
             </table>
         </div>
     </div>

@@ -7,13 +7,17 @@
         .controller('AddProductController', AddProductController);
 
     /** @ngInject */
-    function AddProductController(product_id,operation,design_id,color_id,is_supply,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout)
+
+    function AddProductController(product_id,operation,design_id,color_id,is_supply,size_group_id,vendor_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout,AllConstant)
     {
         var vm = this;
         $scope.product_id = product_id;
+        $scope.NoImage = AllConstant.NoImage;
+        $scope.vendor_id = vendor_id;
+
         $scope.operation = operation;
         var companyData = {};
-        companyData.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1',vendor_id :0};
+        companyData.cond ={is_delete :'1',status :'1',vendor_id :$scope.vendor_id};
         companyData.table ='products';
 
         $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
@@ -28,16 +32,30 @@
                 }
         });
 
+
+         var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                  $scope.miscData = result.data.records;
+        });
+
+
         $scope.changeProduct = function(id,color_id,operation)
         {
             var combine_array_id = {}
             combine_array_id.id = id;
             combine_array_id.design_id = design_id;
+            combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/product/getProductDetailColorSize',combine_array_id).success(function(result) {
 
                 $scope.productId =result.data.product_id;
                 $scope.productColorSize =result.data.productColorSizeData;
+                $scope.product_image_url =result.data.product_image_url;
+                $scope.product_image =result.data.product_image;
 
                 if(operation == 'Add') {
                     $scope.color_id = '0';
@@ -63,7 +81,7 @@
             }
         }
 
-       $scope.addProduct = function (productData,product_id,is_supply)
+       $scope.addProduct = function (productData,product_id,is_supply,size_group_id)
        {
             if(product_id == undefined) {
                 var data = {"status": "error", "message": "Please select product"}
@@ -83,6 +101,7 @@
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
             combine_array_id.is_supply = is_supply;
+            combine_array_id.size_group_id = size_group_id;
             combine_array_id.action = operation;
 
             $scope.execute = 0;
@@ -121,6 +140,9 @@
 
             $scope.product_id = product_id;
             $scope.color_id = color_id;
+            $scope.size_group_id = size_group_id;
+
+
 
             $scope.is_supply = false;
             if(is_supply == 1) {

@@ -7,72 +7,60 @@
         .controller('AddAddressController', AddAddressController);
 
     /** @ngInject */
-    function AddAddressController($mdDialog)
+    function AddAddressController(Orders,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
-        var vm = this;
-        vm.title = 'Add New Distribution Address';
+        $scope.client_id = Orders.client_id;
+        $scope.addAddress={
+            "description":"",
+            "attn":"",
+            "address":"",
+            "address2":"",
+            "city":"",
+            "zipcode":"",
+            "phone":"",
+            "state":"",
+            "client_id":$scope.client_id,
+            "country":"USA"
+        };
 
-        // Data
-        vm.orderInfo={
-          "customerPo":"######",
-         "sales":"keval Baxi",
-         "blind":"Yes",
-         "accountManger":"Nancy McPhee",
-         "mainContact":"Joshi Goodman",
-         "priceGrid":"ABC Grid"
-        };
-        vm.addAddress={
-          "description":"",
-         "attn":"",
-         "address1":"",
-         "address2":"",
-         "city":"",
-         "zipcode":"",
-         "phone":""
-        };
-        vm.addOrder={
-            companyName:"Company Name",
-            jobName:""
-        };
-          vm.stateSelect = {
-            "stateOption":
-                    [
-                        {"option": "State 1"},
-                        {"option": "State 2"},
-                        {"option": "State 3"}
-                    ],
-            "state": ""
+        var state = {};
+        state.table ='state';
 
-        };
-          vm.countrySelect = {
-            "countryOption":
-                    [
-                        {"option": "Country 1"},
-                        {"option": "Country 2"},
-                        {"option": "Country 3"}
-                    ],
-            "country": ""
+        $http.post('api/public/common/GetTableRecords',state).success(function(result) 
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.states_all = result.data.records;
+            }
+        });
 
-        };
-   
-        vm.addDesign={
-            compnayName:"",
-            "front":"",
-            back:"",
-            sideLeft:"",
-            sideRight:"",
-            top:"",
-            bottom:""
-            
+        $scope.save = function()
+        {
+            if($scope.addAddress.description == '')
+            {
+                notifyService.notify('error','Please enter description');
+                return false;
+            }
+            if($scope.addAddress.address == '')
+            {
+                notifyService.notify('error','Please enter address');
+                return false;
+            }
+
+            var InserArray = {}; // INSERT RECORD ARRAY
+            InserArray.cond = {client_id:$scope.client_id};
+            InserArray.data = $scope.addAddress;
+            InserArray.table = 'client_distaddress';
+            // INSERT API CALL
+            $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
+            {
+                notifyService.notify('success','Record added successfully');
+                $mdDialog.hide();
+            });
+
         }
-        // Methods
-    
-        vm.closeDialog = closeDialog;
-     
-        /**
-         * Close dialog
-         */
-        function closeDialog()
+        
+        $scope.closeDialog = function()
         {
             $mdDialog.hide();
         }

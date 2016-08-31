@@ -24,11 +24,11 @@ class Order extends Model {
         $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['company_id'],'order.parent_order_id' => '0'];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.name,order.created_date,order.approved_date,order.date_shipped,
-                      order.status,order.approval_id,client.client_company,misc_type.value as approval,staff.first_name,staff.last_name')];
+                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name')];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
+                         ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
                          ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                          ->select($listArray)
                          ->where($whereConditions);
@@ -38,7 +38,7 @@ class Order extends Model {
                           $orderData = $orderData->Where(function($query) use($search)
                           {
                               $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('staff.first_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('sales.sales_name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
                           });
@@ -80,14 +80,15 @@ class Order extends Model {
       
         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
-        $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','staff.first_name',
-                      'staff.last_name','users.name','cc.first_name as client_first_name',
+        $listArray = ['order.*','order.name as order_name','client.client_company','misc_type.value as approval','sales.sales_name',
+                      'users.name','cc.first_name as client_first_name','i.id as invoice_id',
                       'cc.last_name as client_last_name','price_grid.name as price_grid_name'];
 
         $orderDetailData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('staff as staff','order.sales_id','=', 'staff.id')
+                         ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
+                         ->leftJoin('invoice as i','order.id','=', 'i.order_id')
                          ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "));
                          if(isset($data['is_affiliate']))
                          {
@@ -102,6 +103,7 @@ class Order extends Model {
                          $orderDetailData = $orderDetailData->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
                          ->select($listArray)
                          ->where($whereConditions)
+                         ->GroupBy('order.id')
                          ->get();
 
         $combine_array = array();
@@ -414,9 +416,10 @@ public function saveColorSize($post)
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*'];
+        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id'];
 
         $designDetailData = DB::table('order_design as od')
+                         ->leftJoin('orders as o','od.order_id','=', 'o.id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
@@ -432,10 +435,15 @@ public function saveColorSize($post)
 
         $whereOrderPositionConditions = ['odp.design_id' => $data['id'],'odp.is_delete' => "1"];
 
-        $listArray = ['odp.*','m.value as position_name'];
+        $listArray = ['odp.*','m.value as position_name','mt.value as placement_type_name','odp.position_id as duplicate_position_id','o.price_id','p.foil',
+                      'p.number_on_dark','p.number_on_dark','p.over_size_screens','p.ink_changes','p.number_on_light','p.discharge','p.discharge','p.specialty','p.press_setup','p.screen_fees'];
 
         $orderPositionData = DB::table('order_design_position as odp')
                             ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
+                            ->leftJoin('misc_type as mt','odp.placement_type','=', 'mt.id')
+                            ->leftJoin('order_design as od','odp.design_id','=', 'od.id')
+                            ->leftJoin('orders as o','od.order_id','=', 'o.id')
+                            ->leftJoin('price_grid as p','o.price_id','=', 'p.id')
                             ->where($whereOrderPositionConditions)
                             ->select($listArray)
                             ->get();
@@ -447,15 +455,57 @@ public function saveColorSize($post)
         if(count($combine_array['order_design_position'])>0)
         {
             $total_pos_qnty = 0;
+            $total_screen_fees = 0;
             foreach ($combine_array['order_design_position'] as $key => $value) 
             {
+
+               
+               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup) + ($value->screen_fees_qnty * $value->screen_fees);
+               $combine_array['order_design_position'][$key]->total_price = round($combine_array['order_design_position'][$key]->total_price, 2);
+               $combine_array['order_design_position'][$key]->position_header_name = $value->position_name;
+               $combine_array['order_design_position'][$key]->qnty_header_name = $value->qnty;
+               $combine_array['order_design_position'][$key]->stitch_header_name = $value->color_stitch_count;
+               $combine_array['order_design_position'][$key]->placement_header_name = $value->placement_type_name;
+
+                 /*$combine_array['order_design_position'][$key]->position_header_name = $value->position_name.'-'.$value->qnty;
+
+                 if($value->color_stitch_count != ''){
+                  $combine_array['order_design_position'][$key]->position_header_name .= '-'.$value->color_stitch_count;
+                 }
+
+                 if($value->placement_type_name != ''){
+                   $combine_array['order_design_position'][$key]->position_header_name .= '-'.$value->placement_type_name;
+                 }*/
+                 
                 $combine_array['order_design_position'][$key]->image_1_url_photo = (!empty($value->image_1))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_1:'';
                 $combine_array['order_design_position'][$key]->image_2_url_photo = (!empty($value->image_2))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_2:'';
                 $combine_array['order_design_position'][$key]->image_3_url_photo = (!empty($value->image_3))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_3:'';
                 $combine_array['order_design_position'][$key]->image_4_url_photo = (!empty($value->image_4))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_4:'';
+                
                 $total_pos_qnty += $value->qnty;
+                $total_screen_fees += $value->screen_fees_qnty * $value->screen_fees;
+
+                $value->position_image = '';
+                
+                if($combine_array['order_design_position'][$key]->image_1_url_photo != '')
+                {
+                  $value->position_image = $combine_array['order_design_position'][$key]->image_1_url_photo;
+                }
+                else if($combine_array['order_design_position'][$key]->image_2_url_photo != '')
+                {
+                  $value->position_image = $combine_array['order_design_position'][$key]->image_2_url_photo;
+                }
+                else if($combine_array['order_design_position'][$key]->image_3_url_photo != '')
+                {
+                  $value->position_image = $combine_array['order_design_position'][$key]->image_3_url_photo;
+                }
+                else if($combine_array['order_design_position'][$key]->image_4_url_photo != '')
+                {
+                  $value->position_image = $combine_array['order_design_position'][$key]->image_4_url_photo;
+                }
             }
             $combine_array['total_pos_qnty'] = $total_pos_qnty;
+            $combine_array['total_screen_fees'] = $total_screen_fees;
          }
          
         return $combine_array;
@@ -490,7 +540,7 @@ public function saveColorSize($post)
     public function orderDetailInfo($data) {
       
         $whereConditions = ['is_delete' => "1",'id' => $data['id'],'company_id' => $data['company_id']];
-        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id'];
+        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping'];
 
         $orderDetailData = DB::table('orders')
                          ->select($listArray)
@@ -530,9 +580,9 @@ public function saveColorSize($post)
         return $orderData;
     }
     
-    public function getTotalQntyByDesign($design_id)
+    public function getTotalQntyByProduct($design_id,$product_id)
     {
-        $whereConditions = ['design_id' => $design_id,'dp.is_delete' => '1'];
+        $whereConditions = ['design_id' => $design_id,'dp.is_delete' => '1','product_id' => $product_id];
 
         $orderData = DB::table('purchase_detail as dp')
                          ->select(DB::raw('sum(qnty) as total_qnty'))
@@ -555,22 +605,22 @@ public function saveColorSize($post)
     }
     public function getShippedByOrder($data)
     {
-        $whereConditions = ['od.order_id' => $data['id'],'is_distribute' => '1'];
-        $listArray = [DB::raw('SUM(pd.qnty) as total')];
-        $qntyData = DB::table('purchase_detail as pd')
-                         ->leftJoin('order_design as od','pd.design_id','=','od.id')
+        $whereConditions = ['pam.order_id' => $data['id']];
+        $listArray = [DB::raw('SUM(pas.distributed_qnty) as total')];
+        $qntyData = DB::table('product_address_mapping as pam')
+                         ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
 
         return $qntyData[0]->total;
     }
-    public function getFinishingCount($company_id)
+    public function getFinishingCount($order_id)
     {
-        $whereConditions = ['company_id' => $company_id, 'is_finish' => '1'];
+        $whereConditions = ['order_id' => $order_id, 'is_delete' => '1'];
 
-        $orderData = DB::table('orders')
-                         ->select(DB::raw('COUNT(id) as total'))
+        $orderData = DB::table('finishing')
+                         ->select(DB::raw('COUNT(order_id) as total'))
                          ->where($whereConditions)
                          ->get();
 
@@ -578,7 +628,7 @@ public function saveColorSize($post)
     }
     public function getDesignTotal($order_id)
     {
-        $whereConditions = ['od.order_id' => $order_id];
+        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1'];
         $listArray = [DB::raw('SUM(dp.sales_total) as total')];
         $qntyData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp','dp.design_id','=','od.id')
@@ -587,5 +637,156 @@ public function saveColorSize($post)
                          ->get();
 
         return $qntyData[0]->total;
+    }
+    public function getPoByOrder($order_id,$type)
+    {
+      $result = DB::table('purchase_order as po')
+                ->leftJoin('orders as ord','po.order_id','=','ord.id')
+                ->leftJoin('client as cl','ord.client_id','=','cl.client_id')
+                ->leftJoin('vendors as v','v.id','=','po.vendor_id')
+                ->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type',DB::raw('DATE_FORMAT(po.date,"%m/%d/%Y") as date'))
+                ->where('ord.status','=','1')
+                ->where('ord.is_delete','=','1')
+                ->where('ord.id','=',$order_id);
+                if($type == 'ro')
+                {
+                  $result = $result->where('po.complete','=','1');
+                }
+                $result = $result->GroupBy('po.po_id')
+                ->get();
+
+      return $result;
+    }
+
+    public function checkDuplicatePositions($design_id,$position)
+    {
+     
+       $whereConditions = ['status' => '1','is_delete' => '1','design_id' => $design_id];
+       $listArray = ['position_id'];
+       $designData = DB::table('order_design_position')
+                        ->select($listArray)
+                        ->where($whereConditions)->get();
+                     
+      $position_array = array();
+      $duplicate =  0;
+      foreach($designData as $datanew) {
+          if($datanew->position_id == $position) {
+             $duplicate =  1;
+          }
+      }
+        return $duplicate;
+    }
+
+    public function getPoNotes($order_id)
+    {
+        $whereConditions = ['po.order_id' => $order_id,'pn.is_deleted' => '1'];
+
+        $orderData = DB::table('purchase_order as po')
+                        ->leftJoin('orders as ord','po.order_id','=','ord.id')
+                        ->leftJoin('purchase_notes as pn','pn.po_id','=','po.po_id')
+                        ->select(DB::raw('COUNT(pn.note) as total'))
+                        ->where($whereConditions)
+                        ->get();
+
+        return $orderData[0]->total;
+    }
+
+    public function getTotalPackingCharge($order_id)
+    {
+        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1'];
+        $listArray = [DB::raw('SUM(dp.extra_charges) as total')];
+        $qntyData = DB::table('order_design as od')
+                         ->leftJoin('design_product as dp','dp.design_id','=','od.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $qntyData[0]->total;
+    }
+
+
+   
+
+
+         public function orderInfoData($company_id,$order_id) {
+      
+            $whereConditions = ['is_delete' => "1",'id' => $order_id,'company_id' => $company_id];
+            $orderDetailData = DB::table('orders')
+                             ->select('*')
+                             ->where($whereConditions)
+                             ->get();
+
+           return $orderDetailData;
+      }
+
+
+       public function GetOrderDetailAll($orderId) {
+
+     
+        
+        $where = ['o.id' => $orderId,'o.is_delete' => '1','od.is_delete' => '1','dp.is_delete' => '1','pcs.is_delete' => '1','p.is_delete' => '1','v.is_delete' => '1'];
+
+        $listArray = ['p.id','p.name as product_name','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
+                        'c.name as color_name','dp.id as design_product_id','p.vendor_id'];
+
+        $productData = DB::table('orders as o')
+                         ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
+                         ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                         ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
+                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                         ->leftJoin('purchase_detail as pcs', 'dp.id', '=', 'pcs.design_product_id')
+                         ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
+                         ->select($listArray)
+                         ->where($where)
+                         ->GroupBy('dp.id')
+                         ->orderBy('dp.id','desc')
+                         ->get();
+
+        $combine_array = array();
+
+        if(!empty($productData) && $productData[0]->id > 0)
+        {
+            
+            foreach ($productData as  $key=>$product) {
+
+                $sizeData = DB::table('purchase_detail as pd')
+                                     ->where('pd.design_product_id','=',$product->design_product_id)
+                                     ->get();
+                $product->sizeData = $sizeData;
+
+
+                $total_qnty = DB::table('purchase_detail')
+                                     ->select(DB::raw('SUM(qnty) as total_qnty'))
+                                     ->where('design_product_id','=',$product->design_product_id)
+                                     ->get();
+
+                $product->total_qnty = $total_qnty[0]->total_qnty; 
+               
+                $combine_array[] = $product;
+            }
+        }
+        else
+        {
+            return array();
+        }
+
+        return $combine_array;
+    }
+
+
+     public function orderChargeData($orderId) {
+
+        $where = ['o.id' => $orderId,'o.is_delete' => '1','od.is_delete' => '1','odp.is_delete' => '1'];
+
+
+        $productData = DB::table('orders as o')
+                         ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
+                         ->leftJoin('order_design_position as odp', 'od.id', '=', 'odp.design_id')
+                          ->select(DB::raw('sum(foil_qnty) as foil_qnty'),DB::raw('sum(number_on_dark_qnty) as number_on_dark_qnty'),DB::raw('sum(oversize_screens_qnty) as oversize_screens_qnty'),DB::raw('sum(ink_charge_qnty) as ink_charge_qnty'),DB::raw('sum(number_on_light_qnty) as number_on_light_qnty'),DB::raw('sum(discharge_qnty) as discharge_qnty'),DB::raw('sum(speciality_qnty) as speciality_qnty'))
+                         ->where($where)
+                         ->get();
+
+        return $productData;
+        
     }
 }

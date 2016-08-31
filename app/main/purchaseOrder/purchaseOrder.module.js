@@ -20,12 +20,18 @@
                     }
                 },
                 resolve: {
-                    PurchaseOrderData: function (msApi)
+                   checksession : function (sessionService)
                     {
-                        return msApi.resolve('purchaseOrder@get');
-                    }
+                        return sessionService.AccessService('CA,BC');
+                    },
                 }
             }).state('app.purchaseOrder.companyPO', {
+                resolve: {
+                   checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('CA,BC');
+                    },
+                },
                 url  : '/companyPO/:id',
                 views: {
                     'content@app': {
@@ -34,6 +40,12 @@
                     }
                 }
             }).state('app.purchaseOrder.viewNote', {
+                resolve: {
+                   checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('CA,BC');
+                    },
+                },
                 url  : '/viewNote/:id',
                 views: {
                     'content@app': {
@@ -42,6 +54,12 @@
                     }
                 }
             }).state('app.purchaseOrder.affiliatePO', {
+                resolve: {
+                   checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('CA,BC');
+                    },
+                },
                 url  : '/affiliatePO/:id',
                 views: {
                     'content@app': {
@@ -60,7 +78,6 @@
         $translatePartialLoaderProvider.addPart('app/main/purchaseOrder');
 
         // Api
-        msApiProvider.register('purchaseOrder', ['app/data/purchaseOrder/purchaseOrder.json']);
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
@@ -70,7 +87,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.purchaseOrder', {
-            //title    : 'Purchase Order',
+            title    : 'Purchase Order',
             icon     : 'icon-basket',
             state    : 'app.purchaseOrder',
             /*stateParams: {

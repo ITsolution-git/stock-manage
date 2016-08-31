@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://www.dhl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.dhl.com" xmlns:dhl="http://www.dhl.com/datatypes_EA" xmlns:dhlPickup="http://www.dhl.com/pickupdatatypes_EA" elementFormDefault="unqualified">
+	<xsd:import namespace="http://www.dhl.com/datatypes_EA" schemaLocation="datatypes_EA.xsd"/>
+	<xsd:import namespace="http://www.dhl.com/pickupdatatypes_EA" schemaLocation="pickupdatatypes_EA.xsd"/>
+	<xsd:element name="CancelPickupRequestEA">
+		<xsd:annotation>
+			<xsd:documentation>Root element of Cancel Pickup Request</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Request" type="dhl:Request"/>
+				<xsd:element name="ConfirmationNumber">
+					<xsd:annotation>
+						<xsd:documentation>Confirmation number of the pickup that needs to be canceled</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:positiveInteger">
+							<xsd:minInclusive value="1"/>
+							<xsd:maxInclusive value="999999999"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="RequestorName">
+					<xsd:annotation>
+						<xsd:documentation>Name of the requestor</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:maxLength value="35"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+				<xsd:element name="Reason" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>
+							001   PACKAGE_NOT_READY
+							002     RATES_TOO_HIGH
+							003    TRANSIT_TIME_TOO_SLOW
+							004    TAKE_TO_SERVICE_CENTER_OR_DROP_BOX
+							005    COMMITMENT_TIME_NOT_MET
+							006    REASON_NOT_GIVEN
+							007    OTHER
+						</xsd:documentation>
+					</xsd:annotation>
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:maxLength value="3"/>
+							<xsd:minLength value="3"/>
+							<xsd:enumeration value="001"/>
+							<xsd:enumeration value="002"/>
+							<xsd:enumeration value="003"/>
+							<xsd:enumeration value="004"/>
+							<xsd:enumeration value="005"/>
+							<xsd:enumeration value="006"/>
+							<xsd:enumeration value="007"/>
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:element>
+			
+			<xsd:element name="PickupDate" type="xsd:date"/>
+						
+			<xsd:element name="CountryCode">
+			<xsd:annotation>
+            	<xsd:documentation>Country name with two letter code</xsd:documentation>
+        	</xsd:annotation>
+        	<xsd:simpleType>
+        	<xsd:restriction base="xsd:string">
+        	<xsd:maxLength value="2"/>
+			<xsd:minLength value="2"/>
+			</xsd:restriction>
+        	</xsd:simpleType>
+			</xsd:element>
+			
+			<xsd:element name="CancelTime" type="dhlPickup:TimeHM">
+				<xsd:annotation>
+					<xsd:documentation>Cancel time</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			
+			
+					
+			
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

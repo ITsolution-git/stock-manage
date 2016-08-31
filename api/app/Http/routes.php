@@ -42,6 +42,8 @@ Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
 Route::get('admin/company/getAuthorizeAPI/{company_id}', 'CompanyController@getAuthorizeAPI');
 Route::get('admin/company/getUpsAPI/{company_id}', 'CompanyController@getUpsAPI');
 Route::get('admin/company/getSnsAPI/{company_id}', 'CompanyController@getSnsAPI');
+Route::get('admin/company/getQBAPI/{company_id}', 'CompanyController@getQBAPI');
+Route::get('admin/company/getFedexAPI/{company_id}', 'CompanyController@getFedexAPI');
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
@@ -103,6 +105,7 @@ Route::post('admin/priceGridPrimaryDuplicate', 'SettingController@priceGridPrima
 Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 Route::post('admin/downloadPricegridCSV', 'SettingController@downloadPricegridCSV');
 Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
+Route::get('admin/uploadSnsCSV', 'SettingController@uploadSnsCSV');
 
 // ADMIN MISC ROUTERS
 Route::post('admin/miscSave', 'MiscController@miscSave');
@@ -140,6 +143,7 @@ Route::post('common/updateRecordsEmailVal', 'CommonController@updateRecordsEmail
 Route::post('common/insertRecordsEmail', 'CommonController@insertRecordsEmail'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/allColor', 'CommonController@allColor'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/getTestyRecords', 'CommonController@getTestyRecords'); // GET RECORDS WITH PAGINATION PARAMETERS.
+Route::post('common/AddEditClient', 'CommonController@addEditClient');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');
@@ -187,6 +191,7 @@ Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
 Route::post('purchase/getPurchaseNote/{id}', 'PurchaseController@getPurchaseNote');
 Route::post('purchase/createPDF', 'PurchaseController@createPDF');
 Route::post('purchase/createPO', 'PurchaseController@createPO');
+Route::get('purchase/GetPoReceived/{id}/{company_id}', 'PurchaseController@GetPoReceived');
 
 
 // ORDER CONTROLLER 
@@ -208,9 +213,6 @@ Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSE
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/deleteOrderCommon', 'OrderController@deleteOrderCommon');
 Route::post('order/PODetail', 'OrderController@PODetail');
-Route::post('order/distributionDetail', 'OrderController@distributionDetail');
-Route::post('order/addToDistribute', 'OrderController@addToDistribute');
-Route::post('order/removeFromDistribute', 'OrderController@removeFromDistribute');
 Route::post('order/updateOrderTask', 'OrderController@updateOrderTask');
 Route::post('order/updateDistributedQty', 'OrderController@updateDistributedQty');
 Route::post('order/duplicatePoData', 'OrderController@duplicatePoData');
@@ -238,8 +240,14 @@ Route::post('order/orderDetailInfo', 'OrderController@orderDetailInfo');
 Route::post('order/updateOrderCharge', 'OrderController@updateOrderCharge');
 Route::post('order/updateMarkup', 'OrderController@updateMarkup');
 Route::post('order/updateOverride', 'OrderController@updateOverride');
-Route::post('order/addRemoveToFinishing', 'OrderController@addRemoveToFinishing');
 Route::get('order/calculateAll/{order_id}/{company_id}', 'OrderController@calculateAll');
+Route::post('order/snsOrder', 'OrderController@snsOrder');
+Route::post('order/addPosition', 'OrderController@addPosition');
+Route::post('order/addInvoice', 'OrderController@addInvoice');
+Route::post('order/createInvoice', 'OrderController@createInvoice');
+Route::post('order/paymentInvoiceCash', 'OrderController@paymentInvoiceCash');
+Route::post('order/paymentLinkToPay', 'OrderController@paymentLinkToPay');
+Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
 
 
 // FINISHING CONTROLLER 
@@ -251,6 +259,7 @@ Route::post('finishing/removeFinishingItem', 'FinishingController@removeFinishin
 Route::post('finishing/addFinishingItem', 'FinishingController@addFinishingItem');
 Route::post('finishing/orderAdd', 'FinishingController@add');
 Route::post('finishing/orderEdit', 'FinishingController@edit');
+Route::post('finishing/addRemoveToFinishing', 'FinishingController@addRemoveToFinishing');
 
 // SHIPPING CONTROLLER
 Route::get('shipping/listShipping', 'ShippingController@listShipping');
@@ -265,6 +274,15 @@ Route::post('shipping/getBoxItems', 'ShippingController@getBoxItems');
 Route::post('shipping/createPDF', 'ShippingController@createPDF');
 Route::post('shipping/addRemoveAddressToPdf', 'ShippingController@addRemoveAddressToPdf');
 Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
+Route::post('shipping/shipOrder', 'ShippingController@shipOrder');
+Route::post('shipping/getProductByAddress', 'ShippingController@getProductByAddress');
+Route::post('shipping/addProductToShip', 'ShippingController@addProductToShip');
+Route::post('shipping/getShippingAddress', 'ShippingController@getShippingAddress');
+Route::post('shipping/getShippingBoxes', 'ShippingController@getShippingBoxes');
+Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverview');
+Route::post('shipping/createLabel', 'ShippingController@createLabel');
+Route::post('shipping/checkAddressValid', 'ShippingController@checkAddressValid');
+
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
@@ -281,6 +299,9 @@ Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
 Route::post('product/downloadCSV', 'ProductController@downloadCSV');
 Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
 Route::post('product/getVendorByProductCount', 'ProductController@getVendorByProductCount');
+Route::post('product/getProductSize', 'ProductController@getProductSize');
+Route::post('product/checkProductExist', 'ProductController@checkProductExist');
+Route::post('product/findTotal', 'ProductController@findTotal');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
@@ -296,7 +317,7 @@ Route::get('art/artjob_screen_list/{art_id}/{company_id}', 'ArtController@artjob
 Route::get('art/artjobgroup_list/{art_id}/{company_id}', 'ArtController@artjobgroup_list');
 Route::post('art/artjob_screen_add', 'ArtController@artjob_screen_add');
 Route::post('art/update_orderScreen', 'ArtController@update_orderScreen');
-Route::get('art/ScreenListing/{company_id}', 'ArtController@ScreenListing');
+Route::post('art/ScreenSets', 'ArtController@ScreenSets');
 Route::post('art/create_screen', 'ArtController@create_screen');
 Route::post('art/DeleteScreenRecord', 'ArtController@DeleteScreenRecord');
 Route::post('art/SaveArtWorkProof', 'ArtController@SaveArtWorkProof');
@@ -304,9 +325,41 @@ Route::get('art/Insert_artworkproof/{line_id}', 'ArtController@Insert_artworkpro
 Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Client_art_screen');
 Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
 Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
+Route::get('art/GetScreenset_detail/{position_id}', 'ArtController@GetScreenset_detail');
+Route::get('art/GetscreenColor/{screen_id}', 'ArtController@GetscreenColor');
+Route::post('art/UpdateColorScreen', 'ArtController@UpdateColorScreen');
+Route::get('art/getScreenSizes/{company_id}', 'ArtController@getScreenSizes');
+Route::post('art/change_sortcolor', 'ArtController@change_sortcolor');
+Route::post('art/change_sortscreen', 'ArtController@change_sortscreen');
+Route::post('art/ArtApprovalPDF', 'ArtController@ArtApprovalPDF');
+Route::post('art/PressInstructionPDF', 'ArtController@PressInstructionPDF');
 
 // AFFILIATES ROUTERS
 Route::post('affiliate/getAffiliateDetail', 'AffiliateController@getAffiliateDetail');
 Route::post('affiliate/addAffiliate', 'AffiliateController@addAffiliate');
 Route::post('affiliate/getAffiliateData', 'AffiliateController@getAffiliateData');
 Route::post('affiliate/getAffiliateList', 'AffiliateController@getAffiliateList');
+Route::post('affiliate/getAffiliateDesignProduct', 'AffiliateController@getAffiliateDesignProduct');
+Route::post('affiliate/affiliateCalculation', 'AffiliateController@affiliateCalculation');
+
+//DISTRIBUTION ROUTERS
+Route::post('distribution/distributionDetail', 'DistributionController@distributionDetail');
+Route::post('distribution/getDistProductAddress', 'DistributionController@getDistProductAddress');
+Route::post('distribution/addEditDistribute', 'DistributionController@addEditDistribute');
+Route::post('distribution/removeFromDistribute', 'DistributionController@removeFromDistribute');
+Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
+Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
+Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');
+
+Route::get('qbo/oauth','QuickBookController@qboOauth');
+Route::get('qbo/success','QuickBookController@qboSuccess');
+Route::get('qbo/disconnect','QuickBookController@qboDisconnect');
+Route::get('qbo/qboConnect','QuickBookController@qboConnect');
+Route::get('qbo/createCustomer','QuickBookController@createCustomer');
+Route::post('qbo/AddItem', 'QuickBookController@addItem');
+Route::post('qbo/updateInvoicePayment', 'QuickBookController@updateInvoicePayment');
+
+Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
+Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceDetail');
+Route::get('invoice/getInvoiceHistory/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceHistory');
+Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');

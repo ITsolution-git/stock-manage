@@ -16,6 +16,7 @@
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
             $scope.order_id = $stateParams.id;
+            $scope.company_id = sessionService.get('company_id');
             
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -215,7 +216,7 @@
                   }
             });
         }
-        function openApproveOrderDialog(ev, settings) {
+        function openApproveOrderDialog(ev,order_number,sns_shipping,client_id) {
             $mdDialog.show({
                 controller: 'approveOrderDiallogController',
                 controllerAs: 'vm',
@@ -224,6 +225,9 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
+                    order_number:order_number,
+                    sns_shipping:sns_shipping,
+                    client_id:client_id,
                     event: ev
                 }
             });
@@ -318,23 +322,23 @@
         {
             var target;
             var form = document.createElement("form");
-            form.action = 'api/public/order/savePDF';
+            form.action = 'api/public/invoice/createInvoicePdf';
             form.method = 'post';
             form.target = target || "_blank";
             form.style.display = 'none';
 
-            var input_order = document.createElement('input');
-            input_order.name = 'order';
-            input_order.setAttribute('value', JSON.stringify($scope.order));
-            form.appendChild(input_order);
+            var invoice_id = document.createElement('input');
+            invoice_id.name = 'invoice_id';
+            invoice_id.setAttribute('value', $scope.order.invoice_id);
+            form.appendChild(invoice_id);
 
-            var input_company_detail = document.createElement('input');
-            input_company_detail.name = 'company_detail';
-            input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
-            form.appendChild(input_company_detail);
+            var company_id = document.createElement('input');
+            company_id.name = 'company_id';
+            company_id.setAttribute('value', sessionService.get('company_id'));
+            form.appendChild(company_id);
 
             document.body.appendChild(form);
-            form.submit();  
+            form.submit();
         };
 
         $scope.openEmailPopup = function (ev) {
@@ -354,19 +358,34 @@
             });
         };
 
-        $scope.createPO = function() {
-            var condition_obj = {};
-            condition_obj.order_id = $scope.order_id;
-            condition_obj.company_id = sessionService.get('company_id');
+       $scope.createPO = function() {
+            
+            var permission = confirm("Please make sure that once you create PO, it can't be changed. You also would not be able to add new and edit existing Designs and Products.");
 
-            $http.post('api/public/purchase/createPO',condition_obj).success(function(result) {
-                
-            });
+            if(permission == true){
+
+                var condition_obj = {};
+                condition_obj.order_id = $scope.order_id;
+                condition_obj.company_id = sessionService.get('company_id');
+
+                $http.post('api/public/purchase/createPO',condition_obj).success(function(result) 
+                {
+                    if(result.data.success=='1')
+                    {
+                        $scope.orderDetail();
+                        notifyService.notify('success',result.data.message);
+                        $scope.order.is_complete = '0';
+
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                });
+            }
         }
 
-
-
-         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
         {
             var vm = this;
             var UpdateArray = {};
@@ -391,6 +410,7 @@
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success','Record Deleted Successfully.');
+                        $scope.orderDetail();
                         $scope.designDetail();
                     }
                     else
@@ -399,6 +419,16 @@
                     }
                    });
                  }
-        } 
+        }
+
+        $scope.calculateAll = function(order_id,company_id)
+        {
+            $("#ajax_loader").show();
+            $http.get('api/public/order/calculateAll/'+order_id+'/'+company_id).success(function(result) 
+            {
+                $("#ajax_loader").hide();
+                $scope.orderDetail();
+            });
+        }
     }
 })();

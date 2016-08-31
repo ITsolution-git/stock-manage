@@ -20,12 +20,35 @@
                     }
                 },
                 resolve: {
-                    ArtData: function (msApi)
-                    {
-                        return msApi.resolve('ArtOrder@get');
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                }
+            }) .state('app.screen', {
+                url    : '/screen',
+                views  : {
+                    'content@app': {
+                        templateUrl: 'app/main/art/artscreen.html',
+                        controller : 'ArtScreenController as vm'
                     }
+                },
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
                 }
             }).state('app.art.orderView', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                },
                 url  : '/artOrderView/:id',
                 views: {
                     'content@app': {
@@ -34,11 +57,34 @@
                     }
                 }
             }).state('app.art.screensetView', {
-                url  : '/screensetView',
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                },
+                url  : '/screensetView/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/art/views/screensetview/screensetView.html',
                         controller : 'screenSetViewController as vm'
+                    }
+                }
+            })
+            .state('app.art.notes', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                },
+                url  : '/notes/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/art/views/viewNote/viewNote.html',
+                        controller : 'ArtViewNoteController as vm'
                     }
                 }
             });
@@ -56,7 +102,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.art', {
-            //title    : 'Art',
+            title    : 'Art',
             icon     : 'icon-palette',
             state    : 'app.art',
             /*stateParams: {

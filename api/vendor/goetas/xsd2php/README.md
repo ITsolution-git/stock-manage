@@ -22,7 +22,8 @@ There is one recommended way to install xsd2php via [Composer](https://getcompos
 ```js
   "require": {
       ..
-      "goetas/xsd2php":"^2.0",
+      "goetas/xsd2php":"2.*@dev",
+      "goetas/xsd-reader":"2.*@dev",
       "jms/serializer": "serializer-master-dev as 1.0",
       ..
   },
@@ -112,8 +113,8 @@ All reference to this type are replaced with the `Vendor/Project/CustomDateClass
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\Handler\HandlerRegistryInterface;
 
-use GoetasWebservices\Xsd\XsdToPhpRuntime\Jms\Handler\BaseTypesHandler;
-use GoetasWebservices\Xsd\XsdToPhpRuntime\Jms\Handler\XmlSchemaDateHandler;
+use Goetas\Xsd\XsdToPhp\Jms\Handler\BaseTypesHandler;
+use Goetas\Xsd\XsdToPhp\Jms\Handler\XmlSchemaDateHandler;
 
 $serializerBuilder = SerializerBuilder::create();
 $serializerBuilder->addMetadataDir('metadata dir', 'DemoNs');

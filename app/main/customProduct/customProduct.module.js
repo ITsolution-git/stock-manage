@@ -28,6 +28,14 @@
                         controller : 'customProductController as vm'
                     }
                 }
+            }).state('app.settings.custom-info', {
+                url  : '/custom-info/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/customProduct/dialogs/customProduct/customProduct-dialog.html',
+                        controller : 'CustomProductDialogController as vm'
+                    }
+                }
             })
 
              function searchTable() {

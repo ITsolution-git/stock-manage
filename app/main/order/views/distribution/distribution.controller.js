@@ -7,8 +7,79 @@
             .controller('DistributionController', DistributionController);
 
     /** @ngInject */
-    function DistributionController($document, $window, $timeout, $mdDialog)
+    function DistributionController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+        $scope.orderDetail = function(){
+            $("#ajax_loader").show();
+            
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+            $scope.order_id = $stateParams.id;
+            
+
+            $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+                if(result.data.success == '1') {
+                    $("#ajax_loader").hide();
+                   $scope.order = result.data.records[0];
+                   $scope.order_items = result.data.order_item;
+                } else {
+                    $state.go('app.order');
+                }
+            });
+        }
+
+        $scope.designDetail = function(){
+
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+
+            $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.data.success == '1') {
+                   $scope.designs = result.data.records.all_design;
+                   $scope.total_unit = result.data.records.total_unit;
+                }
+                else {
+                    $scope.designs = [];
+                    $scope.total_unit = 0;
+                }
+
+                if($scope.total_unit == undefined)
+                {
+                    $scope.total_unit = 0;            
+                }
+            });
+        }
+
+        $scope.getDistProductAddress = function(){
+
+            var combine_array_id = {};
+            combine_array_id.order_id = $stateParams.id;
+
+            $http.post('api/public/distribution/getDistProductAddress',combine_array_id).success(function(result, status, headers, config) {
+            
+                if(result.success == '1') {
+                   $scope.products = result.products;
+                   $scope.distribution_address = result.distribution_address;
+                }
+                else {
+                    $scope.products = [];
+                    $scope.distribution_address = [];
+                }
+            });
+        }
+
+        $scope.orderDetail();
+        $scope.designDetail();
+        $scope.getDistProductAddress();
+
+        $scope.reloadPage = function()
+        {
+            $state.reload();
+        }
+
         var vm = this;
         vm.openaddAddressDialog = openaddAddressDialog;
         vm.distributionDistributed = {
@@ -40,6 +111,8 @@
             mainContact: "Joshi Goodman",
             priceGrid: "ABC Grid",
         };
+
+        vm.openAddProductDialog = openAddProductDialog;
         function openaddAddressDialog(ev, order)
         {
             $mdDialog.show({
@@ -50,15 +123,12 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    Orders: $scope.order,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
             });
         }
-
-        //Dummy models data
-
 
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
@@ -73,6 +143,7 @@
         };
         vm.dtInstanceCB = dtInstanceCB;
         vm.openAddProductDialog = openAddProductDialog;
+        vm.createDistribution = createDistribution;
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
@@ -89,15 +160,33 @@
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Order: order,
-                    Orders: vm.orders,
+                    Orders: $scope.order,
                     event: ev
-                }
+                },
+                onRemoving : $scope.reloadPage
             });
         }
 
-
+        function createDistribution(ev,action,product_array)
+        {
+            $mdDialog.show({
+                controller: 'DistributionProductController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/views/distributionProduct/distributionProduct.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Addresses: $scope.distribution_address,
+                    action: action,
+                    order_id: $scope.order_id,
+                    client_id: $scope.order.client_id,
+                    product_arr: product_array,
+                    event: ev
+                },
+                onRemoving : $scope.reloadPage
+            });
+        }
         vm.productSearch = null;
-
     }
 })();

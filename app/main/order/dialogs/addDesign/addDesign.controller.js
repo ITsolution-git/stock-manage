@@ -9,7 +9,19 @@
    
     function AddDesignController(event_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
-        var vm = this;
+
+          
+          $scope.updateStartDate = function(){
+            $scope.minDate = new Date($scope.design.start_date);
+            $scope.minShipDate = new Date($scope.design.start_date);
+          }
+
+          $scope.updateshipDate = function(){
+            $scope.minShipDate = new Date($scope.design.shipping_date);
+          }
+
+          
+          var vm = this;
           vm.title = 'Add/Edit Design';
 
         
@@ -22,6 +34,8 @@
                
                 if(result.data.success == '1') {
                     $scope.design = result.data.records[0];
+                    $scope.minDate = new Date($scope.design.start_date);
+                     $scope.minShipDate = new Date($scope.design.shipping_date);
                 }
                 
             });
@@ -39,6 +53,20 @@
             if(designData.design_name == undefined || designData.design_name == '') {
 
                       var data = {"status": "error", "message": "Design Name should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+            if(designData.colors_count == undefined || designData.colors_count == '') {
+
+                      var data = {"status": "error", "message": "Position Count should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+            if(designData.colors_count == '0') {
+
+                      var data = {"status": "error", "message": "Position Count must be greater than 0"}
                               notifyService.notify(data.status, data.message);
                               return false;
             }

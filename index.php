@@ -17,6 +17,8 @@
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+        
         <script>
             var timer;
             function loadscreen()
@@ -83,6 +85,8 @@
     <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
     <script src="scripts/other/ngDraggable.js"></script>
     <script src="scripts/angular-xeditable/xeditable.min.js"></script>
+    
+    
     <!-- inject:js -->
 
     <script src="app/quick-panel/quick-panel.module.js"></script>
@@ -104,6 +108,7 @@
     <script src="app/core/directives/ms-datepicker-fix/ms-datepicker-fix.directive.js"></script>
     <script src="app/core/directives/ms-card/ms-card.directive.js"></script>
      <script src="app/core/directives/validation.js"></script>
+     <script src="app/core/directives/ConnectToQuickBooksDirective.js"></script>
 
 
 
@@ -167,6 +172,7 @@
     <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
     <script src="app/main/order/dialogs/information/information.controller.js"></script>
     <script src="app/main/order/dialogs/approveorder/approveorder.controller.js"></script>
+    <script src="app/main/order/dialogs/position/position-dialog.controller.js"></script>
     
 
     <!-- CLIENT FILES START -->
@@ -212,6 +218,8 @@
     <script src="app/main/settings/dialogs/addAffiliate/addAffiliate-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/editAffiliate/editAffiliate-dialog.controller.js"></script>
     <script src="app/main/settings/views/vendor/vendor.controller.js"></script>
+    <script src="app/main/settings/views/vendor/viewContact/viewContact.controller.js"></script>
+    <script src="app/main/settings/views/sales/sales.controller.js"></script>
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>
@@ -227,11 +235,12 @@
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>
     <script src="app/main/art/art.controller.js"></script>
-    <script src="app/main/art/views/orderview/orderview.controller.js"></script>
-    <script src="app/main/art/dialogs/createScreen/createScreen-dialog.controller.js"></script>
-    <script src="app/main/art/dialogs/generateArtForm/generateArtForm-dialog.controller.js"></script>
+    <script src="app/main/art/views/orderview/orderView.controller.js"></script>
+<!--     <script src="app/main/art/dialogs/createScreen/createScreen-dialog.controller.js"></script> -->
+<!--     <script src="app/main/art/dialogs/generateArtForm/generateArtForm-dialog.controller.js"></script> -->
     <script src="app/main/art/views/screensetview/screensetView.controller.js"></script>
     <script src="app/main/art/dialogs/createScreenDetail/createScreenDetail.controller.js"></script>
+    <script src="app/main/art/views/viewNote/viewNote.controller.js"></script>
 
     <!-- Invoices -->
     <script src="app/main/invoices/invoices.module.js"></script>
@@ -257,6 +266,9 @@
     <script src="app/main/misc/misc.module.js"></script>
     <script src="app/main/misc/misc.controller.js"></script>
 
+    <script src="scripts/timeoff.js"></script>
+    <script src="scripts/date.js"></script>
+
 
 
     <!--Datatable Scrolling-->
@@ -275,6 +287,7 @@
     <link rel="stylesheet" href="styles/other/kendo.common.min.css">
     <link rel="stylesheet" href="styles/other/kendo.default.min.css">
     <link rel="stylesheet" href="scripts/angular-xeditable/xeditable.css">
-    
+    <script src="scripts/drag/angular-dragdrop.js"></script>
+    <script src="scripts/clipboard.js"></script>
 </body>
 </html>

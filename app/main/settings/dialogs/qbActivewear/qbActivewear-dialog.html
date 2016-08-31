@@ -1,0 +1,29 @@
+<md-dialog class="task-dialog qbActivewearDialog" >
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Quickbook API INTEGRATION</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
+                <div layout="column"  flex="100">
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="Consumer Key" name="consumer_key" ng-model="qb.consumer_key" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'quickbook_detail\',qb.id)' }">
+                    </md-input-container>
+
+                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <input placeholder="Consumer Secret Key" name="consumer_secret_key" ng-model="qb.consumer_secret_key" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'quickbook_detail\',qb.id)' }">
+                    </md-input-container>
+
+
+                </div>
+                
+            </div>
+</div>
+</md-dialog>

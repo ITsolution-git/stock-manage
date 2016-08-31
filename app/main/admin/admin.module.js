@@ -93,11 +93,11 @@
                          return sessionService.AccessService('SA');
                     },
                 },
-                url  : '/admin.sizes',
+                url  : '/admin.snsinventory',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/main/admin/views/sizes_list.html',
-                        controller : 'AdminController as vm'
+                        templateUrl: 'app/main/admin/views/s&s.html',
+                        controller : 'SnsController as vm'
                     }
                 }
             });
@@ -143,7 +143,7 @@
         });
         msNavigationServiceProvider.saveItem('fuse.admin.snsinventory', {
             title      : 'S&S Inventory',
-            state      : '',
+            state      : 'app.admin.snsinventory',
             class      : 'navigation-dashboards project-dashboard',
             
             weight     : 4

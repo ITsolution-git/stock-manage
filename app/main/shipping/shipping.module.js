@@ -12,21 +12,33 @@
         // State
         $stateProvider
             .state('app.shipping', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        },
+                        shippingData: function (msApi)
+                        {
+                            return msApi.resolve('shipping@get');
+                        }
+                    },
                 url    : '/shipping',
                 views  : {
                     'content@app': {
                         templateUrl: 'app/main/shipping/shipping.html',
                         controller : 'shippingController as vm'
                     }
-                },
-                resolve: {
-                    shippingData: function (msApi)
-                    {
-                        return msApi.resolve('shipping@get');
-                    }
                 }
             }).state('app.shipping.orderwaitship', {
-                url  : '/orderwaitship',
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
+                url  : '/orderwaitship/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/orderwaitship/orderwaitship.html',
@@ -34,7 +46,14 @@
                     }
                 }
             }).state('app.shipping.shipmentdetails', {
-                url  : '/shipmentdetails',
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
+                url  : '/shipmentdetails/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/shipmentdetails/shipmentdetails.html',
@@ -42,7 +61,14 @@
                     }
                 }
             }).state('app.shipping.boxingdetail', {
-                url  : '/boxingdetail',
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
+                url  : '/boxingdetail/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/boxingdetail/boxingdetail.html',
@@ -50,7 +76,14 @@
                     }
                 }
             }).state('app.shipping.shipmentoverview', {
-                url  : '/shipmentoverview',
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
+                url  : '/shipmentoverview/:id',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/shipping/views/shipmentoverview/shipmentoverview.html',
@@ -72,7 +105,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.shipping', {
-           // title    : 'Shipping',
+            title    : 'Shipping',
             icon     : 'icon-truck',
             state    : 'app.shipping',
             /*stateParams: {

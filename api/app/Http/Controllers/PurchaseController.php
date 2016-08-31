@@ -28,7 +28,45 @@ class PurchaseController extends Controller {
     public function createPO()
     {
         $post = Input::all();
-        print_r($post);exit;
+
+        if(!empty($post['company_id']) && !empty($post['order_id']))
+        {
+            $po_type = !empty($post['po_type'])?$post['po_type']:'';
+            $order_data = $this->purchase->getOrderData($post['company_id'],$post['order_id'],$po_type);
+            
+            if(count($order_data)>0)
+            {
+                foreach ($order_data as $key=>$value) 
+                {
+                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key);
+                    $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
+                    if($purchase_order_id=='0')
+                    {
+                        $response = array('success' => 0, 'message' => "Purchase order is already created.");
+                        return response()->json(["data" => $response]);
+                    }
+                    else
+                    {
+                        foreach($order_data[$key] as $detail_key=>$detail_value) 
+                        {
+                            $purchase_order_line = $this->purchase->insert_purchase_order_line($detail_value,$purchase_order_id);
+                        }
+                    }
+                }
+                $response = array('success' => 1, 'message' => "Purchase order created successfully.",'data'=>$order_data);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Please select Product.");
+            }
+        }
+        else
+        {
+            $order_data='';
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+       // print_r($post);exit;
+       return response()->json(["data" => $response]);
     }
 
     /*=====================================
@@ -143,22 +181,24 @@ class PurchaseController extends Controller {
         else
         {
             $this->purchase->Update_Ordertotal($po_id);
-            $po = $this->purchase->GetPodata($po_id,$company_id);
-            
-            if(count($po)>0)
+            //$po = $this->purchase->GetPodata($po_id,$company_id);
+            $poline = $this->purchase->GetPoLinedata($po_id,$company_id);
+
+            //echo "<pre>"; print_r($poline); echo "</pre>"; die;
+            if(count($poline)>0)
             {
-                $poline = $this->purchase->GetPoLinedata($po_id,'1',$company_id);
-                $unassign_order = $this->purchase->GetPoLinedata();
+                
+                //c$unassign_order = $this->purchase->GetPoLinedata();
 
                 $order_total = $this->purchase->getOrdarTotal($po_id);
                 
-                $received_total = $this->purchase->getreceivedTotal($po_id);
-                $received_line = $this->purchase->GetPoReceived($po_id,$company_id);
+               // $received_total = $this->purchase->getreceivedTotal($po_id);
+               // $received_line = $this->purchase->GetPoReceived($po_id,$company_id);
 
-                $list_vendors = $this->common->getAllVendors($company_id);
+              //  $list_vendors = $this->common->getAllVendors($company_id);
 
-                $order_id = $po[0]->order_id;
-                $result = array('po'=>$po,'poline'=>$poline,'unassign_order'=>$unassign_order,'order_total'=>$order_total,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
+                $po_data = $poline[0];
+                $result = array('po_data'=>$po_data,'poline'=>$poline,'order_total'=>$order_total);//,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
             }
             else
@@ -198,9 +238,18 @@ class PurchaseController extends Controller {
     public function EditOrderLine()
     {
          $post = Input::all();
-         $result = $this->purchase->EditOrderLine($post);
-         $response = array('success' => 1, 'message' => GET_RECORDS);
-         return  response()->json(["data" => $response]);
+         if(empty($post['po_id']) || empty($post['id']))
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+            die();
+        }
+        else
+        {
+            $result = $this->purchase->EditOrderLine($post);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD);
+            return  response()->json(["data" => $response]);
+        }
     }
     /*=====================================
     TO CALCULATION ONE CP AND CE SCREEN TOTAL AMOUNT
@@ -262,8 +311,9 @@ class PurchaseController extends Controller {
     TO GET SCREEN PRINT AND EMBRODIERY DATA
     =====================================*/
 
-    public function GetScreendata($po_id,$company_id)
+    public function GetPoReceived($po_id,$company_id)
     {
+
         if(empty($po_id) || empty($company_id))
         {
             $response = array('success' => 0, 'message' => MISSING_PARAMS."- po_id, company_id");
@@ -272,63 +322,16 @@ class PurchaseController extends Controller {
         }
         else
         {
-            $Misc_data = $this->AllMsiData($company_id);
-            $this->purchase->Update_Ordertotal($po_id);
-            $screen_data = $this->purchase->GetPodata($po_id,$company_id);
-
-
-            //echo "<pre>"; print_r($screen_data); echo "</pre>"; die;
-            if(count($screen_data)>0)
+            //$this->purchase->Update_Ordertotal($po_id);
+            $result = $this->purchase->GetPoReceived($po_id,$company_id);
+            if(count($result)>0)
             {
-                $screen_line = $this->purchase->GetScreendata($po_id,$company_id);
                 $order_total = $this->purchase->getOrdarTotal($po_id);
-                $placements = $this->purchase->getPlacementData($po_id);
-
-
-                $list_vendors = $this->common->getAllVendors($company_id);
-                $order_id = $screen_data[0]->order_id;
-                $order_line_data = $this->purchase->GetOrderLineData($order_id);
-
-                foreach ($screen_line as $key => $value) 
-                {
-                    $screen_line[$key]->position_name = (!empty($value->position))?$Misc_data[$value->position]:'';
-                }
-
-                if(!empty($order_line_data))
-                    {
-                        $sum = 0;
-                        foreach($order_line_data as $row)
-                        {
-                            $row->orderline_id = $row->id;
-                          
-
-                            $order_line_items = $this->order->getOrderLineItemById($row->id);
-                            $count = 1;
-                            $order_line = array();
-                            foreach ($order_line_items as $line) {
-                             
-                                $line->number = $count;
-                                $order_line[] = $line;
-                                $count++;
-                            }
-                            $row->items = $order_line;
-
-                            $order_line_data_new[] = $row;
-                        }
-                    }
-                        else
-                        {
-                            $order_line_data_new = array();
-                        }
-
-                $result = array('screen_data'=>$screen_data,'screen_line'=>$screen_line,'order_total'=>$order_total,'order_id'=>$order_id,'list_vendors'=>$list_vendors,'order_line_data_new'=>$order_line_data_new,'placements'=>$placements );
-                $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result );
-            }
+                $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'order_total'=>$order_total);
+            } 
             else
             {
                 $response = array('success' => 0, 'message' => NO_RECORDS);
-                return  response()->json(["data" => $response]);
-                die();
             }
         }
         return  response()->json(["data" => $response]);

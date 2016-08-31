@@ -7,78 +7,78 @@
             .controller('DistributionProductController', DistributionProductController);
 
     /** @ngInject */
-    function DistributionProductController($document, $window, $timeout, $mdDialog)
+    function DistributionProductController(Addresses,action,product_arr,order_id,client_id,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
         var vm = this;
-        vm.orderOverview = {
-            productName: "American Apparel Crew Neck",
-            vendor: "American Apparel",
-            sku: "#######",
-            description: "Lorem spunm text that describe the product."
-        };
-        vm.orderOverviewSize = {
-            s: "",
-            m: "",
-            l: "",
-            xl: ""
-        };
-        vm.orderOverviewLocation = {
-            description: "Description Text",
-            attn: "ATTN",
-            location: "1234 N Main St. Chicago, IL 60611 - USA",
-            phone: "Phone"
-        };
-        vm.orderOverviewDescription = {
-            description: "Description Text",
-            attn: "ATTN",
-            location: "1234 N Main St. Chicago, IL 60611 - USA",
-            phone: "Phone"
-        };
 
-        vm.locationSelect = {
-            "locationOption":
-                    [
-                        {"option": "Section 1"},
-                        {"option": "Section 2"},
-                        {"option": "Section 3"}
-                    ],
-            "location": false,
-            "locationView":""
+        $scope.Addresses = Addresses;
+        $scope.product_name = product_arr.product_name;
 
-        };
+        $scope.searchQuery = '';
+        $scope.address_id = 0;
+        $scope.product_id = product_arr.product_id;
+        $scope.design_product_id = product_arr.design_product_id;
+        $scope.order_id = order_id;
+        $scope.products = [];
 
+        $scope.order_id = $stateParams.id;
 
-        vm.distributionDistributed = {
-            "productshipped": "800",
-            "Total": "100",
-        };
-        vm.distributionLocation = {
-            "location": "231",
-        };
-        vm.distProducts = [
-            {productName: "Product Name 1", jobName: "Job Name1", job: "#", totalAllocated: "0/120"},
-            {productName: "Product Name 2", jobName: "Job Name1.1", job: "#", totalAllocated: "0/120"},
-            {productName: "Product Name 3", jobName: "Job Name1.2", job: "#", totalAllocated: "80/120"}
-        ]
+        $scope.orderDetail = function(){
+            $("#ajax_loader").show();
+            
+            var combine_array_id = {};
+            combine_array_id.id = $stateParams.id;
+            combine_array_id.company_id = sessionService.get('company_id');
+            $scope.order_id = $stateParams.id;
+            
 
-                ;
-        vm.distlocations = [
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"}
-        ]
+            $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+                if(result.data.success == '1') {
+                    $("#ajax_loader").hide();
+                   $scope.order = result.data.records[0];
+                   $scope.order_items = result.data.order_item;
+                } else {
+                    $state.go('app.order');
+                }
+            });
+        }
 
-                ;
-        vm.distInfo = {
-            customerPO: "######",
-            sales: "Keval Baxi",
-            blind: "Yes",
-            accountManager: "Nancy McPhee",
-            mainContact: "Joshi Goodman",
-            priceGrid: "ABC Grid",
-        };
+        $scope.orderDetail();
+        var combine_array_id = {};
+        combine_array_id.product_id = $scope.product_id;
+        combine_array_id.order_id = order_id;
 
-        //Dummy models data
+/*        $http.post('api/public/distribution/getDistSizeByProduct',combine_array_id).success(function(result) {
+            
+            if(result.success == '1') {
+               $scope.products = result.products;
+            }
+        });*/
+
+        $scope.getDistributionDetail = function()
+        {
+
+            var combine_array_id = {};
+            combine_array_id.product_id = $scope.product_id;
+            combine_array_id.order_id = order_id;
+            combine_array_id.client_id = client_id;
+            combine_array_id.design_product_id = $scope.design_product_id;
+
+            $http.post('api/public/distribution/getDistAddress',combine_array_id).success(function(result) {
+                
+                if(result.success == '1') {
+                   $scope.addresses = result.addresses;
+                   $scope.selected_addresses = result.selected_addresses;
+
+                   if($scope.address_id > 0)
+                   {
+                        $scope.getProductByAddress($scope.address_id);
+                   }
+               }
+            });
+        }
+
+        $scope.getDistributionDetail();
 
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
@@ -87,7 +87,7 @@
         };
 
         vm.dtInstanceCB = dtInstanceCB;
-        vm.openAddProductDialog = openAddProductDialog;
+        vm.openaddAddressDialog = openaddAddressDialog;
         //methods
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
@@ -110,9 +110,92 @@
                 }
             });
         }
-
-
         vm.productSearch = null;
+        
+        $scope.toggle = function (item, list) {
+            var idx = list.indexOf(item);
+            if (idx > -1) {
+              list.splice(idx, 1);
+            }
+            else {
+              list.push(item);
+            }
+        };
+        $scope.exists = function (item, list) {
+            return list.indexOf(item) > -1;
+        };
 
+        $scope.getProductByAddress = function(address_id)
+        {
+            $scope.address_id = address_id;
+            $scope.products = $scope.addresses[$scope.address_id].sizeArr;
+        }
+
+        $scope.allocate = function()
+        {
+            if($scope.address_id == 0)
+            {
+                var data = {"status": "error", "message": "Please select atleast one address to distribute"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            var combine_array = {};
+            combine_array.product_id = $scope.product_id;
+            combine_array.order_id = order_id;
+            combine_array.client_id = client_id;
+//            combine_array.address_ids = $scope.selected_addresses;
+            combine_array.address_id = $scope.address_id;
+            combine_array.products = $scope.products;
+            combine_array.action = action;
+
+            $http.post('api/public/distribution/addEditDistribute',combine_array).success(function(result) {
+                if(result.success == 1) {
+                    var data = {"status": "success", "message": result.message}
+                    notifyService.notify(data.status, data.message);
+                    $scope.getDistributionDetail();
+                }
+                else {
+                    var data = {"status": "error", "message": result.message}
+                    notifyService.notify(data.status, data.message);
+                }
+            });
+        }
+
+        $scope.cancel = function()
+        {
+            $mdDialog.hide();
+        }
+
+        $scope.filterAddress = function()
+        {
+            var combine_array = {};
+            combine_array.product_id = $scope.product_id;
+            combine_array.order_id = order_id;
+            combine_array.client_id = client_id;
+            combine_array.search = $scope.searchQuery;
+            combine_array.design_product_id = $scope.design_product_id;
+
+            $http.post('api/public/distribution/getDistAddress',combine_array).success(function(result) {
+                if(result.success == '1') {
+                   $scope.addresses = result.addresses;
+                }
+            });
+        }
+        function openaddAddressDialog(ev, order)
+        {
+            $mdDialog.show({
+                controller: 'AddAddressController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/order/dialogs/addAddress/addAddress.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    Orders: $scope.order,
+                    event: ev
+                },
+                onRemoving : $scope.reloadPage
+            });
+        }
     }
 })();

@@ -372,10 +372,12 @@
 
                                   angular.forEach($scope.temp_primary, function( key, value ) {
                                    var price_field;
-                                   for (var i=1; i<=12; i++) {
+                                   for (var i=1; i<=16; i++) {
                                       price_field = "pricing_"+i+"c";
-                                       $scope.allScreenPrimary[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
-                                       
+                                      
+                                      if(key[price_field] !== null) {
+                                        $scope.allScreenPrimary[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
+                                       }
                                     }
                                       index++;
                                     });
@@ -388,9 +390,12 @@
 
                                   angular.forEach($scope.temp_secondary, function( key, value ) {
                                    var price_field;
-                                   for (var i=1; i<=12; i++) {
+                                   for (var i=1; i<=16; i++) {
                                       price_field = "pricing_"+i+"c";
-                                      $scope.allScreenSecondary[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
+
+                                      if(key[price_field] !== null) {
+                                       $scope.allScreenSecondary[index][price_field] = parseFloat(parseFloat(key[price_field]) + (key[price_field] * price_in_percentage) / 100).toFixed(2);
+                                      }
                                     }
                                       index++;
                                     });
@@ -561,9 +566,14 @@
 
                                   angular.forEach($scope.temp_primary, function( key, value ) {
                                    var price_field;
-                                   for (var i=1; i<=12; i++) {
+                                   for (var i=1; i<=16; i++) {
                                       price_field = "pricing_"+i+"c";
-                                      $scope.allScreenPrimary[index][price_field] = parseFloat(parseFloat(key[price_field]) + parseFloat(price_in_amt)).toFixed(2)
+                                      
+                                      if(key[price_field] !== null) {
+                                        
+                                         $scope.allScreenPrimary[index][price_field] = parseFloat(parseFloat(key[price_field]) + parseFloat(price_in_amt)).toFixed(2)
+                                      }
+                                      
                                     }
                                       index++;
                                     });
@@ -575,9 +585,11 @@
 
                                   angular.forEach($scope.temp_secondary, function( key, value ) {
                                    var price_field;
-                                   for (var i=1; i<=12; i++) {
+                                   for (var i=1; i<=16; i++) {
                                       price_field = "pricing_"+i+"c";
+                                      if(key[price_field] !== null) {
                                       $scope.allScreenSecondary[index][price_field] = parseFloat(parseFloat(key[price_field]) + parseFloat(price_in_amt)).toFixed(2)
+                                      }
                                     }
                                       index++;
                                     });

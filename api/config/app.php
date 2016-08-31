@@ -147,6 +147,7 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
 
 	],
 
@@ -199,6 +200,7 @@ return [
         'HTML' => 'Illuminate\Html\HtmlFacade',
         'Image' => 'Intervention\Image\Facades\Image',
         'PDF' => 'Barryvdh\DomPDF\Facade',
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
 	],
 

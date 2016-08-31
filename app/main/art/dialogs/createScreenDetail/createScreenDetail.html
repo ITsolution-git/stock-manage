@@ -1,8 +1,8 @@
 <md-dialog class="task-dialog addAffiliateDialog" >
 <div class="client-profile-page">
 <md-toolbar class="md-accent md-hue-2">
-    <div class="md-toolbar-tools" layout="row" layout-align="space-between"> <span class="title">Create New Screen</span>
-        <md-button  ng-click="cancel()"> <span>Cancel</span> </md-button>
+    <div class="md-toolbar-tools" layout="row" layout-align="space-between"> <span class="title">Screen Details For Screen {{color_screen.color_name}}</span>
+        <md-button  ng-click="closeDialog()"> <span>Cancel</span> </md-button>
     </div>
 </md-toolbar>
 <div ng-cloak>
@@ -10,41 +10,54 @@
     <div layout="row" layout-wrap="nowrap" id="addAffiliateDialog" layout-padding layout-align="space-between start">
         <div layout="column"  flex="100">
            <div layout="row">
+              
+              <div layout="column" flex="25">
+              <label>Thread color</label>
+                  <md-autocomplete
+                      ng-disabled="isDisabled"
+                      md-no-cache="noCache"
+                      md-selected-item="color_screen.thread_display"
+                      md-search-text-change="color_screen.thread_display"
+                      md-search-text="allcolor.color_name"
+                      md-selected-item-change=""
+                      md-items="item in querySearch(allcolor.color_name)"
+                      md-item-text="item.name"
+                      md-min-length="1"
+                      ng-click=""
+                      ng-blur=""
+                      <md-item-template>
+                          <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                          No Color found.
+                      </md-not-found>
+                  </md-autocomplete>
+            </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Color Name" name="" ui-event="">
+                        <input placeholder="Mesh/Thread count" name="mesh_thread_count" ng-model="color_screen.mesh_thread_count" >
                     </md-input-container>
                </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Squeegee" name="" ui-event="">
-                    </md-input-container>
-               </div>
-               <div layout="column" flex="25">
-                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Ink Type" name="" ui-event="">
-                    </md-input-container>
-               </div>
-               <div layout="column" flex="25">
-                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Head Location" name="" ui-event="">
+                        <input placeholder="Stroke" name="stroke" ng-model="color_screen.stroke" >
                     </md-input-container>
                </div>
            </div>
            <div layout="row">
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Pantone/Thread Color" name="" ui-event="">
+                        <input placeholder="Squeegee" name="squeegee"  ng-model="color_screen.squeegee">
                     </md-input-container>
                </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Pantone/Thread Color" name="" ui-event="">
+                        <input placeholder="Inq Type" name="inq" ng-model="color_screen.inq" >
                     </md-input-container>
                </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Stroke" name="" ui-event="">
+                        <input placeholder="Head Location" valid-number name="head_location" ng-model="color_screen.head_location" >
                     </md-input-container>
                </div>
            </div>
@@ -52,10 +65,8 @@
     </div>
 </div>
 <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-    <button ng-transclude="" type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-    <div class="md-ripple-container" style=""></div>
-    </button>
-    <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button>
+   
+    <button type="button" ng-click="Savecolor_screen(color_screen);" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button>
 </md-dialog-actions>
 
 </md-dialog>

@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Yaml\Tests;
 
+use Symfony\Bridge\PhpUnit\ErrorAssert;
 use Symfony\Component\Yaml\Inline;
 use Symfony\Component\Yaml\Yaml;
 
@@ -32,6 +33,44 @@ class InlineTest extends \PHPUnit_Framework_TestCase
         $actual = Inline::parse($yaml, Yaml::PARSE_OBJECT_FOR_MAP);
 
         $this->assertSame(serialize($value), serialize($actual));
+    }
+
+    /**
+     * @dataProvider getTestsForParsePhpConstants
+     */
+    public function testParsePhpConstants($yaml, $value)
+    {
+        $actual = Inline::parse($yaml, Yaml::PARSE_CONSTANT);
+
+        $this->assertSame($value, $actual);
+    }
+
+    public function getTestsForParsePhpConstants()
+    {
+        return array(
+            array('!php/const:Symfony\Component\Yaml\Yaml::PARSE_CONSTANT', Yaml::PARSE_CONSTANT),
+            array('!php/const:PHP_INT_MAX', PHP_INT_MAX),
+            array('[!php/const:PHP_INT_MAX]', array(PHP_INT_MAX)),
+            array('{ foo: !php/const:PHP_INT_MAX }', array('foo' => PHP_INT_MAX)),
+        );
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
+     * @expectedExceptionMessage The constant "WRONG_CONSTANT" is not defined
+     */
+    public function testParsePhpConstantThrowsExceptionWhenUndefined()
+    {
+        Inline::parse('!php/const:WRONG_CONSTANT', Yaml::PARSE_CONSTANT);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
+     * @expectedExceptionMessageRegExp #The string "!php/const:PHP_INT_MAX" could not be parsed as a constant.*#
+     */
+    public function testParsePhpConstantThrowsExceptionOnInvalidType()
+    {
+        Inline::parse('!php/const:PHP_INT_MAX', Yaml::PARSE_EXCEPTION_ON_INVALID_TYPE);
     }
 
     /**
@@ -124,6 +163,17 @@ class InlineTest extends \PHPUnit_Framework_TestCase
     {
         $value = '{ "foo " bar": "bar" }';
         Inline::parse($value);
+    }
+
+    /**
+     * @requires function Symfony\Bridge\PhpUnit\ErrorAssert::assertDeprecationsAreTriggered
+     * throws \Symfony\Component\Yaml\Exception\ParseException in 4.0
+     */
+    public function testParseMappingKeyWithColonNotFollowedBySpace()
+    {
+        ErrorAssert::assertDeprecationsAreTriggered('Omitting the space after the colon that follows a mapping key definition is deprecated since version 3.2 and will throw a ParseException in 4.0.', function () {
+            Inline::parse('{1:""}');
+        });
     }
 
     /**
@@ -254,27 +304,32 @@ class InlineTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @group legacy
+     * @requires function Symfony\Bridge\PhpUnit\ErrorAssert::assertDeprecationsAreTriggered
      * throws \Symfony\Component\Yaml\Exception\ParseException in 4.0
      */
     public function testParseUnquotedScalarStartingWithPercentCharacter()
     {
-        $deprecations = array();
-        set_error_handler(function ($type, $msg) use (&$deprecations) {
-            if (E_USER_DEPRECATED !== $type) {
-                restore_error_handler();
-
-                return call_user_func_array('PHPUnit_Util_ErrorHandler::handleError', func_get_args());
-            }
-
-            $deprecations[] = $msg;
+        ErrorAssert::assertDeprecationsAreTriggered('Not quoting the scalar "%foo " starting with the "%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', function () {
+            Inline::parse('{ foo: %foo }');
         });
+    }
 
-        Inline::parse('{ foo: %foo }');
+    /**
+     * @dataProvider getDataForIsHash
+     */
+    public function testIsHash($array, $expected)
+    {
+        $this->assertSame($expected, Inline::isHash($array));
+    }
 
-        restore_error_handler();
-
-        $this->assertCount(1, $deprecations);
-        $this->assertContains('Not quoting a scalar starting with the "%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', $deprecations[0]);
+    public function getDataForIsHash()
+    {
+        return array(
+            array(array(), false),
+            array(array(1, 2, 3), false),
+            array(array(2 => 1, 1 => 2, 0 => 3), true),
+            array(array('foo' => 1, 'bar' => 2), true),
+        );
     }
 
     public function getTestsForParse()
@@ -332,7 +387,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             array('[\'foo,bar\', \'foo bar\']', array('foo,bar', 'foo bar')),
 
             // mappings
-            array('{foo:bar,bar:foo,false:false,null:null,integer:12}', array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
+            array('{foo: bar,bar: foo,false: false,null: null,integer: 12}', array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{ foo  : bar, bar : foo,  false  :   false,  null  :   null,  integer :  12  }', array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{foo: \'bar\', bar: \'foo: bar\'}', array('foo' => 'bar', 'bar' => 'foo: bar')),
             array('{\'foo\': \'bar\', "bar": \'foo: bar\'}', array('foo' => 'bar', 'bar' => 'foo: bar')),
@@ -399,7 +454,7 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             array('[\'foo,bar\', \'foo bar\']', array('foo,bar', 'foo bar')),
 
             // mappings
-            array('{foo:bar,bar:foo,false:false,null:null,integer:12}', (object) array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
+            array('{foo: bar,bar: foo,false: false,null: null,integer: 12}', (object) array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{ foo  : bar, bar : foo,  false  :   false,  null  :   null,  integer :  12  }', (object) array('foo' => 'bar', 'bar' => 'foo', 'false' => false, 'null' => null, 'integer' => 12)),
             array('{foo: \'bar\', bar: \'foo: bar\'}', (object) array('foo' => 'bar', 'bar' => 'foo: bar')),
             array('{\'foo\': \'bar\', "bar": \'foo: bar\'}', (object) array('foo' => 'bar', 'bar' => 'foo: bar')),
@@ -494,6 +549,8 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             array('[foo, { bar: foo, foo: [foo, { bar: foo }] }, [foo, { bar: foo }]]', array('foo', array('bar' => 'foo', 'foo' => array('foo', array('bar' => 'foo'))), array('foo', array('bar' => 'foo')))),
 
             array('[foo, \'@foo.baz\', { \'%foo%\': \'foo is %foo%\', bar: \'%foo%\' }, true, \'@service_container\']', array('foo', '@foo.baz', array('%foo%' => 'foo is %foo%', 'bar' => '%foo%'), true, '@service_container')),
+
+            array('{ foo: { bar: { 1: 2, baz: 3 } } }', array('foo' => array('bar' => array(1 => 2, 'baz' => 3)))),
         );
     }
 
@@ -526,6 +583,22 @@ class InlineTest extends \PHPUnit_Framework_TestCase
             'spaced' => array('2001-12-15 21:59:43.10 -5', 2001, 12, 16, 2, 59, 43),
             'date' => array('2001-12-15', 2001, 12, 15, 0, 0, 0),
         );
+    }
+
+    /**
+     * @dataProvider getTimestampTests
+     */
+    public function testParseNestedTimestampListAsDateTimeObject($yaml, $year, $month, $day, $hour, $minute, $second)
+    {
+        $expected = new \DateTime($yaml);
+        $expected->setTimeZone(new \DateTimeZone('UTC'));
+        $expected->setDate($year, $month, $day);
+        $expected->setTime($hour, $minute, $second);
+
+        $expectedNested = array('nested' => array($expected));
+        $yamlNested = "{nested: [$yaml]}";
+
+        $this->assertEquals($expectedNested, Inline::parse($yamlNested, Yaml::PARSE_DATETIME));
     }
 
     /**

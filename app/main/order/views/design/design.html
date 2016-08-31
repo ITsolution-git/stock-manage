@@ -1,8 +1,13 @@
 <div class="main-design-page m-r-15 m-l-20 m-b-20">
     <div class="header"  layout="column">
-        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
             <a class="link-back cursor-p" ui-sref="app.order.order-info({id:designInforamtion.order_id})">BACK TO ORDER INFO</a>
-            <h1 flex="4">Design Name - {{designInforamtion.design_name}}</h1>
+            <h1 flex="4">Design Name - {{designInforamtion.design_name}} Job - #{{order_id}}</h1>
+        </div>
+        <div class="text-right">
+            <md-button  class="bg-grey md-raised" ng-click="confirmPricing()">
+                Confirm Pricing
+            </md-button>
         </div>
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-order" flex="100">
@@ -11,7 +16,7 @@
                     <md-card-content flex="80" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
-                                <div>Total # of Colors</div>
+                                <div>Positions Count</div>
                                 <span>{{designInforamtion.colors_count}}</span>
                             </div>
                             <div class="trans-box">
@@ -54,14 +59,39 @@
                 <div class="box-toolbar" layout="row" layout-align="end center">
 
                      <div flex="20" layout="row" layout-align="start center">
-                        <span class="h2 text-semibold">{{order_design_position.position_name}}</span>
+                        <!-- <span class="h2 text-semibold">{{order_design_position.position_header_name}}</span> -->
+                       <div layout="column"> 
+                        <table>
+                            <tr>
+                             <td>Position:</td>
+                             <td>{{order_design_position.position_header_name}}</td>
+                            </tr> 
+
+                            <tr>
+                             <td>Type:</td>
+                             <td>{{order_design_position.placement_header_name}}</td>
+                            </tr> 
+
+                            <tr>
+                             <td>Quantity:</td>
+                             <td>{{order_design_position.qnty_header_name}}</td>
+                            </tr> 
+
+                            <tr>
+                             <td>Price:</td>
+                             <td>{{order_design_position.total_price}}</td>
+                            </tr> 
+                        </table>
+                        
+                       </div> 
+
                     </div>
                   <div flex="80" layout-align="end center" layout="row">
                     <button  ng-click="position1.expanded = !position1.expanded">
                         <md-icon ng-if="position1.expanded" md-font-icon="icon-minus"></md-icon>
                         <md-icon ng-if="!position1.expanded" md-font-icon="icon-plus"></md-icon>
                     </button>
-                     <md-menu>
+                     <md-menu ng-show="order_number == '' && is_complete == '0' ">
                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                         </md-button>
@@ -75,7 +105,7 @@
                     </md-menu> 
                    </div>
                 </div>
-                <div ng-if="position1.expanded" class="box-content" layout="column" layout-padding>
+                <div ng-if="position1.expanded" class="box-content" layout="column" layout-padding ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
                     <div layout="row" class="postion-details" layout-align="space between">
                         <div flex="20">
                             <md-input-container class="width100">
@@ -87,7 +117,7 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <div flex="20">
+                        <div flex="20" >
                             <md-input-container class="width100">
                                 <label>Placement Type</label>
                                 <md-select ng-model="order_design_position.placement_type" ng-change="updateDesignPosition('placement_type',order_design_position.id,order_design_position.placement_type,'order_design_position','id',key)">
@@ -97,8 +127,11 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <div flex="20">
+                        <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
+                              
+                           
                             <md-input-container class="width100">
+
                                 <label>DtG Size</label>
                                 <md-select ng-model="order_design_position.dtg_size" ng-change="updateDesignPosition('dtg_size',order_design_position.id,order_design_position.dtg_size,'order_design_position','id',key)">
                                     <md-option  ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value="{{misc_dtgsize.id}}">
@@ -107,7 +140,7 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <div flex="20">
+                        <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
                             <md-input-container class="width100">
                                 <label>DtG on </label>
                                 <md-select ng-model="order_design_position.dtg_on" ng-change="updateDesignPosition('dtg_on',order_design_position.id,order_design_position.dtg_on,'order_design_position','id',key)">
@@ -192,12 +225,12 @@
                                     <input ng-model="order_design_position.speciality_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'speciality_qnty\',order_design_position.id,order_design_position.speciality_qnty,\'order_design_position\',\'id\',key)' }">
                                 </md-input-container>
                             </div>
-                            <div flex="25" class="pad-r">
+                           <!--  <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Oversize</label>
                                     <input ng-model="order_design_position.oversize" valid-number  ui-event="{ change : 'updateDesignPosition(\'oversize\',order_design_position.id,order_design_position.oversize,\'order_design_position\',\'id\',key)' }">
                                 </md-input-container>
-                            </div>
+                            </div> -->
                             <div flex="25" class="pad-r">
                                 <md-input-container class="md-block" flex-gt-sm>
                                     <label>Screen Fee</label>
@@ -256,8 +289,8 @@
                 </div>
             </div>
             
-            <div class="text-right">
-                <md-button  class="bg-grey md-raised" ng-click="addPosition()">
+            <div class="text-right" ng-show="order_number == '' && is_complete == '0' && position_array_count != designInforamtion.colors_count">
+                <md-button  class="bg-grey md-raised" ng-click="openPositionDialog($event,designInforamtion.order_id,order_design_position[0].qnty)">
                             ADD New Position
                         </md-button>
             </div>
@@ -265,15 +298,18 @@
             </div>
         </div>
 
-        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
+        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-show="order_number == '' && is_complete == '0' ">
 
-            <div class="title"><span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span></div>
+            <div class="title">
+                <span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span>
+                <span class="float-right"><a target="_blank" class="cursor-p" ui-sref="app.settings.price-info({ id: price_id })">GO TO PRICEGRID</a></span>
+            </div>
             <div layout="row" flex="100">
                 <div layout="column" flex="20" class="mrg15-R">
                     <md-input-container class="md-block" flex="25">
                         <label>Vendor</label>
                         <md-select ng-model="vendor_id" ng-change="checkVendor()">
-                            <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}">
+                            <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-if="vendor.total > 0">
                                 {{vendor.name_company}} ({{vendor.total}})
                             </md-option>
                         </md-select>
@@ -295,25 +331,25 @@
                 <div layout="row" layout-align="space-between center" class="margin-bootom15">
                     <div layout="column" >
                         <div class="h4">Product Name</div>
-                        <div class="h5  grey-color">{{product.product_name}}</div>
+                        <div class="h5">{{product.product_name}}</div>
                     </div>
                     <div class="box-toolbar" layout="row" >
                         <button  ng-click="product.expanded = !product.expanded">
                             <md-icon ng-if="product.expanded" md-font-icon="icon-plus"></md-icon>
                             <md-icon ng-if="!product.expanded" md-font-icon="icon-minus"></md-icon>
                         </button>
-                        <md-menu>
+                        <md-menu ng-show="order_number == '' && is_complete == '0' ">
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
                             <md-menu-content width="4" ng-show="product.is_calculate == 1">
                                 <md-menu-item ng-show="product.vendor_id == 1">
-                                    <md-button ng-click="openSearchProductViewDialogView($event,product.id,product.product_image,product.description,product.name_company,'Edit',product.product_name,product.color_name,product.design_product_id)">
+                                    <md-button ng-click="openSearchProductViewDialogView($event,product.id,product.product_image,product.description,product.name_company,'Edit',product.product_name,product.color_name,product.design_product_id,product.size_group_id,product.warehouse)">
                                         Edit
                                     </md-button>
                                 </md-menu-item>
                                 <md-menu-item ng-show="product.vendor_id > 1">
-                                    <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply.product.design_product_id)">
+                                    <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply,product.design_product_id,product.vendor_id,product.size_group_id)">
                                         Edit
                                     </md-button>
                                 </md-menu-item>
@@ -333,11 +369,11 @@
                             </div>  
                             <div layout="column">
                                 <div class="h4" ng-show="product.vendor_id > 0">Vendor</div>
-                                <div class="h5 p-b-10  grey-color">{{product.name_company}}</div>
+                                <div class="h5 p-b-10">{{product.name_company}}</div>
                                 <div class="h4">Item Number</div>
-                                <div class="h5  grey-color">{{product.id}}</div>
+                                <div class="h5">{{product.id}}</div>
                                 <div class="h4">Color</div>
-                                <div class="h5  grey-color">{{product.color_name}}</div>
+                                <div class="h5">{{product.color_name}}</div>
                             </div>  
                         </div>    
                          <div layout="row" flex="55">
@@ -367,25 +403,25 @@
                         </div>
                     </div>
                     <div ng-if="!product.expanded" layout="row" layout-align="space-between start" >
-                        <div layout="row" layout-align="space-between start" flex="35">
+                        <div layout="row" layout-align="space-between start" flex="20">
                             <div layout="column">
                                 <div class="h4 p-b-10">Description</div>
-                                <p class="grey-color" ng-bind-html="product.description"></p>
+                                <p ng-bind-html="product.description"></p>
                                 
                             </div>   
-                                                    </div>
-                        <div layout="row" flex="65"  layout-align="space-between start" layout-padding>
-                            <div layout="column" flex="10">
+                        </div>
+                        <div layout="row" flex="80"  layout-align="space-between start" layout-padding>
+                          <!--   <div layout="column" flex="10">
                                 <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
-                            </div>
-                            <div layout="column" flex="38">
+                            </div> -->
+                            <div layout="column" flex="35">
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Average Garment Cost</div>
-                                    <div class="h5 grey-color font-14 ">${{product.avg_garment_cost}}</div>
+                                    <div class="h5 font-14 ">${{product.avg_garment_cost}}</div>
                                 </div>
-                                <div layout="row" layout-align="space-between start" class="p-b-10">
-                                    <div class="h4">Markup Default 70%</div>
-                                    <div class="h5 grey-color font-14">
+                                <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
+                                    <div class="h4">Markup Default {{product.markup_default}}%</div>
+                                    <div class="h5 font-14">
                                         <div class="form-cntnr">
                                             <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
                                                 <input aria-label="Markup Default" ng-model="product.markup" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_markup(product.id)' }" ng-disabled="product.is_calculate == 0">
@@ -395,32 +431,32 @@
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Average Garment Price</div>
-                                    <div class="h5 grey-color font-14">${{product.avg_garment_price}}</div>
+                                    <div class="h5 font-14">${{product.avg_garment_price}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
-                                    <div class="h5">+</div>
+                                    <div class="h5">&nbsp;</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Print Charges</div>
-                                    <div class="h5 grey-color font-14">${{product.print_charges}}</div>
+                                    <div class="h5 font-14">${{product.print_charges}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
-                                    <div class="h5">=</div>
+                                    <div class="h5">&nbsp;</div>
                                 </div>
-                                <div layout="row" layout-align="space-between start" class="p-b-10">
+                                <!-- <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Total Line Charge</div>
-                                    <div class="h5 grey-color font-14">${{product.total_line_charge}}</div>
-                                </div>
+                                    <div class="h5 font-14">${{product.total_line_charge}}</div>
+                                </div> -->
                             </div> 
                             <div layout="column" flex="40">
-                                <div layout="column">
+                                <div layout="column" class="pd15-LR">
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Markup %</div>
-                                        <div class="h5 grey-color font-14">${{product.markup}}</div>
+                                        <div class="h5 font-14">{{product.markup}}%</div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="">
+                                    <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
                                         <div class="h4">Overide</div>
-                                        <div class="h5 grey-color font-14">
+                                        <div class="h5 font-14">
                                             <div class="form-cntnr">
                                                 <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
                                                     <input aria-label="Override" ng-model="product.override" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_override(product.id)' }" ng-disabled="product.is_calculate == 0">
@@ -428,20 +464,54 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="">
-
-                                        <div class="h5">---</div>
-                                    </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Per Item</div>
-                                        <div class="h5 grey-color font-14">${{product.total_line_charge}}</div>
+                                        <div class="h5 font-14">${{product.total_line_charge}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Sale Total</div>
-                                        <div class="h5 grey-color font-14">${{product.sales_total}}</div>
+                                        <div class="h5 font-14">${{product.sales_total}}</div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between start" class="p-b-10">
+                                        <div class="h4"></div>
+                                        <div class="h5 font-14"></div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between start" class="p-b-10">
+                                        <div class="h4">Total Quantity</div>
+                                        <div class="h5 font-14">{{product.total_qnty}}</div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
+                            <div layout="column" flex="25">
+                                <md-card class="m-b-20 newbox-typ" ng-show="order_number == '' && is_complete == '0' ">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            Packing Information
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                    <md-card-content class="pad0 package-height scrollable" ms-scroll>
+                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product)">
+                                            <div>{{order_item.item}}</div>
+                                            <span>${{order_item.charge}}</span>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+
+                                <md-card class="m-b-20 newbox-typ" ng-show="order_number != '' || is_complete == '1' ">
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            Packing Information
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                    <md-card-content class="pad0 package-height scrollable" ms-scroll>
+                                        <div class="card-box  hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}">
+                                            <div>{{order_item.item}}</div>
+                                            <span>${{order_item.charge}}</span>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+
+                            </div>
                         </div>  
                     </div>
                 </div>
@@ -459,4 +529,11 @@
            <!--  <md-button class="md-accent md-raised">Next</md-button> -->
         </md-dialog-actions>
 </div>
-
+<div class="footer border-t-grey" layout-padding layout="row">
+    <div flex="15 h4 text-semibold"><span>Total Quantity</span></div>
+    <div flex="15"><span>{{total_product}}</span></div>
+    <div flex="15 h4 text-semibold"><span>Screen Charges</span></div>
+    <div flex="15"><span>${{total_screen_fees}}</span></div>
+    <div flex="20 h4 text-semibold"><span>Grand Total</span></div>
+    <div flex="20"><span>${{total_price}}</span></div>
+</div>

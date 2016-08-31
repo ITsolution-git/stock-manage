@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Yaml\Tests;
 
+use Symfony\Bridge\PhpUnit\ErrorAssert;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Parser;
 
@@ -714,6 +715,25 @@ EOT;
         $this->assertSame($expected, $this->parser->parse($yaml));
     }
 
+    public function testSequenceFollowedByCommentEmbeddedInMapping()
+    {
+        $yaml = <<<EOT
+a:
+    b:
+        - c
+# comment
+    d: e
+EOT;
+        $expected = array(
+            'a' => array(
+                'b' => array('c'),
+                'd' => 'e',
+            ),
+        );
+
+        $this->assertSame($expected, $this->parser->parse($yaml));
+    }
+
     /**
      * @expectedException \Symfony\Component\Yaml\Exception\ParseException
      */
@@ -751,6 +771,7 @@ EOF
      *
      * @see http://yaml.org/spec/1.2/spec.html#id2759572
      * @see http://yaml.org/spec/1.1/#id932806
+     * @group legacy
      */
     public function testMappingDuplicateKeyBlock()
     {
@@ -770,6 +791,9 @@ EOD;
         $this->assertSame($expected, Yaml::parse($input));
     }
 
+    /**
+     * @group legacy
+     */
     public function testMappingDuplicateKeyFlow()
     {
         $input = <<<EOD
@@ -782,6 +806,75 @@ EOD;
             ),
         );
         $this->assertSame($expected, Yaml::parse($input));
+    }
+
+    /**
+     * @dataProvider getParseExceptionOnDuplicateData
+     * @requires function Symfony\Bridge\PhpUnit\ErrorAssert::assertDeprecationsAreTriggered
+     * throws \Symfony\Component\Yaml\Exception\ParseException in 4.0
+     */
+    public function testParseExceptionOnDuplicate($input, $duplicateKey, $lineNumber)
+    {
+        ErrorAssert::assertDeprecationsAreTriggered(sprintf('Duplicate key "%s" detected on line %d whilst parsing YAML. Silent handling of duplicate mapping keys in YAML is deprecated since version 3.2 and will throw \Symfony\Component\Yaml\Exception\ParseException in 4.0.', $duplicateKey, $lineNumber), function () use ($input) {
+            Yaml::parse($input);
+        });
+    }
+
+    public function getParseExceptionOnDuplicateData()
+    {
+        $tests = array();
+
+        $yaml = <<<EOD
+parent: { child: first, child: duplicate }
+EOD;
+        $tests[] = array($yaml, 'child', 1);
+
+        $yaml = <<<EOD
+parent:
+  child: first,
+  child: duplicate
+EOD;
+        $tests[] = array($yaml, 'child', 3);
+
+        $yaml = <<<EOD
+parent: { child: foo }
+parent: { child: bar }
+EOD;
+        $tests[] = array($yaml, 'parent', 2);
+
+        $yaml = <<<EOD
+parent: { child_mapping: { value: bar},  child_mapping: { value: bar} }
+EOD;
+        $tests[] = array($yaml, 'child_mapping', 1);
+
+        $yaml = <<<EOD
+parent:
+  child_mapping:
+    value: bar
+  child_mapping:
+    value: bar
+EOD;
+        $tests[] = array($yaml, 'child_mapping', 4);
+
+        $yaml = <<<EOD
+parent: { child_sequence: ['key1', 'key2', 'key3'],  child_sequence: ['key1', 'key2', 'key3'] }
+EOD;
+        $tests[] = array($yaml, 'child_sequence', 1);
+
+        $yaml = <<<EOD
+parent:
+  child_sequence:
+    - key1
+    - key2
+    - key3
+  child_sequence:
+    - key1
+    - key2
+    - key3
+EOD;
+        $tests[] = array($yaml, 'child_sequence', 6);
+
+        return $tests;
     }
 
     public function testEmptyValue()
@@ -1248,6 +1341,87 @@ data: !!binary |
 EOT
                 ,
                 '/The base64 encoded data \(.*\) contains invalid characters/',
+            ),
+        );
+    }
+
+    public function testParseDateAsMappingValue()
+    {
+        $yaml = <<<EOT
+date: 2002-12-14
+EOT;
+        $expectedDate = new \DateTime();
+        $expectedDate->setTimeZone(new \DateTimeZone('UTC'));
+        $expectedDate->setDate(2002, 12, 14);
+        $expectedDate->setTime(0, 0, 0);
+
+        $this->assertEquals(array('date' => $expectedDate), $this->parser->parse($yaml, Yaml::PARSE_DATETIME));
+    }
+
+    /**
+     * @param $lineNumber
+     * @param $yaml
+     * @dataProvider parserThrowsExceptionWithCorrectLineNumberProvider
+     */
+    public function testParserThrowsExceptionWithCorrectLineNumber($lineNumber, $yaml)
+    {
+        $this->setExpectedException(
+            '\Symfony\Component\Yaml\Exception\ParseException',
+            sprintf('Unexpected characters near "," at line %d (near "bar: "123",").', $lineNumber)
+        );
+
+        $this->parser->parse($yaml);
+    }
+
+    public function parserThrowsExceptionWithCorrectLineNumberProvider()
+    {
+        return array(
+            array(
+                4,
+                <<<YAML
+foo:
+    -
+        # bar
+        bar: "123",
+YAML
+            ),
+            array(
+                5,
+                <<<YAML
+foo:
+    -
+        # bar
+        # bar
+        bar: "123",
+YAML
+            ),
+            array(
+                8,
+                <<<YAML
+foo:
+    -
+        # foobar
+        baz: 123
+bar:
+    -
+        # bar
+        bar: "123",
+YAML
+            ),
+            array(
+                10,
+                <<<YAML
+foo:
+    -
+        # foobar
+        # foobar
+        baz: 123
+bar:
+    -
+        # bar
+        # bar
+        bar: "123",
+YAML
             ),
         );
     }

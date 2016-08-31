@@ -6,62 +6,39 @@
             </div>
             <div class="search-block" flex=25>
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                    <input ng-model="vm.searchQuery" ng-change="vm.searchTable()" >
+                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
-            <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon> 
+           <!--  <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon>  -->
         </div>
-        <div class="ms-responsive-table-wrapper">
-            <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions" >
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
+            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                 <table class="dataTable row-border hover">
+
+                    <thead tasty-thead></thead>
+                    <tbody >
+                        <tr ng-repeat="purchase in rows">
+                            <td class="">{{purchase.po_id}}</td>
+                            <td class="">{{purchase.id}}</td>
+                            <td class="">{{purchase.po_type}}</td>
+                            <td class="">{{purchase.client_company}}</td>
+                            <td class="">{{purchase.name_company}}</td>
+                            <td class=""> {{purchase.date}}</td>
+                            <td><a class="font-12" class="cursor-p" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})">VIEW</a></td> 
+                            <!-- <td class="" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})"> View</td> -->
+                        </tr>
+                    </tbody> 
+                </table>
+                <div tasty-pagination class="tasty-page"></div>
+            </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
                 <thead>
                     <tr>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">PO #</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Order ID</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">PO Type</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Client Name</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Vendor/Affiliate</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text">
-                            <div class="table-header">
-                                <span class="column-title">Date Created</span>
-                            </div>
-                        </th>
-                        <th></th>
+                        <th>No Records Found</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr ng-repeat="purchaseOrder in ::vm.purchaseOrders" class="cursor-p">
-                        <td>{{ purchaseOrder.pid}}</td>
-                        <td>{{ purchaseOrder.orderId}}</td>
-                        <td>{{ purchaseOrder.poType}}</td>
-                        <td>{{ purchaseOrder.clientName}}</td>
-                        <td>{{ purchaseOrder.vender}}</td>
-                        <td>{{ purchaseOrder.dateCreated}}</td>
-                        <td class="accor details-control" ui-sref="app.purchaseOrder.companyPO">
-                            <a>VIEW PO</a>
-                        </td>
-                    </tr>                    
-                </tbody>
             </table>
         </div>
     </div>

@@ -5,6 +5,7 @@ require_once(app_path() . '/constants.php');
 use App\Login;
 use App\Category;
 use App\Order;
+use App\Common;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -15,10 +16,12 @@ use Request;
 
 class FinishingController extends Controller { 
 
-    public function __construct(Finishing $finishing, Category $category)
+    public function __construct(Finishing $finishing, Category $category, Common $common, Order $order)
     {
         $this->finishing = $finishing;
         $this->category = $category;
+        $this->common = $common;
+        $this->order = $order;
     }
 
   
@@ -88,21 +91,21 @@ class FinishingController extends Controller {
 
         $result = $this->finishing->getFinishingdata($post);
 
+        foreach ($result['allData'] as $data) {
+            $inner_data = $this->finishing->getFinishingByOrder($data->order_id);
+            $data->order_finishing = $inner_data;
+        }
+
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'order.id', 'name' => 'Order ID'),
-                        1=>array('key' => 'f.qty', 'name' => 'Qty'),
-                        2=>array('key' => 'fc.category_name', 'name' => 'Finishing Item'),
-                        3=>array('key' => 'c.client_company', 'name' => 'Client'),
-                        4=>array('key' => 'f.start_time', 'name' => 'Start'),
-                        5=>array('key' => 'f.end_time', 'name' => 'End'),
-                        6=>array('key' => 'f.est', 'name' => 'EST Completion Time'),
-                        7=>array('key' => 'f.status', 'name' => 'Done?'),
-                        8=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.name', 'name' => 'Job Name'),
+                        2=>array('key' => 'c.client_company', 'name' => 'Client'),
+                        3=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -151,49 +154,8 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        $finishingData['table'] = $post['table'];
-
-        if($post['field'] == 'category_name')
-        {
-            $category = $this->category->getCategoryByName($post['value']);
-            if(empty($category))
-            {
-                $category_id = $this->category->addcategory(array('category_name' => $post['value']));
-            }
-            else
-            {
-                $category_id = $category[0]->id;
-            }
-            $finishingData['field'] = array('category_id' => $category_id);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if($post['field'] == 'job_name')
-        {
-            $finishing_data = $this->finishing->getFinishingDetailById($post['id']);
-
-            $finishingData['field'] = array('job_name' => $post['value']);
-            $finishingData['where'] = array('id' => $finishing_data[0]->order_id);
-        }
-        if($post['field'] == 'note')
-        {
-            $finishingData['field'] = array('note' => $post['value']);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if($post['field'] == 'status')
-        {
-            $finishingData['field'] = array('status' => $post['value']);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if(isset($post['start_time']))
-        {
-            $finishingData['field'] = array('start_time' => $post['start_time'],'est' => $post['est']);
-            $finishingData['where'] = array('id' => $post['id']);
-        }
-        if(isset($post['end_time']))
-        {
-            $finishingData['field'] = array('end_time' => $post['end_time'],'est' => $post['est'],'status' => '1');
-            $finishingData['where'] = array('id' => $post['id']);
-        }
+        $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est'],'note'=>$post['note']);
+        $finishingData['where'] = array('id' => $post['id']);
 
         $result = $this->finishing->updateFinishing($finishingData);
         
@@ -237,8 +199,57 @@ class FinishingController extends Controller {
 
         if(!empty($category))
         {
-            $finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qnty']);
-            $result = $this->finishing->addFinishing($finishingData);
+            //$finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qnty']);
+            $post['category_id'] = $category[0]->id;
+            unset($post['item_name']);
+            $result = $this->finishing->addFinishing($post);
         }
+    }
+
+    public function addRemoveToFinishing()
+    {
+        $post = Input::all();
+
+        $design_data = $this->common->GetTableRecords('design_product',array('design_id'=>$post['product']['design_id'],'product_id'=>$post['product']['id']),array());
+        $design = $design_data[0];
+
+        if($post['item'] == 1)
+        {
+            $finishing_data = $this->common->GetTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id'],'category_id' => $post['item_id']),array());
+            
+            if($finishing_data[0]->status == '1')
+            {
+                $data = array("success"=>0,"message"=>'Finishing of this item is completed.');
+                return response()->json(["data" => $data]);
+            }
+            
+            $extra_charges = $design->extra_charges - $post['item_charge'];
+            
+            $update_arr = array('extra_charges' => $extra_charges);
+            $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id,'product_id' => $design->product_id),$update_arr);
+
+            $this->common->DeleteTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id'],'item_id' => $post['item_id']));
+            $this->common->DeleteTableRecords('finishing',array('order_id' => $post['order_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id'],'category_id' => $post['item_id']));
+        }
+        else
+        {
+            if($post['product']['total_qnty'] > 0)
+            {
+                $extra_charges = $design->extra_charges + $post['item_charge'];
+
+                $update_arr = array('extra_charges' => $extra_charges);
+                $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id,'product_id' => $design->product_id),$update_arr);
+            }
+
+            $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id']);
+            $shipping_id = $this->common->InsertRecords('order_item_mapping',$insert_arr);
+
+            $item_data = array('category_id' => $post['item_id'],'order_id' => $post['order_id'],'qty' => $post['product']['total_qnty'],'design_id' => $post['product']['design_id'],'product_id' => $post['product']['id']);
+            $result = $this->finishing->addFinishing($item_data);
+        }
+        $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['product']['design_id']);
+
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
     }
 }

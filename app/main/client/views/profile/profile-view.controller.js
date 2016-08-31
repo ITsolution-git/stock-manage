@@ -6,7 +6,7 @@
             .module('app.client')
             .controller('ProfileViewController', ProfileViewController)
             .controller('CompanyInfo', CompanyInfo);
-
+ 
     /** @ngInject */
     function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
@@ -79,7 +79,7 @@
                     $scope.allclientnotes = vm.Response.allclientnotes;
                     $scope.Arrdisposition = vm.Response.Arrdisposition;
                     $scope.Client_orders = vm.Response.Client_orders;
-                    $scope.art_detail = vm.Response.art_detail;
+                    $scope.screenset_detail = vm.Response.screenset_detail;
                     $scope.addressAll=vm.Response.addressAll.result;
                     $scope.Distribution_address= vm.Response.Distribution_address.result;
                     $scope.documents= vm.Response.documents;

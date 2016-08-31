@@ -5,13 +5,16 @@
 	.factory('sessionService', sessionService);
 
 	/* ngInject */
-	function sessionService($state, $resource, notifyService,$rootScope,$http,msNavigationService) {
+	function sessionService($document,msNavigationService, $window,$state, $timeout, $mdDialog, $stateParams,$resource,$http,notifyService,AllConstant,$filter) {
+		var vm = this;
 		var service = {
 			set : set,
 			get : get,
 			remove : remove,
 			destroy : destroy,
-			AccessService: AccessService
+			AccessService: AccessService,
+			openAddPopup:openAddPopup,
+			openEditPopup:openEditPopup
 		};
 
 		return service;
@@ -145,6 +148,135 @@
 				msNavigationService.deleteItem('fuse.admin');
 			}
 		}
+
+		function openAddPopup(scope,path,params,table)
+		{
+			$("#ajax_loader").show();
+			$mdDialog.show({
+                controller:function ($scope, params)
+                {
+                	$("#ajax_loader").hide();
+                    $scope.params = params; // GET PARAMETERS FOR POPUP
+
+                    $scope.closeDialog = function() 
+                    { $mdDialog.hide(); } 
+                    
+                    $scope.InsertTableData = function(insert_data,extra,cond)
+			        {
+			        	$("#ajax_loader").show();
+			        	var InserArray = {}; // INSERT RECORD ARRAY
+                		InserArray.data = insert_data;
+                		InserArray.table =table;
+
+                		//=============== SPECIAL CONDITIONS ==============
+                		if(extra=='vendorcontact') { InserArray.data.vendor_id = $scope.params.vendor_id;}
+                		if(extra=='sales') { InserArray.data.company_id = $scope.params.company_id; InserArray.data.sales_created_date =AllConstant.currentdate;}
+                		if(extra=='artnote') { InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;}
+                		//=============== SPECIAL CONDITIONS ==============
+
+			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
+			        	{ 
+			        		if(result.data.success=='1')
+		                    { notifyService.notify('success',result.data.message); $mdDialog.hide();}
+			                else
+		                    { notifyService.notify('error',result.data.message); }
+		                    $("#ajax_loader").hide();
+                   		});
+			        }
+
+                },
+                templateUrl: 'app/main/'+path,
+                parent: angular.element($document.body),
+                clickOutsideToClose: true,
+                    locals: {
+                        params:params,  // PARAMETERS PASS TO POPUP
+                    },
+                onRemoving : scope.returnFunction  // THIS FUNCTION WILL BE FIXED AND MUST BE PRESENT IN YOUR CONTROLLER
+            });
+		}
+		function openEditPopup(scope,path,params,table)
+		{
+			$("#ajax_loader").show();
+			$mdDialog.show({
+                controller:function ($scope, params)
+                {
+                	$("#ajax_loader").hide();
+                    $scope.params = params; // GET PARAMETERS FOR POPUP
+                    $scope.UpdateTableData = function(field_name,field_value,table_name,cond_field,cond_value,extra,extra_cond)
+			        {
+			        	$("#ajax_loader").show();
+			        	var UpdateArray = {};
+			            UpdateArray.table =table_name;
+			            
+			            $scope.name_filed = field_name;
+			            var obj = {};
+			            obj[$scope.name_filed] =  field_value;
+			            UpdateArray.data = angular.copy(obj);
+
+			            var condition_obj = {};
+			            condition_obj[cond_field] =  cond_value;
+			            UpdateArray.cond = angular.copy(condition_obj);
+                		
+                	$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+			        	{
+		                    if(result.data.success=='1')
+		                    { 
+		                    	notifyService.notify('success', result.data.message);
+		                    	//$mdDialog.hide();
+		                    }
+			                else
+		                    {
+		                        notifyService.notify('error',result.data.message);
+		                    }
+		                    $("#ajax_loader").hide();
+                   		});
+			        }
+			        $scope.UpdateTableDataAll = function(tableData,table_name,cond_field,cond_value,extra,extra_cond)
+			        {
+			        	$("#ajax_loader").show();
+			        	var UpdateArray = {};
+			            UpdateArray.table =table_name;
+			            UpdateArray.data = tableData;
+
+			            var condition_obj = {};
+			            condition_obj[cond_field] =  cond_value;
+			            UpdateArray.cond = angular.copy(condition_obj);
+
+			            //=============== SPECIAL CONDITIONS ==============
+			            if(extra=='vendorcontact' || extra=='sales' ) { delete UpdateArray.data.id; delete UpdateArray.data.sales_created_date;}
+                		//console.log(UpdateArray); return false;
+                		if(extra=='artnote'){ delete UpdateArray.data.id;}
+                		//=============== SPECIAL CONDITIONS ==============
+
+                		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+			        	{
+		                    if(result.data.success=='1')
+		                    { 
+		                    	notifyService.notify('success', result.data.message);
+		                    	$mdDialog.hide();
+		                    }
+			                else
+		                    {
+		                        notifyService.notify('error',result.data.message);
+		                    }
+		                    $("#ajax_loader").hide();
+                   		});
+			        }
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    } 
+                },
+                templateUrl: 'app/main/'+path,
+                parent: angular.element($document.body),
+                clickOutsideToClose: false,
+                    locals: {
+                        params:params,  // PARAMETERS PASS TO POPUP
+                    },
+                onRemoving : scope.returnFunction  // THIS FUNCTION WILL BE FIXED AND MUST BE PRESENT IN YOUR CONTROLLER
+            });
+		}
+
 
 	}
 	

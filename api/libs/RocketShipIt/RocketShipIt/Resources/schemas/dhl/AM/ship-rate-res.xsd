@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xsd:schema targetNamespace="http://www.dhl.com" xmlns:dhlRating="http://www.dhl.com/ratingdatatypes" xmlns:dhl="http://www.dhl.com/datatypes" xmlns="http://www.dhl.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified">
+	<xsd:import namespace="http://www.dhl.com/datatypes" schemaLocation="datatypes.xsd"/>
+	<xsd:import namespace="http://www.dhl.com/ratingdatatypes" schemaLocation="ratingdatatypes.xsd"/>
+	<xsd:element name="ShipmentRatingResponse">
+		<xsd:annotation>
+			<xsd:documentation>Shipment Validation response root element</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Response" type="dhl:Response"/>
+				<xsd:element name="Note" type="dhl:Note"/>
+				<xsd:element name="Rated" type="dhl:YesNo"/>
+				<xsd:element name="ShippingCharge" type="dhl:Money" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>This field will be filled if rated is 'y'</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="SaturdayDeliveryCharge" type="dhl:Money" minOccurs="0"/>
+				<xsd:element name="ProofOfDeliveryCharge" type="dhl:Money" minOccurs="0"/>
+				<xsd:element name="DutyPayCharge" type="dhl:Money" minOccurs="0"/>
+				<xsd:element name="OnForwardCharge" type="dhl:Money" minOccurs="0"/>
+				<xsd:element name="InsuranceCharge" type="dhl:Money" minOccurs="0"/>
+				<xsd:element name="PackageCharge" type="dhl:Money" minOccurs="0"/>
+				<xsd:element name="ChargeableWeight" type="dhl:Weight" minOccurs="0"/>
+				<xsd:element name="DimensionalWeight" type="dhl:Weight" minOccurs="0"/>
+				<xsd:element name="OriginServiceArea" type="dhlRating:RatingServiceArea"/>
+				<xsd:element name="DestinationServiceArea" type="dhlRating:RatingServiceArea"/>
+				<xsd:element name="CurrencyCode" type="dhl:CurrencyCode"/>
+				<xsd:element name="WeightUnit" type="dhl:WeightUnit"/>
+				<xsd:element name="CountryCode" type="dhl:CountryCode"/>
+				<xsd:element name="Surcharge" type="dhl:Money" minOccurs="0"/>
+				<xsd:element name="ZoneID" type="xsd:string" minOccurs="0">
+					<xsd:annotation>
+						<xsd:documentation>for future use only</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

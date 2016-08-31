@@ -6,7 +6,7 @@
             .controller('SearchProductController', SearchProductController);
 
     /** @ngInject */
-    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams)
+    function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams,sessionService,notifyService)
     {
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
@@ -15,6 +15,8 @@
         $scope.color = true;
         $scope.size = true;
         $scope.NoImage = AllConstant.NoImage;
+        $scope.product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/products/';
+
         
         $scope.init = {
           'count': 20,
@@ -125,50 +127,81 @@
         }
 
 
-        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName)
+        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,size_group_id,warehouse)
         {
-            $mdDialog.show({
-                controller: 'SearchProductViewController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/searchProductView/searchProductView.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    product_id: product_id,
-                    product_image:product_image,
-                    description:description,
-                    vendor_name:vendor_name,
-                    operation:operation,
-                    product_name:product_name,
-                    colorName:colorName,
-                    design_id:0,
-                    design_product_id:0,
-                    event: ev
-                },
-                onRemoving : $scope.reloadPage
-               
+            var check_data = {};
+            check_data.design_id = $stateParams.id;
+            check_data.product_id = product_id;
+
+            $http.post('api/public/product/checkProductExist',check_data).success(function(result) {
+                   
+                if(result.data.success == '1') {
+                    var data = {"status": "error", "message": "This product is already added to your design select different one."}
+                    notifyService.notify(data.status, data.message);
+                }
+                else
+                {
+                    $mdDialog.show({
+                        controller: 'SearchProductViewController',
+                        controllerAs: 'vm',
+                        templateUrl: 'app/main/order/dialogs/searchProductView/searchProductView.html',
+                        parent: angular.element($document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: true,
+                        locals: {
+                            product_id: product_id,
+                            product_image:product_image,
+                            description:description,
+                            vendor_name:vendor_name,
+                            operation:operation,
+                            product_name:product_name,
+                            colorName:colorName,
+                            design_id:0,
+                            design_product_id:0,
+                            size_group_id:size_group_id,
+                            warehouse:warehouse,
+                            event: ev
+                        },
+                        onRemoving : $scope.reloadPage
+                    });
+                }
             });
         }
 
-        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id)
+        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
         {
-            $mdDialog.show({
-                controller: controller,
-                controllerAs: $scope,
-                templateUrl: file,
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    product_id: product_id,
-                    operation:operation,
-                    design_id:$stateParams.id,
-                    color_id:color_id,
-                    is_supply:is_supply,
-                    event: ev
-                },
-                onRemoving : $scope.reloadPage
+            var check_data = {};
+            check_data.design_id = $stateParams.id;
+            check_data.product_id = product_id;
+
+            $http.post('api/public/product/checkProductExist',check_data).success(function(result) {
+                   
+                if(result.data.success == '1') {
+                    var data = {"status": "error", "message": "This product is already added to your design select different one."}
+                    notifyService.notify(data.status, data.message);
+                }
+                else
+                {
+                    $mdDialog.show({
+                        controller: controller,
+                        controllerAs: $scope,
+                        templateUrl: file,
+                        parent: angular.element($document.body),
+                        targetEvent: ev,
+                        clickOutsideToClose: true,
+                        locals: {
+                            product_id: product_id,
+                            operation:operation,
+                            design_id:$stateParams.id,
+                            color_id:color_id,
+                            is_supply:is_supply,
+                            vendor_id: $scope.vendor_id,
+                            size_group_id:size_group_id,
+                            event: ev
+                        },
+                        onRemoving : $scope.reloadPage
+                    });
+                }
             });
         }
 

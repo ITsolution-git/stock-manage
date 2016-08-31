@@ -188,8 +188,12 @@
                 
             });
         }
+        $scope.onLoad=function()
+        {
+            $scope.showtcprofileimg = true;
+        }; 
         // ============= UPLOAD IMAGE ============= // 
-        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,is_drag,drag_image) 
         {
 
                 $scope.column_name=column_name;
@@ -199,65 +203,118 @@
                 $scope.primary_key_value=primary_key_value;
                 $scope.default_image=default_image;
                 $scope.unlink_url = image_name;
-                //console.log(primary_key_value); return false;
-                $mdDialog.show({
-                   //controllerAs: $scope,
-                    controller: function($scope,params){
-                            $scope.params = params;
-                            $scope.SaveImageAll=function(image_array)
-                            {
-                                if(image_array == null)
+                $scope.is_drag = is_drag;
+                $scope.drag_image = drag_image;
+                ///console.log(drag_image); return false;
+                if(drag_image!=null)
+                {
+                    $mdDialog.show({
+                       //controllerAs: $scope,
+                        controller: function($scope,params){
+                                $scope.params = params;
+                                $scope.logo_image = 'ok';
+                                if($scope.params.is_drag=='image_drag' && $scope.params.drag_image!=null)
+                                {
+                                    $scope.logo_image = $scope.params.drag_image[0];
+                                }
+                                
+                                $scope.SaveImageAll=function(image_array)
+                                {
+                                    if(image_array == null)
+                                    {
+                                        $mdDialog.hide();
+                                        return false;
+                                    }
+
+                                    var Image_data = {};
+                                    Image_data.image_array = image_array;
+                                    Image_data.field = params.column_name;
+                                    Image_data.table = params.table_name;
+                                    Image_data.image_name = params.table_name+"-logo";
+                                    Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.primary_key_value;
+                                    Image_data.cond = params.primary_key_name;
+                                    Image_data.value = params.primary_key_value;
+                                    Image_data.unlink_url = params.unlink_url;
+
+                                    $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
+                                        if(result.data.success=='1')
+                                        {
+                                            notifyService.notify("success", result.data.message);
+                                            $mdDialog.hide();
+                                        }
+                                        else
+                                        {
+                                            notifyService.notify("error", result.data.message); 
+                                        }
+                                    });
+                                };
+                                $scope.showtcprofileimg = false;
+                                $scope.onLoad=function()
+                                    {
+                                        $scope.showtcprofileimg = true;
+                                    }; 
+                                $scope.removeProfileImage=function()
+                                    {
+                                        $scope.showtcprofileimg = false;
+                                    }; 
+                                $scope.closeDialog = function() 
                                 {
                                     $mdDialog.hide();
-                                    return false;
-                                }
-
-                                var Image_data = {};
-                                Image_data.image_array = image_array;
-                                Image_data.field = params.column_name;
-                                Image_data.table = params.table_name;
-                                Image_data.image_name = params.table_name+"-logo";
-                                Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.primary_key_value;
-                                Image_data.cond = params.primary_key_name;
-                                Image_data.value = params.primary_key_value;
-                                Image_data.unlink_url = params.unlink_url;
-
-                                $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
-                                    if(result.data.success=='1')
-                                    {
-                                        notifyService.notify("success", result.data.message);
-                                        $mdDialog.hide();
-                                    }
-                                    else
-                                    {
-                                        notifyService.notify("error", result.data.message); 
-                                    }
-                                });
-                            };
-                            $scope.showtcprofileimg = false;
-                            $scope.onLoad=function()
-                                {
-                                    $scope.showtcprofileimg = true;
-                                }; 
-                            $scope.removeProfileImage=function()
-                                {
-                                    $scope.showtcprofileimg = false;
-                                }; 
-                            $scope.closeDialog = function() 
-                            {
-                                $mdDialog.hide();
-                            } 
-                        },
-                    templateUrl: 'app/main/image/image.html',
-                    parent: angular.element($document.body),
-                    clickOutsideToClose: false,
-                        locals: {
-                            params:$scope
-                        },
-                    onRemoving :  $scope.GetCompany
-                });
+                                } 
+                            },
+                        templateUrl: 'app/main/image/'+is_drag+'.html',
+                        parent: angular.element($document.body),
+                        clickOutsideToClose: false,
+                            locals: {
+                                params:$scope
+                            },
+                        onRemoving :  $scope.GetCompany
+                    });
+                }
 
         };
+
+           $scope.qbClientSetup = function(){
+
+                $("#ajax_loader").show();
+                var companyId = {};
+
+                companyId ={company_id :sessionService.get('company_id')};
+
+                $http.post('api/public/common/AddEditClient',companyId).success(function(result) {
+                    $("#ajax_loader").hide();
+                            if(result != '0')
+                            {
+                                notifyService.notify('success',"Client Sync successfully");   
+                            }
+                            else
+                            {
+                                notifyService.notify('error',"Please connect to quickbook first");
+                            }
+
+                           
+
+                           });
+            }
+
+            $scope.qbUpdateInovice = function(){
+                $("#ajax_loader").show();
+                var company_id = {};
+
+                company_id ={company_id :sessionService.get('company_id')};
+
+                $http.post('api/public/qbo/updateInvoicePayment',company_id).success(function(result) {
+                $("#ajax_loader").hide();
+                    if(result != '0')
+                    {
+                        notifyService.notify('success',"Invoice Payments Sync successfully");   
+                    }
+                    else
+                    {
+                        notifyService.notify('error',"Please connect to quickbook first");
+                    }
+                   });
+            }
 
     }
 })();

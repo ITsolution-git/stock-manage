@@ -8,10 +8,12 @@ use Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Order;
+use App\Api;
 use App\Common;
 use App\Purchase;
 use App\Product;
 use App\Client;
+use App\Company;
 use App\Affiliate;
 use DB;
 use App;
@@ -23,7 +25,7 @@ use PDF;
 
 class OrderController extends Controller { 
 
-    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate)
+    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company)
     {
         $this->order = $order;
         $this->purchase = $purchase;
@@ -31,6 +33,8 @@ class OrderController extends Controller {
         $this->product = $product;
         $this->client = $client;
         $this->affiliate = $affiliate;
+        $this->api = $api;
+        $this->company = $company;
     }
 
 /** 
@@ -79,6 +83,7 @@ class OrderController extends Controller {
 
     public function listOrder()
     {
+        
         $post_all = Input::all();
         $records = array();
 
@@ -197,22 +202,45 @@ class OrderController extends Controller {
            return response()->json(["data" => $response]);
         }
 
+        $result['order'][0]->sns_shipping_name = '';
 
-        $order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
+        if($result['order'][0]->sns_shipping == '1') {
+            $result['order'][0]->sns_shipping_name = 'Ground';
+        } elseif ($result['order'][0]->sns_shipping == '2') {
+            $result['order'][0]->sns_shipping_name = 'Next Day Air';
+        } elseif ($result['order'][0]->sns_shipping == '3') {
+            $result['order'][0]->sns_shipping_name = '2nd Day Air';
+        } elseif ($result['order'][0]->sns_shipping == '16') {
+            $result['order'][0]->sns_shipping_name = '3 Day Select';
+        } elseif ($result['order'][0]->sns_shipping == '6') {
+            $result['order'][0]->sns_shipping_name = 'Will Call / PickUp';
+        }
 
-        if(!empty($order_items))
+        $finishing_count = $this->order->getFinishingCount($result['order'][0]->id);
+        $total_shipped_qnty = $this->order->getShippedByOrder($data);
+        $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
+        $dist_location = count($locations);
+        $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
+        $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');
+        $notes_count = $this->order->getPoNotes($result['order'][0]->id);
+        $total_packing_charge = $this->order->getTotalPackingCharge($result['order'][0]->id);
+
+        $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
+        $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
+        $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
+        $result['order'][0]->notes_count = $notes_count ? $notes_count : '0';
+        $result['order'][0]->total_packing_charge = $total_packing_charge ? $total_packing_charge : '0';
+
+        $result['order'][0]->purchase_orders = $purchase_orders;
+        $result['order'][0]->recieve_orders = $recieve_orders;
+
+
+        //$order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
+
+        /*if(!empty($order_items))
         {
-            $items = $this->order->getItemsByOrder($data['id']);
-            $finishing_count = $this->order->getFinishingCount($data['company_id']);
-
-            $total_shipped_qnty = $this->order->getShippedByOrder($data);
-            $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
-            $dist_location = count($locations);
-
-            $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
-            $result['order'][0]->dist_location = $dist_location ? $dist_location : '0';
-            $result['order'][0]->finishing_count = $finishing_count ? $finishing_count : '0';
-
+            //$items = $this->order->getItemsByOrder($data['id']);
+            
             foreach ($order_items as $order_item)
             {
                 $i = 0;
@@ -239,21 +267,22 @@ class OrderController extends Controller {
         else
         {
             $result['order_item'] = array();
-        }
+        }*/
 
         if (count($result) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'records' => $result['order'],
-                                'order_item' => $result['order_item']
+                                'order_item' => array()
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'records' => $result['order'],
-                                'order_item' => $result['order_item']);
+                                'order_item' => array()
+                            );
         } 
         return response()->json(["data" => $response]);
 
@@ -351,14 +380,37 @@ class OrderController extends Controller {
      public function updatePositions()
      {
         $post = Input::all();
+        
+        if($post['column_name'] == 'position_id') {
+            $result = $this->order->checkDuplicatePositions($post['design_id'],$post['data']['position_id']);
+
+            $screen_set = $post['order_id'].'_'.$post['position'].'_'.$post['design_id'];
+
+            if($result == '1' ) {
+                $data = array("success"=>2,"message"=>"Duplicate");
+                 return response()->json(['data'=>$data]);
+            }
+        }
 
         //$positionData = $this->common->GetTableRecords('order_design_position',array('design_id' => $data['design_id']),array());
 
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
           $date_field = (empty($post['date_field']))? '':$post['date_field']; 
+
+          if($post['column_name'] == 'color_stitch_count') {
+            $post['data']['screen_fees_qnty'] = $post['data']['color_stitch_count'];
+          }  
+
+         
           
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
+
+          if($post['column_name'] == 'position_id') {
+             $this->common->UpdateTableRecords('artjob_screensets',array('positions' => $post['cond']['id']),array('screen_set' => $screen_set));
+          }  
+            
+
           $data = array("success"=>1,"message"=>UPDATE_RECORD);
 
           $return = $this->calculateAll($post['order_id'],$post['company_id']);
@@ -422,7 +474,7 @@ class OrderController extends Controller {
      *          property="order_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+     *      @SWG\Property(
      *          property="address_id",
      *          type="integer"
      *      )
@@ -594,15 +646,15 @@ class OrderController extends Controller {
      *          property="order_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="address_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="item_id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="shipping_id",
      *          type="integer"
      *      )
@@ -684,7 +736,7 @@ class OrderController extends Controller {
      *          property="id",
      *          type="integer"
      *      ),
-            @SWG\Property(
+      *      @SWG\Property(
      *          property="qty",
      *          type="integer"
      *      )
@@ -991,18 +1043,29 @@ class OrderController extends Controller {
         $post = Input::all();
         $email = trim($post['email']);
         $email_array = explode(",",$email);
-        $attached_url = UPLOAD_PATH.$post['company_id'].'/pdf/order-'.$post['order_id'].'.pdf';
-       
-       $uploaddir = base_path() . "/public/uploads/".$post['company_id']."/pdf/order-".$post['order_id'].'.pdf';
-       
-       if (file_exists($uploaddir)) {
-         
-       } else {
-        $response = array('success' => 0, 'message' => "Email Attachement is blank");
-        return response()->json(["data" => $response]);
-        exit;
-       }
 
+        $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+
+        $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';
+
+        if(!file_exists($file_path))
+        {
+            PDF::AddPage('P','A4');
+            PDF::writeHTML(view('pdf.invoice',$data)->render());
+            PDF::Output($file_path,'F');
+        }
+
+        foreach ($email_array as $email)
+        {
+            Mail::send('emails.invoice', ['email'=>$email], function($message) use ($file_path,$email)
+            {
+                 $message->to($email)->subject('Invoice PDF');
+                 $message->attach($file_path);
+            });                
+        }
+
+        $response = array('success' => 1, 'message' => MAIL_SEND);
+        return response()->json(["data" => $response]);
 
       /* Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
         {
@@ -1199,6 +1262,7 @@ class OrderController extends Controller {
     public function addOrder()
     {
         $post = Input::all();
+
        
         $client_data = $this->client->GetclientDetail($post['orderData']['client_id']);
 
@@ -1211,6 +1275,12 @@ class OrderController extends Controller {
                 $estimation_id = $row->id;
               }
         }
+
+        
+        if(array_key_exists('sns_shipping', $post['orderData'])) {
+        $post['orderdata']['sns_shipping'] = $post['orderData']['sns_shipping'];
+        }
+
 
          $post['orderdata']['name'] = $post['orderData']['name'];
          $post['orderdata']['approval_id'] = $estimation_id;
@@ -1361,6 +1431,9 @@ class OrderController extends Controller {
     {
         $post = Input::all();
        
+       
+        unset($post['designData']['order_number']);
+        unset($post['designData']['is_complete']);
       
         if($post['designData']['hands_date'] != '')
         {
@@ -1374,6 +1447,9 @@ class OrderController extends Controller {
         {
             $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
         }
+
+        unset($post['designData']['price_id']);
+
 
        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['designData']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
@@ -1394,14 +1470,16 @@ class OrderController extends Controller {
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
                                 'order_design_position' => $result['order_design_position'],
-                                'total_pos_qnty' => $result['total_pos_qnty']
+                                'total_pos_qnty' => $result['total_pos_qnty'],
+                                'total_screen_fees' => $result['total_screen_fees']
                             );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
                                 'order_design_position' => $result['order_design_position'],
-                                'total_pos_qnty' => 0
+                                'total_pos_qnty' => 0,
+                                'total_screen_fees' => 0
                             );
         }
         return response()->json(["data" => $response]);
@@ -1531,84 +1609,368 @@ class OrderController extends Controller {
         return response()->json(["data" => $data]);
     }
 
-    public function addRemoveToFinishing()
-    {
-        $post = Input::all();
-
-        if($post['item_name'] == 'Inside Tagging')
-        {
-            $post['item_name'] = 'Inside Tag';
-        }
-        $total_qnty = 0;
-
-        $design_data = $this->order->getDesignByOrder($post['order_id']);
-
-        if(!empty($design_data))
-        {
-            if($post['item'] == 1)
-            {
-                foreach($design_data as $design) {
-                    
-                    $total_qnty = $this->order->getTotalQntyByDesign($design->design_id);
-
-                    if($total_qnty > 0 && $post['item_charge'] <= $design->sales_total && $post['item_charge'] <= $design->extra_charges)
-                    {
-                        $extra_charges = $design->extra_charges - $post['item_charge'];
-                        $subtract = $design->sales_total - $post['item_charge'];
-                        $sales_total = round($subtract,2);
-                        
-                        $update_arr = array('extra_charges' => $extra_charges);
-                        $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id),$update_arr);
-                    }
-                }
-
-                $this->common->DeleteTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'item_id' => $post['item_id']));
-
-                $item_data = array('item_name' => $post['item_name'], 'order_id' => $post['order_id']);
-                $return = app('App\Http\Controllers\FinishingController')->removeFinishingItem($item_data);
-            }
-            else
-            {
-                foreach($design_data as $design) {
-                    
-                    $total_qnty = $this->order->getTotalQntyByDesign($design->design_id);
-
-                    if($total_qnty > 0)
-                    {
-                        $extra_charges = $design->extra_charges + $post['item_charge'];
-                        $sum = $design->sales_total + $post['item_charge'];
-                        $sales_total = round($sum,2);
-
-                        $update_arr = array('extra_charges' => $extra_charges);
-                        $this->common->UpdateTableRecords('design_product',array('design_id' => $design->design_id),$update_arr);
-                    }
-                }
-                $insert_arr = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
-                $shipping_id = $this->common->InsertRecords('order_item_mapping',$insert_arr);
-
-                $item_data = array('item_name' => $post['item_name'],'order_id' => $post['order_id'],'total_qnty' => $total_qnty);
-                $return = app('App\Http\Controllers\FinishingController')->addFinishingItem($item_data);
-            }
-            $return = $this->calculateAll($post['order_id'],$post['company_id']);
-
-            $data = array("success"=>1);
-            return response()->json(["data" => $data]);
-        }
-        else
-        {
-            $data = array("success"=>0,"message"=>"Add atleast one design product to pack item");
-            return response()->json(["data" => $data]);
-        }
-    }
     public function calculateAll($order_id,$company_id)
     {
-        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id),array());
+        $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
+
         if(!empty($design_data))
         {
             foreach ($design_data as $design) {
                 $return = app('App\Http\Controllers\ProductController')->orderCalculation($design->id);
             }
         }
-        return true;
+        else
+        {
+            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
+
+            $order_charges_total =  $order_data[0]->separations_charge + $order_data[0]->rush_charge + $order_data[0]->distribution_charge + 
+                                    $order_data[0]->digitize_charge + $order_data[0]->shipping_charge + $order_data[0]->setup_charge + 
+                                    $order_data[0]->artwork_charge;
+
+            if($order_charges_total > 0)
+            {
+                $order_total = $order_charges_total - $order_data[0]->discount;    
+            }
+            else
+            {
+                $order_total = $order_charges_total;
+            }
+
+            $tax = $order_total * $order_data[0]->tax_rate/100;
+            $grand_total = $order_total + $tax;
+            $balance_due = $grand_total - $order_data[0]->total_payments;
+
+            $update_order_arr = array(
+                                    'screen_charge' => 0,
+                                    'press_setup_charge' => 0,
+                                    'order_line_total' => 0,
+                                    'order_total' => round($order_total,2),
+                                    'tax' => round($tax,2),
+                                    'grand_total' => round($grand_total,2),
+                                    'balance_due' => round($balance_due,2),
+                                    'order_charges_total' => round($order_charges_total,2)
+                                    );
+
+            $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
+        }
+        $data = array("success"=>1);
+        return response()->json(["data" => $data]);
     }
+
+    public function snsOrder()
+     {
+        $post = Input::all();
+        
+        if($post['sns_shipping'] == '') {
+            $post['sns_shipping'] = '1';
+        }
+        
+        $result_company = $this->client->getStaffDetail($post['company_id']);
+
+        $result_order = $this->product->getSnsProductDetail($post['id']);
+       
+        if(empty($result_order))
+        {
+            $data_record = array("success"=>0,"message"=>"There is no S&S product for particular this order");
+            return response()->json(["data" => $data_record]);
+        }
+       
+
+        $shippingAddress = array(
+            "customer" => $post['company_name'],
+            "attn" => $result_company[0]->first_name.' '.$result_company[0]->last_name,
+            "address" => $result_company[0]->prime_address1,
+            "city" => $result_company[0]->prime_address_city,
+            "state"=> $result_company[0]->code,
+            "zip"=> $result_company[0]->prime_address_zip,
+            "residential"=> true);
+
+        $lines = array();
+        foreach($result_order as $order_data) {
+                
+                $lines[] = array(
+                    "warehouseAbbr" => $order_data->warehouse,
+                    "identifier" => $order_data->sku,
+                    "qty" => $order_data->qnty);
+
+            }
+
+            $order_main_array = array("shippingAddress" => $shippingAddress,
+                                          "shippingMethod"=> $post['sns_shipping'],
+                                          "emailConfirmation"=> $result_company[0]->email,
+                                          "testOrder"=> true,
+                                          "lines" =>  $lines);
+
+       $order_json = json_encode($order_main_array);
+
+        $result_api = $this->api->getApiCredential($post['company_id'],'api.sns','ss_detail');
+       
+        $credential = $result_api[0]->username.":".$result_api[0]->password;
+ 
+        $curl = curl_init('https://api.ssactivewear.com/v2/orders/');                                                                      
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $order_json);                                                                  
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);                                                                      
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',                                                                                
+            'Content-Length: ' . strlen($order_json))                                                                       
+        );    
+        curl_setopt($curl,CURLOPT_USERPWD,$credential);
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        $all_data = json_decode($result);
+        
+        
+        if(!empty($all_data))
+        {
+            
+
+            if(array_key_exists('code', $all_data)) {
+
+                        if($all_data->code == 400) {
+                     $data_record = array("success"=>0,"message"=>$all_data->errors[0]->message);
+                     return response()->json(["data" => $data_record]);
+
+                    }
+            }
+
+
+            
+            
+            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
+            $data_record = array("success"=>1,"message"=>"Order is successfully posted to S&S");
+            
+            return response()->json(["data" => $data_record]);
+        } else {
+             $data_record = array("success"=>0,"message"=>"There are no items added to post order");
+            
+            return response()->json(["data" => $data_record]);
+        }
+
+       
+        
+      
+     }
+
+
+
+     public function addInvoice()
+     {
+        $post = Input::all();
+
+        $result = $this->client->GetclientDetail($post['client_id']);
+        $result_qbProductId = $this->company->getQBAPI($post['company_id']);
+        $result_order = $this->order->GetOrderDetailAll($post['id']);
+
+        $result_charges = $this->order->orderInfoData($post['company_id'],$post['id']);
+        $other_charges = $this->order->orderChargeData($post['id']);
+
+        $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $result_charges[0]->price_id),array());
+        $price_grid = $price_grid_data[0];
+
+
+        if($result_qbProductId[0]->ss =='') {
+
+            $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
+            return response()->json(["data" => $data_record]);
+        }
+
+        if($result['main']['qid'] == 0) {
+          
+          $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
+          $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid);
+          
+          
+          if($result_quickbook_invoice == '1') {
+            $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");
+            return response()->json(["data" => $data_record]);
+          } else {
+             $data_record = array("success"=>0,"message"=>"Please connect Quickbook");
+            return response()->json(["data" => $data_record]);
+          }
+
+
+        } else {
+          
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid);
+          
+          if($result_quickbook_invoice == '1') {
+            $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");
+            return response()->json(["data" => $data_record]);
+          } else {
+             $data_record = array("success"=>0,"message"=>"Please connect Quickbook again");
+            return response()->json(["data" => $data_record]);
+          }
+          
+
+          
+        }
+
+         
+
+
+
+
+
+
+      
+     }
+
+
+     /** 
+ * @SWG\Definition(
+ *      definition="addOrder",
+ *      type="object",
+ *     
+ *
+ *      @SWG\Property(
+ *          property="orderData",
+ *          type="object",
+ *          required={"client_id"},
+ *          @SWG\Property(
+ *          property="client_id",
+ *          type="integer",
+ *         ),
+ *           @SWG\Property(
+ *          property="job_name",
+ *          type="string",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         ),
+ *       @SWG\Property(
+ *          property="login_id",
+ *          type="integer",
+ *        )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/addOrder",
+ *  summary = "Add Order",
+ *  tags={"Order"},
+ *  description = "Add Order",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Add Order",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/addOrder")
+ *  ),
+ *  @SWG\Response(response=200, description="Add Order"),
+ *  @SWG\Response(response="default", description="Add Order"),
+ * )
+ */
+    public function addPosition()
+    {
+        $post = Input::all();
+
+        $result = $this->order->checkDuplicatePositions($post['design_id'],$post['positionData']['position_id']);
+        
+        if($result == '1' ) {
+            $data = array("success"=>2,"message"=>"Duplicate","id"=>'');
+             return response()->json(['data'=>$data]);
+        }
+       
+         $post['positiondata']['position_id'] = $post['positionData']['position_id'];
+         $post['positiondata']['design_id'] = $post['design_id'];
+         $post['positiondata']['qnty'] = $post['positionData']['qnty'];
+         $post['positiondata']['placement_type'] = $post['positionData']['placement_type'];
+
+         
+         
+          $id = $this->common->InsertRecords('order_design_position',$post['positiondata']);
+
+         if($id > 0) {
+
+            $post['artdata']['Positions'] = $id;
+            $post['artdata']['order_id'] = $post['order_id'];
+            $post['artdata']['screen_set'] = $post['order_id'].'_'.$post['position'].'_'.$post['design_id'];
+
+          $art_screen_id = $this->common->InsertRecords('artjob_screensets',$post['artdata']);
+
+         }
+         
+
+          $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['design_id']);
+
+           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$id);
+           return response()->json(['data'=>$data]);
+
+    }
+
+    public function createInvoice()
+    {
+        $post = Input::all();
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'));
+        $id = $this->common->InsertRecords('invoice',$orderData);
+
+        $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
+        $qb_id = $qb_data[0]->qb_id;
+
+        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id,"qb_invoice_id" => $qb_id);
+        return response()->json(['data'=>$data]);
+    }
+
+    public function paymentInvoiceCash()
+    {
+        $post = Input::all();
+
+        $qb_data = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array());
+        $qb_id = $qb_data[0]->qb_id;
+        $order_id = $qb_data[0]->order_id;
+
+        $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
+
+        $id = $this->common->InsertRecords('payment_history',$orderData);
+
+        $retArray = DB::table('payment_history as p')
+            ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
+            ->leftJoin('orders as o','o.id','=',"p.order_id")
+            ->where('p.order_id','=',$order_id)
+            ->where('p.is_delete','=',1)
+            ->get();
+
+        $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
+        $amt=array('total_payments' => $retArray[0]->totalAmount, 'balance_due' => $balance_due);
+
+        $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+
+        $data = array("success"=>1,'amt' =>$amt);
+        return response()->json(['data'=>$data]);
+    }
+
+    public function paymentLinkToPay(){
+      $post = Input::all();
+
+      $retArray = DB::table('invoice as p')
+            ->select('p.order_id', 'o.balance_due')
+            ->leftJoin('orders as o','o.id','=',"p.order_id")
+            ->where('p.id','=',$post['invoice_id'])
+            ->get();
+        
+        $date = date_create();
+        //echo date_timestamp_get($date);
+        $length = 25;
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
+
+        $orderData = array('order_id' => $retArray[0]->order_id,'balance_amount' => $retArray[0]->balance_due , 'session_link' => $session_link);
+
+        $id = $this->common->InsertRecords('link_to_pay',$orderData);
+        
+
+        //$session_link="http://localhost/stokkup/link_to_pay.php?link=".$session_link;
+        $session_link="http://".$_SERVER['SERVER_NAME']."/stokkup/link_to_pay.php?link=".$session_link;
+        
+
+        $data = array("success"=>1,'session_link' =>$session_link);
+        return response()->json(['data'=>$data]);
+    }
+
 }

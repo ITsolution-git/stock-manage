@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Company;
 use App\Vendor;
+use App\Client;
+use App\Purchase;
+use App\Art;
 use DB;
 
 use Request;
@@ -20,11 +23,14 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client ) 
     {
         $this->common = $common;
         $this->company = $company;
         $this->vendor = $vendor;
+        $this->purchase = $purchase;
+        $this->art = $art;
+        $this->client = $client;
 
     }
 
@@ -442,19 +448,7 @@ class CommonController extends Controller {
               $post['extra'] = empty($post['extra'])?'' : $post['extra'];  
 
               $result = $this->common->DeleteTableRecords($post['table'],$post['cond']);
-              if($post['table'] == 'order_orderlines')
-              {
-                $this->common->DeleteTableRecords('purchase_detail',array('orderline_id' => $post['cond']['id']));
-              }
-
-              if($post['table'] == 'purchase_order')
-              {
-                $this->common->DeleteTableRecords('purchase_order_line',array('po_id' => $post['cond']['po_id']));
-              }
-              if($post['extra'] == 'users')
-              {
-                $this->common->DeleteTableRecords('staff',array('user_id' => $post['cond']['id']));
-              }
+              
               $data = array("success"=>1,"message"=>UPDATE_RECORD);
         }
         else
@@ -985,9 +979,131 @@ class CommonController extends Controller {
                 );
 
         }
-        
-        $records = $result['allData'];
+        if($post['filter']['function']=='purchase_list') // PURCHASE LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'po.po_id';
+            }
+            $result = $this->purchase->ListPurchase($post);
+            $header = array(
+                0=>array('key' => 'po.po_id', 'name' => 'PO#'),
+                1=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                2=>array('key' => 'po.po_type', 'name' => 'PO Type'),
+                3=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
+                5=>array('key' => 'po.date', 'name' => 'Created Date'),
+                );
 
+        }
+        if($post['filter']['function']=='purchase_notes') // PURCHASE NOTES LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->purchase->getPurchaseNote($post);
+            $header = array(
+                0=>array('key' => 'note.note_date', 'name' => 'Created date'),
+                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
+                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                );
+
+        }
+        if($post['filter']['function']=='receive_list') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'po.po_id';
+            }
+            $result = $this->purchase->ListReceive($post);
+            $header = array(
+                0=>array('key' => 'po.po_id', 'name' => 'RO#'),
+                1=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                2=>array('key' => 'po.po_type', 'name' => 'PO Type'),
+                3=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
+                5=>array('key' => 'po.date', 'name' => 'Created Date'),
+                );
+
+        }
+        if($post['filter']['function']=='vendor_contact') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->vendor->vendorContacts($post);
+            $header = array(
+                0=>array('key' => 'first_name', 'name' => 'First Name'),
+                1=>array('key' => 'last_name', 'name' => 'Last Name'),
+                2=>array('key' => 'prime_email', 'name' => 'Email'),
+                3=>array('key' => 'prime_phone', 'name' => 'Phone'),
+                4=>array('key' => 'is_main', 'name' => 'Main')
+                );
+
+        }
+        if($post['filter']['function']=='sales_list') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->vendor->SalesList($post);
+            $header = array(
+                0=>array('key' => 'sales_name', 'name' => 'Name'),
+                1=>array('key' => 'sales_email', 'name' => 'Email'),
+                2=>array('key' => 'sales_phone', 'name' => 'Phone'),
+                3=>array('key' => 'sales_created_date', 'name' => 'Created Date')
+                );
+        }
+        
+        if($post['filter']['function']=='art_list') // ART LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'ord.id';
+            }
+            $result = $this->art->Listing($post);
+            $header = array(
+                0=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                1=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets','sortable' => false)
+                );
+        }
+        if($post['filter']['function']=='art_list_screen') // ART SCREEN LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'ord.id';
+            }
+            $result = $this->art->Screen_Listing($post);
+            $header = array(
+                0=>array('key' => 'ord.id', 'name' => 'Screen Set Name'),
+                1=>array('key' => 'mt.value', 'name' => 'Position'),
+                2=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
+                4=>array('key' => 'screen_width', 'name' => '#of Screen'),
+                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size')
+                );
+        }
+        if($post['filter']['function']=='art_notes') // SCREENSET COLOR NOTE
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'note.id';
+            }
+            $result = $this->art->getArtColorNote($post);
+            $header = array(
+                0=>array('key' => 'note.note_date', 'name' => 'Created date'),
+                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
+                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                );
+        }
+
+        
+
+        $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;
 
@@ -997,6 +1113,47 @@ class CommonController extends Controller {
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$post['sorts']['sortBy'],'sortOrder' => $post['sorts']['sortOrder'],'success'=>$success,'message'=>$message);
         return  response()->json($data);
+    }
+
+
+    public function addEditClient()
+    {
+
+        $post = Input::all();
+        $result = $this->company->getQBAPI($post['company_id']);
+
+       if(empty($result)) {
+             return 0;
+         }
+
+         $result = $this->client->GetAllclientDetailCompany($post['company_id']);
+
+         foreach ($result as $key => $clientData) {
+            
+             if($clientData['main']['qid'] == 0) {
+
+                $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($clientData['main'],$clientData['contact']);
+                $this->common->UpdateTableRecords('client',array('client_id' => $key),array('qid' => $result_quickbook));
+
+               
+
+             } else {
+
+                $result_quickbook = app('App\Http\Controllers\QuickBookController')->updateCustomer($clientData['main'],$clientData['contact']);
+                
+             }
+         }
+
+          if($result_quickbook == '0') {
+                    return 0;
+                    
+                  } else {
+                    return 1;
+                    
+                  }
+         
+
+       
     }
 
 

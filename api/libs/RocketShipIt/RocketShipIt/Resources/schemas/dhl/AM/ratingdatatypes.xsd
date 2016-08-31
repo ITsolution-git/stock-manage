@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.dhl.com/ratingdatatypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:dhlRating="http://www.dhl.com/ratingdatatypes" xmlns:dhl="http://www.dhl.com/datatypes" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://www.dhl.com/datatypes" 
+	schemaLocation="datatypes.xsd"/>
+	<xsd:complexType name="CustomerRateBilling">
+		<xsd:sequence>
+			<xsd:element name="ShipperAccountNumber" type="dhl:AccountNumber"/>
+			<xsd:element name="ShippingPaymentType" type="dhl:PaymentType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RatingShipmentDetails">
+		<xsd:sequence>
+			<xsd:element name="NumberOfPieces" type="xsd:positiveInteger"/>
+			<xsd:element name="Pieces" type="dhl:Pieces"/>
+			<xsd:element name="WeightUnit" type="dhl:WeightUnit"/>
+			<xsd:element name="DimensionUnit" type="dhl:DimensionUnit" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Unit of dimension</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Weight" type="dhl:Weight"/>
+			<xsd:element name="ProductCode" type="dhl:ProductCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RatingSpecialService">
+		<xsd:sequence>
+			<xsd:element name="SpecialServiceType" type="dhl:SpecialServiceType"/>
+			<xsd:element name="CommunicationAddress" type="dhl:CommunicationAddress" minOccurs="0"/>
+			<xsd:element name="CommunicationType" type="dhl:CommunicationType" minOccurs="0"/>
+			<xsd:element name="ChargeValue" type="dhl:Money" minOccurs="0"/>
+			<xsd:element name="CurrencyCode" type="dhl:CurrencyCode" minOccurs="0"/>
+			<xsd:element name="IsWaived" type="dhl:YesNo" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RatingConsignee">
+		<xsd:sequence>
+			<xsd:element name="City" type="dhl:City"/>
+			<xsd:element name="Division" type="dhl:Division" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>State Name. Must be filled in if the country is USA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PostalCode" type="dhl:PostalCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Must be filled in if country code is USA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CountryCode" type="dhl:CountryCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RatingShipper">
+		<xsd:sequence>			
+			<xsd:element name="City" type="dhl:City"/>
+			<xsd:element name="Division" type="dhl:Division" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>State name . T his field must be filled in if the country is USA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="PostalCode" type="dhl:PostalCode" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>This field must be filled in if the counrty is USA</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="CountryCode" type="dhl:CountryCode"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RatingServiceArea">
+		<xsd:sequence>
+			<xsd:element name="ServiceAreaCode" type="dhl:ServiceAreaCode">
+				<xsd:annotation>
+					<xsd:documentation>three letter service area code</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="Description" type="xsd:string" minOccurs="0">
+				<xsd:annotation>
+					<xsd:documentation>Detailed description for the Area code such as city, state,country etc</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

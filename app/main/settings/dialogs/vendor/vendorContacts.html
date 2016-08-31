@@ -1,0 +1,79 @@
+<md-dialog class="task-dialog addEmployeeDialog" >
+<form name="employeeform" class="md-inline-form" novalidate>
+    <div class="client-profile-page">
+    <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Vendor Contacts</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+    <div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-wrap>
+
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="First Name*" required name="first_name"  ng-model="params.data.first_name">
+                     <div ng-messages="employeeform.first_name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Last Name" name="last_name"  ng-model="params.data.last_name">
+                </md-input-container>
+
+                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Email" type="email" name="prime_email"  ng-model="params.data.prime_email">
+                </md-input-container>
+
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Address" name="address"  ng-model="params.data.address">
+                </md-input-container>
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
+                    <input placeholder="Street" name="street"  ng-model="params.data.street">
+                </md-input-container>
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
+                    <input placeholder="City" name="city"  ng-model="params.data.city">
+                </md-input-container>
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
+                 <label>State</label>
+                    <md-select  aria-label='State'  name="state" ng-model="params.data.state">
+                        <md-option value="">
+                            Select State
+                        </md-option>
+                      <md-option ng-repeat="state in params.states_all" value="{{state.id}}" >
+                        {{state.name}}
+                       </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
+                    <input placeholder="Zip" name="zipcode"  ng-model="params.data.zipcode">
+                </md-input-container>
+
+                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                    <input placeholder="Phone" valid-phone name="prime_phone"  ng-model="params.data.prime_phone">
+                </md-input-container>
+        </div>
+    </md-card-content>
+       
+    </div>
+</div>
+<table> 
+    <tr>
+        <td class="p-16 td-500">
+            <md-button class="bg-blue float-right" ng-if="params.flag=='add'" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params.data,'vendorcontact')">
+                    SAVE
+            </md-button>
+             <md-button class="bg-blue float-right"  ng-if="params.flag=='edit'"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params.data,'vendor_contacts','id',params.data.id,'vendorcontact')">
+                    UPDATE
+            </md-button>
+
+        </td>  
+    </tr>
+</table>
+</form>
+</md-dialog>

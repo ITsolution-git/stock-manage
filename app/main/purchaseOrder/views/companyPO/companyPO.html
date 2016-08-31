@@ -2,10 +2,8 @@
     <div class="header "  layout="column" >
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back" ui-sref="app.purchaseOrder">BACK TO PO's</a>
-            <h2 flex="4" class="font-500">Purchase Order #1234 for Client: </h2>
-            <md-input-container md-no-float class="md-block" flex="3">
-                <input placeholder="">
-            </md-input-container>
+            <h2 flex="4" class="font-500">Purchase Order #{{po_data.po_id}} for Client {{po_data.client_company}}</h2>
+            
         </div>
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75">
@@ -15,43 +13,43 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>PO Type</div>
-                                <span class="chrome-weight font-14">{{vm.companyPOinfo.pOType}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.po_type}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Order Number</div>
-                                <span class="chrome-weight font-14">{{vm.companyPOinfo.orderNumber}}</span>
+                                <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:po_data.order_id})"><span class="chrome-weight font-14">#{{ po_data.order_id}}</span></a>
                             </div>
                             <div class="trans-box">
                                 <div>Vendor</div>
-                                <span class="chrome-weight font-14">{{vm.companyPOinfo.vendor}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.name_company}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Main Contact</div>
-                                <span class="chrome-weight font-14">{{vm.companyPOinfo.mainContact}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.mainContact}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Date Created</div>
-                                <span class="chrome-weight font-14">{{vm.companyPOinfo.dateCreated}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.date}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Ship Date</div>
-                                <span class="chrome-weight font-14">{{vm.companyPOinfo.shipDate}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.ship_date}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Receive Date</div>
-                                <span class="chrome-weight font-14">{{vm.companyPOinfo.receiveDate}}</span>
+                                <span class="chrome-weight font-14">{{ po_data.arrival_date}}</span>
                             </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start"  flex="5" layout="row">
+                    <div layout-align="end start" ng-if="po_data.complete==0" flex="5" layout="row">
                         <md-menu>
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
                             <md-menu-content width="4">
-                                <md-menu-item>
+                                <md-menu-item ng-click="changePoData()">
                                     <md-button>
-                                        Main Contact Options
+                                        Edit
                                     </md-button>
                                 </md-menu-item>
                             </md-menu-content>
@@ -73,7 +71,6 @@
                     <tr>
                         <th>Item</th>
                         <th>SKU</th>
-                        <th>Size Group</th>
                         <th>Size</th>
                         <th>Color</th>
                         <th>Ordered/ Recevied</th>
@@ -82,16 +79,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="POProduct in ::vm.companyPOProduct" class="cursor-p">
-                        <td>{{ POProduct.item}}</td>
-                        <td>{{ POProduct.sKU}}  
-                        </td>
-                        <td>{{ POProduct.sizeGroup}}</td>
-                        <td>{{ POProduct.size}}</td>
-                        <td>{{ POProduct.color}}</td>
-                        <td>{{ POProduct.ordered}}</td>
-                        <td>{{ POProduct.unitPrice}}</td>
-                        <td><a class="font-12">VIEW</a></td> 
+                    <tr ng-repeat="line_item in poline" >
+                        <td>{{ line_item.product_name}}</td>
+                        <td>{{ line_item.sku}}</td>
+                        <td>{{ line_item.size}}</td>
+                        <td>{{ line_item.product_color}}</td>
+                        <td>{{ line_item.qnty_ordered}} / {{ line_item.qnty_purchased}}</td>
+                        <td>${{ line_item.unit_price}}</td>
+                        <td ng-if="po_data.complete==0"><a class="font-12" class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
                     </tr>
                 </tbody> 
             </table>
@@ -100,7 +95,7 @@
         </div>
     </div>
     <div layout="row" layout="wrap" layout-align="space-between center" class="p-b-20">
-        <md-card class="m-b-20 " flex="27">
+        <md-card class="m-b-20 m-l-20" flex="27">
             <md-card-title>
                 <md-card-title-text class="text-left">
                     Web Portal
@@ -108,13 +103,13 @@
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height">
                 <div layout="row" layout-wrap layout-align="start start" flex="60">
-                    <a class="font-16 chrome-weight">{{vm.webPo.link}}</a><br/>
+                    <a class="font-16 chrome-weight" href="{{po_data.url}}" target="_blank" >{{po_data.url}}</a><br/>
                 </div>
                 <div class="text-center"><span class="font-18">&nbsp;</span></div>
             </md-card-content>
             <md-divider ></md-divider>
             <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight">EDIT</a>
+                <a class="font-14 chrome-weight" href="{{po_data.url}}" target="_blank">View</a>
             </div>
         </md-card>
         <md-card class="m-b-20 m-l-20" flex="27">
@@ -125,12 +120,12 @@
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height" layout-align="start center">
                 <div layout="row" layout-wrap flex="60" class="width-text">
-                    <span class="font-16 ">{{vm.dropshipPo.data}}</span>
+                    <span class="font-16 ">{{po_data.vendor_instruction}}</span>
                 </div>
             </md-card-content>
             <md-divider ></md-divider>
-            <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight">EDIT</a>
+            <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                <a class="font-14 chrome-weight" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
             </div>
         </md-card>
         <md-card class="m-b-20 m-l-20 m-r-15 " flex="27">
@@ -141,36 +136,58 @@
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height">
                 <div layout="row" layout-wrap layout-align="center center" flex="60">
-                    <span class="h2 semibold f-52">{{vm.notePo.notes}}</span>
+                    <span class="h2 semibold f-52">{{po_data.total_note}}</span>
                 </div>
-                <div class="text-center pad0"><span class="font-18">Total Notes</span></div>
+                <div class="text-center pad0"><span class="font-18">Total Notes </span></div>
             </md-card-content>
             <md-divider ></md-divider>
-            <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight" ui-sref="app.purchaseOrder.viewNote" >VIEW NOTES</a>
+            <div ng-if="po_data.complete==0" layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                <a class="font-14 chrome-weight" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a>
             </div>
         </md-card>
     </div>
 </div>
 <div class="m-t-20 p-t-30">
     <div class="footer border-t-grey" layout-padding layout="row">
-        <md-button  class="close-btn border-t-grey right-m-0 " >
-            <md-icon md-font-icon="icon-close"></md-icon>
+        <md-button aria-label="Back" ng-if="po_data.complete==0" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="close-btn bg-grey bg-green right-m-0" >
+            Create Receive PO
+        </md-button>
+        <md-button aria-label="Back" ng-if="po_data.complete==1" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="close-btn bg-grey bg-green right-m-0" >
+            Go to Receive PO
         </md-button>
         <div flex="35">
             <span class="h4 text-semibold font-19">Purchase Order Totals</span>
         </div>
-        <div flex="15">
+        <div flex="10">
+            <span>Total Quantity</span>
+        </div>
+        <div flex="10" class="color-b-grey">
+            <span>{{ order_total.ordered}}</span>
+        </div>
+
+        <!-- LOCK PO -->
+        <div flex="10" ng-if="po_data.complete==1">
             <span>Vendor Ship Charge</span>
         </div>
-        <div flex="15" class="color-b-grey">
-            <span>{{ vm.purchaseOrderPO.shipChage}}</span>
+
+        <div flex="10" class="color-b-grey" ng-if="po_data.complete==1"> 
+            <span>${{ po_data.vendor_charge}}</span>
         </div>
-        <div flex="15">
+        <!-- LOCK PO -->
+
+
+        <div flex="10" title="click to change" ng-if="po_data.complete==0" class="cursor-p" ng-click="changeVendorcharge(po_data.vendor_charge)">
+            <span>Vendor Ship Charge</span>
+        </div>
+        <div flex="10" class="color-b-grey cursor-p" ng-if="po_data.complete==0" title="click to change" ng-click="changeVendorcharge(po_data.vendor_charge)">
+            <span>${{ po_data.vendor_charge}}</span>
+        </div>
+
+        <div flex="10">
             <span>Total Amount</span>
         </div>
-        <div flex="15" class="color-b-grey">
-            <span>{{ vm.purchaseOrderPO.totalAmount}}</span>
+        <div flex="10" class="color-b-grey">
+            <span>${{ order_total.total_amount}}</span>
         </div>
     </div>
 </div>

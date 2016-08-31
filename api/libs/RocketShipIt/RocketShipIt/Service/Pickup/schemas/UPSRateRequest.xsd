@@ -1,0 +1,200 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ups="http://www.ups.com/XMLSchema" elementFormDefault="qualified">
+	<xsd:element name="RatingServiceSelectionRequest">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="Request" type="RequestType"/>
+				<xsd:element name="PickupType" type="CodeType" minOccurs="0"/>
+				<xsd:element name="CustomerClassification" type="CodeType" minOccurs="0"/>
+				<xsd:element name="Shipment" type="ShipmentType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="RequestType">
+		<xsd:sequence>
+			<xsd:sequence>
+				<xsd:element name="RequestAction" type="xsd:string"/>
+				<xsd:element name="RequestOption" type="xsd:string" minOccurs="0"/>
+				<xsd:element name="TransactionReference" type="TransactionReferenceType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="TransactionReferenceType">
+		<xsd:sequence>
+			<xsd:element name="CustomerContext" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="XpciVersion" type="xsd:string" minOccurs="0" ups:usage="deprecated"/>
+			<xsd:element name="ToolVersion" type="xsd:string" minOccurs="0" ups:usage="notused"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CodeType">
+		<xsd:sequence>
+			<xsd:sequence>
+				<xsd:element name="Code" type="xsd:string"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CodeDescriptionType">
+		<xsd:sequence>
+			<xsd:sequence>
+				<xsd:element name="Code" type="xsd:string"/>
+				<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ShipmentType">
+		<xsd:sequence>
+			<xsd:element name="Shipper" type="ShipperType"/>
+			<xsd:element name="ShipTo" type="ShipToType"/>
+			<xsd:element name="ShipFrom" type="ShipFromType" minOccurs="0"/>
+			<xsd:element name="Service" type="CodeDescriptionType" minOccurs="0"/>
+			<xsd:element name="DocumentsOnly" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Package" type="PackageType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="ShipmentServiceOptions" type="ShipmentServiceOptionsType" minOccurs="0"/>
+			<xsd:element name="RateInformation" type="RateInformationType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ShipperType">
+		<xsd:sequence>
+			<xsd:element name="Name" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ShipperNumber" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Address" type="AddressType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PhoneNumberType">
+		<xsd:sequence>
+			<xsd:element name="StructuredPhoneNumber" type="StructuredPhoneNumberType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="StructuredPhoneNumberType">
+		<xsd:sequence>
+			<xsd:element name="PhoneCountryCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="PhoneDialPlanNumber" type="xsd:string"/>
+			<xsd:element name="PhoneLineNumber" type="xsd:string"/>
+			<xsd:element name="PhoneExtension" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressType">
+		<xsd:sequence>
+			<xsd:element name="AddressLine1" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="AddressLine2" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="AddressLine3" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="City" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="StateProvinceCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="PostalCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="CountryCode" type="xsd:string"/>
+			<xsd:element name="ResidentialAddressIndicator" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ShipToType">
+		<xsd:sequence>
+			<xsd:element name="CompanyName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Address" type="AddressType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ShipFromType">
+		<xsd:sequence>
+			<xsd:element name="CompanyName" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Address" type="AddressType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="WeightType">
+		<xsd:sequence>
+			<xsd:element name="UnitOfMeasurement" type="UnitOfMeasurementType"/>
+			<xsd:element name="Weight" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="UnitOfMeasurementType">
+		<xsd:sequence>
+			<xsd:element name="Code" type="xsd:string"/>
+			<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PackageType">
+		<xsd:sequence>
+			<xsd:element name="PackagingType" type="CodeDescriptionType" minOccurs="0"/>
+			<xsd:element name="Dimensions" type="DimensionsType" minOccurs="0"/>
+			<xsd:element name="PackageWeight" type="WeightType" minOccurs="0"/>
+			<!--Oversize is published in external guide .pdf file, but not LargePackageIndicator -->
+			<xsd:element name="OversizePackage" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="LargePackageIndicator" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="PackageServiceOptions" type="PackageServiceOptionsType" minOccurs="0"/>
+			<xsd:element name="AdditionalHandling" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PackagingTypeType">
+		<xsd:sequence>
+			<xsd:element name="Code" type="xsd:string"/>
+			<xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DimensionsType">
+		<xsd:sequence>
+			<xsd:element name="UnitOfMeasurement" type="UnitOfMeasurementType" minOccurs="0"/>
+			<xsd:element name="Length" type="xsd:string"/>
+			<xsd:element name="Width" type="xsd:string"/>
+			<xsd:element name="Height" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="PackageServiceOptionsType">
+		<xsd:sequence>
+			<xsd:element name="InsuredValue" type="InsuredValueType" minOccurs="0"/>
+			<xsd:element name="COD" type="CODType" minOccurs="0"/>
+			<xsd:element name="DeliveryConfirmation" type="DeliveryConfirmationType" minOccurs="0"/>
+			<xsd:element name="VerbalConfirmation" type="VerbalConfirmationType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InsuredValueType">
+		<xsd:sequence>
+			<xsd:element name="CurrencyCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="MonetaryValue" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CODType">
+		<xsd:sequence>
+			<xsd:element name="CODFundsCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="CODAmount" type="AmountType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AmountType">
+		<xsd:sequence>
+			<xsd:element name="CurrencyCode" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="MonetaryValue" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeliveryConfirmationType">
+		<xsd:sequence>
+			<xsd:element name="DCISType" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="VerbalConfirmationType">
+		<xsd:sequence>
+			<xsd:element name="Name" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="PhoneNumber" type="PhoneNumberType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ShipmentServiceOptionsType">
+		<xsd:sequence>
+			<xsd:element name="SaturdayPickup" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="SaturdayDelivery" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="OnCallAir" type="OnCallAirType" minOccurs="0"/>
+			<xsd:element name="COD" type="CODType" minOccurs="0"/>
+			<xsd:element name="ReturnOfDocumentIndicator" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="DeliveryConfirmation" type="DeliveryConfirmationType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OnCallAirType">
+		<xsd:sequence>
+			<xsd:element name="Schedule" type="ScheduleType" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ScheduleType">
+		<xsd:sequence>
+			<xsd:element name="PickupDay" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Method" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="RateInformationType">
+		<xsd:sequence>
+			<xsd:element name="NegotiatedRatesIndicator" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

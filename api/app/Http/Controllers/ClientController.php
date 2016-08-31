@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Client;
 use App\Common;
+use App\Company;
+
 use App\Art;
 use DB;
 
@@ -15,11 +17,12 @@ use Request;
 
 class ClientController extends Controller { 
 
-	public function __construct(Client $client,Common $common,Art $art) 
+	public function __construct(Client $client,Common $common,Art $art,Company $company) 
  	{
         $this->client = $client;
         $this->common = $common;
         $this->art = $art;
+        $this->company = $company;
     }
 
     /**
@@ -71,11 +74,27 @@ class ClientController extends Controller {
 			$contact['location']=!empty($post['location'])? $post['location'] : '';
 			$contact['contact_main']='1';	// SET ACTIVE CONDITION
 			
+       
+       		$result = $this->company->getQBAPI($post['company_id']);
+        
+	         if($result) {
+	          
+	          	$result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($client,$contact);
 
-		$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
+		        if($result_quickbook != 0) {
+		        $client['qid']= $result_quickbook;
+	           }
+	         }
+
+
+       		
+
+
+			$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
 
 		if($result)
 			{
+				
 				$message = INSERT_RECORD;
 				$success = 1;
 				$data = $result;
@@ -336,13 +355,13 @@ class ClientController extends Controller {
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
 				$Client_orders = $this->client->ListClientOrder($id);
-				$art_detail = '';//$this->art->Client_art_screen($post['client_id'],$post['company_id']);
+				$screenset_detail = $this->art->Client_art_screen($post['client_id'],$post['company_id']);
 				$addressAll = $this->client->getAddress($id);
 				$Distribution_address = $this->client->GetDistributionAddress($id);
 				$documents = $this->client->getDocument($id,$post['company_id']);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'screenset_detail' => $screenset_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else
@@ -806,7 +825,7 @@ public function saveTaxDoc()
 			$AddrTypeData = $this->common->GetMicType('address_type',$company_id);
 			$Arrdisposition = $this->common->GetMicType('disposition',$company_id);
 			$state = $this->common->GetTableRecords('state',array(),array());
-			$AllPriceGrid = $this->common->GetTableRecords('price_grid',array('company_id'=>$company_id),array());
+			$AllPriceGrid = $this->common->GetTableRecords('price_grid',array('company_id'=>$company_id,'is_delete'=>'1'),array());
 			$approval = $this->common->GetMicType('approval',$company_id);
 			$result  = array('StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,'state'=>$state,'AllPriceGrid'=>$AllPriceGrid,'approval'=>$approval);
 			$message = GET_RECORDS;

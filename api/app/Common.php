@@ -126,21 +126,13 @@ class Common extends Model {
         $misc_type = DB::table('misc_type')->where($whereVendorConditions)->where('value','!=','')->get();
         return $misc_type;
     }
-    public function getStaffList($company_id)
+    public function getStaffList($company_id) // SALES EMPLOYEE LIST
     {
-
-
-        $whereConditions = ['misc.status' => '1','misc.is_delete' => '1','staff.is_delete' => '1','misc.type' => 'staff_type','staff.company_id' => $company_id];
-        $listArray = ['staff.id','staff.first_name','staff.last_name',DB::raw('CONCAT(staff.first_name, " ", staff.last_name) AS label')];
-
-        $staffData = DB::table('staff as staff')
-                         ->Join('misc_type as misc','staff.staff_type','=',DB::raw("misc.id AND misc.company_id = ".$company_id))
-                         ->Join('users as users', 'users.id', '=', 'staff.user_id')
-                         ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
-                         ->select($listArray)
-                         ->where($whereConditions)
+        $staffData = DB::table('sales')
+                         ->select('*','sales_name as label',DB::raw('DATE_FORMAT(sales_created_date, "%m/%d/%Y") as sales_created_date'))
+                         ->where('sales_delete','=','1')
+                         ->where('company_id','=',$company_id)
                          ->get();
-
         return $staffData;
     }
 
@@ -295,7 +287,7 @@ class Common extends Model {
 
     public function getAllColorData() {
         
-        $whereColorConditions = ['status' => '1','is_delete' => '1'];
+        $whereColorConditions = ['status' => '1','is_delete' => '1','is_sns'=>1];
         $colorData = DB::table('color')->select('id','name')->where($whereColorConditions)->where('name','!=','')->orderby('name')->get();       
         return $colorData;
     }
@@ -335,7 +327,10 @@ class Common extends Model {
         $admindata = DB::table('users as usr')
                          ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
                          ->leftJoin('staff as s', 'usr.id', '=', 's.user_id')
-                         ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','s.prime_address1','s.prime_address_city','s.prime_address_state','s.prime_address_country','s.prime_address_zip','s.url','s.photo','s.oversize_value')
+                         ->leftJoin('company_detail as cd', 'usr.id', '=', 'cd.company_id')
+                         ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id',
+                                    's.prime_address1','s.prime_address_city','s.prime_address_state','s.prime_address_country','s.prime_address_zip',
+                                    's.url','s.photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip','cd.url')
                          ->where('usr.id','=',$company_id)
                          ->where('usr.is_delete','=','1')
                          ->where('s.is_delete','=','1')
@@ -426,6 +421,11 @@ class Common extends Model {
         $whereColorConditions = ['status' => '1','is_delete' => '1','name'=>$name];
         $colorData = DB::table('color')->select('id','name')->where($whereColorConditions)->get();       
         return $colorData;
+    }
+
+    public function truncateTable($table)
+    {
+        DB::table($table)->truncate();
     }
 
 }
