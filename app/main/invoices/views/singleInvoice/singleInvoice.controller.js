@@ -242,9 +242,8 @@
                 combine_array_id.storeCard = 0;
             }else{
                 combine_array_id.storeCard = 1;
-
-                
             }
+            combine_array_id.linkToPay = 0;
             
             combine_array_id.invoice_id = invoice_id.value;
 
@@ -260,6 +259,7 @@
                         $scope.siData = result.data.allData;
                     });
                     notifyService.notify('success',"Payment made Successfully");
+                    setTimeout("location.href = 'http://new.stokkup.com';",1500);
                 }
                 else
                 {

@@ -41,7 +41,7 @@ class PaymentController extends Controller {
      * @return Response, success, records, message
      */
 
-	public function MerchantAuthentication()
+	/*public function MerchantAuthentication()
 	{
 		// Common setup for API credentials
 		$merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
@@ -85,7 +85,7 @@ class PaymentController extends Controller {
 		{
 		    echo  "Charge Credit card Null response returned";
 		}
-	}
+	}*/
 
 	function chargeCreditCard(){
       $post = Input::all();
@@ -162,6 +162,9 @@ class PaymentController extends Controller {
           $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
 
+        
+
+
         if($post['storeCard']==1){
           // Create the payment data for a credit card
             $creditCard = new AnetAPI\CreditCardType();
@@ -226,21 +229,27 @@ class PaymentController extends Controller {
               }*/
         }
 
+        if(($post['linkToPay']==1) && ($post['ltp_id']!=0)){
+          $amt=array('payment_flag' => 1);
+          $this->common->UpdateTableRecords('link_to_pay',array('ltp_id' => $post['ltp_id']),$amt);
 
+          $data = array("success"=>1, 'message' =>"Payment made Succesfully");
+          return response()->json(['data'=>$data]);
+        }
           $data = array("success"=>1,'amt' =>$amt);
           return response()->json(['data'=>$data]);
         }
         else
         {
             //echo  "Charge Credit Card ERROR :  Invalid response";
-            $data = array("success"=>1,'message' =>"Charge Credit Card ERROR :  Invalid response");
+            $data = array("success"=>0,'message' =>"Charge Credit Card ERROR :  Invalid response");
             return response()->json(['data'=>$data]);
         }
       }
       else
       {
           //echo  "Charge Credit card Null response returned";
-          $data = array("success"=>1,'message' =>"Charge Credit card Null response returned");
+          $data = array("success"=>0,'message' =>"Charge Credit card Null response returned");
           return response()->json(['data'=>$data]);
       }
       //return $response;

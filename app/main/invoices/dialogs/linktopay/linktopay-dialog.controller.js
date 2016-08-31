@@ -10,7 +10,6 @@
     function linktoPayController(result, $mdDialog,$controller,$state,  event,$scope,sessionService,$resource)
     {
         var vm = this;
-        console.log(result);
        $scope.attn = result.data.session_link;
        this.userState = '';
 
