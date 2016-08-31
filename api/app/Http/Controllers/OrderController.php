@@ -1957,9 +1957,12 @@ class OrderController extends Controller {
         $qb_id = $qb_data[0]->qb_id;
         $order_id = $qb_data[0]->order_id;
 
-        $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
+        
+        if(isset($post['amount'])){
+          $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
 
-        $id = $this->common->InsertRecords('payment_history',$orderData);
+          $id = $this->common->InsertRecords('payment_history',$orderData);
+        }
 
         $retArray = DB::table('payment_history as p')
             ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
@@ -1998,7 +2001,7 @@ class OrderController extends Controller {
         
 
         //$session_link="http://localhost/stokkup/link_to_pay.php?link=".$session_link;
-        $session_link="http://".$_SERVER['SERVER_NAME']."/stokkup/link_to_pay.php?link=".$session_link;
+        $session_link="http://".$_SERVER['SERVER_NAME']."/link_to_pay.php?link=".$session_link;
         
 
         $data = array("success"=>1,'session_link' =>$session_link);
