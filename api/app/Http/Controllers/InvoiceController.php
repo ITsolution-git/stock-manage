@@ -158,7 +158,7 @@ class InvoiceController extends Controller {
         $order_id = $invoice_data[0]->order_id;
 
         $retArray = DB::table('payment_history')
-            ->select('payment_amount', 'payment_date', 'payment_method')
+            ->select('payment_id', 'payment_amount', 'payment_date', 'payment_method')
             ->where('order_id','=',$order_id)
             ->where('is_delete','=',1)
             ->get();

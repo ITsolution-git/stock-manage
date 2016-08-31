@@ -93,6 +93,7 @@ class Carbon extends DateTime
         'last',
         'next',
         'this',
+        'today',
         'tomorrow',
         'yesterday',
     );
@@ -381,14 +382,25 @@ class Carbon extends DateTime
      */
     public static function create($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $tz = null)
     {
-        $year = $year === null ? date('Y') : $year;
-        $month = $month === null ? date('n') : $month;
-        $day = $day === null ? date('j') : $day;
+        $now = static::hasTestNow() ? static::getTestNow()->getTimestamp() : time();
+
+        $defaults = array_combine(array(
+            'year',
+            'month',
+            'day',
+            'hour',
+            'minute',
+            'second',
+        ), explode('-', date('Y-n-j-G-i-s', $now)));
+
+        $year = $year === null ? $defaults['year'] : $year;
+        $month = $month === null ? $defaults['month'] : $month;
+        $day = $day === null ? $defaults['day'] : $day;
 
         if ($hour === null) {
-            $hour = date('G');
-            $minute = $minute === null ? date('i') : $minute;
-            $second = $second === null ? date('s') : $second;
+            $hour = $defaults['hour'];
+            $minute = $minute === null ? $defaults['minute'] : $minute;
+            $second = $second === null ? $defaults['second'] : $second;
         } else {
             $minute = $minute === null ? 0 : $minute;
             $second = $second === null ? 0 : $second;
@@ -443,56 +455,27 @@ class Carbon extends DateTime
     public static function createSafe($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null, $tz = null)
     {
         $fields = array(
-            'second' => array(
-                'value' => $second,
-                'range' => array(0, 59),
-            ),
-            'minute' => array(
-                'value' => $minute,
-                'range' => array(0, 59),
-            ),
-            'hour' => array(
-                'value' => $hour,
-                'range' => array(0, 24),
-            ),
-            'year' => array(
-                'value' => $year,
-                'range' => array(0, 9999),
-            ),
-            'month' => array(
-                'value' => $month,
-                'range' => array(0, 12),
-            ),
-            'day' => array(
-                'value' => $day,
-                'range' => array(0, 31),
-            ),
+            'year' => array(0, 9999),
+            'month' => array(0, 12),
+            'day' => array(0, 31),
+            'hour' => array(0, 24),
+            'minute' => array(0, 59),
+            'second' => array(0, 59),
         );
 
-        foreach ($fields as $field => $element) {
-            $value = $element['value'];
-
-            if ($value === null) {
-                continue;
-            }
-
-            if (!is_int($value) || $value < $element['range'][0] || $value > $element['range'][1]) {
-                throw new InvalidDateException($field, $value);
+        foreach ($fields as $field => $range) {
+            if ($$field !== null && (!is_int($$field) || $$field < $range[0] || $$field > $range[1])) {
+                throw new InvalidDateException($field, $$field);
             }
         }
 
         $instance = static::create($year, $month, 1, $hour, $minute, $second, $tz);
 
-        $field = 'day';
-        $value = $fields[$field]['value'];
-
-        if ($value !== null && $value > $instance->daysInMonth) {
-            throw new InvalidDateException($field, $value);
-        } else {
-            $instance->day($value);
+        if ($day !== null && $day > $instance->daysInMonth) {
+            throw new InvalidDateException('day', $day);
         }
 
-        return $instance;
+        return $instance->day($day);
     }
 
     /**
@@ -562,7 +545,7 @@ class Carbon extends DateTime
      */
     private static function setLastErrors(array $lastErrors)
     {
-        self::$lastErrors = $lastErrors;
+        static::$lastErrors = $lastErrors;
     }
 
     /**
@@ -570,7 +553,7 @@ class Carbon extends DateTime
      */
     public static function getLastErrors()
     {
-        return self::$lastErrors;
+        return static::$lastErrors;
     }
 
     /**
@@ -1633,7 +1616,7 @@ class Carbon extends DateTime
      */
     public function isWeekend()
     {
-        return in_array($this->dayOfWeek, self::$weekendDays);
+        return in_array($this->dayOfWeek, static::$weekendDays);
     }
 
     /**
@@ -1706,6 +1689,68 @@ class Carbon extends DateTime
     public function isLongYear()
     {
         return static::create($this->year, 12, 28, 0, 0, 0, $this->tz)->weekOfYear === 53;
+    }
+
+    /*
+     * Compares the formatted values of the two dates.
+     *
+     * @param string              $format The date formats to compare.
+     * @param \Carbon\Carbon|null $dt     The instance to compare with or null to use current day.
+     *
+     * @return bool
+     */
+    public function isSameAs($format, Carbon $dt = null)
+    {
+        $dt = $dt ?: static::now($this->tz);
+
+        return $this->format($format) === $dt->format($format);
+    }
+
+    /**
+     * Determines if the instance is in the current year
+     *
+     * @return bool
+     */
+    public function isCurrentYear()
+    {
+        return $this->isSameYear();
+    }
+
+    /**
+     * Checks if the passed in date is in the same year as the instance year.
+     *
+     * @param \Carbon\Carbon|null $dt The instance to compare with or null to use current day.
+     *
+     * @return bool
+     */
+    public function isSameYear(Carbon $dt = null)
+    {
+        return $this->isSameAs('Y', $dt);
+    }
+
+    /**
+     * Determines if the instance is in the current month
+     *
+     * @return bool
+     */
+    public function isCurrentMonth()
+    {
+        return $this->isSameMonth();
+    }
+
+    /**
+     * Checks if the passed in date is in the same month as the instance month (and year if needed).
+     *
+     * @param \Carbon\Carbon|null $dt         The instance to compare with or null to use current day.
+     * @param bool                $ofSameYear Check if it is the same month in the same year.
+     *
+     * @return bool
+     */
+    public function isSameMonth(Carbon $dt = null, $ofSameYear = false)
+    {
+        $format = $ofSameYear ? 'Y-m' : 'm';
+
+        return $this->isSameAs($format, $dt);
     }
 
     /**
@@ -1853,7 +1898,7 @@ class Carbon extends DateTime
      */
     public function addQuarters($value)
     {
-        return $this->addMonths(self::MONTHS_PER_QUARTER * $value);
+        return $this->addMonths(static::MONTHS_PER_QUARTER * $value);
     }
 
     /**
@@ -1890,6 +1935,55 @@ class Carbon extends DateTime
     public function subQuarters($value)
     {
         return $this->addQuarters(-1 * $value);
+    }
+
+    /**
+     * Add centuries to the instance. Positive $value travels forward while
+     * negative $value travels into the past.
+     *
+     * @param int $value
+     *
+     * @return static
+     */
+    public function addCenturies($value)
+    {
+        return $this->addYears(static::YEARS_PER_CENTURY * $value);
+    }
+
+    /**
+     * Add a century to the instance
+     *
+     * @param int $value
+     *
+     * @return static
+     */
+    public function addCentury($value = 1)
+    {
+        return $this->addCenturies($value);
+    }
+
+    /**
+     * Remove a century from the instance
+     *
+     * @param int $value
+     *
+     * @return static
+     */
+    public function subCentury($value = 1)
+    {
+        return $this->subCenturies($value);
+    }
+
+    /**
+     * Remove centuries from the instance
+     *
+     * @param int $value
+     *
+     * @return static
+     */
+    public function subCenturies($value)
+    {
+        return $this->addCenturies(- 1 * $value);
     }
 
     /**
@@ -2531,10 +2625,11 @@ class Carbon extends DateTime
      *
      * @param Carbon|null $other
      * @param bool        $absolute removes time difference modifiers ago, after, etc
+     * @param bool        $short    displays short format of time units
      *
      * @return string
      */
-    public function diffForHumans(Carbon $other = null, $absolute = false)
+    public function diffForHumans(Carbon $other = null, $absolute = false, $short = false)
     {
         $isNow = $other === null;
 
@@ -2546,37 +2641,38 @@ class Carbon extends DateTime
 
         switch (true) {
             case ($diffInterval->y > 0):
-                $unit = 'year';
+                $unit = $short ? 'y' : 'year';
                 $count = $diffInterval->y;
                 break;
 
             case ($diffInterval->m > 0):
-                $unit = 'month';
+                $unit = $short ? 'm' : 'month';
                 $count = $diffInterval->m;
                 break;
 
             case ($diffInterval->d > 0):
-                $unit = 'day';
+                $unit = $short ? 'd' : 'day';
                 $count = $diffInterval->d;
-                if ($count >= self::DAYS_PER_WEEK) {
-                    $unit = 'week';
-                    $count = (int) ($count / self::DAYS_PER_WEEK);
+
+                if ($count >= static::DAYS_PER_WEEK) {
+                    $unit = $short ? 'w' : 'week';
+                    $count = (int) ($count / static::DAYS_PER_WEEK);
                 }
                 break;
 
             case ($diffInterval->h > 0):
-                $unit = 'hour';
+                $unit = $short ? 'h' : 'hour';
                 $count = $diffInterval->h;
                 break;
 
             case ($diffInterval->i > 0):
-                $unit = 'minute';
+                $unit = $short ? 'min' : 'minute';
                 $count = $diffInterval->i;
                 break;
 
             default:
                 $count = $diffInterval->s;
-                $unit = 'second';
+                $unit = $short ? 's' : 'second';
                 break;
         }
 
@@ -2785,6 +2881,62 @@ class Carbon extends DateTime
     }
 
     /**
+     * Go forward to the next weekday.
+     *
+     * @return $this
+     */
+    public function nextWeekday()
+    {
+        do {
+            $this->addDay();
+        } while ($this->isWeekend());
+
+        return $this;
+    }
+
+    /**
+     * Go backward to the previous weekday.
+     *
+     * @return $this
+     */
+    public function previousWeekday()
+    {
+        do {
+            $this->subDay();
+        } while ($this->isWeekend());
+
+        return $this;
+    }
+
+    /**
+     * Go forward to the next weekend day.
+     *
+     * @return $this
+     */
+    public function nextWeekendDay()
+    {
+        do {
+            $this->addDay();
+        } while ($this->isWeekday());
+
+        return $this;
+    }
+
+    /**
+     * Go backward to the previous weekend day.
+     *
+     * @return $this
+     */
+    public function previousWeekendDay()
+    {
+        do {
+            $this->subDay();
+        } while ($this->isWeekday());
+
+        return $this;
+    }
+
+    /**
      * Modify to the previous occurrence of a given day of the week.
      * If no dayOfWeek is provided, modify to the previous occurrence
      * of the current day of the week.  Use the supplied consts
@@ -2987,9 +3139,7 @@ class Carbon extends DateTime
      */
     public function isBirthday(Carbon $dt = null)
     {
-        $dt = $dt ?: static::now($this->getTimezone());
-
-        return $this->format('md') === $dt->format('md');
+        return $this->isSameAs('md', $dt);
     }
 
     /**
