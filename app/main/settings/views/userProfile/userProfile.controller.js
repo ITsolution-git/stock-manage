@@ -71,8 +71,14 @@
 
    $scope.GetCompany();
     // COMPANY EDIT TIME CALL
-    $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+    $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
+        //console.log(Object.keys(validation).length);
+        if(!angular.isUndefined(validation) && Object.keys(validation).length>0 )
+        {
+            notifyService.notify('error','Please enter valid Input.');
+            return false;
+        }
         var vm = this;
         var UpdateArray = {};
         UpdateArray.table =table_name;
