@@ -21,6 +21,9 @@
             border: 1px dashed #CCC;
             background: none;
         }
+        .popup-image{
+            width: 65%;
+        }
 </style>
 <div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
     <div class="header "  layout="column" >
@@ -93,8 +96,8 @@
                         <td width="97%">
                             <div class="header-typ1">{{ sets.screen_set}}</div>
                             <div layout="row"  ng-show="sets.screen_active==1">
-                                <div flex="95" layout="column">
-                                    <div layout="row" layout-wrap>
+                                
+                                    <div layout="row" flex="80" layout-wrap>
                                         <div class="trans-box">
                                             <div>Position</div>
                                             <span class="chrome-weight font-14">{{sets.position_name}}</span>
@@ -111,7 +114,7 @@
                                             <div>Width</div>
                                             <span class="chrome-weight font-14">{{sets.screen_width}}</span>
                                         </div>
-                                        <div class="trans-box">
+                                        <div style="width: 10%;">
                                             <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
                                         </div>
                                         <div class="trans-box">
@@ -130,11 +133,16 @@
                                             <div>Height</div>
                                             <span class="chrome-weight font-14">{{sets.screen_height}}</span>
                                         </div>
-                                        <div class="trans-box">
+                                        <div  style="width: 10%;">
                                             <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
                                         </div>
                                     </div>
-                                </div>
+                                    <div layout="row" flex="20" layout-wrap>
+                                        <md-card-content layout="column" layout-padding class="min-height">
+                                            <img  ng-if="sets.mokup_logo" ng-src="{{sets.mokup_logo_url}}" alt=""  class="popup-image"/>
+                                        </md-card-content>
+                                    </div>
+                                
                                 <!-- <div layout-align="end start"  flex="5" layout="row">
                                     <md-button  ng-click="vm.createNewScreen($event,sets.screen_id)" class="md-icon-button" aria-label="View Details">
                                         <md-icon md-font-icon="icon-dots-vertical"></md-icon>
