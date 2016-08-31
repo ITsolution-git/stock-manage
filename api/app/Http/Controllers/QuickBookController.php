@@ -963,6 +963,7 @@ class QuickBookController extends Controller
             {
                 //print($PaymentService->lastError());
                 $data = array("success"=>0,'message' =>$PaymentService->lastError());
+                return response()->json(['data'=>$data]);
                 //return 0;
             }
         }
