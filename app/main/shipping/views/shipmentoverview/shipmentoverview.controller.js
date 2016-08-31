@@ -31,6 +31,7 @@
             $("#ajax_loader").show();
             var combine_array = {};
             combine_array.shipping_id = $scope.shipping_id;
+            combine_array.company_id = company_id;
 
             $http.post('api/public/shipping/getShippingOverview',combine_array).success(function(result) {
 

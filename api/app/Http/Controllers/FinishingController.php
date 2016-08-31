@@ -176,7 +176,17 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est'],'note'=>$post['note']);
+        if($post['start_time'] != '') {
+            $start_time = date("H:i", strtotime($post['start_time']));
+        }
+        if($post['end_time'] != '') {
+            $end_time = date("H:i", strtotime($post['end_time']));
+        }
+        if($post['est'] != '') {
+            $est = date("H:i", strtotime($post['est']));
+        }
+
+        $finishingData['field'] = array('start_time' => $start_time,'end_time' => $end_time,'est' => $est,'note'=>$post['note']);
         $finishingData['where'] = array('id' => $post['id']);
 
         $result = $this->finishing->updateFinishing($finishingData);

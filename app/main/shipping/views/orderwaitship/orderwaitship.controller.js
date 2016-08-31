@@ -142,6 +142,10 @@
             }
         }
 
+        $scope.reloadPage = function(){
+            $state.reload();
+        }
+
         vm.openaddAddressDialog = openaddAddressDialog;
 
         function openaddAddressDialog(ev, order)
