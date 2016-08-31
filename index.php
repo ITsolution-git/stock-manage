@@ -8,7 +8,7 @@
         <title>STOKKUP</title>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="shortcut icon" type="image/x-icon" href="/stokkup/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="stylesheet" href="styles/vendor.css">
 
         <link rel="stylesheet" href="styles/app.css">
