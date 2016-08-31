@@ -99,15 +99,20 @@
             return; 
           }
 
-          ngModelCtrl.$parsers.push(function(val) {
+          ngModelCtrl.$parsers.push(function(val, length) {
             if (angular.isUndefined(val)) {
                 var val = '';
             }
             
             var clean = val.replace(/[^0-9]/g, '');
-            if(clean.length>10)
+            var length = 10;
+            if(attrs.onlyNumber != undefined && attrs.onlyNumber > 0)
             {
-              clean = clean.slice(0,10);
+              length = attrs.onlyNumber;
+            }
+            if(clean.length>length)
+            {
+              clean = clean.slice(0,length);
             }
             if (val !== clean) {
               ngModelCtrl.$setViewValue(clean);

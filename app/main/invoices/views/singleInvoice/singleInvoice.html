@@ -101,7 +101,7 @@
                             <td height="72">{{position.position_name}}</td>
                             <td>{{position.placement_type_name}}</td>
                             <td class="text-center">{{position.qnty}}</td>
-                            <td class="text-center">1.5</td>
+                            <td class="text-center">{{position.price_id}}</td>
                             <td class="text-center" ng-if="position.position_image != ''"><img src="{{position.position_image}}" title="Position Image" alt="Position Image" height="40" width="40" /></td>
                             <td class="text-center" ng-if="position.position_image == ''"></td>
                         </tr>
@@ -234,10 +234,10 @@
                                                      <input placeholder="Last Name On Card" name="Last Name On Card" ng-model="company.creditLname">
                                                 </md-input-container>
                                                 <md-input-container flex="100">
-                                                    <input placeholder="Credit Card Number" name="Credit Card Number" ng-model="company.creditCard">
+                                                    <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
                                                 </md-input-container>
                                                 <md-input-container flex="100">
-                                                    <input placeholder="Amount" name="Amount" ng-model="company.amount">
+                                                    <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
                                                 </md-input-container>
                                             </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
@@ -310,7 +310,7 @@
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <input placeholder="Zip" name="Zip" ng-model="company.zip">
+                                                    <input placeholder="Zip" name="Zip" only-number="10" ng-model="company.zip">
                                                 </md-input-container>
                                             </div>
                                             <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>

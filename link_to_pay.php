@@ -1,54 +1,4 @@
 <!doctype html>
-<?php
-error_reporting(E_ALL);ini_set('display_errors', 'on');
-$servername = "192.168.1.13";
-$username = "csuser";
-$password = "codal123";
-//echo $_REQUEST['link'];
-
-
-class TableRows extends RecursiveIteratorIterator { 
-    function __construct($it) { 
-        parent::__construct($it, self::LEAVES_ONLY); 
-    }
-
-    function current() {
-        return "<td style='width:150px;border:1px solid black;'>" . parent::current(). "</td>";
-    }
-
-    function beginChildren() { 
-        echo "<tr>"; 
-    } 
-
-    function endChildren() { 
-        echo "</tr>" . "\n";
-    } 
-} 
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=stokkup", $username, $password);
-    // set the PDO error mode to exception
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //echo "Connected successfully"; 
-
-    $stmt = $conn->prepare("SELECT l.ltp_id, l.order_id, l.balance_amount,i.id FROM link_to_pay l left join invoice i on i.order_id=l.order_id where session_link='".$_REQUEST['link']."'"); 
-    $stmt->execute();
-    $i=0;
-    $orderArray=array();
-
-    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
-    foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) { 
-        //echo $k." : ".$v;
-        $orderArray[$k]=$v;
-    }
-
-    }
-catch(PDOException $e)
-    {
-    echo "Connection failed: " . $e->getMessage();
-    }
-    print_r($orderArray);
-?>
 <html ng-app="fuse">
     <head>
         <base href="/stokkup/">
@@ -68,7 +18,8 @@ catch(PDOException $e)
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
-        <!-- <script>
+
+        <script>
             var timer;
             function loadscreen()
             {
@@ -76,22 +27,98 @@ catch(PDOException $e)
                 setTimeout(function () {
                     $("#ajax_loader").hide();
                 }, 3000);
-            }
-        </script> -->
+            }    
+        </script> 
     </head>
 
     <body md-theme="{{vm.themes.active.name}}" md-theme-watch 
           class="{{state.current.bodyClass|| ''}}" data-custom-background data-off-canvas-nav style="background-color:#F5F5F5;">
+
+<?php
+//error_reporting(E_ALL);ini_set('display_errors', 'on');
+$servername = "192.168.1.13";
+$username = "csuser";
+$password = "codal123";
+//echo $_REQUEST['link'];
+
+
+class TableRows extends RecursiveIteratorIterator { 
+    function __construct($it) { 
+        parent::__construct($it, self::LEAVES_ONLY); 
+    }
+
+    function current() {
+        return parent::current();
+    }
+
+    /*function beginChildren() { 
+        echo "<tr>"; 
+    } 
+
+    function endChildren() { 
+        echo "</tr>" . "\n";
+    }*/
+} 
+
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=stokkup", $username, $password);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    //echo "Connected successfully"; 
+
+    $stmt = $conn->prepare("SELECT l.ltp_id, l.order_id, l.balance_amount,i.id FROM link_to_pay l left join invoice i on i.order_id=l.order_id where  l.payment_flag='0' and l.session_link='".$_REQUEST['link']."'"); 
+    $stmt->execute();
+    $i=0;
+    $orderArray=array();
+
+    $result = $stmt->setFetchMode(PDO::FETCH_ASSOC); 
+    foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) { 
+        //echo $k." : ".$v;
+        $orderArray[$k]=$v;
+    }
+    if(count($orderArray)<1){?>
+        <md-content id="content" class="animate-slide-up md-background md-hue-1 ms-scroll ng-scope flex md-default-theme ps-container ps-theme-default ps-active-y" ms-scroll="" ui-view="content" flex="" data-ps-id="e93466b5-d722-6104-cb5f-6c812c6d8a5a">
+        <div class="main-design-page m-r-15 m-l-20 m-b-20 ng-scope">
+        <div class="header layout-column" layout="column">
+        <div layout="column" flex="50" class="layout-column">
+            <span class="font-20 mrg10-T">Link is either expired or no longer valid. Please contact Stokkup Team</span>
+        </div>
+    </div></div></md-content>
+        </body>
+</html>
+    <?php
+    exit;
+    }
+
+    $stmt_state = $conn->prepare("SELECT name, code FROM state"); 
+    $stmt_state->execute();
+    $stateArray=array();
+
+    $resultState = $stmt_state->setFetchMode(PDO::FETCH_ASSOC); 
+    foreach($stmt_state->fetchAll() as $k=>$v) { 
+        //echo $k." : ".$v;
+        $stateArray[$i]=$v;
+        //echo $stmt_state['name']." : ".$stmt_state['code'];
+        $i++;
+    }
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
+?>
+
+
+        
   
     <md-content id="content" class="animate-slide-up md-background md-hue-1 ms-scroll ng-scope flex md-default-theme ps-container ps-theme-default ps-active-y" ms-scroll="" ui-view="content" flex="" data-ps-id="e93466b5-d722-6104-cb5f-6c812c6d8a5a"><div class="main-design-page m-r-15 m-l-20 m-b-20 ng-scope">
-    <form action="submit_payment.php">
     <div class="header layout-column" layout="column">
         <div class="header-content layout-padding layout-wrap layout-align-start-stretch layout-row flex" layout="row" layout-align="start" layout-wrap="" flex="" layout-padding="">
         </div>
         <div class="order-information m-b-20 layout-wrap layout-align-start-stretch layout-row flex" layout="row" layout-align="start" layout-wrap="" flex="">
             <div class="info-order mrg-auto" flex="40">
                 <md-card layout="row" class="layout-row md-default-theme">
-                    <md-content class="md-default-theme">
+                    <md-content class="md-default-theme" ng-controller="extLinktoPayController">
                         <div class="ms-responsive-table-wrapper">
                             <div class="header-typ2">
                                     <div layout="row" class="layout-row">
@@ -106,20 +133,27 @@ catch(PDOException $e)
                                     </div>
                                 </div>
                                <div class="pd15">
-                                   <div layout="row" class="layout-row">
-                                       <div layout="column" flex="45" class="layout-column flex-45">
-                                            <div class="title"><span class="basicInfoStyle">Credit Card Information</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="layout-wrap layout-align-space-between-start layout-row">
-                                                <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme"><label ng-click="delegateClick()">Name On Card</label>
-                                                     <input name="Name On Card" aria-label="Name On Card" class="md-input" id="input_4">
-                                                <div class="md-errors-spacer"></div></md-input-container>
-                                                <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme"><label ng-click="delegateClick()">Credit Card Number</label>
-                                                    <input name="Credit Card Number" aria-label="Credit Card Number" class="md-input" id="input_5">
-                                                <div class="md-errors-spacer"></div></md-input-container>
+                                   <div layout="row">
+                                       <div layout="column" flex="45">
+                                            <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+<input name="invoice_id" ng-model="company.invoice_id" ng-init="7" type="hidden">
+                                                <md-input-container flex="50">
+                                                     <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
+                                                </md-input-container>
+                                                <md-input-container flex="50">
+                                                     <input placeholder="Last Name On Card" name="Last Name On Card" ng-model="company.creditLname">
+                                                </md-input-container>
+                                                <md-input-container flex="100">
+                                                    <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
+                                                </md-input-container>
+                                                <md-input-container flex="100">
+                                                    <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
+                                                </md-input-container>
                                             </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="layout-wrap layout-align-space-between-start layout-row">
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="MM">
+                                                    <md-select ng-model="company.expMonth" placeholder="MM">
                                                         <md-option value="0">MM</md-option>
                                                         <md-option value="01">JAN</md-option>
                                                         <md-option value="02">FEB</md-option>
@@ -136,7 +170,7 @@ catch(PDOException $e)
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex=30 class="m-b-20">
-                                                   <md-select ng-model="company.prime_address_state" placeholder="YY">
+                                                   <md-select ng-model="company.expYear" placeholder="YY">
                                                         <md-option value="0">YY</md-option>
                                                         <md-option value="16">16</md-option>
                                                         <md-option value="17">17</md-option>
@@ -155,48 +189,43 @@ catch(PDOException $e)
                                                         <md-option value="30">30</md-option>
                                                     </md-select>
                                                 </md-input-container>
-                                                <md-input-container flex="30" class="md-icon-float flex-30 md-default-theme"><label ng-click="delegateClick()">CVV</label>
-                                                    <input name="CVV" aria-label="CVV" class="md-input" id="input_19">
-                                                <div class="md-errors-spacer"></div></md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="layout-wrap layout-align-space-between-start layout-row">
-                                                <md-input-container flex="100" class="md-icon-float md-default-theme"><label ng-click="delegateClick()">Amount</label>
-                                                    <input name="CVV" aria-label="CVV" class="md-input" id="input_19">
-                                                <div class="md-errors-spacer"></div></md-input-container>
+                                                <md-input-container flex="30">
+                                                    <input placeholder="CVV" name="CVV" ng-model="company.cvv">
+                                                </md-input-container>
                                             </div>
                                        </div>
-
-                                       <div flex="10" class="flex-10">&nbsp;</div>
-                                       <div layout="column" flex="45" class="layout-column flex-45">
-                                            <div class="title"><span class="basicInfoStyle">Billing Address</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="layout-wrap layout-align-space-between-start layout-row">
-                                                <md-input-container flex="75" class="md-icon-float flex-75 md-default-theme"><label ng-click="delegateClick()">Street Address</label>
-                                                    <input name="Street Address" aria-label="Street Address" class="md-input" id="input_20">
-                                                <div class="md-errors-spacer"></div></md-input-container>
-                                                <md-input-container flex="25" class="md-icon-float flex-25 md-default-theme"><label ng-click="delegateClick()">Suite</label>
-                                                    <input name="Suite" aria-label="Suite" class="md-input" id="input_21">
-                                                <div class="md-errors-spacer"></div></md-input-container>
+                                       <div flex="10">&nbsp;</div>
+                                       <div layout="column" flex="45">
+                                            <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                <md-input-container flex="75">
+                                                    <input placeholder="Street Address" name="Street Address" ng-model="company.street">
+                                                </md-input-container>
+                                                <md-input-container flex="25">
+                                                    <input placeholder="Suite" name="Suite" ng-model="company.suite">
+                                                </md-input-container>
                                             </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="layout-wrap layout-align-space-between-start layout-row">
-                                                <md-input-container flex="40" class="md-icon-float flex-40 md-default-theme"><label ng-click="delegateClick()">City</label>
-                                                    <input name="City" aria-label="City" class="md-input" id="input_22">
-                                                <div class="md-errors-spacer"></div></md-input-container>
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                <md-input-container flex="40">
+                                                    <input placeholder="City" name="City" ng-model="company.city">
+                                                </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="State">
-                                                        <md-option value="0">State1</md-option>
-                                                        <md-option>State2</md-option>
-                                                        <md-option>State3</md-option>
-                                                        <md-option>State4</md-option>
+                                                    <md-select placeholder="State" name="State" aria-label="State" ng-model="company.state">
+                                                        <md-option value="">State</md-option>
+                                                        <?php for($s=0;$s<count($stateArray);$s++) {?>
+                                                        <md-option value="<?php echo $stateArray[$s]['code']; ?>"><?php echo $stateArray[$s]['name']; ?></md-option>
+                                                        <?php } ?>
                                                     </md-select>
                                                 </md-input-container>
-                                                <md-input-container flex="30" class="md-icon-float flex-30 md-default-theme"><label ng-click="delegateClick()">Zip</label>
-                                                    <input name="Zip" aria-label="Zip" class="md-input" id="input_29">
-                                                <div class="md-errors-spacer"></div></md-input-container>
+                                                <md-input-container flex="30">
+                                                    <input placeholder="Zip" name="Zip" only-number="10" ng-model="company.zip">
+                                                </md-input-container>
                                             </div>
-                                            <md-dialog-actions layout-align="end center" layout="row" class="mrg75-T layout-align-end-center layout-row" style="margin-top:125px;">
+                                            <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
+                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
                                                 <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
                                                 </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
+                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company, <?php echo $orderArray['id'] ?>, <?php echo $orderArray['ltp_id'] ?> )"><span class="ng-scope">Pay</span></button>
                                             </md-dialog-actions>
                                        </div>
                                    </div>
@@ -207,7 +236,6 @@ catch(PDOException $e)
             </div>
         </div>
     </div>
-</form>
 </div><div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 3px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 3px; height: 296px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 204px;"></div></div></md-content>
 
     <!-- <ms-theme-options></ms-theme-options> -->
