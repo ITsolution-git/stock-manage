@@ -126,7 +126,7 @@
 					<td style="border:1px solid #000"> {{$position->position_name}}</td>
 					<td style="border:1px solid #000"> {{$position->placement_type_name}}</td>
 					<td style="border:1px solid #000"> {{$position->qnty}}</td>
-					<td style="border:1px solid #000"> {{$position->total_price}}</td>
+					<td style="border:1px solid #000"> <?php echo number_format($position->total_price,2) ?></td>
 					<td style="text-align:center;height:50px;border:1px solid #000;">
 					<?php if($position->position_image != '') {?>
 						<img src="{{$position->position_image}}" height="40px" width="40px"></td>
@@ -160,7 +160,7 @@
                 	@endforeach
                 </td>
                 <td style="border:1px solid #000"> {{$product->total_qnty}}</td>
-                <td style="border:1px solid #000"> {{$product->total_price}}</td>
+                <td style="border:1px solid #000"> $<?php echo number_format($product->total_price,2) ?></td>
 			</tr>
 			@endforeach
 		</table><br><br>
@@ -176,7 +176,7 @@
 					<br><span><b>Position: </b>{{$position->position_name}}</span><br>
 					<?php if($position->discharge_qnty > 0) {?>
 						<span>
-							Discharge Ink @ ${{$price_grid_data[0]->discharge}}
+							Discharge Ink @ $<?php echo number_format($price_grid_data[0]->discharge,2); ?>
 						</span><br>
 					<?php } ?>
 					<?php if($position->foil_qnty > 0) {?>
@@ -220,63 +220,63 @@
 				<table cellspacing="0" cellpadding="0">
 					<tr>
 						<td style="padding-right:5px;">Screens</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->screen_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->screen_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Press Setup</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->press_setup_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->press_setup_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Digitize</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->digitize_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->digitize_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Art Work</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->artwork_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->artwork_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Separations</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->separations_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->separations_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Rush</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->rush_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->rush_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Distribution</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->distribution_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->distribution_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Shipping</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->shipping_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->shipping_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Discount</td>
-						<td style="border:1px solid #000;text-align:center;">%{{$order_data[0]->discount}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->discount,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Order Total</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->order_total}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->order_total,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Tax Rate</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->tax_rate}}</td>
+						<td style="border:1px solid #000;text-align:center;"><?php echo number_format($order_data[0]->tax_rate,2); ?>%</td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Tax</td>
-						<td style="border:1px solid #000;text-align:center;">{{$order_data[0]->tax}}(%)</td>
+						<td style="border:1px solid #000;text-align:center;"><?php echo number_format($order_data[0]->tax,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Grand Total</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->grand_total}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->grand_total,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Payments/Deposit</td>
-						<td style="border:1px solid #000;text-align:center;">$0</td>
+						<td style="border:1px solid #000;text-align:center;">$0.00</td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Balance Due</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->grand_total}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->grand_total,2); ?></td>
 					</tr>
 				</table>
 			</td>

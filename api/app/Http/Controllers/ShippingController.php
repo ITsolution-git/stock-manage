@@ -395,10 +395,33 @@ class ShippingController extends Controller {
         $post = Input::all();
 
         $shipping['shipping'] = json_decode($post['shipping']);
+
+        if($shipping['shipping']->in_hands_by != '0000-00-00') {
+            $shipping['shipping']->in_hands_by = date("m/d/Y", strtotime($shipping['shipping']->in_hands_by));
+        }
+        else {
+            $shipping['shipping']->in_hands_by = '';
+        }
+        if($shipping['shipping']->shipping_by != '0000-00-00') {
+            $shipping['shipping']->shipping_by = date("m/d/Y", strtotime($shipping['shipping']->shipping_by));
+        }
+        else {
+            $shipping['shipping']->shipping_by = '';
+        }
 //        $shipping['shipping_type'] = json_decode($post['shipping_type']);
         $shipping['shipping_items'] = json_decode($post['shipping_items']);
-        $shipping['company_detail'] = json_decode($_POST['company_detail']);
+        $company_detail = json_decode($_POST['company_detail']);
         $shipping_boxes = json_decode($post['shipping_boxes']);
+
+        $company_id = $company_detail[0]->id;
+
+        $shipping['company_detail'] = $this->common->getCompanyDetail($company_detail[0]->id);
+        $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
+
+        if($shipping['company_detail'][0]->photo != '')
+        {
+            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
+        }
 
         $actual_total = 0;
         $xs_qnty = 0;

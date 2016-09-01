@@ -132,7 +132,7 @@
                             <td class="text-center">{{product.color_name}}</td>
                             <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
                             <td class="text-center">{{product.total_qnty}}</td>
-                            <td class="text-center">{{product.total_price}}</td>
+                            <td class="text-center">{{product.total_price | currency : $ : 2}}</td>
                         </tr>
                     </tbody>
                 </table>

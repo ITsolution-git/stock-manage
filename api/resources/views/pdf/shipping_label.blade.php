@@ -42,10 +42,7 @@
         <td align="left" valign="top" width="100%">          
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                    <td align="left" valign="top" width="25%">
-                        <!-- <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" /> -->
-                        <img src="" title="logo" alt="logo" height="100px" width="100px">
-                    </td>
+                    <td><img src="{{$company_detail[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
                     <td align="center" valign="top" width="50%" class="tableCol">
                         <span style="font-size:15px; line-height:15px;">
                             <strong>{{$company_detail[0]->name}}</strong>                
