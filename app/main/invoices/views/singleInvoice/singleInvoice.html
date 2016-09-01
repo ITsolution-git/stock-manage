@@ -149,27 +149,27 @@
                                 </div>
                                 <div ng-if="position.discharge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding">Discharge Ink @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].discharge}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].discharge | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.foil_qnty > 0"  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding">Foil @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].foil}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].foil | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.ink_charge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding">Ink Charge @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].ink_changes}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].ink_changes | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.number_on_dark_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding"># on Dark @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_dark}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_dark | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.number_on_light_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding"># on Light @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_light}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_light | currency : $ : 2}}</span>
                                 </div>
                             </div>
                             <div>&nbsp;</div>
