@@ -30,11 +30,11 @@
               </tr>
           </table>
       </td>
-        <td style="padding-top:0;"><img id="header_logo" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+        <td style="padding-top:0;"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
       <td>
           <table>
               <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
-              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">{{$company->design_name}}</td></tr>
               <tr><td align="right">{{$company->client_company}}</td></tr>
               <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
           </table>
@@ -93,21 +93,31 @@
 <?php  if(($key+1)%2==0)
 { ?>
 <div style="page-break-before: always;"></div>
-  <table >
+ <table >
     <tr >
       <td>
-      <br>
-        <p><b>{{$company->companyname}}</b></p>
-        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
-        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
-        <span>P: {{$company->prime_phone_main}}</span>
-        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
+          <table>
+              <tr><td><b>{{$company->companyname}}</b></td></tr>
+              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
+                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
+                  </td>
+              </tr>
+              <tr>
+                  <td>P: {{$company->prime_phone_main}}</td>
+              </tr>
+              <tr>
+                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
+              </tr>
+          </table>
       </td>
-      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+        <td style="padding-top:0;"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
       <td>
-        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
-        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
-        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
+          <table>
+              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
+              <tr><td align="right">{{$company->design_name}}</td></tr>
+              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
+          </table>
       </td>
     </tr>
   </table>
@@ -116,32 +126,42 @@
 ?>
 
 <div style="page-break-before: always;"></div>
-  <table >
+   <table >
     <tr >
       <td>
-      <br>
-        <p><b>{{$company->companyname}}</b></p>
-        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
-        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
-        <span>P: {{$company->prime_phone_main}}</span>
-        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
+          <table>
+              <tr><td><b>{{$company->companyname}}</b></td></tr>
+              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
+                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
+                  </td>
+              </tr>
+              <tr>
+                  <td>P: {{$company->prime_phone_main}}</td>
+              </tr>
+              <tr>
+                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
+              </tr>
+          </table>
       </td>
-      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+        <td style="padding-top:0;"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
       <td>
-        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
-        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
-        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
+          <table>
+              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
+              <tr><td align="right">{{$company->design_name}}</td></tr>
+              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
+          </table>
       </td>
     </tr>
   </table>
   <hr style="border:1px solid #000;">
-<table style="margin-top:50px;">
+<table>
 <tr><td align="center"><b>Mockup Image</b></td></tr>
-  <?php foreach($data as $key=>$value){ ?>
+  <?php /*foreach($data as $key=>$value){*/ ?>
     <tr>
-      <td align="center"><img src="<?php echo $value[0]->mokup_image; ?>"  ></td>
+      <td align="center"><img src="<?php echo $company->mokup_image; ?>" style="width: 600px; height: 615px;"  ></td>
     </tr>
-   <?php } ?>
+   <?php /*}*/ ?>
 </table>
   <table style="margin-top: 20px;">
     <tr>

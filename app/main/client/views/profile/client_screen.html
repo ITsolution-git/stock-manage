@@ -38,8 +38,8 @@
                                             <td><a target="_blank" ui-sref="app.art.screensetView({id:screenSet.screen_id})">{{screenSet.screen_set}}</a></td>
                                             <td>{{screenSet.screen_width}}" X {{screenSet.screen_height}}"</td>
                                             <td>
-                                                <img ng-if="ScreenSets.mokup_logo" src="{{screenSet.mokup_logo}}" style="height: 100px; width: 140px;">
-                                                <img ng-if="!ScreenSets.mokup_logo" ng-src="{{NoImage}}"  style="height: 50px; width: 100px;">
+                                                <img ng-if="ScreenSets.mokup_logo!=''" src="{{screenSet.mokup_logo}}" style="height: 100px; width: 140px;">
+                                                <img ng-if="ScreenSets.mokup_logo==''" ng-src="{{NoImage}}"  style="height: 50px; width: 100px;">
                                             </td>
                                             <!-- <td><img src="{{screenSet.mokup_image}}"  style="height: 100px; width: 140px;"></td> -->
                                             
