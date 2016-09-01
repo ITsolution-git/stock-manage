@@ -289,7 +289,6 @@
                         $scope.siData = result.data.allData;
                     });
                     notifyService.notify('success',"Payment made Successfully");
-                    setTimeout("location.href = 'http://new.stokkup.com';",1500);
                 }
                 else
                 {
