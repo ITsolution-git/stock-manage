@@ -18,9 +18,9 @@
 				<span style="text-align:center;margin:0;"><a href="{{$company_data[0]->url}}" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
 			</td>
 			<td>
-				<span style="font-weight:bold;text-align:right;">Order Acknoledgement # {{$order_data[0]->id}}</span>
-				<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span>
-				<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span>
+				<span style="font-weight:bold;text-align:right;">Order Acknowledgement # {{$order_data[0]->id}}</span><br>
+				<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span><br>
+				<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span><br>
 				<span style="font-weight:bold;text-align:right;">Job Name: {{$order_data[0]->name}}</span>
 			</td>
 		</tr>
@@ -126,7 +126,7 @@
 					<td style="border:1px solid #000"> {{$position->position_name}}</td>
 					<td style="border:1px solid #000"> {{$position->placement_type_name}}</td>
 					<td style="border:1px solid #000"> {{$position->qnty}}</td>
-					<td style="border:1px solid #000"> 1.5</td>
+					<td style="border:1px solid #000"> {{$position->total_price}}</td>
 					<td style="text-align:center;height:50px;border:1px solid #000;">
 					<?php if($position->position_image != '') {?>
 						<img src="{{$position->position_image}}" height="40px" width="40px"></td>

@@ -123,6 +123,37 @@ class InvoiceController extends Controller {
         $retutn_arr['order_data'] = $order_data;
 
         $retutn_arr['shipping_detail'] = $this->common->GetTableRecords('shipping',array('order_id' => $order_id),array());
+
+        if(!empty($retutn_arr['shipping_detail']))
+        {
+            foreach ($retutn_arr['shipping_detail'] as $shipping) {
+                if($shipping->shipping_by != '0000-00-00') {
+                    $shipping->shipping_by = date("m/d/Y", strtotime($shipping->shipping_by));
+                }
+                else {
+                    $shipping->shipping_by = '';
+                }
+                if($shipping->in_hands_by != '0000-00-00') {
+                    $shipping->in_hands_by = date("m/d/Y", strtotime($shipping->in_hands_by));
+                }
+                else {
+                    $shipping->in_hands_by = '';
+                }
+                if($shipping->date_shipped != '0000-00-00') {
+                    $shipping->date_shipped = date("m/d/Y", strtotime($shipping->date_shipped));
+                }
+                else {
+                    $shipping->date_shipped = '';
+                }
+                if($shipping->fully_shipped != '0000-00-00') {
+                    $shipping->fully_shipped = date("m/d/Y", strtotime($shipping->fully_shipped));
+                }
+                else {
+                    $shipping->fully_shipped = '';
+                }
+            }
+        }
+
         $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
 
         foreach ($all_design as $design) {

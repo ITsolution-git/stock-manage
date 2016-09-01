@@ -71,13 +71,13 @@
                     <div flex="35" class="text-center"><span class="font-10">Total</span></div>
                 </div>
                 <div class="p-t-20 p-b-20 border border-l-r" layout="row">
-                    <div flex="40" class="text-center">{{shop_invoice}}</div>
+                    <div flex="40" class="text-center">{{shop_invoice | currency : $ : 2}}</div>
                     <div flex="5" class="text-left"><md-icon md-font-icon="icon-minus"  class="font-19"></md-icon></div>
-                    <div flex="30" class="text-center">{{affiliate_invoice}}</div>
+                    <div flex="30" class="text-center">{{affiliate_invoice | currency : $ : 2}}</div>
                     <div flex="10" class="text-left" ><md-icon md-font-icon="icon-plus" class="font-19"></md-icon></div>
-                    <div flex="30" class="text-right">{{additional_charges}}</div>
+                    <div flex="30" class="text-right">{{additional_charges | currency : $ : 2}}</div>
                     <div flex="25" class="text-center"><md-icon md-font-icon="icon-equal" class="font-19"></md-icon></div>
-                    <div flex="55" class="text-center col-green">{{total}}</div>
+                    <div flex="55" class="text-center col-green">{{total | currency : $ : 2}}</div>
                 </div>
             </div>
         </md-dialog-content>
