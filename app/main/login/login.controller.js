@@ -36,11 +36,12 @@
 
 
            login.post(user_data,function(result) 
-            {                
+            {   $("#ajax_loader").show();             
                   if(result.data.success == '0') {
                                   var data = {"status": "error", "message": "Please check Email and Password"}
                                   notifyService.notify(data.status, data.message);
                                   $state.go('app.login');
+                                  $("#ajax_loader").hide();
                                   return false;
 
                                 } else {
@@ -69,6 +70,7 @@
 
 
                                 }
+
                          
             });
         }
