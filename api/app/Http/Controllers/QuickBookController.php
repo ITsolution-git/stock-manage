@@ -426,7 +426,7 @@ class QuickBookController extends Controller
         }*/
     }
 
-    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid){
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid,$payment){
       
 
          $IPP = new \QuickBooks_IPP(QBO_DSN);
@@ -455,8 +455,18 @@ class QuickBookController extends Controller
         $Invoice = new \QuickBooks_IPP_Object_Invoice();
 
          $Invoice->setDocNumber('WEB' . mt_rand(0, 10000));
-         //$Invoice->setTxnDate('2015-10-11');
+
+         
          $Invoice->setTxnDate(date('Y-m-d'));
+
+         if($payment == '15') {
+            $Invoice->setDueDate(date('Y-m-d'), strtotime("+15 days"));
+         } else if($payment == '30') {
+            $Invoice->setDueDate(date('Y-m-d'), strtotime("+30 days"));
+         } else {
+            $Invoice->setDueDate(date('Y-m-d'));
+         }
+         
 
         foreach ($invoiceArray as $key => $value) {
 
