@@ -125,12 +125,8 @@
                             $scope.siData = result.data.allData;
                         });*/
                         notifyService.notify('success',"Payment made Successfully");
-                        window.setTimeout(function(){
+                        setTimeout("location.href = 'http://new.stokkup.com';",5000);
 
-                            // Move to a new location or you can do something else
-                            window.location.href = "http://qa2.stokkup.com/";
-
-                        }, 5000);
                     }
                     else
                     {
