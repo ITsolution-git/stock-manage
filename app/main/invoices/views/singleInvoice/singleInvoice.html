@@ -217,11 +217,8 @@
                                     <tbody> 
                                         <tr ng-repeat="pmntHis in siData" class="cursor-p">
                                             <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
-<<<<<<< HEAD
                                             <td>{{ pmntHis.payment_amount | currency : $ : 2 }}</td>
-=======
                                             <td>{{ pmntHis.payment_amount | currency : $ : 2}}</td>
->>>>>>> e7e3caf2a12729d9c8c9c9614482a7296af2f072
                                             <td>{{ pmntHis.payment_method }}</td>
                                             <td class="text-center"><a href="#" ng-click="deleteHistory(pmntHis.payment_id)" class="icon icon-cancel font-19 f-red"></a></td>
                                         </tr>                    
