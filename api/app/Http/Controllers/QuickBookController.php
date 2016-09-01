@@ -464,15 +464,22 @@ class QuickBookController extends Controller
             $setDate  = date('Y-m-d', strtotime("+15 days"));
            
             $Invoice->setDueDate($setDate);
+            $Invoice->setTermsName('Net 15');
+
 
          } else if($payment == '30') {
 
             $setDate  = date('Y-m-d', strtotime("+30 days"));
             $Invoice->setDueDate($setDate);
+            $Invoice->setTermsName('Net 30');
 
          } else {
             $Invoice->setDueDate(date('Y-m-d'));
          }
+
+
+         
+         
          
 
 
