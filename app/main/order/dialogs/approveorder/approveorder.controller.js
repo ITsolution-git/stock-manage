@@ -83,7 +83,7 @@
                
                 var combine_array = {};
                 combine_array.order_id = $stateParams.id;
-                combine_array_id.payment = $scope.payment_terms;
+                combine_array.payment = $scope.payment_terms;
                 
                 $("#ajax_loader").show();
                
