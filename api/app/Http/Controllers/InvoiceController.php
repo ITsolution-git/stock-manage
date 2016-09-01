@@ -97,6 +97,15 @@ class InvoiceController extends Controller {
         $retutn_arr['invoice_data'] = $invoice_data;
         $retutn_arr['invoice_data'][0]->created_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->created_date));
 
+        if($retutn_arr['invoice_data'][0]->payment_due_date != '0000-00-00')
+        {
+            $retutn_arr['invoice_data'][0]->payment_due_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->payment_due_date));
+        }
+        else
+        {
+            $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
+        }
+
         $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
         $retutn_arr['company_data'] = $this->common->getCompanyDetail($company_id);
 

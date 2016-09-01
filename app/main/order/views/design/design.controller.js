@@ -444,12 +444,12 @@
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
             }
-            else if($scope.vendorProducts == 0)
+            /*else if($scope.vendorProducts == 0)
             {
                 var data = {"status": "error", "message": "No products available for this vendor"}
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
-            }
+            }*/
             else if($scope.valid_sns == 0)
             {
                 var data = {"status": "error", "message": "Please enter valid credentials for S&S"}
