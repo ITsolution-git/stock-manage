@@ -210,8 +210,8 @@
                                     </thead>
                                     <tbody> 
                                         <tr ng-repeat="pmntHis in siData" class="cursor-p">
-                                            <td>{{ pmntHis.payment_date }}</td>
-                                            <td>{{ pmntHis.payment_amount }}</td>
+                                            <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
+                                            <td>${{ pmntHis.payment_amount }}</td>
                                             <td>{{ pmntHis.payment_method }}</td>
                                             <td class="text-center"><a href="#" ng-click="deleteHistory(pmntHis.payment_id)" class="icon icon-cancel font-19 f-red"></a></td>
                                         </tr>                    
@@ -400,10 +400,10 @@
                         <span class="ng-binding">${{allData.order_data[0].discount}}</span>
                     </div>
 
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                    <!--<div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Lines Total</div>
                         <span class="ng-binding">${{allData.order_data[0].order_line_total}}</span>
-                    </div>
+                    </div>-->
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Order Total</div>
