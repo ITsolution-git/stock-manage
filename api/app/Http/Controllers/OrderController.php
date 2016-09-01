@@ -1734,6 +1734,7 @@ class OrderController extends Controller {
                                           "lines" =>  $lines);
 
        $order_json = json_encode($order_main_array);
+       print_r($order_json);exit;
 
         $result_api = $this->api->getApiCredential($post['company_id'],'api.sns','ss_detail');
        
