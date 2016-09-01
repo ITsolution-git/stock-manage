@@ -527,7 +527,7 @@
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Tax Rate(%)</div>
-                        <span class="ng-binding">{{order.tax_rate}}</span>
+                        <span class="ng-binding">{{order.tax_rate | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
