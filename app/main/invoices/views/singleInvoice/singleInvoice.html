@@ -23,7 +23,14 @@
             <div layout="column" flex="40">
                 <div class="font-14 mrg5-B text-bold-right">Order Acknowledgement # {{allData.order_data[0].id}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Created on: {{allData.invoice_data[0].created_date}}</div>
+                <div class="font-14 mrg5-B text-bold-right">Due Date: {{allData.invoice_data[0].payment_due_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Job Name: {{allData.order_data[0].name}}</div>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Order Status</label>
+                    <md-select ng-model="allData.order_data[0].approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',allData.order_data[0].approval_id,allData.order_data[0].id)" >
+                        <md-option ng-selected="allData.order_data[0].approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                    </md-select>
+                </md-input-container>
             </div>            
         </div>
 
