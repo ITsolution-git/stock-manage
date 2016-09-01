@@ -128,6 +128,7 @@ class FinishingController extends Controller {
                         1=>array('key' => 'o.name', 'name' => 'Job Name'),
                         2=>array('key' => 'c.client_company', 'name' => 'Client'),
                         3=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false),
+                        4=>array('key' => 'null', 'name' => 'Order Status', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
