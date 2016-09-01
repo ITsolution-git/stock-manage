@@ -1940,7 +1940,18 @@ class OrderController extends Controller {
     public function createInvoice()
     {
         $post = Input::all();
-        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'));
+
+         if($post['payment'] == '15') {
+            $setDate  = date('Y-m-d', strtotime("+15 days"));
+
+         } else if($post['payment'] == '30') {
+            $setDate  = date('Y-m-d', strtotime("+30 days"));
+
+         } else {
+           $setDate  = date('Y-m-d');
+         }
+         
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate);
         $id = $this->common->InsertRecords('invoice',$orderData);
 
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
