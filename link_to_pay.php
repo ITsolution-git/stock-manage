@@ -9,13 +9,14 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="shortcut icon" type="image/x-icon" href="/stokkup/favicon.ico" />
-        <link rel="stylesheet" href="styles/vendor.css">
+        <link rel="stylesheet" href="styles/vendor.css" type="text/css">
 
-        <link rel="stylesheet" href="styles/app.css">
-        <link rel="stylesheet" href="styles/stokkup-custom.css">
-        <link rel="stylesheet" href="styles/mdPickers.min.css">
+        <link rel="stylesheet" href="styles/app.css" type="text/css">
+        <link rel="stylesheet" href="styles/stokkup-custom.css" type="text/css">
+        <link rel="stylesheet" href="styles/mdPickers.min.css" type="text/css">
+        <link rel="stylesheet" href="styles/stokkup-global-custom.css" type="text/css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
 

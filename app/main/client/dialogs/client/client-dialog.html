@@ -9,7 +9,7 @@
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
-            <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
+            <div layout="column" layout-wrap="nowrap" class="client-add-modal popup-stokkup-modal" layout-padding>
                 <div class="content-heading" layout-padding>
                     <span class="md-title">Company Information</span>
                 </div>
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                 </md-input-container>
-                <md-input-container class="m-b-20">
+                <md-input-container>
                     <label>Type</label>
                     <md-select ng-model="vm.client.client_companytype">
                         <md-option value="0">
@@ -42,7 +42,7 @@
                     <input placeholder="City" ng-model="vm.client.pl_city">
                 </md-input-container>
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                    <md-input-container flex=45 class="m-b-20">
+                    <md-input-container flex=45>
                         <label>State</label>
                         <md-select ng-model="vm.client.pl_state">
                             <md-option value="0">
@@ -86,7 +86,7 @@
                 <md-input-container>
                     <input placeholder="Company Website URL" ng-model="vm.client.company_url">
                 </md-input-container>
-                <md-input-container class="">
+                <md-input-container class="m-b-30">
                     <label>Desposition</label>
                     <md-select ng-model="vm.client.client_desposition">
                         <md-option value="0">
@@ -120,7 +120,7 @@
                         </div>
                     </div>
                 </md-input-container>
-                <md-input-container>
+                <md-input-container class="m-b-30">
                     <input placeholder="Email" ng-pattern="/^.+@.+\..+$/" name="email_main" ng-model="vm.client.email">
 
                     <div ng-messages="clientForm.email_main.$error" role="alert" multiple>
@@ -135,10 +135,10 @@
                 <md-input-container class="first-box">
                     <input placeholder="Sales Web" ng-model="vm.client.salesweb">
                 </md-input-container>
-                <md-input-container class="md-block date-input m-b-30">
+                <md-input-container class="md-block date-input">
                     <input placeholder="Anniversary date" kendo-date-picker k-ng-model="dateObject2" ng-model="vm.client.anniversarydate"   >
                 </md-input-container>
-                <md-input-container class="m-b-10">
+                <md-input-container>
                     <label>Sales Person</label>
                     <md-select ng-model="vm.client.salesperson">
                         <md-option value="0">
@@ -152,7 +152,7 @@
 
                 <md-input-container class="m-b-30">
                     <label>Default PriceGrid *</label>
-                    <md-select ng-model="vm.client.salespricegrid" name="salespricegrid" required>
+                    <md-select ng-model="vm.client.salespricegrid" name="salespricegrid" required class="m-b-20">
                         <md-option value="">
                             Select PriceGrid
                         </md-option>

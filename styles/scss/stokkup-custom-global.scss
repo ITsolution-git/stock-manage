@@ -1,7 +1,7 @@
 /* Sass Document */
 /*global variables */
 
-
+@import "variables.scss";
 $stokkupfamily1:'Open Sans', sans-serif;
 $font-weight-300:300;
 $font-weight-400:400;
@@ -96,6 +96,15 @@ button, select, html, textarea, input{
 	font-size:$font-size-text;
 	text-align:$center;
 	text-transform:uppercase;
+}
+.white-bg{
+	background-color:$white-color;
+}
+.stokkup-select-box1{
+	font-size:16px;
+	color:$datatable-text-color;
+	margin:$zero;
+	padding:$zero;
 }
 /*genera css ends here */
 /*scss for sidebar and top navigation box */
@@ -298,6 +307,11 @@ md-menu-content{
 		}
 	}
 }
+.stokkup-main-tableview{
+	&.transparent-bg{
+		background-color:transparent;
+	}
+}
 table.dataTable{
 	background-color:$datatable-bg;
 	border:$nofloat;
@@ -490,6 +504,9 @@ md-dialog{
 					padding:8px $zero $zero;
 					label{
 						color:$stokkup-table-footer-txtcolor;
+						&.selectbox-label{
+							padding-left:$zero;
+						}
 					}
 					&.md-default-theme.md-input-invalid .md-input, &.md-input-invalid .md-input{
 						border-color:$red-border;
@@ -498,7 +515,7 @@ md-dialog{
 						border-bottom-width:$input-fields-border-size;
 						border-bottom-color:$input-fields-border-color;
 						color:$stokkup-table-footer-txtcolor;
-						padding:0 0 5px 12px;
+						padding:0 0 2px 12px;
 						font-size:$popup-heading-font-size;
 						width:$full-width;
 					}
@@ -652,4 +669,68 @@ md-card{
 		font-size:13px;
 		color:$gray-shade4;
 	}
+}
+.popup-stokkup-modal{
+	md-input-container{
+		margin-bottom:$zero !important;
+	}
+}
+.dialog-cancel-global{
+}
+.dialog-submit-glboal{
+	background-color:#6288dc;
+	@extend .no-box-shadows;
+	min-width:123px;
+	width:auto;
+	height:41px;
+	line-height:41px;
+	font-weight:$font-weight-700;
+	&:hover, &:focus{
+		background-color:#6288dc !important;
+		@extend .no-box-shadows;
+		min-width:123px;
+		width:auto;
+		height:41px;
+		line-height:41px;
+		font-weight:$font-weight-700;
+	}
+}
+table.dataTable thead.stokkup-space1 th{padding-top:10px;}
+.stokkup-custom-btn1{
+	padding:$zero 28px;
+	text-align:center;
+	@extend .border-radius-half;
+	color:$white-color;
+	font-weight:$font-weight-700;
+	font-size:$font-size-text;
+	line-height:41px;
+	&:hover, &:focus{
+		background-color:$blue-shade3;
+	}	
+}
+.stokkup-blue-btn{
+	background-color:$blue-shade3 !important;
+}
+.small-headings{
+	font-size:$datatable-content-size;
+	color:$stokkup-global-txtcolor;
+	font-weight:$font-weight-400;
+}
+.small-results{
+	font-weight:$font-weight-700;
+	font-size:$datatable-content-size;
+	color:$stokkup-global-txtcolor;
+}
+.box-wide{
+	width:$full-width;
+	margin:$zero;
+	padding:$zero 10px $zero 35px;
+}
+.box-upper-shadow{
+	-webkit-box-shadow: 0px -5px 18px -9px rgba(122,122,122,1);
+	-moz-box-shadow: 0px -5px 18px -9px rgba(122,122,122,1);
+	box-shadow: 0px -5px 18px -9px rgba(122,122,122,1);
+}
+.text-lower{
+	text-transform:lowercase !important;
 }

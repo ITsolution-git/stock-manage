@@ -1,4 +1,4 @@
-<md-dialog class="task-dialog affiliate-dialog information-dialog" aria-label="New order">
+<md-dialog class="task-dialog" aria-label="New order">
     <form name="orderInfoForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
@@ -6,69 +6,73 @@
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll class="m-t-20">
-            
-            <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">Name</label>
+                <div class="popup-stokkup-modal">
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                    <label class="selectbox-label">Name</label>
                        <input placeholder="Name" flex="100" ng-model="order_data.name" required>
-                </md-input-container>
-            </div>
+                    </md-input-container>
+                </div>    
 
-            <div layout="column" layout-wrap="nowrap" class=" p-l-0" layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">Sales</label>
-                    <md-select ng-model="order_data.sales_id" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="staff in staffList" value="{{staff.id}}">
-                            {{staff.sales_name}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-            <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">Blind</label>
-                    <md-select ng-model="order_data.is_blind" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option value="0">No</md-option>
-                        <md-option value="1">Yes</md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-            <div layout="column" layout-wrap="nowrap" class="p-l-0" layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">Approval</label>
-                    <md-select ng-model="order_data.approval_id" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option ng-selected="order_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-
-            <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">Account Manager</label>
-                    <md-select ng-model="order_data.account_manager_id" flex="100"  class="select-width font-16 font-weight"  >
-                        <md-option  ng-repeat="user in brandCoList" value="{{user.id}}">
-                            {{user.name}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Sales</label>
+                        <md-select ng-model="order_data.sales_id" flex="100">
+                            <md-option  ng-repeat="staff in staffList" value="{{staff.id}}">
+                                {{staff.sales_name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>    
+           
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Blind</label>
+                        <md-select ng-model="order_data.is_blind" flex="100">
+                            <md-option value="0">No</md-option>
+                            <md-option value="1">Yes</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>    
             
-            <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">Price Grid</label>
-                    <md-select ng-model="order_data.price_id" flex="100"  class="select-width font-16 font-weight"  >
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Approval</label>
+                        <md-select ng-model="order_data.approval_id" flex="100">
+                            <md-option ng-selected="order_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>    
+            
+
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Account Manager</label>
+                        <md-select ng-model="order_data.account_manager_id" flex="100">
+                            <md-option  ng-repeat="user in brandCoList" value="{{user.id}}">
+                                {{user.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            
+            
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                    <label class="selectbox-label">Price Grid</label>
+                    <md-select ng-model="order_data.price_id" flex="100">
                         <md-option  ng-repeat="data in allGrid" value="{{data.id}}">
                             {{data.name}}
                         </md-option>
                     </md-select>
-                </md-input-container>
-            </div>
+                    </md-input-container>
+                </div>
 
 
-             <div layout="column" layout-wrap="nowrap" class="p-l-0 " layout-padding>
-                <md-input-container class="margin-0 p-l-0" layout="row">
-                    <label  class="font-14 p-l-0">S&S Shipping method</label>
-                     <md-select  ng-model="order_data.sns_shipping" flex="100"  class="select-width font-16 font-weight" >
+             <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                    <label class="selectbox-label">S&S Shipping method</label>
+                     <md-select  ng-model="order_data.sns_shipping" flex="100">
                         <md-option value="1">Ground</md-option>
                         <md-option value="2">Next Day Air</md-option>
                         <md-option value="3">2nd Day Air</md-option>
@@ -79,23 +83,35 @@
             </div>
 
 
-                <div class="margin-top-25">
+                <!-- <div class="margin-top-25">
                     <span class="grey-color">
                         Start Date
                     </span>
-                </div>
-                <div class="date-input">
-                     <input kendo-date-picker ng-model="order_data.date_start" k-ng-model="dateObject" />
-                </div>
+                </div> -->
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container class="md-block date-input">
+                            <input placeholder="Start Date"kendo-date-picker ng-model="order_data.date_start" k-ng-model="dateObject" />
+                    </md-input-container>
+                   
+                <!-- <div class="date-input">
+                     
+                </div> -->
+                <md-input-container class="md-block date-input">
+                        <input placeholder="Shipping Date"kendo-date-picker ng-model="order_data.date_shipped" k-ng-model="dateObject1" />
+                </md-input-container>
+                <md-input-container class="md-block date-input m-b-30">
+                        <input placeholder="In Hands By" kendo-date-picker  ng-model="order_data.in_hands_by" k-ng-model="dateObject2">
+                </md-input-container>
+                </div> 
 
-
-                <div class="margin-top-25">
+            </div>
+                <!-- <div class="margin-top-25">
                     <span class="grey-color">
                         Shipped Date
                     </span>
                 </div>
                 <div class="date-input">
-                     <input kendo-date-picker ng-model="order_data.date_shipped" k-ng-model="dateObject1" />
+                     
                 </div>
 
 
@@ -105,14 +121,14 @@
                     </span>
                 </div>
                 <div class="date-input">
-                      <input kendo-date-picker  ng-model="order_data.in_hands_by" k-ng-model="dateObject2">
-                </div>
+                      
+                </div> -->
 
             
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised" ng-disabled="orderInfoForm.$invalid">Save</md-button>
+            <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent dialog-cancel-global">Cancel</md-button>
+            <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised dialog-submit-global" ng-disabled="orderInfoForm.$invalid">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

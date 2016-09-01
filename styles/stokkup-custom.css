@@ -1189,3 +1189,9 @@ span.k-picker-wrap.k-state-border-down {
  md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
       padding-left: 0; }
 
+.m-b-45{
+  margin-bottom:45px;
+}
+.top-30{
+margin-top:30px;
+}
