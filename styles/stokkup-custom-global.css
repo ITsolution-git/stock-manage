@@ -1,5 +1,8 @@
 /* Sass Document */
 /*global variables */
+/*----------------------------------------------------------------*/
+/*  Variables
+/*----------------------------------------------------------------*/
 /*global variables ends here */
 /*global popup style starts here */
 /*global popup style ends here */
@@ -39,16 +42,25 @@ button, select, html, textarea, input {
   text-align: center;
   text-transform: uppercase; }
 
+.white-bg {
+  background-color: #fff; }
+
+.stokkup-select-box1 {
+  font-size: 16px;
+  color: #6e7584;
+  margin: 0;
+  padding: 0; }
+
 /*genera css ends here */
 /*scss for sidebar and top navigation box */
-.no-box-shadows, #toolbar, #vertical-navigation .navigation-header, #vertical-navigation, .stockkup-content-table-container .stokkup-main-tableview, md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]), md-card, md-card.md-default-theme, .box-3 {
+.no-box-shadows, #toolbar, #vertical-navigation .navigation-header, #vertical-navigation, .stockkup-content-table-container .stokkup-main-tableview, md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]), md-card, md-card.md-default-theme, .box-3, .dialog-submit-glboal, .dialog-submit-glboal:hover, .dialog-submit-glboal:focus {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   -ms-box-shadow: none;
   -o-box-shadow: none;
   box-shadow: none; }
 
-.border-radius-half, .stokkup-btn-style1, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, md-dialog.task-dialog md-dialog-actions .md-button {
+.border-radius-half, .stokkup-btn-style1, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
   border-radius: 50px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -187,6 +199,9 @@ md-menu-content {
       color: #252932;
       font-size: 20px;
       font-weight: 300; }
+
+.stokkup-main-tableview.transparent-bg {
+  background-color: transparent; }
 
 table.dataTable {
   background-color: #f6f7f8;
@@ -340,13 +355,15 @@ md-dialog.task-dialog {
         padding: 8px 0 0; }
         md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container label {
           color: #252932; }
+          md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container label.selectbox-label {
+            padding-left: 0; }
         md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-default-theme.md-input-invalid .md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-default-theme.md-input-invalid md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-input-invalid .md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-input-invalid md-select .md-select-value {
           border-color: #de0000; }
         md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container .md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value {
           border-bottom-width: 2px;
           border-bottom-color: #d3d4d6;
           color: #252932;
-          padding: 0 0 5px 12px;
+          padding: 0 0 2px 12px;
           font-size: 16px;
           width: 100%; }
         md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select {
@@ -446,5 +463,62 @@ md-card {
 .trans-box span {
   font-size: 13px;
   color: #8d93a0; }
+
+.popup-stokkup-modal md-input-container {
+  margin-bottom: 0 !important; }
+
+.dialog-submit-glboal {
+  background-color: #6288dc;
+  min-width: 123px;
+  width: auto;
+  height: 41px;
+  line-height: 41px;
+  font-weight: 700; }
+  .dialog-submit-glboal:hover, .dialog-submit-glboal:focus {
+    background-color: #6288dc !important;
+    min-width: 123px;
+    width: auto;
+    height: 41px;
+    line-height: 41px;
+    font-weight: 700; }
+
+table.dataTable thead.stokkup-space1 th {
+  padding-top: 10px; }
+
+.stokkup-custom-btn1 {
+  padding: 0 28px;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 41px; }
+  .stokkup-custom-btn1:hover, .stokkup-custom-btn1:focus {
+    background-color: #4773d6; }
+
+.stokkup-blue-btn {
+  background-color: #4773d6 !important; }
+
+.small-headings {
+  font-size: 13px;
+  color: #6e7584;
+  font-weight: 400; }
+
+.small-results {
+  font-weight: 700;
+  font-size: 13px;
+  color: #6e7584; }
+
+.box-wide {
+  width: 100%;
+  margin: 0;
+  padding: 0 10px 0 35px; }
+
+.box-upper-shadow {
+  -webkit-box-shadow: 0px -5px 18px -9px #7a7a7a;
+  -moz-box-shadow: 0px -5px 18px -9px #7a7a7a;
+  box-shadow: 0px -5px 18px -9px #7a7a7a; }
+
+.text-lower {
+  text-transform: lowercase !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

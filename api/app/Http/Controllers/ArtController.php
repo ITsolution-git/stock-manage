@@ -348,6 +348,7 @@ class ArtController extends Controller {
                     foreach ($getColors as $value) 
                     {
                         $value->color_display_name = $color_array[$value->color_name];
+                        $value->thread_display_name = !empty($value->thread_color)? $color_array[$value->thread_color]:'';
                     }
                 }
             
