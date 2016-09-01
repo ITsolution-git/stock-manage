@@ -1739,7 +1739,7 @@ class OrderController extends Controller {
         $result_api = $this->api->getApiCredential($post['company_id'],'api.sns','ss_detail');
        
         $credential = $result_api[0]->username.":".$result_api[0]->password;
-        print_r($credential);exit;
+        
  
         $curl = curl_init('https://api.ssactivewear.com/v2/orders/');                                                                      
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
