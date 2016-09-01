@@ -147,12 +147,35 @@
                                     if( !angular.isUndefined(id))
                                     {
                                         $('#remove_color').val('');
-                                        $scope.initial_add_color.push({id:id,color_name:color_name});
+                                        $scope.initial_add_color.push({id:id,color_name:color_name,thread_id:'',inq:''});
+                                    }
+                                    //console.log($scope.initial_add_color);
+                                }
+                                $scope.add_thread = function(thread_id,thread_color,key)
+                                {
+                                    if( !angular.isUndefined(key) && !angular.isUndefined(thread_id) && !angular.isUndefined(thread_color))
+                                    {
+                                        $scope.initial_add_color[key].thread_id = thread_id;
+                                        $scope.initial_add_color[key].thread_color = thread_color;
+                                    }
+                                }
+                                $scope.add_inq = function(inq,key)
+                                {
+                                    if( !angular.isUndefined(key) && !angular.isUndefined(inq))
+                                    {
+                                        $scope.initial_add_color[key].inq = inq;
+                                    }
+                                }
+                                $scope.change_thread = function(id,key)
+                                {
+                                    if( !angular.isUndefined(key) && !angular.isUndefined(id))
+                                    {
+                                        $scope.getColors[key].thread_color = id;
                                     }
                                 }
                                 $scope.CreateScreenset = function(alldata)
                                 {
-                                    alldata = {alldata:alldata,add_screen_color:$scope.initial_add_color,remove_screen_color:$scope.screen_id_removed};
+                                    alldata = {alldata:alldata,add_screen_color:$scope.initial_add_color,remove_screen_color:$scope.screen_id_removed,change_color:$scope.getColors};
                                     
                                     $http.post('api/public/art/create_screen',alldata).success(function(result) 
                                     {

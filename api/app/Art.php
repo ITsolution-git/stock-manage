@@ -230,12 +230,21 @@ class Art extends Model {
     		$screen_set_name = $alldata['order_id']."_".$value."_".$alldata['design_id']."_".$alldata['screen_width']; 
     	}
     	$result = DB::table('artjob_screensets')->where('id','=',$alldata['id'])->update(array('screen_set'=>$screen_set_name,'screen_active'=>'1','frame_size'=>$alldata['frame_size'],'screen_location'=>$alldata['screen_location'],'line_per_inch'=>$alldata['line_per_inch'],'screen_date'=>date('Y-m-d'),'screen_width'=>$alldata['screen_width'],'screen_height'=>$alldata['screen_height']));
-
+    	$sort=1;
     	if(!empty($post['add_screen_color']))
     	{
     		foreach ($post['add_screen_color'] as $key=>$value) 
     		{
-    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'head_location'=>$key+1));
+    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'thread_color'=>$value['thread_id'],'inq'=>$value['inq'],'head_location'=>$key+1));
+    			$sort=$key+1;
+    		}
+    	}
+    	if(!empty($post['change_color']))
+    	{
+    		foreach ($post['change_color'] as $key=>$value) 
+    		{
+    			$result = $this->common->UpdateTableRecords('artjob_screencolors',array('id'=>$value['id']),array('thread_color'=>$value['thread_color'],'inq'=>$value['inq'],'head_location'=>$sort));
+    			$sort++;
     		}
     	}
     	if(!empty($post['remove_screen_color']))
