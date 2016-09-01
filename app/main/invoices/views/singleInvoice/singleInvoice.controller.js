@@ -60,7 +60,7 @@
                 $mdDialog.hide();
                 if(result != '0')
                 {
-                    notifyService.notify('success',"Payment added Successfully");
+                    //notifyService.notify('success',"Payment added Successfully");
                     $mdDialog.show({
                 controller: 'linktoPayController',
                 controllerAs: 'vm',
@@ -76,7 +76,7 @@
                 }
                 else
                 {
-                    notifyService.notify('error',"Payment not added");
+                    notifyService.notify('error',"Please try again");
                 }
             });
         }
@@ -128,8 +128,8 @@
 
         $scope.pay_cash = function(amount)
         {
-            if(amount == undefined) {
-                var data = {"status": "error", "message": "Amount should not be blank"}
+            if((amount == undefined) || (amount.cashAmount==0) || (amount.cashAmount=0.00)) {
+                var data = {"status": "error", "message": "Amount should not be blank or 0"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
@@ -164,6 +164,7 @@
                 {
                     notifyService.notify('error',"Payment not added");
                 }
+                $scope.pay.cashAmount = null;
                 return false;
                 
             });
@@ -193,8 +194,8 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.amount == undefined) {
-                var data = {"status": "error", "message": "Please enter Amount for Payment"}
+            if((paymentData.amount == undefined) || (paymentData.amount==0) || (paymentData.amount=0.00)) {
+                var data = {"status": "error", "message": "Amount should not be blank or 0"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }

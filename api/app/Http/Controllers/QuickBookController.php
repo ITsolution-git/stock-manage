@@ -948,6 +948,10 @@ class QuickBookController extends Controller
 
         $company_data = $this->common->GetTableRecords('company_info',array('user_id' => $company_id),array());
         $result = $this->GetAllclientInovices($company_id);
+        if(count($result)<1){
+            $data = array("success"=>0,'message' =>"No Payments are there to update.");
+            return response()->json(['data'=>$data]);
+        }
 
         foreach ($result as $key => $all_data) 
         {
