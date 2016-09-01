@@ -69,7 +69,7 @@
                       md-selected-item=""
                       md-search-text-change=""
                       md-search-text="allcolor.color_name"
-                      md-selected-item-change="add_color(item.id,item.name)"
+                      md-selected-item-change="add_color(item.id,item.name,'color_name')"
                       md-items="item in querySearch(allcolor.color_name)"
                       md-item-text="item.name"
                       md-min-length="1"
@@ -83,12 +83,91 @@
                       </md-not-found>
                   </md-autocomplete>
 
-            <div class="mrg10-B">Color :</div>
+            
+
+            <table width="100%">
+                  <tr>
+                     <th width="35%">Color</th>
+                     <th width="35%"> Pantone </th>
+                     <th width="20%">Inq Type</th>
+                     <th width="10%"></th>
+                  </tr>
+            </table>  
             <div ng-repeat="(key,sc) in initial_add_color">
-              <div class="mrg5-B"><span class="gray-text">{{sc.color_name}}</span><a href="#" ng-click="remove_added($index)" class="icon icon-close f-red mrg10-L"></a></div>
+              <div class="mrg5-B">
+                <table>
+                  <tr>
+                    <td width="35%"><span class="gray-text">{{sc.color_name}}</span></td>
+                    <td width="35%">    
+                        <md-autocomplete
+                              ng-disabled="isDisabled"
+                              md-no-cache="noCache"
+                              md-selected-item="item1.name"
+                              md-search-text-change=""
+                              md-search-text="sc.thread_color"
+                              md-selected-item-change="add_thread(item1.id,item1.name,key)"
+                              md-items="item1 in querySearch(sc.thread_color)"
+                              md-item-text="item1.name"
+                              md-min-length="1"
+                              ng-click=""
+                              ng-blur=""
+                              <md-item-template>
+                                  <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item1.name}}</span>
+                              </md-item-template>
+                              <md-not-found>
+                                  No Color found.
+                              </md-not-found>
+                          </md-autocomplete>
+                      </td>
+                      <td width="20%">
+                          <md-input-container class="md-block first-box settings-margin-0">
+                              <input placeholder="Inq Type" name="inq" ng-model="sc.inq" ui-event="{ change : 'add_inq($event.target.value,key)' }">
+                          </md-input-container>
+                      </td>
+                      <td width="10%"><a href="#" ng-click="remove_added($index)" class="icon icon-close f-red mrg10-L"></a></td>
+                  </tr>
+                </table>  
+              </div>
             </div>
-            <div ng-repeat="sc in getColors">
-              <div class="mrg5-B"><span class="gray-text">{{sc.color_display_name}}</span><a href="#" ng-click="remove_selected($index,sc.id)" class="icon icon-close f-red mrg10-L"></a></div>
+            <div ng-repeat="(key,sc) in getColors">
+              <div class="mrg5-B">
+              
+
+              <table>
+                  <tr>
+                    <td width="35%"><span class="gray-text">{{sc.color_display_name}}</span></td>
+                    <td width="35%">    
+                        <md-autocomplete
+                              ng-disabled="isDisabled"
+                              md-no-cache="noCache"
+                              md-selected-item="thread.name"
+                              md-search-text-change="sc.thread_display_name"
+                              md-search-text="sc.thread_display_name"
+                              md-selected-item-change="change_thread(thread.id,key)"
+                              md-items="thread in querySearch(sc.thread_display_name)"
+                              md-item-text="thread.name"
+                              md-min-length="1"
+                              ng-click=""
+                              ng-blur=""
+                              <md-item-template>
+                                  <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{thread.name}}</span>
+                              </md-item-template>
+                              <md-not-found>
+                                  No Color found.
+                              </md-not-found>
+                          </md-autocomplete>
+                      </td>
+                      <td width="20%">
+                          <md-input-container class="md-block first-box settings-margin-0">
+                              <input placeholder="Inq Type" name="inq" ng-model="sc.inq" >
+                          </md-input-container>
+                      </td>
+                      <td width="10%"><a href="#" ng-click="remove_selected($index,sc.id)" class="icon icon-close f-red mrg10-L"></a></td>
+                  </tr>
+                </table>  
+
+
+              </div>
             </div>
         </div>
     </div>
