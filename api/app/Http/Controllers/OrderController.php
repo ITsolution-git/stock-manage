@@ -1973,7 +1973,7 @@ class OrderController extends Controller {
             ->get();
 
         $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
-        $amt=array('total_payments' => $retArray[0]->totalAmount, 'balance_due' => $balance_due);
+        $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
 
         $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
