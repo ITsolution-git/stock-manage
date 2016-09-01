@@ -128,7 +128,7 @@
 
         $scope.pay_cash = function(amount)
         {
-            if((amount == undefined) || (amount.cashAmount==0) || (amount.cashAmount=0.00)) {
+            if((amount == undefined) || (amount.cashAmount==0) || (amount.cashAmount==0.00)) {
                 var data = {"status": "error", "message": "Amount should not be blank or 0"}
                 notifyService.notify(data.status, data.message);
                 return false;
