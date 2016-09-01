@@ -460,13 +460,21 @@ class QuickBookController extends Controller
          $Invoice->setTxnDate(date('Y-m-d'));
 
          if($payment == '15') {
-            $Invoice->setDueDate(date('Y-m-d'), strtotime("+15 days"));
+
+            $setDate  = date('Y-m-d', strtotime("+15 days"));
+           
+            $Invoice->setDueDate($setDate);
+
          } else if($payment == '30') {
-            $Invoice->setDueDate(date('Y-m-d'), strtotime("+30 days"));
+
+            $setDate  = date('Y-m-d', strtotime("+30 days"));
+            $Invoice->setDueDate($setDate);
+
          } else {
             $Invoice->setDueDate(date('Y-m-d'));
          }
          
+
 
         foreach ($invoiceArray as $key => $value) {
 

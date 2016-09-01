@@ -104,6 +104,7 @@
                                 combine_array_id.company_id = sessionService.get('company_id');
                                 combine_array_id.client_id = client_id;
                                 combine_array_id.invoice_id = $scope.invoice_id;
+                                combine_array_id.payment = $scope.payment_terms;
                                 
                                $("#ajax_loader").show();
                                
