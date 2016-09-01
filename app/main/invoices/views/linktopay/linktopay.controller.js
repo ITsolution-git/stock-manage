@@ -42,7 +42,7 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if((paymentData.amount == undefined) || (paymentData.amount==0) || (paymentData.amount=0.00)) {
+            if((paymentData.amount == undefined) || (paymentData.amount==0) || (paymentData.amount==0.00)) {
                 var data = {"status": "error", "message": "Amount should not be blank or 0"}
                 notifyService.notify(data.status, data.message);
                 return false;
