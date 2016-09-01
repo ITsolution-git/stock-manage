@@ -1734,10 +1734,12 @@ class OrderController extends Controller {
                                           "lines" =>  $lines);
 
        $order_json = json_encode($order_main_array);
+       
 
         $result_api = $this->api->getApiCredential($post['company_id'],'api.sns','ss_detail');
        
         $credential = $result_api[0]->username.":".$result_api[0]->password;
+        
  
         $curl = curl_init('https://api.ssactivewear.com/v2/orders/');                                                                      
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
@@ -1790,6 +1792,7 @@ class OrderController extends Controller {
      public function addInvoice()
      {
         $post = Input::all();
+        
 
         $result = $this->client->GetclientDetail($post['client_id']);
         $result_qbProductId = $this->company->getQBAPI($post['company_id']);
@@ -1812,7 +1815,7 @@ class OrderController extends Controller {
           
           $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
           $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment']);
           
           
           if($result_quickbook_invoice == '1') {
@@ -1826,7 +1829,7 @@ class OrderController extends Controller {
 
         } else {
           
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment']);
           
           if($result_quickbook_invoice == '1') {
             $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");
@@ -1939,7 +1942,18 @@ class OrderController extends Controller {
     public function createInvoice()
     {
         $post = Input::all();
-        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'));
+
+         if($post['payment'] == '15') {
+            $setDate  = date('Y-m-d', strtotime("+15 days"));
+
+         } else if($post['payment'] == '30') {
+            $setDate  = date('Y-m-d', strtotime("+30 days"));
+
+         } else {
+           $setDate  = date('Y-m-d');
+         }
+         
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate);
         $id = $this->common->InsertRecords('invoice',$orderData);
 
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());

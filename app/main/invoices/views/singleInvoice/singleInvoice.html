@@ -23,7 +23,14 @@
             <div layout="column" flex="40">
                 <div class="font-14 mrg5-B text-bold-right">Order Acknowledgement # {{allData.order_data[0].id}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Created on: {{allData.invoice_data[0].created_date}}</div>
+                <div class="font-14 mrg5-B text-bold-right">Due Date: {{allData.invoice_data[0].payment_due_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Job Name: {{allData.order_data[0].name}}</div>
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Order Status</label>
+                    <md-select ng-model="allData.order_data[0].approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',allData.order_data[0].approval_id,allData.order_data[0].id)" >
+                        <md-option ng-selected="allData.order_data[0].approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                    </md-select>
+                </md-input-container>
             </div>            
         </div>
 
@@ -70,14 +77,13 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="shipping in allData.shipping_detail">
-                        <td>{{shippping.order_id}}</td>
+                        <td>{{allData.order_data[0].id}}</td>
                         <td>{{shipping.shipping_by}}</td>
                         <td class="text-center">Pending</td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 0"></td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 1">UPS</td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 2">FEDEX</td>
-                        <td ng-if="shipping.in_hands_by == '0000-00-00'" class="text-center"></td>
-                        <td ng-if="shipping.in_hands_by != '0000-00-00'" class="text-center">{{shipping.in_hands_by}}</td>
+                        <td class="text-center">{{shipping.in_hands_by}}</td>
                     </tr>                    
                 </tbody>
             </table>
@@ -101,7 +107,7 @@
                             <td height="72">{{position.position_name}}</td>
                             <td>{{position.placement_type_name}}</td>
                             <td class="text-center">{{position.qnty}}</td>
-                            <td class="text-center">{{position.price_id}}</td>
+                            <td class="text-center">{{position.total_price | currency : $ : 2}}</td>
                             <td class="text-center" ng-if="position.position_image != ''"><img src="{{position.position_image}}" title="Position Image" alt="Position Image" height="40" width="40" /></td>
                             <td class="text-center" ng-if="position.position_image == ''"></td>
                         </tr>
@@ -126,7 +132,7 @@
                             <td class="text-center">{{product.color_name}}</td>
                             <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
                             <td class="text-center">{{product.total_qnty}}</td>
-                            <td class="text-center">{{product.total_price}}</td>
+                            <td class="text-center">{{product.total_price | currency : $ : 2}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,27 +149,27 @@
                                 </div>
                                 <div ng-if="position.discharge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding">Discharge Ink @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].discharge}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].discharge | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.foil_qnty > 0"  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding">Foil @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].foil}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].foil | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.ink_charge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding">Ink Charge @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].ink_changes}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].ink_changes | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.number_on_dark_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding"># on Dark @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_dark}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_dark | currency : $ : 2}}</span>
                                 </div>
 
                                 <div ng-if="position.number_on_light_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding"># on Light @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_light}}</span>
+                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_light | currency : $ : 2}}</span>
                                 </div>
                             </div>
                             <div>&nbsp;</div>
@@ -180,7 +186,7 @@
                                 </div>
                                 <div ng-repeat="oitem in product.order_items" ng-if="oitem.selected > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding">{{oitem.item}}</div>
-                                    <span class="ng-binding">${{oitem.charge}}</span>
+                                    <span class="ng-binding">{{oitem.charge | currency : $ : 2}}</span>
                                 </div>
                             </div>
                             <div>&nbsp;</div>
@@ -211,7 +217,11 @@
                                     <tbody> 
                                         <tr ng-repeat="pmntHis in siData" class="cursor-p">
                                             <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
+<<<<<<< HEAD
                                             <td>{{ pmntHis.payment_amount | currency : $ : 2 }}</td>
+=======
+                                            <td>{{ pmntHis.payment_amount | currency : $ : 2}}</td>
+>>>>>>> e7e3caf2a12729d9c8c9c9614482a7296af2f072
                                             <td>{{ pmntHis.payment_method }}</td>
                                             <td class="text-center"><a href="#" ng-click="deleteHistory(pmntHis.payment_id)" class="icon icon-cancel font-19 f-red"></a></td>
                                         </tr>                    
@@ -358,46 +368,46 @@
                 <md-card-content class="recap pd0">
                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Screens</div>
-                        <span class="ng-binding">${{allData.order_data[0].screen_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].screen_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Press Setup</div>
-                        <span class="ng-binding">${{allData.order_data[0].press_setup_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].press_setup_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Digitize</div>
-                        <span class="ng-binding">${{allData.order_data[0].digitize_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].digitize_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Art Work</div>
-                        <span class="ng-binding">${{allData.order_data[0].artwork_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].artwork_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Seperations</div>
-                        <span class="ng-binding">${{allData.order_data[0].separations_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].separations_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Rush</div>
-                        <span class="ng-binding">${{allData.order_data[0].rush_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].rush_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Distribution</div>
-                        <span class="ng-binding">${{allData.order_data[0].distribution_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].distribution_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Shipping</div>
-                        <span class="ng-binding">${{allData.order_data[0].shipping_charge}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].shipping_charge | currency : $ : 2}}</span> 
                     </div>
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Discount</div>
-                        <span class="ng-binding">${{allData.order_data[0].discount}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].discount | currency : $ : 2}}</span>
                     </div>
 
                     <!--<div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
@@ -407,7 +417,7 @@
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Order Total</div>
-                        <span class="ng-binding">${{allData.order_data[0].order_total}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].order_total | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
@@ -417,22 +427,22 @@
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Tax</div>
-                        <span class="ng-binding">${{allData.order_data[0].tax}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].tax | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Grand Total</div>
-                        <span class="ng-binding">${{allData.order_data[0].grand_total}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].grand_total | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">${{allData.order_data[0].total_payments}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].total_payments | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Balance Due</div>
-                        <span class="ng-binding">${{allData.order_data[0].balance_due}}</span>
+                        <span class="ng-binding">{{allData.order_data[0].balance_due | currency : $ : 2}}</span>
                     </div>
                 </md-card-content>
             </md-card>

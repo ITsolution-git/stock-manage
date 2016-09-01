@@ -65,7 +65,7 @@
 
                             <tr>
                              <td>Price:</td>
-                             <td>{{order_design_position.total_price}}</td>
+                             <td>{{order_design_position.total_price | currency : $ : 2}}</td>
                             </tr> 
                         </table>
                         
@@ -411,7 +411,7 @@
                             <div layout="column" flex="35">
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Average Garment Cost</div>
-                                    <div class="h5 font-14 ">${{product.avg_garment_cost}}</div>
+                                    <div class="h5 font-14 ">{{product.avg_garment_cost | currency : $ : 2}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': order_number != '' || is_complete == '1'}">
                                     <div class="h4">Markup Default {{product.markup_default}}%</div>
@@ -425,14 +425,14 @@
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Average Garment Price</div>
-                                    <div class="h5 font-14">${{product.avg_garment_price}}</div>
+                                    <div class="h5 font-14">{{product.avg_garment_price | currency : $ : 2}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h5">&nbsp;</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Print Charges</div>
-                                    <div class="h5 font-14">${{product.print_charges}}</div>
+                                    <div class="h5 font-14">{{product.print_charges | currency : $ : 2}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h5">&nbsp;</div>
@@ -460,11 +460,11 @@
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Per Item</div>
-                                        <div class="h5 font-14">${{product.total_line_charge}}</div>
+                                        <div class="h5 font-14">{{product.total_line_charge | currency : $ : 2}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Sale Total</div>
-                                        <div class="h5 font-14">${{product.sales_total}}</div>
+                                        <div class="h5 font-14">{{product.sales_total | currency : $ : 2}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4"></div>
@@ -487,7 +487,7 @@
                                     <md-card-content class="pad0 package-height scrollable" ms-scroll>
                                         <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product)">
                                             <div>{{order_item.item}}</div>
-                                            <span>${{order_item.charge}}</span>
+                                            <span>{{order_item.charge | currency : $ : 2}}</span>
                                         </div>
                                     </md-card-content>
                                 </md-card>
@@ -525,10 +525,16 @@
         </md-dialog-actions>
 </div>
 <div class="footer border-t-grey" layout-padding layout="row">
-    <div flex="15 h4 text-semibold"><span>Total Quantity</span></div>
+    <div flex="15"><span>Total Quantity</span></div>
     <div flex="15"><span>{{total_product}}</span></div>
-    <div flex="15 h4 text-semibold"><span>Screen Charges</span></div>
-    <div flex="15"><span>${{total_screen_fees}}</span></div>
-    <div flex="20 h4 text-semibold"><span>Grand Total</span></div>
-    <div flex="20"><span>${{total_price}}</span></div>
+    <div flex="15"><span>Screen Charges</span></div>
+    <div flex="15"><span>{{total_screen_fees | currency : $ : 2}}</span></div>
+    <div flex="15"><span>Product Charges</span></div>
+    <div flex="15"><span>{{total_price | currency : $ : 2}}</span></div>
+    <div flex="15"><span>Order Design</span></div>
+    <div flex="15"><span>{{ order.order_line_total | currency : $ : 2}}</span></div>
+    <div flex="15"><span>Order Charges</span></div>
+    <div flex="15"><span>{{ order.order_charges_total | currency : $ : 2}}</span></div>
+    <div flex="15"><span>Order Sales</span></div>
+    <div flex="15"><span>{{ order.order_total | currency : $ : 2}}</span></div>
 </div>

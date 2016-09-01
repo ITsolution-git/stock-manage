@@ -152,7 +152,7 @@ class Art extends Model {
             $client_filter = $post['filter']['client'];
         }
         $admindata = DB::table('order_design_position as odp')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
 					->join('artjob_screensets as asc','asc.positions','=','odp.id')
 					->join('order_design as od','od.id','=','odp.design_id')
 					->join('orders as ord','ord.id','=','od.order_id')
@@ -230,12 +230,21 @@ class Art extends Model {
     		$screen_set_name = $alldata['order_id']."_".$value."_".$alldata['design_id']."_".$alldata['screen_width']; 
     	}
     	$result = DB::table('artjob_screensets')->where('id','=',$alldata['id'])->update(array('screen_set'=>$screen_set_name,'screen_active'=>'1','frame_size'=>$alldata['frame_size'],'screen_location'=>$alldata['screen_location'],'line_per_inch'=>$alldata['line_per_inch'],'screen_date'=>date('Y-m-d'),'screen_width'=>$alldata['screen_width'],'screen_height'=>$alldata['screen_height']));
-
+    	$sort=1;
     	if(!empty($post['add_screen_color']))
     	{
     		foreach ($post['add_screen_color'] as $key=>$value) 
     		{
-    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'head_location'=>$key+1));
+    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'thread_color'=>$value['thread_id'],'inq'=>$value['inq'],'head_location'=>$key+1));
+    			$sort=$key+1;
+    		}
+    	}
+    	if(!empty($post['change_color']))
+    	{
+    		foreach ($post['change_color'] as $key=>$value) 
+    		{
+    			$result = $this->common->UpdateTableRecords('artjob_screencolors',array('id'=>$value['id']),array('thread_color'=>$value['thread_color'],'inq'=>$value['inq'],'head_location'=>$sort));
+    			$sort++;
     		}
     	}
     	if(!empty($post['remove_screen_color']))
@@ -364,8 +373,10 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email')
+				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name')
 				->join('orders as or','ass.order_id','=','or.id')
+				->join('order_design_position as odp','odp.id','=','ass.positions')
+				->join('order_design as od','od.id','=','odp.design_id')
 				->join('art as art','art.order_id','=','or.id')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->leftjoin('color as col','col.id','=','acol.color_name')
