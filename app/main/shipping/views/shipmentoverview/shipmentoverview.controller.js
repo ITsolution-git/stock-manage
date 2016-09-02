@@ -65,7 +65,6 @@
             var form = document.createElement("form");
             form.action = 'api/public/shipping/createLabel';
             form.method = 'post';
-            form.target = target || "_blank";
             form.style.display = 'none';
 
             var shipping = document.createElement('input');
@@ -75,8 +74,6 @@
 
             document.body.appendChild(form);
             form.submit();
-
-            $scope.getShippingOverview();
         }
 
         $scope.printLAbel = function()

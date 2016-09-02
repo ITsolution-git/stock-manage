@@ -7,6 +7,7 @@ require_once(app_path() . '/constants.php');
 use App\Product;
 use App\Common;
 use App\Order;
+use App\Shipping;
 use App\Api;
 use Input;
 use Illuminate\Support\Facades\Session;
@@ -24,13 +25,13 @@ class ProductController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Product $product,Common $common,Api $api,Order $order) {
+    public function __construct(Product $product,Common $common,Api $api,Order $order,Shipping $shipping) {
 
         $this->product = $product;
         $this->common = $common;
         $this->api = $api;
         $this->order = $order;
-       
+        $this->shipping = $shipping;
     }
 
 /**
@@ -462,7 +463,7 @@ public function create_dir($dir_path) {
 
                 $product_name = strtolower($product_detail[0]->name);
 
-                if (strpos($product_name,$find) !== false) {
+                if (strpos($product_name,$find) !== false || $product->is_supply > 0) {
                     $supplied = 1;
                 }
 
@@ -871,7 +872,18 @@ public function create_dir($dir_path) {
                                 $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
                                 $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
 
-        $order_total = $design_product_total + $order_charges_total - $order_data[0]->discount;
+        $shipping = $this->shipping->getTotalShipCharge($order_id);
+
+        if($shipping[0]->total > 0)
+        {
+            $item_shipping_charge = $shipping[0]->total;
+        }
+        else
+        {
+            $item_shipping_charge = 0;            
+        }
+
+        $order_total = $design_product_total + $order_charges_total + $item_shipping_charge - $order_data[0]->discount;
         $tax = $order_total * $order_data[0]->tax_rate/100;
         $grand_total = $order_total + $tax;
         $balance_due = $grand_total - $order_data[0]->total_payments;
@@ -881,6 +893,7 @@ public function create_dir($dir_path) {
                                 'press_setup_charge' => $total_press_setup,
                                 'order_line_total' => round($design_product_total,2),
                                 'order_total' => round($order_total,2),
+                                'item_ship_charge' => round($item_shipping_charge,2),
                                 'tax' => round($tax,2),
                                 'grand_total' => round($grand_total,2),
                                 'balance_due' => round($balance_due,2),

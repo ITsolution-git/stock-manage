@@ -326,4 +326,17 @@ class Shipping extends Model {
 
         return $shippingBoxes;
     }
+
+    public function getTotalShipCharge($order_id)
+    {
+        $listArr = [DB::raw('SUM(cost_to_ship) as total')];
+        $where = ['order_id' => $order_id];
+
+        $result = DB::table('shipping')
+                ->select($listArr)
+                ->where($where)
+                ->get();
+
+        return $result;
+    }
 }
