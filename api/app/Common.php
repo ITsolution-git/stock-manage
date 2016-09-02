@@ -428,9 +428,17 @@ class Common extends Model {
         DB::table($table)->truncate();
     }
 
-    public function checkImageExist($path)
+    public function checkImageExist($path,$image='')
     {
-        return file_exists(FILEUPLOAD.$path)?UPLOAD_PATH.$path:NOIMAGE;
+        if(empty($image))
+        {
+            return NOIMAGE;
+        }
+        else
+        {
+            return file_exists(FILEUPLOAD.$path.$image)?UPLOAD_PATH.$path.$image:NOIMAGE;
+        }
+        
     }
     public function GetCompanyUsers($company_id)
     {
