@@ -688,6 +688,7 @@
                         $scope.designDetail();
                         $scope.designPosition();
                         $scope.designProductData();
+                        $scope.orderDetail();
                     }
                     else
                     {
