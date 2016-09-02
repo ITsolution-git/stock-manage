@@ -133,6 +133,7 @@ class PaymentController extends Controller {
 
       $order = new AnetAPI\OrderType();
       $order->setDescription("Payment for Order ID: ".$order_id);
+      $order->setInvoiceNumber("INV - ".$order_id);
 
       //create a transaction
       $transactionRequestType = new AnetAPI\TransactionRequestType();
@@ -140,6 +141,26 @@ class PaymentController extends Controller {
       $transactionRequestType->setAmount($amount);
       $transactionRequestType->setOrder($order);
       $transactionRequestType->setPayment($paymentOne);
+
+        $retArray = DB::table('payment_history as p')
+              ->select('c.client_company', 'c.client_id', 'c.billing_email')
+              ->leftJoin('orders as o','o.id','=',"p.order_id")
+              ->leftJoin('client as c','o.client_id','=',"o.client_id")
+              ->where('p.order_id','=',$order_id)
+              ->where('p.is_delete','=',1)
+              ->get();
+
+      $billto = new AnetAPI\CustomerAddressType();
+      $billto->setFirstName($post['creditFname']);
+      $billto->setLastName($post['creditLname']);
+      $billto->setCompany($retArray[0]->client_company);
+      $billto->setAddress($post['street']);
+      $billto->setCity($post['city']);
+      $billto->setState($post['state']);
+      $billto->setZip($post['zip']);
+      $billto->setCountry("USA");
+
+      $transactionRequestType->setBillTo($billto);
       
 
       $request = new AnetAPI\CreateTransactionRequest();
@@ -165,15 +186,15 @@ class PaymentController extends Controller {
 
           $id = $this->common->InsertRecords('payment_history',$orderData);
 
-          $retArray = DB::table('payment_history as p')
+          $retArrayPmt = DB::table('payment_history as p')
             ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
             ->leftJoin('orders as o','o.id','=',"p.order_id")
             ->where('p.order_id','=',$order_id)
             ->where('p.is_delete','=',1)
             ->get();
 
-          $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
-          $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+          $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
+          $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
 
           $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
