@@ -114,7 +114,7 @@
                 {
                     $("#ajax_loader").hide();
                     //$mdDialog.hide();
-                    if(result != '0')
+                    if(result.data.success=='1')
                     {
                         /*$scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                         $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;

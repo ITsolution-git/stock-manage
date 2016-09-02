@@ -141,6 +141,26 @@ class PaymentController extends Controller {
       $transactionRequestType->setAmount($amount);
       $transactionRequestType->setOrder($order);
       $transactionRequestType->setPayment($paymentOne);
+
+        $retArray = DB::table('payment_history as p')
+              ->select('c.client_company', 'c.client_id', 'c.billing_email')
+              ->leftJoin('orders as o','o.id','=',"p.order_id")
+              ->leftJoin('client as c','o.client_id','=',"o.client_id")
+              ->where('p.order_id','=',$order_id)
+              ->where('p.is_delete','=',1)
+              ->get();
+
+      $billto = new AnetAPI\CustomerAddressType();
+      $billto->setFirstName($post['creditFname']);
+      $billto->setLastName($post['creditLname']);
+      $billto->setCompany($retArray[0]->client_company);
+      $billto->setAddress($post['street']);
+      $billto->setCity($post['city']);
+      $billto->setState($post['state']);
+      $billto->setZip($post['zip']);
+      $billto->setCountry("USA");
+
+      $transactionRequestType->setBillTo($billto);
       
       $retArray = DB::table('payment_history as p')
         ->select('c.client_company', 'c.client_id', 'c.billing_email')

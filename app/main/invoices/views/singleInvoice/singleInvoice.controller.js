@@ -66,11 +66,12 @@
 
             var combine_array_id = {};
             combine_array_id.invoice_id = invoice_id.value;
+            $("#ajax_loader").show();
 
             $http.post('api/public/order/paymentLinkToPay',combine_array_id).success(function(result) 
             {
-                $mdDialog.hide();
-                if(result != '0')
+                $("#ajax_loader").hide();
+                if(result.data.success=='1')
                 {
                     //notifyService.notify('success',"Payment added Successfully");
                     $mdDialog.show({
@@ -163,7 +164,7 @@
             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(result) 
             {
                 $("#ajax_loader").hide();
-                if(result != '0')
+                if(result.data.success=='1')
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
@@ -332,6 +333,7 @@
             UpdateArray.table ='payment_history';
             UpdateArray.data = {is_delete:0};
             UpdateArray.cond = {payment_id:payment_id};
+            $("#ajax_loader").show();
 
             $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
             {
