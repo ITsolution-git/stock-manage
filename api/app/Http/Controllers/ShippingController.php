@@ -853,7 +853,7 @@ class ShippingController extends Controller {
 
                 $response = $shipment->submitShipment();
 
-                if(isset($response) && $response['status'] == 'SUCCESS')
+                if(isset($response) && isset($response['status']) && $response['status'] == 'SUCCESS')
                 {
                     $success = 1;
                     $message = '';
