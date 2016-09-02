@@ -384,8 +384,8 @@ class ArtController extends Controller {
                     {
                         $value->color_name = $color_array[$value->color_name];
                     }
-                    $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-                    $value->mokup_logo_url = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+                    $value->mokup_image_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->mokup_image);
+                    $value->mokup_logo_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo);
 
                     if(!empty($value->thread_color))
                     {

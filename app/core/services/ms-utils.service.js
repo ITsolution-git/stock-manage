@@ -320,7 +320,7 @@ core.factory('AllConstant', AllConstant);
                   deletePermanent: 'Are you sure want to delete this record ? Clicking Ok will delete record permanently.',
                   snsImport: 'Are you sure want to import S&S data? it will take more time.',
                   pagination: 15,
-                  NoImage: base_path+'api/public/images/noimage.jpg',
+                  NoImage: base_path+'api/public/images/noimage.png',
                   NoDocument: base_path+'api/public/images/nodocument.png',
                   currentdate : $filter('date')(new Date(), 'yyyy-MM-dd'),
                   base_path:base_path

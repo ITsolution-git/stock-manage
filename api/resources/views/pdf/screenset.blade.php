@@ -15,7 +15,7 @@
 <body>
   <table >
     <tr >
-      <td>
+      <td width="30%">
           <table>
               <tr><td><b>{{$company->companyname}}</b></td></tr>
               <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
@@ -30,8 +30,8 @@
               </tr>
           </table>
       </td>
-        <td style="padding-top:0;"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td>
+        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td width="30%">
           <table>
               <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
               <tr><td align="right">{{$company->design_name}}</td></tr>
@@ -93,9 +93,9 @@
 <?php  if(($key+1)%2==0)
 { ?>
 <div style="page-break-before: always;"></div>
- <table >
+   <table >
     <tr >
-      <td>
+      <td width="30%">
           <table>
               <tr><td><b>{{$company->companyname}}</b></td></tr>
               <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
@@ -110,8 +110,8 @@
               </tr>
           </table>
       </td>
-        <td style="padding-top:0;"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td>
+        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td width="30%">
           <table>
               <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
               <tr><td align="right">{{$company->design_name}}</td></tr>
@@ -126,9 +126,9 @@
 ?>
 
 <div style="page-break-before: always;"></div>
-   <table >
+     <table >
     <tr >
-      <td>
+      <td width="30%">
           <table>
               <tr><td><b>{{$company->companyname}}</b></td></tr>
               <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
@@ -143,8 +143,8 @@
               </tr>
           </table>
       </td>
-        <td style="padding-top:0;"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td>
+        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td width="30%">
           <table>
               <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
               <tr><td align="right">{{$company->design_name}}</td></tr>

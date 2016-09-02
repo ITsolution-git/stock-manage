@@ -428,4 +428,24 @@ class Common extends Model {
         DB::table($table)->truncate();
     }
 
+    public function checkImageExist($path)
+    {
+        return file_exists(FILEUPLOAD.$path)?UPLOAD_PATH.$path:NOIMAGE;
+    }
+    public function GetCompanyUsers($company_id)
+    {
+        $whereConditions = ['usr.status' => '1','usr.is_delete' => '1','usr.parent_id' => $company_id];
+        $listArray = ['usr.id','usr.name'];
+
+        $Companyuser = DB::table('users as usr')
+                         ->Join('roles as roles', 'usr.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->where('roles.slug','<>','CA')
+                         ->where('roles.slug','<>','SA')
+                         ->orderby('usr.name','ASC')
+                         ->get();
+
+        return $Companyuser;
+    }
 }

@@ -30,8 +30,8 @@
                                     <md-card-content>
                                             
                                         <div class="form-group  m-b panel panel-default"  >
-                                              <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
-                                              <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                                              <img   ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
+                                              <!-- <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" > -->
                                           </div>
                                     </md-card-content>
                                 </md-card>
@@ -124,6 +124,8 @@
                                         <span>{{company_info.client_companytype}}</span>
                                         <div class="h5 text-semibold">Disposition:</div>
                                         <span>{{company_info.client_desposition}}</span>
+                                        <div class="h5 text-semibold">Account Manager:</div>
+                                        <span>{{company_info.account_manager_name}}</span>
                                     </md-card-content>
                                 </md-card>
                             </div>

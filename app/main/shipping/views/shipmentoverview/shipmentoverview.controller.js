@@ -65,7 +65,6 @@
             var form = document.createElement("form");
             form.action = 'api/public/shipping/createLabel';
             form.method = 'post';
-            form.target = target || "_blank";
             form.style.display = 'none';
 
             var shipping = document.createElement('input');
@@ -94,7 +93,7 @@
                 notifyService.notify('error','city is compulsory');
                 return false;
             }
-            if($scope.shipping.state == '')
+            if($scope.shipping.code == '')
             {
                 notifyService.notify('error','state is compulsory');
                 return false;
@@ -110,8 +109,10 @@
                 return false;
             }
 
+            $("#ajax_loader").show();
             $http.post('api/public/shipping/checkAddressValid',$scope.shipping).success(function(result) {
 
+                $("#ajax_loader").hide();
                 if(result.data.success == '1')
                 {
                     $scope.submitForm();

@@ -1,8 +1,8 @@
 <div class="client-profile-page">
     <div class="header md-accent-bg"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
-                 <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;"  alt=""  />
-                 <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;" >
+                 <img ng-src="{{company_info.color_url_photo}}" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;"  alt=""  />
+                 <!-- <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;" > -->
             <h1 style="margin-left: 20px;">{{company_info.client_company}}</h1>
         </div>
     </div>
