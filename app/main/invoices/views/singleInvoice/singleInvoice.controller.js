@@ -6,18 +6,30 @@
             .module('app.invoices')
             .controller('singleInvoiceController', singleInvoiceController);
     /** @ngInject */
-    function singleInvoiceController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService,$stateParams) {
+    function singleInvoiceController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService,$stateParams,$state) {
         var vm = this;
         vm.linktopay = linktopay;
 
         var invoice_data = {invoice_id:$stateParams.id,company_id :sessionService.get('company_id')};
         
         $http.get('api/public/invoice/getInvoiceDetail/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
+
+            if(result.data.success == '0') {
+                    $state.go('app.invoices');
+                } 
+
+
             $scope.allData = result.data.allData;
             $scope.brand_coordinator = sessionService.get('role_title');
         });
 
         $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
+
+            if(result.data.success == '0') {
+                    $state.go('app.invoices');
+                } 
+
+                
             $scope.siData = result.data.allData;
         });
 

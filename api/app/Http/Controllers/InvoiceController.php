@@ -92,6 +92,18 @@ class InvoiceController extends Controller {
         $retutn_arr = array();
         
         $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+
+          if(empty($invoice_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+
         $order_id = $invoice_data[0]->order_id;
 
         $retutn_arr['invoice_data'] = $invoice_data;
@@ -106,7 +118,20 @@ class InvoiceController extends Controller {
             $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
         }
 
-        $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
+        $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+
+
+         if(empty($order_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+
         $retutn_arr['company_data'] = $this->common->getCompanyDetail($company_id);
 
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
@@ -195,6 +220,18 @@ class InvoiceController extends Controller {
         $retutn_arr = array();
         
         $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+
+         if(empty($invoice_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+        
         $order_id = $invoice_data[0]->order_id;
 
         $retArray = DB::table('payment_history')
