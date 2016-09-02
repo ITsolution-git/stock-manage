@@ -67,9 +67,6 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.suite != undefined) {
-                combine_array_id.suite = paymentData.suite;
-            }
             if(paymentData.city == undefined) {
                 var data = {"status": "error", "message": "Please enter City"}
                 notifyService.notify(data.status, data.message);
@@ -96,6 +93,7 @@
             combine_array_id.amount = paymentData.amount;
 
             combine_array_id.street = paymentData.street;
+            combine_array_id.suite = paymentData.suite;
             combine_array_id.city = paymentData.city;
             combine_array_id.state = paymentData.state;
             combine_array_id.zip = paymentData.zip;
