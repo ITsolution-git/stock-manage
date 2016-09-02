@@ -143,7 +143,7 @@
                                     </div>
                                     <div layout="row" flex="20" layout-wrap>
                                         <md-card-content layout="column" layout-padding class="min-height">
-                                            <img  ng-if="sets.mokup_logo" ng-src="{{sets.mokup_logo_url}}" alt="" style="width:65%"  class="popup-image"/>
+                                            <img   ng-src="{{sets.mokup_logo_url}}" alt="" style="width:65%"  class="popup-image"/>
                                         </md-card-content>
                                     </div>
                                 
@@ -204,13 +204,13 @@
                          </md-card-header>
             <md-card-content ng-click="ImagePopup('mokup_image','art','art',ScreenSets[0].mokup_image_url,'order_id',ScreenSets[0].order_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
                 
-                <img  ng-if="ScreenSets[0].mokup_image" ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
+                <img   ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
                          
-                <table class="uploadfile" ng-show="ScreenSets[0].mokup_image == ''" >
+                <!-- <table class="uploadfile" ng-show="ScreenSets[0].mokup_image == ''" >
                         <tr>
                             <td><span class="icon icon-plus font-50"></span></td>
                         </tr>
-                </table>
+                </table> -->
             </md-card-content>
         </md-card> 
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
