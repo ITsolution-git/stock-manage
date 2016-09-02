@@ -468,13 +468,14 @@ class ArtController extends Controller {
     {
 
         $screenArray= json_decode($_POST['art']);
-        
+        // echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
         if(count($screenArray)>0)
         {
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
+            
             if(!empty($pdf_data[0]))
             {
-                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+                $email_array = explode(",",$screenArray->email);
                 $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
@@ -487,12 +488,14 @@ class ArtController extends Controller {
                 $filename = $file_path."/". $pdf_url;
                 PDF::Output($filename,'F');
 
-                if(!empty($screenArray->mail) && $screenArray->mail=='1' && !empty($pdf_data[0][0]->billing_email))
+                if(!empty($screenArray->flag) && $screenArray->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
-                    Mail::send('emails.artapproval', ['email'=>$pdf_data[0][0]->billing_email], function($message) use ($pdf_data,$filename)
+
+                    Mail::send('emails.artapproval', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
                     {
-                         $message->to($pdf_data[0][0]->billing_email)->subject('Art Approval for the order '.$pdf_data[0][0]->order_name);
-                         $message->attach($filename);
+                        $message->to($email_array);
+                        $message->subject('Art Approval for the order '.$pdf_data[0][0]->order_name);
+                        $message->attach($filename);
                     });
                 }
 
