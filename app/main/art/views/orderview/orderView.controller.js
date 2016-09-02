@@ -12,6 +12,7 @@
         var vm = this;
         vm.createNewScreen = createNewScreen;
         vm.generateArtForm = generateArtForm;
+        //vm.openClientEmailPopup = openClientEmailPopup;
         $scope.company_id = sessionService.get('company_id');
         $scope.order_id = $stateParams.id;
 
@@ -219,6 +220,59 @@
                 onRemoving : $scope.GetOrderScreenSet
             });
         }
+        $scope.openClientEmailPopup = function(ev)
+        {
+            $mdDialog.show({
+                controller: function ($scope, params)
+                {
+                    $scope.mail=params.ScreenSets[0].billing_email;
+                    $scope.company_id=params.company_id;
+                    $scope.order_id=params.order_id;
+                    //console.log($scope.mail);
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    }
+                    $scope.printPdf=function(flag,email)
+                    {
+                        $mdDialog.hide();
+                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email}
+                        if(flag=='1')
+                        {
+                            var k = confirm("Do you want to send Art approval PDF to client?");
+                            if(k==false)
+                            {
+                                return false;
+                            }
+                        }
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/art/ArtApprovalPDF';
+                        form.method = 'post';
+                        form.target = target || "_blank";
+                        form.style.display = 'none';
+
+                        var input_screenset = document.createElement('input');
+                        input_screenset.name = 'art';
+                        input_screenset.setAttribute('value', JSON.stringify(pass_array));
+                        form.appendChild(input_screenset);
+
+                        document.body.appendChild(form);
+                        form.submit();  
+
+                    };
+                },
+                controllerAs: 'vm',
+                templateUrl: 'app/main/art/dialogs/EmailPopup/EmailPopup.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                }
+            });
+        }
         function generateArtForm(ev, settings) {
             $mdDialog.show({
                  controller: function ($scope, params){
@@ -251,33 +305,7 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
-        $scope.printPdf=function(mail)
-        {
-            
-            var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,mail:mail}
-            if(mail=='1')
-            {
-                var k = confirm("Do you want to send Art approval PDF to client?");
-                if(k==false)
-                {
-                    return false;
-                }
-            }
-            var target;
-            var form = document.createElement("form");
-            form.action = 'api/public/art/ArtApprovalPDF';
-            form.method = 'post';
-            form.target = target || "_blank";
-            form.style.display = 'none';
-
-            var input_screenset = document.createElement('input');
-            input_screenset.name = 'art';
-            input_screenset.setAttribute('value', JSON.stringify(pass_array));
-            form.appendChild(input_screenset);
-
-            document.body.appendChild(form);
-            form.submit();  
-        };
+       
 
         $scope.UpdateTableField = function(field_value,order_id)
         {

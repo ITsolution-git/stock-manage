@@ -402,7 +402,7 @@ class Art extends Model {
 		{
 				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->mokup_image);
 				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo);
-				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->companyphoto);
+				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto);
 
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$temp[$value->screen_id][] = $value;
@@ -445,7 +445,7 @@ class Art extends Model {
 			{
 				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->mokup_image);
 				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo);
-				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/".$value->companyphoto);
+				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto);
 
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$color[$value->color_id] = $value;
