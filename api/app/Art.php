@@ -101,8 +101,15 @@ class Art extends Model {
 			foreach ($query as $key => $value) 
 			{
 				$value->created_date = date("m/d/Y",strtotime($value->created_date));
-				$value->mokup_logo_url  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
-				$value->mokup_image_url  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
+
+				$mokupImage_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_image;
+				$value->mokup_image_url  = file_exists(FILEUPLOAD.$mokupImage_path)?UPLOAD_PATH.$mokupImage_path:NOIMAGE;
+				
+				$mokupLogo_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo;
+				$value->mokup_logo_url  = file_exists(FILEUPLOAD.$mokupLogo_path)?UPLOAD_PATH.$mokupLogo_path:NOIMAGE;
+
+				//$value->mokup_logo_url  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+				//$value->mokup_image_url  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
 			}
 		}
 		return $query;
@@ -131,8 +138,11 @@ class Art extends Model {
 		{
 			foreach ($query as $value) 
 			{
-				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+				$mokupImage_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_image;
+				$value->mokup_image  = file_exists(FILEUPLOAD.$mokupImage_path)?UPLOAD_PATH.$mokupImage_path:NOIMAGE;
+
+				$mokupLogo_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo;
+				$value->mokup_logo  = file_exists(FILEUPLOAD.$mokupLogo_path)?UPLOAD_PATH.$mokupLogo_path:NOIMAGE;
 			}
 		}
 		return $query;
@@ -396,12 +406,20 @@ class Art extends Model {
 				$temp = array();
 		foreach ($query as $key=>$value) 
 		{
-				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
-				$value->companyphoto = (!empty($value->companyphoto))?UPLOAD_PATH.$value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto:'';
+				$mokupImage_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_image;
+				$value->mokup_image  = file_exists(FILEUPLOAD.$mokupImage_path)?UPLOAD_PATH.$mokupImage_path:'';
+
+				$mokupLogo_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo;
+				$value->mokup_logo  = file_exists(FILEUPLOAD.$mokupLogo_path)?UPLOAD_PATH.$mokupLogo_path:'';
+
+				$company_path = $value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto;
+				$value->companyphoto = file_exists(FILEUPLOAD.$company_path)?UPLOAD_PATH.$company_path:'';
+
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$temp[$value->screen_id][] = $value;
 		}
+		
+		//echo "<pre>"; print_r(FILEUPLOAD.$mokupImage_path); echo "</pre>"; die;
 		$temp = array_values($temp);
 		return $temp;
 	}
@@ -436,9 +454,15 @@ class Art extends Model {
 				$size = array();
 			foreach ($query as $key=>$value) 
 			{
-				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
-				$value->companyphoto = (!empty($value->companyphoto))?UPLOAD_PATH.$value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto:'';
+				$mokupImage_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_image;
+				$value->mokup_image  = file_exists(FILEUPLOAD.$mokupImage_path)?UPLOAD_PATH.$mokupImage_path:'';
+
+				$mokupLogo_path = $value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo;
+				$value->mokup_logo  = file_exists(FILEUPLOAD.$mokupLogo_path)?UPLOAD_PATH.$mokupLogo_path:'';
+
+				$company_path = $value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto;
+				$value->companyphoto = file_exists(FILEUPLOAD.$company_path)?UPLOAD_PATH.$company_path:'';
+
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$color[$value->color_id] = $value;
 				$size[$value->size] = $value;
