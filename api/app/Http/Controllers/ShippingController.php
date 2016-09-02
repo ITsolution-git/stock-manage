@@ -787,15 +787,6 @@ class ShippingController extends Controller {
         {
             $av = new \RocketShipIt\AddressValidate('FedEx');
 
-            /*if($av->status == 'unknown')
-            {
-                $response = array(
-                        'success' => 0,
-                        'message' => 'Something wrong in your address'
-                    );
-                return response()->json(["data" => $response]);
-            }*/
-
             $av->setParameter('toAddr1', $post['address']);
             $av->setParameter('toAddr2', $post['address2']);
             $av->setParameter('toCity', $post['city']);
@@ -816,6 +807,24 @@ class ShippingController extends Controller {
         }
 
         $response = $av->validate();
+
+        if($response == 'mismatch')
+        {
+            $response = array(
+                        'success' => 0,
+                        'message' => 'Something wrong in your address'
+                    );
+            return response()->json(["data" => $response]);
+        }
+
+        if(isset($response['AddressValidationResponse']['Response']['Error']) && !empty($response['AddressValidationResponse']['Response']['Error']))
+        {
+            $response = array(
+                        'success' => 0,
+                        'message' => $response['AddressValidationResponse']['Response']['Error']['ErrorDescription']
+                    );
+            return response()->json(["data" => $response]);
+        }
 
         if(isset($response['Data']['Errors']) && !empty($response['Data']['Errors']))
         {
