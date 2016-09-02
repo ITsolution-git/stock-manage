@@ -194,6 +194,11 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
+            if((paymentData.creditCard.length < 12) || (paymentData.creditCard.length > 20)) {
+                var data = {"status": "error", "message": "Please enter valid Credit Card number"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
             if((paymentData.amount == undefined) || (paymentData.amount==0) || (paymentData.amount==0.00)) {
                 var data = {"status": "error", "message": "Amount should not be blank or 0"}
                 notifyService.notify(data.status, data.message);
@@ -216,11 +221,6 @@
             }
             if(paymentData.street == undefined) {
                 var data = {"status": "error", "message": "Please enter Street Address"}
-                notifyService.notify(data.status, data.message);
-                return false;
-            }
-            if(paymentData.suite == undefined) {
-                var data = {"status": "error", "message": "Please enter Suite"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
@@ -263,10 +263,10 @@
             combine_array_id.amount = paymentData.amount;
 
             combine_array_id.street = paymentData.street;
-                combine_array_id.suite = paymentData.suite;
-                combine_array_id.city = paymentData.city;
-                combine_array_id.state = paymentData.state;
-                combine_array_id.zip = paymentData.zip;
+            combine_array_id.suite = paymentData.suite;
+            combine_array_id.city = paymentData.city;
+            combine_array_id.state = paymentData.state;
+            combine_array_id.zip = paymentData.zip;
 
             if(!paymentData.storeCard) {
                 combine_array_id.storeCard = 0;
@@ -276,6 +276,7 @@
             combine_array_id.linkToPay = 0;
             
             combine_array_id.invoice_id = invoice_id.value;
+            combine_array_id.company_id = company_id.value;
 
 
             $http.post('api/public/payment/chargeCreditCard',combine_array_id).success(function(result) 
@@ -288,6 +289,19 @@
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
                     });
+                    //$scope.paymentData = null;
+                    paymentData.creditFname = null;
+                    paymentData.creditLname = null;
+                    paymentData.creditCard = null;
+                    paymentData.cvv = null;
+                    paymentData.expMonth = null;
+                    paymentData.expYear = null;
+                    paymentData.amount = null;
+                    paymentData.street = null;
+                    paymentData.suite = null;
+                    paymentData.city = null;
+                    paymentData.state = null;
+                    paymentData.zip = null;
                     notifyService.notify('success',"Payment made Successfully");
                 }
                 else
