@@ -165,15 +165,15 @@ class PaymentController extends Controller {
 
           $id = $this->common->InsertRecords('payment_history',$orderData);
 
-          $retArray = DB::table('payment_history as p')
+          $retArrayPmt = DB::table('payment_history as p')
             ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
             ->leftJoin('orders as o','o.id','=',"p.order_id")
             ->where('p.order_id','=',$order_id)
             ->where('p.is_delete','=',1)
             ->get();
 
-          $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
-          $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+          $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
+          $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
 
           $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
