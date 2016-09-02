@@ -507,7 +507,7 @@
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Shipping Charge</div>
-                        <span class="ng-binding">{{order.shipping_charge | currency : $ : 2}}</span>
+                        <span class="ng-binding">{{order.item_ship_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
@@ -573,6 +573,6 @@
     <div flex="15"><span>{{ order.order_line_total | currency : $ : 2}}</span></div>
     <div flex="15"><span>Order Charges</span></div>
     <div flex="15"><span>{{ order.order_charges_total | currency : $ : 2}}</span></div>
-    <div flex="20"><span>Order Sales</span></div>
+    <div flex="20"><span>Grand Total</span></div>
     <div flex="20"><span>{{ order.order_total | currency : $ : 2}}</span></div>
 </div>

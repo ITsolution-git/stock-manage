@@ -684,6 +684,7 @@ class ShippingController extends Controller {
         $data['overview'] = 1;
 
         $result = $this->shipping->shippingDetail($data);
+
         $boxes = $this->shipping->getShippingBoxes($data);
 
         foreach ($result['shippingItems'] as $item) {
@@ -711,17 +712,21 @@ class ShippingController extends Controller {
             $shipment = new \RocketShipIt\Shipment('fedex');
 
             $shipment->setParameter('toCompany', $shipping->client_company);
-            $shipment->setParameter('toName', $shipping->description);
             $shipment->setParameter('toPhone', $shipping->phone);
             $shipment->setParameter('toAddr1', $shipping->address.' '.$shipping->address2);
             $shipment->setParameter('toCity', $shipping->city);
-            $shipment->setParameter('toState', $shipping->state);
+            $shipment->setParameter('toState', $shipping->code);
             $shipment->setParameter('toCode', $shipping->zipcode);
 
-            $shipment->setParameter('length', '5');
-            $shipment->setParameter('width', '5');
-            $shipment->setParameter('height', '5');
-            $shipment->setParameter('weight','5');
+            $shipment->setParameter('toCompany', 'John Doe');
+            $shipment->setParameter('toPhone', '1231231234');
+            $shipment->setParameter('toAddr1', '101 W Main');
+            $shipment->setParameter('toCity', 'Bozeman');
+            $shipment->setParameter('toState', 'MT');
+            $shipment->setParameter('toCode', '59715');
+            $shipment->setParameter('weight', '5'); 
+
+            $response = $shipment->submitShipment();
         }
         else
         {
@@ -732,7 +737,7 @@ class ShippingController extends Controller {
             $shipment->setParameter('toPhone', $shipping->phone);
             $shipment->setParameter('toAddr1', $shipping->address.' '.$shipping->address2);
             $shipment->setParameter('toCity', $shipping->city);
-            $shipment->setParameter('toState', $shipping->state);
+            $shipment->setParameter('toState', $shipping->code);
             $shipment->setParameter('toCode', $shipping->zipcode);
 
             $package = new \RocketShipIt\Package('UPS');
@@ -742,9 +747,20 @@ class ShippingController extends Controller {
             $package->setParameter('weight','5');
 
             $shipment->addPackageToShipment($package);
+
+            $response = $shipment->submitShipment();
         }
 
-        $response = $shipment->submitShipment();
+        $trackingNumber = '';
+        $charges = 0;
+
+        if(isset($response['trk_main']))
+        {
+            $trackingNumber = $response['trk_main'];
+            $charges = $response['charges'];
+        }
+
+        $this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
 
         foreach ($response['pkgs'] as $package) {
             $label = $package['label_img'];
@@ -761,6 +777,7 @@ class ShippingController extends Controller {
             echo base64_decode($label);
             //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
         }
+        return redirect()->back();
     }
 
     public function checkAddressValid()
@@ -770,29 +787,120 @@ class ShippingController extends Controller {
         if($post['shipping_type_id'] == 'Fedex')
         {
             $av = new \RocketShipIt\AddressValidate('FedEx');
+
+            $av->setParameter('toAddr1', $post['address']);
+            $av->setParameter('toAddr2', $post['address2']);
+            $av->setParameter('toCity', $post['city']);
+            $av->setParameter('toState', $post['code']);
+            $av->setParameter('toCode', $post['zipcode']);
         }
         else
         {
-            $av = new \RocketShipIt\AddressValidate('USPS');
-        }
+            $av = new \RocketShipIt\AddressValidate('UPS');
 
-        $av->setParameter('toAddr1', $post['address']);
-        $av->setParameter('toAddr2', $post['address2']);
-        $av->setParameter('toCity', $post['city']);
-        $av->setParameter('toState', $post['state']);
-        $av->setParameter('toCode', $post['zipcode']);
+            $av->setParameter('toCompany', $post['description']);
+            $av->setParameter('toPhone', $post['phone']);
+            $av->setParameter('toAddr1', $post['address']);
+            $av->setParameter('toAddr2', $post['address2']);
+            $av->setParameter('toCity', $post['city']);
+            $av->setParameter('toState', $post['code']);
+            $av->setParameter('toCode', $post['zipcode']);
+        }
 
         $response = $av->validate();
 
-        $success = 0;
-        if($response['Meta']['ErrorMessage'] == '')
+        if($response == 'mismatch')
         {
-            $success = 1;
+            $response = array(
+                        'success' => 0,
+                        'message' => 'Something wrong in your address'
+                    );
+            return response()->json(["data" => $response]);
+        }
+
+        if(isset($response['AddressValidationResponse']['Response']['Error']) && !empty($response['AddressValidationResponse']['Response']['Error']))
+        {
+            $response = array(
+                        'success' => 0,
+                        'message' => $response['AddressValidationResponse']['Response']['Error']['ErrorDescription']
+                    );
+            return response()->json(["data" => $response]);
+        }
+
+        if(isset($response['Data']['Errors']) && !empty($response['Data']['Errors']))
+        {
+            $message = 'Something wrong in your address';
+            $success = 0;
+        }
+        else
+        {
+            if($post['shipping_type_id'] == 'Fedex')
+            {
+                $shipment = new \RocketShipIt\Shipment('fedex');
+
+                $shipment->setParameter('toCompany', $post['client_company']);
+                $shipment->setParameter('toName', $post['description']);
+                $shipment->setParameter('toPhone', $post['phone']);
+                $shipment->setParameter('toAddr1', $post['address'].' '.$post['address2']);
+                $shipment->setParameter('toCity', $post['city']);
+                $shipment->setParameter('toState', $post['code']);
+                $shipment->setParameter('toCode', $post['zipcode']);
+
+                $shipment->setParameter('length', '5');
+                $shipment->setParameter('width', '5');
+                $shipment->setParameter('height', '5');
+                $shipment->setParameter('weight','5');
+
+                $response = $shipment->submitShipment();
+
+                if(isset($response) && isset($response['status']) && $response['status'] == 'SUCCESS')
+                {
+                    $success = 1;
+                    $message = '';
+                }
+                else
+                {
+                    $success = 0;
+                    $message = 'Something wrong in your address';
+                }
+            }
+            else
+            {
+                $shipment = new \RocketShipIt\Shipment('UPS');
+
+                $shipment->setParameter('toCompany', $post['description']);
+                $shipment->setParameter('toPhone', $post['phone']);
+                $shipment->setParameter('toAddr1', $post['address'].' '.$post['address2']);
+                $shipment->setParameter('toCity', $post['city']);
+                $shipment->setParameter('toState', $post['code']);
+                $shipment->setParameter('toCode', $post['zipcode']);
+
+                $package = new \RocketShipIt\Package('UPS');
+                $package->setParameter('length','5');
+                $package->setParameter('width','5');
+                $package->setParameter('height','5');
+                $package->setParameter('weight','5');
+
+                $shipment->addPackageToShipment($package);
+
+                $response = $shipment->submitShipment();
+
+                if(isset($response) && isset($response['error']))
+                {
+                    $success = 0;
+                    $message = $response['error'];
+                }
+                else
+                {
+                    $success = 1;
+                    $message = '';
+                }
+            }
         }
 
         $response = array(
-                        'success' => $success, 
-                        'message' => $response['Meta']['ErrorMessage']
+                        'success' => $success,
+                        'message' => $message
                     );
 
         return response()->json(["data" => $response]);
