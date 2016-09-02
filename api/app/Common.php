@@ -428,4 +428,9 @@ class Common extends Model {
         DB::table($table)->truncate();
     }
 
+    public function checkImageExist($path)
+    {
+        return file_exists(FILEUPLOAD.$path)?UPLOAD_PATH.$path:NOIMAGE;
+    }
+
 }

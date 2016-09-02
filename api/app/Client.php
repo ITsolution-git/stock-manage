@@ -4,10 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Common;
 use DateTime;
  
 class Client extends Model {
 
+    public function __construct(Common $common) 
+    {
+        $this->common = $common;
+    }
 	public function addclient($client,$contact)
 	{
 
@@ -197,9 +202,12 @@ class Client extends Model {
           $result['main']['pl_pincode'] = !empty($value->pl_pincode)?$value->pl_pincode:'' ;
           $result['main']['state_id']   = !empty($value->state_id)?$value->state_id:'' ;
 
-          $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']:'';
-          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']:'';
-          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']:'';
+             $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']):NOIMAGE;
+
+          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']):NOIMAGE;
+          
+          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']):NOIMAGE;
+
 
           $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
     			$result['contact']['email'] = $value->email;
@@ -500,10 +508,18 @@ public function saveTaxDoc($post)
           $result['main']['pl_pincode'] = !empty($value->pl_pincode)?$value->pl_pincode:'' ;
           $result['main']['state_id']   = !empty($value->state_id)?$value->state_id:'' ;
 
+          $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']):NOIMAGE;
+
+          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']):NOIMAGE;
+          
+          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']):NOIMAGE;
+
+
+/*
           $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']:'';
           $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']:'';
           $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?UPLOAD_PATH.$value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']:'';
-
+*/
           $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
           $result['contact']['email'] = $value->email;
           $result['contact']['first_name'] = $value->first_name;
