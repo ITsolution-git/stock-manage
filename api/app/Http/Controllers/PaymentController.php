@@ -250,8 +250,8 @@ class PaymentController extends Controller {
         }
 
         if(($post['linkToPay']==1) && ($post['ltp_id']!=0)){
-          $amt=array('payment_flag' => 1, 'payment_date' => date('Y-m-d H:i:s'));
-          $this->common->UpdateTableRecords('link_to_pay',array('ltp_id' => $post['ltp_id']),$amt);
+          $updateLtp=array('payment_flag' => 1, 'payment_date' => date('Y-m-d H:i:s'));
+          $this->common->UpdateTableRecords('link_to_pay',array('ltp_id' => $post['ltp_id']),$updateLtp);
 
           $data = array("success"=>1, 'message' =>"Payment made Succesfully");
           return response()->json(['data'=>$data]);

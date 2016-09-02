@@ -272,11 +272,11 @@
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Payments/Deposit</td>
-						<td style="border:1px solid #000;text-align:center;">$0.00</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->total_payments,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Balance Due</td>
-						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->grand_total,2); ?></td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->balance_due,2); ?></td>
 					</tr>
 				</table>
 			</td>
