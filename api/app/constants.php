@@ -13,7 +13,7 @@ define('UPLOAD_PATH', url() . '/uploads/');
 define('THEME_IMAGES', url() . '/img/');
 define('FILEUPLOAD', base_path() . "/public/uploads/");
 define('CURRENT_URL','http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-
+define('NOIMAGE',url() ."/images/noimage.png");
 
 define ('GET_RECORDS','Get Records.');
 define ('NO_RECORDS','No Records Found.');
