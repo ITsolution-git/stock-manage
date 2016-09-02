@@ -145,7 +145,7 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            $mdDialog.show();
+            $("#ajax_loader").show();
 
             var invoice_id = document.createElement('input');
             invoice_id.name = 'invoice_id';
@@ -162,7 +162,7 @@
 
             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(result) 
             {
-                $mdDialog.hide();
+                $("#ajax_loader").hide();
                 if(result != '0')
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
@@ -254,7 +254,7 @@
             //storeCard
             /**/
             
-            $mdDialog.show();
+            $("#ajax_loader").show();
 
             var invoice_id = document.createElement('input');
             invoice_id.name = 'invoice_id';
@@ -293,8 +293,8 @@
 
             $http.post('api/public/payment/chargeCreditCard',combine_array_id).success(function(result) 
             {
-                $mdDialog.hide();
-                if(result != '0')
+                $("#ajax_loader").hide();
+                if(result.data.success=='1')
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
@@ -326,9 +326,7 @@
         }
         $scope.deleteHistory = function(payment_id)
         {
-            /*alert(payment_id);
-            return false;*/
-
+            $("#ajax_loader").show();
             var vm = this;
             var UpdateArray = {};
             UpdateArray.table ='payment_history';
@@ -337,6 +335,7 @@
 
             $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
             {
+                $("#ajax_loader").hide();
                 if(result.data.success=='1')
                 {
                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {

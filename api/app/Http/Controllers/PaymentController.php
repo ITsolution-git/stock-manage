@@ -133,6 +133,7 @@ class PaymentController extends Controller {
 
       $order = new AnetAPI\OrderType();
       $order->setDescription("Payment for Order ID: ".$order_id);
+      $order->setInvoiceNumber("INV - ".$order_id);
 
       //create a transaction
       $transactionRequestType = new AnetAPI\TransactionRequestType();
@@ -141,10 +142,33 @@ class PaymentController extends Controller {
       $transactionRequestType->setOrder($order);
       $transactionRequestType->setPayment($paymentOne);
       
+      $retArray = DB::table('payment_history as p')
+        ->select('c.client_company', 'c.client_id', 'c.billing_email')
+        ->leftJoin('orders as o','o.id','=',"p.order_id")
+        ->leftJoin('client as c','o.client_id','=',"o.client_id")
+        ->where('p.order_id','=',$order_id)
+        ->where('p.is_delete','=',1)
+        ->get();
+
+      $billto = new AnetAPI\CustomerAddressType();
+      $billto->setFirstName($post['creditFname']);
+      $billto->setLastName($post['creditLname']);
+      $billto->setCompany($retArray[0]->client_company);
+      $billto->setAddress($post['street']);
+      $billto->setCity($post['city']);
+      $billto->setState($post['state']);
+      $billto->setZip($post['zip']);
+      $billto->setCountry("USA");
+
+
+//       $billto = array("firstName"=>"Ellen","lastName"=>"Johnson","company"=>"Souveniropolis","address"=>"14 Main Street","city"=>"Pecan Springs","state"=>"TX","zip"=>"44628","country"=>"USA");
+// $billto=json_encode($billto);
+      $transactionRequestType->setBillTo($billto);
 
       $request = new AnetAPI\CreateTransactionRequest();
       $request->setMerchantAuthentication($merchantAuthentication);
       $request->setRefId( $refId);
+     
       $request->setTransactionRequest( $transactionRequestType);
       $controller = new AnetController\CreateTransactionController($request);
       $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
@@ -203,6 +227,7 @@ class PaymentController extends Controller {
             $billto->setState($post['state']);
             $billto->setZip($post['zip']);
             $billto->setCountry("USA");
+            $billto->setEmail($retArray[0]->billing_email);
 
 
               // Create a Customer Profile Request
