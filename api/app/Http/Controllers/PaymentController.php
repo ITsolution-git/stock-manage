@@ -90,6 +90,23 @@ class PaymentController extends Controller {
 	function chargeCreditCard(){
       $post = Input::all();
       $amount=$post['amount'];
+      
+
+      if(isset($post['company_id'])){
+        $company_id=$post['company_id'];
+        $retCredsArray = DB::table('authorize_detail as au')
+              ->select('au.login', 'au.transactionkey')
+              ->leftJoin('api_link_table as ai','ai.id','=',"au.link_id")
+              ->where('ai.company_id','=',$company_id)
+              ->where('ai.status','=','1')
+              ->where('ai.api_id','=',3)
+              ->get();
+      }
+      if(count($retCredsArray)<1){
+          $data = array("success"=>0,'message' =>"Please integrate Authorize.net details");
+          return response()->json(['data'=>$data]);
+      }
+
       $creditCardNumber=$post['creditCard'];//4111111111111111
       $expiry=$post['expMonth'].$post['expYear'];
       //$expiry=$post['expiry'];//1226
@@ -98,8 +115,8 @@ class PaymentController extends Controller {
       $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
       /*$merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
       $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);*/
-      $merchantAuthentication->setName("93Yd4M9fU");
-      $merchantAuthentication->setTransactionKey("443U8c9zrK5UZyEd");
+      $merchantAuthentication->setName($retCredsArray[0]->login);
+      $merchantAuthentication->setTransactionKey($retCredsArray[0]->transactionkey);
       $refId = 'ref' . time();
 
       // Create the payment data for a credit card
@@ -149,23 +166,26 @@ class PaymentController extends Controller {
           $id = $this->common->InsertRecords('payment_history',$orderData);
 
           $retArray = DB::table('payment_history as p')
-              ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total', 'c.client_company', 'c.client_id', 'c.billing_email')
+            ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
+            ->leftJoin('orders as o','o.id','=',"p.order_id")
+            ->where('p.order_id','=',$order_id)
+            ->where('p.is_delete','=',1)
+            ->get();
+
+          $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
+          $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+
+          $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+
+          $retArray = DB::table('payment_history as p')
+              ->select('c.client_company', 'c.client_id', 'c.billing_email')
               ->leftJoin('orders as o','o.id','=',"p.order_id")
               ->leftJoin('client as c','o.client_id','=',"o.client_id")
               ->where('p.order_id','=',$order_id)
               ->where('p.is_delete','=',1)
               ->get();
 
-          $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
-          $amt=array('total_payments' => $retArray[0]->totalAmount, 'balance_due' => $balance_due);
-
-          $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
-
-
-        
-
-
-        if($post['storeCard']==1){
+        if(($post['storeCard']==1) || ($post['linkToPay']==1)){
           // Create the payment data for a credit card
             $creditCard = new AnetAPI\CreditCardType();
             $creditCard->setCardNumber($creditCardNumber);
@@ -230,7 +250,7 @@ class PaymentController extends Controller {
         }
 
         if(($post['linkToPay']==1) && ($post['ltp_id']!=0)){
-          $amt=array('payment_flag' => 1);
+          $amt=array('payment_flag' => 1, 'payment_date' => date('Y-m-d H:i:s'));
           $this->common->UpdateTableRecords('link_to_pay',array('ltp_id' => $post['ltp_id']),$amt);
 
           $data = array("success"=>1, 'message' =>"Payment made Succesfully");
@@ -256,7 +276,7 @@ class PaymentController extends Controller {
   }
 
 
-  function createCustomerProfile($email){
+  /*function createCustomerProfile($email){
     
     // Common setup for API credentials
     $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
@@ -321,6 +341,6 @@ class PaymentController extends Controller {
     }
     return $response;
   }
-  /*if(!defined('DONT_RUN_SAMPLES'))
+  if(!defined('DONT_RUN_SAMPLES'))
       createCustomerProfile("test123@test.com");*/
 }

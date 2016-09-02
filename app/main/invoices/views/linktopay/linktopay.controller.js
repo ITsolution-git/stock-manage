@@ -16,12 +16,7 @@
             $mdDialog.hide();
         };
 
-        $scope.pay_creditCard = function(paymentData, invoice_id, ltp_id){
-            if(paymentData == undefined ) {
-                var data = {"status": "error", "message": "Please enter Payment Information"}
-                notifyService.notify(data.status, data.message);
-                return false;
-            }
+        $scope.pay_creditCard = function(paymentData, invoice_id, ltp_id, company_id){
             if(paymentData == undefined ) {
                 var data = {"status": "error", "message": "Please enter Payment Information"}
                 notifyService.notify(data.status, data.message);
@@ -39,6 +34,11 @@
             }
             if(paymentData.creditCard == undefined) {
                 var data = {"status": "error", "message": "Please enter Credit Card number"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if((paymentData.creditCard.length < 12) || (paymentData.creditCard.length > 20)) {
+                var data = {"status": "error", "message": "Please enter valid Credit Card number"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
@@ -67,10 +67,8 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.suite == undefined) {
-                var data = {"status": "error", "message": "Please enter Suite"}
-                notifyService.notify(data.status, data.message);
-                return false;
+            if(paymentData.suite != undefined) {
+                combine_array_id.suite = paymentData.suite;
             }
             if(paymentData.city == undefined) {
                 var data = {"status": "error", "message": "Please enter City"}
@@ -98,10 +96,9 @@
             combine_array_id.amount = paymentData.amount;
 
             combine_array_id.street = paymentData.street;
-                combine_array_id.suite = paymentData.suite;
-                combine_array_id.city = paymentData.city;
-                combine_array_id.state = paymentData.state;
-                combine_array_id.zip = paymentData.zip;
+            combine_array_id.city = paymentData.city;
+            combine_array_id.state = paymentData.state;
+            combine_array_id.zip = paymentData.zip;
 
             if(!paymentData.storeCard) {
                 combine_array_id.storeCard = 0;
@@ -109,6 +106,7 @@
                 combine_array_id.storeCard = 1;
             }
             combine_array_id.invoice_id = invoice_id;
+            combine_array_id.company_id = company_id;
             combine_array_id.linkToPay = 1;
             combine_array_id.ltp_id=ltp_id;
             //alert(combine_array_id.invoice_id);return false;
@@ -125,7 +123,7 @@
                             $scope.siData = result.data.allData;
                         });*/
                         notifyService.notify('success',"Payment made Successfully");
-                        setTimeout("location.href = 'http://new.stokkup.com';",5000);
+                        setTimeout("location.href = 'http://new.stokkup.com';",2000);
 
                     }
                     else
