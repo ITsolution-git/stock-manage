@@ -760,7 +760,7 @@ class ShippingController extends Controller {
             $charges = $response['charges'];
         }
 
-        $this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges),'date_shipped' => date('Y-m-d'));
+        $this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
 
         foreach ($response['pkgs'] as $package) {
             $label = $package['label_img'];
