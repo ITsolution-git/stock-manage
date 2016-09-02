@@ -348,6 +348,7 @@ class ClientController extends Controller {
 
 			if(count($result)>0)
 			{
+				$CompanyUsers = $this->common->GetCompanyUsers($post['company_id']);
 				$StaffList = $this->common->getStaffList($post['company_id']);
 				$ArrCleintType=$this->common->TypeList('company');
 				$AddrTypeData = $this->common->GetMicType('address_type',$post['company_id']);
@@ -361,7 +362,7 @@ class ClientController extends Controller {
 				$documents = $this->client->getDocument($id,$post['company_id']);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'screenset_detail' => $screenset_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'screenset_detail' => $screenset_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents,'companyUsers'=>$CompanyUsers);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else
