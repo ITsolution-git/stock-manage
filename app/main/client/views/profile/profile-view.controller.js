@@ -83,6 +83,7 @@
                     $scope.addressAll=vm.Response.addressAll.result;
                     $scope.Distribution_address= vm.Response.Distribution_address.result;
                     $scope.documents= vm.Response.documents;
+                    $scope.companyUsers = vm.Response.companyUsers;
                 }
                 $("#ajax_loader").hide();
             });
@@ -507,6 +508,7 @@
         $scope.client_id = Params.client_id;
         $scope.company_id = Params.company_id;
         $scope.client_tax = Params.client_tax;
+        $scope.companyUsers = Params.companyUsers;
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
         {
             //console.log(validation);

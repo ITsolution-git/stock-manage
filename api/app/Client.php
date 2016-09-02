@@ -152,7 +152,7 @@ class Client extends Model {
     {
 
     	$retArray = DB::table('client as c')
-    				->select('st.name as state_name','st.id as state_id','pg.name as price_grid','stf.sales_name','tp.id as type_id','tp.name as type_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*')
+    				->select('st.name as state_name','st.id as state_id','pg.name as price_grid','stf.sales_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*','usr.name as account_manager_name','tp.id as type_id','tp.name as type_name')
     				->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
     				->leftJoin('client_address as ca','c.client_id','=',DB::raw("ca.client_id AND ca.address_main = '1' "))
     				->leftJoin('misc_type as mt','mt.id','=',"c.client_desposition")
@@ -160,6 +160,7 @@ class Client extends Model {
     				->leftJoin('type as tp','tp.id','=',"c.client_companytype")
             ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
             ->leftJoin('state as st','st.id','=',"c.pl_state")
+            ->leftJoin('users as usr','usr.id','=',"c.account_manager")
     				->where('c.client_id','=',$id)
     				->get();
     	$result = array();
@@ -182,6 +183,8 @@ class Client extends Model {
 
     			$result['main']['misc_id'] = $value->misc_id;
           $result['main']['client_desposition'] = $value->misc_value_p;
+          $result['main']['account_manager_name'] = !empty($value->account_manager_name)?$value->account_manager_name:'' ;
+          $result['main']['account_manager'] = !empty($value->account_manager)?$value->account_manager:'' ;
           
           $result['main']['color_logo'] = $value->color_logo;
           $result['main']['b_w_logo'] = $value->b_w_logo;
