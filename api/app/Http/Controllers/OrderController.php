@@ -1262,9 +1262,9 @@ class OrderController extends Controller {
     public function addOrder()
     {
         $post = Input::all();
-
        
-        $client_data = $this->client->GetclientDetail($post['orderData']['client_id']);
+       
+        $client_data = $this->client->GetclientDetail($post['orderData']['client']['client_id']);
 
         $dataMisc['cond']['company_id'] = $post['company_id'];
         
@@ -1286,7 +1286,7 @@ class OrderController extends Controller {
          $post['orderdata']['approval_id'] = $estimation_id;
          $post['orderdata']['login_id'] = $post['login_id'];
          $post['orderdata']['company_id'] = $post['company_id'];
-         $post['orderdata']['client_id'] = $post['orderData']['client_id'];
+         $post['orderdata']['client_id'] = $post['orderData']['client']['client_id'];
          $post['orderdata']['created_date'] = date('Y-m-d');
          $post['orderdata']['updated_date'] = date('Y-m-d');
          $post['orderdata']['sales_id'] = $client_data['sales']['salesperson'];
@@ -2019,6 +2019,16 @@ class OrderController extends Controller {
         
 
         $data = array("success"=>1,'session_link' =>$session_link);
+        return response()->json(['data'=>$data]);
+    }
+
+    public function GetAllClientsLowerCase(){
+       $post = Input::all();
+
+
+      $result = $this->order->GetAllClientsLowerCase($post);
+      
+        $data = array("success"=>1,"message"=>"Success",'records' => $result);
         return response()->json(['data'=>$data]);
     }
 

@@ -248,6 +248,7 @@ Route::post('order/createInvoice', 'OrderController@createInvoice');
 Route::post('order/paymentInvoiceCash', 'OrderController@paymentInvoiceCash');
 Route::post('order/paymentLinkToPay', 'OrderController@paymentLinkToPay');
 Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
+Route::post('order/GetAllClientsLowerCase', 'OrderController@GetAllClientsLowerCase');
 
 
 // FINISHING CONTROLLER 
