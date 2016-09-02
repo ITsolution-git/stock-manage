@@ -205,11 +205,11 @@ class Client extends Model {
           $result['main']['pl_pincode'] = !empty($value->pl_pincode)?$value->pl_pincode:'' ;
           $result['main']['state_id']   = !empty($value->state_id)?$value->state_id:'' ;
 
-             $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']):NOIMAGE;
+             $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['color_logo']):NOIMAGE;
 
-          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']):NOIMAGE;
+          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['b_w_logo']):NOIMAGE;
           
-          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']):NOIMAGE;
+          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['shipping_logo']):NOIMAGE;
 
 
           $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
@@ -511,11 +511,11 @@ public function saveTaxDoc($post)
           $result['main']['pl_pincode'] = !empty($value->pl_pincode)?$value->pl_pincode:'' ;
           $result['main']['state_id']   = !empty($value->state_id)?$value->state_id:'' ;
 
-          $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['color_logo']):NOIMAGE;
+          $result['main']['color_url_photo'] = (!empty($result['main']['color_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['color_logo']):NOIMAGE;
 
-          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['b_w_logo']):NOIMAGE;
+          $result['main']['bw_url_photo'] = (!empty($result['main']['b_w_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['b_w_logo']):NOIMAGE;
           
-          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/".$result['main']['shipping_logo']):NOIMAGE;
+          $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['shipping_logo']):NOIMAGE;
 
 
 /*
