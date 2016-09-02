@@ -75,6 +75,8 @@
 
             document.body.appendChild(form);
             form.submit();
+
+            $scope.getShippingOverview();
         }
 
         $scope.printLAbel = function()
@@ -94,7 +96,7 @@
                 notifyService.notify('error','city is compulsory');
                 return false;
             }
-            if($scope.shipping.state == '')
+            if($scope.shipping.code == '')
             {
                 notifyService.notify('error','state is compulsory');
                 return false;
@@ -110,8 +112,10 @@
                 return false;
             }
 
+            $("#ajax_loader").show();
             $http.post('api/public/shipping/checkAddressValid',$scope.shipping).success(function(result) {
 
+                $("#ajax_loader").hide();
                 if(result.data.success == '1')
                 {
                     $scope.submitForm();
