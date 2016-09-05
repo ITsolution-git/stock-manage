@@ -9,7 +9,17 @@
 <body>
 	<table id="header" style="width:100%">
 		<tr>
-			<td><img src="{{$company_data[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+			<td>
+			<?php if(!empty($company_data[0]->photo))
+			{?>
+				<img src="{{$company_data[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+			<?php
+			else
+			{ ?>
+				<img src="" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+			<?php
+			}
+			?>
 			<td>
 				<span style="text-align:center;margin:0;font-weight:bold;">{{$company_data[0]->name}}</span>
 				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address1}}</span>
