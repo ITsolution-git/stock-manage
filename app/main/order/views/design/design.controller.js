@@ -167,11 +167,13 @@
                    
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
                     $scope.total_screen_fees = result.data.total_screen_fees;
+                    $scope.order_design_position = result.data.order_design_position;
                 }
                 else
                 {
                     $scope.total_pos_qnty = 0;
                     $scope.total_screen_fees = 0;
+                    $scope.order_design_position = [];
                 }
             });
         }
