@@ -19,6 +19,7 @@
         vm.client_id = $stateParams.id;
         vm.company_id = sessionService.get('company_id');
         $scope.company_id = sessionService.get('company_id');
+        $scope.login_id = sessionService.get('user_id');
         $scope.client_id = vm.client_id ;
 
 
@@ -138,6 +139,27 @@
         {
             open_popup(ev,$scope,'CompanyInfo','tax_document');
         }
+
+
+//======================
+﻿        // DYNAMIC POPUP FOR INSERT RECORDS
+        $scope.openInsertPopup = function(path,ev,table)
+        {
+            var insert_params = {client_id:$scope.client_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
+        }
+        // DYNAMIC POPUP FOR UPDATE RECORDS
+        $scope.openEditPopup = function(path,param,ev,table)
+        {
+            var edit_params = {data:param}; // REQUIRED PARAMETERS
+            sessionService.openEditPopup($scope,path,edit_params,table);
+        }
+        // RETURN FUNCTION FROM POPUP.
+        $scope.returnFunction = function()
+        {
+            $scope.getClientProfile();
+        }
+//======================
 
 
 
