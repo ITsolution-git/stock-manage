@@ -222,7 +222,7 @@ class OrderController extends Controller {
         $dist_location = count($locations);
         $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
         $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');
-        $notes_count = $this->order->getPoNotes($result['order'][0]->id);
+        $notes_count = $this->order->getOrderNotes($result['order'][0]->id);
         $total_packing_charge = $this->order->getTotalPackingCharge($result['order'][0]->id);
 
         $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';
@@ -1289,6 +1289,7 @@ class OrderController extends Controller {
          $post['orderdata']['client_id'] = $post['orderData']['client']['client_id'];
          $post['orderdata']['created_date'] = date('Y-m-d');
          $post['orderdata']['updated_date'] = date('Y-m-d');
+         $post['orderdata']['account_manager_id'] = $client_data['main']['account_manager'];
          $post['orderdata']['sales_id'] = $client_data['sales']['salesperson'];
          $post['orderdata']['price_id'] = $client_data['sales']['salespricegrid'];
          $post['orderdata']['tax_rate'] = $client_data['tax']['tax_rate'];

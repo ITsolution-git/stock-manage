@@ -44,7 +44,7 @@
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
                                         <md-menu-content width="4">
-                                            <md-menu-item ng-click="vm.editCompanyConatct($event,'edit','client_notes','notes_form','note_id',note.note_id,'notes')">
+                                            <md-menu-item ng-click="openEditPopup('client/views/forms/notes_form.html',note,$event,'client_notes')">
                                                 <md-button>
                                                     Edit Notes
                                                 </md-button>
@@ -62,7 +62,7 @@
                                 </table>
                                 <table> 
                                     <tr>
-                                        <td class="p-16"><a href=""  ng-click="vm.editCompanyConatct($event,'add','client_notes','notes_form','note_id',note.note_id,'notes')">ADD NEW</a></td>                                                
+                                         <td class="p-16"><a href="javascript:;" ng-click="openInsertPopup('client/views/forms/notes_form.html',$event,'client_notes')">ADD NEW</a></td>                                       
                                     </tr>
                                 </table>
                             </div>
