@@ -1492,14 +1492,21 @@ class OrderController extends Controller {
 
         foreach ($result['order_design_position'] as $position) {
 
+            $screen_print_charge = 0;
+            $screen_print_charge = 0;
+            $embroidery_charge = 0;
+            $direct_to_garment_charge = 0;
+            $markup_default = 0;
+
             $position_qty = $position->qnty;
             $color_stitch_count = $position->color_stitch_count;
+            $position->color_count = $position->color_stitch_count;
             
             if($position->placement_type > 0)
             {
                 $placement_type_id =  $position->placement_type;
                 $miscData['placement_type'][$placement_type_id]->slug;
-              
+
                 if($miscData['placement_type'][$placement_type_id]->slug == 43)
                 {
                     foreach($price_screen_primary as $primary)
@@ -1670,10 +1677,19 @@ class OrderController extends Controller {
                     }
                 }
             }
+
             $position->screen_print_charge = $screen_print_charge;
             $position->embroidery_charge = $embroidery_charge;
             $position->direct_to_garment_charge = $direct_to_garment_charge;
             $position->markup_default = $markup_default;
+
+            if(isset($data['getNextPrice']) && $data['getNextPrice'] == 1 && isset($data['position_id']) && $data['position_id'] == $position->id)
+            {
+                $response = array(
+                                'position' => $position
+                            );
+                return response()->json(["data" => $response]);
+            }
         }
        
         if (count($result['order_design_position']) > 0) {
