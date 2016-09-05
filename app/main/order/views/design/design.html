@@ -49,26 +49,39 @@
                        <div layout="column"> 
                         <table>
                             <tr>
-                             <td>Position:</td>
-                             <td>{{order_design_position.position_header_name}}</td>
-                            </tr> 
-
+                                <td>Position:</td>
+                                <td>{{order_design_position.position_header_name}}</td>
+                            </tr>
                             <tr>
-                             <td>Type:</td>
-                             <td>{{order_design_position.placement_header_name}}</td>
+                                <td>Type:</td>
+                                <td>{{order_design_position.placement_header_name}}</td>
                             </tr> 
-
                             <tr>
-                             <td>Quantity:</td>
-                             <td>{{order_design_position.qnty_header_name}}</td>
+                                <td>Quantity:</td>
+                                <td>{{order_design_position.qnty_header_name}}</td>
                             </tr> 
-
                             <tr>
-                             <td>Price:</td>
-                             <td>{{order_design_position.total_price | currency : $ : 2}}</td>
+                                <td>Price:</td>
+                                <td>{{order_design_position.total_price | currency : $ : 2}}</td>
+                            </tr>
+                            <tr>
+                                <td>Color Count:</td>
+                                <td>{{order_design_position.color_stitch_count}}</td>
+                            </tr>
+                            <tr>
+                                <td>Design Name:</td>
+                                <td>{{designInforamtion.design_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>Next Tier:</td>
+                                <td>
+                                    <b>Screent Print:</b>{{order_design_position.screen_print_charge | currency : $ : 2}}
+                                    <b>Embroidery:</b>{{order_design_position.embroidery_charge | currency : $ : 2}}
+                                    <b>Direct To Garment:</b>{{order_design_position.direct_to_garment_charge | currency : $ : 2}}
+                                    <b>Garment Markup:</b>{{order_design_position.markup_default}}%
+                                </td>
                             </tr> 
                         </table>
-                        
                        </div> 
 
                     </div>
