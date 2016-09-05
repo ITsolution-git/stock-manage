@@ -794,26 +794,14 @@ public function saveColorSize($post)
 
     public function GetAllClientsLowerCase($post)
   {
-       
-
-       /* $whereConditions = ['is_delete' => '1','company_id' => $post['company_id']];
-
-        $listArray = ['client_id','client_company'];
-
-        $orderData = DB::table('client')
-                         ->select($listArray)
-                         ->where($whereConditions);
-                         ->get();*/
-
+      
        $listArray = ['client_id','client_company'];
       $whereConditions = ['is_delete' => "1",'company_id' => $post['company_id']];
       $orderDetailData = DB::table('client')
          ->select($listArray)
          ->where($whereConditions)
          ->get();
-
-
-         
+   
         foreach ($orderDetailData as $key=>$alldata){
           $newData[$key]['client_company'] = strtolower($alldata->client_company);
           $newData[$key]['client_id'] = $alldata->client_id;

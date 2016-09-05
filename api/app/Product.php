@@ -332,11 +332,11 @@ class Product extends Model {
             }
 
         if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d h:i:sa'));
         }
         else
         {
-            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
         }
 
         if($post['action'] == 'Add') {

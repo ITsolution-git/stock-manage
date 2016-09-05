@@ -120,21 +120,21 @@
             
         }
 
-        $scope.addProduct = function (productData,size_group_id,warehouse) {
+        $scope.addProduct = function (productData,warehouse) {
           
-            if(size_group_id == 0)
+           /* if(size_group_id == 0)
             {
                 var data = {"status": "error", "message": "Please select size group"}
                 notifyService.notify(data.status, data.message);
                 return false;
-            }
+            }*/
             var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.product_id = product_id;
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
             combine_array_id.action = operation;
-            combine_array_id.size_group_id = size_group_id;
+            //combine_array_id.size_group_id = size_group_id;
             combine_array_id.warehouse = warehouse;
             combine_array_id.design_product_id = design_product_id;
 
