@@ -17,6 +17,9 @@ $center:center;
 $white-color:#fff;
 $left:left;
 $right:right;
+$red-highlight:#ed1c24;
+$pos-relative:relative;
+$pos-absolute:absolute;
 $usermenu-color:#2c3038;
 $usermenu-txtcolor:#9fa1a7;
 $datatable-bg:#f6f7f8;
@@ -36,6 +39,8 @@ $secondary-blue:#6288dc;
 $blue-shade3:#4773d6;
 $gray-shade3:#ededed;
 $gray-shade4:#8d93a0;
+$thirty:30px;
+
 /*global variables ends here */
 
 /*global popup style starts here */
@@ -73,10 +78,22 @@ button, select, html, textarea, input{
 .pull-left{
 	float:$left;
 }
+.pos-relative{
+	position:$pos-relative;
+}
+.red-highlight{
+	color:$red-highlight !important;
+}
+.pos-absolute{
+	position:$pos-absolute;
+}
 .full-width-box{
 	float:$left;
 	width:$full-width;
 	padding:$zero 15px $zero 35px;
+}
+.light-300{
+	font-weight:$font-weight-300;
 }
 .right-search-box{
 	width:70%;
@@ -99,6 +116,15 @@ button, select, html, textarea, input{
 }
 .white-bg{
 	background-color:$white-color;
+}
+.approve-btn span{
+	color:$white-color;
+}
+.h3-font-size{
+	font-size:24px;
+}
+.order-screenbox-height{
+	min-height:165px;
 }
 .stokkup-select-box1{
 	font-size:16px;
@@ -463,8 +489,8 @@ md-dialog{
 	}
 	&.task-dialog{
 		max-width:445px;
-		max-height:475px;
-		top:8%;
+		max-height:580px;
+		top:5%;
 		left:6%;
 		@extend .dialog-shadow;
 		md-dialog-actions{
@@ -727,10 +753,213 @@ table.dataTable thead.stokkup-space1 th{padding-top:10px;}
 	padding:$zero 10px $zero 35px;
 }
 .box-upper-shadow{
-	-webkit-box-shadow: 0px -5px 18px -9px rgba(122,122,122,1);
-	-moz-box-shadow: 0px -5px 18px -9px rgba(122,122,122,1);
-	box-shadow: 0px -5px 18px -9px rgba(122,122,122,1);
+	-webkit-box-shadow: 0px -5px 10px -10px rgba(240,240,240,1);
+	-moz-box-shadow: 0px -5px 10px -10px rgba(240,240,240,1);
+	box-shadow: 0px -5px 10px -10px rgba(240,240,240,1);
 }
 .text-lower{
 	text-transform:lowercase !important;
+}
+.numbers-large{
+	font-size:32px;
+	color:$stokkup-table-footer-txtcolor;
+	font-weight:$font-weight-300;
+	padding:$zero;
+}
+.notes-style{
+	font-weight:$font-weight-300;
+	color:$stokkup-table-footer-txtcolor;
+}
+.table-box-outer{
+	width:$full-width;
+	background-color:$white-color;
+	table.dataTable{
+		background-color:$white-color;
+	}
+}
+
+.box-layout-2{
+	width:$full-width;
+	padding:$zero;
+}
+table.table-white-bg{
+	border-spacing:$zero;
+    margin:$auto;
+    width:$full-width;
+	background-color:$white-color;
+	thead{
+		background-color:$white-color;
+		th{
+			font-weight:$datatable-heading-fontweight;
+			font-size:$datatable-heading-size;
+			color:$datatable-text-color !important;
+			background-color:$white-color;
+			border-bottom:solid 1px #e5e5e5;
+			padding:30px 8px 10px;
+			line-height:$datatable-heading-size;		
+			&:first-child{
+				padding-left:$thirty;
+			}
+		}
+	}
+	tbody{
+		td{
+			color:$datatable-text-color !important;
+			opacity:1 !important;
+    		font-size: $datatable-content-size;
+    		font-weight:$font-weight-400;
+			padding:12px 8px;
+			vertical-align:middle;
+			&.last-col-txt{
+				padding-right:$thirty !important;
+			}
+		}
+	}
+}
+table.table-white-bg tbody td:first-child{
+	padding-left:$thirty !important;
+}
+table.table-white-bg tbody tr:last-child td{
+	padding-bottom:$thirty !important;
+}
+table.table-white-bg tbody tr:first-child td{
+	padding-top:35px;
+}
+.box-layout-2{
+	md-card{
+		background-color:transparent;
+		margin:$zero;
+		border:$nofloat;
+		md-card-title{
+			padding:$zero;
+		}
+		md-card-content{
+			background:$white-color;
+			border:solid 1px #e5e5e5;
+			padding-top:12px;
+				md-input-container{
+					padding:$zero;
+					input{
+					padding:$zero;
+					border:$nofloat !important;
+					color:$gray-shade4 !important;
+					opacity:1 !important;
+					}
+				}
+		}
+	}
+}
+.bottom-box-shadow{
+	-moz-box-shadow:0 0 2px 5px rgba(34,31,31,0.15);
+	-webkit-box-shadow:0 0 2px 5px rgba(34,31,31,0.15);
+	-ms-box-shadow:0 0 2px 5px rgba(34,31,31,0.15);
+	-o-box-shadow:0 0 2px 5px rgba(34,31,31,0.15);
+	box-shadow:0 0 2px 5px rgba(34,31,31,0.15);
+}
+.num-style1{
+	font-weight:$font-weight-600;
+	font-size:34px;
+	color:$datatable-text-color;
+	line-height:34px;
+}
+.extra-large-padding{
+	padding:30px 0 25px;
+	display:inline-table;
+}
+.full-row{
+	width:$full-width;
+}
+.full-row-center{
+	width:$full-width;
+	margin:$auto;
+	padding:$zero;
+}
+.orderin-padding{
+	padding:60px 0 4px;
+}
+.fig-desc-text{
+	font-weight:$font-weight-600;
+	font-size:$font-size-text;
+	
+}
+.box-zerospace{
+	width:$full-width;
+	float:$left;
+}
+.order-popup-menu1{
+	position:$pos-absolute;
+	top:20px;
+	right:$zero;
+}
+button{
+	&.orderscreen-infobtns{
+	max-width:270px;
+	margin:$zero $zero 15px;
+	}
+	&:last-child{
+		margin-bottom:$zero;
+	}
+}
+.footer{
+	button{
+		&:last-child{
+			margin-bottom:6px;
+		}
+	}
+}
+.dataTable{
+	&.order-design-table{
+		background-color:$white-color;
+		thead{
+			background-color:$white-color;
+			th{
+				background-color:$white-color;
+			}
+		}
+		tbody{
+			td{
+				background-color:$white-color !important;
+			}
+		}
+	}
+}
+.orderscreen-rightbar{
+	max-width:23%;
+	width:$full-width;
+}
+.center-num-box{
+	height:165px;
+	display:table;
+	text-align:center;
+	&.order-btm-box{
+		height:175px;
+	}
+}
+.shipping-main{
+	.center-num-box{
+		height:auto;
+	}
+}
+.center-num{
+	display:table-cell;
+	vertical-align:middle;
+}
+.global-text-style{
+	color:$stokkup-global-txtcolor;
+    font-size: $datatable-content-size;
+    font-weight: $font-weight-400;
+    opacity: 1;
+    padding: 12px 8px;
+}
+.global-heading-style{
+	color: $stokkup-global-txtcolor;
+    font-size: $font-size-text;
+    font-weight: $font-weight-700;
+    line-height:$font-size-text;
+}
+.box-layout-2 md-card md-card-content.recap{
+	padding:18px 30px 18px 22px;
+}
+.not-visible{
+	visibility:hidden;
 }

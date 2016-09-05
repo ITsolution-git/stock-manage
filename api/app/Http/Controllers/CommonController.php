@@ -1025,6 +1025,7 @@ class CommonController extends Controller {
                 3=>array('key' => 'cl.client_company', 'name' => 'Client'),
                 4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
                 5=>array('key' => 'po.date', 'name' => 'Created Date'),
+                6=>array('key' => '', '' => ''),
                 );
 
         }
