@@ -280,7 +280,7 @@ class Client extends Model {
      public function GetNoteDetails($id)
    {
    		$result = DB::table('client_notes as cn')
-   					->select('cn.client_notes','cn.note_id',DB::raw('DATE_FORMAT(cn.created_date, "%m/%d/%Y") as created_date'),'u.user_name')
+   					->select('cn.client_notes','cn.note_id',DB::raw('DATE_FORMAT(cn.created_date, "%m/%d/%Y") as created_date'),'u.name')
    					->join('users as u','u.id','=','cn.user_id')
    					->where('cn.client_id','=',$id)
    					->where('cn.note_status','=','1')
