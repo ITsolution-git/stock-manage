@@ -344,8 +344,8 @@ md-dialog .content-heading {
     padding: 0; }
 md-dialog.task-dialog {
   max-width: 445px;
-  max-height: 580px;
-  top: 5%;
+  max-height: 76vh;
+  top: calc((100vh-76vh)/2);
   left: 6%; }
   md-dialog.task-dialog md-dialog-actions {
     background: #e9eaeb;
@@ -713,3 +713,9 @@ button:last-child {
   visibility: hidden; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
+@media only screen and (min-width:1400px){
+  md-dialog.task-dialog{
+    max-height:80vh;
+    top:calc((100vh-80vh)/2);
+  }
+}

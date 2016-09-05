@@ -489,8 +489,8 @@ md-dialog{
 	}
 	&.task-dialog{
 		max-width:445px;
-		max-height:580px;
-		top:5%;
+		max-height:76vh;
+		top:calc((100vh-76vh)/2);
 		left:6%;
 		@extend .dialog-shadow;
 		md-dialog-actions{
