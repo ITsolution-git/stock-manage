@@ -11,10 +11,10 @@
                 </md-input-container>
             </div>
 
-               
-            <div class="client-modal-title " flex=50>
-                <span class="cursor-p" ng-click="openInsertPopup($event)">ADD NEW SALES PERSON</span>
-            </div>
+               <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+                    <a class="link-back cursor-p createPriceGridLink" ng-click="openInsertPopup($event)">ADD NEW SALES</a>
+                </div>
+            
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
