@@ -222,7 +222,7 @@ class OrderController extends Controller {
         $dist_location = count($locations);
         $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
         $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');
-        $notes_count = $this->order->getPoNotes($result['order'][0]->id);
+        $notes_count = $this->order->getOrderNotes($result['order'][0]->id);
         $total_packing_charge = $this->order->getTotalPackingCharge($result['order'][0]->id);
 
         $result['order'][0]->total_shipped_qnty = $total_shipped_qnty ? $total_shipped_qnty : '0';

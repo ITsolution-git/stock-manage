@@ -10,6 +10,7 @@ use App\Common;
 use App\Company;
 use App\Vendor;
 use App\Client;
+use App\Order;
 use App\Purchase;
 use App\Art;
 use DB;
@@ -23,7 +24,7 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order ) 
     {
         $this->common = $common;
         $this->company = $company;
@@ -31,6 +32,7 @@ class CommonController extends Controller {
         $this->purchase = $purchase;
         $this->art = $art;
         $this->client = $client;
+        $this->order = $order;
 
     }
 
@@ -1103,8 +1105,21 @@ class CommonController extends Controller {
                 );
         }
 
-        
 
+        if($post['filter']['function']=='order_notes') // PURCHASE NOTES LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'odp.id';
+            }
+            $result = $this->order->getOrderNoteDetail($post);
+            $header = array(
+                 0=>array('key' => '', 'name' => 'Notes','sortable' => false)
+                );
+
+        }
+
+        
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;
