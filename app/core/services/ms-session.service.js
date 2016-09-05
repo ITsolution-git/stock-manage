@@ -257,7 +257,7 @@
                 		if(extra=='artnote'){ delete UpdateArray.data.id;}
                 		if(extra=='client_contact'){ delete UpdateArray.data.id; }
                 		if(extra=='client_address'){ delete UpdateArray.data.id;delete UpdateArray.data.address_type;delete UpdateArray.data.state_name; }
-                		if(extra=='client_notes'){ delete UpdateArray.data.note_id; delete UpdateArray.data.user_name; delete UpdateArray.data.created_date;}
+                		if(extra=='client_notes'){ delete UpdateArray.data.note_id; delete UpdateArray.data.name; delete UpdateArray.data.created_date;}
                 		if(extra=='client_distaddress'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
                 		//=============== SPECIAL CONDITIONS ==============
 
