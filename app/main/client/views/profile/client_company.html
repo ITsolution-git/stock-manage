@@ -75,11 +75,11 @@
                                         <md-card-header-text>
                                             <span class="md-title">Main Contact</span>
                                         </md-card-header-text>
-                                        <md-menu ng-if="maincompcontact.contact_id != '0'">
+                                        <md-menu ng-if="maincompcontact.id != '0'">
                                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
-                                            <md-menu-content width="4"  ng-click="vm.editCompanyConatct($event,maincompcontact.contact_id,'client_contact','contact_form','id',maincompcontact.contact_id)">
+                                            <md-menu-content width="4"  ng-click="openEditPopup('client/views/forms/contact_form.html',maincompcontact,$event,'client_contact')">
                                                 <md-menu-item>
                                                     <md-button>
                                                         Edit

@@ -212,7 +212,7 @@ class Client extends Model {
           $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['shipping_logo']):NOIMAGE;
 
 
-          $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
+          $result['contact']['id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
     			$result['contact']['email'] = $value->email;
     			$result['contact']['first_name'] = $value->first_name;
     			$result['contact']['last_name'] = $value->last_name;
