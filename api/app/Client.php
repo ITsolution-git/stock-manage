@@ -176,8 +176,8 @@ class Client extends Model {
     			//$result['main']['created_date'] = $value->created_date;
     			$result['main']['billing_email'] = $value->billing_email;
     			$result['main']['company_phone'] = $value->company_phone;
-    			$result['main']['salesweb'] = $value->salesweb;
-
+    			$result['main']['salesweb'] = (!empty($value->salesweb) && preg_match('/http/',$value->salesweb) == false) ? "http://".$value->salesweb:$value->salesweb;
+          
           $result['main']['type_id'] = $value->type_id;
     			$result['main']['client_companytype'] = $value->type_name;
 
@@ -190,7 +190,7 @@ class Client extends Model {
           $result['main']['b_w_logo'] = $value->b_w_logo;
           $result['main']['shipping_logo'] = $value->shipping_logo;
           $result['main']['blind_text'] = $value->blind_text;
-          $result['main']['company_url'] = $value->company_url;
+          $result['main']['company_url'] = (!empty($value->company_url) && preg_match('/http/',$value->company_url) == false) ? "http://".$value->company_url:$value->company_url;
 
           $result['main']['client_address']  = !empty($value->pl_address)?$value->pl_address.",":'' ; 
           $result['main']['client_address'] .= !empty($value->pl_city)?$value->pl_city.", ":''; 
@@ -220,7 +220,7 @@ class Client extends Model {
     			$result['contact']['phone'] = $value->phone;
 
 
-    			$result['sales']['salesweb'] = $value->salesweb;
+    			$result['sales']['salesweb'] =   (!empty($value->salesweb) && preg_match('/http/',$value->salesweb) == false) ? "http://".$value->salesweb:$value->salesweb;
     			$result['sales']['anniversarydate'] = $value->anniversarydate;
     			$result['sales']['salesperson'] = $value->salesperson;
           $result['sales']['sales_name'] = $value->sales_name;
