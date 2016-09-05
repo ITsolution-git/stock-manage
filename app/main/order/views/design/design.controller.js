@@ -124,11 +124,7 @@
             $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
                
                 if(result.data.success == '1') {
-
                     $scope.position_array_count = result.data.order_design_position.length;
-
-
-
                     $scope.order_design_position = result.data.order_design_position;
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
                     $scope.total_screen_fees = result.data.total_screen_fees;
@@ -171,17 +167,26 @@
                    
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
                     $scope.total_screen_fees = result.data.total_screen_fees;
+                    $scope.order_design_position = result.data.order_design_position;
                 }
                 else
                 {
                     $scope.total_pos_qnty = 0;
                     $scope.total_screen_fees = 0;
+                    $scope.order_design_position = [];
                 }
             });
         }
 
         $scope.updateDesignPosition = function(column_name,id,value,table_name,match_condition,key)
         {
+            if(column_name == 'color_stitch_count' && value > 16)
+            {
+                var data = {"status": "error", "message": "Color Stich Count should not be more than 16"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+
             var position_main_data = {};
             position_main_data.table =table_name;
             $scope.name_filed = column_name;
