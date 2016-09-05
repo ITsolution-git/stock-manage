@@ -212,7 +212,7 @@ class Client extends Model {
           $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['shipping_logo']):NOIMAGE;
 
 
-          $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
+          $result['contact']['id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
     			$result['contact']['email'] = $value->email;
     			$result['contact']['first_name'] = $value->first_name;
     			$result['contact']['last_name'] = $value->last_name;
@@ -280,7 +280,7 @@ class Client extends Model {
      public function GetNoteDetails($id)
    {
    		$result = DB::table('client_notes as cn')
-   					->select('cn.client_notes','cn.note_id',DB::raw('DATE_FORMAT(cn.created_date, "%m/%d/%Y") as created_date'),'u.user_name')
+   					->select('cn.client_notes','cn.note_id',DB::raw('DATE_FORMAT(cn.created_date, "%m/%d/%Y") as created_date'),'u.name')
    					->join('users as u','u.id','=','cn.user_id')
    					->where('cn.client_id','=',$id)
    					->where('cn.note_status','=','1')
