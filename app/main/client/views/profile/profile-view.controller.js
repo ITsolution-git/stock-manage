@@ -320,18 +320,19 @@
 // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
         $scope.RemoveFields = function(table,cond_field,cond_value){
               
-                var delete_data = {};
-                
-                $scope.name_filed = cond_field;
-                var obj = {};
-                obj[$scope.name_filed] =  cond_value;
-                delete_data.cond = angular.copy(obj);
-                
-                delete_data.table =table;
+
+                var UpdateArray = {};
+                UpdateArray.table =table;
+                UpdateArray.data = {is_deleted:'0'}
+
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                UpdateArray.cond = angular.copy(condition_obj);
                 var permission = confirm("Are you sure to delete this Record ?");
+                
                 if (permission == true) 
                 {
-                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                    $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                     {
                         if(result.data.success=='1')
                         {
@@ -348,12 +349,13 @@
 // ============= REMOVE CLIENT LOCATION TABLE RECORD WITH NO MAIN,SHIIPING,BIllING ADDRESS CONDITION ============= // 
         $scope.RemoveLocationFields = function(table,cond_field,cond_value,main,shipping,billing){
               
-                var delete_data = {};
-                
-                $scope.name_filed = cond_field;
-                var obj = {};
-                obj[$scope.name_filed] =  cond_value;
-                delete_data.cond = angular.copy(obj);
+                var UpdateArray = {};
+                UpdateArray.table =table;
+                UpdateArray.data = {is_deleted:'0'}
+
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                UpdateArray.cond = angular.copy(condition_obj);
                 
                 delete_data.table =table;
                 if(main==0)
@@ -365,7 +367,7 @@
                             var permission = confirm("Are you sure to delete this Record ?");
                             if (permission == true) 
                             {
-                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                                 {
                                     if(result.data.success=='1')
                                     {
