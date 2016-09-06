@@ -313,7 +313,11 @@
                 $("#ajax_loader").hide();
                     if(result.data.success=='1')
                     {
-                        notifyService.notify('success',"Invoice Payments Sync successfully");   
+                        notifyService.notify('success', result.data.message);
+                    }
+                    else if(result.data.success=='2')
+                    {
+                        notifyService.notify('error', result.data.message);
                     }
                     else
                     {

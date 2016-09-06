@@ -947,10 +947,10 @@ class QuickBookController extends Controller
         $company_id=$post['company_id'];
 
         $company_data = $this->common->GetTableRecords('company_info',array('user_id' => $company_id),array());
-        $result = $this->GetAllclientInovicesAddDelete($company_id,0);
-        $resultDelete = $this->GetAllclientInovicesAddDelete($company_id,1);
+        $result = $this->GetAllclientInovicesAddDelete($company_id,0,1);
+        $resultDelete = $this->GetAllclientInovicesAddDelete($company_id,1,0);
         if((count($result)<1) && (count($resultDelete)<1)){
-            $data = array("success"=>0,'message' =>"No Payments are there to update.");
+            $data = array("success"=>2,'message' =>"No Invoice Payments are there to Sync to Quickbook.");
             return response()->json(['data'=>$data]);
         }
 
@@ -986,6 +986,9 @@ class QuickBookController extends Controller
             if ($resp = $PaymentService->add($this->context, $this->realm, $Payment))
             {
                 //print('Our new Payment ID is: [' . $resp . ']');
+                $resp=$numeric_filtered = filter_var($resp, FILTER_SANITIZE_NUMBER_INT);
+                $spChars= array('0' => '-');
+                $resp=str_replace($spChars, '', $resp);
                 //return 1;
                 $qbData=array('qb_payment_id' => $resp, 'qb_web_reference' => $setPaymentRefNum, 'qb_flag' => 1);
                 $this->common->UpdateTableRecords('payment_history',array('payment_id' => $all_data->payment_id),$qbData);
@@ -1000,49 +1003,24 @@ class QuickBookController extends Controller
         }
 
         // Updating delete invoice payment data
-        /*foreach ($resultDelete as $key => $all_data) 
+        foreach ($resultDelete as $key => $all_data) 
         {
-            $setPaymentRefNum='WEB' . mt_rand(0, 10000);
-            $Payment->setPaymentRefNum($setPaymentRefNum);
-            $Payment->setTxnDate($all_data->payment_date);
-            //$Payment->setTotalAmt(7870);
-            $Payment->setTotalAmt($all_data->totalAmount);
-
-            // Create line for payment (this details what it's applied to)
-            $Line = new \QuickBooks_IPP_Object_Line();
-            //$Line->setAmount(500);
-            $Line->setAmount($all_data->payment_amount);
-
-            // The line has a LinkedTxn node which links to the actual invoice
-            $LinkedTxn = new \QuickBooks_IPP_Object_LinkedTxn();
-            //$LinkedTxn->setTxnId(152);
-            $LinkedTxn->setTxnId($all_data->invoiceId);
-            $LinkedTxn->setTxnType('Invoice');
-
-            $Line->setLinkedTxn($LinkedTxn);
-
-            $Payment->addLine($Line);
-
-            //$Payment->setCustomerRef(1);
-            $Payment->setCustomerRef($all_data->CustomerRef);
-            //print_r($Payment);exit;
-
-            // Send payment to QBO 
-            if ($resp = $PaymentService->add($this->context, $this->realm, $Payment))
-            {
-                //print('Our new Payment ID is: [' . $resp . ']');
-                //return 1;
-                $qbData=array('qb_payment_id' => $resp, 'qb_web_reference' => $setPaymentRefNum, 'qb_flag' => 1);
-                $this->common->UpdateTableRecords('payment_history',array('payment_id' => $all_data->payment_id),$qbData);
+            $qb_payment_id = $all_data->qb_payment_id;
+            if((isset($qb_payment_id)) && ($qb_payment_id!=0)){
+                $respDelete = $PaymentService->delete($this->context, $this->realm, $qb_payment_id);
+                if ($respDelete)
+                {
+                    // print('The payment was deleted!'); delete from payment history
+                    $result = $this->common->DeleteTableRecords('payment_history',array('payment_id'=>$all_data->payment_id, 'qb_payment_id'=>$all_data->qb_payment_id));
+                }
+                else
+                {
+                    //print('Could not delete payment: ' . $PaymentService->lastError());
+                    $data = array("success"=>0,'message' =>'Could not delete payment: ' . $PaymentService->lastError());
+                    return response()->json(['data'=>$data]);
+                }
             }
-            else
-            {
-                //print($PaymentService->lastError());
-                $data = array("success"=>0,'message' =>$PaymentService->lastError());
-                return response()->json(['data'=>$data]);
-                //return 0;
-            }
-        }*/
+        }
         return response()->json(['data'=>$data]);
         //print_r($result);exit;
     }
@@ -1063,16 +1041,17 @@ class QuickBookController extends Controller
         return $retArray;
     }*/
 
-    public function GetAllclientInovicesAddDelete($company_id,$operation){
+    public function GetAllclientInovicesAddDelete($company_id,$operationQB,$operationDelete){
         $retArray = DB::table('users as u')
-            ->select('i.qb_id as invoiceId', 'p.payment_id as payment_id', 'p.payment_date as payment_date', 'p.payment_amount as payment_amount', 'o.grand_total as totalAmount', 'c.qid as CustomerRef')
+            ->select('i.qb_id as invoiceId', 'p.payment_id as payment_id', 'p.payment_date as payment_date', 'p.payment_amount as payment_amount', 'o.grand_total as totalAmount', 'c.qid as CustomerRef', 'p.qb_payment_id as qb_payment_id')
             ->leftJoin('client as c','c.company_id','=',"u.id")
             ->leftJoin('orders as o','o.client_id','=',"c.client_id")
             ->leftJoin('invoice as i','i.order_id','=',"o.id")
             ->leftJoin('payment_history as p','p.qb_id','=',"i.qb_id")
             ->where('u.id','=',$company_id)
             ->where('i.qb_id','!=',0)
-            ->where('p.qb_flag','=',$operation)
+            ->where('p.qb_flag','=',$operationQB)
+            ->where('p.is_delete','=',$operationDelete)
             ->get();
         return $retArray;
     }
