@@ -14,7 +14,7 @@
         <div layout="row" layout-wrap>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Name *" required name="sales_name"  ng-model="params.data.sales_name">
+                    <input placeholder="Name *" required name="sales_name"  ng-model="params.sales_name">
                      <div ng-messages="employeeform.sales_name.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>This field is required</span>
@@ -22,7 +22,7 @@
                     </div>
                 </md-input-container>
                  <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Email *" type="email" name="sales_email" required ng-pattern="/^.+@.+\..+$/"  ng-model="params.data.sales_email">
+                    <input placeholder="Email *" type="email" name="sales_email" required ng-pattern="/^.+@.+\..+$/"  ng-model="params.sales_email">
                     <div ng-messages="employeeform.sales_email.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span >This field is required</span>
@@ -34,10 +34,10 @@
                 </md-input-container>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Phone" valid-phone name="sales_phone"  ng-model="params.data.sales_phone">
+                    <input placeholder="Phone" valid-phone name="sales_phone"  ng-model="params.sales_phone">
                 </md-input-container>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Website" name="sales_web"  ng-model="params.data.sales_web">
+                    <input placeholder="Website" name="sales_web"  ng-model="params.sales_web">
                 </md-input-container>
         </div>
     </md-card-content>
@@ -48,11 +48,11 @@
     <tr>
         <td class="p-16 td-500">
         
-            <md-button class="bg-blue float-right" ng-if="params.flag=='add'" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params.data,'sales')">
+            <md-button class="bg-blue float-right" ng-if="flag=='add'" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params,'sales')">
                     SAVE
             </md-button>
 
-             <md-button class="bg-blue float-right"  ng-if="params.flag=='edit'"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params.data,'sales','id',params.data.id,'sales')">
+             <md-button class="bg-blue float-right"  ng-if="flag=='edit'"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params,'sales','id',params.id,'sales')">
                     UPDATE
             </md-button>
 

@@ -76,9 +76,9 @@
         $scope.setTime = function (finishing,param)
         {
             var d = new Date();
-            var hours = ("0" + d.getHours()).slice(-2);
-            var minutes = ("0" + d.getMinutes()).slice(-2);
-            var seconds = ("0" + d.getSeconds()).slice(-2);
+            var hours = d.getHours();
+            var minutes = d.getMinutes();
+            var seconds = d.getSeconds();
 
             var ampm = hours >= 12 ? 'PM' : 'AM';
 

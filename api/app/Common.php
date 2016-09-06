@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+ 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -163,7 +163,7 @@ class Common extends Model {
 
         return $id;
     }
-    public function GetTableRecords($table,$cond,$notcond,$sort=0,$sortBy=0)
+    public function GetTableRecords($table,$cond,$notcond=array(),$sort=0,$sortBy=0)
     {
         $result = DB::table($table);
         if(count($cond)>0)

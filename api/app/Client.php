@@ -176,8 +176,8 @@ class Client extends Model {
     			//$result['main']['created_date'] = $value->created_date;
     			$result['main']['billing_email'] = $value->billing_email;
     			$result['main']['company_phone'] = $value->company_phone;
-    			$result['main']['salesweb'] = $value->salesweb;
-
+    			$result['main']['salesweb'] = (!empty($value->salesweb) && preg_match('/http/',$value->salesweb) == false) ? "http://".$value->salesweb:$value->salesweb;
+          
           $result['main']['type_id'] = $value->type_id;
     			$result['main']['client_companytype'] = $value->type_name;
 
@@ -190,7 +190,7 @@ class Client extends Model {
           $result['main']['b_w_logo'] = $value->b_w_logo;
           $result['main']['shipping_logo'] = $value->shipping_logo;
           $result['main']['blind_text'] = $value->blind_text;
-          $result['main']['company_url'] = $value->company_url;
+          $result['main']['company_url'] = (!empty($value->company_url) && preg_match('/http/',$value->company_url) == false) ? "http://".$value->company_url:$value->company_url;
 
           $result['main']['client_address']  = !empty($value->pl_address)?$value->pl_address.",":'' ; 
           $result['main']['client_address'] .= !empty($value->pl_city)?$value->pl_city.", ":''; 
@@ -212,7 +212,7 @@ class Client extends Model {
           $result['main']['shipping_url_photo'] = (!empty($result['main']['shipping_logo']))?$this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$result['main']['shipping_logo']):NOIMAGE;
 
 
-          $result['contact']['contact_id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
+          $result['contact']['id'] = !empty($value->contact_id)?$value->contact_id:'0' ;
     			$result['contact']['email'] = $value->email;
     			$result['contact']['first_name'] = $value->first_name;
     			$result['contact']['last_name'] = $value->last_name;
@@ -220,7 +220,7 @@ class Client extends Model {
     			$result['contact']['phone'] = $value->phone;
 
 
-    			$result['sales']['salesweb'] = $value->salesweb;
+    			$result['sales']['salesweb'] =   (!empty($value->salesweb) && preg_match('/http/',$value->salesweb) == false) ? "http://".$value->salesweb:$value->salesweb;
     			$result['sales']['anniversarydate'] = $value->anniversarydate;
     			$result['sales']['salesperson'] = $value->salesperson;
           $result['sales']['sales_name'] = $value->sales_name;
@@ -280,7 +280,7 @@ class Client extends Model {
      public function GetNoteDetails($id)
    {
    		$result = DB::table('client_notes as cn')
-   					->select('cn.client_notes','cn.note_id',DB::raw('DATE_FORMAT(cn.created_date, "%m/%d/%Y") as created_date'),'u.user_name')
+   					->select('cn.client_notes','cn.note_id',DB::raw('DATE_FORMAT(cn.created_date, "%m/%d/%Y") as created_date'),'u.name')
    					->join('users as u','u.id','=','cn.user_id')
    					->where('cn.client_id','=',$id)
    					->where('cn.note_status','=','1')

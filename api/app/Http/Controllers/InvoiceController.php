@@ -143,6 +143,12 @@ class InvoiceController extends Controller {
 
         $retutn_arr['addresses'] = $this->client->getAddress($order_data[0]->client_id);
         $retutn_arr['client_data'] = $this->common->GetTableRecords('client_contact',array('client_id' => $order_data[0]->client_id,'contact_main' => 1),array());
+
+        if(empty($retutn_arr['client_data'])) {
+            $retutn_arr['client_data'][0]->first_name = '';
+            $retutn_arr['client_data'][0]->last_name = '';
+        }
+
         $retutn_arr['price_grid_data'] = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $order_data[0]->price_id),array());
 
         $retutn_arr['order_data'] = $order_data;
@@ -185,7 +191,14 @@ class InvoiceController extends Controller {
             $data = array('company_id' => $company_id,'id' => $design->id);
             $design->positions = $this->order->getDesignPositionDetail($data);
             $productData = $this->product->designProduct($data);
-            $design->products = $productData['productData'];
+            
+            if(!empty($productData['productData'])) {
+                $design->products = $productData['productData'];    
+            }
+            else
+            {
+                $design->products = array();
+            }
         }
 
         $retutn_arr['all_design'] = $all_design;

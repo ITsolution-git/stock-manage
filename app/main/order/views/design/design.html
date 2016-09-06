@@ -44,35 +44,64 @@
             <div class="design-positions-box border-grey m-b-20" layout="column" layout-align="start" ng-repeat="(key,order_design_position) in order_design_position">
                 <div class="box-toolbar" layout="row" layout-align="end center">
 
-                     <div flex="20" layout="row" layout-align="start center">
+                     <div flex="90" layout-align="start center" class="box-zerospace">
                         <!-- <span class="h2 text-semibold">{{order_design_position.position_header_name}}</span> -->
-                       <div layout="column"> 
-                        <table>
-                            <tr>
-                             <td>Position:</td>
-                             <td>{{order_design_position.position_header_name}}</td>
-                            </tr> 
+                        <div layout-wrap class="box-zerospace">
+                            <div class="trans-box order-designname pull-left">
+                                <div>Position:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.position_header_name}}</span>
+                            </div>
 
-                            <tr>
-                             <td>Type:</td>
-                             <td>{{order_design_position.placement_header_name}}</td>
-                            </tr> 
+                            <div class="trans-box order-designname pull-left">
+                                <div>Type:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.placement_header_name}}</span>
+                            </div>
 
-                            <tr>
-                             <td>Quantity:</td>
-                             <td>{{order_design_position.qnty_header_name}}</td>
-                            </tr> 
+                            <div class="trans-box order-designname pull-left">
+                                <div>Quantity:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.qnty_header_name}}</span>
+                            </div>
 
-                            <tr>
-                             <td>Price:</td>
-                             <td>{{order_design_position.total_price | currency : $ : 2}}</td>
-                            </tr> 
-                        </table>
-                        
-                       </div> 
+                            <div class="trans-box order-designname pull-left">
+                                <div>Price:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.total_price | currency : $ : 2}}</span>
+                            </div>
+
+                            <div class="trans-box order-designname pull-left">
+                                <div>Color Count:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.color_stitch_count}}</span>
+                            </div>
+
+                            <div class="trans-box order-designname pull-left">
+                                <div>Design Name:</div>
+                                <span class="font-14 chrome-weight">{{designInforamtion.design_name}}</span>
+                            </div>
+                            
+                        </div>
+
+                        <div class="box-zerospace white-bg">
+                            <div class="pull-left right-20 box-zerospace">
+                                 
+                                <table class="simple-table layout-padding row-border box-zerospace">
+                                    <tbody>
+                                         <tr>
+                                            <td class="design-intable">
+                                                <span class="stokkup-title-h4 light-300">Next Tier:</span>  
+                                            </td>
+                                                <td class="design-intable">
+                                                <b>Screent Print: </b>{{order_design_position.screen_print_charge | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Embroidery: </b>{{order_design_position.embroidery_charge | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Direct To Garment: </b>{{order_design_position.direct_to_garment_charge | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Garment Markup: </b>{{order_design_position.markup_default}}%
+                                                </td>
+                                            </tr> 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
                     </div>
-                  <div flex="80" layout-align="end center" layout="row">
+                  <div flex="10" layout-align="end center" layout="row">
                     <button  ng-click="position1.expanded = !position1.expanded">
                         <md-icon ng-if="position1.expanded" md-font-icon="icon-minus"></md-icon>
                         <md-icon ng-if="!position1.expanded" md-font-icon="icon-plus"></md-icon>
