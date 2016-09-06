@@ -1039,6 +1039,7 @@ button{
 .custom-tabs-content{
 	md-card{
 		padding:5px $font-size-mid;
+		margin:$zero 10px;
 		md-card-header{
 			padding:$zero;
 			.md-title{
@@ -1076,5 +1077,8 @@ md-card-content{
 			margin-bottom:$font-size-text;
 		}
 	}
+}
+.text-white{
+	color:$white-color !important;
 }
 /*clients module inner pages */

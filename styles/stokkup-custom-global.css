@@ -766,7 +766,8 @@ button:last-child {
     color: #252932 !important; }
 
 .custom-tabs-content md-card {
-  padding: 5px 20px; }
+  padding: 5px 20px;
+  margin: 0 10px; }
   .custom-tabs-content md-card md-card-header {
     padding: 0; }
     .custom-tabs-content md-card md-card-header .md-title {
@@ -795,6 +796,9 @@ md-card-content.custom-desc-box .h5 {
 md-card-content.custom-desc-box span {
   margin-top: 4px;
   margin-bottom: 14px; }
+
+.text-white {
+  color: #fff !important; }
 
 /*clients module inner pages */
 
