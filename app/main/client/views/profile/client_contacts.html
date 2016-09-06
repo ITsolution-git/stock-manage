@@ -58,7 +58,7 @@
                                             <td>{{contact.phone}}</td>
                                             <td>{{contact.email}}</td>
                                             <td class="text-center" ng-if="contact.contact_main=='1'"><i class="icon icon-check s40"></i></td>
-                                            <td ng-if="contact.contact_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
+                                            <td class="text-center" ng-if="contact.contact_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
                                             <td class="text-left"> 
                                     <md-menu>
                                         <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">

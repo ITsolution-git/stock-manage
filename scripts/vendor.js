@@ -50529,7 +50529,7 @@ var DARK_FOREGROUND = {
   name: 'dark',
   '1': 'rgba(110,117,132,1)',
   '2': 'rgba(110,117,132,1)',
-  '3': 'rgba(110,117,132,1)',
+  '3': 'rgba(255,255,255,1)',
   '4': 'rgba(110,117,132,1)'
 };
 var LIGHT_FOREGROUND = {
