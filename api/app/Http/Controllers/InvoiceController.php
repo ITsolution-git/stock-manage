@@ -213,6 +213,7 @@ class InvoiceController extends Controller {
         PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');
     }
 
+    // get invoice history from payment history
     public function getInvoiceHistory($invoice_id,$company_id,$type=0){
 
         $post = Input::all();
@@ -244,6 +245,38 @@ class InvoiceController extends Controller {
             'success' => 1, 
             'message' => GET_RECORDS,
             'allData' => $retArray
+            );
+        return response()->json(["data" => $response]);
+    }
+
+    // get invoice payment stored for future use
+    public function getInvoicePayment($invoice_id,$company_id,$type=0){
+
+        $post = Input::all();
+
+        $retutn_arr = array();
+        
+        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+
+        $retArray = DB::table('invoice')
+            ->select('creditFname', 'creditLname', 'creditCard', 'month', 'year', 'street', 'suite', 'city', 'state', 'zip')
+            ->where('id','=',$invoice_id)
+            ->get();
+
+         if(empty($invoice_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $invoice_data
             );
         return response()->json(["data" => $response]);
     }

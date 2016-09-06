@@ -33,6 +33,17 @@
             $scope.siData = result.data.allData;
         });
 
+        $http.get('api/public/invoice/getInvoicePayment/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+
+            if(result123.data.success == '0') {
+                    $state.go('app.invoices');
+            }else{
+                //$scope.spData = result123.data.allData[0];
+                //alert(result123.data.allData[0].first_name+' : '+result123.data.allData[0].last_name+' : '+result123.data.allData[0].credit_card);
+                $scope.company = result123.data.allData[0];
+            }
+        });
+
         var misc_list_data = {};
         var condition_obj = {};
         condition_obj['company_id'] =  sessionService.get('company_id');
@@ -303,18 +314,25 @@
                         $scope.siData = result.data.allData;
                     });
                     //$scope.paymentData = null;
-                    paymentData.creditFname = null;
-                    paymentData.creditLname = null;
-                    paymentData.creditCard = null;
-                    paymentData.cvv = null;
-                    paymentData.expMonth = null;
-                    paymentData.expYear = null;
-                    paymentData.amount = null;
-                    paymentData.street = null;
-                    paymentData.suite = null;
-                    paymentData.city = null;
-                    paymentData.state = null;
-                    paymentData.zip = null;
+                    if(!paymentData.storeCard) {
+                        paymentData.creditFname = null;
+                        paymentData.creditLname = null;
+                        paymentData.creditCard = null;
+                        paymentData.cvv = null;
+                        paymentData.expMonth = null;
+                        paymentData.expYear = null;
+                        paymentData.amount = null;
+                        paymentData.street = null;
+                        paymentData.suite = null;
+                        paymentData.city = null;
+                        paymentData.state = null;
+                        paymentData.zip = null;
+                        paymentData.storeCard = null;
+                    }else{
+                        paymentData.amount = null;
+                        paymentData.cvv = null;
+                    }
+                    
                     notifyService.notify('success',"Payment made Successfully");
                 }
                 else
