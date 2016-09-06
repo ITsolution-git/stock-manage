@@ -14,6 +14,7 @@
 			{?>
 				<img src="{{$company_data[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
 			<?php
+			}
 			else
 			{ ?>
 				<img src="" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
@@ -23,7 +24,7 @@
 			<td>
 				<span style="text-align:center;margin:0;font-weight:bold;">{{$company_data[0]->name}}</span>
 				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address1}}</span>
-				<span style="text-align:center;margin:0;">{{$company_data[0]->city}}, {{$company_data[0]->state}} {{$company_data[0]->zip}}</span>
+				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address_city}}, {{$company_data[0]->prime_address_state}} {{$company_data[0]->prime_address_zip}}</span>
 				<span style="text-align:center;margin:0;">P: {{$company_data[0]->phone}}</span><br>
 				<span style="text-align:center;margin:0;"><a href="{{$company_data[0]->url}}" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
 			</td>

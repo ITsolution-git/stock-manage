@@ -55,10 +55,10 @@
                         </div>
                            
                     </md-card-content>
-                        <div layout-align="end start"  flex="30" layout="row" ng-show="order.order_number == '' && order.is_complete == '0' ">
+                        <div layout-align="end start"  flex="30" layout="row">
                             <!--4 buttons panel -->
                             <div class="right-20 m-t-20 m-b-20">
-                                <md-button  class="pull-right full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns" ng-click="calculateAll(order_id,company_id)">
+                                <md-button  class="pull-right full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns" ng-click="calculateAll(order_id,company_id)" ng-show="order.order_number == '' && order.is_complete == '0' ">
                                 CONFIRM PRICING
                                 </md-button>
                                 <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-show="order.invoice_id > 0" ng-click="openEmailPopup($event)">
