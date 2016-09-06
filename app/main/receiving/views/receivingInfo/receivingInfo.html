@@ -50,12 +50,12 @@
                             </div>
                         </div>
                     </div>
-<!--                     <div layout-align="end start"  flex="20" layout="row">
-                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openReceivingInformationDialog($event,order.id)">
+                    <div layout-align="end start"  flex="20" layout="row">
+                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="changeReceiveData($event)">
                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                         </md-button>
                     </div>
- -->                </div>
+                </div>
             </div>
         </div>
         
@@ -93,7 +93,7 @@
                         <div layout="row" class="" flex=100 layout-wrap>
                             <div class="trans-box divPO m-b-20 m-15-L" ng-repeat="(key,line_data) in line_item.data" flex=15>
                                 <span class="sizeColor heading">{{line_data.size}}</span>
-                                <!-- <p class="font-14 chrome-weight subtitle" align="center">Ordered <span class="pull-right subtitle">{{line_data.qnty_ordered}}</span></p> -->
+                               
                                 <p class="font-14 chrome-weight subtitle" align="center">Ordered<md-input-container flex=50>
                                     <input class="text-right subtitle" value="{{line_data.qnty_ordered}}" style="border:0" readonly>
                                     </md-input-container></p>
@@ -103,7 +103,7 @@
                                     <p class="font-14 chrome-weight subtitle" align="center">Defective<md-input-container flex=50>
                                         <input class="text-right subtitle" ng-model="line_data.short" only-number name="short"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_purchased,\'short\')' }" aria-label="short" class="subtitle">
                                     </md-input-container></p>
-                                </p>
+                                
                                 <hr style="border: 0;height: 1px;background-image: linear-gradient(to right, rgba(224, 225, 227, 1), rgba(224, 225, 227, 1), rgba(224, 225, 227, 1));">
                                 <p class="productYellow">{{line_data.short}} Defective</p>
                                 <p class="productRed">{{line_data.short_unit}} Units Short</p>
@@ -118,22 +118,22 @@
                 <div layout="row" class="borderTopBottom divPO m-15-LR">
                     <div flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight subtitle">Order Line Total:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_product}}</span></p>
+                            <p class="font-14 chrome-weight subtitle">Order Total:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_product}}</span></p>
                         </div>
                     </div>
                     <div flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight subtitle">Order Line Received:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_received}}</span></p>
+                            <p class="font-14 chrome-weight subtitle">Order Received:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_received}}</span></p>
                         </div>
                     </div>
                     <div flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight subtitle">Order Line Defectives:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_defective}}</span></p>
+                            <p class="font-14 chrome-weight subtitle">Order Defectives:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_defective}}</span></p>
                         </div>
                     </div>
                     <div flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight subtitle">Order Line Remaining:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_remains}}</span></p>
+                            <p class="font-14 chrome-weight subtitle">Order Remaining:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="heading">{{line_item.total_remains}}</span></p>
                         </div>
                     </div>
                 </div>
