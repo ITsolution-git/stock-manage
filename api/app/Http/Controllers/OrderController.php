@@ -1056,7 +1056,7 @@ class OrderController extends Controller {
         }
         else
         {
-            $payment_link = SITE_HOST."/invoice/linktopay/".$payment_data[0]->session_link;
+            $payment_link = SITE_HOST."api/public/invoice/linktopay/".$payment_data[0]->session_link;
         }
 
         if(!file_exists($file_path))
