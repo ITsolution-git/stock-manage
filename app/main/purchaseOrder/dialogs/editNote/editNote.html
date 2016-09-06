@@ -11,12 +11,16 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
                 <md-input-container class="md-block m-b-0 p-b-0" flex-gt-sm>
-                    <label class="font-14 color-b-grey">Note Name</label>
-                    <input placeholder="" ng-model="note_data.note_title">
+                    <label class="font-14 color-b-grey">{{note_data.value}}</label>
+                </md-input-container>
+
+                <md-input-container class="md-block m-b-0 p-b-0" flex-gt-sm>
+                    <label class="font-14 color-b-grey">Note</label>
+                    <textarea ng-model="note_data.note" md-maxlength="150" rows="5" md-select-on-focus ></textarea>
                 </md-input-container>
                 <md-input-container class="md-block pad0 m-b-0 margin-0">
-                    <label class="color-b-grey">Note Description</label>
-                    <textarea ng-model="note_data.note" md-maxlength="150" rows="5" md-select-on-focus ></textarea>
+                    <label class="color-b-grey">Description</label>
+                    <textarea ng-model="note_data.description" md-maxlength="150" rows="5" md-select-on-focus ></textarea>
                 </md-input-container>
                 <!-- <md-checkbox md-no-ink aria-label="Checkbox No Ink" class="md-primary margin-0 p-l-20  ">
                     Make Note Private
