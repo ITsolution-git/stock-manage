@@ -311,7 +311,7 @@
 
                 $http.post('api/public/qbo/updateInvoicePayment',company_id).success(function(result) {
                 $("#ajax_loader").hide();
-                    if(result != '0')
+                    if(result.data.success=='1')
                     {
                         notifyService.notify('success',"Invoice Payments Sync successfully");   
                     }
