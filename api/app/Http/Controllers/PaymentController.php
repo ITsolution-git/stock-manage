@@ -142,13 +142,12 @@ class PaymentController extends Controller {
       $transactionRequestType->setOrder($order);
       $transactionRequestType->setPayment($paymentOne);
 
-        $retArray = DB::table('payment_history as p')
-              ->select('c.client_company', 'c.client_id', 'c.billing_email')
-              ->leftJoin('orders as o','o.id','=',"p.order_id")
-              ->leftJoin('client as c','o.client_id','=',"o.client_id")
-              ->where('p.order_id','=',$order_id)
-              ->where('p.is_delete','=',1)
-              ->get();
+      $retArray = DB::table('orders as o')
+            ->select('c.client_company', 'c.client_id', 'c.billing_email')
+            ->leftJoin('client as c','c.client_id','=',"o.client_id")
+            ->where('o.id','=',$order_id)
+            ->where('o.is_delete','=','1')
+            ->get();
 
       $billto = new AnetAPI\CustomerAddressType();
       $billto->setFirstName($post['creditFname']);
@@ -198,13 +197,7 @@ class PaymentController extends Controller {
 
           $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
-          $retArray = DB::table('payment_history as p')
-              ->select('c.client_company', 'c.client_id', 'c.billing_email')
-              ->leftJoin('orders as o','o.id','=',"p.order_id")
-              ->leftJoin('client as c','o.client_id','=',"o.client_id")
-              ->where('p.order_id','=',$order_id)
-              ->where('p.is_delete','=',1)
-              ->get();
+          
 
           if(($post['storeCard']==1) || ($post['linkToPay']==1)){
             // Create the payment data for a credit card
