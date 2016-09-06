@@ -1007,9 +1007,9 @@ class CommonController extends Controller {
             }
             $result = $this->purchase->getPurchaseNote($post);
             $header = array(
-                0=>array('key' => 'note.note_date', 'name' => 'Created date'),
-                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
-                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                0=>array('key' => 'mt.value', 'name' => 'Position'),
+                1=>array('key' => 'odp.note', 'name' => 'Note Name'),
+                2=>array('key' => 'odp.description', 'name' => 'Note Description')
                 );
 
         }
