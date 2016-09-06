@@ -500,56 +500,50 @@
                         </md-card-title-text>
                     </md-card-title>
                     <md-card-content class="recap">
-
-                       <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Screens</div>
                             <span class="ng-binding global-heading-style">{{order.screen_charge | currency : $ : 2}}</span>
                         </div>
-
-                     
-                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Press Setup</div>
                             <span class="ng-binding global-heading-style">{{order.press_setup_charge | currency : $ : 2}}</span>
-                        </div>    
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding global-text-style">Shipping Charge</div>
-                        <span class="ng-binding global-heading-style">{{order.item_ship_charge | currency : $ : 2}}</span>
-                    </div>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Shipping Charge</div>
+                            <span class="ng-binding global-heading-style">{{order.item_ship_charge | currency : $ : 2}}</span>
+                        </div>
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Packing Charge</div>
                             <span class="ng-binding global-heading-style">{{order.total_packing_charge | currency : $ : 2}}</span>
                         </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding global-text-style">Tax Rate(%)</div>
-                        <span class="ng-binding global-heading-style">{{order.tax_rate | currency : $ : 2}}</span>
-                    </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Discount</div>
+                            <span class="ng-binding global-heading-style">{{order.discount | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Tax Rate(%)</div>
+                            <span class="ng-binding global-heading-style">{{order.tax_rate | currency : $ : 2}}</span>
+                        </div>
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Order Total</div>
                             <span class="ng-binding global-heading-style">{{order.order_total | currency : $ : 2}}</span>
                         </div>
-
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Tax</div>
-                            <span class="ng-binding global-heading-style red-highlight">{{order.tax | currency : $ : 2}}</span>
+                            <span class="ng-binding global-heading-style">{{order.tax | currency : $ : 2}}</span>
                         </div>
-
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Grand Total</div>
-                            <span class="ng-binding global-heading-style">{{order.grand_total | currency : $ : 2}}</span>
+                            <span class="ng-binding global-heading-style red-highlight">{{order.grand_total | currency : $ : 2}}</span>
                         </div>
-
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Total Payments</div>
                             <span class="ng-binding global-heading-style">{{order.total_payments | currency : $ : 2}}</span>
                         </div>
-
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Balance Due</div>
                             <span class="ng-binding global-heading-style">{{order.balance_due | currency : $ : 2}}</span>
                         </div>
-
                     </md-card-content>
                 </md-card>
                 <div class="text-center m-t-20">
@@ -566,7 +560,7 @@
             <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
                 <div flex="33">
                     <div class="table-title " layout="row" layout-align="space-between center">
-                        <div class="title box-title mr-20"><span class="stokkup-title-h4 flex-90">Order Total</span></div>
+                        <div class="title box-title mr-20"><span class="stokkup-title-h4 flex-90">Order Summary</span></div>
                     </div>
                 </div>    
                     <div flex="12">
@@ -582,7 +576,7 @@
 
                     <div flex="10">
                         <span class="small-headings mr-20">Grand Total</span>
-                        <span class="small-results">{{ order.order_total | currency : $ : 2}}</span>
+                        <span class="small-results">{{order.grand_total | currency : $ : 2}}</span>
                     </div>
                 
                     <div class="pull-right" ng-show="order.invoice_id > 0">
