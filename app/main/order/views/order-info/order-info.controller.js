@@ -353,6 +353,8 @@
                 locals: {
                     client_id: $scope.order.client_id,
                     order_id: $stateParams.id,
+                    paid: $scope.order.is_paid,
+                    balance: $scope.order.balance_due,
                     event: ev
                   }
             });

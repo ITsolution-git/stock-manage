@@ -1048,15 +1048,26 @@ class OrderController extends Controller {
 
         $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';
 
-        $payment_data = $this->common->GetTableRecords('link_to_pay',array('order_id' => $data['order_data'][0]->id),array(),'ltp_id','desc');
+        $payment_link = '';
 
-        if(empty($payment_data))
+        if($post['paid'] == '0')
         {
-            $payment_link = '';
-        }
-        else
-        {
-            $payment_link = SITE_HOST."api/public/invoice/linktopay/".$payment_data[0]->session_link;
+            $payment_data = $this->common->GetTableRecords('link_to_pay',array('order_id' => $post['order_id'],'payment_flag' => '0'),array(),'ltp_id','desc');
+
+            if(empty($payment_data))
+            {
+                $length = 25;
+                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
+
+                $this->common->InsertRecords('link_to_pay',array('order_id' => $data['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
+
+                $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$session_link;
+            }
+            else
+            {
+                $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$payment_data[0]->session_link;
+            }
         }
 
         if(!file_exists($file_path))

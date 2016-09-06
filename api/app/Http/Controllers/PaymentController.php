@@ -161,10 +161,33 @@ class PaymentController extends Controller {
 
       $transactionRequestType->setBillTo($billto);
       
+      $retArray = DB::table('payment_history as p')
+        ->select('c.client_company', 'c.client_id', 'c.billing_email')
+        ->leftJoin('orders as o','o.id','=',"p.order_id")
+        ->leftJoin('client as c','o.client_id','=',"o.client_id")
+        ->where('p.order_id','=',$order_id)
+        ->where('p.is_delete','=',1)
+        ->get();
+
+      $billto = new AnetAPI\CustomerAddressType();
+      $billto->setFirstName($post['creditFname']);
+      $billto->setLastName($post['creditLname']);
+      $billto->setCompany($retArray[0]->client_company);
+      $billto->setAddress($post['street']);
+      $billto->setCity($post['city']);
+      $billto->setState($post['state']);
+      $billto->setZip($post['zip']);
+      $billto->setCountry("USA");
+
+
+//       $billto = array("firstName"=>"Ellen","lastName"=>"Johnson","company"=>"Souveniropolis","address"=>"14 Main Street","city"=>"Pecan Springs","state"=>"TX","zip"=>"44628","country"=>"USA");
+// $billto=json_encode($billto);
+      $transactionRequestType->setBillTo($billto);
 
       $request = new AnetAPI\CreateTransactionRequest();
       $request->setMerchantAuthentication($merchantAuthentication);
       $request->setRefId( $refId);
+     
       $request->setTransactionRequest( $transactionRequestType);
       $controller = new AnetController\CreateTransactionController($request);
       $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
@@ -198,6 +221,63 @@ class PaymentController extends Controller {
           $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
           
+
+        if(($post['storeCard']==1) || ($post['linkToPay']==1)){
+          // Create the payment data for a credit card
+            $creditCard = new AnetAPI\CreditCardType();
+            $creditCard->setCardNumber($creditCardNumber);
+            $creditCard->setExpirationDate($expiry);
+            $paymentCreditCard = new AnetAPI\PaymentType();
+            $paymentCreditCard->setCreditCard($creditCard);
+
+            // Create the Bill To info
+            $billto = new AnetAPI\CustomerAddressType();
+            $billto->setFirstName($post['creditFname']);
+            $billto->setLastName($post['creditLname']);
+            $billto->setCompany($retArray[0]->client_company);
+            $billto->setAddress($post['street']);
+            $billto->setCity($post['city']);
+            $billto->setState($post['state']);
+            $billto->setZip($post['zip']);
+            $billto->setCountry("USA");
+            $billto->setEmail($retArray[0]->billing_email);
+
+
+              // Create a Customer Profile Request
+              //  1. create a Payment Profile
+              //  2. create a Customer Profile   
+              //  3. Submit a CreateCustomerProfile Request
+              //  4. Validate Profiiel ID returned
+              $date = date_create();
+              $paymentprofile = new AnetAPI\CustomerPaymentProfileType();
+
+              $paymentprofile->setCustomerType('individual');
+              $paymentprofile->setBillTo($billto);
+              $paymentprofile->setPayment($paymentCreditCard);
+              $paymentprofiles[] = $paymentprofile;
+              $customerprofile = new AnetAPI\CustomerProfileType();
+              $customerprofile->setDescription($retArray[0]->client_company);
+
+              $customerprofile->setMerchantCustomerId("M_".date_timestamp_get($date));
+              $customerprofile->setEmail($retArray[0]->billing_email);
+              $customerprofile->setPaymentProfiles($paymentprofiles);
+
+              $requestNew = new AnetAPI\CreateCustomerProfileRequest();
+              $requestNew->setMerchantAuthentication($merchantAuthentication);
+              $requestNew->setRefId( $refId);
+              $requestNew->setProfile($customerprofile);
+              $controller = new AnetController\CreateCustomerProfileController($requestNew);
+              $responseProfile = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+              //print_r($responseProfile);exit;
+              if (($responseProfile != null) && ($responseProfile->getMessages()->getResultCode() == "Ok") )
+              {
+                /*echo "Succesfully create customer profile : " . $responseProfile->getCustomerProfileId() . "\n";*/
+                $paymentProfiles = $responseProfile->getCustomerPaymentProfileIdList();
+                //echo "SUCCESS: PAYMENT PROFILE ID : " . $paymentProfiles[0] . "\n";
+
+                $profileData = array('profile_id' => $paymentProfiles[0],'client_id' => $retArray[0]->client_id);
+
+                $id = $this->common->InsertRecords('client_payment_profiles',$profileData);
 
           if(($post['storeCard']==1) || ($post['linkToPay']==1)){
             // Create the payment data for a credit card
@@ -275,6 +355,7 @@ class PaymentController extends Controller {
               $suite='';
               if(isset($post['suite'])){
                $suite=$post['suite'];
+
               }
 
               $updateInvoice=array('creditFname' => $post['creditFname'], 'creditLname' => $post['creditLname'], 'creditCard' => $post['creditCard'], 'month' => $post['expMonth'],  'year' => $post['expYear'],  'street' => $post['street'],  'suite' => $suite,  'city' => $post['city'],  'state' => $post['state'],  'zip' => $post['zip']);

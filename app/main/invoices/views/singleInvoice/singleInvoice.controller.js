@@ -345,9 +345,7 @@
         }
         $scope.deleteHistory = function(payment_id)
         {
-            /*alert(payment_id);
-            return false;*/
-
+            $("#ajax_loader").show();
             var vm = this;
             var UpdateArray = {};
             UpdateArray.table ='payment_history';

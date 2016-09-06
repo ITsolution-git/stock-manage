@@ -108,10 +108,11 @@
             combine_array_id.linkToPay = 1;
             combine_array_id.ltp_id=ltp_id;
             //alert(combine_array_id.invoice_id);return false;
-
+            $("#ajax_loader").show();
 
                 $http.post('api/public/payment/chargeCreditCard',combine_array_id).success(function(result) 
                 {
+                    $("#ajax_loader").hide();
                     //$mdDialog.hide();
                     if(result.data.success=='1')
                     {
