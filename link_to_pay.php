@@ -138,7 +138,7 @@ catch(PDOException $e)
                                        <div layout="column" flex="45">
                                             <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-<input name="invoice_id" ng-model="company.invoice_id" ng-init="7" type="hidden">
+                                                <input name="invoice_id" ng-model="company.invoice_id" ng-init="7" type="hidden">
                                                 <md-input-container flex="50">
                                                      <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
                                                 </md-input-container>

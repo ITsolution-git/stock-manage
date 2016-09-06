@@ -463,6 +463,15 @@ function refundTransaction($amount){
     return $response;
   }
 
+    public function linktopay($token)
+    {
+        $payment_data = $this->common->GetTableRecords('link_to_pay',array('session_link' => $token));
+        $data['stateArray'] = $this->common->GetTableRecords('state',array());
+        $data['orderArray'] = $payment_data[0];
+
+        return view('auth.payment',$data)->render();
+    }
+
   /*function createCustomerProfile($email){
     
     // Common setup for API credentials
