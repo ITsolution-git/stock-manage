@@ -1048,6 +1048,17 @@ class OrderController extends Controller {
 
         $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';
 
+        $payment_data = $this->common->GetTableRecords('link_to_pay',array('order_id' => $data['order_data'][0]->id),array(),'ltp_id','desc');
+
+        if(empty($payment_data))
+        {
+            $payment_link = '';
+        }
+        else
+        {
+            $payment_link = SITE_HOST."/invoice/linktopay/".$payment_data[0]->session_link;
+        }
+
         if(!file_exists($file_path))
         {
             PDF::AddPage('P','A4');
@@ -1057,14 +1068,14 @@ class OrderController extends Controller {
 
         foreach ($email_array as $email)
         {
-            Mail::send('emails.invoice', ['email'=>$email], function($message) use ($file_path,$email)
+            Mail::send('emails.invoice', ['email'=>$email,'payment_link' => $payment_link], function($message) use ($file_path,$email)
             {
                  $message->to($email)->subject('Invoice PDF');
                  $message->attach($file_path);
             });                
         }
 
-        $response = array('success' => 1, 'message' => 'Email has been sent Sucessfully');
+        $response = array('success' => 1, 'message' => 'Email has been sent successfully');
         return response()->json(["data" => $response]);
 
       /* Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
