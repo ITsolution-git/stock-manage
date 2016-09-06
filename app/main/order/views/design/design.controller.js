@@ -17,6 +17,7 @@
         $scope.vendor_id = 0;
         $scope.company_id = sessionService.get('company_id');
         $scope.valid_sns = 1;
+        $scope.getNextPrice = 0;
 
         $scope.calculateAll = function(order_id,company_id)
         {
@@ -119,6 +120,7 @@
         var combine_array_id = {};
             combine_array_id.id = $stateParams.id;
             combine_array_id.company_id = sessionService.get('company_id');
+            combine_array_id.getNextPrice = $stateParams.getNextPrice;
             $scope.total_pos_qnty = 0;
             
             $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -202,51 +204,66 @@
                 position_main_data.position = $scope.miscData.position[value].value;
             } 
 
-
+            if(column_name == 'placement_type' || column_name == 'color_stitch_count' || column_name == 'qnty' || column_name == 'dtg_size' || column_name == 'dtg_on') {
+                $scope.getNextPrice = 1;
+            }
+            else {
+                $scope.getNextPrice = 0;
+            }
           
             $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
 
-                        if(result.data.success == '2') 
-
-                        {
-
-                             var data = {"status": "error", "message": "This position already exists in this design."}
-                             notifyService.notify(data.status, data.message);
-                            
-                             $scope.order_design_position[key].position_id = $scope.order_design_position[key].duplicate_position_id;
-                             return false;
-                        } 
+                if(result.data.success == '2')
+                {
+                     var data = {"status": "error", "message": "This position already exists in this design."}
+                     notifyService.notify(data.status, data.message);
+                    
+                     $scope.order_design_position[key].position_id = $scope.order_design_position[key].duplicate_position_id;
+                     return false;
+                } 
 
                 if(column_name == 'position_id') {
                     $scope.order_design_position[key].position_header_name = $scope.miscData.position[value].value;
                     $scope.order_design_position[key].duplicate_position_id = $scope.miscData.position[value].id;
-                  
                 }
 
                 if(column_name == 'color_stitch_count') {
                     $scope.order_design_position[key].screen_fees_qnty = value;
                     $scope.order_design_position[key].stitch_header_name = value;
-                  
                 }
 
                 $scope.order_design_position[key].total_price = ($scope.order_design_position[key].number_on_dark_qnty * $scope.all_price_grid['number_on_dark'] ) + ($scope.order_design_position[key].oversize_screens_qnty * $scope.all_price_grid['over_size_screens']) + ($scope.order_design_position[key].ink_charge_qnty * $scope.all_price_grid['ink_changes']) + ($scope.order_design_position[key].number_on_light_qnty * $scope.all_price_grid['number_on_light']) + ($scope.order_design_position[key].press_setup_qnty * $scope.all_price_grid['press_setup']) + ($scope.order_design_position[key].discharge_qnty * $scope.all_price_grid['discharge']) + ($scope.order_design_position[key].speciality_qnty * $scope.all_price_grid['specialty']) + ($scope.order_design_position[key].screen_fees_qnty * $scope.all_price_grid['screen_fees']) + ($scope.order_design_position[key].foil_qnty * $scope.all_price_grid['foil']);
                 
                 if($scope.order_design_position[key].total_price > 0) {
-
-                  
-                       $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price.toFixed(2); 
-
+                    $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price.toFixed(2); 
                 }
+                
                 if(column_name == 'qnty') {
                     $scope.order_design_position[key].qnty_header_name = value ;
-                  
                 }
-
 
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
                 notifyService.notify(data.status, data.message);
                 $scope.designProductData();
+
+                if(column_name == 'placement_type' || column_name == 'color_stitch_count' || column_name == 'qnty' || column_name == 'dtg_size' || column_name == 'dtg_on')
+                {
+                    var combine_array_id = {};
+                    combine_array_id.id = $stateParams.id;
+                    combine_array_id.company_id = sessionService.get('company_id');
+                    combine_array_id.getNextPrice = $scope.getNextPrice;
+                    combine_array_id.position_id = id;
+                    
+                    $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
+                       
+                        $scope.order_design_position[key].color_stitch_count = result.data.position.color_stitch_count;
+                        $scope.order_design_position[key].screen_print_charge = result.data.position.screen_print_charge;
+                        $scope.order_design_position[key].direct_to_garment_charge = result.data.position.direct_to_garment_charge;
+                        $scope.order_design_position[key].embroidery_charge = result.data.position.embroidery_charge;
+                    });
+                }
                 $scope.designPositionNew();
+
             });
         }
 

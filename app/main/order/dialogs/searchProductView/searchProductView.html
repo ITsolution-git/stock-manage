@@ -44,7 +44,7 @@
                             <div class="h4">Item Number</div>
                             <div class="h5  grey-color">{{product_id}}</div>
 
-                            <div flex="100" layout="column">
+                         <!--    <div flex="100" layout="column">
                             <md-input-container class="width100">
                                 <label>Size Group</label>
                                  <md-select ng-model="size_group_id">
@@ -53,7 +53,7 @@
                                                     </md-option>
                                                  </md-select>
                                             </md-input-container>
-                            </div>
+                            </div> -->
 
 
                             <div flex="100" layout="column">
@@ -122,7 +122,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes,size_group_id,warehouse)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
+            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes,warehouse)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

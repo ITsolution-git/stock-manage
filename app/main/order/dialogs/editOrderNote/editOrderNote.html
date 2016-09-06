@@ -1,0 +1,25 @@
+<md-dialog class=" add-note edit-note task-dialog designadd-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit Note</span>
+                <md-button  ng-click="closeDialog()">
+                    Cancel
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+               
+                <md-input-container class="md-block pad0 m-b-0 margin-0 margin-top-25">
+                    <label class="color-b-grey">Note Description</label>
+                    <textarea ng-model="note_data.note" md-maxlength="150" rows="5" md-select-on-focus ></textarea>
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <!-- <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
+            <md-button class="md-accent md-raised " ng-click="editNote(note_data)">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

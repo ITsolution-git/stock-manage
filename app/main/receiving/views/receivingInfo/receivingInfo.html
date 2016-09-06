@@ -11,7 +11,7 @@
             <div class="info-order" flex="75">
                 <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
                 <md-card layout="row"  >
-                    <md-card-content flex="95" layout="column" layout="column">
+                    <md-card-content flex="95" layout="column">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                              <div>PO Type</div>
@@ -58,12 +58,6 @@
                         </md-menu>
                     </div>                
                     </md-card>
-            </div>
-            <div flex="25" layout="column" style="max-height:50%;">
-                <div class="title"><span class="h2 text-semibold">Order Status</span></div>
-                <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
-                    <md-option ng-selected="po_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
-                </md-select>
             </div>
         </div>
 
@@ -128,22 +122,22 @@
                 <md-card layout="row" class="borderTopBottom">
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Total: {{line_item.total_product}}</p>
+                            <p class="font-14 chrome-weight">Order Total: {{line_item.total_product}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Received: {{line_item.total_received}}</p>
+                            <p class="font-14 chrome-weight">Order Received: {{line_item.total_received}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Defectives: {{line_item.total_defective}}</p>
+                            <p class="font-14 chrome-weight">Order Defectives: {{line_item.total_defective}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Remaining: {{line_item.total_remains}}</p>
+                            <p class="font-14 chrome-weight">Order Remaining: {{line_item.total_remains}}</p>
                         </div>
                     </md-card-content>
                 </md-card>
