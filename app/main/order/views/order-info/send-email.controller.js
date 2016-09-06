@@ -8,7 +8,7 @@
             
 
     /** @ngInject */
-    function openEmailController(client_id,order_id,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
+    function openEmailController(client_id,order_id,paid,balance,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
 
            function get_company_data_selected(id)
@@ -62,8 +62,10 @@
             combine_array.order_id = order_id;
             combine_array.company_id = sessionService.get('company_id');
             combine_array.invoice_id = $scope.invoice.id;
+            combine_array.paid = paid;
+            combine_array.balance = balance;
 
-            $("#ajax_loader").show();
+            //$("#ajax_loader").show();
              
             $http.post('api/public/order/sendEmail',combine_array).success(function(result) 
             {
