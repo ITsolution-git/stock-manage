@@ -40,7 +40,13 @@ $blue-shade3:#4773d6;
 $gray-shade3:#ededed;
 $gray-shade4:#8d93a0;
 $thirty:30px;
-
+$blue-shade4:#0b5c93;
+$inner-heading-size:20px;
+$tab-color:#a5a6a9;
+$tab-active-color:#252932;
+$xs-font-size:12px;
+$font-size-mid:20px;
+$md-iconbtn-color:#a8a9ad;
 /*global variables ends here */
 
 /*global popup style starts here */
@@ -968,3 +974,107 @@ button{
 		width:15%;
 	}
 }
+.header-bg-custom{
+	background-color:$blue-shade4;
+}
+.inner-page-heading{
+	font-size:$inner-heading-size;
+	font-weight:$font-weight-400;
+	color:$white-color;
+	font-family:$stokkupfamily1;
+	padding:16px 0 16px 35px;
+	margin:$zero;
+}
+.stokkup-tab-view{
+	width:$full-width;
+	background-color:$white-color;
+}
+.inner-custom-box2{
+	width:$full-width;
+	background-color:transparent;
+	padding:0 35px;
+}
+.stokkup-custom-tabs{
+	md-tabs-wrapper{
+		padding:0 35px;
+		@extend .custom-shadow1;
+	}
+}
+.stokkup-custom-tabs{
+	md-tabs-canvas{
+		height:41px;
+		md-pagination-wrapper{
+			height:41px;
+		}
+	}
+}
+.stokkup-custom-tabs{
+	.md-button.md-icon-button{
+		padding:$zero;
+		margin:$zero;
+		color:$md-iconbtn-color;
+		right:-10px;
+		position:$pos-relative;
+	}
+}
+.stokkup-custom-tabs{
+	.md-tab{
+		font-size:$xs-font-size;
+		color:$tab-color !important;
+		color:#252932;
+		font-weight:$font-weight-300;
+		padding:14px $zero 10px;
+		line-height:18px;
+		text-transform:uppercase;
+		margin:$zero;
+		span{
+			padding:0 10px;
+			text-transform:uppercase;
+		}
+		&.md-active{
+			color:$tab-active-color !important;
+		}
+	}
+}
+.custom-tabs-content{
+	md-card{
+		padding:5px $font-size-mid;
+		md-card-header{
+			padding:$zero;
+			.md-title{
+				font-weight:$font-weight-600;
+				font-size:$font-size-text;
+				color:$stokkup-global-txtcolor;
+			}
+		}
+		md-card-content{
+			padding:$zero;
+		}
+	}
+}
+.custom-shadow1{
+	box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.1);
+	-moz-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.1);
+	-ms-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.1);
+	-o-box-shadow:0 0 5px 0 rgba(0, 0, 0, 0.1);
+}
+.custom-fullbox-shadow{
+	-webkit-box-shadow: 0 0 5px 0 rgba(34,31,31,0.30) !important;
+	-mz-box-shadow: 0 0 5px 0 rgba(34,31,31,0.30) !important;
+	-o-box-shadow: 0 0 5px 0 rgba(34,31,31,0.30) !important;
+	box-shadow: 0 0 5px 0 rgba(34,31,31,0.30) !important;
+}
+md-card-content{
+	&.custom-desc-box{
+		.h5{
+			padding-top:6px;
+			font-size:$font-size-text;
+		}
+		span{
+			margin-top:4px;
+			margin-bottom:$font-size-text;
+		}
+	}
+}
+/*clients module inner pages */
