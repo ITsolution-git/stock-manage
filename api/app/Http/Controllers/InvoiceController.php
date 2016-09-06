@@ -144,12 +144,6 @@ class InvoiceController extends Controller {
         $retutn_arr['addresses'] = $this->client->getAddress($order_data[0]->client_id);
         $retutn_arr['client_data'] = $this->common->GetTableRecords('client_contact',array('client_id' => $order_data[0]->client_id,'contact_main' => 1),array());
 
-        if(empty($retutn_arr['client_data'])) {
-            $retutn_arr['client_data'][0] = array();
-            $retutn_arr['client_data'][0]->first_name = '';
-            $retutn_arr['client_data'][0]->last_name = '';
-        }
-
         $retutn_arr['price_grid_data'] = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $order_data[0]->price_id),array());
 
         $retutn_arr['order_data'] = $order_data;

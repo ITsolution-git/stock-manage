@@ -44,7 +44,12 @@
 	     <tr>
 	      <td style="width:30px;padding:0;border:none;"><img src="" alt="BILL TO" title="BILL TO"></td>
 	      <td style="vertical-align: top;padding: 10px 0 0 20px;border:none;">
+	      <?php if(!empty($client_data))
+	      {?>
 	       <label style="font-weight: bold;">{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}</label><br>
+	       <?php
+	   		}
+	   		?>
 	       <label style="">
 	       @foreach ($addresses['result'] as $address)  
 	        <?php if($address->address_billing == '1') {?>
