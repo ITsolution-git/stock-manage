@@ -715,4 +715,87 @@ button:last-child {
 .trans-box.order-designname {
   width: 15%; }
 
+.header-bg-custom {
+  background-color: #0b5c93; }
+
+.inner-page-heading {
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
+  font-family: "Open Sans", sans-serif;
+  padding: 16px 0 16px 35px;
+  margin: 0; }
+
+.stokkup-tab-view {
+  width: 100%;
+  background-color: #fff; }
+
+.inner-custom-box2 {
+  width: 100%;
+  background-color: transparent;
+  padding: 0 35px; }
+
+.stokkup-custom-tabs md-tabs-wrapper {
+  padding: 0 35px; }
+
+.stokkup-custom-tabs md-tabs-canvas {
+  height: 41px; }
+  .stokkup-custom-tabs md-tabs-canvas md-pagination-wrapper {
+    height: 41px; }
+
+.stokkup-custom-tabs .md-button.md-icon-button {
+  padding: 0;
+  margin: 0;
+  color: #a8a9ad;
+  right: -10px;
+  position: relative; }
+
+.stokkup-custom-tabs .md-tab {
+  font-size: 12px;
+  color: #a5a6a9 !important;
+  color: #252932;
+  font-weight: 300;
+  padding: 14px 0 10px;
+  line-height: 18px;
+  text-transform: uppercase;
+  margin: 0; }
+  .stokkup-custom-tabs .md-tab span {
+    padding: 0 10px;
+    text-transform: uppercase; }
+  .stokkup-custom-tabs .md-tab.md-active {
+    color: #252932 !important; }
+
+.custom-tabs-content md-card {
+  padding: 5px 20px; }
+  .custom-tabs-content md-card md-card-header {
+    padding: 0; }
+    .custom-tabs-content md-card md-card-header .md-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: #6e7584; }
+  .custom-tabs-content md-card md-card-content {
+    padding: 0; }
+
+.custom-shadow1, .stokkup-custom-tabs md-tabs-wrapper {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  -o-box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1); }
+
+.custom-fullbox-shadow {
+  -webkit-box-shadow: 0 0 5px 0 rgba(34, 31, 31, 0.3) !important;
+  -mz-box-shadow: 0 0 5px 0 rgba(34, 31, 31, 0.3) !important;
+  -o-box-shadow: 0 0 5px 0 rgba(34, 31, 31, 0.3) !important;
+  box-shadow: 0 0 5px 0 rgba(34, 31, 31, 0.3) !important; }
+
+md-card-content.custom-desc-box .h5 {
+  padding-top: 6px;
+  font-size: 14px; }
+md-card-content.custom-desc-box span {
+  margin-top: 4px;
+  margin-bottom: 14px; }
+
+/*clients module inner pages */
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
