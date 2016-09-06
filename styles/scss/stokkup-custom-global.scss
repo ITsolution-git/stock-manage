@@ -963,3 +963,8 @@ button{
 .not-visible{
 	visibility:hidden;
 }
+.trans-box{
+	&.order-designname{
+		width:15%;
+	}
+}

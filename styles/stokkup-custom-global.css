@@ -712,10 +712,7 @@ button:last-child {
 .not-visible {
   visibility: hidden; }
 
+.trans-box.order-designname {
+  width: 15%; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
-@media only screen and (min-width:1400px){
-  md-dialog.task-dialog{
-    max-height:80vh;
-    top:calc((100vh-80vh)/2);
-  }
-}
