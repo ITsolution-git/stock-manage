@@ -1,8 +1,9 @@
-
+<div class="content client-list-page stockkup-content-table-container custom-tabs-content">
+    <div class="md-whiteframe-4dp stokkup-main-tableview">
                     <md-content class="md-padding">
                         <div layout="row" layout-wrap="nowrap" class="client-live-nation">
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Logo</span>
@@ -29,15 +30,15 @@
                                     </md-card-header>
                                     <md-card-content>
                                             
-                                        <div class="form-group  m-b panel panel-default"  >
-                                              <img   ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
+                                        <div class="form-group  m-b m-b-20 panel panel-default"  >
+                                              <img   ng-src="{{company_info.color_url_photo}}" alt="" />
                                               <!-- <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" > -->
                                           </div>
                                     </md-card-content>
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Company Contact</span>
@@ -55,7 +56,7 @@
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
-                                    <md-card-content>
+                                    <md-card-content class="custom-desc-box">
                                         <div class="h5 text-semibold">Company</div>
                                         <span>{{company_info.client_company}}</span>
                                         <div class="h5 text-semibold">Address:</div>
@@ -70,7 +71,7 @@
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Main Contact</span>
@@ -88,7 +89,7 @@
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
-                                    <md-card-content>
+                                    <md-card-content class="custom-desc-box">
                                         <div class="h5 text-semibold">Main Contact:</div>
                                         <span>{{maincompcontact.first_name}} {{maincompcontact.last_name}}</span>
                                         <div class="h5 text-semibold">Main Location:</div>
@@ -101,7 +102,7 @@
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Account Information</span>
@@ -119,7 +120,7 @@
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
-                                    <md-card-content>
+                                    <md-card-content class="custom-desc-box">
                                         <div class="h5 text-semibold">Account Type:</div>
                                         <span>{{company_info.client_companytype}}</span>
                                         <div class="h5 text-semibold">Disposition:</div>
@@ -131,4 +132,5 @@
                             </div>
                         </div>
                     </md-content>
-                
+</div>
+</div>
