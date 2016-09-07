@@ -374,11 +374,27 @@ class Art extends Model {
 			}
 		}
 	}
+	public function array_values_recursive( $array ) 
+	{
+	    $array = array_values( $array );
+	    for ( $i = 0, $n = count( $array ); $i < $n; $i++ ) 
+	    {
+	        $element = $array[$i];
+	        if ( is_array( $element ) ) 
+	        {
+	            $array[$i] = $this->array_values_recursive( $element );
+	        }
+    	}
+    return $array;
+	}
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name')
+				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen')
+				->leftjoin('art_notes as an','an.screenset_id','=','ass.id',DB::raw("is_deleted = '1' "))
 				->join('orders as or','ass.order_id','=','or.id')
+				->leftJoin('users as usr','usr.id','=','or.company_id')
+				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
 				->join('order_design as od','od.id','=','odp.design_id')
 				->join('art as art','art.order_id','=','or.id')
@@ -387,17 +403,14 @@ class Art extends Model {
 				->leftjoin('color as col1','col1.id','=','acol.thread_color')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
-				->leftJoin('users as usr','usr.id','=','or.company_id')
-				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->where('or.id','=',$order_id)
 				->where('or.company_id','=',$company_id)
 				->where('ass.screen_active','=','1')
-				->groupby('acol.id')
 				->orderBy('ass.screen_order','asc')
 				->orderBy('acol.head_location','asc')
 				->orderBy('acol.id','desc')
 				->get();
-				$temp = array();
+				$transfer = array();
 		foreach ($query as $key=>$value) 
 		{
 				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
@@ -405,13 +418,22 @@ class Art extends Model {
 				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
 
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
-				$temp[$value->screen_id][] = $value;
+				$transfer[$value->screen_id]['colors'][$value->id] = $value;
+
+				if(!empty($value->note_id))
+				{
+					$transfer[$value->screen_id]['art_notes'][$value->note_id] = "<b>- </b>".$value->note;
+				}
 		}
 		
-		//echo "<pre>"; print_r(FILEUPLOAD.$mokupImage_path); echo "</pre>"; die;
-		$temp = array_values($temp);
-		return $temp;
+		
+		$transfer = $this->array_values_recursive($transfer);
+		//echo "<pre>"; print_r($query); echo "</pre>"; die;
+		return $transfer;
 	}
+
+
+
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
 		$query = DB::table('artjob_screencolors as acol')

@@ -1101,7 +1101,7 @@ class CommonController extends Controller {
             $result = $this->art->getArtColorNote($post);
             $header = array(
                 0=>array('key' => 'note.note_date', 'name' => 'Created date'),
-                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
+                1=>array('key' => 'note.note_title', 'name' => 'Note Title'),
                 2=>array('key' => 'note.note', 'name' => 'Note Description')
                 );
         }
