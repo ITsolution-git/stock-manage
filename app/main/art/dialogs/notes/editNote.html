@@ -11,18 +11,18 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
                 <md-input-container class="md-block m-b-0 p-b-0" flex-gt-sm>
-                    <label class="font-14 color-b-grey">Note Name</label>
-                    <input placeholder="" ng-model="params.data.note_title">
+                    <label class="font-14 color-b-grey">Note Title</label>
+                    <input placeholder="" ng-model="params.note_title">
                 </md-input-container>
                 <md-input-container class="md-block pad0 m-b-10 margin-0">
                     <label class="color-b-grey">Note Description</label>
-                    <textarea ng-model="params.data.note" md-maxlength="150" rows="5" md-select-on-focus placeholder="Enter Text Here"></textarea>
+                    <textarea ng-model="params.note"  rows="5" md-select-on-focus placeholder="Enter Text Here"></textarea>
                 </md-input-container>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <!-- <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
-            <md-button class="md-accent md-raised " ng-click="UpdateTableDataAll(params.data,'art_notes','id',params.data.id,'artnote')">Save</md-button>
+            <md-button class="md-accent md-raised " ng-click="UpdateTableDataAll(params,'art_notes','id',params.id,'artnote')">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

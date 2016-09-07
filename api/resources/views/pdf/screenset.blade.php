@@ -56,19 +56,20 @@
     </tr>
   </table>
   <hr style="border:1px solid #000;">
-<?php foreach($data as $key=>$value){ 
-
+<?php foreach($data as $key_main=>$value_main)
+{ 
   ?>
   <table style="margin-top:15px;">
     <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
-      <td><?php echo (!empty($value[0]->screen_set))?$value[0]->screen_set:''; ?></td>
-      <td>w:<?php echo $value[0]->screen_width; ?> X h:<?php echo $value[0]->screen_height; ?></td>
+      <td><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
+      <td>w:<?php echo $value_main[0][0]->screen_width; ?> X h:<?php echo $value_main[0][0]->screen_height; ?></td>
     </tr>
     <tr>
       <td>
-        <img src="<?php echo $value[0]->mokup_logo; ?>" >
+        <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; width:120px" >
       </td>
       <td>
+      
           <table border="1">
             <tr>
               <td align="center"><b>H</b></td>
@@ -76,21 +77,37 @@
               <td align="center"><b>Color</b></td>
               <td align="center"><b>Pantone</b></td>
             </tr>
-            <?php foreach($value as $sec_key=>$sec_value){ ?>
+            <?php foreach($value_main[0] as $key=>$value){ ?>
             <tr>
-              <td align="center"><?php echo $sec_key+1; ?></td>
-              <td align="center"><?php echo $sec_value->inq; ?></td>
-              <td align="center"><?php echo $sec_value->color_name; ?></td>
-              <td align="center"><?php echo $sec_value->pantone; ?></td>
+              <td align="center"><?php echo $key+1; ?></td>
+              <td align="center"><?php echo $value->inq; ?></td>
+              <td align="center"><?php echo $value->color_name; ?></td>
+              <td align="center"><?php echo $value->pantone; ?></td>
             </tr>
             <?php } ?>
           </table>
+          
       </td>
     </tr>
   </table>
+
+  <?php  if(!empty($value_main[1])) {?>
+    <table>
+          <tr>
+              <td align="left"><b>Notes</b></td>
+          </tr>
+        <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
+          <tr>
+              <td align="left"><?php echo $not_value ?></td>
+          </tr>
+        <?php } ?>
+    </table>
+  <?php } ?>
+  
+
   <hr style="border:1px solid #000;">
 
-<?php  if(($key+1)%2==0)
+<?php  if(($key_main+1)%3==0 && ($key_main+1)!=count($data))
 { ?>
 <div style="page-break-before: always;"></div>
    <table >
@@ -122,7 +139,10 @@
     </tr>
   </table>
 <hr style="border:1px solid #000;">
-<?php }}
+<?php 
+}
+
+}
 ?>
 
 <div style="page-break-before: always;"></div>
