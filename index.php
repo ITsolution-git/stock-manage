@@ -176,7 +176,7 @@
     <script src="app/main/order/dialogs/position/position-dialog.controller.js"></script>
     <script src="app/main/order/views/notes/notes.controller.js"></script>
     <script src="app/main/order/dialogs/editOrderNote/editOrderNote.controller.js"></script>
-    
+
 
     <!-- CLIENT FILES START -->
     <script src="app/main/client/client.module.js"></script>    
