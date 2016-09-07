@@ -87,7 +87,7 @@ button, select, html, textarea, input {
   -webkit-border-radius: 50px;
   -ms-border-radius: 50px; }
 
-.noborder-radius, md-dialog, md-toolbar button .md-button, md-card, md-card.md-default-theme, .box-3 {
+.noborder-radius, .md-button, md-dialog, md-toolbar button .md-button, md-card, md-card.md-default-theme, .box-3 {
   border-radius: 0;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
@@ -737,7 +737,8 @@ button:last-child {
   padding: 0 35px; }
 
 .stokkup-custom-tabs md-tabs-wrapper {
-  padding: 0 35px; }
+  padding: 0 35px;
+  border: none; }
 
 .stokkup-custom-tabs md-tabs-canvas {
   height: 41px; }
@@ -807,6 +808,48 @@ md-card-content.custom-desc-box span {
 .client-list-page .center-num-box {
   height: 90px; }
 
+.custom-struct-2 md-tabs-wrapper {
+  top: 20px;
+  width: 250px;
+  margin: auto;
+  position: relative;
+  z-index: 5; }
+
+.custom-struct-2 md-tabs.md-dynamic-height md-tab-content.md-active {
+  top: -50px; }
+
+.stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title {
+  position: relative;
+  z-index: 0;
+  padding-bottom: 0; }
+
+.custom-struct-2 md-pagination-wrapper {
+  height: 40px; }
+
+.custom-struct-2 md-tabs-canvas {
+  height: 40px; }
+
+.custom-struct-2 .md-tab {
+  font-size: 12px;
+  color: #a5a6a9 !important;
+  color: #252932;
+  font-weight: 300;
+  padding: 14px 0 10px;
+  line-height: 18px;
+  text-transform: uppercase;
+  margin: 0; }
+  .custom-struct-2 .md-tab span {
+    padding: 0 10px;
+    text-transform: uppercase; }
+  .custom-struct-2 .md-tab.md-active {
+    color: #252932 !important; }
+
+.custom-struct-2 md-tabs md-ink-bar {
+  border-bottom: 3px solid #e3e3e3; }
+
+/* .custom-struct-2 md-tabs.md-active md-ink-bar{
+	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
+}*/
 /*clients module inner pages */
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
