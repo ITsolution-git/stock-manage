@@ -18,6 +18,7 @@ use SplFileInfo;
 use DB;
 use Image;
 use Request;
+use Excel;
 
 class ProductController extends Controller {  
 
@@ -1298,5 +1299,24 @@ public function create_dir($dir_path) {
         $data = array("success"=>1,"message"=>'Data',"total"=>$total,"total_qnty"=>$total_qnty);
         return response()->json(["data" => $data]);
         
+    }
+
+     public function downloadCustomProductCSV()
+    {
+        $post = Input::all();
+
+        $data = $this->product->productListDownload($post['company_id']);
+        $array = json_decode(json_encode($data), True);
+       // print_r($array);exit;
+        return Excel::create('custom_product', function($excel) use ($array) {
+
+            $excel->sheet('mySheet', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array);
+            });
+
+        })->download($post['type']);
+
     }
 }

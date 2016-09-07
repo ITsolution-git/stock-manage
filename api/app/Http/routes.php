@@ -303,6 +303,7 @@ Route::post('product/getVendorByProductCount', 'ProductController@getVendorByPro
 Route::post('product/getProductSize', 'ProductController@getProductSize');
 Route::post('product/checkProductExist', 'ProductController@checkProductExist');
 Route::post('product/findTotal', 'ProductController@findTotal');
+Route::post('product/downloadCustomProductCSV', 'ProductController@downloadCustomProductCSV');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');

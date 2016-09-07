@@ -583,7 +583,7 @@ class Product extends Model {
         }
        
 
-        $whereConditions = ['product.is_delete' => "1",'product.company_id' => $post['company_id']];
+        $whereConditions = ['product.is_delete' => "1",'v.is_delete' => '1','v.company_id' => $post['company_id']];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS product.*,v.name_company')];
 
@@ -758,5 +758,23 @@ class Product extends Model {
                          ->get();
         
         return $productData;
+    }
+
+    public function productListDownload($company_id) {
+        
+        $whereConditions = ['products.is_delete' => '1','vendors.is_delete' => '1','vendors.company_id' => $company_id];
+        $listArray = ['products.name as Name','products.description as Description','vendors.name_company as Vendor','pcs.customer_price as Price','c.name as Color','pz.name as Size'];
+
+        $vendorData = DB::table('products as products')
+                         ->leftJoin('vendors as vendors', 'products.vendor_id', '=', 'vendors.id')
+                         ->leftJoin('product_color_size as pcs', 'products.id', '=', 'pcs.product_id')
+                         ->leftJoin('color as c', 'c.id', '=', 'pcs.color_id')
+                         ->leftJoin('product_size as pz', 'pz.id', '=', 'pcs.size_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->orderBy('products.id', 'desc')
+                         ->get();
+
+        return $vendorData;
     }
 }
