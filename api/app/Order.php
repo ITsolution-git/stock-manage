@@ -701,9 +701,11 @@ public function saveColorSize($post)
             $search = $post['filter']['name'];
         }
 
+    $listArray = [DB::raw('SQL_CALC_FOUND_ROWS odp.note,odp.id')];
+
     $result = DB::table('order_design as od')
             ->leftJoin('order_design_position as odp','od.id','=','odp.design_id')
-          ->select('odp.note','odp.id')
+          ->select($listArray)
           ->where('od.is_delete','=','1')
           ->where('odp.is_delete','=','1')
           ->where('odp.note','!=','')

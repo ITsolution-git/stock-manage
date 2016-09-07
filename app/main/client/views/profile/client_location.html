@@ -1,18 +1,19 @@
 
-                    <md-content class="md-padding">
-                        <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title " layout="row" layout-align="space-between center">
+                <md-content class="md-padding">
+                    <div class="content client-list-page stockkup-content-table-container">
+                        <div class="simple-table-container stokkup-main-tableview">
+                            <!-- <div class="table-title " layout="row" layout-align="space-between center">
                                 <div class="table-title-text" flex=20>
                                     Locations
                                 </div>
-                                <!-- <div class="table-title-text" flex=70>
+                                <div class="table-title-text" flex=70>
                                 </div>
                                 <div class="p-16" flex=10>
                                 <a href="" title="Add new Location" ng-click="vm.editCompanyConatct($event,'add','client_address','location_form','id',location.id)">ADD NEW</a>
-                                </div> -->
-                            </div>
+                                </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple">
+                                <table class="dataTable">
                                     <thead>
                                         <tr>
                                             <th class="secondary-text">
@@ -41,17 +42,17 @@
                                                 </div>
                                             </th>  
                                             <th class="secondary-text">
-                                                <div class="table-header">
+                                                <div class="table-header text-center">
                                                     <span class="column-title">Main Location</span>
                                                 </div>
                                             </th>  
                                             <th class="secondary-text">
-                                                <div class="table-header">
+                                                <div class="table-header text-center">
                                                     <span class="column-title">Shipping Location</span>
                                                 </div>
                                             </th>  
                                             <th class="secondary-text">
-                                                <div class="table-header">
+                                                <div class="table-header text-center">
                                                     <span class="column-title">Billing Location</span>
                                                 </div>
                                             </th>                                            
@@ -66,14 +67,14 @@
                                             <td>{{location.postal_code}}</td>
                                             <td>{{location.address_type}}</td>
 
-                                            <td ng-if="location.address_main=='1'"><i class="icon icon-check s40"></i></td>
-                                            <td ng-if="location.address_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
+                                            <td  class="text-center" ng-if="location.address_main=='1'"><i class="icon icon-check s40"></i></td>
+                                            <td class="text-center" ng-if="location.address_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
 
-                                            <td ng-if="location.address_shipping=='1'"><i class="icon icon-check s40"></i></td>
-                                            <td ng-if="location.address_shipping=='0'"><i class="icon icon-flickr-before s40"></i></td>
+                                            <td class="text-center" ng-if="location.address_shipping=='1'"><i class="icon icon-check s40"></i></td>
+                                            <td class="text-center" ng-if="location.address_shipping=='0'"><i class="icon icon-flickr-before s40"></i></td>
 
-                                            <td ng-if="location.address_billing=='1'"><i class="icon icon-check s40"></i></td>
-                                            <td ng-if="location.address_billing=='0'"><i class="icon icon-flickr-before s40"></i></td>
+                                            <td class="text-center" ng-if="location.address_billing=='1'"><i class="icon icon-check s40"></i></td>
+                                            <td class="text-center" ng-if="location.address_billing=='0'"><i class="icon icon-flickr-before s40"></i></td>
 
                                             
                                             <td class="text-right"> 
@@ -113,12 +114,9 @@
                                         </tr>                                
                                     </tbody>
                                 </table>
-                                <table> 
-                                    <tr>
-                                        <td class="p-16"><a href="javascript:;" ng-click="openInsertPopup('client/views/forms/location_form.html',$event,'client_address')">ADD NEW</a></td>                                                
-                                    </tr>
-                                </table>
+                               <div class="pull-right"><a href="javascript:;" ng-click="openInsertPopup('client/views/forms/location_form.html',$event,'client_address')" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right">ADD NEW</a></div>
                             </div>
-                        </div>   
-                    </md-content>
+                        </div>
+                    </div>
+                </md-content>
                 
