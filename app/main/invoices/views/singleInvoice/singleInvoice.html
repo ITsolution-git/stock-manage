@@ -219,7 +219,7 @@
                                             <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
                                             <td>{{ pmntHis.payment_amount | currency : $ : 2 }}</td>
                                             <td>{{ pmntHis.payment_method }}</td>
-                                            <td class="text-center"><a href="#" ng-click="deleteHistory(pmntHis.payment_id)" class="icon icon-cancel font-19 f-red"></a></td>
+                                            <td class="text-center"><a href="#" ng-click="deleteHistory(pmntHis.payment_id, pmntHis.payment_method)" class="icon icon-cancel font-19 f-red"></a></td>
                                         </tr>                    
                                     </tbody>
                                 </table>

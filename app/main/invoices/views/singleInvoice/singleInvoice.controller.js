@@ -343,15 +343,56 @@
                 
             });
         }
-        $scope.deleteHistory = function(payment_id)
+        $scope.deleteHistory = function(payment_id,method)
         {
+            if(method=='Credit Card'){
+                alert('Refund');
+                var invoice_id = document.createElement('input');
+                invoice_id.name = 'invoice_id';
+                invoice_id.setAttribute('value', $stateParams.id);
+
+                var company_id = document.createElement('input');
+                company_id.name = 'company_id';
+                company_id.setAttribute('value', sessionService.get('company_id'));
+
+                var combine_array = {};
+                combine_array.payment_id = payment_id;
+                combine_array.company_id = company_id.value;
+                combine_array.invoice_id = invoice_id.value;
+                $http.post('api/public/payment/refundTransaction',combine_array).success(function(result) 
+                {
+                    $("#ajax_loader").hide();
+                    /*if(result.data.success=='1')
+                    {
+                       $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                            $scope.siData = result123.data.allData;
+
+                            var combine_array_id = {};
+                            combine_array_id.invoice_id = $stateParams.id;
+
+                            $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
+                            {
+                                $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
+                                $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
+
+                            });
+                        });
+
+                       notifyService.notify('success', "Record Deleted Successfully!");
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }*/
+                });
+            }
+            return false;
             $("#ajax_loader").show();
             var vm = this;
             var UpdateArray = {};
             UpdateArray.table ='payment_history';
             UpdateArray.data = {is_delete:0};
             UpdateArray.cond = {payment_id:payment_id};
-            $("#ajax_loader").show();
 
             $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
             {
@@ -359,22 +400,20 @@
                 if(result.data.success=='1')
                 {
                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
-                    $scope.siData = result123.data.allData;
+                        $scope.siData = result123.data.allData;
 
-                    var combine_array_id = {};
-                    combine_array_id.invoice_id = $stateParams.id;
+                        var combine_array_id = {};
+                        combine_array_id.invoice_id = $stateParams.id;
 
-                    $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
-                    {
-                        $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
-                        $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
+                        $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
+                        {
+                            $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
+                            $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
 
+                        });
                     });
-                });
 
                    notifyService.notify('success', "Record Deleted Successfully!");
-
-                   //$scope.reloadCallback(); // CALL COMPANY LIST
                 }
                 else
                 {
