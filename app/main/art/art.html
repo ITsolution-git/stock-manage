@@ -10,41 +10,41 @@
                          Arts
                         </div>
                         <div class="pull-right right-search-box">
-                 <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p">
-                    <md-tooltip md-delay="demo.delayTooltip">Filter By - Client</md-tooltip>
-                </md-icon>
-                <div class="filter-menu filter-box">
-                    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
-                        <md-toolbar class=" filter-title">
-                            <h1 class="md-toolbar-tools">Filter</h1>
-                        </md-toolbar>
+                             <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p">
+                                <md-tooltip md-delay="demo.delayTooltip">Filter By - Client</md-tooltip>
+                            </md-icon>
+                            <div class="filter-menu filter-box">
+                                <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
+                                    <md-toolbar class=" filter-title">
+                                        <h1 class="md-toolbar-tools">Filter</h1>
+                                    </md-toolbar>
 
-                        <md-content class="flex-fix-bottom scrollable"  ms-scroll>
-                            <div class="contant-filter filter-detail" >
-                                <div layout="column" class="f-box-1 first-cheak">
-                                  
-                                    <div class="f-body scrollable pad0"  ms-scroll>
-                                        <div layout="column" >
-                                            <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings" translation-texts="buttonSetting"  class="cheak-box-class"></div>
+                                    <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+                                        <div class="contant-filter filter-detail" >
+                                            <div layout="column" class="f-box-1 first-cheak">
+                                              
+                                                <div class="f-body scrollable pad0"  ms-scroll>
+                                                    <div layout="column" >
+                                                        <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings" translation-texts="buttonSetting"  class="cheak-box-class"></div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
                                         </div>
+                                    </md-content>
+                                    <div class="filter-footer" layout="row">
+                                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
+                                        <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
                                     </div>
-
-                                </div>
-
+                                </md-sidenav>
                             </div>
-                        </md-content>
-                        <div class="filter-footer" layout="row">
-                            <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
-                            <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
-                        </div>
-                    </md-sidenav>
-                </div>
-                 <div class="search-block pull-right">
-                    <md-input-container class="md-block" flex-gt-sm>
-                        <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                    </md-input-container>
-                 </div>
-            </div> 
+                             <div class="search-block pull-right">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                                </md-input-container>
+                             </div>
+                        </div> 
                     </div>
                         <div class="ms-responsive-table-wrapper" ng-show="success==1">
                             <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
