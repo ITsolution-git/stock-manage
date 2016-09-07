@@ -801,6 +801,12 @@ md-card-content.custom-desc-box span {
 .text-white {
   color: #fff !important; }
 
+.client-list-page .num-style1 {
+  font-size: 20px; }
+
+.client-list-page .center-num-box {
+  height: 90px; }
+
 /*clients module inner pages */
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

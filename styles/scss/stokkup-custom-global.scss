@@ -1082,4 +1082,15 @@ md-card-content{
 .text-white{
 	color:$white-color !important;
 }
+.client-list-page{
+	.num-style1{
+		font-size:$page-title-size;
+	}
+}
+.client-list-page{
+	.center-num-box{
+		height:90px;
+	}
+}
+
 /*clients module inner pages */

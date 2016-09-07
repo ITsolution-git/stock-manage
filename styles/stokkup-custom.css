@@ -1247,6 +1247,9 @@ margin-top:30px;
   background:transparent !important;
   opacity:1 !important;
  }
+ .client-live-nation.med-box md-card{
+  min-height:165px;
+ }
 /* .md-button{
   color:#fff !important;
  }*/
