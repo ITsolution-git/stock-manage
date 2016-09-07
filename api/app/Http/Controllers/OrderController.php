@@ -1537,7 +1537,7 @@ class OrderController extends Controller {
                         $price_field = 'pricing_'.$color_stitch_count.'c';
                         if($position_qty <= $primary->range_low)
                         {
-                            if(isset($primary->$price_field))
+                            if(isset($primary->$price_field) && $position_qty > 0)
                             {
                                 $screen_print_charge = $primary->$price_field;
                                 break;
@@ -1552,7 +1552,7 @@ class OrderController extends Controller {
                         $price_field = 'pricing_'.$color_stitch_count.'c';
                         if($position_qty <= $secondary->range_low)
                         {
-                            if(isset($secondary->$price_field))
+                            if(isset($secondary->$price_field) && $position_qty > 0)
                             {
                                 $screen_print_charge = $secondary->$price_field;
                                 break;
@@ -1635,7 +1635,7 @@ class OrderController extends Controller {
 
                         foreach ($price_screen_embroidery as $embroidery2)
                         {
-                            if($position_qty <= $embroidery2->range_low)
+                            if($position_qty <= $embroidery2->range_low  && $position_qty > 0)
                             {
                                 $embroidery_charge = $embroidery2->$embroidery_field;
                                 break;
@@ -1680,7 +1680,7 @@ class OrderController extends Controller {
 
                         foreach($price_direct_garment as $garment) {
                           
-                          if($position_qty <= $garment->range_low)
+                          if($position_qty <= $garment->range_low  && $position_qty > 0)
                           {
                               $direct_to_garment_charge = $garment->$garment_field;
                               break;
