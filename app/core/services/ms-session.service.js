@@ -173,7 +173,10 @@
                 		//=============== SPECIAL CONDITIONS ==============
                 		if(extra=='vendorcontact') { InserArray.data.vendor_id = $scope.params.vendor_id;}
                 		if(extra=='sales') { InserArray.data.company_id = $scope.params.company_id; InserArray.data.sales_created_date =AllConstant.currentdate;}
-                		if(extra=='artnote') { InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;}
+                		if(extra=='artnote') 
+                			{ InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;
+                			  if(InserArray.data.artapproval_display==true){InserArray.data.artapproval_display='1';} else {InserArray.data.artapproval_display='0';}	
+                			}
                 		if(extra=='client_contact'){InserArray.data.client_id=$scope.all_scope.client_id;}
                 		if(extra=='client_notes'){InserArray.data.client_id=$scope.all_scope.client_id; InserArray.data.user_id=$scope.all_scope.login_id;InserArray.data.created_date=AllConstant.currentdate;}
                 		if(extra=='client_distaddress'){InserArray.data.client_id=$scope.all_scope.client_id;}
