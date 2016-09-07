@@ -33,8 +33,8 @@ class Shipping extends Model {
                                         ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                               });
                             }
-                            $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-                            ->GroupBy('po.order_id')
+                            $shippingData = $shippingData->GroupBy('po.order_id')
+                            ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                             ->skip($post['start'])
                             ->take($post['range'])
                             ->get();
