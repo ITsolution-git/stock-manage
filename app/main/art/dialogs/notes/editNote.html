@@ -18,6 +18,10 @@
                     <label class="color-b-grey">Note Description</label>
                     <textarea ng-model="params.note"  rows="5" md-select-on-focus placeholder="Enter Text Here"></textarea>
                 </md-input-container>
+
+                <md-checkbox md-no-ink aria-label="Art approval" ng-model="params.artapproval_display" class="md-primary margin-0 p-l-20">
+                    Show in Art Approval
+                </md-checkbox>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">

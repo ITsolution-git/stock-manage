@@ -18,9 +18,9 @@
                     <label class="color-b-grey">Note Description</label>
                     <textarea ng-model="notes.note" rows="5" ></textarea>
                 </md-input-container>
-               <!--  <md-checkbox md-no-ink aria-label="Checkbox No Ink" class="md-primary margin-0 p-l-20  ">
-                    Make Note Private
-                </md-checkbox> -->
+                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="notes.artapproval_display" class="md-primary margin-0 p-l-20  ">
+                    Show in Art Approval
+                </md-checkbox>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
