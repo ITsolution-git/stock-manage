@@ -10,7 +10,8 @@
                 </div>
                 <div class="search-block pull-right">
                     <md-input-container class="md-block" flex-gt-sm>
-                        <input ng-model="name" ui-event="{ change : 'search($event)' }" placeholder="Search clients..." >
+                        <label class="top-srch-label">Search Clients...</label>
+                        <input type="text" ng-model="name" ui-event="{change : 'search($event)'}" />
                     </md-input-container>
                 </div> 
             </div>

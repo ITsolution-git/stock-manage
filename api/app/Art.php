@@ -329,10 +329,11 @@ class Art extends Model {
 		//echo "<pre>"; print_r($result); echo "</pre>"; die;
         if(count($result)>0)
         {
-          foreach ($result as $key=>$value) 
-          {
-          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00' || empty($result[$key]->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
-          }
+          	foreach ($result as $key=>$value) 
+          	{
+          		$value->note_date = ($value->note_date=='0000-00-00' || empty($value->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
+          		$value->artapproval_display = ($value->artapproval_display=='0')? false: true;
+          	}
         }
 		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
         $returnData = array();
@@ -391,7 +392,7 @@ class Art extends Model {
 	{
 		$query = DB::table('artjob_screensets as ass')
 				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen')
-				->leftjoin('art_notes as an','an.screenset_id','=','ass.id',DB::raw("is_deleted = '1' "))
+				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')

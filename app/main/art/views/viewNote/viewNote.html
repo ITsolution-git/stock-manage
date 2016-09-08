@@ -33,6 +33,12 @@
                                 <td class="">{{note.note_date}}</td>
                                 <td class="">{{note.note_title}}</td>
                                 <td class="">{{note.note}}</td>
+                                
+                                <td ng-if="note.artapproval_display=='1'"><i class="icon icon-check s40"></i></td>
+                                <td ng-if="note.artapproval_display=='0'"><i class="icon icon-flickr-before s40"></i></td>
+
+
+                                <!-- <td class="">{{note.artapproval_display}}</td> -->
                                 <td>
                                     <md-menu>
                                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -49,7 +55,7 @@
                                                     Remove Note
                                                 </md-button>
                                             </md-menu-item>
-                                        </md-menu-content>
+                                        </md-menu-content> 
                                     </md-menu>
                                 </td>
                             </tr>

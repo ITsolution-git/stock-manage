@@ -60,6 +60,12 @@ $red-border:#de0000;
 /*global popup style ends here */
 $page-title-color:#252932;
 $page-title-size:20px;
+$toolbar-height:70px;
+$topbar-bgcolor:#252932;
+$sidenav-bg:#303440;
+$sidenav-color:#9fa1a7;
+$sidenav-lineheight:40px;
+$teal-green:#26b999;
 @mixin generaltablespacing($maintablemargin, $maintablepadding){
 	margin:$maintablemargin;
 	padding:$maintablepadding;
@@ -71,6 +77,10 @@ $page-title-size:20px;
 }
 
 /*genera css */
+input::-moz-placeholder, textarea::-moz-placeholder {
+	opacity:1;
+	color:$popup-header-bg;
+}
 html,body{
 	font-family:$stokkupfamily1;
 	color:$stokkup-global-txtcolor;
@@ -100,6 +110,30 @@ button, select, html, textarea, input{
 }
 .light-300{
 	font-weight:$font-weight-300;
+}
+.topheadicon{
+	.fa-stack{
+		top:18px;
+		left:-25px;
+	}
+	.fa-circle{
+		color:$teal-green;
+		font-size:22px;
+		position:$pos-relative;
+	}
+	.fa-check{
+		color:$white-color;
+		font-size:11px;
+		left:-24px;
+		top:-3px;
+		position:$pos-relative;
+	}
+	.fa-angle-down{
+		color:#c5c8cb;
+		font-size:$font-size-text;
+		position:$pos-relative;
+		left:-10px;
+	}
 }
 .right-search-box{
 	width:70%;
@@ -140,11 +174,7 @@ button, select, html, textarea, input{
 }
 /*genera css ends here */
 /*scss for sidebar and top navigation box */
-$toolbar-height:70px;
-$topbar-bgcolor:#252932;
-$sidenav-bg:#303440;
-$sidenav-color:#9fa1a7;
-$sidenav-lineheight:40px;
+
 
 .no-box-shadows{
 	-moz-box-shadow:$nofloat;
@@ -310,8 +340,13 @@ md-menu-content{
 	md-input-container{
 		margin:$zero 10px $zero $zero;
 		padding:$zero;
-		label{
+		&.md-input-focused label{
 			display:$nofloat;
+		}
+		.top-srch-label{
+			line-height:18px;
+			padding-left:$font-size-mid !important;
+			color:$stokkup-table-footer-txtcolor;
 		}
 		.md-input{
 			@extend .border-radius-half;
@@ -471,6 +506,11 @@ table.dataTable tbody tr:nth-child(even){
 /*global dialog box starts here */
 .md-button{
 	@extend .noborder-radius;
+}
+.stokkup-custom-btn1{
+	&.md-button{
+		@extend .border-radius-half;
+	}
 }
 @mixin dialogfooterbtn($footerbtnbg){
 	background-color:$footerbtnbg;
@@ -1025,7 +1065,6 @@ button{
 	.md-tab{
 		font-size:$xs-font-size;
 		color:$tab-color !important;
-		color:#252932;
 		font-weight:$font-weight-300;
 		padding:14px $zero 10px;
 		line-height:18px;
@@ -1127,7 +1166,6 @@ md-card-content{
 	.md-tab{
 		font-size:$xs-font-size;
 		color:$tab-color !important;
-		color:#252932;
 		font-weight:$font-weight-300;
 		padding:14px $zero 10px;
 		line-height:18px;
