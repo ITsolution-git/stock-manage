@@ -763,7 +763,7 @@ class Product extends Model {
     public function productListDownload($company_id) {
         
         $whereConditions = ['products.is_delete' => '1','vendors.is_delete' => '1','vendors.company_id' => $company_id];
-        $listArray = ['products.name as Name','products.description as Description','vendors.name_company as Vendor','pcs.customer_price as Price','c.name as Color','pz.name as Size'];
+        $listArray = ['products.name as Name','products.description as Description','vendors.name_company as Vendor','c.name as Color','pz.name as Size','pcs.customer_price as Price'];
 
         $vendorData = DB::table('products as products')
                          ->leftJoin('vendors as vendors', 'products.vendor_id', '=', 'vendors.id')
