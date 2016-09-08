@@ -1056,6 +1056,7 @@ class OrderController extends Controller {
 
             if(empty($payment_data))
             {
+                $date = date_create();
                 $length = 25;
                 $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);

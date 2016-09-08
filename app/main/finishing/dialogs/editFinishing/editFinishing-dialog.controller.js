@@ -92,29 +92,45 @@
                 /*if($scope.finishing_data.start_time == '')
                 {*/
                     $scope.finishing_data.end_time = '';
-                    $scope.finishing_data.start_time = strTime;
-/*                    var start_time = $scope.finishing_data.start_time;
+                    $scope.finishing_data.start_time2 = hours + ":" + minutes + ":" + seconds;
+                    var start_time2 = $scope.finishing_data.start_time2;
 
-                    var a = start_time.split(':');
-                    var start_time = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                    $scope.finishing_data.start_time = strTime;
+                    var start_time = $scope.finishing_data.start_time;
+
+                    var a = start_time2.split(':');
+                    var start_time2 = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
 
                     var est = (new Date).clearTime()
-                      .addSeconds(start_time)
-                      .toString('H:mm:ss');*/
+                      .addSeconds(start_time2)
+                      .toString('H:mm:ss');
 
-                    //$scope.finishing_data.est = est;
-                //}
+                    $scope.finishing_data.est2 = est;
+
+                    var e = est.split(':');
+
+                    e[0] = e[0] % 12;
+                    e[1] = e[0] ? e[0] : 12; // the hour '0' should be '12'
+                    minutes = e[1] < 10 ? '0'+e[1] : e[1];
+                    var est2 = e[0] + ':' + e[1] + ' ' + ampm;
+
+                    $scope.finishing_data.est = est2;
+               // }
             }
             if(param == 'end')
             {
                 if($scope.finishing_data.start_time != '' && $scope.finishing_data.end_time == '')
                 {
+                    $scope.finishing_data.end_time2 = hours + ":" + minutes + ":" + seconds;
+                    var end_time2 = $scope.finishing_data.end_time2;
+                    var start_time2 = $scope.finishing_data.start_time2;
+
                     $scope.finishing_data.end_time = strTime;
-/*                    var start_time = $scope.finishing_data.start_time;
+                    var start_time = $scope.finishing_data.start_time;
                     var end_time = $scope.finishing_data.end_time;
 
-                    var a = start_time.split(':');
-                    var b = end_time.split(':');
+                    var a = start_time2.split(':');
+                    var b = end_time2.split(':');
                     
                     var strtime1 = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
                     var strtime2 = (+b[0]) * 60 * 60 + (+b[1]) * 60 + (+b[2]);
@@ -125,7 +141,16 @@
                       .addSeconds(time_diff)
                       .toString('H:mm:ss');
 
-                    $scope.finishing_data.est = est;*/
+                    $scope.finishing_data.est2 = est;
+
+                    var e = est.split(':');
+
+                    e[0] = e[0] % 12;
+                    e[1] = e[0] ? e[0] : 12; // the hour '0' should be '12'
+                    minutes = e[1] < 10 ? '0'+e[1] : e[1];
+                    var est2 = e[0] + ':' + e[1] + ' ' + ampm;
+
+                    $scope.finishing_data.est = est2;
                 }
             }
         }
