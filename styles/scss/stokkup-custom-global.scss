@@ -154,6 +154,11 @@ button, select, html, textarea, input{
 	text-align:$center;
 	text-transform:uppercase;
 }
+button.bg-grey.md-raised{
+	@extend .stokkup-btn-style1;
+	background-color:$usermenu-txtcolor !important;
+	font-weight:$font-weight-700;
+}
 .white-bg{
 	background-color:$white-color;
 }
@@ -946,9 +951,9 @@ button{
 	&.orderscreen-infobtns{
 	max-width:270px;
 	margin:$zero $zero 15px;
-	}
 	&:last-child{
 		margin-bottom:$zero;
+	}
 	}
 }
 .footer{
@@ -1189,13 +1194,13 @@ md-card-content{
 .md-primary
 {
 	&.md-hue-1{
-	background-color:#9fa1a7;
+	background-color:$usermenu-txtcolor;
 	color:$white-color;
 	}
 }
 .dialog-cancel-global{
 	min-width:123px;
-	background-color:#9fa1a7;
+	background-color:$usermenu-txtcolor;
 	color:$white-color;
 	height:41px;
 	line-height:41px;
