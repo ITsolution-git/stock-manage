@@ -1253,3 +1253,10 @@ margin-top:30px;
 /* .md-button{
   color:#fff !important;
  }*/
+ a.md-button.md-default-theme[disabled], a.md-button[disabled], a.md-button.md-default-theme.md-raised[disabled], a.md-button.md-raised[disabled], a.md-button.md-default-theme.md-fab[disabled], a.md-button.md-fab[disabled], a.md-button.md-default-theme.md-accent[disabled], a.md-button.md-accent[disabled], a.md-button.md-default-theme.md-warn[disabled], a.md-button.md-warn[disabled], .md-button.md-default-theme[disabled], .md-button[disabled], .md-button.md-default-theme.md-raised[disabled], .md-button.md-raised[disabled], .md-button.md-default-theme.md-fab[disabled], .md-button.md-fab[disabled], .md-button.md-default-theme.md-accent[disabled], .md-button.md-accent[disabled], .md-button.md-default-theme.md-warn[disabled], .md-button.md-warn[disabled]{
+  background-color:#9fa1a7 !important;
+  color:#fff !important;
+ }
+ a.md-button.md-default-theme.md-hue-1.md-accent, a.md-button.md-hue-1.md-accent, .md-button.md-default-theme.md-hue-1.md-accent, .md-button.md-hue-1.md-accent{
+  color:#fff !important;
+ }
