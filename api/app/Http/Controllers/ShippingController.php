@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Shipping;
 use App\Common;
 use App\Distribution;
+use App\Api;
 
 use App\Order;
 use DB;
@@ -19,11 +20,12 @@ use Request;
 use PDF;
 class ShippingController extends Controller { 
 
-    public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order) 
+    public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order,Api $api) 
     {
         $this->shipping = $shipping;
         $this->distribution = $distribution;
         $this->common = $common;
+        $this->api = $api;
     }
 
     public function addressValidate()
@@ -60,7 +62,6 @@ class ShippingController extends Controller {
         if ($response->isValid()) {
             echo "isValid";
             $validAddress = $response->getValidatedAddress();
-            print_r($validAddress);exit;
             //Show user validated address or update their address with the 'official' address
             //Or do something else helpful...
         }
@@ -143,8 +144,8 @@ class ShippingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'po.order_id', 'name' => 'Order ID'),
-                        1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        0=>array('key' => 'po.order_id', 'name' => 'Order ID','sortable' => false),
+                        1=>array('key' => 'c.client_company', 'name' => 'Client Name','sortable' => false),
                         2=>array('key' => 'po.po_id', 'name' => 'PO #'),
                         3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
                         4=>array('key' => '', 'name' => '', 'sortable' => false)
@@ -415,7 +416,8 @@ class ShippingController extends Controller {
 
         $company_id = $company_detail[0]->id;
 
-        $shipping['company_detail'] = $this->common->getCompanyDetail($company_detail[0]->id);
+        $shipping['company_detail'] = $this->common->getCompanyDetail($company_id);
+
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
 
         if($shipping['company_detail'][0]->photo != '')
@@ -497,7 +499,6 @@ class ShippingController extends Controller {
         $shipping['other_data'] = $other_data;
         $shipping['color_all_data'] = $color_all_data;
 
-        
         if($post['print_type'] == 'manifest')
         {
         
@@ -783,6 +784,8 @@ class ShippingController extends Controller {
     public function checkAddressValid()
     {
         $post = Input::all();
+
+        $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail');
 
         if($post['shipping_type_id'] == 'Fedex')
         {

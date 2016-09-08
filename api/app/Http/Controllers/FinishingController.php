@@ -107,10 +107,15 @@ class FinishingController extends Controller {
                 else {
                     $row->end_time = '';
                 }
-                if($row->est != '00:00:00') {
-                    $row->est = date('h:i A', strtotime($row->est));
+
+                if($row->est != '00:00:00')
+                {
+                    $est = explode(":", $row->est);
+                    $ampm = $est[0] >= 12 ? 'PM' : 'AM';
+                    $row->est = $est[0] .":". $est[1] ." ". $ampm;
                 }
-                else {
+                else
+                {
                     $row->est = '';
                 }
             }
@@ -177,17 +182,7 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        if($post['start_time'] != '') {
-            $start_time = date("H:i", strtotime($post['start_time']));
-        }
-        if($post['end_time'] != '') {
-            $end_time = date("H:i", strtotime($post['end_time']));
-        }
-        if($post['est'] != '') {
-            $est = date("H:i", strtotime($post['est']));
-        }
-
-        $finishingData['field'] = array('start_time' => $start_time,'end_time' => $end_time,'est' => $est,'note'=>$post['note']);
+        $finishingData['field'] = array('start_time' => $post['start_time2'],'end_time' => $post['end_time2'],'est' => $post['est2'],'note'=>$post['note']);
         $finishingData['where'] = array('id' => $post['id']);
 
         $result = $this->finishing->updateFinishing($finishingData);
