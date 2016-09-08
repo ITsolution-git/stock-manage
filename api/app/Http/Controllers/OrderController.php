@@ -1061,7 +1061,7 @@ class OrderController extends Controller {
                 $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
 
-                $this->common->InsertRecords('link_to_pay',array('order_id' => $data['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
+                $this->common->InsertRecords('link_to_pay',array('order_id' => $post['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
 
                 $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$session_link;
             }
