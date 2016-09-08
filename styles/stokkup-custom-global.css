@@ -389,7 +389,7 @@ md-dialog.task-dialog {
       font-weight: 700;
       text-transform: uppercase; }
     md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]) {
-      background-color: #6288dc;
+      background-color: #6288dc !important;
       min-width: 123px;
       width: auto;
       height: 41px;
@@ -426,7 +426,10 @@ md-dialog.task-dialog {
   margin: 0 !important;
   padding: 0;
   min-width: 30px;
-  float: right; }
+  float: right;
+  background: transparent !important;
+  color: #fff;
+  font-size: 13px; }
   .close-stokkup-dialog:hover, .close-stokkup-dialog:focus {
     background: transparent !important;
     -moz-transition: none;
@@ -871,6 +874,21 @@ md-card-content.custom-desc-box span {
 
 .custom-struct-2 md-tabs md-ink-bar {
   border-bottom: 3px solid #e3e3e3; }
+
+.md-primary.md-hue-1 {
+  background-color: #9fa1a7;
+  color: #fff; }
+
+.dialog-cancel-global {
+  min-width: 123px;
+  background-color: #9fa1a7;
+  color: #fff;
+  height: 41px;
+  line-height: 41px;
+  font-weight: 700; }
+
+.dialog-cancel-btn {
+  min-width: 123px; }
 
 /* .custom-struct-2 md-tabs.md-active md-ink-bar{
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
