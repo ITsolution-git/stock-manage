@@ -114,7 +114,7 @@
                     minutes = e[1] < 10 ? '0'+e[1] : e[1];
                     var est2 = e[0] + ':' + e[1] + ' ' + ampm;
 
-                    $scope.finishing_data.est = est2;
+                    $scope.finishing_data.est = strTime;
                // }
             }
             if(param == 'end')
