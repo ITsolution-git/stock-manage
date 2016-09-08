@@ -473,7 +473,7 @@ class ArtController extends Controller {
         {
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
             
-            if(!empty($pdf_data[0]))
+            if(!empty($pdf_data[0][0]))
             {
                 $email_array = explode(",",$screenArray->email);
                 $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
@@ -481,8 +481,11 @@ class ArtController extends Controller {
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
                 else { exec("chmod $file_path 0777"); }
                 
+                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+
+
                 PDF::AddPage('P','A4');
-                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0]))->render());
+                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0]))->render());
            
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
@@ -494,7 +497,7 @@ class ArtController extends Controller {
                     Mail::send('emails.artapproval', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
                     {
                         $message->to($email_array);
-                        $message->subject('Art Approval for the order '.$pdf_data[0][0]->order_name);
+                        $message->subject('Art Approval for the order '.$pdf_data[0][0][0]->order_name);
                         $message->attach($filename);
                     });
                 }

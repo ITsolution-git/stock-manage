@@ -37,17 +37,7 @@
             //getResource();
         };
         
-       // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
-            var state = {};
-            state.table ='state';
 
-            $http.post('api/public/common/GetTableRecords',state).success(function(result) 
-            {   
-                if(result.data.success=='1')
-                {   
-                	$scope.states_all = result.data.records;
-                }
-            });
        $scope.getResource = function (params, paramsObj, search)
         {   
         	$scope.params = params;
@@ -83,13 +73,13 @@
     	}
     	$scope.openInsertPopup = function(ev, settings)
         {
-            var Insert_params = {states_all:$scope.states_all,company_id:$scope.company_id,flag:'add'};
+            var Insert_params = {company_id:$scope.company_id};
             //OPEN POPUP WITH TO INSERT DATA// SCOPE, PATH INSIDE app/main FOLDER, CONDITION DATA, TABLE
             sessionService.openAddPopup($scope,'settings/dialogs/sales/addsales.html',Insert_params,'sales');
         }
         $scope.openEditPopup = function(path,param,ev)
         {
-            var edit_params = {states_all:$scope.states_all,data:param,flag:'edit'};
+            var edit_params = {data:param};
             // OPEN POPUP WITH DATA   // SCOPE, PATH FILE, DISPLAY DATA, TABLE
             sessionService.openEditPopup($scope,'settings/dialogs/sales/addsales.html',edit_params,'sales');
         }

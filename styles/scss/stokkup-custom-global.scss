@@ -469,7 +469,9 @@ table.dataTable tbody tr:nth-child(even){
 /*global table elements css */
 
 /*global dialog box starts here */
-
+.md-button{
+	@extend .noborder-radius;
+}
 @mixin dialogfooterbtn($footerbtnbg){
 	background-color:$footerbtnbg;
 }
@@ -998,6 +1000,7 @@ button{
 .stokkup-custom-tabs{
 	md-tabs-wrapper{
 		padding:0 35px;
+		border:$nofloat;
 		@extend .custom-shadow1;
 	}
 }
@@ -1092,5 +1095,57 @@ md-card-content{
 		height:90px;
 	}
 }
+.custom-struct-2{
+	md-tabs-wrapper{
+		top:20px;
+		width:250px;
+		margin:$auto;
+		position:$pos-relative;
+		z-index:5;
+	}
+}
+.custom-struct-2 md-tabs.md-dynamic-height md-tab-content.md-active{
+	top:-50px;
+}
+.stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title{
+	position:$pos-relative;
+	z-index:$zero;
+	padding-bottom:$zero;
+}
+.custom-struct-2{
+	md-pagination-wrapper{
+		height:40px;
+	}
+}
+.custom-struct-2{
+	md-tabs-canvas{
+		height:40px;
+	}
+}
 
+.custom-struct-2{
+	.md-tab{
+		font-size:$xs-font-size;
+		color:$tab-color !important;
+		color:#252932;
+		font-weight:$font-weight-300;
+		padding:14px $zero 10px;
+		line-height:18px;
+		text-transform:uppercase;
+		margin:$zero;
+		span{
+			padding:0 10px;
+			text-transform:uppercase;
+		}
+		&.md-active{
+			color:$tab-active-color !important;
+		}
+	}
+}
+.custom-struct-2 md-tabs md-ink-bar{
+	border-bottom:3px solid #e3e3e3;
+}
+/* .custom-struct-2 md-tabs.md-active md-ink-bar{
+	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
+}*/
 /*clients module inner pages */

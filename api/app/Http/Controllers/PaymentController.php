@@ -109,6 +109,7 @@ class PaymentController extends Controller {
         }
 
         $creditCardNumber=$post['creditCard'];//4111111111111111
+        $creditCardNumberStored=substr($creditCardNumber, -4);
         $expiry=$post['expMonth'].$post['expYear'];
         //$expiry=$post['expiry'];//1226
         $cvv=$post['cvv'];//123
@@ -164,7 +165,7 @@ class PaymentController extends Controller {
 
 //       $billto = array("firstName"=>"Ellen","lastName"=>"Johnson","company"=>"Souveniropolis","address"=>"14 Main Street","city"=>"Pecan Springs","state"=>"TX","zip"=>"44628","country"=>"USA");
 // $billto=json_encode($billto);
-        $transactionRequestType->setBillTo($billto);
+        //$transactionRequestType->setBillTo($billto);
 
         $request = new AnetAPI\CreateTransactionRequest();
         $request->setMerchantAuthentication($merchantAuthentication);
@@ -186,7 +187,7 @@ class PaymentController extends Controller {
 
               ///// update payments
 
-                $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Credit Card','authorized_TransId' => $tresponse->getTransId(),'authorized_AuthCode' => $tresponse->getAuthCode(),'qb_payment_id' => '', 'qb_web_reference' => '');
+                $orderData = array('qb_id' => $qb_id,'order_id' => $order_id, 'payment_card' => $creditCardNumberStored, 'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Credit Card','authorized_TransId' => $tresponse->getTransId(),'authorized_AuthCode' => $tresponse->getAuthCode(),'qb_payment_id' => '', 'qb_web_reference' => '');
 
                 $id = $this->common->InsertRecords('payment_history',$orderData);
 
@@ -369,26 +370,142 @@ class PaymentController extends Controller {
         }
     }
 
-    public function refundTransaction($amount)
+    public function getTransactionDetails($transactionId, $merchantAuthentication) {
+
+      $refId = 'ref' . time();
+
+      $request = new AnetAPI\GetTransactionDetailsRequest();
+      $request->setMerchantAuthentication($merchantAuthentication);
+      $request->setTransId($transactionId);
+
+      $controller = new AnetController\GetTransactionDetailsController($request);
+
+      $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+
+      if (($response != null) && ($response->getMessages()->getResultCode() == "Ok"))
+      {
+
+        $responseData=array(
+        'amount' => $response->getTransaction()->getAuthAmount(),
+        'order' => $response->getTransaction()->getOrder()->getdescription(),
+        'invoice' => $response->getTransaction()->getOrder()->getinvoiceNumber(),
+        'firstName' => $response->getTransaction()->getBillTo()->getfirstName(),
+        'lastName' => $response->getTransaction()->getBillTo()->getlastName(),
+        'company' => $response->getTransaction()->getBillTo()->getcompany(),
+        'address' => $response->getTransaction()->getBillTo()->getaddress(),
+        'city' => $response->getTransaction()->getBillTo()->getcity(),
+        'state' => $response->getTransaction()->getBillTo()->getstate(),
+        'zip' => $response->getTransaction()->getBillTo()->getzip(),
+        'country' => $response->getTransaction()->getBillTo()->getcountry()
+        );
+
+        $data = array("success"=>1,'message' =>$responseData);
+      }
+      else
+      {
+        echo "ERROR :  Invalid response\n";
+        $errorMessages = $response->getMessages()->getMessage();
+        echo "Response : " . $errorMessages[0]->getCode() . "  " .$errorMessages[0]->getText() . "\n";
+        $data = array("success"=>0,'message' =>'Authorized.net Transaction ID is not valid');
+      }
+      return $data;
+    }
+
+    public function refundTransaction()
     {
-    // Common setup for API credentials
+        $post = Input::all();
+        $payment_id=$post['payment_id'];
+        $retArrayRefund = DB::table('payment_history')
+            ->select('payment_card', 'payment_amount', 'authorized_TransId', 'payment_date', 'authorized_AuthCode')
+            ->where('payment_id','=',$payment_id)
+            ->where('is_delete','=','1')
+            ->get();
+        if(count($retArrayRefund)<1){
+            $data = array("success"=>0,'message' =>"Invalid Payment record");
+            return response()->json(['data'=>$data]);
+        }
+
+        $amount=$retArrayRefund[0]->payment_amount;
+        $refTransId=$retArrayRefund[0]->authorized_TransId;
+        $creditCardNumber=$retArrayRefund[0]->payment_card;
+        $payment_date=$retArrayRefund[0]->payment_date;
+        $authorized_AuthCode=$retArrayRefund[0]->authorized_AuthCode;
+        //print_r($retCredsArray);exit;
+
+        if(isset($post['company_id']))
+        {
+            $company_id=$post['company_id'];
+            $retCredsArray = DB::table('authorize_detail as au')
+            ->select('au.login', 'au.transactionkey')
+            ->leftJoin('api_link_table as ai','ai.id','=',"au.link_id")
+            ->where('ai.company_id','=',$company_id)
+            ->where('ai.status','=','1')
+            ->where('ai.api_id','=',3)
+            ->get();
+        }
+        if(count($retCredsArray)<1){
+            $data = array("success"=>0,'message' =>"Please integrate Authorize.net details");
+            return response()->json(['data'=>$data]);
+        }
+
+        // Common setup for API credentials
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        $merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-        $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);
+        /*$merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
+        $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);*/
+        $merchantAuthentication->setName($retCredsArray[0]->login);
+        $merchantAuthentication->setTransactionKey($retCredsArray[0]->transactionkey);
+        $result = $this->getTransactionDetails($refTransId, $merchantAuthentication);
+    
+        if($result['success']==0){
+            $data = array("success"=>0,'message' =>"Authorized.net Transaction ID is not valid");
+            return response()->json(['data'=>$data]);
+        }
+        print_r($result);exit;
         $refId = 'ref' . time();
 
         // Create the payment data for a credit card
         $creditCard = new AnetAPI\CreditCardType();
-        $creditCard->setCardNumber("0015");
+        $creditCard->setCardNumber($creditCardNumber);
         $creditCard->setExpirationDate("XXXX");
         $paymentOne = new AnetAPI\PaymentType();
         $paymentOne->setCreditCard($creditCard);
+
+        $retArrayOrder = DB::table('invoice')
+        ->select('order_id')
+        ->where('id','=',$post['invoice_id'])
+        ->get();
+
+        $order_id=$retArrayOrder[0]->order_id;
+
+        $order = new AnetAPI\OrderType();
+        $order->setDescription("Refund for Order ID: ".$order_id);
+        $order->setInvoiceNumber("INV - ".$order_id);
+
         //create a transaction
         $transactionRequest = new AnetAPI\TransactionRequestType();
         $transactionRequest->setTransactionType( "refundTransaction"); 
         $transactionRequest->setAmount($amount);
         $transactionRequest->setPayment($paymentOne);
-     
+        $transactionRequest->setrefTransId($refTransId);
+
+        $retArrayBilling = DB::table('orders as o')
+            ->select('c.client_company', 'c.client_id', 'c.billing_email')
+            ->leftJoin('client as c','c.client_id','=',"o.client_id")
+            ->where('o.id','=',$order_id)
+            ->where('o.is_delete','=','1')
+            ->get();
+
+        $billto = new AnetAPI\CustomerAddressType();
+        $billto->setFirstName($post['creditFname']);
+        $billto->setLastName($post['creditLname']);
+        $billto->setCompany($retArrayBilling[0]->client_company);
+        $billto->setAddress($post['street']);
+        $billto->setCity($post['city']);
+        $billto->setState($post['state']);
+        $billto->setZip($post['zip']);
+        $billto->setCountry("USA");
+
+        $transactionRequestType->setBillTo($billto);
 
         $request = new AnetAPI\CreateTransactionRequest();
         $request->setMerchantAuthentication($merchantAuthentication);
@@ -405,40 +522,58 @@ class PaymentController extends Controller {
             
             if ($tresponse != null && $tresponse->getMessages() != null)   
             {
-              echo " Transaction Response code : " . $tresponse->getResponseCode() . "\n";
-              echo "Refund SUCCESS: " . $tresponse->getTransId() . "\n";
-              echo " Code : " . $tresponse->getMessages()[0]->getCode() . "\n"; 
-              echo " Description : " . $tresponse->getMessages()[0]->getDescription() . "\n";
+              //echo " Transaction Response code : " . $tresponse->getResponseCode() . "\n";
+              //echo "Refund SUCCESS: " . $tresponse->getTransId() . "\n";
+              //echo " Code : " . $tresponse->getMessages()[0]->getCode() . "\n"; 
+              //echo " Description : " . $tresponse->getMessages()[0]->getDescription() . "\n";
+              $message="This transaction has been approved.";
+              //$tresponse->getTransId();
+
+              $orderData = array('order_id' => $order_id, 'payment_card' => $creditCardNumberStored, 'payment_amount' => $post['amount'],'payment_date' => $payment_date ,'payment_refund_date' => date('Y-m-d'), 'payment_method' => 'Credit Card', 'authorized_TransId' => $authorized_TransId, 'authorized_TransId_refund' => $tresponse->getTransId(), 'authorized_AuthCode' => $authorized_AuthCode);
+
+              $id = $this->common->InsertRecords('payment_refund',$orderData);
+
+              $data = array("success"=>1,'message' =>$message);
+              return response()->json(['data'=>$data]);
             }
             else
             {
-              echo "Transaction Failed \n";
+              $message = "Refund Transaction Failed. ";
               if($tresponse->getErrors() != null)
               {
-                echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
-                echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";            
+                //echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+                //echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
+                $message=$message.$tresponse->getErrors()[0]->getErrorText();
               }
+              $data = array("success"=>0,'message' =>$message);
+              return response()->json(['data'=>$data]);
             }
           }
           else
           {
-            echo "Transaction Failed \n";
+            $message = "Refund Transaction Failed. ";
             $tresponse = $response->getTransactionResponse();
             if($tresponse != null && $tresponse->getErrors() != null)
             {
-              echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
-              echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";                      
+              //echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+              //echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
+              $message=$message.$tresponse->getErrors()[0]->getErrorText();
             }
             else
             {
-              echo " Error code  : " . $response->getMessages()->getMessage()[0]->getCode() . "\n";
-              echo " Error message : " . $response->getMessages()->getMessage()[0]->getText() . "\n";
+              //echo " Error code  : " . $response->getMessages()->getMessage()[0]->getCode() . "\n";
+              //echo " Error message : " . $response->getMessages()->getMessage()[0]->getText() . "\n";
+              $message=$message.$response->getMessages()->getMessage()[0]->getText();
             }
+            $data = array("success"=>0,'message' =>$message);
+            return response()->json(['data'=>$data]);
           }      
         }
         else
         {
-          echo  "No response returned \n";
+          $message = "No response returned";
+          $data = array("success"=>0,'message' =>$message);
+          return response()->json(['data'=>$data]);
         }
 
         return $response;
