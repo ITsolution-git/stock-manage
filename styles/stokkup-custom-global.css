@@ -81,7 +81,7 @@ button, select, html, textarea, input {
   -o-box-shadow: none;
   box-shadow: none; }
 
-.border-radius-half, .stokkup-btn-style1, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
+.border-radius-half, .stokkup-btn-style1, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
   border-radius: 50px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;

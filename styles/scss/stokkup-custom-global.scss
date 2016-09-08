@@ -60,6 +60,11 @@ $red-border:#de0000;
 /*global popup style ends here */
 $page-title-color:#252932;
 $page-title-size:20px;
+$toolbar-height:70px;
+$topbar-bgcolor:#252932;
+$sidenav-bg:#303440;
+$sidenav-color:#9fa1a7;
+$sidenav-lineheight:40px;
 @mixin generaltablespacing($maintablemargin, $maintablepadding){
 	margin:$maintablemargin;
 	padding:$maintablepadding;
@@ -140,11 +145,7 @@ button, select, html, textarea, input{
 }
 /*genera css ends here */
 /*scss for sidebar and top navigation box */
-$toolbar-height:70px;
-$topbar-bgcolor:#252932;
-$sidenav-bg:#303440;
-$sidenav-color:#9fa1a7;
-$sidenav-lineheight:40px;
+
 
 .no-box-shadows{
 	-moz-box-shadow:$nofloat;
@@ -471,6 +472,11 @@ table.dataTable tbody tr:nth-child(even){
 /*global dialog box starts here */
 .md-button{
 	@extend .noborder-radius;
+}
+.stokkup-custom-btn1{
+	&.md-button{
+		@extend .border-radius-half;
+	}
 }
 @mixin dialogfooterbtn($footerbtnbg){
 	background-color:$footerbtnbg;
