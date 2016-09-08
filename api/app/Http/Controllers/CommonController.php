@@ -1102,7 +1102,8 @@ class CommonController extends Controller {
             $header = array(
                 0=>array('key' => 'note.note_date', 'name' => 'Created date'),
                 1=>array('key' => 'note.note_title', 'name' => 'Note Title'),
-                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                2=>array('key' => 'note.note', 'name' => 'Note Description'),
+                3=>array('key' => 'note.artapproval_display', 'name' => 'Show in Art Approval')
                 );
         }
 
