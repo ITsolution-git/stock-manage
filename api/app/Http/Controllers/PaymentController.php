@@ -41,52 +41,6 @@ class PaymentController extends Controller {
      * @return Response, success, records, message
      */
 
-	/*public function MerchantAuthentication()
-	{
-		// Common setup for API credentials
-		$merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-		$merchantAuthentication->setName("93Yd4M9fU");
-		$merchantAuthentication->setTransactionKey("443U8c9zrK5UZyEd");
-
-		// Create the payment data for a credit card
-		$creditCard = new AnetAPI\CreditCardType();
-		$creditCard->setCardNumber("4111111111111111");
-		$creditCard->setExpirationDate("2038-12");
-		$paymentOne = new AnetAPI\PaymentType();
-		$paymentOne->setCreditCard($creditCard);
-
-		// Create a transaction
-		$transactionRequestType = new AnetAPI\TransactionRequestType();
-		$transactionRequestType->setTransactionType( "authCaptureTransaction"); 
-		$transactionRequestType->setAmount(151.51);
-		$transactionRequestType->setPayment($paymentOne);
-
-		$request = new AnetAPI\CreateTransactionRequest();
-		$request->setMerchantAuthentication($merchantAuthentication);
-		$request->setTransactionRequest( $transactionRequestType);
-		$controller = new AnetController\CreateTransactionController($request);
-		$response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
-
-		if ($response != null)
-		{
-		    $tresponse = $response->getTransactionResponse();
-
-		    if (($tresponse != null) && ($tresponse->getResponseCode()=="1") )   
-		    {
-		        echo "Charge Credit Card AUTH CODE : " . $tresponse->getAuthCode() . "\n";
-		        echo "Charge Credit Card TRANS ID  : " . $tresponse->getTransId() . "\n";
-		    }
-		    else
-		    {
-		        echo  "Charge Credit Card ERROR :  Invalid response\n";
-		    }
-		}
-		else
-		{
-		    echo  "Charge Credit card Null response returned";
-		}
-	}*/
-
     public function chargeCreditCard()
     {
         $post = Input::all();
@@ -163,10 +117,6 @@ class PaymentController extends Controller {
 
         $transactionRequestType->setBillTo($billto);
 
-//       $billto = array("firstName"=>"Ellen","lastName"=>"Johnson","company"=>"Souveniropolis","address"=>"14 Main Street","city"=>"Pecan Springs","state"=>"TX","zip"=>"44628","country"=>"USA");
-// $billto=json_encode($billto);
-        //$transactionRequestType->setBillTo($billto);
-
         $request = new AnetAPI\CreateTransactionRequest();
         $request->setMerchantAuthentication($merchantAuthentication);
         $request->setRefId( $refId);
@@ -184,9 +134,7 @@ class PaymentController extends Controller {
               /*echo "Charge Credit Card AUTH CODE : " . $tresponse->getAuthCode() . "\n";
               echo "Charge Credit Card TRANS ID  : " . $tresponse->getTransId() . "\n";*/
 
-
-              ///// update payments
-
+              // update payments
                 $orderData = array('qb_id' => $qb_id,'order_id' => $order_id, 'payment_card' => $creditCardNumberStored, 'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Credit Card','authorized_TransId' => $tresponse->getTransId(),'authorized_AuthCode' => $tresponse->getAuthCode(),'qb_payment_id' => '', 'qb_web_reference' => '');
 
                 $id = $this->common->InsertRecords('payment_history',$orderData);
@@ -202,8 +150,6 @@ class PaymentController extends Controller {
                 $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
 
                 $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
-
-          
 
                 if(($post['storeCard']==1) || ($post['linkToPay']==1))
                 {
@@ -370,6 +316,7 @@ class PaymentController extends Controller {
         }
     }
 
+    // Fetching transaction details from Authorized.net
     public function getTransactionDetails($transactionId, $merchantAuthentication) {
 
       $refId = 'ref' . time();
@@ -428,6 +375,7 @@ class PaymentController extends Controller {
         $amount=$retArrayRefund[0]->payment_amount;
         $refTransId=$retArrayRefund[0]->authorized_TransId;
         $creditCardNumber=$retArrayRefund[0]->payment_card;
+        $creditCardNumberStored = substr($creditCardNumber, -4);
         $payment_date=$retArrayRefund[0]->payment_date;
         $authorized_AuthCode=$retArrayRefund[0]->authorized_AuthCode;
         //print_r($retCredsArray);exit;
@@ -460,12 +408,11 @@ class PaymentController extends Controller {
             $data = array("success"=>0,'message' =>"Authorized.net Transaction ID is not valid");
             return response()->json(['data'=>$data]);
         }
-        print_r($result);exit;
         $refId = 'ref' . time();
 
         // Create the payment data for a credit card
         $creditCard = new AnetAPI\CreditCardType();
-        $creditCard->setCardNumber($creditCardNumber);
+        $creditCard->setCardNumber($creditCardNumberStored);
         $creditCard->setExpirationDate("XXXX");
         $paymentOne = new AnetAPI\PaymentType();
         $paymentOne->setCreditCard($creditCard);
@@ -476,15 +423,22 @@ class PaymentController extends Controller {
         ->get();
 
         $order_id=$retArrayOrder[0]->order_id;
+        $result=$result['message'];
 
         $order = new AnetAPI\OrderType();
-        $order->setDescription("Refund for Order ID: ".$order_id);
-        $order->setInvoiceNumber("INV - ".$order_id);
+        $order->setDescription("Refund - ".$result['order']);
+        $order->setInvoiceNumber($result['invoice']);
+        /*if($amount==$result['amount']){
+            echo "ok";
+        }else{
+          echo "not ok";
+        }
+        exit;*/
 
         //create a transaction
         $transactionRequest = new AnetAPI\TransactionRequestType();
         $transactionRequest->setTransactionType( "refundTransaction"); 
-        $transactionRequest->setAmount($amount);
+        $transactionRequest->setAmount($result['amount']);
         $transactionRequest->setPayment($paymentOne);
         $transactionRequest->setrefTransId($refTransId);
 
@@ -495,17 +449,18 @@ class PaymentController extends Controller {
             ->where('o.is_delete','=','1')
             ->get();
 
+        // Billing information fetched from Transaction id of Authorized.net
         $billto = new AnetAPI\CustomerAddressType();
-        $billto->setFirstName($post['creditFname']);
-        $billto->setLastName($post['creditLname']);
-        $billto->setCompany($retArrayBilling[0]->client_company);
-        $billto->setAddress($post['street']);
-        $billto->setCity($post['city']);
-        $billto->setState($post['state']);
-        $billto->setZip($post['zip']);
-        $billto->setCountry("USA");
+        $billto->setFirstName($result['firstName']);
+        $billto->setLastName($result['lastName']);
+        $billto->setCompany($result['company']);
+        $billto->setAddress($result['address']);
+        $billto->setCity($result['city']);
+        $billto->setState($result['state']);
+        $billto->setZip($result['zip']);
+        $billto->setCountry($result['country']);
 
-        $transactionRequestType->setBillTo($billto);
+        $transactionRequest->setBillTo($billto);
 
         $request = new AnetAPI\CreateTransactionRequest();
         $request->setMerchantAuthentication($merchantAuthentication);
@@ -516,7 +471,7 @@ class PaymentController extends Controller {
 
         if ($response != null)
         {
-          if($response->getMessages()->getResultCode() == \SampleCode\Constants::RESPONSE_OK)
+          if($response->getMessages()->getResultCode()  == "Ok")
           {
             $tresponse = $response->getTransactionResponse();
             
@@ -529,9 +484,11 @@ class PaymentController extends Controller {
               $message="This transaction has been approved.";
               //$tresponse->getTransId();
 
-              $orderData = array('order_id' => $order_id, 'payment_card' => $creditCardNumberStored, 'payment_amount' => $post['amount'],'payment_date' => $payment_date ,'payment_refund_date' => date('Y-m-d'), 'payment_method' => 'Credit Card', 'authorized_TransId' => $authorized_TransId, 'authorized_TransId_refund' => $tresponse->getTransId(), 'authorized_AuthCode' => $authorized_AuthCode);
+              $orderData = array('order_id' => $order_id, 'payment_card' => $creditCardNumber, 'payment_amount' => $amount,'payment_date' => $payment_date ,'payment_refund_date' => date('Y-m-d'), 'payment_method' => 'Credit Card', 'authorized_TransId' => $refTransId, 'authorized_TransId_refund' => $tresponse->getTransId(), 'authorized_AuthCode' => $authorized_AuthCode);
 
               $id = $this->common->InsertRecords('payment_refund',$orderData);
+
+              //$result = $this->common->DeleteTableRecords('payment_history',array('payment_id'=>$payment_id, 'order_id'=>$order_id, 'authorized_TransId'=>$authorized_TransId));
 
               $data = array("success"=>1,'message' =>$message);
               return response()->json(['data'=>$data]);
@@ -587,72 +544,4 @@ class PaymentController extends Controller {
 
         return view('auth.payment',$data)->render();
     }
-
-  /*function createCustomerProfile($email){
-    
-    // Common setup for API credentials
-    $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-      $merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-      $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);
-      $refId = 'ref' . time();
-
-    // Create the payment data for a credit card
-    $creditCard = new AnetAPI\CreditCardType();
-    $creditCard->setCardNumber(  "4111111111111111");
-    $creditCard->setExpirationDate( "2038-12");
-    $paymentCreditCard = new AnetAPI\PaymentType();
-    $paymentCreditCard->setCreditCard($creditCard);
-
-    // Create the Bill To info
-    $billto = new AnetAPI\CustomerAddressType();
-    $billto->setFirstName("Ellen");
-    $billto->setLastName("Johnson");
-    $billto->setCompany("Souveniropolis");
-    $billto->setAddress("14 Main Street");
-    $billto->setCity("Pecan Springs");
-    $billto->setState("TX");
-    $billto->setZip("44628");
-    $billto->setCountry("USA");
-    
-   // Create a Customer Profile Request
-   //  1. create a Payment Profile
-   //  2. create a Customer Profile   
-   //  3. Submit a CreateCustomerProfile Request
-   //  4. Validate Profiiel ID returned
-
-    $paymentprofile = new AnetAPI\CustomerPaymentProfileType();
-
-    $paymentprofile->setCustomerType('individual');
-    $paymentprofile->setBillTo($billto);
-    $paymentprofile->setPayment($paymentCreditCard);
-    $paymentprofiles[] = $paymentprofile;
-    $customerprofile = new AnetAPI\CustomerProfileType();
-    $customerprofile->setDescription("Customer 2 Test PHP");
-
-    $customerprofile->setMerchantCustomerId("M_".$email);
-    $customerprofile->setEmail($email);
-    $customerprofile->setPaymentProfiles($paymentprofiles);
-
-    $request = new AnetAPI\CreateCustomerProfileRequest();
-    $request->setMerchantAuthentication($merchantAuthentication);
-    $request->setRefId( $refId);
-    $request->setProfile($customerprofile);
-    $controller = new AnetController\CreateCustomerProfileController($request);
-    $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
-    if (($response != null) && ($response->getMessages()->getResultCode() == "Ok") )
-    {
-      echo "Succesfully create customer profile : " . $response->getCustomerProfileId() . "\n";
-      $paymentProfiles = $response->getCustomerPaymentProfileIdList();
-      echo "SUCCESS: PAYMENT PROFILE ID : " . $paymentProfiles[0] . "\n";
-     }
-    else
-    {
-      echo "ERROR :  Invalid response\n";
-      $errorMessages = $response->getMessages()->getMessage();
-          echo "Response : " . $errorMessages[0]->getCode() . "  " .$errorMessages[0]->getText() . "\n";
-    }
-    return $response;
-  }
-  if(!defined('DONT_RUN_SAMPLES'))
-      createCustomerProfile("test123@test.com");*/
 }

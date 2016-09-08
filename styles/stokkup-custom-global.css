@@ -7,6 +7,10 @@
 /*global popup style starts here */
 /*global popup style ends here */
 /*genera css */
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1;
+  color: #252932; }
+
 html, body {
   font-family: "Open Sans", sans-serif;
   color: #6e7584; }
@@ -36,6 +40,25 @@ button, select, html, textarea, input {
 
 .light-300 {
   font-weight: 300; }
+
+.topheadicon .fa-stack {
+  top: 18px;
+  left: -25px; }
+.topheadicon .fa-circle {
+  color: #26b999;
+  font-size: 22px;
+  position: relative; }
+.topheadicon .fa-check {
+  color: #fff;
+  font-size: 11px;
+  left: -24px;
+  top: -3px;
+  position: relative; }
+.topheadicon .fa-angle-down {
+  color: #c5c8cb;
+  font-size: 14px;
+  position: relative;
+  left: -10px; }
 
 .right-search-box {
   width: 70%; }
@@ -200,8 +223,12 @@ md-menu-content {
 .search-block md-input-container {
   margin: 0 10px 0 0;
   padding: 0; }
-  .search-block md-input-container label {
+  .search-block md-input-container.md-input-focused label {
     display: none; }
+  .search-block md-input-container .top-srch-label {
+    line-height: 18px;
+    padding-left: 20px !important;
+    color: #252932; }
   .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value {
     width: 320px;
     height: 41px;
@@ -755,7 +782,6 @@ button:last-child {
 .stokkup-custom-tabs .md-tab {
   font-size: 12px;
   color: #a5a6a9 !important;
-  color: #252932;
   font-weight: 300;
   padding: 14px 0 10px;
   line-height: 18px;
@@ -832,7 +858,6 @@ md-card-content.custom-desc-box span {
 .custom-struct-2 .md-tab {
   font-size: 12px;
   color: #a5a6a9 !important;
-  color: #252932;
   font-weight: 300;
   padding: 14px 0 10px;
   line-height: 18px;
