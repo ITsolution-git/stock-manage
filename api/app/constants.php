@@ -13,7 +13,8 @@ define('UPLOAD_PATH', url() . '/uploads/');
 define('THEME_IMAGES', url() . '/img/');
 define('FILEUPLOAD', base_path() . "/public/uploads/");
 define('CURRENT_URL','http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-
+define('SITE_HOST','http://'.$_SERVER['HTTP_HOST']);
+define('NOIMAGE',url() ."/images/noimage.png");
 
 define ('GET_RECORDS','Get Records.');
 define ('NO_RECORDS','No Records Found.');
@@ -46,10 +47,3 @@ define('AUTHORIZED_ID',3);
 define('QUICKBOOK_ID',4);
 define('OVERSIZE_VALUE',0.5);
 define('TAX_RATE',0);
-define('QBO_OAUTH_URL', url() . '/qbo/oauth');
-define('QBO_SUCCESS_URL', url() . '/qbo/success');
-define('QBO_SANDBOX',true);
-define('QBO_DSN', "mysqli://csuser:codal123@192.168.1.13/stokkup");
-define('QBO_ENCRYPTION_KEY','bcde1234');
-define('QBO_USERNAME','DO_NOT_CHANGE_ME');
-define('QBO_TENANT','67234');

@@ -12,10 +12,8 @@
                                     <div class="gray-text">{{ shipping.shipping_id }}</div>
                                 </div>
                                 <div layout="column" flex="50">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Status" class="mrg6-TB">
-                                        <md-option value="0">Status</md-option>
-                                        <md-option>Pending</md-option>
-                                        <md-option>Approved</md-option>
+                                    <md-select ng-model="shipping.approval_id" placeholder="Status" class="mrg6-TB" ng-change="updateShippingAll('approval_id',shipping.approval_id,shipping.order_id)">
+                                        <md-option ng-selected="shipping.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                     </md-select>
                                 </div>
                             </div>
@@ -102,9 +100,8 @@
                             </div>
                             <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="100">
-                                    <md-input-container flex="100">
-                                        <input placeholder="Cost To Ship" ng-model="shipping.cost_to_ship" name="cost_to_ship" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">
-                                    </md-input-container>
+                                    <div>Cost To Ship</div>
+                                    <div class="gray-text">{{ shipping.cost_to_ship |  currency : $ : 2}}</div>
                                 </div>
                             </div>
                         </div>

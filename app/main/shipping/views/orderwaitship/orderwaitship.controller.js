@@ -68,8 +68,8 @@
                 $scope.assignedItems = [];
             }
 
-            if($scope.shipping_id > 0)
-            {
+/*            if($scope.shipping_id > 0)
+            {*/
                 var combine_array = {};
                 combine_array.address_id = $scope.address_id;
                 combine_array.order_id = $scope.order_id;
@@ -81,7 +81,7 @@
                         $scope.assignedItems = result.data.products;
                     }
                 });
-            }
+//            }
         }
 
         $scope.getShippingAddress = function()
@@ -140,6 +140,10 @@
             {
                 $state.go('app.shipping.shipmentdetails',{id: $scope.shipping_id});
             }
+        }
+
+        $scope.reloadPage = function(){
+            $state.reload();
         }
 
         vm.openaddAddressDialog = openaddAddressDialog;

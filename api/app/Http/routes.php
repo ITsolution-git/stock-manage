@@ -248,7 +248,9 @@ Route::post('order/createInvoice', 'OrderController@createInvoice');
 Route::post('order/paymentInvoiceCash', 'OrderController@paymentInvoiceCash');
 Route::post('order/paymentLinkToPay', 'OrderController@paymentLinkToPay');
 Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
-
+Route::post('order/GetAllClientsLowerCase', 'OrderController@GetAllClientsLowerCase');
+Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
+Route::post('payment/refundTransaction', 'PaymentController@refundTransaction');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
@@ -302,6 +304,7 @@ Route::post('product/getVendorByProductCount', 'ProductController@getVendorByPro
 Route::post('product/getProductSize', 'ProductController@getProductSize');
 Route::post('product/checkProductExist', 'ProductController@checkProductExist');
 Route::post('product/findTotal', 'ProductController@findTotal');
+Route::post('product/downloadCustomProductCSV', 'ProductController@downloadCustomProductCSV');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
@@ -362,4 +365,5 @@ Route::post('qbo/updateInvoicePayment', 'QuickBookController@updateInvoicePaymen
 Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
 Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceDetail');
 Route::get('invoice/getInvoiceHistory/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceHistory');
+Route::get('invoice/getInvoicePayment/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoicePayment');
 Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');

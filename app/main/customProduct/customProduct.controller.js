@@ -133,5 +133,10 @@
              document.getElementById('downloadcsv').submit();
         }
 
+         $scope.submitProductFormDownload = function () {
+ 
+             document.getElementById('downloadProductcsv').submit();
+        }
+
     }
 })();

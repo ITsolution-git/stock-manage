@@ -348,6 +348,7 @@ class ArtController extends Controller {
                     foreach ($getColors as $value) 
                     {
                         $value->color_display_name = $color_array[$value->color_name];
+                        $value->thread_display_name = !empty($value->thread_color)? $color_array[$value->thread_color]:'';
                     }
                 }
             
@@ -383,8 +384,8 @@ class ArtController extends Controller {
                     {
                         $value->color_name = $color_array[$value->color_name];
                     }
-                    $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-                    $value->mokup_logo_url = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+                    $value->mokup_image_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
+                    $value->mokup_logo_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_logo);
 
                     if(!empty($value->thread_color))
                     {
@@ -467,31 +468,37 @@ class ArtController extends Controller {
     {
 
         $screenArray= json_decode($_POST['art']);
-        
+        // echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
         if(count($screenArray)>0)
         {
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
-            if(!empty($pdf_data[0]))
+            
+            if(!empty($pdf_data[0][0]))
             {
-                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+                $email_array = explode(",",$screenArray->email);
                 $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
                 else { exec("chmod $file_path 0777"); }
                 
+                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+
+
                 PDF::AddPage('P','A4');
-                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0]))->render());
+                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0]))->render());
            
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
                 PDF::Output($filename,'F');
 
-                if(!empty($screenArray->mail) && $screenArray->mail=='1' && !empty($pdf_data[0][0]->billing_email))
+                if(!empty($screenArray->flag) && $screenArray->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
-                    Mail::send('emails.artapproval', ['email'=>$pdf_data[0][0]->billing_email], function($message) use ($pdf_data,$filename)
+
+                    Mail::send('emails.artapproval', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
                     {
-                         $message->to($pdf_data[0][0]->billing_email)->subject('Art Approval for the order '.$pdf_data[0][0]->order_name);
-                         $message->attach($filename);
+                        $message->to($email_array);
+                        $message->subject('Art Approval for the order '.$pdf_data[0][0][0]->order_name);
+                        $message->attach($filename);
                     });
                 }
 

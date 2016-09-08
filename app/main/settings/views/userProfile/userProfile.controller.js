@@ -71,8 +71,14 @@
 
    $scope.GetCompany();
     // COMPANY EDIT TIME CALL
-    $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+    $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
+        //console.log(Object.keys(validation).length);
+        if(!angular.isUndefined(validation) && Object.keys(validation).length>0 )
+        {
+            notifyService.notify('error','Please enter valid Input.');
+            return false;
+        }
         var vm = this;
         var UpdateArray = {};
         UpdateArray.table =table_name;
@@ -305,9 +311,13 @@
 
                 $http.post('api/public/qbo/updateInvoicePayment',company_id).success(function(result) {
                 $("#ajax_loader").hide();
-                    if(result != '0')
+                    if(result.data.success=='1')
                     {
-                        notifyService.notify('success',"Invoice Payments Sync successfully");   
+                        notifyService.notify('success', result.data.message);
+                    }
+                    else if(result.data.success=='2')
+                    {
+                        notifyService.notify('error', result.data.message);
                     }
                     else
                     {

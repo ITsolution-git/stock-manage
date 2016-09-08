@@ -1,69 +1,73 @@
 <div class="client-profile-page">
-    <div class="header md-accent-bg"  layout="column">
+    <div class="header header-bg-custom"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
-                 <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;"  alt=""  />
-                 <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;" >
-            <h1 style="margin-left: 20px;">{{company_info.client_company}}</h1>
+                <!--  <img ng-src="{{company_info.color_url_photo}}" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;"  alt=""  /> -->
+                 <!-- <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;" > -->
+            <h1 class="inner-page-heading">{{company_info.client_company}}</h1>
         </div>
     </div>
-    <div ng-cloak>
-        <md-content>
-            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
-                <!-----------------Company Info Tab-------------------->
-                
 
-                <md-tab label="Company Info">
-                    <div ng-include src="'app/main/client/views/profile/client_company.html'"></div>
-                </md-tab>
-                <!-----------------Contacts Tab-------------------->
-                <md-tab label="Contacts">
-                    <div ng-include src="'app/main/client/views/profile/client_contacts.html'"></div>
-                </md-tab>
-                <!-----------------Locations Tab-------------------->
-                <md-tab label="Locations">
-                    <div ng-include src="'app/main/client/views/profile/client_location.html'"></div>
-                </md-tab>
-                <!-----------------Sales Detail Tab-------------------->
-                <md-tab label="Sales Detail">
-                    <div ng-include src="'app/main/client/views/profile/client_sales.html'"></div>
-                </md-tab>
-                <!-----------------Tax Tab-------------------->
-                <md-tab label="Tax">
-                    <div ng-include src="'app/main/client/views/profile/client_tax.html'"></div>
-                </md-tab>
-                <!-----------------Documents Tab-------------------->
-                <md-tab label="Documents">
-                    <div ng-include src="'app/main/client/views/profile/client_documents.html'"></div>
-                </md-tab>
-                <!-----------------Notes Tab-------------------->
-                <md-tab label="Notes">
-                    <div ng-include src="'app/main/client/views/profile/client_note.html'"></div>
-                </md-tab>
-                <!-----------------Orders Tab-------------------->
-                <md-tab label="Orders">
-                    <div ng-include src="'app/main/client/views/profile/client_orders.html'"></div>
-                </md-tab>
-                <!-----------------Distribution Addresses Tab-------------------->
-                <md-tab label="Distribution Addresses">
-                    <div ng-include src="'app/main/client/views/profile/client_address.html'"></div>
-                </md-tab>
-                <!-----------------Screen Sets Tab-------------------->
-                <md-tab label="Screen Sets">
-                    <div ng-include src="'app/main/client/views/profile/client_screen.html'"></div>
-                </md-tab>
-                <!-----------------Web Portal Tab-------------------->
-                <md-tab label="Web Portal">
-                    <div ng-include src="'app/main/client/views/profile/client_portal.html'"></div>
-                </md-tab>
-                <!-----------------Logos Tab-------------------->
-                <md-tab label="Logos">
-                    <div ng-include src="'app/main/client/views/profile/client_logo.html'"></div>
-                </md-tab>
-                <!-----------------Art Tab-------------------->
-                <!-- <md-tab label="Art">
-                    <div ng-include src="'app/main/client/views/profile/client_art.html'"></div>
-                </md-tab> -->
-            </md-tabs>
-        </md-content>
+    <div class="full-row pull-left">
+        
+            <div ng-cloak>
+                <md-content class="stokkup-custom-tabs">
+                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                        <!-----------------Company Info Tab-------------------->
+                        
+
+                        <md-tab label="Company Info">
+                            <div ng-include src="'app/main/client/views/profile/client_company.html'"></div>
+                        </md-tab>
+                        <!-----------------Contacts Tab-------------------->
+                        <md-tab label="Contacts">
+                            <div ng-include src="'app/main/client/views/profile/client_contacts.html'"></div>
+                        </md-tab>
+                        <!-----------------Locations Tab-------------------->
+                        <md-tab label="Locations">
+                            <div ng-include src="'app/main/client/views/profile/client_location.html'"></div>
+                        </md-tab>
+                        <!-----------------Sales Detail Tab-------------------->
+                        <md-tab label="Sales Detail">
+                            <div ng-include src="'app/main/client/views/profile/client_sales.html'"></div>
+                        </md-tab>
+                        <!-----------------Tax Tab-------------------->
+                        <md-tab label="Tax">
+                            <div ng-include src="'app/main/client/views/profile/client_tax.html'"></div>
+                        </md-tab>
+                        <!-----------------Documents Tab-------------------->
+                        <md-tab label="Documents">
+                            <div ng-include src="'app/main/client/views/profile/client_documents.html'"></div>
+                        </md-tab>
+                        <!-----------------Notes Tab-------------------->
+                        <md-tab label="Notes">
+                            <div ng-include src="'app/main/client/views/profile/client_note.html'"></div>
+                        </md-tab>
+                        <!-----------------Orders Tab-------------------->
+                        <md-tab label="Orders">
+                            <div ng-include src="'app/main/client/views/profile/client_orders.html'"></div>
+                        </md-tab>
+                        <!-----------------Distribution Addresses Tab-------------------->
+                        <md-tab label="Distribution Addresses">
+                            <div ng-include src="'app/main/client/views/profile/client_address.html'"></div>
+                        </md-tab>
+                        <!-----------------Screen Sets Tab-------------------->
+                        <md-tab label="Screen Sets">
+                            <div ng-include src="'app/main/client/views/profile/client_screen.html'"></div>
+                        </md-tab>
+                        <!-----------------Web Portal Tab-------------------->
+                        <md-tab label="Web Portal">
+                            <div ng-include src="'app/main/client/views/profile/client_portal.html'"></div>
+                        </md-tab>
+                        <!-----------------Logos Tab-------------------->
+                        <md-tab label="Logos">
+                            <div ng-include src="'app/main/client/views/profile/client_logo.html'"></div>
+                        </md-tab>
+                        <!-----------------Art Tab-------------------->
+                        <!-- <md-tab label="Art">
+                            <div ng-include src="'app/main/client/views/profile/client_art.html'"></div>
+                        </md-tab> -->
+                    </md-tabs>
+                </md-content>
+        </div>
     </div>
 </div>

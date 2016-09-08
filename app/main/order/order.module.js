@@ -71,6 +71,21 @@
                         controller : 'DistributionController as vm'
                     }
                 }
+            }).state('app.order.orderNotes', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('BC,CA');
+                        }
+                    },
+                url  : '/orderNotes/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/notes/notes.html',
+                        controller : 'NotesController as vm'
+                    }
+                }
             }).state('app.order.distributionProduct', {
                 resolve: {
                         checksession : function (sessionService,$stateParams,$state)

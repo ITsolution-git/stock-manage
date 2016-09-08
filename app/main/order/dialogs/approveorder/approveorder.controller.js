@@ -42,6 +42,7 @@
 
         $scope.save = function () {
           
+
             if($scope.invoice ==  undefined && $scope.qb == true) {
                 notifyService.notify('error','Please select Create Invoice to sync with Quickbook');
                     return false;
@@ -80,9 +81,15 @@
 
              if($scope.invoice == true && $scope.invoice_id == 0)
             {
+
+               if($scope.payment_terms ==  undefined) {
+                    notifyService.notify('error','Please select Payment Terms for creating invoice');
+                    return false;
+                }
                
                 var combine_array = {};
                 combine_array.order_id = $stateParams.id;
+                combine_array.payment = $scope.payment_terms;
                 
                 $("#ajax_loader").show();
                
@@ -104,6 +111,7 @@
                                 combine_array_id.company_id = sessionService.get('company_id');
                                 combine_array_id.client_id = client_id;
                                 combine_array_id.invoice_id = $scope.invoice_id;
+                                combine_array_id.payment = $scope.payment_terms;
                                 
                                $("#ajax_loader").show();
                                
@@ -130,11 +138,19 @@
 
             if($scope.invoice == true && $scope.qb == true && $scope.qb_invoice_id == 0) {
 
+               
+
+                if($scope.payment_terms ==  undefined) {
+                    notifyService.notify('error','Please select Payment Terms for creating invoice');
+                    return false;
+                }
+               
                 var combine_array_id = {};
                     combine_array_id.id = $stateParams.id;
                     combine_array_id.company_id = sessionService.get('company_id');
                     combine_array_id.client_id = client_id;
                     combine_array_id.invoice_id = $scope.invoice_id;
+                    combine_array_id.payment = $scope.payment_terms;
                     
                    $("#ajax_loader").show();
                    

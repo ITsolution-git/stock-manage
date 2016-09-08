@@ -1,14 +1,23 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20">
-    <div class="header "  layout="column">
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.order">BACK TO ORDERS</a>
-            <h1 flex="4" class="font-500">{{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}</h1>
+<div class="order-info-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview m-b-30">
+        <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+                {{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}
+            </div>
+            <div class="pull-right right-search-box">
+                <a class="pull-right common-header-links" ui-sref="app.order">BACK TO ORDERS</a>
+            </div>
         </div>
-        <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="75">
-                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
+    </div>
+
+
+    <div class="inner-full-box">
+        <!--information box -->
+        <div class="order-information m-b-30 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <div class="info-order box-zerospace">
+                <div class="title box-title m-b-20"><span class="stokkup-title-h4 light-300">Information</span></div>
                 <md-card layout="row">
-                    <md-card-content flex="80" layout="column">
+                    <md-card-content layout="column" class="pos-relative box-zerospace">
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Sales</div>
@@ -39,540 +48,548 @@
                                 <div>Approval</div>
                                 <span class="font-14 chrome-weight">{{order.approval}}</span>
                             </div>
-
+                            <div class="pull-right order-popup-menu1">
+                                <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event,order.id)"><md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                            </div> 
                         </div>
+                           
                     </md-card-content>
-                    <div layout-align="end start"  flex="20" layout="row" ng-show="order.order_number == '' && order.is_complete == '0' ">
-                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event,order.id)">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                            </md-button>
-                    </div>
+                        <div layout-align="end start"  flex="30" layout="row">
+                            <!--4 buttons panel -->
+                            <div class="right-20 m-t-20 m-b-20">
+                                <md-button  class="pull-right full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns" ng-click="calculateAll(order_id,company_id)" ng-show="order.order_number == '' && order.is_complete == '0' ">
+                                CONFIRM PRICING
+                                </md-button>
+                                <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-show="order.invoice_id > 0" ng-click="openEmailPopup($event)">
+                                EMAIL
+                                </md-button>
+                                <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-show="order.invoice_id > 0" ng-click="printPdf()">
+                                    PRINT
+                                </md-button>
+                                <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-click="checkDesign()" ng-show="order.order_number == '' && order.is_complete == '0' ">
+                                    ASSIGN/SPLIT AFFILIATE
+                                </md-button>
+                            </div>
+                             <!--4 buttons panel ends here -->
+                        </div>
                 </md-card>
-            </div>
-            <div classs="" flex="25" layout-align="end end" layout="column">
-                <md-button  class="bg-grey right-m-0 " ng-click="calculateAll(order_id,company_id)">
-                    CONFIRM PRICING
-                </md-button>
-                <md-button  class="bg-grey right-m-0 " ng-show="order.invoice_id > 0" ng-click="openEmailPopup($event)">
-                    EMAIL
-                </md-button>
-                <md-button  class="bg-grey right-m-0 " ng-show="order.invoice_id > 0" ng-click="printPdf()">
-                    PRINT
-                </md-button>
-                <md-button class="bg-grey right-m-0 color-white" ng-click="checkDesign()" ng-show="order.order_number == '' && order.is_complete == '0' ">
-                    ASSIGN/SPLIT AFFILIATE
-                </md-button>
-            </div>
-        </div>
-    </div>
-    <div class="content order-info-page m-b-20">
-        <div class="simple-table-container md-whiteframe-4dp">
-            <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
-                <div class="table-title-text h2 text-semibold" flex=20>
-                    Designs
-                </div>
-                <div class="order-modal-title " layout="row" layout-align="end center"flex=11 ng-show="order.order_number == '' && order.is_complete == '0' ">
-                    <md-button class="dark-bg" ng-click="vm.openaddDesignDialog($event,0)">
-                        ADD NEW
-                    </md-button>
-                </div>
-            </div>
-            <div class="ms-responsive-table-wrapper">
                 
-                <table class="scrol table3 row-border hover" id="designTable" dt-options="vm.dtOptions"  >
-                    <thead>
+                
+               
+            </div>
+        </div>
+        <!--information box ends here -->
 
-                        <tr>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">ID</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Design Name</span>
-                                </div>
-                            </th>
+        <!--Design panel box starts here -->
+        <div class="order-design-block box-zerospace m-b-30">
+            <div class="">
+                    <div class="title box-title">
+                        <div class="flex-70 m-b-20" flex="70">
+                        <span class="stokkup-title-h4 light-300">Designs</span>
+                        </div>           
+                    </div>
+                    
+                    <div class="box-zerospace white-bg">
+                        <div class="flex-75 pull-left right-20 box-zerospace">
+                        <table class="dataTable row-border order-design-table" id="designTable" dt-options="vm.dtOptions"  >
+                            <thead>
 
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Total Qty</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Positions Count</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title marginLeft-58">Status</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text" ng-show="order.order_number == '' && order.is_complete == '0' ">
+                                <tr>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">ID</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Design Name</span>
+                                        </div>
+                                    </th>
 
-                            </th>
-                        </tr>
-                    </thead>
-                   <tbody class="scrollable" ms-scroll>
-                        <tr ng-repeat="design in designs">
-                            <td class="cursor-p" ui-sref="app.order.design({id:design.id})">{{ design.id}} </td>
-                            <td>{{ design.design_name}}</td>
-                            <td>{{ design.total_qnty}}</td>
-                            <td>{{ design.colors_count}}</td>
-                            <td class="text-center font-small mdslider pad-0 " ><label class="slider">60</label>
-                    <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
-                    </md-slider>
-                    </td> 
-                    <td class="text-right" ng-show="order.order_number == '' && order.is_complete == '0' "> 
-                    <md-menu>
-                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Total Qty</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title">Positions Count</span>
+                                        </div>
+                                    </th>
+                                    <!-- <th class="secondary-text">
+                                        <div class="table-header">
+                                            <span class="column-title marginLeft-58">Status</span>
+                                        </div>
+                                    </th> -->
+                                    <th class="secondary-text" ng-show="order.order_number == '' && order.is_complete == '0' ">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                           <tbody class="">
+                                <tr ng-repeat="design in designs">
+                                    <td class="cursor-p" ui-sref="app.order.design({id:design.id})">{{ design.id}} </td>
+                                    <td>{{ design.design_name}}</td>
+                                    <td>{{ design.total_qnty}}</td>
+                                    <td>{{ design.colors_count}}</td>
+                                    <!-- <td class="text-center font-small mdslider pad-0 " ><label class="slider">60</label>
+                                        <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
+                                        </md-slider>
+                                    </td>  -->
+                            <td class="text-right" ng-show="order.order_number == '' && order.is_complete == '0' "> 
+                            <md-menu>
+                                <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="4">
+                                    <md-menu-item>
+                                        <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
+                                            Edit Design
+                                        </md-button>
+                                    </md-menu-item>
+                                    
+                                     <md-menu-item>
+                                         <md-button ng-click="UpdateTableField('is_delete','0','order_design','id',design.id)">
+                                            Delete
+                                        </md-button>
+                                    </md-menu-item>
+
+                                </md-menu-content>
+                            </md-menu>
+                            </td>
+                                    
+                            </tr>
+                            </tbody> 
+                        </table>
+                        </div>
+                        <div class="flex-20 m-t-20 right-20 layout-padding pull-right">
+                            <div ng-show="order.order_number == '' && order.is_complete == '0' ">
+                            <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right" ng-click="vm.openaddDesignDialog($event,0)">
+                                ADD NEW
+                            </md-button>
+                            </div> 
+                            <div class="m-t-20 full-width-box">
+                                <span class="stokkup-title-h4">Total Units : {{ total_unit}}</span> 
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <!--Design panel box ends here -->
+        <!--layout block stars here -->
+        <div class="box-layout-2">
+            <div flex="75" layout="column" class="right-20 pull-left">
+                <div class="content box-layout-2">
+                    <div class="m-b-30" >
+                        <div class="title box-title" layout="row">
+                            <span class="stokkup-title-h4 m-b-20 light-300" flex=80>
+                                Purchase Orders
+                            </span>
+                        </div>
+                        <div class="ms-responsive-table-wrapper stockkup-content-table-container">
+                            <div class="stokkup-main-tableview">
+                            <table class="row-border table-white-bg" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase" ng-if="order.purchase_orders.length > 0">
+                                <thead>
+                                    <tr>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">PO #</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">PO Type</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Client Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Vendor</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                            <div class="table-header">
+                                                <span class="column-title">Date Created</span>
+                                            </div>
+                                        </th>
+                                        <th class="secondary-text">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="purchase in order.purchase_orders" class="cursor-p">
+                                        <td>{{ purchase.po_id}}</td>
+                                        <td>{{ purchase.po_type}}</td>
+                                        <td>{{ purchase.client_company}}</td>
+                                        <td>{{ purchase.name_company}}</td>
+                                        <td>{{ purchase.date}}
+                                        </td> 
+                                        <td class="text-right last-col-txt"> 
+                                            <a  href="#" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})">VIEW PO</a>
+                                        </td>
+                                    </tr>
+                                </tbody> 
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+                <div class="content box-layout-2">
+                    <div class="m-b-30">
+                        <div class="title box-title" layout="row">
+                            <span class="stokkup-title-h4 m-b-20 light-300" flex=80>
+                                Receiving Orders
+                            </span>
+                        </div>
+
+                        <div class="ms-responsive-table-wrapper stockkup-content-table-container">
+                            <div class="stokkup-main-tableview">
+                                <table class="row-border table-white-bg" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="order.recieve_orders.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">RO #</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Client Name</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Vendor/Affiliate</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Date Created</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="receive in order.recieve_orders" class="cursor-p">
+                                            <td>{{ receive.po_id}}</td>
+                                            <td>{{ receive.client_company}}  
+                                            <td>{{ receive.name_company}}</td>
+                                            <td>{{ receive.date}}
+                                            </td>
+                                            <td class="text-right last-col-txt"> 
+                                                <a  href="#" ui-sref="app.receiving.receivingInfo({id:receive.po_id})">VIEW RECIEVE PO</a>
+                                            </td>
+                                        </tr>
+                                    </tbody> 
+                                </table>
+                            </div>
+                        </div>    
+                    </div>
+                </div> 
+                <div class="content box-layout-2">
+                    <div class="m-b-30">
+                        <div class="title box-title" layout="row">
+                            <span class="stokkup-title-h4 m-b-20 light-300" flex=80>
+                                Affiliate Orders
+                            </span>
+                        </div>
+
+                        <div class="ms-responsive-table-wrapper stockkup-content-table-container">
+                            <div class="stokkup-main-tableview">
+                                <table class="table-white-bg row-border bottom-box-shadow" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="affiliateList.length > 0">
+                                    <thead>
+                                    <th class="secondary-text" width="20%">
+                                        <div class="table-header">
+                                            <span class="column-title">Company</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text" width="20%">
+                                        <div class="table-header">
+                                            <span class="column-title">Total # of Units</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text" width="20%">
+                                        <div class="table-header">
+                                            <span class="column-title">Total # of Designs</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text" width="20%">
+                                        <div class="table-header">
+                                            <span class="column-title">Design</span>
+                                        </div>
+                                    </th>
+                                    <th class="secondary-text" width="20%"></th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="affiliateOrder in affiliateList" class="cursor-p">
+                                            <td>{{ affiliateOrder.affiliate_name}}</td>
+                                            <td>{{ affiliateOrder.total}}</td>
+                                            <td>{{ affiliateOrder.design_name}}</td>  
+                                            <td>1</td>
+                                            <td class="text-right last-col-txt"> 
+                                                <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a>
+                                            </td>
+                                        </tr>
+                                    </tbody> 
+                                </table>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+
+                <div class="content box-layout-2">
+                    <div class="m-b-30">
+                        <md-card class="m-b-20" ng-class="{'disable-click': order.order_number != '' || order.is_complete == '1'}">
+                    <md-card-title>
+                        <md-card-title-text class="stokkup-title-h4 m-b-20 light-300">
+                            Order Info
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content  layout="column">
+                            <div layout="row" layout-wrap>
+                                <div class="trans-box">
+                                    <div>Separations</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input ng-model="order.separations_charge" placeholder="$"  ui-event="{ change : 'updateOrderCharge(\'separations_charge\',order.id,order.separations_charge,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Rush</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input  ng-model="order.rush_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'rush_charge\',order.id,order.rush_charge,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Distribution</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input ng-model="order.distribution_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'distribution_charge\',order.id,order.distribution_charge,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Digitize</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input ng-model="order.digitize_charge"  placeholder="$" ui-event="{ change : 'updateOrderCharge(\'digitize_charge\',order.id,order.digitize_charge,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                                <div class="trans-box">
+
+                                    <div>Shipping</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input ng-model="order.shipping_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'shipping_charge\',order.id,order.shipping_charge,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Set Up</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input ng-model="order.setup_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'setup_charge\',order.id,order.setup_charge,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Artwork</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input ng-model="order.artwork_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'artwork_charge\',order.id,order.artwork_charge,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Discount</div>
+                                    <span><md-input-container md-no-float class="md-block">
+                                            <input ng-model="order.discount" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'discount\',order.id,order.discount,\'orders\',\'id\')' }" valid-number>
+                                        </md-input-container></span>
+                                </div>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                    </div>
+                </div>    
+                
+                <md-card class="m-b-20">
+                    <md-card-title>
+                        <md-card-title-text class="stokkup-title-h4 m-b-20 light-300">
+                            Shipping
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content  layout="column" layout-padding class="shipping-main">
+                            <div layout="row" class="center-num-box box-zerospace">
+                                <div class="center-num box-zerospace text-center">
+                                    <span class="num-style1 extra-large-padding">{{ order.total_shipped_qnty}}/{{total_unit}} Products Shipped</span>
+                                </div>
+                            </div>
+                            <div class="box-wide p-b-20">
+                                <a class="text-right pull-right" ui-sref="app.shipping.orderwaitship({id:order.id})">VIEW SHIPPING</a>
+                            </div>
+                    </md-card-content>
+                </md-card>
+                <div layout="row">
+                    <md-card class="m-b-20 m-r-15" flex="33">
+                        <md-card-title>
+                            <md-card-title-text class="stokkup-title-h4 m-b-20 light-300">
+                                Distribution
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content  class="order-btm-box center-num-box box-zerospace" layout="column" layout-padding>
+                            <div layout="row" layout-wrap layout-align="center center" flex="100" class="center-num box-zerospace text-center p-t-30 m-b-30">
+                                <span class="num-style1">{{ order.dist_location}}</span><br/><span class="full-row text-center">Locations</span>
+                            </div>
+                            <div class="text-right">
+                                <a ui-sref="app.order.distribution({id:order_id})">VIEW DISTRIBUTION</a>
+                            </div>
+                        </md-card-content>
+                        
+                        
+                    </md-card>
+                    <md-card class="m-b-20 m-r-15" flex="33">
+                        <md-card-title>
+                            <md-card-title-text class="stokkup-title-h4 m-b-20 light-300">
+                                Notes
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content class="order-btm-box center-num-box box-zerospace" layout="column" layout-padding>
+                            <div layout="row" layout-wrap layout-align="center center" flex="100" class="center-num box-zerospace text-center p-t-30 m-b-30">
+                                <span class="num-style1">{{ order.notes_count}}</span><br /><span class="full-row text-center">Total Notes</span>
+                            </div>
+                            <div class="text-right">
+                                <a ui-sref="app.order.orderNotes({id:order_id})" >View</a>
+                            </div>    
+                        </md-card-content>
+                    </md-card>
+                    <md-card class="m-b-20" flex="33">
+                        <md-card-title>
+                            <md-card-title-text class="stokkup-title-h4 m-b-20 light-300">
+                                Artwork
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-content class="order-btm-box center-num-box box-zerospace"  layout="column" layout-padding>
+                            <div layout="row" layout-wrap layout-align="center center" flex="100" class="center-num box-zerospace text-center p-t-30 m-b-45">
+                                <span ng-if="order.art_approval > 0" class="num-style1">{{ vm.artwork.approved}}</span>
+                                <span ng-if="order.art_approval == '0'" class="num-style1">Pending</span>
+                                <span class="full-row text-center not-visible">text</span>
+                            </div>
+                             <div class="text-right">
+                                <a ui-sref="app.art.orderView({id:order_id})">EDIT</a>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+            <div class="side-bar orderscreen-rightbar pull-right" flex="25" layout="column">
+                
+                <md-card class="m-b-20 md-default-theme" >
+                    <md-card-title>
+                        <md-card-title-text class="text-left stokkup-title-h4 m-b-20 light-300">
+                            Finishing
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content  class="center-num-box layout-padding box-zerospace">
+                        <div layout="row" layout-wrap layout-align="center center" flex="100" class="center-num">
+                            <label class="num-style1 text-center">{{ order.finishing_count}}</label>
+                        </div>
+                    </md-card-content>
+                </md-card>
+
+                <md-card class="m-b-30">
+                    <md-card-title>
+                        <md-card-title-text class="text-left stokkup-title-h4 m-b-20 light-300">
+                            Order Recap
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content class="recap">
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Screens</div>
+                            <span class="ng-binding global-heading-style">{{order.screen_charge | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Press Setup</div>
+                            <span class="ng-binding global-heading-style">{{order.press_setup_charge | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Shipping Charge</div>
+                            <span class="ng-binding global-heading-style">{{order.item_ship_charge | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Packing Charge</div>
+                            <span class="ng-binding global-heading-style">{{order.total_packing_charge | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Discount</div>
+                            <span class="ng-binding global-heading-style">{{order.discount | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Tax Rate(%)</div>
+                            <span class="ng-binding global-heading-style">{{order.tax_rate | currency : '' : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Order Total</div>
+                            <span class="ng-binding global-heading-style">{{order.order_total | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Tax</div>
+                            <span class="ng-binding global-heading-style">{{order.tax | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Grand Total</div>
+                            <span class="ng-binding global-heading-style red-highlight">{{order.grand_total | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Total Payments</div>
+                            <span class="ng-binding global-heading-style">{{order.total_payments | currency : $ : 2}}</span>
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Balance Due</div>
+                            <span class="ng-binding global-heading-style">{{order.balance_due | currency : $ : 2}}</span>
+                        </div>
+                    </md-card-content>
+                </md-card>
+                <div class="text-center m-t-20">
+                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)">Approve Order</md-button>
+                </div>
+            </div>
+        </div>
+        <!--layout block ends here -->    
+    </div><!--inner box ends here -->    
+
+<div class="m-t-20 p-t-30">
+    <div class="footer" layout="row">
+        <div class="box-wide transparent-bg box-upper-shadow">
+            <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
+                <div flex="33">
+                    <div class="table-title " layout="row" layout-align="space-between center">
+                        <div class="title box-title mr-20"><span class="stokkup-title-h4 flex-90">Order Summary</span></div>
+                    </div>
+                </div>    
+                    <div flex="12">
+                        <span class="small-headings mr-20">Order Design</span>
+                        <span class="small-results">{{ order.order_line_total | currency : $ : 2}}</span>
+                    </div>
+                    
+
+                    <div flex="10">
+                        <span class="small-headings mr-20">Order Charges</span>
+                        <span class="small-results">{{ order.order_charges_total | currency : $ : 2}}</span>
+                    </div>
+
+                    <div flex="10">
+                        <span class="small-headings mr-20">Grand Total</span>
+                        <span class="small-results">{{order.grand_total | currency : $ : 2}}</span>
+                    </div>
+                
+                    <div class="pull-right" ng-show="order.invoice_id > 0">
+                        <md-button  class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="createPO()">Create PO
                         </md-button>
-                        <md-menu-content width="4">
-                            <md-menu-item>
-                                <md-button ng-click="vm.openaddDesignDialog($event,design.id)">
-                                    Edit Design
-                                </md-button>
-                            </md-menu-item>
-                            
-                             <md-menu-item>
-                                 <md-button ng-click="UpdateTableField('is_delete','0','order_design','id',design.id)">
-                                    Delete
-                                </md-button>
-                            </md-menu-item>
-
-                        </md-menu-content>
-                    </md-menu>
-                    </td>
-                            
-                    </tr>
-                    </tbody> 
-                </table>
-                <div class="p-16 text-right m-r-15">
-                    <span class="h2 text-semibold">Total Units : {{ total_unit}}</span> 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div  layout="row" class="margin">
-        <div flex="75" layout="column" class="">
-            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
-                <div class="table-title " layout="row" layout-align="space-between center">
-                    <div class="table-title-text h2 text-semibold" >
-                        Purchase Orders
-                    </div>
-                </div>
-                <div class="ms-responsive-table-wrapper">
-                    <table class="scrol table3 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase" ng-if="order.purchase_orders.length > 0">
-                        <thead>
-                            <tr>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">PO #</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">PO Type</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">Client Name</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">Vendor</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">Date Created</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="scrollable" ms-scroll>
-                            <tr ng-repeat="purchase in order.purchase_orders" class="cursor-p">
-                                <td>{{ purchase.po_id}}</td>
-                                <td>{{ purchase.po_type}}</td>
-                                <td>{{ purchase.client_company}}</td>
-                                <td>{{ purchase.name_company}}</td>
-                                <td>{{ purchase.date}}
-                                </td> 
-                                <td class="text-right"> 
-                                    <a  href="#" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})">VIEW PO</a>
-                                </td>
-                            </tr>
-                        </tbody> 
-                    </table>
-                    <div class="p-23">
-                    </div>
-                </div>
-            </div> 
-            <div class="simple-table-container md-whiteframe-4dp m-b-20">
-                <div class="table-title " layout="row" layout-align="space-between center">
-                    <div class="table-title-text h2 text-semibold" >
-                        Receiving Orders
-                    </div>
-                </div>
-                <div class="ms-responsive-table-wrapper">
-                    <table class="scrol table4 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="order.recieve_orders.length > 0">
-                        <thead>
-                            <tr>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">RO #</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">Client Name</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">Vendor/Affiliate</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                    <div class="table-header">
-                                        <span class="column-title">Date Created</span>
-                                    </div>
-                                </th>
-                                <th class="secondary-text">
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="scrollable" ms-scroll>
-                            <tr ng-repeat="receive in order.recieve_orders" class="cursor-p">
-                                <td>{{ receive.po_id}}</td>
-                                <td>{{ receive.client_company}}  
-                                <td>{{ receive.name_company}}</td>
-                                <td>{{ receive.date}}
-                                </td>
-                                <td class="text-right"> 
-                                    <a  href="#" ui-sref="app.receiving.receivingInfo({id:receive.po_id})">VIEW RECIEVE PO</a>
-                                </td>
-                            </tr>
-                        </tbody> 
-                    </table>
-                    <div class="p-23">
-                    </div>
-                </div>
-            </div>
-            <div class="simple-table-container md-whiteframe-4dp m-b-20">
-                <div class="table-title " layout="row" layout-align="space-between center">
-                    <div class="table-title-text h2 text-semibold" >
-                        Affiliate Orders
-                    </div>
-                </div>
-                <div class="ms-responsive-table-wrapper">
-                    <table width="100%" class="table5 row-border hover" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptionsPurchase"  ng-if="affiliateList.length > 0">
-                        <thead>
-                        <th class="secondary-text" width="20%">
-                            <div class="table-header">
-                                <span class="column-title">Company</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text" width="20%">
-                            <div class="table-header">
-                                <span class="column-title">Total # of Units</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text" width="20%">
-                            <div class="table-header">
-                                <span class="column-title">Total # of Designs</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text" width="20%">
-                            <div class="table-header">
-                                <span class="column-title">Design</span>
-                            </div>
-                        </th>
-                        <th class="secondary-text" width="20%"></th>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="affiliateOrder in affiliateList" class="cursor-p">
-                                <td>{{ affiliateOrder.affiliate_name}}</td>
-                                <td>{{ affiliateOrder.total}}</td>
-                                <td>{{ affiliateOrder.design_name}}</td>  
-                                <td>1</td>
-                                <td class="text-right"> 
-                                    <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a>
-                                </td>
-                            </tr>
-                        </tbody> 
-                    </table>
-                    <div class="p-23 ">
-                    </div>
-                </div>
-            </div>
-            <md-card class="m-b-20" ng-class="{'disable-click': order.order_number != '' || order.is_complete == '1'}">
-                <md-card-title>
-                    <md-card-title-text class="text-left">
-                        Order Info
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content  layout="column">
-                    <div layout="row" layout-wrap>
-                        <div class="trans-box">
-                            <div>Separations</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.separations_charge" placeholder="$"  ui-event="{ change : 'updateOrderCharge(\'separations_charge\',order.id,order.separations_charge,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                        <div class="trans-box">
-                            <div>Rush</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input  ng-model="order.rush_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'rush_charge\',order.id,order.rush_charge,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                        <div class="trans-box">
-                            <div>Distribution</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.distribution_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'distribution_charge\',order.id,order.distribution_charge,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                        <div class="trans-box">
-                            <div>Digitize</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.digitize_charge"  placeholder="$" ui-event="{ change : 'updateOrderCharge(\'digitize_charge\',order.id,order.digitize_charge,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                        <div class="trans-box">
-
-                            <div>Shipping</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.shipping_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'shipping_charge\',order.id,order.shipping_charge,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                        <div class="trans-box">
-                            <div>Set Up</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.setup_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'setup_charge\',order.id,order.setup_charge,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                        <div class="trans-box">
-                            <div>Artwork</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.artwork_charge" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'artwork_charge\',order.id,order.artwork_charge,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                        <div class="trans-box">
-                            <div>Discount</div>
-                            <span><md-input-container md-no-float class="md-block">
-                                    <input ng-model="order.discount" placeholder="$" ui-event="{ change : 'updateOrderCharge(\'discount\',order.id,order.discount,\'orders\',\'id\')' }" valid-number>
-                                </md-input-container></span>
-                        </div>
-                    </div>
-                </md-card-content>
-            </md-card>
-            <md-card class="m-b-20">
-                <md-card-title>
-                    <md-card-title-text class="text-left">
-                        Shipping
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content  layout="column" layout-padding>
-                    <div layout="row" layout-wrap layout-align="center center" flex="60">
-                        <div layout="row">
-                            <div layout="column">
-                                <span class="h2 semibold f-52 min-ht-62">{{ order.total_shipped_qnty}}</span>
-                                <span class="m-r-15">Product shipped</span>
-                            </div>
-                        </div>
-                        <div layout="row">
-                            <span class="h2 semibold f-52 mr-top m-r-15"> / </span>
-                        </div>
-                        <div layout="row">
-                            <div layout="column">
-                                <span class="h2 semibold f-52 min-ht-62">{{total_unit}}</span>
-                                <span class="m-l-20">Total</span>
-                            </div>
-                        </div>
-                    </div>
-                </md-card-content>
-                <md-divider ></md-divider>
-                <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                    <a ui-sref="app.shipping.orderwaitship({id:order.id})">VIEW SHIPPING</a>
-                </div>
-            </md-card>
-            <div layout="row">
-                <md-card class="m-b-20 m-r-15" flex="33">
-                    <md-card-title>
-                        <md-card-title-text class="text-left">
-                            Distribution
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content  layout="column" layout-padding>
-                        <div layout="row" layout-wrap layout-align="center center" flex="60">
-                            <span class="h2 semibold f-52">{{ order.dist_location}}</span><br/>
-                        </div>
-                        <div class="text-center"> <span class="font-18">Location</span></div>
-                    </md-card-content>
-                    <md-divider ></md-divider>
-                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <a ui-sref="app.order.distribution({id:order_id})">VIEW DISTRIBUTION</a>
-                    </div>
-                </md-card>
-                <md-card class="m-b-20 m-r-15" flex="33">
-                    <md-card-title>
-                        <md-card-title-text class="text-left">
-                            Notes
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content  layout="column" layout-padding>
-                        <div layout="row" layout-wrap layout-align="center center" flex="60">
-                            <span class="h2 semibold f-52">{{ order.notes_count}}</span><br/>
-                        </div>
-                        <div class="text-center"><span class="font-18">Total Notes</span></div>
-                    </md-card-content>
-                    <md-divider ></md-divider>
-                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <a>&nbsp;</a>
-                    </div>
-                </md-card>
-                <md-card class="m-b-20 m-r-15" flex="33">
-                    <md-card-title>
-                        <md-card-title-text class="text-left">
-                            Artwork
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content  layout="column" layout-padding>
-                        <div layout="row" layout-wrap layout-align="center center" flex="60">
-                            <span ng-if="order.art_approval > 0" class="h2 semibold f-52">{{ vm.artwork.approved}}</span>
-                            <span ng-if="order.art_approval == '0'" class="h2 semibold f-52">Pending</span>
-                        </div>
-                        <div class="text-center"> <span class="font-18">&nbsp</span></div>
-                    </md-card-content>
-                    <md-divider ></md-divider>
-                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <a ui-sref="app.art.orderView({id:order_id})">EDIT</a>
-                    </div>
-                </md-card>
-            </div>
-        </div>
-        <div class="m-l-20 side-bar" flex="25" layout="column">
-            <!-- <md-card class="m-b-20">
-                <md-card-title>
-                    <md-card-title-text>
-                        Packing Information
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content class="pad0 package-height scrollable" ms-scroll>
-                    <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in order_items" ng-class="{active :  order_item.selected == 1}" ng-click="order_item.selected = vm.assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id)">
-                        <div>{{order_item.item}}</div>
-                        <span>${{order_item.charge}}</span>
-                    </div>
-                </md-card-content>
-            </md-card> -->
-            <md-card class="m-b-20 " >
-                <md-card-title>
-                    <md-card-title-text class="text-left">
-                        Finishing
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content  layout="column" layout-padding>
-                    <div layout="row" layout-wrap layout-align="center center" flex="60">
-                        <label class="h2 semibold f-52">{{ order.finishing_count}}</label>
-                    </div>
-                </md-card-content>
-                <md-divider ></md-divider>
-                <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                    <a>&nbsp;</a>
-                </div>
-            </md-card>
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text>
-                        Order Recap
-                    </md-card-title-text>
-                </md-card-title>
-                <md-card-content class="recap">
-
-                   <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Screens</div>
-                        <span class="ng-binding">${{order.screen_charge}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Press Setup</div>
-                        <span class="ng-binding">${{order.press_setup_charge}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Shipping Charge</div>
-                        <span class="ng-binding">${{order.shipping_charge}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Packing Charge</div>
-                        <span class="ng-binding">${{order.total_packing_charge}}</span>
-                    </div>
-
-                    <!-- <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Lines Total</div>
-                        <span class="ng-binding">${{order.order_line_total}}</span>
-                    </div> -->
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Order Total</div>
-                        <span class="ng-binding">${{order.order_total}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax Rate(%)</div>
-                        <span class="ng-binding">{{order.tax_rate}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax</div>
-                        <span class="ng-binding">${{order.tax}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Grand Total</div>
-                        <span class="ng-binding">${{order.grand_total}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">${{order.total_payments}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Balance Due</div>
-                        <span class="ng-binding">${{order.balance_due}}</span>
-                    </div>
-
-                </md-card-content>
-            </md-card>
-            <div class="mrg15-B mrg-auto-T" ng-show="order.is_complete == '1'" >
-                <md-button class="dark-bg" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)">Approve Order</md-button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="text-right">
-    <md-button  class="bg-grey md-raised" ng-click="createPO()">
-        Create PO
-</md-button>
-<div class="footer border-t-grey" layout-padding layout="row">
     <!-- <md-button  aria-label="Close button" class="close-btn border-t-grey" >
         <md-icon md-font-icon="icon-close"></md-icon>
     </md-button> -->
-    <div flex="25">
-        <span class="h4 text-semibold">Order Total</span>
+        
     </div>
-    <div flex="15"><span>Order Line</span></div>
-    <div flex="15"><span>${{ order.order_line_total}}</span></div>
-    <div flex="15"><span>Order Charges</span></div>
-    <div flex="15"><span>${{ order.order_charges_total}}</span></div>
-    <div flex="20"><span>Order Sales</span></div>
-    <div flex="20"><span>${{ order.order_total}}</span></div>
 </div>
+</div><!--main div ends here -->

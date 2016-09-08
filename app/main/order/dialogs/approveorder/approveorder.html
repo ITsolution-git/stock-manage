@@ -17,10 +17,11 @@
                     <md-checkbox aria-label="Create Invoice" aria-label="Select All" ng-model="invoice">Create Invoice</md-checkbox>
                 </div>
                 <div layout="row" flex="100">
-                    <md-select flex="30" ng-model="company.prime_address_state" placeholder="Payment Terms" class="mrg6-TB">
+                    <md-select flex="30" ng-model="payment_terms" placeholder="Payment Terms" class="mrg6-TB">
                         <md-option value="0">Payment Terms</md-option>
-                        <md-option>Pending</md-option>
-                        <md-option>Approved</md-option>
+                        <md-option value="1">Due Today</md-option>
+                        <md-option value="15">Net 15</md-option>
+                        <md-option value="30">Net 30</md-option>
                     </md-select>
                 </div>
                 <div layout="row" flex="100">

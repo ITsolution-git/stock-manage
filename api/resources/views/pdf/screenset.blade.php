@@ -6,7 +6,8 @@
     #header { position: fixed; left: 0px; top: -180px; right: 0px; height: 150px; background-color: orange; text-align: center; }
     #footer { position: fixed; left: 0px; bottom: -180px; right: 0px; height: 150px; background-color: lightblue; }
     #footer .page:after { content: counter(page, upper-roman); }
-    img{width: 250px; height:220px;}
+    #header_logo{width: 120px; height:100px;}
+    
   </style>
   <title>Order Info</title>
 </head>
@@ -14,19 +15,29 @@
 <body>
   <table >
     <tr >
-      <td>
-      <br>
-        <p><b>{{$company->companyname}}</b></p>
-        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
-        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
-        <span>P: {{$company->prime_phone_main}}</span>
-        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
+      <td width="30%">
+          <table>
+              <tr><td><b>{{$company->companyname}}</b></td></tr>
+              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
+                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
+                  </td>
+              </tr>
+              <tr>
+                  <td>P: {{$company->prime_phone_main}}</td>
+              </tr>
+              <tr>
+                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
+              </tr>
+          </table>
       </td>
-      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td>
-        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
-        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
-        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
+        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td width="30%">
+          <table>
+              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
+              <tr><td align="right">{{$company->design_name}}</td></tr>
+              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
+          </table>
       </td>
     </tr>
   </table>
@@ -45,19 +56,20 @@
     </tr>
   </table>
   <hr style="border:1px solid #000;">
-<?php foreach($data as $key=>$value){ 
-
+<?php foreach($data as $key_main=>$value_main)
+{ 
   ?>
   <table style="margin-top:15px;">
     <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
-      <td><?php echo (!empty($value[0]->screen_set))?$value[0]->screen_set:''; ?></td>
-      <td>w:<?php echo $value[0]->screen_width; ?> X h:<?php echo $value[0]->screen_height; ?></td>
+      <td><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
+      <td>w:<?php echo $value_main[0][0]->screen_width; ?> X h:<?php echo $value_main[0][0]->screen_height; ?></td>
     </tr>
     <tr>
       <td>
-        <img src="<?php echo $value[0]->mokup_logo; ?>" >
+        <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; width:120px" >
       </td>
       <td>
+      
           <table border="1">
             <tr>
               <td align="center"><b>H</b></td>
@@ -65,72 +77,111 @@
               <td align="center"><b>Color</b></td>
               <td align="center"><b>Pantone</b></td>
             </tr>
-            <?php foreach($value as $sec_key=>$sec_value){ ?>
+            <?php foreach($value_main[0] as $key=>$value){ ?>
             <tr>
-              <td align="center"><?php echo $sec_key+1; ?></td>
-              <td align="center"><?php echo $sec_value->inq; ?></td>
-              <td align="center"><?php echo $sec_value->color_name; ?></td>
-              <td align="center"><?php echo $sec_value->pantone; ?></td>
+              <td align="center"><?php echo $key+1; ?></td>
+              <td align="center"><?php echo $value->inq; ?></td>
+              <td align="center"><?php echo $value->color_name; ?></td>
+              <td align="center"><?php echo $value->pantone; ?></td>
             </tr>
             <?php } ?>
+          </table>
+          
+      </td>
+    </tr>
+  </table>
+
+  <?php  if(!empty($value_main[1])) {?>
+    <table>
+          <tr>
+              <td align="left"><b>Notes</b></td>
+          </tr>
+        <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
+          <tr>
+              <td align="left"><?php echo $not_value ?></td>
+          </tr>
+        <?php } ?>
+    </table>
+  <?php } ?>
+  
+
+  <hr style="border:1px solid #000;">
+
+<?php  if(($key_main+1)%3==0 && ($key_main+1)!=count($data))
+{ ?>
+<div style="page-break-before: always;"></div>
+   <table >
+    <tr >
+      <td width="30%">
+          <table>
+              <tr><td><b>{{$company->companyname}}</b></td></tr>
+              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
+                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
+                  </td>
+              </tr>
+              <tr>
+                  <td>P: {{$company->prime_phone_main}}</td>
+              </tr>
+              <tr>
+                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
+              </tr>
+          </table>
+      </td>
+        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td width="30%">
+          <table>
+              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
+              <tr><td align="right">{{$company->design_name}}</td></tr>
+              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
+          </table>
+      </td>
+    </tr>
+  </table>
+<hr style="border:1px solid #000;">
+<?php 
+}
+
+}
+?>
+
+<div style="page-break-before: always;"></div>
+     <table >
+    <tr >
+      <td width="30%">
+          <table>
+              <tr><td><b>{{$company->companyname}}</b></td></tr>
+              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
+                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
+                  </td>
+              </tr>
+              <tr>
+                  <td>P: {{$company->prime_phone_main}}</td>
+              </tr>
+              <tr>
+                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
+              </tr>
+          </table>
+      </td>
+        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
+      <td width="30%">
+          <table>
+              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
+              <tr><td align="right">{{$company->design_name}}</td></tr>
+              <tr><td align="right">{{$company->client_company}}</td></tr>
+              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
           </table>
       </td>
     </tr>
   </table>
   <hr style="border:1px solid #000;">
-
-<?php  if(($key+1)%2==0)
-{ ?>
-<div style="page-break-before: always;"></div>
-  <table >
-    <tr >
-      <td>
-      <br>
-        <p><b>{{$company->companyname}}</b></p>
-        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
-        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
-        <span>P: {{$company->prime_phone_main}}</span>
-        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
-      </td>
-      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td>
-        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
-        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
-        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
-      </td>
-    </tr>
-  </table>
-<hr style="border:1px solid #000;">
-<?php }}
-?>
-
-<div style="page-break-before: always;"></div>
-  <table >
-    <tr >
-      <td>
-      <br>
-        <p><b>{{$company->companyname}}</b></p>
-        <span>{{$company->prime_address1}} {{$company->prime_address_street}}</span>
-        <span>{{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}</span>
-        <span>P: {{$company->prime_phone_main}}</span>
-        <p><a href="http://www.culturestdio.net">www.culturestdio.net</a></p>
-      </td>
-      <td style="padding-top:0;"><img src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td>
-        <p style="text-align: right;">Art Approval Job #{{$company->order_id}}</p>
-        <p style="text-align: right;"><b>{{$company->client_company}}</b></p>
-        <p style="text-align: right;">Attn:{{$company->first_name}} {{$company->last_name}}</p>
-      </td>
-    </tr>
-  </table>
-  <hr style="border:1px solid #000;">
-<table style="margin-top:50px;">
+<table>
 <tr><td align="center"><b>Mockup Image</b></td></tr>
-  <?php foreach($data as $key=>$value){ ?>
+  <?php /*foreach($data as $key=>$value){*/ ?>
     <tr>
-      <td align="center"><img src="<?php echo $value[0]->mokup_image; ?>"  ></td>
+      <td align="center"><img src="<?php echo $company->mokup_image; ?>" style="width: 600px; height: 615px;"  ></td>
     </tr>
-   <?php } ?>
+   <?php /*}*/ ?>
 </table>
   <table style="margin-top: 20px;">
     <tr>

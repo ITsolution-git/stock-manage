@@ -108,6 +108,20 @@
                     </md-select>
                 </md-input-container>  
 
+                <md-input-container class="m-b-30">
+                    <label>Account Managers</label>
+                    <md-select ng-model="client.account_manager" name="account_manager"  ng-change='UpdateTableField("account_manager",client.account_manager,"client","client_id",client.client_id)'>
+                        <md-option value="0">
+                            Select Account Manager
+                        </md-option>
+                        <md-option ng-repeat="usr in companyUsers" ng-selected='{{client.account_manager==usr.id}}' value="{{usr.id}}">
+                            {{usr.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>  
+
+                
+
             </div>
         </md-dialog-content>
 <!--         <md-dialog-actions layout="row" layout-align="end center">

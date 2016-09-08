@@ -21,9 +21,7 @@
             border: 1px dashed #CCC;
             background: none;
         }
-        .popup-image{
-            width: 65%;
-        }
+        
 </style>
 <div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
     <div class="header "  layout="column" >
@@ -76,6 +74,12 @@
                     <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}">Pending</md-option>
                 </md-select>
             </div>
+            <!-- <div flex="25" layout="column" style="max-height:50%;">
+                <div class="title"><span class="h2 text-semibold">Order Status</span></div>
+                <md-select ng-model="ScreenSets[0].approval_id" flex="100" aria-label="status" class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',ScreenSets[0].approval_id,ScreenSets[0].order_id)" >
+                    <md-option ng-selected="ScreenSets[0].approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                </md-select>
+            </div> -->
         </div>
     </div>
     <div layout="row" class="pd10-R">
@@ -139,7 +143,7 @@
                                     </div>
                                     <div layout="row" flex="20" layout-wrap>
                                         <md-card-content layout="column" layout-padding class="min-height">
-                                            <img  ng-if="sets.mokup_logo" ng-src="{{sets.mokup_logo_url}}" alt=""  class="popup-image"/>
+                                            <img   ng-src="{{sets.mokup_logo_url}}" alt="" style="width:65%"  class="popup-image"/>
                                         </md-card-content>
                                     </div>
                                 
@@ -172,8 +176,45 @@
         </li>
         </ul>
     </div>
+      <md-card class="m-b-20 " flex="30">
+                                    <md-card-header layout-align="space-between center">
+                                        <md-card-header-text>
+                                            <span class="md-title">Mockup Image</span>
+                                        </md-card-header-text>
+
+                                        <md-menu>
+                                            <md-button aria-label="Image Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                            </md-button>
+                                            <md-menu-content width="4">
+                                                <md-menu-item ng-click="ImagePopup('mokup_image','art','art',ScreenSets[0].mokup_image_url,'order_id',ScreenSets[0].order_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" >
+                                                    <md-button>
+                                                        Change Image
+                                                    </md-button>
+                                                </md-menu-item>
+
+                                                <md-menu-item ng-click="deleteImage('mokup_image','art','art',ScreenSets[0].mokup_image,'order_id',ScreenSets[0].order_id,ScreenSets[0].order_id)">
+                                                    <md-button>
+                                                        Remove Image
+                                                    </md-button>
+                                                </md-menu-item>
+
+                                            </md-menu-content>
+                                        </md-menu>
+                         </md-card-header>
+            <md-card-content ng-click="ImagePopup('mokup_image','art','art',ScreenSets[0].mokup_image_url,'order_id',ScreenSets[0].order_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
+                
+                <img   ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
+                         
+                <!-- <table class="uploadfile" ng-show="ScreenSets[0].mokup_image == ''" >
+                        <tr>
+                            <td><span class="icon icon-plus font-50"></span></td>
+                        </tr>
+                </table> -->
+            </md-card-content>
+        </md-card> 
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf('1')"><span class="ng-scope">Send Art Approval to Client</span></button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf('0')"><span class="ng-scope">Generate Art Approval Form</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="openClientEmailPopup()"><span class="ng-scope">Art Approval</span></button>
+        <!-- <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf('0','')"><span class="ng-scope">Generate Art Approval Form</span></button> -->
     </md-dialog-actions>
 </div>

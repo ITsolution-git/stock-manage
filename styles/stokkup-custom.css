@@ -90,9 +90,9 @@
   padding: 5px;
 }
 
-#designTable tbody tr td {
-	padding-left: 1.2em !important;  /*or 15px*/
-}
+/*#designTable tbody tr td {
+	padding-left: 1.2em !important;  /*or 15px
+}*/
 
 
 .filterWidth {
@@ -258,9 +258,9 @@ hr .style1 {
       margin-top: 25px !important;
 }
 
-md-input-container > label {
+/*md-input-container > label {
   color : #000 !important;
-}
+}*/
 
 [md-theme="default"] .md-accent-bg {
     background-color: rgb(3,155,229);
@@ -1178,9 +1178,78 @@ ul[dnd-list] .dndPlaceholder {
   margin-top: 40px;
 }
 
+
 .k-picker-wrap, .k-picker-wrap .k-select,.k-picker-wrap .k-state-default{
   border:0 none !important;
 }
 span.k-picker-wrap.k-state-border-down {
   padding-bottom: 0;
 }
+
+ md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
+      padding-left: 0; }
+
+.m-b-45{
+  margin-bottom:45px;
+}
+.top-30{
+margin-top:30px;
+}
+.right-20{
+  margin-right:20px;
+}
+.number-box-height{
+  height:175px;
+}
+[md-theme="default"] .secondary-text, [md-theme="default"] .icon{
+  color:#6e7584;
+}
+/*css added by tejas */
+.pad-0-L {
+  padding-left: 0;
+}
+.divPO {
+    background-color: #fff;
+    border: 1px solid rgba(224, 225, 227, 0.7);
+    padding: 10px;
+}
+.shad-btm {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 
+  0px 4px 5px 0px rgba(0, 0, 0, 0.14), 
+  0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.font-title {
+  color: #252932;
+  font-size: 18px;
+  font-weight: 400;
+}
+.m-15-L {
+  margin-left: 15px;
+}
+.m-15-LR {
+  margin: 0 15px;
+}
+.heading {
+  font-weight: 600;
+  font-size: 14px;
+  color: #6e7584 !important;
+}
+.subtitle {
+    font-weight: 400;
+    font-size: 13px;
+    color: #6e7584 !important;
+ }
+ .h-70 {
+  min-height: 70px;
+ }
+ /* css to remove bg from focus out on buttons */
+ a.md-button.md-default-theme:not([disabled]).md-focused, a.md-button:not([disabled]).md-focused, .md-button.md-default-theme:not([disabled]).md-focused, .md-button:not([disabled]).md-focused, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused{
+  background:transparent !important;
+  opacity:1 !important;
+ }
+ .client-live-nation.med-box md-card{
+  min-height:165px;
+ }
+/* .md-button{
+  color:#fff !important;
+ }*/

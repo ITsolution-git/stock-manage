@@ -1,18 +1,19 @@
 
-                    <md-content class="md-padding">
-                        <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title " layout="row" layout-align="space-between center">
+                <md-content>
+                    <div class="content client-list-page stockkup-content-table-container">
+                        <div class="simple-table-container stokkup-main-tableview">
+                            <!-- <div class="table-title " layout="row" layout-align="space-between center">
                                 <div class="table-title-text" flex=20>
                                     Notes
                                 </div>
-                                <!-- <div class="table-title-text" flex=70>
+                                <div class="table-title-text" flex=70>
                                 </div>
                                 <div class="p-16" flex=10>
                                     <a href=""  ng-click="vm.editCompanyConatct($event,'add','client_notes','notes_form','note_id',note.note_id,'notes')">ADD NEW</a>
-                                </div> -->
-                            </div>
+                                </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
-                                <table class="simple"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
+                                <table class="dataTable"  ms-responsive-table="" datatable="ng" dt-instance="vm.dtInstanceCB" dt-options="vm.dtOptions">
                                     <thead>
                                         <tr>
                                             <th class="secondary-text">
@@ -35,7 +36,7 @@
                                     </thead>                                   
                                     <tbody>
                                         <tr ng-repeat="note in allclientnotes">
-                                            <td>{{note.user_name}}</td>
+                                            <td>{{note.name}}</td>
                                             <td>{{note.client_notes}}</td>
                                             <td>{{note.created_date}}</td>
                                             <td class="text-right">
@@ -44,7 +45,7 @@
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
                                         <md-menu-content width="4">
-                                            <md-menu-item ng-click="vm.editCompanyConatct($event,'edit','client_notes','notes_form','note_id',note.note_id,'notes')">
+                                            <md-menu-item ng-click="openEditPopup('client/views/forms/notes_form.html',note,$event,'client_notes')">
                                                 <md-button>
                                                     Edit Notes
                                                 </md-button>
@@ -60,12 +61,9 @@
                                     </tr>
                                      </tbody>
                                 </table>
-                                <table> 
-                                    <tr>
-                                        <td class="p-16"><a href=""  ng-click="vm.editCompanyConatct($event,'add','client_notes','notes_form','note_id',note.note_id,'notes')">ADD NEW</a></td>                                                
-                                    </tr>
-                                </table>
+                                <div class="pull-right"><a class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right" href="javascript:;" ng-click="openInsertPopup('client/views/forms/notes_form.html',$event,'client_notes')">ADD NEW</a></div>
                             </div>
-                        </div> 
-                    </md-content>
+                        </div>
+                    </div>
+                </md-content>
                 

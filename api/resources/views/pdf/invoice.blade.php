@@ -9,17 +9,29 @@
 <body>
 	<table id="header" style="width:100%">
 		<tr>
-			<td><img src="{{$company_data[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+			<td>
+			<?php if(!empty($company_data[0]->photo))
+			{?>
+				<img src="{{$company_data[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+			<?php
+			}
+			else
+			{ ?>
+				<img src="" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+			<?php
+			}
+			?>
 			<td>
 				<span style="text-align:center;margin:0;font-weight:bold;">{{$company_data[0]->name}}</span>
 				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address1}}</span>
-				<span style="text-align:center;margin:0;">{{$company_data[0]->city}}, {{$company_data[0]->state}} {{$company_data[0]->zip}}</span>
-				<span style="text-align:center;margin:0;">P: 312 243-8304  F: 312 243-9015</span><br>
+				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address_city}}, {{$company_data[0]->prime_address_state}} {{$company_data[0]->prime_address_zip}}</span>
+				<span style="text-align:center;margin:0;">P: {{$company_data[0]->phone}}</span><br>
 				<span style="text-align:center;margin:0;"><a href="{{$company_data[0]->url}}" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
 			</td>
 			<td>
-				<span style="font-weight:bold;text-align:right;">Order Acknoledgement # {{$order_data[0]->id}}</span>
-				<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span>
+				<span style="font-weight:bold;text-align:right;">Order Acknowledgement # {{$order_data[0]->id}}</span><br>
+				<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span><br>
+				<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span><br>
 				<span style="font-weight:bold;text-align:right;">Job Name: {{$order_data[0]->name}}</span>
 			</td>
 		</tr>
@@ -32,7 +44,12 @@
 	     <tr>
 	      <td style="width:30px;padding:0;border:none;"><img src="" alt="BILL TO" title="BILL TO"></td>
 	      <td style="vertical-align: top;padding: 10px 0 0 20px;border:none;">
+	      <?php if(!empty($client_data))
+	      {?>
 	       <label style="font-weight: bold;">{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}</label><br>
+	       <?php
+	   		}
+	   		?>
 	       <label style="">
 	       @foreach ($addresses['result'] as $address)  
 	        <?php if($address->address_billing == '1') {?>
@@ -50,7 +67,12 @@
 	     <tr>
 	      <td style="width:30px;padding:0;border:none;"><img src="" alt="SHIP TO" title="SHIP TO"></td>
 	      <td style="vertical-align: top;padding: 10px 0 0 20px;border:none;">
-	       <label style="font-weight: bold">{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}</label><br>
+	       <?php if(!empty($client_data))
+	      {?>
+	       <label style="font-weight: bold;">{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}</label><br>
+	       <?php
+	   		}
+	   		?>
 	       <label style="">
 	       @foreach ($addresses['result'] as $address)  
 	        <?php if($address->address_shipping == '1') {?>
@@ -125,7 +147,7 @@
 					<td style="border:1px solid #000"> {{$position->position_name}}</td>
 					<td style="border:1px solid #000"> {{$position->placement_type_name}}</td>
 					<td style="border:1px solid #000"> {{$position->qnty}}</td>
-					<td style="border:1px solid #000"> 1.5</td>
+					<td style="border:1px solid #000"> <?php echo number_format($position->total_price,2) ?></td>
 					<td style="text-align:center;height:50px;border:1px solid #000;">
 					<?php if($position->position_image != '') {?>
 						<img src="{{$position->position_image}}" height="40px" width="40px"></td>
@@ -159,7 +181,7 @@
                 	@endforeach
                 </td>
                 <td style="border:1px solid #000"> {{$product->total_qnty}}</td>
-                <td style="border:1px solid #000"> {{$product->total_price}}</td>
+                <td style="border:1px solid #000"> $<?php echo number_format($product->total_price,2) ?></td>
 			</tr>
 			@endforeach
 		</table><br><br>
@@ -175,7 +197,7 @@
 					<br><span><b>Position: </b>{{$position->position_name}}</span><br>
 					<?php if($position->discharge_qnty > 0) {?>
 						<span>
-							Discharge Ink @ ${{$price_grid_data[0]->discharge}}
+							Discharge Ink @ $<?php echo number_format($price_grid_data[0]->discharge,2); ?>
 						</span><br>
 					<?php } ?>
 					<?php if($position->foil_qnty > 0) {?>
@@ -219,63 +241,63 @@
 				<table cellspacing="0" cellpadding="0">
 					<tr>
 						<td style="padding-right:5px;">Screens</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->screen_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->screen_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Press Setup</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->press_setup_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->press_setup_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Digitize</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->digitize_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->digitize_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Art Work</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->artwork_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->artwork_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Separations</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->separations_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->separations_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Rush</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->rush_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->rush_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Distribution</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->distribution_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->distribution_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Shipping</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->shipping_charge}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->shipping_charge,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Discount</td>
-						<td style="border:1px solid #000;text-align:center;">%{{$order_data[0]->discount}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->discount,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Order Total</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->order_total}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->order_total,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Tax Rate</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->tax_rate}}</td>
+						<td style="border:1px solid #000;text-align:center;"><?php echo number_format($order_data[0]->tax_rate,2); ?>%</td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Tax</td>
-						<td style="border:1px solid #000;text-align:center;">{{$order_data[0]->tax}}(%)</td>
+						<td style="border:1px solid #000;text-align:center;"><?php echo number_format($order_data[0]->tax,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Grand Total</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->grand_total}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->grand_total,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Payments/Deposit</td>
-						<td style="border:1px solid #000;text-align:center;">$0</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->total_payments,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Balance Due</td>
-						<td style="border:1px solid #000;text-align:center;">${{$order_data[0]->grand_total}}</td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->balance_due,2); ?></td>
 					</tr>
 				</table>
 			</td>

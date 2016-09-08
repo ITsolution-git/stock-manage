@@ -22,23 +22,26 @@
                                             </th>
                                             <th class="secondary-text">
                                                 <div class="table-header">
-                                                    <span class="column-title">Mokup Logo</span>
+                                                    <span class="column-title">Mockup Logo</span>
                                                 </div>
                                             </th>
-                                            <th class="secondary-text">
+                                           <!--  <th class="secondary-text">
                                                 <div class="table-header">
                                                     <span class="column-title">Mokup Image</span>
                                                 </div>
-                                            </th>
+                                            </th> -->
                                                                                  
                                         </tr>
                                     </thead>                                    
                                     <tbody>
                                         <tr ng-repeat="screenSet in screenset_detail">
                                             <td><a target="_blank" ui-sref="app.art.screensetView({id:screenSet.screen_id})">{{screenSet.screen_set}}</a></td>
-                                            <td>{{screenSet.screen_width}}" X {{screenSet.screen_height}}"</td>
-                                            <td><img src="{{screenSet.mokup_logo}}" style="height: 100px; width: 140px;"></td>
-                                            <td><img src="{{screenSet.mokup_image}}"  style="height: 100px; width: 140px;"></td>
+                                            <td><b ng-if="screenSet.screen_width!=''" >{{screenSet.screen_width}}"</b> X <b ng-if="screenSet.screen_height!=''">{{screenSet.screen_height}}"</b></td>
+                                            <td>
+                                                <img ng-if="ScreenSets.mokup_logo!=''" src="{{screenSet.mokup_logo}}" style="height: 100px; width: 140px;">
+                                                <img ng-if="ScreenSets.mokup_logo==''" ng-src="{{NoImage}}"  style="height: 50px; width: 100px;">
+                                            </td>
+                                            <!-- <td><img src="{{screenSet.mokup_image}}"  style="height: 100px; width: 140px;"></td> -->
                                             
                                     </tr>                                    
                                     </tbody>

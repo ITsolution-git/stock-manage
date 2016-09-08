@@ -8,15 +8,17 @@
         <title>STOKKUP</title>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="shortcut icon" type="image/x-icon" href="/stokkup/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="styles/font-awesome.min.css">
+        <link rel="stylesheet" href="styles/mdPickers.min.css">
         <link rel="stylesheet" href="styles/vendor.css">
-
         <link rel="stylesheet" href="styles/app.css">
         <link rel="stylesheet" href="styles/stokkup-custom.css">
-        <link rel="stylesheet" href="styles/mdPickers.min.css">
+        <link rel="stylesheet" href="styles/stokkup-custom-global.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+        
+        
 
         
         <script>
@@ -173,7 +175,9 @@
     <script src="app/main/order/dialogs/information/information.controller.js"></script>
     <script src="app/main/order/dialogs/approveorder/approveorder.controller.js"></script>
     <script src="app/main/order/dialogs/position/position-dialog.controller.js"></script>
-    
+    <script src="app/main/order/views/notes/notes.controller.js"></script>
+    <script src="app/main/order/dialogs/editOrderNote/editOrderNote.controller.js"></script>
+
 
     <!-- CLIENT FILES START -->
     <script src="app/main/client/client.module.js"></script>    

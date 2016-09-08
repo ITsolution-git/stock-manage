@@ -29,12 +29,12 @@ class Shipping extends Model {
                             {
                               $shippingData = $shippingData->Where(function($query) use($search)
                               {
-                                  $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                  $query->orWhere('po.id', 'LIKE', '%'.$search.'%')
                                         ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                               });
                             }
-                            $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-                            ->GroupBy('o.id')
+                            $shippingData = $shippingData->GroupBy('po.order_id')
+                            ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                             ->skip($post['start'])
                             ->take($post['range'])
                             ->get();
@@ -146,14 +146,16 @@ class Shipping extends Model {
     public function shippingDetail($data) {
 
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
-        $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company',
-                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku'];
+        $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number',
+                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code'];
 
         $shippingData = DB::table('shipping as s')
                         ->leftJoin('orders as o','s.order_id','=','o.id')
                         ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
                         ->leftJoin('client as c','o.client_id','=','c.client_id')
                         ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
+                        ->leftJoin('state as st','cd.state','=','st.id')
+                        ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
                         ->select($listArray)
                         ->where($whereShippingConditions)->get();
 
@@ -323,5 +325,18 @@ class Shipping extends Model {
                         ->get();
 
         return $shippingBoxes;
+    }
+
+    public function getTotalShipCharge($order_id)
+    {
+        $listArr = [DB::raw('SUM(cost_to_ship) as total')];
+        $where = ['order_id' => $order_id];
+
+        $result = DB::table('shipping')
+                ->select($listArr)
+                ->where($where)
+                ->get();
+
+        return $result;
     }
 }

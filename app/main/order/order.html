@@ -1,15 +1,15 @@
-<div class="content order-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content order-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20 class="cursor-p">
                 Orders
             </div>
-            <div class="search-block" flex=40>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                </md-input-container>
-            </div>
-            <md-icon  ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
+            <div class="pull-right right-search-box">
+                <div class="order-modal-title pull-right" layout="row" layout-align="end center" ng-if="role=='CA' || role=='BC'">
+                    <span class="cursor-p stokkup-btn-style1" ng-click="vm.openOrderDialog($event)" >CREATE NEW ORDER</span>
+                </div>
+
+                <md-icon  ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
             </md-tooltip></md-icon>   
             <!--Filter Sidebar Start-->
@@ -93,10 +93,16 @@
                     </div>
                 </md-sidenav>
             </div>
-            <!----------Filter Sidebar End-------->
-            <div class="order-modal-title " layout="row" layout-align="end center" flex=11 ng-if="role=='CA' || role=='BC'">
-                <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >CREATE NEW ORDER</span>
+                 <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div>
             </div>
+           
+            
+            <!----------Filter Sidebar End-------->
+            
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
@@ -109,16 +115,18 @@
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>
-                            <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
+                            <td ng-if="row.created_date != '0000-00-00'">{{ row.created_date | date:"M/d/yyyy" }}</td>
+                            <td ng-if="row.created_date == '0000-00-00'"></td>
                             <td>{{ row.sales_name}}</td>
-                            <td>{{ row.date_shipped | date:"M/d/yyyy" }}</td>
-                                 <td class="accor" ng-show="row.design_pos.length > 0">
-                            <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
-                            <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
-                        </td>
-                        <td  ng-show="row.design_pos.length == 0">
-                            &nbsp;
-                        </td>
+                            <td ng-if="row.date_shipped != '0000-00-00'">{{ row.date_shipped | date:"M/d/yyyy" }}</td>
+                            <td ng-if="row.date_shipped == '0000-00-00'"></td>
+                            <td class="accor" ng-show="row.design_pos.length > 0">
+                                <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                                <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                            </td>
+                            <td  ng-show="row.design_pos.length == 0">
+                                &nbsp;
+                            </td>
                         </tr>
                                 <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
                                     <td colspan="8" class="collpas">
@@ -127,7 +135,7 @@
                                             <th>Design Name</th>
                                             <th>Postion Name</th>
                                             <th>Ship Date</th>
-                                            <th>Status</th>
+                                            <!-- <th>Status</th> -->
                                             
                                         </thead>
                                         <tbody>
@@ -138,10 +146,10 @@
                                                 <td ng-if="design_data_all.shipping_date != '0000-00-00' && design_data_all.shipping_date != '' ">{{design_data_all.shipping_date | date:"M/d/yyyy"  }}</td>
                                                 <td ng-if="design_data_all.shipping_date == '0000-00-00' || design_data_all.shipping_date == '' "></td>
 
-                                                <td  class="text-center font-small mdslider"><label class="slider">123</label>
+                                                <!-- <td  class="text-center font-small mdslider"><label class="slider">123</label>
                                                     <md-slider flex ng-model="row.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
                                                     </md-slider>
-                                                </td>                      
+                                                </td> -->                      
                                             </tr>
                                         </tbody>
                                     </table>

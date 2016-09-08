@@ -121,11 +121,11 @@ class Purchase extends Model {
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',DB::raw('(select count(*) from purchase_notes where po_id=po.po_id) as total_note'),'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
+					->select('vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
                       DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
                       DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*' )
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*','ord.approval_id')
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
@@ -145,9 +145,22 @@ class Purchase extends Model {
 			array_walk_recursive($result[0], function(&$item) {
 	            $item = str_replace(array('00/00/0000'),array(''), $item);
 	        });
-		}
 
-		return $result;
+    		$count_note = DB::table('purchase_order as po')
+			->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+			->leftJoin('purchase_detail as pd','pd.id','=','pol.purchase_detail')
+			->leftJoin('order_design_position as odp','pd.design_id','=','odp.design_id')
+			->select('*')
+			->where('odp.is_delete','=','1')
+			->where('pd.is_delete','=','1')
+			->where('po.po_id','=',$po_id)
+			->GroupBy('odp.id')
+			->get();
+
+			//echo "<pre>"; print_r(count($count_note)); echo "</pre>"; die;
+			$result[0]->total_notes = count($count_note);              
+			return $result;
+		}
 	}
 	function getOrdarTotal($po_id)
 	{
@@ -253,7 +266,7 @@ class Purchase extends Model {
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
                       DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
                       DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*' )
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*','ord.approval_id')
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
@@ -361,33 +374,28 @@ class Purchase extends Model {
             $search = $post['filter']['name'];
         }
 
-		$result = DB::table('purchase_notes as note')
-					->select('*')
-					->where('note.is_deleted','=','1')
-					->where('note.po_id','=',$post['po_id']);
+		$result = DB::table('purchase_order as po')
+					->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+					->leftJoin('purchase_detail as pd','pd.id','=','pol.purchase_detail')
+					->leftJoin('order_design_position as odp','pd.design_id','=','odp.design_id')
+					->leftJoin('misc_type as mt','mt.id','=','odp.position_id')
+					->select(DB::raw('SQL_CALC_FOUND_ROWS odp.note,mt.value,odp.description,odp.id'))
+					->where('odp.is_delete','=','1')
+					->where('pd.is_delete','=','1')
+					->where('po.po_id','=',$post['po_id']);
 
 					if($search != '')               
                   	{
-                      $result = $result->Where(function($query) use($search)
-                      {
-                          $query->orWhere('note.note_title', 'LIKE', '%'.$search.'%')
-                                ->orWhere('note.note','LIKE', '%'.$search.'%')
-                                ->orWhere('note.note_date','LIKE', '%'.$search.'%');
-                      });
+                        $result = $result->Where(function($query) use($search)
+                        {
+                            $query->orWhere('odp.note', 'LIKE', '%'.$search.'%');
+                        });
                   	}
-                 $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-				 ->skip($post['start'])
+                 $result = $result->GroupBy('odp.id')->skip($post['start'])
                  ->take($post['range'])
                  ->get();
 		
-		//echo "<pre>"; print_r($result); echo "</pre>"; die;
-        if(count($result)>0)
-        {
-          foreach ($result as $key=>$value) 
-          {
-          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00' || empty($result[$key]->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
-          }
-        }
+
 		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
         $returnData = array();
         $returnData['allData'] = $result;

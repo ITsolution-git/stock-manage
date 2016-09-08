@@ -78,40 +78,46 @@ class Fedex extends \RocketShipIt\Service\Common
         }
 
         if (isset($r['AddressValidationReply']['AddressResults']['ProposedAddressDetails']['Address'])) {
-            $parsedAddr = $r['AddressValidationReply']['AddressResults']['ProposedAddressDetails']['ParsedAddress'];
-            $av->Data->Addr1 = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.StreetLines', '');
-            $av->Data->City = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.City', '');
+            if(isset($r['AddressValidationReply']['AddressResults']['ProposedAddressDetails']['ParsedAddress'])) {
+                $parsedAddr = $r['AddressValidationReply']['AddressResults']['ProposedAddressDetails']['ParsedAddress'];
+                $av->Data->Addr1 = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.StreetLines', '');
+                $av->Data->City = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.City', '');
 
-            if ($this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.DeliveryPointValidation', '') == 'CONFIRMED') {
-                $av->Data->Match = true;
-                $av->Data->CityStateZipMatch = true;
-            }
+                if ($this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.DeliveryPointValidation', '') == 'CONFIRMED') {
+                    $av->Data->Match = true;
+                    $av->Data->CityStateZipMatch = true;
+                }
 
-            if (isset($parsedAddr['ParsedPostalCode']['Elements'][0])) {
-                foreach ($parsedAddr['ParsedPostalCode']['Elements'] as $elm) {
-                    if (isset($elm['Name']) && $elm['Name'] == 'postalBase') {
-                        $av->Data->ZipCode = $elm['Value'];
-                    }
-                    if (isset($elm['Name']) && $elm['Name'] == 'postalAddOn') {
-                        $av->Data->ZipCodeAddon = $elm['Value'];
+                if (isset($parsedAddr['ParsedPostalCode']['Elements'][0])) {
+                    foreach ($parsedAddr['ParsedPostalCode']['Elements'] as $elm) {
+                        if (isset($elm['Name']) && $elm['Name'] == 'postalBase') {
+                            $av->Data->ZipCode = $elm['Value'];
+                        }
+                        if (isset($elm['Name']) && $elm['Name'] == 'postalAddOn') {
+                            $av->Data->ZipCodeAddon = $elm['Value'];
+                        }
                     }
                 }
-            }
 
-            if (isset($parsedAddr['ParsedPostalCode']['Elements']['Name'])) {
-                if ($parsedAddr['ParsedPostalCode']['Elements']['Name'] == 'postalBase') {
-                    $av->Data->ZipCode = $parsedAddr['ParsedPostalCode']['Elements']['Value'];
+                if (isset($parsedAddr['ParsedPostalCode']['Elements']['Name'])) {
+                    if ($parsedAddr['ParsedPostalCode']['Elements']['Name'] == 'postalBase') {
+                        $av->Data->ZipCode = $parsedAddr['ParsedPostalCode']['Elements']['Value'];
+                    }
+                }
+
+                $av->Data->State = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.StateOrProvinceCode', '');
+                $av->Data->Country = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.CountryCode', '');
+
+                if ($this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.ResidentialStatus', '') == 'RESIDENTIAL') {
+                    $av->Data->Residential = true;
+                }
+                if ($this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.ResidentialStatus', '') == 'BUSINESS') {
+                    $av->Data->Residential = false;
                 }
             }
-
-            $av->Data->State = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.StateOrProvinceCode', '');
-            $av->Data->Country = $this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.Address.CountryCode', '');
-
-            if ($this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.ResidentialStatus', '') == 'RESIDENTIAL') {
-                $av->Data->Residential = true;
-            }
-            if ($this->get($r, 'AddressValidationReply.AddressResults.ProposedAddressDetails.ResidentialStatus', '') == 'BUSINESS') {
-                $av->Data->Residential = false;
+            else
+            {
+                return 'mismatch';
             }
         }
 

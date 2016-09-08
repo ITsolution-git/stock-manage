@@ -26,6 +26,15 @@
             }
         });
 
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                  $scope.miscData = result.data.records;
+        });
+
         $scope.updateShippingAll = function(name,value,id)
         {
             var order_main_data = {};
@@ -37,6 +46,11 @@
             else
             {
                 order_main_data.table ='shipping';
+            }
+
+            if(name == 'approval_id')
+            {
+                order_main_data.table ='orders';
             }
 
             $scope.name_filed = name;

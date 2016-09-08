@@ -12,8 +12,40 @@
         var vm = this;
         vm.createNewScreen = createNewScreen;
         vm.generateArtForm = generateArtForm;
+        //vm.openClientEmailPopup = openClientEmailPopup;
         $scope.company_id = sessionService.get('company_id');
         $scope.order_id = $stateParams.id;
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+        
+        $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
 
         $scope.GetOrderScreenSet = function() 
         {
@@ -116,12 +148,35 @@
                                     if( !angular.isUndefined(id))
                                     {
                                         $('#remove_color').val('');
-                                        $scope.initial_add_color.push({id:id,color_name:color_name});
+                                        $scope.initial_add_color.push({id:id,color_name:color_name,thread_id:'',inq:''});
+                                    }
+                                    //console.log($scope.initial_add_color);
+                                }
+                                $scope.add_thread = function(thread_id,thread_color,key)
+                                {
+                                    if( !angular.isUndefined(key) && !angular.isUndefined(thread_id) && !angular.isUndefined(thread_color))
+                                    {
+                                        $scope.initial_add_color[key].thread_id = thread_id;
+                                        $scope.initial_add_color[key].thread_color = thread_color;
+                                    }
+                                }
+                                $scope.add_inq = function(inq,key)
+                                {
+                                    if( !angular.isUndefined(key) && !angular.isUndefined(inq))
+                                    {
+                                        $scope.initial_add_color[key].inq = inq;
+                                    }
+                                }
+                                $scope.change_thread = function(id,key)
+                                {
+                                    if( !angular.isUndefined(key) && !angular.isUndefined(id))
+                                    {
+                                        $scope.getColors[key].thread_color = id;
                                     }
                                 }
                                 $scope.CreateScreenset = function(alldata)
                                 {
-                                    alldata = {alldata:alldata,add_screen_color:$scope.initial_add_color,remove_screen_color:$scope.screen_id_removed};
+                                    alldata = {alldata:alldata,add_screen_color:$scope.initial_add_color,remove_screen_color:$scope.screen_id_removed,change_color:$scope.getColors};
                                     
                                     $http.post('api/public/art/create_screen',alldata).success(function(result) 
                                     {
@@ -165,6 +220,59 @@
                 onRemoving : $scope.GetOrderScreenSet
             });
         }
+        $scope.openClientEmailPopup = function(ev)
+        {
+            $mdDialog.show({
+                controller: function ($scope, params)
+                {
+                    $scope.mail=params.ScreenSets[0].billing_email;
+                    $scope.company_id=params.company_id;
+                    $scope.order_id=params.order_id;
+                    //console.log($scope.mail);
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    }
+                    $scope.printPdf=function(flag,email)
+                    {
+                        $mdDialog.hide();
+                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email}
+                        if(flag=='1')
+                        {
+                            var k = confirm("Do you want to send Art approval PDF to client?");
+                            if(k==false)
+                            {
+                                return false;
+                            }
+                        }
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/art/ArtApprovalPDF';
+                        form.method = 'post';
+                        form.target = target || "_blank";
+                        form.style.display = 'none';
+
+                        var input_screenset = document.createElement('input');
+                        input_screenset.name = 'art';
+                        input_screenset.setAttribute('value', JSON.stringify(pass_array));
+                        form.appendChild(input_screenset);
+
+                        document.body.appendChild(form);
+                        form.submit();  
+
+                    };
+                },
+                controllerAs: 'vm',
+                templateUrl: 'app/main/art/dialogs/EmailPopup/EmailPopup.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                }
+            });
+        }
         function generateArtForm(ev, settings) {
             $mdDialog.show({
                  controller: function ($scope, params){
@@ -197,33 +305,7 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
-        $scope.printPdf=function(mail)
-        {
-            
-            var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,mail:mail}
-            if(mail=='1')
-            {
-                var k = confirm("Do you want to send Art approval PDF to client?");
-                if(k==false)
-                {
-                    return false;
-                }
-            }
-            var target;
-            var form = document.createElement("form");
-            form.action = 'api/public/art/ArtApprovalPDF';
-            form.method = 'post';
-            form.target = target || "_blank";
-            form.style.display = 'none';
-
-            var input_screenset = document.createElement('input');
-            input_screenset.name = 'art';
-            input_screenset.setAttribute('value', JSON.stringify(pass_array));
-            form.appendChild(input_screenset);
-
-            document.body.appendChild(form);
-            form.submit();  
-        };
+       
 
         $scope.UpdateTableField = function(field_value,order_id)
         {
@@ -243,6 +325,121 @@
                     notifyService.notify('error', result.data.message);
                 }
             });
+        }
+         // ============= UPLOAD IMAGE ============= // 
+        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,extra_params) 
+        {
+
+                $scope.column_name=column_name;
+                $scope.table_name=table_name;
+                $scope.folder_name=folder_name;
+                $scope.primary_key_name=primary_key_name;
+                $scope.primary_key_value=primary_key_value;
+                $scope.default_image=default_image;
+                $scope.unlink_url = image_name;
+                $scope.extra_params = extra_params;
+
+                $mdDialog.show({
+                   //controllerAs: $scope,
+                    controller: function($scope,params){
+                            $scope.params = params;
+                            $scope.SaveImageAll=function(image_array)
+                            {
+                                if(image_array == null)
+                                {
+                                    $mdDialog.hide();
+                                    return false;
+                                }
+
+                                var Image_data = {};
+                                Image_data.image_array = image_array;
+                                Image_data.field = params.column_name;
+                                Image_data.table = params.table_name;
+                                Image_data.image_name = params.table_name+"-logo";
+                                Image_data.image_path = params.company_id+"/"+params.folder_name+"/"+params.extra_params;
+                                Image_data.cond = params.primary_key_name;
+                                Image_data.value = params.primary_key_value;
+                                Image_data.unlink_url = params.unlink_url;
+                                //console.log(Image_data); return false;
+                                $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
+                                    if(result.data.success=='1')
+                                    {
+                                        notifyService.notify("success", result.data.message);
+                                        $mdDialog.hide();
+                                    }
+                                    else
+                                    {
+                                        notifyService.notify("error", result.data.message); 
+                                    }
+                                });
+                            };
+                            $scope.showtcprofileimg = false;
+                            $scope.onLoad=function()
+                                {
+                                    $scope.showtcprofileimg = true;
+                                }; 
+                            $scope.removeProfileImage=function()
+                                {
+                                    $scope.showtcprofileimg = false;
+                                }; 
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                        },
+                    templateUrl: 'app/main/image/image.html',
+                    parent: angular.element($document.body),
+                    clickOutsideToClose: false,
+                        locals: {
+                            params:$scope
+                        },
+                    onRemoving : $scope.GetOrderScreenSet
+                });
+
+        };
+    // ============= DELETE IMAGE ============= // 
+        $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,extra_params)
+        {
+            if(default_image == '') 
+            {
+
+                var data = {"status": "error", "message": "Please upload image first."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+            }
+              var permission = confirm(AllConstant.deleteMessage);
+
+            if (permission == true) {
+
+                var image_data = {};
+                image_data.table =table_name
+
+                var obj = {};
+                obj[column_name] =  '';
+                image_data.data = angular.copy(obj);
+
+                var cond_arr = {};
+                cond_arr[primary_key_name] =  primary_key_value;
+                image_data.cond =angular.copy(cond_arr);
+
+
+                image_data.image_delete =  $scope.company_id+'/'+folder_name+'/' + extra_params +'/'+default_image;
+            
+                $http.post('api/public/common/deleteImage',image_data).success(function(result) 
+                {
+
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify("success", result.data.message);
+                        $scope.GetOrderScreenSet();
+                    }
+                    else
+                    {
+                        notifyService.notify("error", result.data.message); 
+                    }
+ 
+                });
+            }
         }
 
     }

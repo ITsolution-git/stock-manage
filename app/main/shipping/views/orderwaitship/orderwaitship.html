@@ -53,23 +53,23 @@
                                             <md-checkbox aria-label="Select"></md-checkbox>
                                         </div> -->
                                         <div layout="column" flex="90">
-                                            <div layout-wrap="" layout="row" class="layout-wrap layout-row">
+                                            <div layout-wrap="" layout="row" class="layout-wrap layout-row m-b-30">
                                                 <div class="trans-box">
                                                     <div>Size Group</div>
-                                                    <span class="chrome-weight font-14 ng-binding">{{ item.misc_value }}</span>
+                                                    <span class="ng-binding">{{ item.misc_value }}</span>
                                                 </div>
                                                 <div class="trans-box">
                                                     <div>Product#</div>
-                                                    <span class="chrome-weight font-14 ng-binding">{{ item.name }}</span> </div>
+                                                    <span class="ng-binding">{{ item.name }}</span> </div>
                                                 <div class="trans-box">
                                                     <div>Size</div>
-                                                    <span class="chrome-weight font-14 ng-binding">{{ item.size }}</span>
+                                                    <span class="ng-binding">{{ item.size }}</span>
                                                 </div>
                                                 <div class="trans-box">
                                                     <div>Color</div>
-                                                    <span class="chrome-weight font-14 ng-binding">{{ item.color_name }}</span> </div>
+                                                    <span class="font-14 ng-binding">{{ item.color_name }}</span> </div>
                                             </div>
-                                            <div layout="row" flex="100" class="mrg10-TB">
+                                            <div layout="row" flex="100" class="m-t-20">
                                                 <div layout="column" flex="100">
                                                     <div class="font-12 gray-text">Quantity to distribute to location</div>
                                                     <div class="search-block" flex=40>
@@ -113,8 +113,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody> 
-                                                    <tr class="cursor-p">
-                                                        <td>{{ product.misc_value}}</td>
+                                                    <tr class="cursor-p                                                        <td>{{ product.misc_value}}</td>
                                                         <td>{{ product.name}}</td>
                                                         <td>{{ product.color_name}}</td>
                                                         <td>{{ product.size}}</td>

@@ -92,12 +92,46 @@ class InvoiceController extends Controller {
         $retutn_arr = array();
         
         $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+
+          if(empty($invoice_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+
         $order_id = $invoice_data[0]->order_id;
 
         $retutn_arr['invoice_data'] = $invoice_data;
         $retutn_arr['invoice_data'][0]->created_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->created_date));
 
-        $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
+        if($retutn_arr['invoice_data'][0]->payment_due_date != '0000-00-00')
+        {
+            $retutn_arr['invoice_data'][0]->payment_due_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->payment_due_date));
+        }
+        else
+        {
+            $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
+        }
+
+        $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+
+
+         if(empty($order_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+
         $retutn_arr['company_data'] = $this->common->getCompanyDetail($company_id);
 
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
@@ -109,18 +143,57 @@ class InvoiceController extends Controller {
 
         $retutn_arr['addresses'] = $this->client->getAddress($order_data[0]->client_id);
         $retutn_arr['client_data'] = $this->common->GetTableRecords('client_contact',array('client_id' => $order_data[0]->client_id,'contact_main' => 1),array());
+
         $retutn_arr['price_grid_data'] = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $order_data[0]->price_id),array());
 
         $retutn_arr['order_data'] = $order_data;
 
         $retutn_arr['shipping_detail'] = $this->common->GetTableRecords('shipping',array('order_id' => $order_id),array());
+
+        if(!empty($retutn_arr['shipping_detail']))
+        {
+            foreach ($retutn_arr['shipping_detail'] as $shipping) {
+                if($shipping->shipping_by != '0000-00-00') {
+                    $shipping->shipping_by = date("m/d/Y", strtotime($shipping->shipping_by));
+                }
+                else {
+                    $shipping->shipping_by = '';
+                }
+                if($shipping->in_hands_by != '0000-00-00') {
+                    $shipping->in_hands_by = date("m/d/Y", strtotime($shipping->in_hands_by));
+                }
+                else {
+                    $shipping->in_hands_by = '';
+                }
+                if($shipping->date_shipped != '0000-00-00') {
+                    $shipping->date_shipped = date("m/d/Y", strtotime($shipping->date_shipped));
+                }
+                else {
+                    $shipping->date_shipped = '';
+                }
+                if($shipping->fully_shipped != '0000-00-00') {
+                    $shipping->fully_shipped = date("m/d/Y", strtotime($shipping->fully_shipped));
+                }
+                else {
+                    $shipping->fully_shipped = '';
+                }
+            }
+        }
+
         $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
 
         foreach ($all_design as $design) {
             $data = array('company_id' => $company_id,'id' => $design->id);
             $design->positions = $this->order->getDesignPositionDetail($data);
             $productData = $this->product->designProduct($data);
-            $design->products = $productData['productData'];
+            
+            if(!empty($productData['productData'])) {
+                $design->products = $productData['productData'];    
+            }
+            else
+            {
+                $design->products = array();
+            }
         }
 
         $retutn_arr['all_design'] = $all_design;
@@ -148,6 +221,7 @@ class InvoiceController extends Controller {
         PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');
     }
 
+    // get invoice history from payment history
     public function getInvoiceHistory($invoice_id,$company_id,$type=0){
 
         $post = Input::all();
@@ -155,6 +229,18 @@ class InvoiceController extends Controller {
         $retutn_arr = array();
         
         $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+
+         if(empty($invoice_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+        
         $order_id = $invoice_data[0]->order_id;
 
         $retArray = DB::table('payment_history')
@@ -167,6 +253,38 @@ class InvoiceController extends Controller {
             'success' => 1, 
             'message' => GET_RECORDS,
             'allData' => $retArray
+            );
+        return response()->json(["data" => $response]);
+    }
+
+    // get invoice payment stored for future use
+    public function getInvoicePayment($invoice_id,$company_id,$type=0){
+
+        $post = Input::all();
+
+        $retutn_arr = array();
+        
+        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+
+        $retArray = DB::table('invoice')
+            ->select('creditFname', 'creditLname', 'creditCard', 'month', 'year', 'street', 'suite', 'city', 'state', 'zip')
+            ->where('id','=',$invoice_id)
+            ->get();
+
+         if(empty($invoice_data))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $invoice_data
             );
         return response()->json(["data" => $response]);
     }

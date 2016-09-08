@@ -2,7 +2,7 @@
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <a class="link-back cursor-p" ui-sref="app.order.order-info({id:order_id})">BACK TO ORDER INFO</a>
-            <h1 flex="4">Demo Job #1234 for Company </h1>
+            <h1 flex="4">{{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}</h1>
         </div>
         <div class="distribution-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-disribution m-b-20" flex="100" >
@@ -11,13 +11,13 @@
 
                     <md-card-content flex="90" layout="column">
                         <div layout="row" layout-wrap>
-                            <div class="trans-box">
+<!--                             <div class="trans-box">
                                 <div>Customer PO</div>
                                 <span>{{vm.distInfo.customerPO}}</span>
-                            </div>
+                            </div> -->
                             <div class="trans-box">
                                 <div>Sales</div>
-                                <span class="font-14 chrome-weight">{{order.first_name}} &nbsp; {{ order.last_name}}</span>
+                                <span class="font-14 chrome-weight">{{order.sales_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Blind</div>

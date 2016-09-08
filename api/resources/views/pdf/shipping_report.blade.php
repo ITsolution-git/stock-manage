@@ -30,18 +30,15 @@
         <td align="left" valign="top" width="100%">          
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr>
-                    <td align="left" valign="top" width="25%">
-                        <!-- <img src="<?php echo url().'/uploads/company/'.$company_detail[0]->company_logo;?>" alt="Logo" style="display:block; max-width:100%;" width="80" /> -->
-                        <img alt="Logo" style="display:block; max-width:100%;" width="80" />
-                    </td>
-                    <td align="center" valign="top" width="25%" class="tableCol">
+                    <td><img src="{{$company_detail[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
+                    <td align="center" valign="top" width="50%" class="tableCol">
                         <span style="font-size:15px; line-height:15px;">
                             <strong>{{$company_detail[0]->name}}</strong>                
                         </span>
                         <br/>
                         <span>{{$company_detail[0]->address}}, {{$company_detail[0]->city}}, {{$company_detail[0]->state}}, <br/>{{$company_detail[0]->country}} - {{$company_detail[0]->zip}}<br />{{$company_detail[0]->url}}</span>
                     </td>
-                    <td align="right" valign="top" width="50%">
+                    <td align="right" valign="top" width="25%">
                         <span><strong>Job # {{$shipping->order_id}}</strong></span>
                     </td>
                 </tr>
@@ -56,17 +53,17 @@
       <td align="left" valign="top" width="100%">          
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
-            <td align="left" valign="top" width="38%"><span>CLIENT</span>
-              <p style="border:1px solid #000000;"><span>{{$shipping->description}}</span><br />
-                <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
-                <span>{{$shipping->city}} {{$shipping->state}}</span><br/>
-                <span>{{$shipping->zipcode}} {{$shipping->country}}</span>
+            <td align="left" valign="top" width="38%"><span><strong>CLIENT</strong></span>
+              <p style="border:1px solid #000000;"><span><strong> {{$shipping->description}}</strong></span><br />
+                <span> {{$shipping->address}} {{$shipping->address2}}</span><br />
+                <span> {{$shipping->city}} {{$shipping->state}}</span><br/>
+                <span> {{$shipping->zipcode}} {{$shipping->country}}</span>
               </p>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
-            <td align="left" valign="top" width="40%"><br /><br /><br /><span><strong>PO Number : #</strong></span><br />
+            <td align="left" valign="top" width="40%"><br /><br /><br /><span></span><br />
                 <span><strong>{{$shipping->name}}</strong></span><br />
-                <span>Shipped On : {{$shipping->shipping_by}}</span>
+                <span><strong>Shipped On :</strong> {{$shipping->shipping_by}}</span>
             </td>
           </tr>
         </table>
@@ -77,7 +74,7 @@
       <td align="left" valign="top" width="100%">          
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
-            <td align="left" valign="top" width="100%" style="font-size:14px;"><span>Garments For Job:{{$shipping->name}}</span></td>
+            <td align="left" valign="top" width="100%" style="font-size:14px;"><span><strong>Garments For Job:</strong> {{$shipping->name}}</span></td>
           </tr>
         </table>
       </td>            
@@ -87,35 +84,37 @@
       <td align="left" valign="top" width="100%">&nbsp;</td>
     </tr>
 
-    <tr>
+
+    <!-- <tr>
       <td align="left" valign="top">
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           
                @foreach ($color_all_data as $color => $colordata)
                <tr>
-               <td align="left" valign="top" width="100%" style="border:1px solid #000000; line-height:19px;">SKU: {{$colordata['desc']}} : COLOR: {{$color}}:
-               <?php $sum = 0; ?>
-                @foreach ($colordata as $size => $value_data)
-               <?php if($size == 'desc'){
-                $size = '';
-               
-               }
-               ?>
-              <?php $sum += $value_data;?>
-
-                <?php if($size != ''){?>
-               [{{$size}}]:{{$value_data}} 
-               <?php }?>
-                @endforeach 
-                :TOTAL QNTY:<?php echo $sum;?>    
-              </td> 
+                   <td align="left" valign="top" width="100%" style="border:1px solid #000000;">SKU: {{$colordata['desc']}} : COLOR: {{$color}}:
+                   <?php $sum = 0; ?>
+                    @foreach ($colordata as $size => $value_data)
+                   <?php if($size == 'desc'){
+                    $size = '';
+                   
+                   }
+                   ?>
+                  <?php $sum += $value_data;?>
+        
+                    <?php if($size != ''){?>
+                   [{{$size}}]:{{$value_data}} 
+                   <?php }?>
+                    @endforeach 
+                    :TOTAL QNTY:<?php echo $sum;?>    
+                  </td> 
               </tr>
-              @endforeach
-              
+              @endforeach              
           
         </table>
       </td>
-    </tr>
+    </tr> -->
+
+    
 
     <tr>
       <td align="left" valign="top" width="100%">&nbsp;</td>
@@ -131,12 +130,12 @@
             <td colspan="2">&nbsp;</td>
           </tr>
           <tr>
-            <td width="50%"><p><span>{{$shipping->description}}</span><br />
+            <td width="50%"><p><span><strong>{{$shipping->description}}</strong></span><br />
                 <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
                 <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}} {{$shipping->country}}</span></p>
             </td>
             <td width="50%" style="font-size:16px;">
-              <span>Tracking Number</span>
+              <span><strong>Tracking Number:</strong>{{$shipping->tracking_number}}</span>
             </td>
           </tr>
           <tr>
@@ -151,11 +150,11 @@
           <table border="0" cellpadding="0" cellspacing="0" width="100%">              
               <thead>
                 <tr>
-                  <th align="left" valign="top" width="15%" style="border:1px solid #000000;"> Size</th>
-                  <th align="left" valign="top" width="15%" style="border:1px solid #000000;"> Group</th>
-                  <th align="left" valign="top" width="20%" style="border:1px solid #000000;"> Color</th>
-                  <th align="left" valign="top" width="40%" style="border:1px solid #000000;"> Description</th>
-                  <th align="right" valign="top" width="10%" style="border:1px solid #000000;"> Qnty&nbsp;&nbsp;</th>
+                  <th align="left" valign="top" width="15%" style="border:1px solid #000000;"><strong> Size</strong></th>
+                  <th align="left" valign="top" width="15%" style="border:1px solid #000000;"><strong> Group</strong></th>
+                  <th align="left" valign="top" width="20%" style="border:1px solid #000000;"><strong> Color</strong></th>
+                  <th align="left" valign="top" width="40%" style="border:1px solid #000000;"><strong> Description</strong></th>
+                  <th align="right" valign="top" width="10%" style="border:1px solid #000000;"><strong> Qnty&nbsp;&nbsp;</strong></th>
                 </tr>
               </thead>
               <tbody class="color-grey">
@@ -203,13 +202,15 @@
               <td align="left" valign="top" width="100%">&nbsp;</td>
             </tr>
             <tr>
-              <td width="45%"><span>Total Spoilage: {{$other_data['total_spoil']}}</span><br />
-                <span>Total Manufacturer Defect: {{$other_data['total_md']}}</span>
+              <td width="45%"><span><strong>Total Spoilage:</strong> {{$other_data['total_spoil']}}</span><br />
+                <span><strong>Total Manufacturer Defect:</strong> {{$other_data['total_md']}}</span>
               </td>
             </tr>
         </table>
       </td>
     </tr>
+
+
 
     
 </table>

@@ -678,19 +678,59 @@ public function saveColorSize($post)
         return $duplicate;
     }
 
-    public function getPoNotes($order_id)
+    public function getOrderNotes($order_id)
     {
-        $whereConditions = ['po.order_id' => $order_id,'pn.is_deleted' => '1'];
+        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1','odp.is_delete' => '1'];
 
-        $orderData = DB::table('purchase_order as po')
-                        ->leftJoin('orders as ord','po.order_id','=','ord.id')
-                        ->leftJoin('purchase_notes as pn','pn.po_id','=','po.po_id')
-                        ->select(DB::raw('COUNT(pn.note) as total'))
+
+        $orderData = DB::table('order_design as od')
+                        ->leftJoin('order_design_position as odp','od.id','=','odp.design_id')
+                        ->select(DB::raw('COUNT(odp.note) as total'))
                         ->where($whereConditions)
+                        ->where('odp.note','!=','')
                         ->get();
 
         return $orderData[0]->total;
     }
+
+
+    public function getOrderNoteDetail($post)
+    {
+        $search = '';
+        if(isset($post['filter']['name'])) {
+            $search = $post['filter']['name'];
+        }
+
+    $listArray = [DB::raw('SQL_CALC_FOUND_ROWS odp.note,odp.id')];
+
+    $result = DB::table('order_design as od')
+            ->leftJoin('order_design_position as odp','od.id','=','odp.design_id')
+          ->select($listArray)
+          ->where('od.is_delete','=','1')
+          ->where('odp.is_delete','=','1')
+          ->where('odp.note','!=','')
+          ->where('od.order_id','=',$post['order_id']);
+
+          if($search != '')               
+                    {
+                      $result = $result->Where(function($query) use($search)
+                      {
+                          $query->orWhere('odp.note', 'LIKE', '%'.$search.'%');
+                      });
+                    }
+                 $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+         ->skip($post['start'])
+                 ->take($post['range'])
+                 ->get();
+    
+   
+    $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        $returnData = array();
+        $returnData['allData'] = $result;
+        $returnData['count'] = $count[0]->Totalcount;   
+    //echo "<pre>"; print_r($result); die();
+    return $returnData;
+  }
 
     public function getTotalPackingCharge($order_id)
     {
@@ -790,4 +830,24 @@ public function saveColorSize($post)
         return $productData;
         
     }
+
+
+    public function GetAllClientsLowerCase($post)
+  {
+      
+       $listArray = ['client_id','client_company'];
+      $whereConditions = ['is_delete' => "1",'company_id' => $post['company_id']];
+      $orderDetailData = DB::table('client')
+         ->select($listArray)
+         ->where($whereConditions)
+         ->get();
+   
+        foreach ($orderDetailData as $key=>$alldata){
+          $newData[$key]['client_company'] = strtolower($alldata->client_company);
+          $newData[$key]['client_id'] = $alldata->client_id;
+        }
+
+         return $newData;
+
+  }
 }

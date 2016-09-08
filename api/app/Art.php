@@ -79,7 +79,8 @@ class Art extends Model {
     public function ScreenSets($post) // ART SCREEN DETAIL PAGE FOR SCREEN SETS
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.mokup_logo','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+
+			->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','ass.mokup_logo','art.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'or.approval_id')
 				->join('art as art','art.order_id','=','ass.order_id')
 				->join('orders as or','art.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -100,7 +101,12 @@ class Art extends Model {
 			foreach ($query as $key => $value) 
 			{
 				$value->created_date = date("m/d/Y",strtotime($value->created_date));
-				$value->mokup_logo_url  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+
+				$value->mokup_image_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
+				$value->mokup_logo_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_logo);
+
+				//$value->mokup_logo_url  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+				//$value->mokup_image_url  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
 			}
 		}
 		return $query;
@@ -129,8 +135,8 @@ class Art extends Model {
 		{
 			foreach ($query as $value) 
 			{
-				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
+				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_logo);
 			}
 		}
 		return $query;
@@ -150,7 +156,7 @@ class Art extends Model {
             $client_filter = $post['filter']['client'];
         }
         $admindata = DB::table('order_design_position as odp')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
 					->join('artjob_screensets as asc','asc.positions','=','odp.id')
 					->join('order_design as od','od.id','=','odp.design_id')
 					->join('orders as ord','ord.id','=','od.order_id')
@@ -228,12 +234,21 @@ class Art extends Model {
     		$screen_set_name = $alldata['order_id']."_".$value."_".$alldata['design_id']."_".$alldata['screen_width']; 
     	}
     	$result = DB::table('artjob_screensets')->where('id','=',$alldata['id'])->update(array('screen_set'=>$screen_set_name,'screen_active'=>'1','frame_size'=>$alldata['frame_size'],'screen_location'=>$alldata['screen_location'],'line_per_inch'=>$alldata['line_per_inch'],'screen_date'=>date('Y-m-d'),'screen_width'=>$alldata['screen_width'],'screen_height'=>$alldata['screen_height']));
-
+    	$sort=1;
     	if(!empty($post['add_screen_color']))
     	{
     		foreach ($post['add_screen_color'] as $key=>$value) 
     		{
-    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'head_location'=>$key+1));
+    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'thread_color'=>$value['thread_id'],'inq'=>$value['inq'],'head_location'=>$key+1));
+    			$sort=$key+1;
+    		}
+    	}
+    	if(!empty($post['change_color']))
+    	{
+    		foreach ($post['change_color'] as $key=>$value) 
+    		{
+    			$result = $this->common->UpdateTableRecords('artjob_screencolors',array('id'=>$value['id']),array('thread_color'=>$value['thread_color'],'inq'=>$value['inq'],'head_location'=>$sort));
+    			$sort++;
     		}
     	}
     	if(!empty($post['remove_screen_color']))
@@ -314,10 +329,11 @@ class Art extends Model {
 		//echo "<pre>"; print_r($result); echo "</pre>"; die;
         if(count($result)>0)
         {
-          foreach ($result as $key=>$value) 
-          {
-          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00' || empty($result[$key]->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
-          }
+          	foreach ($result as $key=>$value) 
+          	{
+          		$value->note_date = ($value->note_date=='0000-00-00' || empty($value->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
+          		$value->artapproval_display = ($value->artapproval_display=='0')? false: true;
+          	}
         }
 		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
         $returnData = array();
@@ -359,38 +375,66 @@ class Art extends Model {
 			}
 		}
 	}
+	public function array_values_recursive( $array ) 
+	{
+	    $array = array_values( $array );
+	    for ( $i = 0, $n = count( $array ); $i < $n; $i++ ) 
+	    {
+	        $element = $array[$i];
+	        if ( is_array( $element ) ) 
+	        {
+	            $array[$i] = $this->array_values_recursive( $element );
+	        }
+    	}
+    return $array;
+	}
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','ass.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email')
+				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen')
+				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
+				->leftJoin('users as usr','usr.id','=','or.company_id')
+				->leftJoin('staff as stf','stf.user_id','=','usr.id')
+				->join('order_design_position as odp','odp.id','=','ass.positions')
+				->join('order_design as od','od.id','=','odp.design_id')
+				->join('art as art','art.order_id','=','or.id')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->leftjoin('color as col','col.id','=','acol.color_name')
 				->leftjoin('color as col1','col1.id','=','acol.thread_color')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
-				->leftJoin('users as usr','usr.id','=','or.company_id')
-				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->where('or.id','=',$order_id)
 				->where('or.company_id','=',$company_id)
 				->where('ass.screen_active','=','1')
-				->groupby('acol.id')
 				->orderBy('ass.screen_order','asc')
 				->orderBy('acol.head_location','asc')
 				->orderBy('acol.id','desc')
 				->get();
-				$temp = array();
+				$transfer = array();
 		foreach ($query as $key=>$value) 
 		{
-				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
-				$value->companyphoto = (!empty($value->companyphoto))?UPLOAD_PATH.$value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto:'';
+				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
+				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_logo);
+				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
-				$temp[$value->screen_id][] = $value;
+				$transfer[$value->screen_id]['colors'][$value->id] = $value;
+
+				if(!empty($value->note_id))
+				{
+					$transfer[$value->screen_id]['art_notes'][$value->note_id] = "<b>- </b>".$value->note;
+				}
 		}
-		$temp = array_values($temp);
-		return $temp;
+		
+		
+		$transfer = $this->array_values_recursive($transfer);
+		//echo "<pre>"; print_r($query); echo "</pre>"; die;
+		return $transfer;
 	}
+
+
+
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
 		$query = DB::table('artjob_screencolors as acol')
@@ -422,9 +466,10 @@ class Art extends Model {
 				$size = array();
 			foreach ($query as $key=>$value) 
 			{
-				$value->mokup_image  = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-				$value->mokup_logo  = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
-				$value->companyphoto = (!empty($value->companyphoto))?UPLOAD_PATH.$value->company_id.'/staff/'.$value->staff_id."/".$value->companyphoto:'';
+				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
+				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_logo);
+				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$color[$value->color_id] = $value;
 				$size[$value->size] = $value;

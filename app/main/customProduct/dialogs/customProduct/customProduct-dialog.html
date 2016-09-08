@@ -21,6 +21,9 @@
                          <md-input-container class="md-block first-box settings-margin-0">
                             <label>Vendor</label>
                             <md-select ng-model="vendor_id"   ng-change="updateProduct('vendor_id',productId,vendor_id,'products','id')">
+
+                             <md-option  value="-1" >Add Vendor  </md-option>
+
                                 <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-if="vendor.id != 1" ng-selected="{{vendor_id==vendor.id}}">
                                    
                                     {{vendor.name_company}}
@@ -86,6 +89,8 @@
                             </div>
 
                             <div class="float-right">
+
+                               
 
                                 <md-button type="button"  class="bg-blue float-right m-t-10" ng-click="cancel()" aria-label="cancel">
                                         Cancel

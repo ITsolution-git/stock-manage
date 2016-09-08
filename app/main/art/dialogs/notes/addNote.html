@@ -1,5 +1,5 @@
 <md-dialog class=" add-note edit-note task-dialog designadd-dialog" aria-label="New order">
-    <form name="orderForm" class="md-inline-form" novalidate>
+    <form name="artnote_form" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">{{vm.title}}</span>
@@ -11,21 +11,26 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
                 <md-input-container class="md-block m-b-10 p-b-10" flex-gt-sm>
-                    <label class="font-14 color-b-grey">Note Name</label>
+                    <label class="font-14 color-b-grey">Note Title</label>
                     <input placeholder="" ng-model="notes.note_title">
                 </md-input-container>
                 <md-input-container class="md-block pad0 m-b-0 margin-0">
-                    <label class="color-b-grey">Note Description</label>
-                    <textarea ng-model="notes.note" md-maxlength="150" rows="5" ></textarea>
+                    <label class="color-b-grey">Note Description *</label>
+                    <textarea ng-model="notes.note" required rows="5" ></textarea>
+                    <div ng-messages="artnote_form.note.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                    </div>
                 </md-input-container>
-               <!--  <md-checkbox md-no-ink aria-label="Checkbox No Ink" class="md-primary margin-0 p-l-20  ">
-                    Make Note Private
-                </md-checkbox> -->
+                <md-checkbox md-no-ink aria-label="Checkbox No Ink" ng-model="notes.artapproval_display" class="md-primary margin-0 p-l-20  ">
+                    Show in Art Approval
+                </md-checkbox>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
             <!-- <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
-            <md-button class="md-accent md-raised " ng-click="InsertTableData(notes,'artnote','')">Save</md-button>
+            <md-button class="md-accent md-raised " ng-disabled="artnote_form.$invalid || artnote_form.$pristine" ng-click="InsertTableData(notes,'artnote','')">Save</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

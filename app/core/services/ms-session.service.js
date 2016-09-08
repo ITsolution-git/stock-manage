@@ -153,10 +153,12 @@
 		{
 			$("#ajax_loader").show();
 			$mdDialog.show({
-                controller:function ($scope, params)
+                controller:function ($scope, params, all_scope)
                 {
                 	$("#ajax_loader").hide();
-                    $scope.params = params; // GET PARAMETERS FOR POPUP
+                    $scope.params = params; 		//	GET PARAMETERS FOR POPUP
+                    $scope.flag = 'add'; 		//	GET PARAMETERS FOR POPUP
+                    $scope.all_scope = all_scope; 	//	FULL SCOPE OF CONTROLLER DATA
 
                     $scope.closeDialog = function() 
                     { $mdDialog.hide(); } 
@@ -164,16 +166,23 @@
                     $scope.InsertTableData = function(insert_data,extra,cond)
 			        {
 			        	$("#ajax_loader").show();
-			        	var InserArray = {}; // INSERT RECORD ARRAY
+			        	var InserArray = {}; 		// INSERT RECORD ARRAY
                 		InserArray.data = insert_data;
                 		InserArray.table =table;
 
                 		//=============== SPECIAL CONDITIONS ==============
                 		if(extra=='vendorcontact') { InserArray.data.vendor_id = $scope.params.vendor_id;}
                 		if(extra=='sales') { InserArray.data.company_id = $scope.params.company_id; InserArray.data.sales_created_date =AllConstant.currentdate;}
-                		if(extra=='artnote') { InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;}
+                		if(extra=='artnote') 
+                			{ InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;
+                			  if(InserArray.data.artapproval_display==true){InserArray.data.artapproval_display='1';} else {InserArray.data.artapproval_display='0';}	
+                			}
+                		if(extra=='client_contact'){InserArray.data.client_id=$scope.all_scope.client_id;}
+                		if(extra=='client_notes'){InserArray.data.client_id=$scope.all_scope.client_id; InserArray.data.user_id=$scope.all_scope.login_id;InserArray.data.created_date=AllConstant.currentdate;}
+                		if(extra=='client_distaddress'){InserArray.data.client_id=$scope.all_scope.client_id;}
                 		//=============== SPECIAL CONDITIONS ==============
 
+                		//console.log(InserArray); return false;
 			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
 			        	{ 
 			        		if(result.data.success=='1')
@@ -190,6 +199,7 @@
                 clickOutsideToClose: true,
                     locals: {
                         params:params,  // PARAMETERS PASS TO POPUP
+                        all_scope:scope
                     },
                 onRemoving : scope.returnFunction  // THIS FUNCTION WILL BE FIXED AND MUST BE PRESENT IN YOUR CONTROLLER
             });
@@ -198,10 +208,13 @@
 		{
 			$("#ajax_loader").show();
 			$mdDialog.show({
-                controller:function ($scope, params)
+                controller:function ($scope, params,all_scope)
                 {
                 	$("#ajax_loader").hide();
-                    $scope.params = params; // GET PARAMETERS FOR POPUP
+                    $scope.params = params.data; // GET PARAMETERS FOR POPUP
+                    $scope.flag = 'edit'; 		//	GET PARAMETERS FOR POPUP
+                    $scope.all_scope = all_scope; 	//	FULL SCOPE OF CONTROLLER DATA
+                   // console.log($scope.params); //return false;
                     $scope.UpdateTableData = function(field_name,field_value,table_name,cond_field,cond_value,extra,extra_cond)
 			        {
 			        	$("#ajax_loader").show();
@@ -217,7 +230,7 @@
 			            condition_obj[cond_field] =  cond_value;
 			            UpdateArray.cond = angular.copy(condition_obj);
                 		
-                	$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
 			        	{
 		                    if(result.data.success=='1')
 		                    { 
@@ -244,10 +257,14 @@
 
 			            //=============== SPECIAL CONDITIONS ==============
 			            if(extra=='vendorcontact' || extra=='sales' ) { delete UpdateArray.data.id; delete UpdateArray.data.sales_created_date;}
-                		//console.log(UpdateArray); return false;
                 		if(extra=='artnote'){ delete UpdateArray.data.id;}
+                		if(extra=='client_contact'){ delete UpdateArray.data.id; }
+                		if(extra=='client_address'){ delete UpdateArray.data.id;delete UpdateArray.data.address_type;delete UpdateArray.data.state_name; }
+                		if(extra=='client_notes'){ delete UpdateArray.data.note_id; delete UpdateArray.data.name; delete UpdateArray.data.created_date;}
+                		if(extra=='client_distaddress'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
                 		//=============== SPECIAL CONDITIONS ==============
 
+                		//console.log(UpdateArray); return false;
                 		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
 			        	{
 		                    if(result.data.success=='1')
@@ -272,6 +289,7 @@
                 clickOutsideToClose: false,
                     locals: {
                         params:params,  // PARAMETERS PASS TO POPUP
+                        all_scope:scope
                     },
                 onRemoving : scope.returnFunction  // THIS FUNCTION WILL BE FIXED AND MUST BE PRESENT IN YOUR CONTROLLER
             });

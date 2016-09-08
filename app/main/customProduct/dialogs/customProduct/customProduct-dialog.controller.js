@@ -8,27 +8,39 @@
 /** @ngInject */
     function CustomProductDialogController($scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$filter,$stateParams,AllConstant)
     {
-    
+
+     
         var product_id = $stateParams.id;
         $scope.product_id = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
         $scope.NoImage = AllConstant.NoImage;
 
-         var vendor_data = {};
-         vendor_data.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
-         vendor_data.table ='vendors';
-        
-        $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
-            
-            if(result.data.success == '1') 
-            {
-                $scope.allVendors =result.data.records;
-            } 
-            else
-            {
-                $scope.allVendors=[];
-            }
-        });
+
+         $scope.vendorList = function(){
+
+          var vendor_data = {};
+           vendor_data.cond ={company_id :sessionService.get('company_id'),is_delete :'1',status :'1'};
+           vendor_data.table ='vendors';
+           vendor_data.sort='id';
+           vendor_data.sortcond='desc';
+
+          
+          $http.post('api/public/common/GetTableRecords',vendor_data).success(function(result) {
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.allVendors =result.data.records;
+              } 
+              else
+              {
+                  $scope.allVendors=[];
+              }
+          });
+      }
+
+       $scope.vendorList();
+
+         
 
         if(product_id == 0) {
 
@@ -65,6 +77,8 @@
             }
 
 
+
+
             // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
         {
@@ -86,6 +100,7 @@
                             $scope.params = params;
                             $scope.SaveImageAll=function(image_array)
                             {
+                              
                                  if(image_array == null) {
                                     $mdDialog.hide();
                                     return false;
@@ -221,6 +236,11 @@
 
         $scope.updateProduct = function(column_name,id,value,table_name,match_condition)
         {
+
+            if(column_name == 'vendor_id' && value == '-1') {
+              $scope.addVendor();
+              return false;
+            }
             var position_main_data = {};
             position_main_data.table =table_name;
             $scope.name_filed = column_name;
@@ -304,5 +324,69 @@
         $scope.cancel = function() {
                          window.history.back();
                   }
+
+
+        var state = {};
+        state.table ='state';
+
+        $http.post('api/public/common/GetTableRecords',state).success(function(result) 
+        {   
+            if(result.data.success=='1')
+            {   
+              $scope.states_all = result.data.records;
+            }
+        });
+
+
+        $scope.addVendor = function()
+        {
+            $mdDialog.show({
+                //controller: 'AddEmployeeDialogController',
+                controller: function($scope,params){
+                    $scope.params = params;
+                    $scope.states_all = params.states_all;
+                    $scope.addVendor = function (vendor) 
+                    {
+            var InserArray = {}; // INSERT RECORD ARRAY
+
+                  InserArray.data = vendor;
+                  InserArray.data.company_id = $scope.params.company_id;
+                  InserArray.table ='vendors';            
+
+                  // INSERT API CALL
+                  $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
+                  {   
+                    if(Response.data.success=='1')
+                      {
+                        notifyService.notify('success',Response.data.message);
+                        
+                         $scope.params.updateProduct('vendor_id',$scope.params.product_id_new,Response.data.id,'products','id');
+
+                         $scope.params.vendorList();
+                         $scope.params.vendor_id = Response.data.id;
+                        
+                        $scope.closeDialog();
+                      }
+                      else
+                      {
+                        notifyService.notify('error',Response.data.message);
+                      }  
+                  });
+                    } 
+                    $scope.closeDialog = function() 
+                    {
+                     
+                        $mdDialog.hide();
+                    } 
+
+                },
+                templateUrl: 'app/main/settings/dialogs/vendor/addvendor.html',
+                parent: angular.element($document.body),
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope
+                }
+            });
+        }
     }
 })();

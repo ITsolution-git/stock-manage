@@ -2,7 +2,7 @@
     <form name="clientForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">Edit Location</span>
+                <span class="title">Client Location</span>
                 <md-button  ng-click="closeDialog()">
                     <span>Close</span>
                 </md-button>
@@ -11,37 +11,53 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Address" name="address" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_address\',\'id\',contact_arr.id,\'location\')' }"  required ng-model="contact_arr.address">
+                    <input placeholder="Address *" name="address" required ng-model="params.address">
+                    <div ng-messages="clientForm.address.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                    </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="City" name="city" ng-model="contact_arr.city" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_address\',\'id\',contact_arr.id,\'location\')' }" >
+                    <input placeholder="City" name="city" ng-model="params.city"  >
                 </md-input-container>
                 <md-input-container class="m-b-20">
                     <label>State</label>
-                    <md-select ng-model="contact_arr.state"  name="state"  ng-change='UpdateTableField("state",contact_arr.state,"client_address","id",contact_arr.id,"distribution")'>
+                    <md-select ng-model="params.state"  name="state"  >
                         <md-option value="0">
                                 Select State
                         </md-option>
-                        <md-option ng-repeat="state_val in states_all" ng-selected='{{state_val.id==contact_arr.state}}' value="{{state_val.id}}">
+                        <md-option ng-repeat="state_val in all_scope.states_all" ng-selected='{{state_val.id==params.state}}' value="{{state_val.id}}">
                             {{state_val.name}}
                         </md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Zip Code"  name="postal_code" ng-model="contact_arr.postal_code" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client_address\',\'id\',contact_arr.id,\'location\')' }" >
+                    <input placeholder="Zip Code"  name="postal_code" ng-model="params.postal_code"  >
                 </md-input-container>
                  <md-input-container class="m-b-20">
                     <label>Type</label>
-                    <md-select ng-model="contact_arr.type"  name="type"  ng-change='UpdateTableField("type",contact_arr.type,"client_address","id",contact_arr.id,"distribution")'>
+                    <md-select ng-model="params.type"  name="type"  >
                         <md-option value="0">
                                 Select Type
                         </md-option>
-                        <md-option ng-repeat="type in AddrTypeData" ng-selected='{{type.id==contact_arr.type}}' value="{{type.id}}">
+                        <md-option ng-repeat="type in all_scope.AddrTypeData" ng-selected='{{type.id==params.type}}' value="{{type.id}}">
                             {{type.value}}
                         </md-option>
                     </md-select>
                 </md-input-container>
               </div>
         </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-align="end center">
+            
+                  <!--  <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button> -->
+                 <md-button class="md-accent md-raised " ng-show="flag=='add'" ng-disabled="clientForm.$invalid || clientForm.$pristine" ng-click="InsertTableData(params,'client_address')">Save</md-button>
+
+                 <md-button class="md-accent md-raised" ng-show="flag=='edit'" ng-disabled="clientForm.$invalid || clientForm.$pristine" ng-click="UpdateTableDataAll(params,'client_address','id',params.id,'client_address')">Update</md-button>
+            
+        </md-dialog-actions>
+
+
     </form>
 </md-dialog>

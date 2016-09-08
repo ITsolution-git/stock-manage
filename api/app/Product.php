@@ -332,11 +332,11 @@ class Product extends Model {
             }
 
         if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d h:i:sa'));
         }
         else
         {
-            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'size_group_id' => $post['size_group_id'],'date_added' => date('Y-m-d h:i:sa'));
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
         }
 
         if($post['action'] == 'Add') {
@@ -468,7 +468,9 @@ class Product extends Model {
                 $find = 'supplied';
                 $product->supplied = 0;
 
-                if (strpos($product->product_name,$find) !== false) {
+                $product_name = strtolower($product->product_name);
+
+                if (strpos($product_name,$find) !== false) {
                     $product->supplied = 1;
                 }
 
@@ -581,7 +583,7 @@ class Product extends Model {
         }
        
 
-        $whereConditions = ['product.is_delete' => "1",'product.company_id' => $post['company_id']];
+        $whereConditions = ['product.is_delete' => "1",'v.is_delete' => '1','v.company_id' => $post['company_id']];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS product.*,v.name_company')];
 
@@ -756,5 +758,23 @@ class Product extends Model {
                          ->get();
         
         return $productData;
+    }
+
+    public function productListDownload($company_id) {
+        
+        $whereConditions = ['products.is_delete' => '1','vendors.is_delete' => '1','vendors.company_id' => $company_id];
+        $listArray = ['products.name as PRODUCT NAME','products.description as DESCRIPTION','vendors.name_company as VENDOR','c.name as COLOR','pz.name as SIZE','pcs.customer_price as PRICE'];
+
+        $vendorData = DB::table('products as products')
+                         ->leftJoin('vendors as vendors', 'products.vendor_id', '=', 'vendors.id')
+                         ->leftJoin('product_color_size as pcs', 'products.id', '=', 'pcs.product_id')
+                         ->leftJoin('color as c', 'c.id', '=', 'pcs.color_id')
+                         ->leftJoin('product_size as pz', 'pz.id', '=', 'pcs.size_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->orderBy('products.id', 'desc')
+                         ->get();
+
+        return $vendorData;
     }
 }
