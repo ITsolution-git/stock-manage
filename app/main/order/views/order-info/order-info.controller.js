@@ -24,6 +24,10 @@
                     $("#ajax_loader").hide();
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
+                   if($scope.order.item_ship_charge == undefined || $scope.order.item_ship_charge == '')
+                   {
+                        $scope.order.item_ship_charge = 0;
+                   }
                 } else {
                     $state.go('app.order');
                 }
