@@ -3,7 +3,7 @@
         <md-button id="navigation-toggle" class="md-icon-button" ng-click="vm.toggleSidenav('navigation')"
                    hide-gt-sm aria-label="Toggle navigation" translate
                    translate-attr-aria-label="TOOLBAR.TOGGLE_NAVIGATION">
-            <md-icon md-font-icon="icon-menu" class="icon"></md-icon>
+            <!-- <md-icon md-font-icon="icon-menu" class="icon"></md-icon> -->
         </md-button>
 
         
@@ -24,14 +24,16 @@
                     <div layout="row" layout-align="space-between center">
                         <div class="avatar-wrapper">
                             <img md-menu-align-target class="avatar" src="assets/images/avatars/profile-avatar.png">
-                            <md-icon md-font-icon ng-class="vm.userStatus.icon"
+                            <!-- <md-icon md-font-icon ng-class="vm.userStatus.icon"
                                      ng-style="{'color': vm.userStatus.color }"
                                      class="icon status s16">
-                            </md-icon>
+                            </md-icon> -->
+                            <span class="stokkup-icondiv topheadicon"><span class="fa-stack"><i class="fa fa-circle"></i><i class="fa fa-check"></i></span></span>
                         </div>
                         <span class="username" hide-xs>{{vm.useremail}}</span>
-                        <md-icon md-font-icon="icon-chevron-down"
-                                 class="icon s16" hide-xs></md-icon>
+                        <!-- <md-icon md-font-icon="icon-chevron-down"
+                                 class="icon s16" hide-xs></md-icon> -->
+                        <span class="stokkup-icondiv topheadicon"><i class="fa fa-angle-down"></i></span>
                     </div>
                 </md-button>
 
