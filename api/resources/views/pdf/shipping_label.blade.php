@@ -76,7 +76,7 @@
     </tr> -->
 
     <tr>
-      <?php if($shipping->boxing_type == '0')
+      <?php if($shipping->boxing_type == 'Retail')
       { ?>
         <td align="left" valign="top" width="100%">        
           <table border="0" cellpadding="0" cellspacing="0" width="100%">

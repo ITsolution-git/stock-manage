@@ -61,7 +61,7 @@
               </p>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
-            <td align="left" valign="top" width="40%"><br /><br /><br /><span><strong>PO Number : #</strong></span><br />
+            <td align="left" valign="top" width="40%"><br /><br /><br /><span></span><br />
                 <span><strong>{{$shipping->name}}</strong></span><br />
                 <span><strong>Shipped On :</strong> {{$shipping->shipping_by}}</span>
             </td>
@@ -135,7 +135,7 @@
                 <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}} {{$shipping->country}}</span></p>
             </td>
             <td width="50%" style="font-size:16px;">
-              <span><strong>Tracking Number</strong></span>
+              <span><strong>Tracking Number:</strong>{{$shipping->tracking_number}}</span>
             </td>
           </tr>
           <tr>

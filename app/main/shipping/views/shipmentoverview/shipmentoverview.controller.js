@@ -41,6 +41,7 @@
                     $scope.shippingBoxes =result.data.shippingBoxes;
                     $scope.shippingItems =result.data.shippingItems;
                     $scope.shipping =result.data.records[0];
+                    $scope.shipping.company_id = company_id;
 
                     if($scope.shipping.boxing_type == '0') {
                         $scope.shipping.boxing_type = 'Retail';
