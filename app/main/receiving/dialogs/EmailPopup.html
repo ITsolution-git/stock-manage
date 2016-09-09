@@ -1,0 +1,24 @@
+<md-dialog class="task-dialog order-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Receive Order PDF</span>
+                <md-button  ng-click="closeDialog()">
+                    <span>Cancel</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
+               
+                <md-input-container class="first-box">
+                    <input placeholder="Client Billing Email(Use comma separate for multiple.)" ng-model="mail">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="md-accent md-raised " ng-click="printPdf('0','')">Create PDF</md-button>
+            <md-button class="md-accent md-raised " ng-click="printPdf('1',mail)">Send to client</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

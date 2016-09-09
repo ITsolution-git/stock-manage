@@ -8,6 +8,7 @@ use DateTime;
 use App\Common;
 
 
+
 class Purchase extends Model {
 
 	public function __construct(Common $common) 
@@ -255,12 +256,14 @@ class Purchase extends Model {
 					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
 					->JOIN('order_design as od','od.id','=','pd.design_id')
 					->JOIN('orders as ord','od.order_id','=','ord.id')
+					->JOIN('users as usr','usr.id','=','ord.company_id')
+					->JOIN('staff as stf','stf.user_id','=','usr.id')
 					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
 				    ->JOIN('products as p','p.id','=','pd.product_id')
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','cl.billing_email','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',
 						DB::raw('(select count(*) from purchase_notes where po_id=po.po_id) as total_note'),'po.po_id',
 						'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
@@ -277,45 +280,48 @@ class Purchase extends Model {
 
 		$check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
 		//echo "<pre>"; print_r($result); echo "</pre>"; die;
-		$temp = array();
+		$ret_array = array();
 		if(count($result)>0)
 		{
 
-			
-			$temp['po_data']=array();
+			$ret_array['po_data']=array();
 			foreach ($result as $key=>$value) 
           	{
           		array_walk_recursive($value, function(&$item) {
 	            	$item = str_replace(array('00/00/0000'),array(''), $item);
 	        	});
-	            $temp['receive'][$value->product_id]['data'][$value->size]= $value;
-	            $temp['receive'][$value->product_id]['product'] = $value;
-	            $temp['po_data']= $result[0];
+	        	$result[0]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+	            $ret_array['receive'][$value->product_id]['data'][$value->size]= $value;
+	            $ret_array['receive'][$value->product_id]['product'] = $value;
+	            $ret_array['po_data']= $result[0];
           	}
-          	foreach ($temp['receive'] as $key => $value) 
+          	$total_invoice = 0;
+          	foreach ($ret_array['receive'] as $key => $value) 
           	{
           		$total_order = 0;
           		$rec_qnty = 0;
           		$short = 0;
-          		foreach ($value['data'] as $key_temp => $value_temp) 
+          		foreach ($value['data'] as $key_ret_array => $value_ret_array) 
           		{
-          			$total_order += $value_temp->qnty_ordered;
-          			$rec_qnty += $value_temp->qnty_purchased;
-          			$short += $value_temp->short;
+          			$total_order += $value_ret_array->qnty_ordered;
+          			$rec_qnty += $value_ret_array->qnty_purchased;
+          			$short += $value_ret_array->short;
 
-          			$value['data'][$key_temp]->short_unit = ($value_temp->qnty_ordered - $value_temp->qnty_purchased);
-          			//$value['data'][$key_temp]['']
+          			$value['data'][$key_ret_array]->short_unit = ($value_ret_array->qnty_ordered - $value_ret_array->qnty_purchased);
+          			$total_invoice += $value_ret_array->line_total;
+          			//$value['data'][$key_ret_array]['']
           		}
-          		$temp['receive'][$key]['total_product'] = $total_order;
-          		$temp['receive'][$key]['total_received'] = $rec_qnty;
-          		$temp['receive'][$key]['total_defective'] = $short;
-          		$temp['receive'][$key]['total_remains'] = $total_order -$rec_qnty;
-
+          		$ret_array['receive'][$key]['data'] = array_values($value['data']);
+          		$ret_array['receive'][$key]['total_product'] = $total_order;
+          		$ret_array['receive'][$key]['total_received'] = $rec_qnty;
+          		$ret_array['receive'][$key]['total_defective'] = $short;
+          		$ret_array['receive'][$key]['total_remains'] = $total_order -$rec_qnty;
+          		$ret_array['po_data']->total_invoice = $total_invoice;
           	}
 
 
 	    }
-		return $temp;
+		return $ret_array;
 	}
 
 	function Update_shiftlock($post)
