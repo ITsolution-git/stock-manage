@@ -14,7 +14,7 @@
         <div layout="row" layout-wrap>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="First Name*" required name="first_name"  ng-model="params.data.first_name">
+                    <input placeholder="First Name*" required name="first_name"  ng-model="params.first_name">
                      <div ng-messages="employeeform.first_name.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>This field is required</span>
@@ -23,39 +23,55 @@
                 </md-input-container>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Last Name" name="last_name"  ng-model="params.data.last_name">
+                    <input placeholder="Last Name" name="last_name"  ng-model="params.last_name">
                 </md-input-container>
 
                  <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Email" type="email" name="prime_email"  ng-model="params.data.prime_email">
+                    <input placeholder="Email *" required ng-pattern="/^.+@.+\..+$/" type="email" name="prime_email"  ng-model="params.prime_email">
+                    <div ng-messages="employeeform.email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span >Email must be a valid e-mail address</span>
+                        </div>
+                    </div>
                 </md-input-container>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Address" name="address"  ng-model="params.data.address">
+                    <input placeholder="Address" name="address"  ng-model="params.address">
                 </md-input-container>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
-                    <input placeholder="Street" name="street"  ng-model="params.data.street">
+                    <input placeholder="Street" name="street"  ng-model="params.street">
                 </md-input-container>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
-                    <input placeholder="City" name="city"  ng-model="params.data.city">
+                    <input placeholder="City" name="city"  ng-model="params.city">
                 </md-input-container>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
                  <label>State</label>
-                    <md-select  aria-label='State'  name="state" ng-model="params.data.state">
+                    <md-select  aria-label='State'  name="state" ng-model="params.state">
                         <md-option value="">
                             Select State
                         </md-option>
-                      <md-option ng-repeat="state in params.states_all" value="{{state.id}}" >
-                        {{state.name}}
+                      <md-option ng-repeat="st in all_scope.states_all" value="{{st.id}}" >
+                        {{st.name}}
                        </md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-100">
-                    <input placeholder="Zip" name="zipcode"  ng-model="params.data.zipcode">
+                    <input placeholder="Zip"  name="zipcode"  ng-model="params.zipcode">
                 </md-input-container>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Phone" valid-phone name="prime_phone"  ng-model="params.data.prime_phone">
+                    <input placeholder="Phone" only-number ng-maxlength="10" ng-minlength="10" name="prime_phone"  ng-model="params.prime_phone">
+                    ﻿﻿  <div ng-messages="employeeform.prime_phone.$error" role="alert" multiple>
+                        <div ng-message="maxlength">
+                            <span >Phone number must be have 10 digits.</span>
+                        </div>
+                        <div ng-message="minlength">
+                            <span >Phone number must be have 10 digits.</span>
+                        </div>
+                    </div>
                 </md-input-container>
         </div>
     </md-card-content>
@@ -65,10 +81,10 @@
 <table> 
     <tr>
         <td class="p-16 td-500">
-            <md-button class="bg-blue float-right" ng-if="params.flag=='add'" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params.data,'vendorcontact')">
+            <md-button class="bg-blue float-right" ng-if="flag=='add'" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params,'vendorcontact')">
                     SAVE
             </md-button>
-             <md-button class="bg-blue float-right"  ng-if="params.flag=='edit'"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params.data,'vendor_contacts','id',params.data.id,'vendorcontact')">
+             <md-button class="bg-blue float-right"  ng-if="flag=='edit'"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params,'vendor_contacts','id',params.id,'vendorcontact')">
                     UPDATE
             </md-button>
 
