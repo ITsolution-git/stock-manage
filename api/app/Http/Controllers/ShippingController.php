@@ -854,6 +854,13 @@ class ShippingController extends Controller {
                 $shipment->setParameter('height', '5');
                 $shipment->setParameter('weight','5');
 
+                $shipment->setParameter('key', $result_api[0]->key);
+                $shipment->setParameter('password', $result_api[0]->password);
+                $shipment->setParameter('accountNumber', $result_api[0]->account_number);
+
+                print_r($shipment);
+                exit;
+
                 $response = $shipment->submitShipment();
 
                 if(isset($response) && isset($response['status']) && $response['status'] == 'SUCCESS')
