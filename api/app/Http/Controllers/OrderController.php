@@ -1667,7 +1667,10 @@ class OrderController extends Controller {
                             if($position_qty <= $embroidery2->range_low)
                             {
                                 $embroidery_charge_qnty = $embroidery2->range_low." - ".$embroidery2->range_high;
-                                $embroidery_charge = $embroidery2->$embroidery_field;
+                                if(isset($embroidery2->$embroidery_field))
+                                {
+                                    $embroidery_charge = $embroidery2->$embroidery_field;    
+                                }
                                 break;
                             }
                         }
@@ -1717,7 +1720,10 @@ class OrderController extends Controller {
                             if($position_qty <= $garment->range_low)
                             {
                                 $direct_to_garment_charge_qnty = $garment->range_low." - ".$garment->range_high;
-                                $direct_to_garment_charge = $garment->$garment_field;
+                                if(isset($garment->$garment_field))
+                                {
+                                    $direct_to_garment_charge = $garment->$garment_field;
+                                }
                                 break;
                             }
                         }
