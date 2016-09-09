@@ -1213,6 +1213,27 @@ md-card-content{
 	max-height:100px;
 	width:$auto;
 }
+.art-tabs{
+	float:$left;
+	span{
+		cursor:pointer;
+		font-weight:$font-weight-300;
+		font-size:$font-size-text;
+		color:$stokkup-global-txtcolor;
+		opacity:0.6;
+		border-bottom:solid 3px #e3e3e3;
+		margin:$zero 2px;
+		padding:8px 10px;
+		position:$pos-relative;
+		top:15px;
+		float:$left;
+		text-transform:uppercase;
+		&.active-art{
+			opacity:1;
+			border-bottom:solid 3px $blue-shade3;
+		}
+	}
+}
 /* .custom-struct-2 md-tabs.md-active md-ink-bar{
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
 }*/

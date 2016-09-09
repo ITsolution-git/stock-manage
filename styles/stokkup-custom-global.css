@@ -898,6 +898,25 @@ md-card-content.custom-desc-box span {
   max-height: 100px;
   width: auto; }
 
+.art-tabs {
+  float: left; }
+  .art-tabs span {
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 14px;
+    color: #6e7584;
+    opacity: 0.6;
+    border-bottom: solid 3px #e3e3e3;
+    margin: 0 2px;
+    padding: 8px 10px;
+    position: relative;
+    top: 15px;
+    float: left;
+    text-transform: uppercase; }
+    .art-tabs span.active-art {
+      opacity: 1;
+      border-bottom: solid 3px #4773d6; }
+
 /* .custom-struct-2 md-tabs.md-active md-ink-bar{
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
 }*/
