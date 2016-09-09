@@ -1747,9 +1747,19 @@ class OrderController extends Controller {
                 $position->direct_to_garment_charge = $direct_to_garment_charge;
                 $position->markup_default = $markup_default;
 
-                $position->screen_print_charge2 = abs($screen_print_charge2 - $screen_print_charge);
-                $position->embroidery_charge2 = abs($embroidery_charge2 - $embroidery_charge);
-                $position->direct_to_garment_charge2 = abs($direct_to_garment_charge2 - $direct_to_garment_charge);
+                $position->screen_print_charge2 = 0;
+                $position->embroidery_charge2 = 0;
+                $position->direct_to_garment_charge2 = 0;
+
+                if($screen_print_charge2 > 0) {
+                    $position->screen_print_charge2 = abs($screen_print_charge2 - $screen_print_charge);
+                }
+                if($embroidery_charge2 > 0) {
+                    $position->embroidery_charge2 = abs($embroidery_charge2 - $embroidery_charge);
+                }
+                if($direct_to_garment_charge2 > 0) {
+                    $position->direct_to_garment_charge2 = abs($direct_to_garment_charge2 - $direct_to_garment_charge);
+                }
             }
             else
             {
