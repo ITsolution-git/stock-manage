@@ -1,8 +1,9 @@
-
-                    <md-content class="md-padding">
-                        <div layout="row" layout-wrap="nowrap" class="client-live-nation">
+<div class="content client-list-page stockkup-content-table-container custom-tabs-content">
+    <div class="md-whiteframe-4dp stokkup-main-tableview">
+        <md-content>
+                        <div layout="row" layout-wrap="nowrap" class="client-live-nation med-box p-30">
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow md-default-theme">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax ID</span>
@@ -20,13 +21,14 @@
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
-                                    <md-card-content>
-                                        <span><span>{{client_tax.tax_id}}</span></span>
+                                    <md-card-content class="center-num-box box-zerospace">
+                                        <div class="center-num"><span class="num-style1 text-center">
+                                        {{client_tax.tax_id}}</div>
                                     </md-card-content>
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow md-default-theme">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax Rate Percentage</span>
@@ -44,13 +46,15 @@
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
-                                    <md-card-content>
-                                        <span>{{client_tax.tax_rate}} %</span>
+                                    <md-card-content class="center-num-box box-zerospace">
+                                        <div class="center-num"><span class="num-style1 text-center">
+                                        {{client_tax.tax_rate}} %</span>
+                                    </div>
                                     </md-card-content>
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow md-default-theme">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax Exempt</span>
@@ -68,13 +72,14 @@
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
-                                    <md-card-content>
-                                        <span>{{client_tax.tax_exempt_show}}</span>                                 
+                                    <md-card-content class="center-num-box box-zerospace">
+                                        <div class="center-num"><span class="num-style1 text-center">
+                                        {{client_tax.tax_exempt_show}}</span></div>                                 
                                     </md-card-content>
                                 </md-card>
                             </div>
                             <div flex-xs flex-gt-xs="25" layout="column">
-                                <md-card>
+                                <md-card class="custom-fullbox-shadow md-default-theme">
                                     <md-card-header layout-align="space-between center">
                                         <md-card-header-text>
                                             <span class="md-title">Tax ID Document</span>
@@ -92,12 +97,16 @@
                                             </md-menu-content>
                                         </md-menu>
                                     </md-card-header>
-                                    <md-card-content>
-                                        <span><a ng-if="client_tax.tax_document_url != ''" href="{{client_tax.tax_document_url}}" target="_blank"> OPEN </a></span>
-                                        <span  ng-if="client_tax.tax_document_url==''"> NO DOCUMENT </span>
+                                    <md-card-content class="center-num-box box-zerospace">
+                                        <div class="center-num"><span class="num-style1">
+                                        <a class="fig-desc-text" ng-if="client_tax.tax_document_url != ''" href="{{client_tax.tax_document_url}}" target="_blank"> OPEN </a></span></div>
+                                        <div class="center-num"><span  class="num-style1" ng-if="client_tax.tax_document_url==''"> NO DOCUMENT </span></div>
                                     </md-card-content>
                                 </md-card>
                             </div>
                         </div>
                     </md-content>
+    </div>
+</div>        
+                    
                 
