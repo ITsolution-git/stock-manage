@@ -725,7 +725,13 @@ class ShippingController extends Controller {
             $shipment->setParameter('toCity', 'Bozeman');
             $shipment->setParameter('toState', 'MT');
             $shipment->setParameter('toCode', '59715');
-            $shipment->setParameter('weight', '5'); 
+            $shipment->setParameter('weight', '5');
+
+            $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail');
+            
+            $shipment->setParameter('key', $result_api[0]->key);
+            $shipment->setParameter('password', $result_api[0]->password);
+            $shipment->setParameter('accountNumber', $result_api[0]->account_number);
 
             $response = $shipment->submitShipment();
         }
@@ -740,6 +746,13 @@ class ShippingController extends Controller {
             $shipment->setParameter('toCity', $shipping->city);
             $shipment->setParameter('toState', $shipping->code);
             $shipment->setParameter('toCode', $shipping->zipcode);
+
+            $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail');
+            
+            $shipment->setParameter('license', $result_api[0]->api);
+            $shipment->setParameter('username', $result_api[0]->username);
+            $shipment->setParameter('password', $result_api[0]->password);
+            $shipment->setParameter('accountNumber', $result_api[0]->account_number);
 
             $package = new \RocketShipIt\Package('UPS');
             $package->setParameter('length','5');
@@ -784,8 +797,6 @@ class ShippingController extends Controller {
     public function checkAddressValid()
     {
         $post = Input::all();
-
-        $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail');
 
         if($post['shipping_type_id'] == 'Fedex')
         {
@@ -839,6 +850,8 @@ class ShippingController extends Controller {
         {
             if($post['shipping_type_id'] == 'Fedex')
             {
+                $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail');
+
                 $shipment = new \RocketShipIt\Shipment('fedex');
 
                 $shipment->setParameter('toCompany', $post['client_company']);
@@ -854,15 +867,18 @@ class ShippingController extends Controller {
                 $shipment->setParameter('height', '5');
                 $shipment->setParameter('weight','5');
 
-                /*$shipment->setParameter('key', $result_api[0]->key);
+                $shipment->setParameter('key', $result_api[0]->key);
                 $shipment->setParameter('password', $result_api[0]->password);
-                $shipment->setParameter('accountNumber', $result_api[0]->account_number);*/
+                $shipment->setParameter('accountNumber', $result_api[0]->account_number);
 
                 $response = $shipment->submitShipment();
 
-                //print_r($response);exit;
-
-                if(isset($response) && isset($response['status']) && $response['status'] == 'SUCCESS')
+                if(isset($response) && isset($response['error']))
+                {
+                    $success = 0;
+                    $message = $response['error'];
+                }
+                else if(isset($response) && isset($response['status']) && $response['status'] == 'SUCCESS')
                 {
                     $success = 1;
                     $message = '';
@@ -875,6 +891,7 @@ class ShippingController extends Controller {
             }
             else
             {
+                $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail');
                 $shipment = new \RocketShipIt\Shipment('UPS');
 
                 $shipment->setParameter('toCompany', $post['description']);
@@ -883,6 +900,11 @@ class ShippingController extends Controller {
                 $shipment->setParameter('toCity', $post['city']);
                 $shipment->setParameter('toState', $post['code']);
                 $shipment->setParameter('toCode', $post['zipcode']);
+
+                $shipment->setParameter('license', $result_api[0]->api);
+                $shipment->setParameter('username', $result_api[0]->username);
+                $shipment->setParameter('password', $result_api[0]->password);
+                $shipment->setParameter('accountNumber', $result_api[0]->account_number);
 
                 $package = new \RocketShipIt\Package('UPS');
                 $package->setParameter('length','5');
