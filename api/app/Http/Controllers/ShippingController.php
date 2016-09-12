@@ -144,8 +144,8 @@ class ShippingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'po.order_id', 'name' => 'Order ID','sortable' => false),
-                        1=>array('key' => 'c.client_company', 'name' => 'Client Name','sortable' => false),
+                        0=>array('key' => 'po.order_id', 'name' => 'Order ID'),
+                        1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
                         2=>array('key' => 'po.po_id', 'name' => 'PO #'),
                         3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
                         4=>array('key' => '', 'name' => '', 'sortable' => false)
