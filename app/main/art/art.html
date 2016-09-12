@@ -1,49 +1,28 @@
-<div class="content order-list-page stockkup-content-table-container">
-    <div class="tab-view-page simple-table-container md-whiteframe-4dp stokkup-main-tableview">
-            <md-content class="custom-struct-2">
-                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
-                    <!-----------------Orders Tab-------------------->
-                    <md-tab label="Orders">
+ <div class="content order-list-page stockkup-content-table-container">
+                <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+            <md-content>
+                <div md-dynamic-height md-border-bottom class="client-profile-tab">
+                   
+                    <div label="Orders">
                         <div class="table-title custom-shadow1" layout="row" layout-align="space-between center">
 
-                        <div class="table-title-text pd15-TB" flex=40 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
+                        <div class="table-title-text" flex=40 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
                          Arts
                         </div>
+                        <div class="art-tabs" flex=30>
+                            <span class="active-art" ui-sref="app.art">Orders</span>
+                            <span ui-sref="app.screen">ScreenSets</span>
+                        </div>
                         <div class="pull-right right-search-box">
+                             <div class="search-block pull-right">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="top-srch-label">Search...</label>
+                                    <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                                </md-input-container>
+                             </div>
                              <md-icon ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p">
                                 <md-tooltip md-delay="demo.delayTooltip">Filter By - Client</md-tooltip>
                             </md-icon>
-                            <div class="filter-menu filter-box">
-                                <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
-                                    <md-toolbar class=" filter-title">
-                                        <h1 class="md-toolbar-tools">Filter</h1>
-                                    </md-toolbar>
-
-                                    <md-content class="flex-fix-bottom scrollable"  ms-scroll>
-                                        <div class="contant-filter filter-detail" >
-                                            <div layout="column" class="f-box-1 first-cheak">
-                                              
-                                                <div class="f-body scrollable pad0"  ms-scroll>
-                                                    <div layout="column" >
-                                                        <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings" translation-texts="buttonSetting"  class="cheak-box-class"></div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </md-content>
-                                    <div class="filter-footer" layout="row">
-                                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
-                                        <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
-                                    </div>
-                                </md-sidenav>
-                            </div>
-                             <div class="search-block pull-right">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                                </md-input-container>
-                             </div>
                         </div> 
                     </div>
                         <div class="ms-responsive-table-wrapper" ng-show="success==1">
@@ -72,10 +51,37 @@
                             </tbody>
                          </table>
                          </div>
-                    </md-tab>
-                    <md-tab label="Screen Sets" ui-sref="app.screen"  ></md-tab>
-                    <!-----------------Screen Set Tab-------------------->
-                </md-tabs>
+                    </div>
+                   <!--  <div label="Screen Sets"  ></div> -->
+                    
+                </div>
             </md-content>
-    </div>
+        </div>
+</div>
+
+<div class="filter-menu filter-box">
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
+        <md-toolbar class=" filter-title">
+            <h1 class="md-toolbar-tools">Filter</h1>
+        </md-toolbar>
+
+        <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+            <div class="contant-filter filter-detail" >
+                <div layout="column" class="f-box-1 first-cheak">
+                  
+                    <div class="f-body scrollable pad0"  ms-scroll>
+                        <div layout="column" >
+                            <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings" translation-texts="buttonSetting"  class="cheak-box-class"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </md-content>
+        <div class="filter-footer" layout="row">
+            <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
+            <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
+        </div>
+    </md-sidenav>
 </div>

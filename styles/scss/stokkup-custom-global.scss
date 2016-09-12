@@ -154,6 +154,11 @@ button, select, html, textarea, input{
 	text-align:$center;
 	text-transform:uppercase;
 }
+button.bg-grey.md-raised{
+	@extend .stokkup-btn-style1;
+	background-color:$usermenu-txtcolor !important;
+	font-weight:$font-weight-700;
+}
 .white-bg{
 	background-color:$white-color;
 }
@@ -560,7 +565,7 @@ md-dialog{
 					text-transform:uppercase;
 				}
 				&.md-raised:not([disabled]){
-					background-color:#6288dc;
+					background-color:#6288dc !important;
 					@extend .no-box-shadows;
 					min-width:123px;
 					width:auto;
@@ -617,6 +622,9 @@ md-dialog{
 	padding:$zero;
 	min-width:30px;
 	float:right;
+	background:transparent !important;
+	color:$white-color;
+	font-size:$datatable-content-size;
 	&:hover, &:focus{
 		background:transparent !important;
 		-moz-transition:none;
@@ -943,9 +951,9 @@ button{
 	&.orderscreen-infobtns{
 	max-width:270px;
 	margin:$zero $zero 15px;
-	}
 	&:last-child{
 		margin-bottom:$zero;
+	}
 	}
 }
 .footer{
@@ -1182,6 +1190,49 @@ md-card-content{
 }
 .custom-struct-2 md-tabs md-ink-bar{
 	border-bottom:3px solid #e3e3e3;
+}
+.md-primary
+{
+	&.md-hue-1{
+	background-color:$usermenu-txtcolor;
+	color:$white-color;
+	}
+}
+.dialog-cancel-global{
+	min-width:123px;
+	background-color:$usermenu-txtcolor;
+	color:$white-color;
+	height:41px;
+	line-height:41px;
+	font-weight:$font-weight-700;
+}
+.dialog-cancel-btn{
+	min-width:123px;
+}
+.client-screenset-img{
+	max-height:100px;
+	width:$auto;
+}
+.art-tabs{
+	float:$left;
+	span{
+		cursor:pointer;
+		font-weight:$font-weight-300;
+		font-size:$font-size-text;
+		color:$stokkup-global-txtcolor;
+		opacity:0.6;
+		border-bottom:solid 3px #e3e3e3;
+		margin:$zero 2px;
+		padding:8px 10px;
+		position:$pos-relative;
+		top:15px;
+		float:$left;
+		text-transform:uppercase;
+		&.active-art{
+			opacity:1;
+			border-bottom:solid 3px $blue-shade3;
+		}
+	}
 }
 /* .custom-struct-2 md-tabs.md-active md-ink-bar{
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;

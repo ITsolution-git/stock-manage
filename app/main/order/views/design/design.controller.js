@@ -260,6 +260,12 @@
                         $scope.order_design_position[key].screen_print_charge = result.data.position.screen_print_charge;
                         $scope.order_design_position[key].direct_to_garment_charge = result.data.position.direct_to_garment_charge;
                         $scope.order_design_position[key].embroidery_charge = result.data.position.embroidery_charge;
+                        $scope.order_design_position[key].screen_print_charge2 = result.data.position.screen_print_charge2;
+                        $scope.order_design_position[key].direct_to_garment_charge2 = result.data.position.direct_to_garment_charge2;
+                        $scope.order_design_position[key].embroidery_charge2 = result.data.position.embroidery_charge2;
+                        $scope.order_design_position[key].screen_print_charge_qnty = result.data.position.screen_print_charge_qnty;
+                        $scope.order_design_position[key].direct_to_garment_charge_qnty = result.data.position.direct_to_garment_charge_qnty;
+                        $scope.order_design_position[key].embroidery_charge_qnty = result.data.position.embroidery_charge_qnty;
                     });
                 }
                 $scope.designPositionNew();

@@ -41,6 +41,7 @@
                     $scope.shippingBoxes =result.data.shippingBoxes;
                     $scope.shippingItems =result.data.shippingItems;
                     $scope.shipping =result.data.records[0];
+                    $scope.shipping.company_id = company_id;
 
                     if($scope.shipping.boxing_type == '0') {
                         $scope.shipping.boxing_type = 'Retail';
@@ -78,6 +79,16 @@
 
         $scope.printLAbel = function()
         {
+            if($scope.shipping.tracking_number != '')
+            {
+                notifyService.notify('error','Shipping label is already created');
+                return false;
+            }
+            if($scope.shippingBoxes.length == 0)
+            {
+                notifyService.notify('error','Please create box to print label');
+                return false;
+            }
             if($scope.shipping.address == '')
             {
                 notifyService.notify('error','address is compulsory');
@@ -142,6 +153,13 @@
 
         $scope.print_pdf = function(method)
         {
+
+            if($scope.shippingBoxes.length == 0)
+            {
+                notifyService.notify('error','Please create box to generate pdf');
+                return false;
+            }
+
             var target;
             var form = document.createElement("form");
             form.action = 'api/public/shipping/createPDF';
@@ -176,6 +194,25 @@
 
             document.body.appendChild(form);
             form.submit();
+        }
+
+        $scope.box_shipment = function()
+        {
+            $("#ajax_loader").show();
+            $http.post('api/public/shipping/CreateBoxShipment',$scope.shippingItems).success(function(result) {
+
+                if(result.data.success == '1') {
+                    var data = {"status": "success", "message": "Boxes created Successfully."}
+                    notifyService.notify(data.status, data.message);
+                }
+                else
+                {
+                    var data = {"status": "info", "message": "Delete all boxes in the boxes tab to rebox shipment."}
+                    notifyService.notify(data.status, data.message);
+                }
+                $("#ajax_loader").hide();
+                $state.go('app.shipping.boxingdetail',{id: $stateParams.id});
+            });
         }
     }
 })();

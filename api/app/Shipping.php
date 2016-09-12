@@ -19,7 +19,7 @@ class Shipping extends Model {
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,c.client_company,po.po_id,s.id as shipping_id')];
 
         $shippingData = DB::table('orders as o')
-                         ->leftJoin('shipping as s', 's.order_id', '=', 'o.id')
+                         ->leftJoin('shipping as s', 's.order_id', '=', 'o.ids')
                          ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                          ->leftJoin('purchase_order as po', 'o.id', '=', 'po.order_id')
                          ->select($listArray)
@@ -30,7 +30,8 @@ class Shipping extends Model {
                               $shippingData = $shippingData->Where(function($query) use($search)
                               {
                                   $query->orWhere('po.id', 'LIKE', '%'.$search.'%')
-                                        ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
+                                        ->orWhere('c.client_company', 'LIKE', '%'.$search.'%')
+                                        ->orWhere('po.po_id', 'LIKE', '%'.$search.'%');
                               });
                             }
                             $shippingData = $shippingData->GroupBy('po.order_id')

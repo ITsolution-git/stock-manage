@@ -67,7 +67,7 @@ button, select, html, textarea, input {
     margin-right: 10px;
     line-height: 40px; }
 
-.stokkup-btn-style1 {
+.stokkup-btn-style1, button.bg-grey.md-raised {
   background-color: #e0e1e3;
   width: 204px;
   height: 41px;
@@ -76,6 +76,10 @@ button, select, html, textarea, input {
   font-size: 14px;
   text-align: center;
   text-transform: uppercase; }
+
+button.bg-grey.md-raised {
+  background-color: #9fa1a7 !important;
+  font-weight: 700; }
 
 .white-bg {
   background-color: #fff; }
@@ -104,7 +108,7 @@ button, select, html, textarea, input {
   -o-box-shadow: none;
   box-shadow: none; }
 
-.border-radius-half, .stokkup-btn-style1, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
+.border-radius-half, .stokkup-btn-style1, button.bg-grey.md-raised, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
   border-radius: 50px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -389,7 +393,7 @@ md-dialog.task-dialog {
       font-weight: 700;
       text-transform: uppercase; }
     md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]) {
-      background-color: #6288dc;
+      background-color: #6288dc !important;
       min-width: 123px;
       width: auto;
       height: 41px;
@@ -426,7 +430,10 @@ md-dialog.task-dialog {
   margin: 0 !important;
   padding: 0;
   min-width: 30px;
-  float: right; }
+  float: right;
+  background: transparent !important;
+  color: #fff;
+  font-size: 13px; }
   .close-stokkup-dialog:hover, .close-stokkup-dialog:focus {
     background: transparent !important;
     -moz-transition: none;
@@ -687,8 +694,8 @@ table.table-white-bg tbody tr:first-child td {
 button.orderscreen-infobtns {
   max-width: 270px;
   margin: 0 0 15px; }
-button:last-child {
-  margin-bottom: 0; }
+  button.orderscreen-infobtns:last-child {
+    margin-bottom: 0; }
 
 .footer button:last-child {
   margin-bottom: 6px; }
@@ -871,6 +878,44 @@ md-card-content.custom-desc-box span {
 
 .custom-struct-2 md-tabs md-ink-bar {
   border-bottom: 3px solid #e3e3e3; }
+
+.md-primary.md-hue-1 {
+  background-color: #9fa1a7;
+  color: #fff; }
+
+.dialog-cancel-global {
+  min-width: 123px;
+  background-color: #9fa1a7;
+  color: #fff;
+  height: 41px;
+  line-height: 41px;
+  font-weight: 700; }
+
+.dialog-cancel-btn {
+  min-width: 123px; }
+
+.client-screenset-img {
+  max-height: 100px;
+  width: auto; }
+
+.art-tabs {
+  float: left; }
+  .art-tabs span {
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 14px;
+    color: #6e7584;
+    opacity: 0.6;
+    border-bottom: solid 3px #e3e3e3;
+    margin: 0 2px;
+    padding: 8px 10px;
+    position: relative;
+    top: 15px;
+    float: left;
+    text-transform: uppercase; }
+    .art-tabs span.active-art {
+      opacity: 1;
+      border-bottom: solid 3px #4773d6; }
 
 /* .custom-struct-2 md-tabs.md-active md-ink-bar{
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
