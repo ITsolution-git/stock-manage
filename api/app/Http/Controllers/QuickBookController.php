@@ -31,15 +31,34 @@ class QuickBookController extends Controller
         $this->company = $company;
         $this->common = $common;
 
-        if (!\QuickBooks_Utilities::initialized(QBO_DSN)) {
-            // Initialize creates the neccessary database schema for queueing up requests and logging
-            \QuickBooks_Utilities::initialize(QBO_DSN);
-        }
-
         $company_id = Session::get('company_id');
 
+        $this->company_id = $company_id;
+
         $result = $this->company->getQBAPI($company_id);
-        $this->IntuitAnywhere = new \QuickBooks_IPP_IntuitAnywhere(QBO_DSN,QBO_ENCRYPTION_KEY,$result[0]->consumer_key,$result[0]->consumer_secret_key,QBO_OAUTH_URL,QBO_SUCCESS_URL);
+
+        if($result[0]->is_sandbox == 0) {
+            $this->is_sandbox = true;
+            $this->QBO_DSN = "mysqli://csuser:codal123@192.168.1.13/stokkup";
+
+        } else if($result[0]->is_sandbox == 1) { 
+
+            $this->is_sandbox = true;
+            $this->QBO_DSN = "mysqli://root:stokkdb@1357@localhost/stokkup_new";
+
+        } else {
+
+            $this->is_sandbox = false;
+            $this->QBO_DSN = "mysqli://stokkuplive:Amren341221@stokkup-live.cagpmtmc0vub.us-east-1.rds.amazonaws.com/stokkup";
+        }
+
+
+        if (!\QuickBooks_Utilities::initialized($this->QBO_DSN)) {
+            // Initialize creates the neccessary database schema for queueing up requests and logging
+            \QuickBooks_Utilities::initialize($this->QBO_DSN);
+        }
+
+        $this->IntuitAnywhere = new \QuickBooks_IPP_IntuitAnywhere($this->QBO_DSN,QBO_ENCRYPTION_KEY,$result[0]->consumer_key,$result[0]->consumer_secret_key,QBO_OAUTH_URL,QBO_SUCCESS_URL);
        
     }
 
@@ -51,7 +70,7 @@ class QuickBookController extends Controller
         if ($this->IntuitAnywhere->check(QBO_USERNAME, QBO_TENANT) && $this->IntuitAnywhere->test(QBO_USERNAME, QBO_TENANT)) {
 
             // Set up the IPP instance
-            $IPP = new \QuickBooks_IPP(QBO_DSN);
+            $IPP = new \QuickBooks_IPP($this->QBO_DSN);
             // Get our OAuth credentials from the database
             $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
             // Tell the framework to load some data from the OAuth store
@@ -60,7 +79,7 @@ class QuickBookController extends Controller
                 QBO_USERNAME,
                 $creds);
 
-            if (QBO_SANDBOX) {
+            if ($this->is_sandbox) {
                 // Turn on sandbox mode/URLs
                 $IPP->sandbox(true);
             }
@@ -69,11 +88,7 @@ class QuickBookController extends Controller
             // Load the OAuth information from the database
             $this->context = $IPP->context();
 
-
-
-           
         $response = array('success' => 1, 'message' => "Successful",'records' => true);
-        
         
         return response()->json(["data" => $response]);
 
@@ -87,8 +102,6 @@ class QuickBookController extends Controller
             
         }
     }
-
-
 
     public function qboOauth($oauth_token=''){
         /*if(!empty($oauth_token)) $_GET['oauth_token'] = $oauth_token;*/
@@ -112,8 +125,6 @@ class QuickBookController extends Controller
        
     }
 
-
-
     public function qboDisconnect(){
 
         $this->IntuitAnywhere->disconnect(QBO_USERNAME, QBO_TENANT,true);
@@ -130,7 +141,7 @@ class QuickBookController extends Controller
 
     public function createCustomer($client,$contact){
 
-       $IPP = new \QuickBooks_IPP(QBO_DSN);
+       $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -140,7 +151,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -217,7 +228,7 @@ class QuickBookController extends Controller
 
     public function updateCustomer($client,$contact){
 
-       $IPP = new \QuickBooks_IPP(QBO_DSN);
+       $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -227,7 +238,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -298,7 +309,7 @@ class QuickBookController extends Controller
     public function addItem(){
         $post = Input::all();
 
-        $IPP = new \QuickBooks_IPP(QBO_DSN);
+        $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -308,7 +319,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -429,7 +440,7 @@ class QuickBookController extends Controller
     public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid,$payment){
       
 
-         $IPP = new \QuickBooks_IPP(QBO_DSN);
+         $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -439,7 +450,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -915,7 +926,7 @@ class QuickBookController extends Controller
      public function updateInvoicePayment(){
         $data = array("success"=>1,'message' =>"Invoice Payments Sync successfully");
 
-        $IPP = new \QuickBooks_IPP(QBO_DSN);
+        $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -925,7 +936,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
