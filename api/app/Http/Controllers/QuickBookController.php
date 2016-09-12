@@ -49,7 +49,7 @@ class QuickBookController extends Controller
         } else {
 
             $this->is_sandbox = false;
-            $this->QBO_DSN = "mysqli://stokkuplive:Amren341221@stokkup-live.cagpmtmc0vub.us-east-1.rds.amazonaws.com/stokkup";
+            $this->QBO_DSN = "mysqli://stokkuplive:Amren341221@stokkup-live.cagpmtmc0vub.us-east-1.rds.amazonaws.com/stokkup-live";
         }
 
 

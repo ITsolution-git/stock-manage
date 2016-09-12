@@ -8,6 +8,7 @@ use App\Product;
 use App\Invoice;
 use App\Common;
 use App\Client;
+use App\Company;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -18,13 +19,14 @@ use PDF;
 
 class InvoiceController extends Controller { 
 
-    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client)
+    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company)
     {
         $this->common = $common;
         $this->order = $order;
         $this->product = $product;
         $this->invoice = $invoice;
         $this->client = $client;
+        $this->company = $company;
     }
 
     public function listInvoice()
@@ -34,6 +36,21 @@ class InvoiceController extends Controller {
 
         $post = $post_all['cond']['params'];
         $post['company_id'] = $post_all['cond']['company_id'];
+
+
+        $result = $this->company->getQBAPI($post['company_id']);
+
+        if($result[0]->is_sandbox == 0) {
+            $quickbook_url = "https://sandbox.qbo.intuit.com/app/invoice?txnId=";
+
+        } else if($result[0]->is_sandbox == 1) { 
+               $quickbook_url = "https://sandbox.qbo.intuit.com/app/invoice?txnId="; 
+
+        } else {
+
+           $quickbook_url = "https://qbo.intuit.com/app/invoice?txnId=";
+        }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
         if(!isset($post['page']['page'])) {
              $post['page']['page']=1;
@@ -82,7 +99,7 @@ class InvoiceController extends Controller {
                         6=>array('key' => '', 'name' => 'Option', 'sortable' => false),
                         );
 
-        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
         return response()->json($data);
     }
     public function getInvoiceDetail($invoice_id,$company_id,$type=0)
