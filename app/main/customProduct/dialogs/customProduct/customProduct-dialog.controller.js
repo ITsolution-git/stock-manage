@@ -100,6 +100,7 @@
                             $scope.params = params;
                             $scope.SaveImageAll=function(image_array)
                             {
+                              
                                  if(image_array == null) {
                                     $mdDialog.hide();
                                     return false;
@@ -323,6 +324,18 @@
         $scope.cancel = function() {
                          window.history.back();
                   }
+
+
+        var state = {};
+        state.table ='state';
+
+        $http.post('api/public/common/GetTableRecords',state).success(function(result) 
+        {   
+            if(result.data.success=='1')
+            {   
+              $scope.states_all = result.data.records;
+            }
+        });
 
 
         $scope.addVendor = function()

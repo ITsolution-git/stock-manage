@@ -24,6 +24,10 @@
                     $("#ajax_loader").hide();
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
+                   if($scope.order.item_ship_charge == undefined || $scope.order.item_ship_charge == '')
+                   {
+                        $scope.order.item_ship_charge = 0;
+                   }
                 } else {
                     $state.go('app.order');
                 }
@@ -217,20 +221,30 @@
             });
         }
         function openApproveOrderDialog(ev,order_number,sns_shipping,client_id) {
-            $mdDialog.show({
-                controller: 'approveOrderDiallogController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    order_number:order_number,
-                    sns_shipping:sns_shipping,
-                    client_id:client_id,
-                    event: ev
-                }
-            });
+            
+            if($scope.total_unit > 0)
+            {
+                $mdDialog.show({
+                    controller: 'approveOrderDiallogController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        order_number:order_number,
+                        sns_shipping:sns_shipping,
+                        client_id:client_id,
+                        event: ev
+                    }
+                });
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please add product to approve order"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
         }
         $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
         {

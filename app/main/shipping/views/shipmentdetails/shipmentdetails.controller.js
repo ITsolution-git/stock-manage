@@ -71,7 +71,7 @@
 
         $scope.box_shipment = function(shipping_items)
         {
-            $("#ajax_loader").show();
+            
             if($scope.shipping.shipping_type_id == 0 || $scope.shipping.shipping_type_id == '')
             {
                 var data = {"status": "error", "message": "Please select any shipping method."}
@@ -84,7 +84,7 @@
                     notifyService.notify(data.status, data.message);
                     return false;
             }
-            
+            $("#ajax_loader").show();
             $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
 
                 if(result.data.success == '1') {

@@ -81,13 +81,13 @@
         // DYNAMIC POPUP FOR INSERT RECORDS
         $scope.openInsertPopup = function(path,ev)
         {
-            var insert_params = {states_all:$scope.states_all,vendor_id:$scope.v_id,flag:'add'};
+            var insert_params = {vendor_id:$scope.v_id};
             //OPEN POPUP WITH TO INSERT DATA// SCOPE, PATH FILE, CONDITION DATA, TABLE
             sessionService.openAddPopup($scope,path,insert_params,'vendor_contacts');
         }
         $scope.openEditPopup = function(path,param,ev)
         {
-            var edit_params = {states_all:$scope.states_all,data:param,flag:'edit'};
+            var edit_params = {data:param};
             // OPEN POPUP WITH DATA   // SCOPE, PATH FILE, DISPLAY DATA, TABLE
             sessionService.openEditPopup($scope,path,edit_params,'vendor_contacts');
         }

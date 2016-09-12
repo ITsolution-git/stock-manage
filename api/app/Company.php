@@ -349,6 +349,7 @@ class Company extends Model {
          $dir_path_tax = base_path() . "/public/uploads/" . $companyid.'/tax'; 
          $dir_path_vendor = base_path() . "/public/uploads/". $companyid.'/vendor'; 
          $dir_path_pdf = base_path() . "/public/uploads/". $companyid.'/pdf'; 
+         $dir_path_purchase = base_path() . "/public/uploads/". $companyid.'/purchase';
 
           $old_umask = umask(0);
 
@@ -359,6 +360,15 @@ class Company extends Model {
             } else {
                 exec("chmod $dir_path 0777");
             }
+            
+            if (!file_exists($dir_path_purchase)) {
+           
+            mkdir($dir_path_purchase, 0777);
+            
+            } else {
+                exec("chmod $dir_path 0777");
+            }
+
 
            if (!file_exists($dir_path_art)) {
            

@@ -50,13 +50,12 @@
               </p>
             </td>
             <td align="left" valign="top" width="2%">&nbsp;</td>
-            <td align="left" valign="top" width="30%"><br /><br /><br /><span><strong>PO Number :</strong> #</span><br />
+            <td align="left" valign="top" width="30%"><br /><br /><br /><span></span><br />
                 <span>&nbsp;</span><br />
                 <span><strong>Shipped On :</strong> {{$shipping->shipping_by}}</span> 
             </td>
-            <td align="left" valign="top" width="30%"><br /><br /><br /><span><strong>Tracking Number(s)</strong></span><br />
+            <td align="left" valign="top" width="30%"><span><strong>Tracking Number:</strong>{{$shipping->tracking_number}}</span><br />
                 <span>&nbsp;</span><br />
-                <span><strong>SKU :</strong> </span>
             </td>
           </tr>
         </table>

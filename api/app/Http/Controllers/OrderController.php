@@ -1056,11 +1056,12 @@ class OrderController extends Controller {
 
             if(empty($payment_data))
             {
+                $date = date_create();
                 $length = 25;
                 $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
                 $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
 
-                $this->common->InsertRecords('link_to_pay',array('order_id' => $data['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
+                $this->common->InsertRecords('link_to_pay',array('order_id' => $post['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
 
                 $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$session_link;
             }
@@ -1507,12 +1508,6 @@ class OrderController extends Controller {
 
         $result = $this->order->getDesignPositionDetail($data);
 
-        $screen_print_charge = 0;
-        $screen_print_charge = 0;
-        $embroidery_charge = 0;
-        $direct_to_garment_charge = 0;
-        $markup_default = 0;
-
         foreach ($result['order_design_position'] as $position) {
 
             $screen_print_charge = 0;
@@ -1520,6 +1515,18 @@ class OrderController extends Controller {
             $embroidery_charge = 0;
             $direct_to_garment_charge = 0;
             $markup_default = 0;
+
+            $screen_print_charge2 = 0;
+            $screen_print_charge2 = 0;
+            $embroidery_charge2 = 0;
+            $direct_to_garment_charge2 = 0;
+            $markup_default2 = 0;
+
+            $screen_print_charge_qnty = 0;
+            $screen_print_charge_qnty = 0;
+            $embroidery_charge_qnty = 0;
+            $direct_to_garment_charge_qnty = 0;
+            $markup_default_qnty = 0;
 
             $position_qty = $position->qnty;
             $color_stitch_count = $position->color_stitch_count;
@@ -1535,13 +1542,22 @@ class OrderController extends Controller {
                     foreach($price_screen_primary as $primary)
                     {
                         $price_field = 'pricing_'.$color_stitch_count.'c';
+
+                        if($position_qty >= $primary->range_low && $position_qty <= $primary->range_high)
+                        {
+                            if(isset($primary->$price_field))
+                            {
+                                $screen_print_charge2 = $primary->$price_field;
+                            }
+                        }
                         if($position_qty <= $primary->range_low)
                         {
-                            if(isset($primary->$price_field) && $position_qty > 0)
+                            $screen_print_charge_qnty = $primary->range_low." - ".$primary->range_high;
+                            if(isset($primary->$price_field))
                             {
-                                $screen_print_charge = $primary->$price_field;
-                                break;
+                                $screen_print_charge = $primary->$price_field;                                
                             }
+                            break;
                         }
                     }
                 }
@@ -1550,13 +1566,22 @@ class OrderController extends Controller {
                     foreach($price_screen_secondary as $secondary)
                     {
                         $price_field = 'pricing_'.$color_stitch_count.'c';
+
+                        if($position_qty >= $secondary->range_low && $position_qty <= $secondary->range_high)
+                        {
+                            if(isset($secondary->$price_field))
+                            {
+                                $screen_print_charge2 = $secondary->$price_field;
+                            }
+                        }
                         if($position_qty <= $secondary->range_low)
                         {
-                            if(isset($secondary->$price_field) && $position_qty > 0)
+                            $screen_print_charge_qnty = $secondary->range_low." - ".$secondary->range_high;
+                            if(isset($secondary->$price_field))
                             {
-                                $screen_print_charge = $secondary->$price_field;
-                                break;
+                                $screen_print_charge = $secondary->$price_field;                                
                             }
+                            break;
                         }
                     }
                 }
@@ -1635,9 +1660,17 @@ class OrderController extends Controller {
 
                         foreach ($price_screen_embroidery as $embroidery2)
                         {
-                            if($position_qty <= $embroidery2->range_low  && $position_qty > 0)
+                            if($position_qty >= $embroidery2->range_low && $position_qty <= $embroidery2->range_high)
                             {
-                                $embroidery_charge = $embroidery2->$embroidery_field;
+                                $embroidery_charge2 = $embroidery2->$embroidery_field;
+                            }
+                            if($position_qty <= $embroidery2->range_low)
+                            {
+                                $embroidery_charge_qnty = $embroidery2->range_low." - ".$embroidery2->range_high;
+                                if(isset($embroidery2->$embroidery_field))
+                                {
+                                    $embroidery_charge = $embroidery2->$embroidery_field;    
+                                }
                                 break;
                             }
                         }
@@ -1679,12 +1712,20 @@ class OrderController extends Controller {
                         }
 
                         foreach($price_direct_garment as $garment) {
-                          
-                          if($position_qty <= $garment->range_low  && $position_qty > 0)
-                          {
-                              $direct_to_garment_charge = $garment->$garment_field;
-                              break;
-                          }
+
+                            if($position_qty >= $garment->range_low && $position_qty <= $garment->range_high)
+                            {
+                                $direct_to_garment_charge2 = $garment->$garment_field;
+                            }
+                            if($position_qty <= $garment->range_low)
+                            {
+                                $direct_to_garment_charge_qnty = $garment->range_low." - ".$garment->range_high;
+                                if(isset($garment->$garment_field))
+                                {
+                                    $direct_to_garment_charge = $garment->$garment_field;
+                                }
+                                break;
+                            }
                         }
                     }
                 }
@@ -1701,10 +1742,38 @@ class OrderController extends Controller {
                 }
             }
 
-            $position->screen_print_charge = $screen_print_charge;
-            $position->embroidery_charge = $embroidery_charge;
-            $position->direct_to_garment_charge = $direct_to_garment_charge;
-            $position->markup_default = $markup_default;
+            $position->screen_print_charge_qnty = $screen_print_charge_qnty;
+            $position->embroidery_charge_qnty = $embroidery_charge_qnty;
+            $position->direct_to_garment_charge_qnty = $direct_to_garment_charge_qnty;
+
+            if($position_qty > 0)
+            {
+                $position->screen_print_charge = $screen_print_charge;
+                $position->embroidery_charge = $embroidery_charge;
+                $position->direct_to_garment_charge = $direct_to_garment_charge;
+                $position->markup_default = $markup_default;
+
+                $position->screen_print_charge2 = 0;
+                $position->embroidery_charge2 = 0;
+                $position->direct_to_garment_charge2 = 0;
+
+                if($screen_print_charge2 > 0) {
+                    $position->screen_print_charge2 = abs($screen_print_charge2 - $screen_print_charge);
+                }
+                if($embroidery_charge2 > 0) {
+                    $position->embroidery_charge2 = abs($embroidery_charge2 - $embroidery_charge);
+                }
+                if($direct_to_garment_charge2 > 0) {
+                    $position->direct_to_garment_charge2 = abs($direct_to_garment_charge2 - $direct_to_garment_charge);
+                }
+            }
+            else
+            {
+                $position->screen_print_charge = 0;
+                $position->embroidery_charge = 0;
+                $position->direct_to_garment_charge = 0;
+                $position->markup_default = 0;
+            }
 
             if(isset($data['getNextPrice']) && $data['getNextPrice'] == 1 && isset($data['position_id']) && $data['position_id'] == $position->id)
             {

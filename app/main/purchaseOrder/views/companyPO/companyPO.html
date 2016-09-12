@@ -91,7 +91,7 @@
                         <th>Color</th>
                         <th>Ordered<br /> Recevied</th>
                         <th>Unit $</th>
-                        <!-- <th></th> -->
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,7 +102,7 @@
                         <td>{{ line_item.product_color}}</td>
                         <td>{{ line_item.qnty_ordered}} / {{ line_item.qnty_purchased}}</td>
                         <td>${{ line_item.unit_price}}</td>
-                        <!-- <td ng-if="po_data.complete==0"><a class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td>  -->
+                        <td ng-if="po_data.complete==0"><a class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
                     </tr>
                 </tbody> 
             </table>

@@ -84,17 +84,30 @@
                                  
                                 <table class="simple-table layout-padding row-border box-zerospace">
                                     <tbody>
-                                         <tr>
-                                            <td class="design-intable">
-                                                <span class="stokkup-title-h4 light-300">Next Tier:</span>  
-                                            </td>
+                                            <tr>
                                                 <td class="design-intable">
-                                                <b>Screent Print: </b>{{order_design_position.screen_print_charge | currency : $ : 2}}</td>
+                                                    <span class="stokkup-title-h4 light-300">Next Tier:</span>  
+                                                </td>
+                                                <td class="design-intable"><b>Screent Print: </b>{{order_design_position.screen_print_charge | currency : $ : 2}}</td>
                                                 <td class="design-intable"><b>Embroidery: </b>{{order_design_position.embroidery_charge | currency : $ : 2}}</td>
                                                 <td class="design-intable"><b>Direct To Garment: </b>{{order_design_position.direct_to_garment_charge | currency : $ : 2}}</td>
-                                                <td class="design-intable"><b>Garment Markup: </b>{{order_design_position.markup_default}}%
+                                            </tr>
+                                            <tr>
+                                                <td class="design-intable">
+                                                    <span class="stokkup-title-h4 light-300"></span>  
                                                 </td>
-                                            </tr> 
+                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.screen_print_charge_qnty}}</td>
+                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.embroidery_charge_qnty}}</td>
+                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.direct_to_garment_charge_qnty}}</td>
+                                            </tr>
+                                             <tr>
+                                                <td class="design-intable">
+                                                    <span class="stokkup-title-h4 light-300"></span>  
+                                                </td>
+                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.screen_print_charge2 | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.embroidery_charge2 | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.direct_to_garment_charge2 | currency : $ : 2}}</td>
+                                            </tr>
                                     </tbody>
                                 </table>
                             </div>

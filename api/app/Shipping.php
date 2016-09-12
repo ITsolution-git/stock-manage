@@ -16,7 +16,7 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,c.client_company,po.po_id,s.id as shipping_id')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS po.order_id,c.client_company,po.po_id,s.id as shipping_id')];
 
         $shippingData = DB::table('orders as o')
                          ->leftJoin('shipping as s', 's.order_id', '=', 'o.id')
@@ -29,7 +29,8 @@ class Shipping extends Model {
                             {
                               $shippingData = $shippingData->Where(function($query) use($search)
                               {
-                                  $query->orWhere('po.id', 'LIKE', '%'.$search.'%')
+                                  $query->orWhere('po.order_id', 'LIKE', '%'.$search.'%')
+                                        ->orWhere('po.id', 'LIKE', '%'.$search.'%')
                                         ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                               });
                             }
@@ -49,7 +50,7 @@ class Shipping extends Model {
         foreach ($shippingData as $data) {
             
             $listArr = [DB::raw('SUM(pol.qnty_purchased - pol.short) as total'),'pol.purchase_detail'];
-            $where = ['po.order_id' => $data->id];
+            $where = ['po.order_id' => $data->order_id];
 
             $result = DB::table('purchase_order as po')
                         ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
@@ -58,7 +59,7 @@ class Shipping extends Model {
                         ->get();
 
             $listArr2 = [DB::raw('SUM(pas.distributed_qnty) as distributed'),'pas.purchase_detail_id'];
-            $where2 = ['pam.order_id' => $data->id];
+            $where2 = ['pam.order_id' => $data->order_id];
 
             $result2 = DB::table('product_address_mapping as pam')
                             ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
@@ -69,7 +70,7 @@ class Shipping extends Model {
             if($result2[0]->distributed == '' || $result2[0]->distributed == '0')
             {
                 $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
-                                                LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$data->id."' ");
+                                                LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$data->order_id."' ");
 
                 foreach($purchase_detail as $row)
                 {
