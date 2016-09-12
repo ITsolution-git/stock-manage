@@ -2264,8 +2264,7 @@ class OrderController extends Controller {
         $id = $this->common->InsertRecords('link_to_pay',$orderData);
         
 
-        //$session_link="http://localhost/stokkup/link_to_pay.php?link=".$session_link;
-        $session_link="http://".$_SERVER['SERVER_NAME']."/link_to_pay.php?link=".$session_link;
+        $session_link="http://".$_SERVER['SERVER_NAME']."/api/public/invoice/linktopay/".$session_link;
         
 
         $data = array("success"=>1,'session_link' =>$session_link);

@@ -1,3 +1,45 @@
+ <script language="JavaScript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+
+<script>
+            var timer;
+            function loadscreen()
+            {
+                $("#ajax_loader").show();
+                setTimeout(function () {
+                    $("#ajax_loader").hide();
+                }, 3000);
+            }
+
+
+            function checkvalidations()
+            {
+                var combine_array_id = {};
+                combine_array_id.creditFname = document.getElementById(creditFname);
+                combine_array_id.creditLname = document.getElementById(creditLname);
+                combine_array_id.creditCard = document.getElementById(creditCard);
+                combine_array_id.amount = document.getElementById(amount);
+
+                /*$http.post('http://<?php echo $_SERVER['SERVER_NAME']; ?>/api/public/payment/chargeCreditCard',combine_array_id).success(function(result)
+                {
+
+                }) ;*/
+
+
+                var myKeyVals = { creditFname : 'bhargav', creditLname : 'pithva', creditCard : '4111111111111111', amount : '100' }
+
+                var saveData = $.ajax({
+                      type: 'POST',
+                      url: "http://"+<?php echo $_SERVER['SERVER_NAME']; ?>+"/api/public/payment/chargeCreditCard?action=saveData",
+                      data: myKeyVals,
+                      dataType: "text",
+                      success: function(resultData) { alert("Save Complete") }
+                });
+                saveData.error(function() { alert("Something went wrong"); });
+            }
+
+
+
+        </script>
 <md-content id="content" class="animate-slide-up md-background md-hue-1 ms-scroll ng-scope flex md-default-theme ps-container ps-theme-default ps-active-y" ms-scroll="" ui-view="content" flex="" data-ps-id="e93466b5-d722-6104-cb5f-6c812c6d8a5a"><div class="main-design-page m-r-15 m-l-20 m-b-20 ng-scope">
     <div class="header layout-column" layout="column">
         <div class="header-content layout-padding layout-wrap layout-align-start-stretch layout-row flex" layout="row" layout-align="start" layout-wrap="" flex="" layout-padding=""></div>
@@ -6,10 +48,13 @@
                 <md-card layout="row" class="layout-row md-default-theme">
                     <md-content class="md-default-theme" ng-controller="extLinktoPayController">
                         <div class="ms-responsive-table-wrapper">
+                            <?php
+                            if(isset($orderArray->link_status) && $orderArray->link_status==1){
+                            ?>
                             <div class="header-typ2">
                                 <div layout="row" class="layout-row">
                                     <div layout="column" flex="50" class="layout-column">
-                                        <span class="font-20 mrg10-T">Link to Pay - INV-<?php echo $orderArray->order_id ?></span>
+                                        <span class="font-20 mrg10-T">Link is either expired or no longer valid. Please contact Stokkup Team</span>
                                     </div>
                                     <!--<div layout="column" flex="50" class="text-right layout-column">
                                         <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
@@ -18,6 +63,25 @@
                                     </div>-->
                                 </div>
                             </div>
+                            <?php
+                            }else{
+                            ?>
+                            <div class="header-typ2">
+                                <div layout="row" class="layout-row">
+                                    <div layout="column" flex="50" class="layout-column">
+                                        <?php
+                                        //print_r($orderArray);
+                                        ?>
+                                        <span class="font-20 mrg10-T">Link to Pay - INV-<?php echo $orderArray->order_id ?> Balance Amount to pay : $<?php echo $orderArray->balance_amount ?></span>
+                                    </div>
+                                    <!--<div layout="column" flex="50" class="text-right layout-column">
+                                        <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                            <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Download"><span class="ng-scope">Download</span></button>
+                                        </md-dialog-actions>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <form action="" onsubmit="">
                             <div class="pd15">
                                 <div layout="row">
                                     <div layout="column" flex="45">
@@ -25,21 +89,21 @@
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <input name="invoice_id" value="" ng-init="7" type="hidden">
                                                 <md-input-container flex="50">
-                                                     <input placeholder="First Name On Card" name="First Name On Card" value="">
+                                                     <input placeholder="First Name On Card" name="creditFname" id="creditFname" value="">
                                                 </md-input-container>
                                                 <md-input-container flex="50">
-                                                     <input placeholder="Last Name On Card" name="Last Name On Card" value="">
+                                                     <input placeholder="Last Name On Card" name="creditLname" id="creditLname" value="">
                                                 </md-input-container>
                                                 <md-input-container flex="100">
-                                                    <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" value="">
+                                                    <input placeholder="Credit Card Number" only-number="20" id="creditCard" name="creditCard" value="">
                                                 </md-input-container>
                                                 <md-input-container flex="100">
-                                                    <input placeholder="Amount" name="Amount" only-number="20" value="">
+                                                    <input placeholder="Amount" name="amount" id="amount" only-number="20" value="">
                                                 </md-input-container>
                                             </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="30">
-                                                    <md-select placeholder="MM" name="month">
+                                                    <md-select placeholder="MM" name="expMonth">
                                                         <md-option value="0">MM</md-option>
                                                         <md-option value="01">JAN</md-option>
                                                         <md-option value="02">FEB</md-option>
@@ -56,7 +120,7 @@
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex=30 class="m-b-20">
-                                                   <md-select placeholder="YY" name="year">
+                                                   <md-select placeholder="YY" name="expYear">
                                                         <md-option value="0">YY</md-option>
                                                         <md-option value="16">16</md-option>
                                                         <md-option value="17">17</md-option>
@@ -76,7 +140,7 @@
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="CVV" value="">
+                                                    <input placeholder="CVV" name="cvv" value="">
                                                 </md-input-container>
                                             </div>
                                         </div>
@@ -85,7 +149,7 @@
                                             <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="75">
-                                                    <input placeholder="Street Address" name="Street Address" value="">
+                                                    <input placeholder="Street Address" name="street" value="">
                                                 </md-input-container>
                                                 <md-input-container flex="25">
                                                     <input placeholder="Suite" name="Suite" value="">
@@ -93,10 +157,10 @@
                                             </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="40">
-                                                    <input placeholder="City" name="City" value="">
+                                                    <input placeholder="City" name="city" value="">
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <md-select placeholder="State" name="State" aria-label="State" value="">
+                                                    <md-select placeholder="State" name="state" aria-label="State" value="">
                                                         <md-option value="">State</md-option>
                                                         <?php foreach ($stateArray as $state) {?>
                                                             <md-option value="<?php echo $state->code; ?>"><?php echo $state->name; ?></md-option>
@@ -104,18 +168,24 @@
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <input placeholder="Zip" name="Zip" only-number="10" value="">
+                                                    <input placeholder="Zip" name="zip" only-number="10" value="">
                                                 </md-input-container>
                                             </div>
                                             <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
                                             <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
                                                 <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
                                                 </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net"><span class="ng-scope">Pay</span></button>
+                                                <button onclick="checkvalidations()" type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net"><span class="ng-scope">Pay</span></button>
                                             </md-dialog-actions>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
+                            <?php
+                            }
+                            ?>
+                            
+                            
                             </div>
                         </md-content>
                     </md-card>

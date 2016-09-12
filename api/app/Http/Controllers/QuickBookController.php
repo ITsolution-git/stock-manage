@@ -986,6 +986,7 @@ class QuickBookController extends Controller
             if ($resp = $PaymentService->add($this->context, $this->realm, $Payment))
             {
                 //print('Our new Payment ID is: [' . $resp . ']');
+                // Quickbook ID is returned as {-111}. Below 3 lines are to remove non-numeric things.
                 $resp=$numeric_filtered = filter_var($resp, FILTER_SANITIZE_NUMBER_INT);
                 $spChars= array('0' => '-');
                 $resp=str_replace($spChars, '', $resp);

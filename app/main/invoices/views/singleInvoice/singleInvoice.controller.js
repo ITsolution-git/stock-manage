@@ -390,7 +390,8 @@
                             }
                             else
                             {
-                                notifyService.notify('error',resultUpdate.data.message);
+                                //notifyService.notify('error',resultUpdate.data.message);
+                                notifyService.notify('error',"Refund Transaction Failed. Please try again after a few hours.");
                             }
 
                         });
