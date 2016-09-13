@@ -939,6 +939,63 @@ md-card-content.custom-desc-box span {
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
 }*/
 /*clients module inner pages */
+.dash-btwn-txt {
+  float: none;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 14px;
+  font-weight: 400;
+  padding: 0 15px; }
+  .dash-btwn-txt.comp-report-txt {
+    position: relative;
+    float: none;
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+    width: 95%; }
+  .dash-btwn-txt.green-txt {
+    color: #39b54a;
+    font-size: 16px;
+    padding: 0;
+    position: relative;
+    top: -3px;
+    left: 10px; }
+    .dash-btwn-txt.green-txt.fa {
+      color: #39b54a;
+      font-size: 14px; }
+
+.dashboard-page .num-style1 {
+  font-size: 29px; }
+.dashboard-page .p-30.last-row {
+  padding-top: 0; }
+.dashboard-page md-card {
+  padding: 20px 0 0;
+  margin: 0 8px;
+  position: relative; }
+  .dashboard-page md-card.firstbox {
+    margin-left: 0 !important; }
+  .dashboard-page md-card.lastbox {
+    margin-right: 0 !important; }
+  .dashboard-page md-card md-card-title {
+    padding: 0 20px; }
+  .dashboard-page md-card md-card-header {
+    padding: 0 5px 0 20px; }
+  .dashboard-page md-card md-card-content {
+    padding-top: 0; }
+
+.dash-footer-box {
+  width: 100%;
+  background-color: #f8f9fa;
+  border-top: solid 1px #ededed;
+  padding: 15px 0;
+  text-align: center; }
+
+.dash-footer-alternate-box {
+  width: 100%;
+  background-color: #fff;
+  padding: 15px 0;
+  text-align: center; }
+
 .affiliate-box {
   width: 100%;
   border: solid 1px #ededed; }
@@ -970,5 +1027,12 @@ md-card-content.custom-desc-box span {
   font-weight: 600;
   font-size: 14px;
   color: #6e7584; }
+
+.bottom-shadow {
+  -moz-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  -webkit-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  -ms-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  -o-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
