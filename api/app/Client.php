@@ -94,7 +94,7 @@ class Client extends Model {
     }
     public function getContacts($id)
     {
-    	$result = DB::table('client_contact')->select('*')->where('client_id','=',$id)->get();
+    	$result = DB::table('client_contact')->select('*')->where('client_id','=',$id)->where('is_deleted','=','1')->get();
     	return $result;
     }
     public function clientAddress($post,$id,$address)
@@ -103,7 +103,7 @@ class Client extends Model {
     	//echo "<pre>"; print_r($address['address_main']); echo "</pre>"; die;
     	//echo $id; die;
 
-    	DB::table('client_address')->where('client_id','=',$id)->delete();
+    	DB::table('client_address')->where('client_id','=',$id)->where('is_deleted','=','1')->delete();
     	$result = DB::table('client_address')->insert($post);
 		
     
@@ -116,6 +116,7 @@ class Client extends Model {
                   ->leftJoin('state as st','st.id','=','cd.state')
                   ->select('st.name as state_name','cd.*')
                   ->where('cd.client_id','=',$id)
+                  ->where('cd.is_deleted','=','1')
                   ->get();
 
       
@@ -130,6 +131,7 @@ class Client extends Model {
                   ->leftJoin('state as st','st.id','=','ca.state')
                   ->select('mt.value as address_type','st.name as state_name','ca.*')
                   ->where('client_id','=',$id)
+                  ->where('ca.is_deleted','=','1')
                   ->get();
 
     	/*if(count($result)>0)
@@ -284,6 +286,7 @@ class Client extends Model {
    					->join('users as u','u.id','=','cn.user_id')
    					->where('cn.client_id','=',$id)
    					->where('cn.note_status','=','1')
+            ->where('cn.is_deleted','=','1')
    					->get();
    		return $result;
    }
@@ -301,7 +304,7 @@ class Client extends Model {
    }
    public function GetClientDetailById($id)
    {
-   		$result = DB::table('client_notes')->where('note_id','=',$id)->get();
+   		$result = DB::table('client_notes')->where('note_id','=',$id)->where('is_deleted','=','1')->get();
    		return $result;
    }
    public function UpdateCleintNotes($post)
@@ -385,7 +388,7 @@ class Client extends Model {
 
    public function getDocumentDetailbyId($id)
    {
-        $result = DB::table('client_document')->where('id','=',$id)->get();
+        $result = DB::table('client_document')->where('id','=',$id)->where('is_delete','=','1')->get();
         return $result;
    }
 
