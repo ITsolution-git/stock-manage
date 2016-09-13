@@ -73,7 +73,7 @@
           <table border="1">
             <tr>
               <td align="center"><b>H</b></td>
-              <td align="center"><b>Inq Type</b></td>
+              <td align="center"><b>Ink Type</b></td>
               <td align="center"><b>Color</b></td>
               <td align="center"><b>Pantone</b></td>
             </tr>
