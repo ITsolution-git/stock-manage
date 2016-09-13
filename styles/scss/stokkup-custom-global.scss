@@ -47,6 +47,8 @@ $tab-active-color:#252932;
 $xs-font-size:12px;
 $font-size-mid:20px;
 $md-iconbtn-color:#a8a9ad;
+$blue-shade-btn:#6187db;
+$green-txt:#39b54a;
 /*global variables ends here */
 
 /*global popup style starts here */
@@ -177,6 +179,7 @@ button.bg-grey.md-raised{
 	margin:$zero;
 	padding:$zero;
 }
+
 /*genera css ends here */
 /*scss for sidebar and top navigation box */
 
@@ -791,7 +794,7 @@ table.dataTable thead.stokkup-space1 th{padding-top:10px;}
 	}	
 }
 .stokkup-blue-btn{
-	background-color:$blue-shade3 !important;
+	background-color:$blue-shade-btn !important;
 }
 .small-headings{
 	font-size:$datatable-content-size;
@@ -1144,8 +1147,7 @@ md-card-content{
 }
 .custom-struct-2{
 	md-tabs-wrapper{
-		top:20px;
-		width:250px;
+		width:50%;
 		margin:$auto;
 		position:$pos-relative;
 		z-index:5;
@@ -1156,7 +1158,7 @@ md-card-content{
 }
 .stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title{
 	position:$pos-relative;
-	z-index:$zero;
+	z-index:2;
 	padding-bottom:$zero;
 }
 .custom-struct-2{
@@ -1234,7 +1236,146 @@ md-card-content{
 		}
 	}
 }
+.right-search-box{
+	&.srch-small{
+		width:35%;
+	}
+}
+.shipping-custom-tab{
+	position:absolute;
+	top:13px;
+	z-index:1;
+	width:$full-width;
+	background-color:transparent;
+	md-tabs-canvas.md-paginated{
+		margin:$zero;
+	}
+	md-tabs-wrapper{
+		width:50%;
+		margin:0 auto;
+	}
+}
+.dashboard-page{
+	.md-title{
+		font-size:$font-size-text;
+		font-weight:$font-weight-600;
+	}
+}
 /* .custom-struct-2 md-tabs.md-active md-ink-bar{
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
 }*/
 /*clients module inner pages */
+.dash-btwn-txt{
+	float:$nofloat;
+	display:inline-block;
+	font-size:$datatable-content-size;
+	line-height:$font-size-text;
+	font-weight:$font-weight-400;
+	padding:$zero 15px;
+	&.comp-report-txt{
+		position:$pos-relative;
+		float:$nofloat;
+		display:table;
+		margin:0 auto;
+		text-align:center;
+		width:95%;
+	}
+	&.green-txt{
+		color:$green-txt;
+		font-size:16px;
+		padding:$zero;
+		position:$pos-relative;
+		top:-3px;
+		left:10px;
+		&.fa{
+			color:$green-txt;
+			font-size:14px;
+		}
+	}
+}
+.dashboard-page{
+	.num-style1{
+		font-size:29px;
+	}
+	.p-30.last-row{
+		padding-top:$zero;
+	}
+	md-card{
+		padding:20px $zero $zero;
+		margin:$zero 8px;
+		position:$pos-relative;
+		&.firstbox{
+			margin-left:$zero !important;
+		}
+		&.lastbox{
+			margin-right:$zero !important;
+		}
+		md-card-title{
+			padding:$zero 20px;
+		}
+		md-card-header{
+			padding:$zero 5px $zero 20px;
+		}
+		md-card-content{
+			padding-top:$zero;
+		}
+	}
+}
+.dash-footer-box{
+	width:$full-width;
+	background-color:#f8f9fa;
+	border-top:solid 1px $gray-shade3;
+	padding:15px $zero;
+	text-align:center;
+}
+.dash-footer-alternate-box{
+	width:$full-width;
+	background-color:$white-color;
+	padding:15px $zero;
+	text-align:center;
+}
+.affiliate-box{
+	width:$full-width;
+	@extend .white-bg;
+	border:solid 1px $gray-shade3;	
+	h4{
+		width:$full-width;
+		font-size:16px;
+		line-height:18px;
+		border-bottom:solid 1px $gray-shade3;
+		padding:15px 30px;
+	}
+	.affiliate-content{
+		width:$full-width;
+		padding:20px 30px;
+		float:$left;
+	}
+}
+.affiliate-content{
+	.img-box{
+		max-width:131px;
+		max-height:131px;
+		float:$left;
+		overflow:hidden;
+		margin-right:30px;
+		img{
+			max-width:$full-width;
+			height:auto;
+		}
+	}
+}
+.affiliate-block-space{
+	margin-bottom:15px;
+}
+.global-labels{
+	font-weight:$font-weight-600;
+		font-size:$font-size-text;
+		color:$datatable-text-color;
+}
+.bottom-shadow{
+	-moz-box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
+	-webkit-box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
+	-ms-box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
+	-o-box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
+	box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
+}

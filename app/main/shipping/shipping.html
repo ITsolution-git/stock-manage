@@ -1,25 +1,37 @@
-<div class="content order-list-page stockkup-content-table-container">
-    <div class="simple-table-container stokkup-main-tableview">
-        <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text pd15-TB" flex=100 class="cursor-p">Shipping</div>
-        </div>
-        <div ng-cloak>
-            <md-content>
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="tab-view-page simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        
+
+
+
+            <md-content class="shipping-custom-tab">
+                <div class="table-title " layout="row" layout-align="space-between center">
+                    <div class="table-title-text" flex=10 class="cursor-p">Shipping</div>
+                        <div class="pull-right right-search-box srch-small">
+                            <div class="search-block pull-right">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                   <label class="top-srch-label">Search Shipping...</label>
+                                    <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                                </md-input-container>
+                                <!-- <md-input-container class="md-block" flex-gt-sm>
+                                    <label class="top-srch-label">Search Clients...</label>
+                                    <input type="text" ng-model="name" ui-event="{change : 'search($event)'}" />
+                                </md-input-container> -->
+                            </div> 
+                        </div>
+                </div>
                 <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
                     <!---Order Waiting to Ship Tab-->
                     <md-tab label="Order Waiting to Ship">
                         <div ng-controller="shippingController">
-                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                            <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
-                                    <md-input-container class="md-block" flex-gt-sm>
-                                        <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                                        <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                                    </md-input-container>
+                                    
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
-                                    <table class="simple hover simple-tbl1">
+                                    <table class="dataTable row-border">
                                         <thead tasty-thead></thead>
 
                                             <tr ng-repeat="wait in rows">
@@ -34,7 +46,7 @@
                                     <div tasty-pagination class="tasty-page"></div>
                                 </div>
                                 <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-                                   <table class="simple">
+                                   <table class="dataTable row-border">
                                         <thead>
                                             <tr>
                                                 <th>No Records Found</th>
@@ -48,17 +60,17 @@
                     <!---Order In Progress Tab-->
                     <md-tab label="Order In Progress Set">
                         <div ng-controller="shippingProgressController">
-                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                            <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
-                                    <table class="simple hover simple-tbl1">
+                                    <table class="dataTable row-border">
                                         <thead tasty-thead></thead>
                                         <tbody> 
                                             <tr ng-repeat="progress in rows">
@@ -73,7 +85,7 @@
                                     <div tasty-pagination class="tasty-page"></div>
                                 </div>
                                 <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-                                   <table class="simple">
+                                   <table class="dataTable row-border">
                                         <thead>
                                             <tr>
                                                 <th>No Records Found</th>
@@ -87,17 +99,17 @@
                     <!---Shipped Orders Tab-->
                     <md-tab label="Shipped Orders">
                         <div ng-controller="shippingShippedController">
-                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                            <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
-                                    <table class="simple hover simple-tbl1">
+                                    <table class="dataTable row-border">
                                         <thead tasty-thead></thead>
                                         <tbody> 
                                             <tr ng-repeat="shipped in rows">
@@ -112,7 +124,7 @@
                                     <div tasty-pagination class="tasty-page"></div>
                                 </div>
                                 <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-                                   <table class="simple">
+                                   <table class="dataTable row-border">
                                         <thead>
                                             <tr>
                                                 <th>No Records Found</th>
@@ -125,6 +137,5 @@
                     </md-tab>
                 </md-tabs>
             </md-content>
-        </div>
     </div> 
 </div>
