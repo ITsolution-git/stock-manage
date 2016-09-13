@@ -7,20 +7,18 @@
     /** @ngInject */
     function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,size_group_id,warehouse,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
-      $("#ajax_loader").show();
-       var vm = this;
-
+        $("#ajax_loader").show();
+        var vm = this;
        
-       var combine_array_id = {};
-       var product_image_main;
-       combine_array_id.product_id = product_id;
-       combine_array_id.design_id = design_id;
-       combine_array_id.company_id = sessionService.get('company_id');
-       product_image_main = "https://www.ssactivewear.com/"+product_image;
-       product_image = "https://www.ssactivewear.com/"+product_image;
-       $scope.operation = operation;
+        var combine_array_id = {};
+        var product_image_main;
+        combine_array_id.product_id = product_id;
+        combine_array_id.design_id = design_id;
+        combine_array_id.company_id = sessionService.get('company_id');
+        product_image_main = "https://www.ssactivewear.com/"+product_image;
+        product_image = "https://www.ssactivewear.com/"+product_image;
+        $scope.operation = operation;
         $scope.warehouse = warehouse;
-        
 
         $scope.product_name = product_name;
         $scope.product_image_display = product_image;
@@ -28,17 +26,42 @@
         $scope.description = description;
         $scope.vendor_name = vendor_name;
         $scope.product_id = product_id;
-         $scope.colorName = colorName;
-         $scope.size_group_id = size_group_id;
+        $scope.colorName = colorName;
+        $scope.size_group_id = size_group_id;
 
-
-         var misc_list_data = {};
+        var misc_list_data = {};
         var condition_obj = {};
         condition_obj['company_id'] =  sessionService.get('company_id');
         misc_list_data.cond = angular.copy(condition_obj);
 
         $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
-                  $scope.miscData = result.data.records;
+            $scope.miscData = result.data.records;
+        });
+
+        var product_data = {};
+        product_data.cond ={'product_id':product_id,'design_id':design_id,is_delete :'1'};
+        product_data.table ='design_product';
+
+        $scope.is_supply = false;
+
+        $http.post('api/public/common/GetTableRecords',product_data).success(function(result) {
+          
+            if(result.data.success == '1') 
+            {
+                $scope.product =result.data.records[0];
+                $scope.is_supply = result.data.records[0].is_supply;
+
+                if($scope.is_supply == 1) {
+                    $scope.is_supply = true;
+                }
+                else {
+                    $scope.is_supply = false;
+                }
+            } 
+            else
+            {
+                $scope.product=[];
+            }
         });
 
        
@@ -134,6 +157,7 @@
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
             combine_array_id.action = operation;
+            combine_array_id.is_supply = $scope.is_supply;
             //combine_array_id.size_group_id = size_group_id;
             combine_array_id.warehouse = warehouse;
             combine_array_id.design_product_id = design_product_id;
