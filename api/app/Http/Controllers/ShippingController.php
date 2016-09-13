@@ -130,13 +130,13 @@ class ShippingController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'po.order_id';
+            $post['sorts']['sortBy'] = 'o.id';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'po.order_id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
 
-    	$result = $this->shipping->getShippingList($post);
+        $result = $this->shipping->getShippingList($post);
 
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
@@ -144,11 +144,10 @@ class ShippingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'po.order_id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
                         1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'po.po_id', 'name' => 'PO #'),
-                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
-                        4=>array('key' => '', 'name' => '', 'sortable' => false)
+                        2=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        3=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
