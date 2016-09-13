@@ -35,11 +35,10 @@
                                         <thead tasty-thead></thead>
 
                                             <tr ng-repeat="wait in rows">
-                                                <td>{{ wait.order_id}}</td>
+                                                <td>{{ wait.id}}</td>
                                                 <td>{{ wait.client_company}}</td>
-                                                <td>{{ wait.po_id}}</td>
                                                 <td>0/{{ wait.total}}</td>
-                                                <td class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.order_id})"><a>SHIP</a></td>
+                                                <td class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.id})"><a>SHIP</a></td>
                                             </tr>                    
                                         </tbody>
                                     </table>
@@ -74,11 +73,10 @@
                                         <thead tasty-thead></thead>
                                         <tbody> 
                                             <tr ng-repeat="progress in rows">
-                                                <td>{{ progress.order_id}}</td>
+                                                <td>{{ progress.id}}</td>
                                                 <td>{{ progress.client_company}}</td>
-                                                <td>{{ progress.po_id}}</td>
                                                 <td>{{ progress.distributed}}/{{ progress.total}}</td>
-                                                <td class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:progress.order_id})"><a>SHIP</a></td>
+                                                <td class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:progress.id})"><a>SHIP</a></td>
                                             </tr>                    
                                         </tbody>
                                     </table>
@@ -112,13 +110,40 @@
                                     <table class="dataTable row-border">
                                         <thead tasty-thead></thead>
                                         <tbody> 
-                                            <tr ng-repeat="shipped in rows">
-                                                <td>{{ shipped.order_id}}</td>
-                                                <td>{{ shipped.client_company}}</td>
-                                                <td>{{ shipped.po_id}}</td>
-                                                <td>{{ shipped.distributed}}/{{ shipped.total}}</td>
-                                                <td class="text-center cursor-p" ui-sref="app.shipping.shipmentoverview({id:shipped.shipping_id})"><a>SHIPMENT OVERVIEW</a></td>
-                                            </tr>                    
+                                            <tr ng-repeat-start="row in rows">
+                                                <td>{{ row.id}}</td>
+                                                <td>{{ row.client_company}}</td>
+                                                <td>{{ row.distributed}}/{{ row.total}}</td>
+                                                <td class="accor" ng-show="row.shipping_data.length > 0">
+                                                    <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                                                    <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                                                </td>
+                                                <td ng-if="row.shipping_created == '0'" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:row.id})"><a>SHIP</a></td>
+                                            </tr>
+                                            <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
+                                                <td colspan="8" class="collpas">
+                                                    <table class="dataTable row-border hover" >
+                                                        <thead>
+                                                            <th>Shipping Id</th>
+                                                            <th>Job Name</th>
+                                                            <th>Shipping By</th>
+                                                            <th>In Hands By</th>
+                                                            <th>&nbsp;</th>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in row.shipping_data">
+                                                                <td>{{data.shipping_id}}</td>
+                                                                <td>{{row.name}}</td>
+                                                                <td ng-if="data.shipping_by != '0000-00-00'">{{ data.shipping_by | date:"M/d/yyyy" }}</td>
+                                                                <td ng-if="data.shipping_by == '0000-00-00'"></td>
+                                                                <td ng-if="data.in_hands_by != '0000-00-00'">{{ data.in_hands_by | date:"M/d/yyyy" }}</td>
+                                                                <td ng-if="data.in_hands_by == '0000-00-00'"></td>
+                                                                <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.shipping_id})"><a>SHIPMENT OVERVIEW</a></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>               
                                         </tbody>
                                     </table>
                                     <div tasty-pagination class="tasty-page"></div>
