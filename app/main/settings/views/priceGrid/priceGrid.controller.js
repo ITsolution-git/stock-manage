@@ -88,6 +88,31 @@
                
         }
 
+
+         $scope.print_excel = function(id)
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/admin/downloadPriceGridExcel';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var invoice_id = document.createElement('input');
+            invoice_id.name = 'price_id';
+            invoice_id.setAttribute('value', id);
+            form.appendChild(invoice_id);
+
+            var type = document.createElement('input');
+            type.name = 'type';
+            type.setAttribute('value', 'xlsx');
+            form.appendChild(type);
+
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
     }
     
 })();
