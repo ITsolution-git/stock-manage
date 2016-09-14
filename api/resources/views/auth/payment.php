@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Payment Login</title>
+    <title>STOKKUP Invoice Payment</title>
     <style type="text/css">
     html,body{
         margin:0;
@@ -280,16 +280,6 @@
 
     function checkvalidations()
     {
-        /*var ddlReason = $("[id*=expMonth]");
-        var selectedValue = ddlReason.val();
-        alert(selectedValue);
-        if(selectedValue == '0' ) {
-            alert("Please select Year of Expiration");
-            return false;
-        }*/
-        //var answer=document.getElementById("expMonth");
-        //alert(answer[answer.selectedIndex].value);
-
         if(document.getElementById('creditFname').value == '' ) {
             alert("Please enter First Name");
             return false;
@@ -300,11 +290,6 @@
         }
         if(document.getElementById('creditCard').value == '' ) {
             alert("Please enter Credit Card");
-            return false;
-        }
-        if(!$.isNumeric("#creditCard")){
-            alert("Please enter Valid Credit Card Number");
-            document.getElementById('creditCard').value = '';
             return false;
         }
         if(document.getElementById('amount').value == '' ) {
