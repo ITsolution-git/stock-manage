@@ -76,61 +76,45 @@
         $scope.setTime = function (finishing,param)
         {
             var d = new Date();
-            var hours = d.getHours();
-            var minutes = d.getMinutes();
-            var seconds = d.getSeconds();
+            var hours = ("0" + d.getHours()).slice(-2);
+            var minutes = ("0" + d.getMinutes()).slice(-2);
+            var seconds = ("0" + d.getSeconds()).slice(-2);
 
-            var ampm = hours >= 12 ? 'PM' : 'AM';
-
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0'+minutes : minutes;
-            var strTime = hours + ':' + minutes + ' ' + ampm;
-
+            var ampm = hours >= 12 ? ' PM' : ' AM';
+            
             if(param == 'start')
             {
                 /*if($scope.finishing_data.start_time == '')
                 {*/
                     $scope.finishing_data.end_time = '';
-                    $scope.finishing_data.start_time2 = hours + ":" + minutes + ":" + seconds;
-                    var start_time2 = $scope.finishing_data.start_time2;
+                    var start_time = hours + ":" + minutes + ":" + seconds;
+                    $scope.finishing_data.start_time = start_time + ampm;
 
-                    $scope.finishing_data.start_time = strTime;
-                    var start_time = $scope.finishing_data.start_time;
 
-                    var a = start_time2.split(':');
-                    var start_time2 = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                    var a = start_time.split(':');
+                    var start_time = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
 
                     var est = (new Date).clearTime()
-                      .addSeconds(start_time2)
+                      .addSeconds(start_time)
                       .toString('H:mm:ss');
 
-                    $scope.finishing_data.est2 = est;
-
-                    var e = est.split(':');
-
-                    e[0] = e[0] % 12;
-                    e[1] = e[0] ? e[0] : 12; // the hour '0' should be '12'
-                    minutes = e[1] < 10 ? '0'+e[1] : e[1];
-                    var est2 = e[0] + ':' + e[1] + ' ' + ampm;
-
-                    $scope.finishing_data.est = strTime;
-               // }
+                    $scope.finishing_data.est = est;
+                //}
             }
             if(param == 'end')
             {
                 if($scope.finishing_data.start_time != '' && $scope.finishing_data.end_time == '')
                 {
-                    $scope.finishing_data.end_time2 = hours + ":" + minutes + ":" + seconds;
-                    var end_time2 = $scope.finishing_data.end_time2;
-                    var start_time2 = $scope.finishing_data.start_time2;
-
-                    $scope.finishing_data.end_time = strTime;
-                    var start_time = $scope.finishing_data.start_time;
+                    $scope.finishing_data.end_time = hours + ":" + minutes + ":" + seconds;
+                    $scope.finishing_data.start_time1 = $scope.finishing_data.start_time.replace(' AM','');
+                    $scope.finishing_data.start_time1 = $scope.finishing_data.start_time.replace(' PM','');
+                    var start_time = $scope.finishing_data.start_time1;
                     var end_time = $scope.finishing_data.end_time;
 
-                    var a = start_time2.split(':');
-                    var b = end_time2.split(':');
+                    $scope.finishing_data.end_time = $scope.finishing_data.end_time + ampm;
+
+                    var a = start_time.split(':');
+                    var b = end_time.split(':');
                     
                     var strtime1 = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
                     var strtime2 = (+b[0]) * 60 * 60 + (+b[1]) * 60 + (+b[2]);
@@ -141,19 +125,13 @@
                       .addSeconds(time_diff)
                       .toString('H:mm:ss');
 
-                    $scope.finishing_data.est2 = est;
+                    $scope.finishing_data.est = est;
 
-                    var e = est.split(':');
 
-                    e[0] = e[0] % 12;
-                    e[1] = e[0] ? e[0] : 12; // the hour '0' should be '12'
-                    minutes = e[1] < 10 ? '0'+e[1] : e[1];
-                    var est2 = e[0] + ':' + e[1] + ' ' + ampm;
-
-                    $scope.finishing_data.est = est2;
                 }
             }
         }
+
 
         $scope.editFinishing = function()
         {
