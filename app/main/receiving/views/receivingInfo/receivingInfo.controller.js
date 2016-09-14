@@ -171,7 +171,7 @@
 
                         if(new Date($scope.main_po.date) > new Date(field_value))
                         {
-                            notifyService.notify('error', 'Receive date should not be greater then Created Date.');
+                            notifyService.notify('error', 'Receive date should be greater then Created Date.');
                             return false;
                         }
                         var condition_obj = {};
