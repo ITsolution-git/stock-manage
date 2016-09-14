@@ -96,27 +96,25 @@ class FinishingController extends Controller {
 
             foreach ($inner_data as $row) {
                 if($row->start_time != '00:00:00') {
-                    $row->start_time = date('h:i A', strtotime($row->start_time));
+                    //$row->start_time = date('h:i A', strtotime($row->start_time));
+                    $start_time = explode(":", $row->start_time);
+                    $ampm = $start_time[0] >= 12 ? 'PM' : 'AM';
+                    $row->start_time = $row->start_time ." ". $ampm;
                 }
                 else {
                     $row->start_time = '';   
                 }
                 if($row->end_time != '00:00:00') {
-                    $row->end_time = date('h:i A', strtotime($row->end_time));
+                    //$row->end_time = date('h:i A', strtotime($row->end_time));
+                    $end_time = explode(":", $row->end_time);
+                    $ampm = $end_time[0] >= 12 ? 'PM' : 'AM';
+                    $row->end_time = $row->end_time ." ". $ampm;
                 }
                 else {
                     $row->end_time = '';
                 }
-
-                if($row->est != '00:00:00')
-                {
-                    $est = explode(":", $row->est);
-                    $ampm = $est[0] >= 12 ? 'PM' : 'AM';
-                    $row->est = $est[0] .":". $est[1] ." ". $ampm;
-                }
-                else
-                {
-                    $row->est = '';
+                if($row->est == '00:00:00') {
+                    $row->est;
                 }
             }
 
@@ -182,8 +180,9 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        $finishingData['field'] = array('start_time' => $post['start_time2'],'end_time' => $post['end_time2'],'est' => $post['est2'],'note'=>$post['note']);
+        $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est'],'note'=>$post['note']);
         $finishingData['where'] = array('id' => $post['id']);
+
 
         $result = $this->finishing->updateFinishing($finishingData);
         
