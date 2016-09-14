@@ -457,8 +457,8 @@
                         <input type="text" placeholder="City" name="city" id="city" value="">
                         </div>
                         <div class="flex-30  m-r-15 pull-left selectouter">
-                            <select placeholder="State" name="state" aria-label="State" id="state" value="">
-                                <option value="">State</option>
+                            <select placeholder="State" name="state" id="state">
+                                <option value="0">State</option>
                                 <?php foreach ($stateArray as $state) {?>
                                     <option value="<?php echo $state->code; ?>"><?php echo $state->name; ?></option>
                                 <?php } ?>
