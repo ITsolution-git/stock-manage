@@ -328,11 +328,6 @@
             return false;
         }
         $("#ajax_loader").show();
-        $("#creditCard").numeric();
-        $("#cvv").numeric();
-        $('#creditCard').keyup(function () { 
-            this.value = this.value.replace(/[^0-9\.]/g,'');
-        });
 
         
 
@@ -401,7 +396,7 @@
                              <input type="text" placeholder="Last Name On Card" name="creditLname" id="creditLname" value="">
                         </div>
                         <div class="flex-100 inputfield-space pull-left">
-                            <input type="text" placeholder="Credit Card Number" maxlength="20" name="creditCard" id="creditCard" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" value="">
+                            <input type="text" placeholder="Credit Card Number" maxlength="20" name="creditCard" id="creditCard" onkeypress="return IsNumeric(event);" value="">
                         </div>
                         <div class="flex-100 inputfield-space pull-left">
                             <input type="text" placeholder="Amount" name="amount" id="amount" value="" onchange="validateFloatKeyPress(this);">
@@ -445,7 +440,7 @@
                             </select>
                         </div>
                          <div class="flex-30 pull-left">
-                            <input type="text" placeholder="CVV" name="cvv" id="cvv" value="" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;">
+                            <input type="text" placeholder="CVV" name="cvv" id="cvv" value="" onkeypress="return IsNumeric(event);">
                         </div>
                         </div>
                     </div>
