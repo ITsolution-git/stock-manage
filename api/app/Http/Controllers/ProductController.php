@@ -991,19 +991,19 @@ public function create_dir($dir_path) {
             {
                 if($flag) { $flag = false; continue; }
                 
-                if($emapData[4] != '') {
+                if($emapData[2] != '') {
 
                     if($emapData[0] != '') {
 
 
-                           $vendor_data = $this->common->GetTableRecords('vendors',array('name_company' => trim($emapData[4]),'company_id' => $post['company_id']),array());
+                           $vendor_data = $this->common->GetTableRecords('vendors',array('name_company' => trim($emapData[2]),'company_id' => $post['company_id']),array());
                            
                            if(count($vendor_data)>0) {
                              $vendor_id = $vendor_data[0]->id;
                           
                            } else {
                                 $vendor_name = array(
-                                    'name_company'=>$emapData[4],
+                                    'name_company'=>$emapData[2],
                                     'created_date' => date('Y-m-d'),
                                     'company_id' => $post['company_id']
                                     
@@ -1020,7 +1020,7 @@ public function create_dir($dir_path) {
                            } else {
                                 $product_name = array(
                                     'name'=>$emapData[0],
-                                    'description'=>$emapData[5],
+                                    'description'=>$emapData[1],
                                     'created_date' => date('Y-m-d'),
                                     'company_id' => $post['company_id'],
                                     'vendor_id' => $vendor_id
@@ -1029,15 +1029,15 @@ public function create_dir($dir_path) {
                                   $result = $this->common->InsertRecords('products',$product_name);
                                   $product_id = $result;
                            }
-                           if($emapData[1] != '') {
-                           $color_data = $this->common->GetTableRecords('color',array('name' => trim($emapData[1]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                           if($emapData[3] != '') {
+                           $color_data = $this->common->GetTableRecords('color',array('name' => trim($emapData[3]),'company_id' => $post['company_id'],'is_sns' => 0),array());
                            
                            if(count($color_data)>0) {
                              $color_id = $color_data[0]->id;
                           
                            } else {
                                $color_name = array(
-                                        'name'=>$emapData[1],
+                                        'name'=>$emapData[3],
                                         'is_sns' => 0,
                                         'company_id' => $post['company_id']
                                         );
@@ -1045,16 +1045,16 @@ public function create_dir($dir_path) {
                                 $color_id = $result_color;
                            }
                          
-                           if($emapData[2] != '') {
+                           if($emapData[4] != '') {
                           
-                                   $size_data = $this->common->GetTableRecords('product_size',array('name' => trim($emapData[2]),'company_id' => $post['company_id'],'is_sns' => 0),array());
+                                   $size_data = $this->common->GetTableRecords('product_size',array('name' => trim($emapData[4]),'company_id' => $post['company_id'],'is_sns' => 0),array());
                                    
                                        if(count($size_data)>0) {
                                          $size_id = $size_data[0]->id;
                                       
                                        } else {
                                            $size_name = array(
-                                                    'name'=>$emapData[2],
+                                                    'name'=>$emapData[4],
                                                     'is_sns' => 0,
                                                     'company_id' => $post['company_id']
                                                     );
@@ -1069,7 +1069,7 @@ public function create_dir($dir_path) {
                                                         'product_id'=>$product_id,
                                                         'color_id' => $color_id,
                                                         'size_id' => $size_id,
-                                                        'customer_price' => $emapData[3]
+                                                        'customer_price' => $emapData[5]
                                                         );
                                             $result_size_color = $this->common->InsertRecords('product_color_size',$product_color_size);
                                             $id = $result_size_color;
