@@ -331,13 +331,15 @@ class Product extends Model {
                 $post['warehouse'] = '';
             }
 
-        if(isset($post['is_supply'])) {
-            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'date_added' => date('Y-m-d h:i:sa'));
+/*        if(isset($post['is_supply'])) {
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
         }
         else
         {
             $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
-        }
+        }*/
+
+        $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
 
         if($post['action'] == 'Add') {
             $design_product_id = DB::table('design_product')->insertGetId($insert_array);
