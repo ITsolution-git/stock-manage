@@ -1286,7 +1286,6 @@ class OrderController extends Controller {
     {
         $post = Input::all();
        
-       
         $client_data = $this->client->GetclientDetail($post['orderData']['client']['client_id']);
 
         $dataMisc['cond']['company_id'] = $post['company_id'];
@@ -1808,7 +1807,8 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
-       
+        $orderdata = $this->common->GetTableRecords('orders',array('id'=>$post['cond']['id']));
+
         if($post['orderDataDetail']['in_hands_by'] != '')
         {
             $post['orderDataDetail']['in_hands_by'] = date("Y-m-d", strtotime($post['orderDataDetail']['in_hands_by']));
@@ -1822,8 +1822,13 @@ class OrderController extends Controller {
             $post['orderDataDetail']['date_start'] = date("Y-m-d", strtotime($post['orderDataDetail']['date_start']));
         }
 
+        if($orderdata[0]->client_id != $post['orderDataDetail']['client_id'])
+        {
+            $client_data = $this->client->GetclientDetail($post['orderDataDetail']['client_id']);
+            $post['orderDataDetail']['price_id'] = $client_data['sales']['salespricegrid'];
+        }
 
-       $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
+        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
             return response()->json(['data'=>$data]);
 

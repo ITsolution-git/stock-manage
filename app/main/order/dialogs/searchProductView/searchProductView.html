@@ -102,7 +102,7 @@
                             <div class="mrg20-T header-typ3">
                                 <span>TOTAL Quantity :- {{AllProductDetail[colorName].total_qnty}}</span>
                                 <br><br>
-                                <span>TOTAL COST :- {{AllProductDetail[colorName].total}}</span>
+                                <span ng-show="!is_supply">TOTAL COST :- {{AllProductDetail[colorName].total}}</span>
                                 <md-checkbox  aria-label="Checkbox 1" ng-model="is_supply">
                                     These products are supplied garments
                                 </md-checkbox>

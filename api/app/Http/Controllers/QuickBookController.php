@@ -960,8 +960,8 @@ class QuickBookController extends Controller
         $company_data = $this->common->GetTableRecords('company_info',array('user_id' => $company_id),array());
         $result = $this->GetAllclientInovicesAddDelete($company_id,0,1);
         $resultDelete = $this->GetAllclientInovicesAddDelete($company_id,1,0);
-        if((count($result)<1) && (count($resultDelete)<1)){
-            $data = array("success"=>2,'message' =>"No Invoice Payments are there to Sync to Quickbook.");
+        if((count($result)<1) || (count($resultDelete)<1)){
+            $data = array("success"=>2,'message' =>"Either Quickbook not Connected or No Invoice Payments are there to Sync to Quickbook.");
             return response()->json(['data'=>$data]);
         }
 
@@ -1008,8 +1008,8 @@ class QuickBookController extends Controller
             else
             {
                 //print($PaymentService->lastError());
-                $data = array("success"=>0,'message' =>$PaymentService->lastError());
-                return response()->json(['data'=>$data]);
+                $dataTemp = array("success_temp"=>0,'message' =>$PaymentService->lastError());
+                //return response()->json(['data'=>$data]);
                 //return 0;
             }
         }
@@ -1028,10 +1028,13 @@ class QuickBookController extends Controller
                 else
                 {
                     //print('Could not delete payment: ' . $PaymentService->lastError());
-                    $data = array("success"=>0,'message' =>'Could not delete payment: ' . $PaymentService->lastError());
-                    return response()->json(['data'=>$data]);
+                    $dataTemp = array("success_temp"=>0,'message' =>'Could not delete payment: ' . $PaymentService->lastError());
+                    //return response()->json(['data'=>$data]);
                 }
             }
+        }
+        if($dataTemp['success_temp']==0){
+            $data = array("success"=>0,'message' =>"Quickbook not Connected.");
         }
         return response()->json(['data'=>$data]);
         //print_r($result);exit;
