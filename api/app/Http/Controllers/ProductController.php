@@ -742,7 +742,7 @@ public function create_dir($dir_path) {
                         {
                             $price = $pd->price;
                             if($supplied > 0) {
-                                $sum = $price;
+                                $sum = 0;
                             }
                             else {
                                 $sum = $price + $price_grid->shipping_charge;

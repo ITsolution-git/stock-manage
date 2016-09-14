@@ -12,7 +12,12 @@
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
                 <md-input-container class="md-block first-box m-b-30">
-                    <input placeholder="Description" name="description" area-label=""  required ng-model="contact_arr.description">
+                    <input placeholder="Description *" name="description" area-label=""  required ng-model="contact_arr.description">
+                    <div ng-messages="clientForm.description.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                    </div>
                 </md-input-container>
 
 				<md-input-container class="upload-rel">
@@ -37,7 +42,7 @@
               </div>
         </md-dialog-content>
          <md-dialog-actions layout="row" layout-align="end center">
-                   <md-button ng-click="saveDocument(contact_arr)" class="md-primary md-hue-1 md-accent ">Save</md-button>
+                   <md-button ng-disabled="clientForm.$invalid || clientForm.$pristine"  class="md-primary md-hue-1 md-accent" ng-click="saveDocument(contact_arr)" >Save</md-button>
         </md-dialog-actions> 
     </form>
 </md-dialog>
