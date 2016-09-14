@@ -44,6 +44,7 @@ class PaymentController extends Controller {
     public function chargeCreditCard()
     {
         $post = Input::all();
+        //print_r($post);exit;
         $amount=$post['amount'];
 
         if(isset($post['company_id']))
@@ -57,6 +58,7 @@ class PaymentController extends Controller {
             ->where('ai.api_id','=',3)
             ->get();
         }
+
         if(count($retCredsArray)<1){
             $data = array("success"=>0,'message' =>"Please integrate Authorize.net details");
             return response()->json(['data'=>$data]);
@@ -499,10 +501,36 @@ class PaymentController extends Controller {
 
     public function linktopay($token)
     {
-        $payment_data = $this->common->GetTableRecords('link_to_pay',array('session_link' => $token));
-        $data['stateArray'] = $this->common->GetTableRecords('state',array());
-        $data['orderArray'] = $payment_data[0];
+        //$payment_data = $this->common->GetTableRecords('link_to_pay',array('session_link' => $token));
 
+        $payment_data = DB::table('link_to_pay as lp')
+            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'lp.balance_amount', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id')
+            ->leftJoin('orders as o','o.id','=',"lp.order_id")
+            ->leftJoin('invoice as i','i.order_id','=',"o.id")
+            ->leftJoin('client as c','c.client_id','=',"o.client_id")
+            ->leftJoin('users as u','u.id','=',"c.company_id")
+            ->where('lp.session_link','=',$token)
+            ->where('lp.payment_flag','=','0')
+            ->get();
+
+        if(count($payment_data)<1){
+          //$data['orderArray'] = new stdClass();
+          //$newobject = (object) null;
+          $data['orderArray'] = (object) null;
+          $data['orderArray']->link_status=1;
+        }else{
+          $data['orderArray'] = $payment_data[0];
+          $data['stateArray'] = $this->common->GetTableRecords('state',array());
+          $time = strtotime($data['orderArray']->created_date);
+          $curtime = time();
+
+          if(($curtime-$time) > 86400) {     //86400 seconds
+            //echo "Link expired";
+            $payment_flag=array('payment_flag' => '1');
+            $this->common->UpdateTableRecords('link_to_pay',array('session_link' => $token),$payment_flag);
+            $data['orderArray']->link_status=1;
+          }
+        }
         return view('auth.payment',$data)->render();
     }
 }

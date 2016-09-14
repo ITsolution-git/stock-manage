@@ -337,7 +337,7 @@
                 }
                 else
                 {
-                    notifyService.notify('error',"Payment could not be made");
+                    notifyService.notify('error',"Payment could not be made. Please verify your card details with Authorized.net.");
                 }
                 return false;
                 

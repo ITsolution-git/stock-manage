@@ -226,7 +226,7 @@
                             </div>                    
                         </md-tab>
                         <!-----------------Pay By Credit Card-------------------->
-                        <md-tab label="Pay By Credit Card">
+                        <md-tab label="Pay By Credit Card" ng-if="allData.order_data[0].total_payments < allData.order_data[0].grand_total">
                             <div class="ms-responsive-table-wrapper">
                                <div class="pd15">
                                    <div layout="row">
@@ -285,7 +285,7 @@
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="CVV" ng-model="company.cvv">
+                                                    <input placeholder="CVV" name="CVV" only-number="10" ng-model="company.cvv">
                                                 </md-input-container>
                                             </div>
                                             <md-checkbox  aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>
@@ -331,7 +331,7 @@
                             </div> 
                         </md-tab>
                         <!-----------------Pay By Cash-------------------->
-                        <md-tab label="Pay By Cash">
+                        <md-tab label="Pay By Cash" ng-if="allData.order_data[0].total_payments < allData.order_data[0].grand_total">
                             <div class="ms-responsive-table-wrapper">
                               <div class="pd15">
                                    <div layout="row">
@@ -445,7 +445,7 @@
         </div>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg15-T">
-        <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
+        <button ng-if="allData.order_data[0].total_payments < allData.order_data[0].grand_total" type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
         <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Link to Pay" ng-click="print_pdf()"><span class="ng-scope">Download</span></button>
     </md-dialog-actions>
 </div>
