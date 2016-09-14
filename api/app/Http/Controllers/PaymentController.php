@@ -202,7 +202,6 @@ class PaymentController extends Controller {
                         $requestNew->setProfile($customerprofile);
                         $controller = new AnetController\CreateCustomerProfileController($requestNew);
                         $responseProfile = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
-                  //print_r($responseProfile);exit;
                   
                         if (($responseProfile != null) && ($responseProfile->getMessages()->getResultCode() == "Ok") )
                         {
@@ -210,10 +209,9 @@ class PaymentController extends Controller {
                             $paymentProfiles = $responseProfile->getCustomerPaymentProfileIdList();
                             //echo "SUCCESS: PAYMENT PROFILE ID : " . $paymentProfiles[0] . "\n";
 
-                            $profileData = array('profile_id' => $paymentProfiles[0],'client_id' => $retArray[0]->client_id);
+                            $profileData = array('profile_id' => $paymentProfiles[0],'client_id' => $retArray[0]->client_id, 'card_number' => $creditCardNumberStored);
 
                             $id = $this->common->InsertRecords('client_payment_profiles',$profileData);
-
                         }
                     } 
                     // update link to pay records
@@ -532,5 +530,45 @@ class PaymentController extends Controller {
           }
         }
         return view('auth.payment',$data)->render();
+    }
+
+    // Retrieve an existing customer profile along with all the associated payment profiles and shipping addresses
+    public function getCustomerProfile(){
+        //$merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+        //$merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
+        //$merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);
+        //$profileIdRequested='';
+        $refId = 'ref' . time();
+
+        $request = new AnetAPI\GetCustomerProfileRequest();
+        $request->setMerchantAuthentication($merchantAuthentication);
+        $request->setCustomerProfileId($profileIdRequested);
+        $controller = new AnetController\GetCustomerProfileController($request);
+        $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        if (($response != null) && ($response->getMessages()->getResultCode() == "Ok") )
+        {
+            echo "GetCustomerProfile SUCCESS : " .  "\n";
+            $profileSelected = $response->getProfile();
+            $paymentProfilesSelected = $profileSelected->getPaymentProfiles();
+            echo "Profile Has " . count($paymentProfilesSelected). " Payment Profiles" . "\n";
+
+            if($response->getSubscriptionIds() != null) 
+            {
+                if($response->getSubscriptionIds() != null)
+                {
+
+                    echo "List of subscriptions:";
+                    foreach($response->getSubscriptionIds() as $subscriptionid)
+                    echo $subscriptionid . "\n";
+                }
+            }
+        }
+        else
+        {
+            echo "ERROR :  GetCustomerProfile: Invalid response\n";
+            $errorMessages = $response->getMessages()->getMessage();
+            echo "Response : " . $errorMessages[0]->getCode() . "  " .$errorMessages[0]->getText() . "\n";
+        }
+        return $response;
     }
 }
