@@ -485,7 +485,7 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
 
 
         $wherePriceConditions = ['id' => $priceId];
-        $listArrayDatanew = [DB::raw("discharge as 'Discharge',foil as 'Foil',number_on_dark as 'Number on Dark',poly_bagging as 'Poly Bagging',specialty as 'Specialty',folding as 'Folding',number_on_light as 'Number on Light',press_setup as 'Press Setup',color_matching as 'Color Matching',hang_tag as 'Hang Tag',over_size as 'Oversize',printed_names as 'Printed Name',embroidered_names as 'Embroidered Names',ink_changes as 'Ink Charges',over_size_screens as 'Oversize Screens',screen_fees as 'Screen Fees',shipping_charge as 'Shipping Charge'")];
+        $listArrayDatanew = [DB::raw("discharge as 'Discharge',foil as 'Foil',number_on_dark as 'Number on Dark',poly_bagging as 'Poly Bagging',specialty as 'Speciality',folding as 'Folding',number_on_light as 'Number on Light',press_setup as 'Press Setup',color_matching as 'Color Matching',hang_tag as 'Hang Tag',over_size as 'Oversize',printed_names as 'Printed Name',embroidered_names as 'Embroidered Names',ink_changes as 'Ink Charges',over_size_screens as 'Oversize Screens',screen_fees as 'Screen Fees',shipping_charge as 'Shipping Charge'")];
         $priceDataCharges = DB::table('price_grid')->select($listArrayDatanew)->where($wherePriceConditions)->get();
         
 
