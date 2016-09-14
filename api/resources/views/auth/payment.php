@@ -362,7 +362,7 @@
               success: function(resultData) {
                 $("#ajax_loader").hide();
                 alert("Payment made Successfully");
-                //setTimeout("location.href = '../../../../index.php';",2000);
+                setTimeout("location.href = '../../../../index.php';",2000);
             }
         });
         saveData.error(function() { alert("Payment could not be made. Please verify your card details with Authorized.net."); });
