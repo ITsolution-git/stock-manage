@@ -251,6 +251,10 @@ md-menu-content {
       color: #252932;
       font-size: 20px;
       font-weight: 300; }
+      .stockkup-content-table-container .stokkup-main-tableview .table-title .table-title-text a {
+        font-weight: 400; }
+        .stockkup-content-table-container .stokkup-main-tableview .table-title .table-title-text a:hover, .stockkup-content-table-container .stokkup-main-tableview .table-title .table-title-text a:focus {
+          font-weight: 400; }
 
 .stokkup-main-tableview.transparent-bg {
   background-color: transparent; }
@@ -551,7 +555,7 @@ table.dataTable thead.stokkup-space1 th {
     background-color: #4773d6; }
 
 .stokkup-blue-btn {
-  background-color: #6187db !important; }
+  background-color: #4773d6 !important; }
 
 .small-headings {
   font-size: 13px;
@@ -608,7 +612,7 @@ table.table-white-bg {
       font-size: 14px;
       color: #6e7584 !important;
       background-color: #fff;
-      border-bottom: solid 1px #e5e5e5;
+      border-bottom: solid 1px #eeeeee;
       padding: 30px 8px 10px;
       line-height: 14px; }
       table.table-white-bg thead th:first-child {
@@ -640,7 +644,7 @@ table.table-white-bg tbody tr:first-child td {
     padding: 0; }
   .box-layout-2 md-card md-card-content {
     background: #fff;
-    border: solid 1px #e5e5e5;
+    border: solid 1px #eeeeee;
     padding-top: 12px; }
     .box-layout-2 md-card md-card-content md-input-container {
       padding: 0; }
@@ -1034,5 +1038,63 @@ md-card-content.custom-desc-box span {
   -ms-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
   -o-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
   box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important; }
+
+.payment-accordion {
+  width: 100%;
+  border: solid 1px #ededed;
+  margin: 0;
+  padding: 20px;
+  float: left; }
+  .payment-accordion .payment-panel {
+    width: 100%; }
+    .payment-accordion .payment-panel h4 {
+      float: left;
+      width: 100%;
+      background: #fafafa;
+      border: solid 1px #ededed;
+      padding: 12px;
+      margin: 0 0 5px;
+      cursor: pointer; }
+
+.no-border {
+  border: none !important; }
+
+.screenset-list-struct {
+  list-style-type: none;
+  display: block;
+  margin: 0;
+  padding: 0; }
+  .screenset-list-struct li {
+    list-style-type: none;
+    display: block;
+    margin: 0 0 15px;
+    padding: 15px 0 0;
+    float: left;
+    background-color: #fff;
+    width: 100%;
+    border: solid 1px #eeeeee; }
+
+.screenset-list-struct dnd-nodrag {
+  float: left;
+  width: 100%;
+  padding: 0 30px 0 20px; }
+
+img.screenset-img {
+  max-height: 130px;
+  width: auto;
+  float: none;
+  margin: auto; }
+
+.screenset-titlebox {
+  padding: 3px 30px 15px;
+  border-bottom: solid 1px #eeeeee;
+  width: 100%;
+  float: left; }
+
+.transparent-bg {
+  background-color: transparent !important; }
+
+.mockup-img-box {
+  margin: 10px 0 0; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

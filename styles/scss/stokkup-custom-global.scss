@@ -10,6 +10,7 @@ $font-weight-700:700;
 $font-size-text:14px;
 $stokkup-global-txtcolor:#6e7584;
 $nofloat:none;
+$block:block;
 $full-width:100%;
 $zero:0;
 $auto:auto;
@@ -47,7 +48,7 @@ $tab-active-color:#252932;
 $xs-font-size:12px;
 $font-size-mid:20px;
 $md-iconbtn-color:#a8a9ad;
-$blue-shade-btn:#6187db;
+$blue-shade-btn:#4773d6;
 $green-txt:#39b54a;
 /*global variables ends here */
 
@@ -378,6 +379,12 @@ md-menu-content{
 			color:$page-title-color;
 			font-size:$page-title-size;
 			font-weight:$font-weight-300;
+			a{
+				font-weight:$font-weight-400;
+				&:hover, &:focus{
+					font-weight:$font-weight-400;
+				}
+			}
 			}
 		}
 	}
@@ -853,7 +860,7 @@ table.table-white-bg{
 			font-size:$datatable-heading-size;
 			color:$datatable-text-color !important;
 			background-color:$white-color;
-			border-bottom:solid 1px #e5e5e5;
+			border-bottom:solid 1px #eeeeee;
 			padding:30px 8px 10px;
 			line-height:$datatable-heading-size;		
 			&:first-child{
@@ -894,7 +901,7 @@ table.table-white-bg tbody tr:first-child td{
 		}
 		md-card-content{
 			background:$white-color;
-			border:solid 1px #e5e5e5;
+			border:solid 1px #eeeeee;
 			padding-top:12px;
 				md-input-container{
 					padding:$zero;
@@ -1378,4 +1385,65 @@ md-card-content{
 	-ms-box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
 	-o-box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
 	box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
+}
+.payment-accordion{
+	width:$full-width;
+	border:solid 1px $gray-shade3;
+	margin:$zero;
+	padding:20px;
+	float:$left;
+	.payment-panel{
+		width:$full-width;
+		h4{
+			float:$left;
+			width:$full-width;
+			background:#fafafa;
+			border:solid 1px $gray-shade3;
+			padding:$xs-font-size;
+			margin:$zero $zero 5px;
+			cursor:pointer;
+		}
+	}
+}
+.no-border{
+	border:$nofloat !important;
+}
+.screenset-list-struct{
+	list-style-type:$nofloat;
+	display:$block;
+	margin:$zero;
+	padding:$zero;
+	li{
+		list-style-type:$nofloat;
+		display:$block;
+		margin:$zero $zero 15px;
+		padding:15px $zero $zero;
+		float:$left;
+		background-color:$white-color;
+		width:$full-width;
+		border:solid 1px #eeeeee;
+	}
+}
+.screenset-list-struct dnd-nodrag{
+	float:$left;
+	width:$full-width;
+	padding:$zero 30px $zero 20px;
+}
+img.screenset-img{
+	max-height:130px;
+	width:auto;
+	float:$nofloat;
+	margin:$auto;
+}
+.screenset-titlebox{
+	padding:3px 30px 15px;
+	border-bottom:solid 1px #eeeeee;
+	width:$full-width;
+	float:$left;
+}
+.transparent-bg{
+	background-color:transparent !important;
+}
+.mockup-img-box{
+	margin:10px $zero $zero;
 }
