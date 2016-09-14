@@ -1044,31 +1044,41 @@ class OrderController extends Controller {
         $email = trim($post['email']);
         $email_array = explode(",",$email);
 
-        $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
-
-        $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';
+        if(!isset($post['invoice_id']))
+        {
+          $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail(0,$post['company_id'],1,$post['order_id']);
+          $file_path =  FILEUPLOAD.'order_invoice_'.$post['order_id'].$post['company_id'].'.pdf';
+        }
+        else
+        {
+          $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+          $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';           
+        }
 
         $payment_link = '';
 
-        if($post['paid'] == '0')
+        if($data['order_data'][0]->grand_total > 0)
         {
-            $payment_data = $this->common->GetTableRecords('link_to_pay',array('order_id' => $post['order_id'],'payment_flag' => '0'),array(),'ltp_id','desc');
+          if($post['paid'] == '0')
+          {
+              $payment_data = $this->common->GetTableRecords('link_to_pay',array('order_id' => $post['order_id'],'payment_flag' => '0'),array(),'ltp_id','desc');
 
-            if(empty($payment_data))
-            {
-                $date = date_create();
-                $length = 25;
-                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
+              if(empty($payment_data))
+              {
+                  $date = date_create();
+                  $length = 25;
+                  $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                  $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
 
-                $this->common->InsertRecords('link_to_pay',array('order_id' => $post['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
+                  $this->common->InsertRecords('link_to_pay',array('order_id' => $post['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
 
-                $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$session_link;
-            }
-            else
-            {
-                $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$payment_data[0]->session_link;
-            }
+                  $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$session_link;
+              }
+              else
+              {
+                  $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$payment_data[0]->session_link;
+              }
+          }
         }
 
         if(!file_exists($file_path))

@@ -102,50 +102,58 @@ class InvoiceController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
         return response()->json($data);
     }
-    public function getInvoiceDetail($invoice_id,$company_id,$type=0)
+    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id=0)
     {
     	$post = Input::all();
 
         $retutn_arr = array();
-        
-        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
 
-          if(empty($invoice_data))
+        if($invoice_id != 0)
         {
+            $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
 
-           $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
-           return response()->json(["data" => $response]);
-        }
+            if(empty($invoice_data))
+            {
+
+               $response = array(
+                                    'success' => 0, 
+                                    'message' => NO_RECORDS
+                                    ); 
+               return response()->json(["data" => $response]);
+            }
 
 
-        $order_id = $invoice_data[0]->order_id;
+            $order_id = $invoice_data[0]->order_id;
 
-        $retutn_arr['invoice_data'] = $invoice_data;
-        $retutn_arr['invoice_data'][0]->created_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->created_date));
+            $retutn_arr['invoice_data'] = $invoice_data;
+            $retutn_arr['invoice_data'][0]->created_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->created_date));
 
-        if($retutn_arr['invoice_data'][0]->payment_due_date != '0000-00-00')
-        {
-            $retutn_arr['invoice_data'][0]->payment_due_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->payment_due_date));
+            if($retutn_arr['invoice_data'][0]->payment_due_date != '0000-00-00')
+            {
+                $retutn_arr['invoice_data'][0]->payment_due_date = date("m/d/Y", strtotime($retutn_arr['invoice_data'][0]->payment_due_date));
+            }
+            else
+            {
+                $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
+            }
+
+            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+
+
+             if(empty($order_data))
+            {
+
+               $response = array(
+                                    'success' => 0, 
+                                    'message' => NO_RECORDS
+                                    ); 
+               return response()->json(["data" => $response]);
+            }
         }
         else
         {
-            $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
-        }
-
-        $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
-
-
-         if(empty($order_data))
-        {
-
-           $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
-           return response()->json(["data" => $response]);
+            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+            $retutn_arr['invoice_data'] = array();
         }
 
 
