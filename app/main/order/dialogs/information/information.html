@@ -18,12 +18,23 @@
                     <md-input-container layout="row">
                         <label class="selectbox-label">Sales</label>
                         <md-select ng-model="order_data.sales_id" flex="100">
-                            <md-option  ng-repeat="staff in staffList" value="{{staff.id}}">
+                            <md-option ng-selected="staff.id==order_data.sales_id" ng-repeat="staff in staffList" value="{{staff.id}}">
                                 {{staff.sales_name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
-                </div>    
+                </div>
+
+                 <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Company</label>
+                        <md-select ng-model="order_data.client_id" flex="100">
+                            <md-option ng-selected="company.client_id==order_data.client_id" ng-repeat="company in allCompany" value="{{company.client_id}}">
+                                {{company.client_company}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
            
                 <div layout="column" layout-wrap="nowrap">
                     <md-input-container layout="row">

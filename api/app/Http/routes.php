@@ -106,6 +106,7 @@ Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 Route::post('admin/downloadPricegridCSV', 'SettingController@downloadPricegridCSV');
 Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
 Route::get('admin/uploadSnsCSV', 'SettingController@uploadSnsCSV');
+Route::post('admin/downloadPriceGridExcel', 'SettingController@downloadPriceGridExcel');
 
 // ADMIN MISC ROUTERS
 Route::post('admin/miscSave', 'MiscController@miscSave');

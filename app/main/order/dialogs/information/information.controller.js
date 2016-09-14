@@ -29,8 +29,24 @@
                 }
                
             });
-
           }
+
+        var companyData = {};
+        companyData.company_id =sessionService.get('company_id');
+        companyData.table = 'client';
+        companyData.cond = {'company_id':sessionService.get('company_id'),'is_delete':1};
+
+        $http.post('api/public/common/GetTableRecords',companyData).success(function(result) {
+
+                if(result.data.success == '1') 
+                {
+                    $scope.allCompany =result.data.records;
+                } 
+                else
+                {
+                    $scope.allCompany=[];
+                }
+        });
 
           var misc_list_data = {};
           var condition_obj = {};

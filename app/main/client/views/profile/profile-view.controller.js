@@ -357,7 +357,7 @@
                 condition_obj[cond_field] =  cond_value;
                 UpdateArray.cond = angular.copy(condition_obj);
                 
-                delete_data.table =table;
+                UpdateArray.table =table;
                 if(main==0)
                 {
                     if(shipping==0)
@@ -397,6 +397,46 @@
                 }
                 
       }
+
+// ============= REMOVE CLIENT CONTACT  ============= // 
+        $scope.RemoveContactFields = function(table,cond_field,cond_value,main){
+              
+                var UpdateArray = {};
+                UpdateArray.table =table;
+                UpdateArray.data = {is_deleted:'0'}
+
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                UpdateArray.cond = angular.copy(condition_obj);
+                
+                UpdateArray.table =table;
+                if(main==0)
+                {
+                    var permission = confirm("Are you sure to delete this Record ?");
+                    if (permission == true) 
+                    {
+                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                        {
+                            if(result.data.success=='1')
+                            {
+                                notifyService.notify('success',result.data.message);
+                                $scope.getClientProfile();
+                            }
+                            else
+                            {
+                                notifyService.notify('error',result.data.message);
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    notifyService.notify('error','Please select another Main contact first !');
+                }
+                
+      }
+
+
 // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
         {
