@@ -182,15 +182,14 @@
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
                     });
+                    $scope.pay.cashAmount = null;
                     notifyService.notify('success',"Payment added Successfully");
                 }
                 else
                 {
+                    $scope.pay.cashAmount = null;
                     notifyService.notify('error',"Payment not added");
                 }
-                $scope.pay.cashAmount = null;
-                return false;
-                
             });
 
         }
