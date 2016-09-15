@@ -97,6 +97,21 @@ class Shipping extends Model {
             }
         }
 
+        if($post['type'] == 'wait')
+        {
+            foreach ($shippingData as $data)
+            {
+                $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
+                                            LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$data->id."' ");
+                foreach($purchase_detail as $row)
+                {
+                    $value = DB::table('purchase_detail')
+                            ->where('id','=',$row->purchase_detail)
+                            ->update(array('remaining_qnty'=>$row->total));
+                }            
+            }
+        }
+
         $returnData['allData'] = $shippingData;
         $returnData['count'] = $count[0]->Totalcount;
 
