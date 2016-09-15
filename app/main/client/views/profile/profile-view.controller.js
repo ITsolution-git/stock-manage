@@ -592,8 +592,8 @@
                 if($scope.states_all[i].code == apidata.state)
                 {
                     //console.log($scope.states_all[i].code);
-                    $scope.client.state_id = $scope.states_all[i].id;
-                    $scope.client.pl_state = $scope.states_all[i].id;
+                    $scope.client.state_id = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
+                    $scope.client.pl_state = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
                     //$('#'+$scope.states_all[i].id).attr('selected','selected');
                     //console.log($scope.client.state_id);
                 }
