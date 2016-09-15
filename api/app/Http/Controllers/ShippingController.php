@@ -790,7 +790,7 @@ class ShippingController extends Controller {
             echo base64_decode($label);
             //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
         }
-        return redirect()->back();
+//        return redirect()->back();
     }
 
     public function checkAddressValid()
