@@ -169,6 +169,11 @@
 
                         UpdateArray.table ='purchase_order';
 
+                        if(new Date($scope.main_po.date) > new Date(field_value))
+                        {
+                            notifyService.notify('error', 'Receive date should be greater then Created Date.');
+                            return false;
+                        }
                         var condition_obj = {};
                         condition_obj[field_name] =  field_value;
                         UpdateArray.data = angular.copy(condition_obj);

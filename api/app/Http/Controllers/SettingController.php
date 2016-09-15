@@ -599,7 +599,7 @@ class SettingController extends Controller {
 
                 foreach ($data[3] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_primary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_primary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'pricing_11c' => $value->pricing_11c,'pricing_12c' => $value->pricing_12c,'pricing_13c' => $value->pricing_13c,'pricing_14c' => $value->pricing_14c,'pricing_15c' => $value->pricing_15c,'pricing_16c' => $value->pricing_16c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
@@ -613,7 +613,7 @@ class SettingController extends Controller {
 
                 foreach ($data[4] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_secondary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_secondary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'pricing_11c' => $value->pricing_11c,'pricing_12c' => $value->pricing_12c,'pricing_13c' => $value->pricing_13c,'pricing_14c' => $value->pricing_14c,'pricing_15c' => $value->pricing_15c,'pricing_16c' => $value->pricing_16c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
@@ -828,6 +828,137 @@ class SettingController extends Controller {
         $totaltime = ($endtime - $starttime);
         echo "This page was created in ".$totaltime." seconds";
         curl_close($curl);*/
+    }
+
+
+    public function downloadPriceGridExcel()
+    {
+       
+
+        $post = Input::all();
+       
+
+        $data = $this->price->priceDetailExcel($post['price_id']);
+        
+        $array = json_decode(json_encode($data), True);
+      
+        unset($array['embroswitch'][0]['id']);
+
+       
+        return Excel::create('price_grid', function($excel) use ($array) {
+
+            $excel->sheet('PriceGrid', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['price']);
+
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+
+            $excel->sheet('Charges', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['charges']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Charges List', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allPriceGrid']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Screen Printing Primary', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allScreenPrimary']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Screen Printing Secondary', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allScreenSecondary']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Embroidery Header', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['embroswitch']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Embroidery Price', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allEmbroidery']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Direct To Garment', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allGarment']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+             $excel->sheet('Garment Markup', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allGarmentMackup']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+
+        })->download($post['type']);
     }
 }
 

@@ -1,201 +1,9 @@
-
- <script language="JavaScript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
-<script>
-            var timer;
-            function loadscreen()
-            {
-                $("#ajax_loader").show();
-                setTimeout(function () {
-                    $("#ajax_loader").hide();
-                }, 3000);
-            }
-
-
-            function checkvalidations()
-            {
-                var combine_array_id = {};
-                combine_array_id.creditFname = document.getElementById(creditFname);
-                combine_array_id.creditLname = document.getElementById(creditLname);
-                combine_array_id.creditCard = document.getElementById(creditCard);
-                combine_array_id.amount = document.getElementById(amount);
-
-                /*$http.post('http://<?php echo $_SERVER['SERVER_NAME']; ?>/api/public/payment/chargeCreditCard',combine_array_id).success(function(result)
-                {
-
-                }) ;*/
-
-
-                var myKeyVals = { creditFname : 'bhargav', creditLname : 'pithva', creditCard : '4111111111111111', amount : '100' }
-
-                var saveData = $.ajax({
-                      type: 'POST',
-                      url: "http://"+<?php echo $_SERVER['SERVER_NAME']; ?>+"/api/public/payment/chargeCreditCard?action=saveData",
-                      data: myKeyVals,
-                      dataType: "text",
-                      success: function(resultData) { alert("Save Complete") }
-                });
-                saveData.error(function() { alert("Something went wrong"); });
-            }
-
-
-
-        </script>
-<md-content id="content" class="animate-slide-up md-background md-hue-1 ms-scroll ng-scope flex md-default-theme ps-container ps-theme-default ps-active-y" ms-scroll="" ui-view="content" flex="" data-ps-id="e93466b5-d722-6104-cb5f-6c812c6d8a5a"><div class="main-design-page m-r-15 m-l-20 m-b-20 ng-scope">
-    <div class="header layout-column" layout="column">
-        <div class="header-content layout-padding layout-wrap layout-align-start-stretch layout-row flex" layout="row" layout-align="start" layout-wrap="" flex="" layout-padding=""></div>
-        <div class="order-information m-b-20 layout-wrap layout-align-start-stretch layout-row flex" layout="row" layout-align="start" layout-wrap="" flex="">
-            <div class="info-order mrg-auto" flex="40">
-                <md-card layout="row" class="layout-row md-default-theme">
-                    <md-content class="md-default-theme" ng-controller="extLinktoPayController">
-                        <div class="ms-responsive-table-wrapper">
-                            <?php
-                            if(isset($orderArray->link_status) && $orderArray->link_status==1){
-                            ?>
-                            <div class="header-typ2">
-                                <div layout="row" class="layout-row">
-                                    <div layout="column" flex="50" class="layout-column">
-                                        <span class="font-20 mrg10-T">Link is either expired or no longer valid. Please contact Stokkup Team</span>
-                                    </div>
-                                    <!--<div layout="column" flex="50" class="text-right layout-column">
-                                        <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-                                            <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Download"><span class="ng-scope">Download</span></button>
-                                        </md-dialog-actions>
-                                    </div>-->
-                                </div>
-                            </div>
-                            <?php
-                            }else{
-                            ?>
-                            <div class="header-typ2">
-                                <div layout="row" class="layout-row">
-                                    <div layout="column" flex="50" class="layout-column">
-                                        <?php
-                                        //print_r($orderArray);
-                                        ?>
-                                        <span class="font-20 mrg10-T">Link to Pay - INV-<?php echo $orderArray->order_id ?> Balance Amount to pay : $<?php echo $orderArray->balance_amount ?></span>
-                                    </div>
-                                    <!--<div layout="column" flex="50" class="text-right layout-column">
-                                        <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-                                            <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Download"><span class="ng-scope">Download</span></button>
-                                        </md-dialog-actions>
-                                    </div>-->
-                                </div>
-                            </div>
-                            <form action="" onsubmit="">
-                            <div class="pd15">
-                                <div layout="row">
-                                    <div layout="column" flex="45">
-                                        <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <input name="invoice_id" value="" ng-init="7" type="hidden">
-                                                <md-input-container flex="50">
-                                                     <input placeholder="First Name On Card" name="creditFname" id="creditFname" value="">
-                                                </md-input-container>
-                                                <md-input-container flex="50">
-                                                     <input placeholder="Last Name On Card" name="creditLname" id="creditLname" value="">
-                                                </md-input-container>
-                                                <md-input-container flex="100">
-                                                    <input placeholder="Credit Card Number" only-number="20" id="creditCard" name="creditCard" value="">
-                                                </md-input-container>
-                                                <md-input-container flex="100">
-                                                    <input placeholder="Amount" name="amount" id="amount" only-number="20" value="">
-                                                </md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="30">
-                                                    <md-select placeholder="MM" name="expMonth">
-                                                        <md-option value="0">MM</md-option>
-                                                        <md-option value="01">JAN</md-option>
-                                                        <md-option value="02">FEB</md-option>
-                                                        <md-option value="03">MAR</md-option>
-                                                        <md-option value="04">APR</md-option>
-                                                        <md-option value="05">MAY</md-option>
-                                                        <md-option value="06">JUN</md-option>
-                                                        <md-option value="07">JUL</md-option>
-                                                        <md-option value="08">AUG</md-option>
-                                                        <md-option value="09">SEP</md-option>
-                                                        <md-option value="10">OCT</md-option>
-                                                        <md-option value="11">NOV</md-option>
-                                                        <md-option value="12">DEC</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex=30 class="m-b-20">
-                                                   <md-select placeholder="YY" name="expYear">
-                                                        <md-option value="0">YY</md-option>
-                                                        <md-option value="16">16</md-option>
-                                                        <md-option value="17">17</md-option>
-                                                        <md-option value="18">18</md-option>
-                                                        <md-option value="19">19</md-option>
-                                                        <md-option value="20">20</md-option>
-                                                        <md-option value="21">21</md-option>
-                                                        <md-option value="22">22</md-option>
-                                                        <md-option value="23">23</md-option>
-                                                        <md-option value="24">24</md-option>
-                                                        <md-option value="25">25</md-option>
-                                                        <md-option value="26">26</md-option>
-                                                        <md-option value="27">27</md-option>
-                                                        <md-option value="28">28</md-option>
-                                                        <md-option value="29">29</md-option>
-                                                        <md-option value="30">30</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="cvv" value="">
-                                                </md-input-container>
-                                            </div>
-                                        </div>
-                                        <div flex="10">&nbsp;</div>
-                                        <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="75">
-                                                    <input placeholder="Street Address" name="street" value="">
-                                                </md-input-container>
-                                                <md-input-container flex="25">
-                                                    <input placeholder="Suite" name="Suite" value="">
-                                                </md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="40">
-                                                    <input placeholder="City" name="city" value="">
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <md-select placeholder="State" name="state" aria-label="State" value="">
-                                                        <md-option value="">State</md-option>
-                                                        <?php foreach ($stateArray as $state) {?>
-                                                            <md-option value="<?php echo $state->code; ?>"><?php echo $state->name; ?></md-option>
-                                                        <?php } ?>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="Zip" name="zip" only-number="10" value="">
-                                                </md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
-                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
-                                                <button onclick="checkvalidations()" type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net"><span class="ng-scope">Pay</span></button>
-                                            </md-dialog-actions>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <?php
-                            }
-                            ?>
-                            
-                            
-                            </div>
-                        </md-content>
-                    </md-card>
-                </div>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Payment Login</title>
+    <title>STOKKUP Invoice Payment</title>
     <style type="text/css">
     html,body{
         margin:0;
@@ -395,29 +203,207 @@
         border-radius:50px;
         cursor:pointer;
     }
+    .loaderouter{
+    position:fixed;
+    width:100%;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    background-color:rgba(23, 16, 20, 0.7);
+    filter:alpha(opacity=100);
+    z-index:200;
+    overflow-y:hidden;
+    top:0;
+    left:0;
+    padding-top:10%;
+    padding-left:10%;
+    opacity: 1;
+    }
+    .loader,
+    .loader:before,
+    .loader:after {
+        background: #31c0be;
+        -webkit-animation: load1 1s infinite ease-in-out;
+        animation: load1 1s infinite ease-in-out;
+        width: 1em;
+        height: 4em;
+    }
+    .loader:before,
+    .loader:after {
+        position: absolute;
+        top: 0;
+        content: '';
+    }
+    .loader:before {
+        left: -1.5em;
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+    }
+    .loader {
+        text-indent: -9999em;
+        margin: 20em auto;
+        position: relative;
+        font-size: 11px;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+    }
+    .loader:after {
+        left: 1.5em;
+    }
     </style>
+<script language="JavaScript" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+<script>
+    var timer;
+    function loadscreen()
+    {
+        $("#ajax_loader").show();
+        setTimeout(function () {
+            $("#ajax_loader").hide();
+        }, 3000);
+    }
+
+    var specialKeys = new Array('.');
+    specialKeys.push(8); //Backspace
+    function IsNumeric(e) {
+        var keyCode = e.which ? e.which : e.keyCode
+        var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+        return ret;
+    }
+
+    function validateFloatKeyPress(el) {
+        var v = parseFloat(el.value);
+        el.value = (isNaN(v)) ? '' : v.toFixed(2);
+    }
+
+    function checkvalidations()
+    {
+        if(document.getElementById('creditFname').value == '' ) {
+            alert("Please enter First Name");
+            return false;
+        }
+        if(document.getElementById('creditLname').value == '' ) {
+            alert("Please enter Last Name");
+            return false;
+        }
+        if(document.getElementById('creditCard').value == '' ) {
+            alert("Please enter Credit Card");
+            return false;
+        }
+        if(document.getElementById('amount').value == '' ) {
+            alert("Please enter Amount");
+            return false;
+        }
+        var m = document.getElementById("expMonth");
+        if(m.options[m.selectedIndex].value == '0' ) {
+            alert("Please select Month of Expiration");
+            return false;
+        }
+        var e = document.getElementById("expYear");
+        if(e.options[e.selectedIndex].value == '0' ) {
+            alert("Please select Year of Expiration");
+            return false;
+        }
+        if(document.getElementById('cvv').value == '' ) {
+            alert("Please enter CVV");
+            return false;
+        }
+        if(document.getElementById('street').value == '' ) {
+            alert("Please enter Street Address");
+            return false;
+        }
+        if(document.getElementById('city').value == '' ) {
+            alert("Please enter City");
+            return false;
+        }
+        var s = document.getElementById("state");
+        if(s.options[s.selectedIndex].value == '0' ) {
+            alert("Please select State");
+            return false;
+        }
+        if(document.getElementById('zip').value == '' ) {
+            alert("Please enter Zip");
+            return false;
+        }
+        $("#ajax_loader").show();
+
+        
+
+        var combine_array_id = {};
+        combine_array_id.creditFname = document.getElementById('creditFname').value;
+        combine_array_id.creditLname = document.getElementById('creditLname').value;
+        combine_array_id.creditCard = document.getElementById('creditCard').value;
+        combine_array_id.amount = document.getElementById('amount').value;
+        combine_array_id.expMonth = document.getElementById('expMonth').value;
+        combine_array_id.expYear = document.getElementById('expYear').value;
+        combine_array_id.cvv = document.getElementById('cvv').value;
+        combine_array_id.street = document.getElementById('street').value;
+        combine_array_id.city = document.getElementById('city').value;
+        combine_array_id.state = document.getElementById('state').value;
+        combine_array_id.zip = document.getElementById('zip').value;
+        combine_array_id.linkToPay = 1;
+        combine_array_id.storeCard = 1;
+        
+
+        combine_array_id.invoice_id = document.getElementById('invoice_id').value;
+        combine_array_id.company_id = document.getElementById('company_id').value;
+        combine_array_id.ltp_id = document.getElementById('ltp_id').value;
+        if(document.getElementById('suite').value != '' ) {
+            combine_array_id.suite = document.getElementById('suite').value;
+        }
+
+        var saveData = $.ajax({
+              type: 'POST',
+              url: "/api/public/payment/chargeCreditCard?action=saveData",
+              data: combine_array_id,
+              dataType: "text",
+              success: function(resultData) {
+                $("#ajax_loader").hide();
+                alert("Payment made Successfully");
+                setTimeout("location.href = '../../../../index.php';",2000);
+            }
+        });
+        saveData.error(function() { alert("Payment could not be made. Please verify your card details with Authorized.net."); });
+    }
+</script>
 <body>
+<div class="loaderouter" id="ajax_loader" style="display: none;">
+    <div class="loader">Loading...</div>
+</div>
 <section id="content" class="link-pay-page" data-ps-id="e93466b5-d722-6104-cb5f-6c812c6d8a5a">
-    <h4 class="stokkup-title-h4">Link to Pay - INV-<?php echo $orderArray->order_id ?></h4>
+    <?php
+    if(isset($orderArray->link_status) && $orderArray->link_status==1){
+    ?>
+    <h4 class="stokkup-title-h4">Link is either expired or no longer valid. Please contact Stokkup Team.</h4>
+    <?php
+    }else{
+    ?>
+    <input type="hidden" name="invoice_id" id="invoice_id" value="<?php echo $orderArray->invoice_id ?>">
+    <input type="hidden" name="company_id" id="company_id" value="<?php echo $orderArray->company_id ?>">
+    <input type="hidden" name="ltp_id" id="ltp_id" value="<?php echo $orderArray->ltp_id ?>">
+    
+    <h4 class="stokkup-title-h4">Link to Pay - INV-<?php echo $orderArray->order_id ?> Balance Amount to pay : $<?php echo $orderArray->balance_amount ?></h4>
         <div class="row linktopay_form">
             <div class="half-sections">
                 <div class="title"><span class="basicInfoStyle">Credit Card Information</span></div>
                         <input name="invoice_id" value="" ng-init="7" type="hidden">
                         <div class="flex-50 inputfield-space pull-left m-r-5">
-                             <input  type="text" placeholder="First Name On Card" name="First Name On Card" value="">
+                             <input  type="text" placeholder="First Name On Card" name="creditFname" id="creditFname" value="">
                         </div>
                         <div class="flex-50 inputfield-space pull-left">
-                             <input type="text" placeholder="Last Name On Card" name="Last Name On Card" value="">
+                             <input type="text" placeholder="Last Name On Card" name="creditLname" id="creditLname" value="">
                         </div>
                         <div class="flex-100 inputfield-space pull-left">
-                            <input type="text" placeholder="Credit Card Number" only-number="20" name="Credit Card Number" value="">
+                            <input type="text" placeholder="Credit Card Number" maxlength="20" name="creditCard" id="creditCard" onkeypress="return IsNumeric(event);" value="">
                         </div>
                         <div class="flex-100 inputfield-space pull-left">
-                            <input type="text" placeholder="Amount" name="Amount" only-number="20" value="">
+                            <input type="text" placeholder="Amount" name="amount" id="amount" value="" onchange="validateFloatKeyPress(this);">
                         </div>
                         <div class="flex-100 inputfield-space pull-left">
                             <div class="flex-30 m-r-15 pull-left selectouter">
-                            <select placeholder="MM" name="month">
+                            <select id="expMonth" placeholder="MM" name="expMonth">
                                 <option value="0">MM</option>
                                 <option value="01">JAN</option>
                                 <option value="02">FEB</option>
@@ -434,7 +420,7 @@
                             </select>
                         </div>
                         <div class="flex-30 m-r-15 pull-left selectouter">
-                            <select placeholder="YY" name="year">
+                            <select id="expYear" placeholder="YY" name="expYear">
                                     <option value="0">YY</option>
                                     <option value="16">16</option>
                                     <option value="17">17</option>
@@ -454,39 +440,42 @@
                             </select>
                         </div>
                          <div class="flex-30 pull-left">
-                            <input type="text" placeholder="CVV" name="CVV" value="">
+                            <input type="text" placeholder="CVV" name="cvv" id="cvv" value="" onkeypress="return IsNumeric(event);">
                         </div>
                         </div>
                     </div>
             <div class="half-sections">
                  <div class="title"><span class="basicInfoStyle">Billing Address</span></div>
                     <div class="flex-75 inputfield-space pull-left m-r-5">
-                        <input type="text" placeholder="Street Address" name="Street Address" value="">
+                        <input type="text" placeholder="Street Address" id="street" name="street" value="">
                     </div>
                     <div class="flex-25 inputfield-space pull-left">
-                        <input type="text" placeholder="Suite" name="Suite" value="">
+                        <input type="text" placeholder="Suite" name="suite" id="suite" value="">
                     </div>
                     <div class="flex-100 inputfield-space pull-left">
                         <div class="flex-30 m-r-15 pull-left">
-                        <input type="text" placeholder="City" name="City" value="">
+                        <input type="text" placeholder="City" name="city" id="city" value="">
                         </div>
                         <div class="flex-30  m-r-15 pull-left selectouter">
-                            <select placeholder="State" name="State" aria-label="State" value="">
-                                <option value="">State</option>
+                            <select placeholder="State" name="state" id="state">
+                                <option value="0">State</option>
                                 <?php foreach ($stateArray as $state) {?>
                                     <option value="<?php echo $state->code; ?>"><?php echo $state->name; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="flex-30 pull-left">
-                            <input type="text" placeholder="Zip" name="Zip" only-number="10" value="">
+                            <input type="text" placeholder="Zip" name="zip" id="zip" value="" maxlength="15">
                         </div>
                     </div>
             </div>
             <div class="pay-section">
-                <button type="button" aria-label="Pay by Credit Card via Authorized.net">PAY</button>
+                <button type="button" onclick="checkvalidations()" aria-label="Pay by Credit Card via Authorized.net">PAY</button>
             </div>
-        </div>    
+        </div>
+<?php
+}
+?>
 </section>
 </body>
 </html>

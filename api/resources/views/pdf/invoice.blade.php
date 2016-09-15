@@ -30,8 +30,10 @@
 			</td>
 			<td>
 				<span style="font-weight:bold;text-align:right;">Order Acknowledgement # {{$order_data[0]->id}}</span><br>
-				<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span><br>
-				<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span><br>
+				<?php if(!empty($invoice_data)) {?>
+					<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span><br>
+					<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span><br>
+				<?php } ?>
 				<span style="font-weight:bold;text-align:right;">Job Name: {{$order_data[0]->name}}</span>
 			</td>
 		</tr>
@@ -285,7 +287,7 @@
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Tax</td>
-						<td style="border:1px solid #000;text-align:center;"><?php echo number_format($order_data[0]->tax,2); ?></td>
+						<td style="border:1px solid #000;text-align:center;">$<?php echo number_format($order_data[0]->tax,2); ?></td>
 					</tr>
 					<tr>
 						<td style="padding-right:5px;">Grand Total</td>

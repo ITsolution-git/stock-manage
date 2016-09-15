@@ -22,12 +22,15 @@
                         <div class="contant-filter filter-detail" >
                             <div layout="column" class="f-box-1 first-cheak">
                                 <div class="f-header">
-                                    <span>
+                                    <span class="cursor-p" ng-if="vm.toggle" ng-click="vm.toggle = false">
                                         SALES REP 
-                                        <button ng-if="vm.toggle" ng-click="vm.toggle = false">
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-up"></md-icon>
                                         </button>
-                                        <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                    </span>
+                                    <span class="cursor-p" ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                        SALES REP
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-down"></md-icon>
                                         </button>
                                     </span>
@@ -41,12 +44,15 @@
                             </div>
                             <div layout="column" class="f-box-2">
                                 <div class="f-header">
-                                    <span>
-                                        CREATE DATE  
-                                        <button ng-if="vm.createdate" ng-click="vm.createdate = false">
+                                    <span class="cursor-p" ng-if="vm.createdate" ng-click="vm.createdate = false">
+                                        CREATE DATE
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-up"></md-icon>
                                         </button>
-                                        <button ng-if="!vm.createdate" ng-click="vm.createdate = true">
+                                    </span>
+                                    <span class="cursor-p" ng-if="!vm.createdate" ng-click="vm.createdate = true">
+                                        CREATE DATE
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-down"></md-icon>
                                         </button>
                                     </span>
@@ -56,18 +62,21 @@
                                     <div layout="column" >
                                         <div class="date-input width100">
                                             <input id="datepicker" kendo-date-picker ng-model="vm.createDate" k-ng-model="dateObject6" placeholder="Dates"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
                             <div layout="column" class="f-box-1">
                                 <div class="f-header">
-                                    <span>
+                                    <span class="cursor-p" ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
                                         COMPANY  
-                                        <button ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-up"></md-icon>
                                         </button>
-                                        <button ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
+                                    </span>
+                                    <span class="cursor-p" ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
+                                        COMPANY
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-down"></md-icon>
                                         </button>
                                     </span>
@@ -79,7 +88,6 @@
                                     </div>
                                 </div>
                             </div>
-                           
                         </div>
                     </md-content>
                     <div class="filter-footer" layout="row">
