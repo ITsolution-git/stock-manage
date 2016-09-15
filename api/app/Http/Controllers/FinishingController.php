@@ -114,7 +114,7 @@ class FinishingController extends Controller {
                     $row->end_time = '';
                 }
                 if($row->est == '00:00:00') {
-                    $row->est;
+                    $row->est = '';
                 }
             }
 

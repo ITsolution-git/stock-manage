@@ -33,7 +33,7 @@ return array(
         'shipper' => 'RocketShipIt',
 
         // Key shipping contact individual at your company
-        'shipContact' => 'Mark Sanborn',
+        'shipContact' => 'Rich Santo',
 
         // Shipper's address
         'shipAddr1' => '201 1/2 W 2nd St.',
