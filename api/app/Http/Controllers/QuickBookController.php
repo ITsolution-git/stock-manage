@@ -1033,7 +1033,7 @@ class QuickBookController extends Controller
                 }
             }
         }
-        if($dataTemp['success_temp']==0){
+        if(isset($dataTemp) && $dataTemp['success_temp']==0){
             $data = array("success"=>0,'message' =>"Quickbook not Connected.");
         }
         return response()->json(['data'=>$data]);
