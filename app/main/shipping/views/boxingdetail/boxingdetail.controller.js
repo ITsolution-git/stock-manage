@@ -61,7 +61,7 @@
         $scope.select_box = function(box_id)
         {
             $scope.shipping_box_id = box_id;
-            $scope.box_items = $scope.shippingBoxes[box_id].boxItems;
+//            $scope.box_items = $scope.shippingBoxes[box_id].boxItems;
         }
 
         $scope.update_box_qty = function(box)
