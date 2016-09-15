@@ -44,7 +44,7 @@
 
                 <!---------      STATE      ---------------->
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                    <md-input-container flex=45 class="m-b-20">
+                    <md-input-container flex=45>
                         <label>State</label>
                         <md-select ng-model="params.state"  name="state"  >
                             <md-option ng-repeat="state_val in all_scope.states_all" ng-selected='{{state_val.id==params.state}}' value="{{state_val.id}}">
