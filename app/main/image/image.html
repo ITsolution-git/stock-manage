@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Upload Image</span>
-                <md-button  ng-click="closeDialog()">
+                <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
                     <span>Close</span>
                 </md-button>
             </div>
@@ -13,13 +13,13 @@
                 <md-input-container class="md-block first-box"></md-input-container>
                <md-input-container class="upload-rel">
                     <input>
-                    <md-button class="md-primary md-hue-1 md-accent upload" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
+                    <md-button class="border-radius-half stokkup-custom-btn1 stokkup-upload-btn stokkup-blue-btn pull-right mt-15" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
                 </md-input-container>
 
                 <input type="file" required style="display: none;"  onload="onLoad" ng-model="logo_image" id="myFileInput" name="logo_image" class="btn btn-default" base-sixty-four-input  accept="image/*">
 
                 <div layout-wrap="nowrap" flex="50">
-                    <md-card class="card ">
+                    <md-card class="card noborder">
                         <div class="height-image">
                            
                             <img ng-if="showtcprofileimg == false && params.default_image != ''" ng-src="{{params.default_image}}" alt="No Image" class="popup-image" >

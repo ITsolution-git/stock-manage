@@ -50,6 +50,7 @@ $font-size-mid:20px;
 $md-iconbtn-color:#a8a9ad;
 $blue-shade-btn:#4773d6;
 $green-txt:#39b54a;
+$disable-btn-txt-color:#cdcfd3;
 /*global variables ends here */
 
 /*global popup style starts here */
@@ -156,11 +157,16 @@ button, select, html, textarea, input{
 	font-size:$font-size-text;
 	text-align:$center;
 	text-transform:uppercase;
+	&.stokkup-upload-btn{
+		@include buttonvariant(120,41px,41px);
+	}
 }
 button.bg-grey.md-raised{
 	@extend .stokkup-btn-style1;
 	background-color:$usermenu-txtcolor !important;
 	font-weight:$font-weight-700;
+	width:$auto;
+	min-width:120px;
 }
 .white-bg{
 	background-color:$white-color;
@@ -564,12 +570,13 @@ md-dialog{
 				@extend .border-radius-half;
 				
 				&.md-accent[disabled]{
-					@include dialogfooterbtn(#9fa1a7);
+					@include dialogfooterbtn(#9f9f9f);
+					border:solid 1px #9f9f9f;
 					min-width:123px;
 					width:auto;
 					height:41px;
 					line-height:41px;
-					color:$white-color !important;
+					color:$disable-btn-txt-color !important;
 					text-align:center;
 					font-weight:$font-weight-700;
 					text-transform:uppercase;
@@ -634,6 +641,9 @@ md-dialog{
 	float:right;
 	background:transparent !important;
 	color:$white-color;
+	font-weight:$font-weight-600;
+	line-height:36px;
+	text-transform:uppercase;
 	font-size:$datatable-content-size;
 	&:hover, &:focus{
 		background:transparent !important;
@@ -1250,7 +1260,7 @@ md-card-content{
 }
 .shipping-custom-tab{
 	position:absolute;
-	top:13px;
+	top:$zero;
 	z-index:1;
 	width:$full-width;
 	background-color:transparent;
@@ -1446,4 +1456,21 @@ img.screenset-img{
 }
 .mockup-img-box{
 	margin:10px $zero $zero;
+}
+md-card.noborder{
+	border:$nofloat;
+}
+.height-image{
+	height:$auto;
+	max-height:300px;
+	overflow:hidden;
+	background-color:transparent;
+	img{
+		height:auto;
+		width:auto;
+		max-height:300px;
+		background-color:#f9f9f9;
+		border:solid 1px #ededed;
+		margin:$auto;
+	}
 }
