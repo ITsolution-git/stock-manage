@@ -491,12 +491,21 @@ class ClientController extends Controller {
 		return response()->json(['data'=>$data]);
 	}
 
-	public function SaveCleintPlimp()
+	public function SaveClientInfo()
 	{
 		$post = Input::all();
-		$result = $this->client->SaveCleintPlimp($post['data'],$post['id']);
+		//echo "<pre>"; print_r($post); die();
+		if(!empty($post['client_company']) && !empty($post['client_id']))
+		{
 
-    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+			$result = $this->client->SaveClientInfo($post,$post['client_id']);
+			//echo "<pre>"; print_r($post); die();
+    		$data = array("success"=>1,"message"=>UPDATE_RECORD);
+    	}
+    	else
+    	{
+    		$data = array("success"=>0,"message"=>MISSING_PARAMS);
+    	}
 		return response()->json(['data'=>$data]);
 	}
 /**

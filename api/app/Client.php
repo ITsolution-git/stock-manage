@@ -195,8 +195,8 @@ class Client extends Model {
           $result['main']['company_url'] = (!empty($value->company_url) && preg_match('/http/',$value->company_url) == false) ? "http://".$value->company_url:$value->company_url;
 
           $result['main']['client_address']  = !empty($value->pl_address)?$value->pl_address.",":'' ; 
-          $result['main']['client_address'] .= !empty($value->pl_city)?$value->pl_city.", ":''; 
           $result['main']['client_address'] .= !empty($value->pl_suite)?$value->pl_suite.", ":''; 
+          $result['main']['client_address'] .= !empty($value->pl_city)?$value->pl_city.", ":''; 
           $result['main']['client_address'] .= !empty($value->state_name)?$value->state_name.", ":'';
           $result['main']['client_address'] .= !empty($value->pl_pincode)?$value->pl_pincode:'' ;
 
@@ -272,13 +272,30 @@ class Client extends Model {
    						->update($post);
     	return $result;
    }
-    public function SaveCleintPlimp($post,$id)
+
+   public function SaveClientInfo($post,$id)
    {
-   		$result = DB::table('client')
-   						->where('client_id','=',$id)
-   						->update($post);
-    	return $result;
+     //echo "<pre>"; print_r($post); die();
+      $result = DB::table('client')
+              ->where('client_id','=',$id)
+              ->update(array(
+                      'client_company'=>$post['client_company'],
+                      'client_companytype'=>$post['client_companytype'],
+                      'client_desposition'=>$post['client_desposition'],
+                      'pl_address'=>$post['pl_address'],
+                      'pl_city'=>$post['pl_city'],
+                      'pl_pincode'=>$post['pl_pincode'],
+                      'pl_state'=>$post['pl_state'],
+                      'pl_suite'=>$post['pl_suite'],
+                      'account_manager'=>$post['account_manager'],
+                      'billing_email'=>$post['billing_email'],
+                      'company_phone'=>$post['company_phone'],
+                      'company_url'=>$post['company_url'],
+                      'client_desposition'=>$post['misc_id']
+                      ));
+      return $result;
    }
+
      public function GetNoteDetails($id)
    {
    		$result = DB::table('client_notes as cn')

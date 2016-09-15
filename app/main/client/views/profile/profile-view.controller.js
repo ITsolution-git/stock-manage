@@ -573,6 +573,59 @@
         $scope.company_id = Params.company_id;
         $scope.client_tax = Params.client_tax;
         $scope.companyUsers = Params.companyUsers;
+           
+
+        $scope.options = {
+        //types: ['(cities)'],
+        componentRestrictions: { country: 'US' }
+        };
+
+        $scope.GetAPIData = function (apidata)
+        {
+            //console.log(apidata);
+            $scope.client.pl_address = angular.isUndefined(apidata.street)?'':apidata.street;
+            $scope.client.pl_suite = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+            $scope.client.pl_city = angular.isUndefined(apidata.city)?'':apidata.city;
+            //console.log(apidata.state);
+            for(var i=0; i<$scope.states_all.length; i++)
+            {
+                if($scope.states_all[i].code == apidata.state)
+                {
+                    //console.log($scope.states_all[i].code);
+                    $scope.client.state_id = $scope.states_all[i].id;
+                    $scope.client.pl_state = $scope.states_all[i].id;
+                    //$('#'+$scope.states_all[i].id).attr('selected','selected');
+                    //console.log($scope.client.state_id);
+                }
+            }
+
+            $scope.client.pl_pincode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+
+        }
+  
+          $scope.address = {
+            name: '',
+            place: '',
+            components: {
+              placeId: '',
+              streetNumber: '', 
+              street: '',
+              city: '',
+              state: '',
+              countryCode: '',
+              country: '',
+              postCode: '',
+              district: '',
+              location: {
+                lat: '',
+                long: ''
+              }
+            }
+          };
+
+
+
+
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
         {
             //console.log(validation);
@@ -658,6 +711,25 @@
               });
         }
 
+        // ============= REMOVE CLIENT CONTACT  ============= // 
+        $scope.SaveCompanyInfo = function(ArrsaveCompany)
+        {
+            //$("#ajax_loader").show();
+            $http.post('api/public/client/SaveClientInfo',ArrsaveCompany).success(function(result) 
+              {
+                if(result.data.success=='1')
+                {
+                    $mdDialog.hide();
+                }
+                else
+                {
+                    notifyService('error',result.data.message);
+                    $mdDialog.hide();
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+
         $scope.showtcprofileimg = false;
         $scope.onLoad=function()
         {
@@ -693,8 +765,7 @@
               });
 
         }
-       
-       
+
 
         }
 })();
