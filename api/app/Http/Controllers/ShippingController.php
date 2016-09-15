@@ -718,15 +718,11 @@ class ShippingController extends Controller {
             $shipment->setParameter('toState', $shipping->code);
             $shipment->setParameter('toCode', $shipping->zipcode);
 
-            $shipment->setParameter('toCompany', 'John Doe');
-            $shipment->setParameter('toPhone', '1231231234');
-            $shipment->setParameter('toAddr1', '101 W Main');
-            $shipment->setParameter('toCity', 'Bozeman');
-            $shipment->setParameter('toState', 'MT');
-            $shipment->setParameter('toCode', '59715');
-            $shipment->setParameter('weight', '5');
-
-            $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail');
+            $result_api = $this->api->getApiCredential($shipping->company_id,'api.fedex','fedex_detail',array('is_active'=>1));
+            if(empty($result_api))
+            {
+                $result_api = $this->api->getApiCredential($shipping->company_id,'api.fedex','fedex_detail',array('is_live'=>'0'));
+            }
             
             $shipment->setParameter('key', $result_api[0]->key);
             $shipment->setParameter('password', $result_api[0]->password);
@@ -746,7 +742,11 @@ class ShippingController extends Controller {
             $shipment->setParameter('toState', $shipping->code);
             $shipment->setParameter('toCode', $shipping->zipcode);
 
-            $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail');
+            $result_api = $this->api->getApiCredential($shipping->company_id,'api.ups','ups_detail',array('is_active'=>1));
+            if(empty($result_api))
+            {
+                $result_api = $this->api->getApiCredential($shipping->company_id,'api.ups','ups_detail',array('is_live'=>'0'));
+            }
             
             $shipment->setParameter('license', $result_api[0]->api);
             $shipment->setParameter('username', $result_api[0]->username);
@@ -849,7 +849,11 @@ class ShippingController extends Controller {
         {
             if($post['shipping_type_id'] == 'Fedex')
             {
-                $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail');
+                $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail',array('is_active'=>1));
+                if(empty($result_api))
+                {
+                    $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail',array('is_live'=>'0'));
+                }
 
                 $shipment = new \RocketShipIt\Shipment('fedex');
 
@@ -890,7 +894,11 @@ class ShippingController extends Controller {
             }
             else
             {
-                $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail');
+                $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail',array('is_active'=>1));
+                if(empty($result_api))
+                {
+                    $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail',array('is_live'=>'0'));
+                }
                 $shipment = new \RocketShipIt\Shipment('UPS');
 
                 $shipment->setParameter('toCompany', $post['description']);

@@ -164,7 +164,7 @@
             var form = document.createElement("form");
             form.action = 'api/public/shipping/createPDF';
             form.method = 'post';
-            form.target = target || "_blank";
+            form.target = '_blank';
             form.style.display = 'none';
 
             var print_type = document.createElement('input');
