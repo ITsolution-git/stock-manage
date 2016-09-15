@@ -960,7 +960,7 @@ class QuickBookController extends Controller
         $company_data = $this->common->GetTableRecords('company_info',array('user_id' => $company_id),array());
         $result = $this->GetAllclientInovicesAddDelete($company_id,0,1);
         $resultDelete = $this->GetAllclientInovicesAddDelete($company_id,1,0);
-        if((count($result)<1) || (count($resultDelete)<1)){
+        if((count($result)<1) && (count($resultDelete)<1)){
             $data = array("success"=>2,'message' =>"Either Quickbook not Connected or No Invoice Payments are there to Sync to Quickbook.");
             return response()->json(['data'=>$data]);
         }

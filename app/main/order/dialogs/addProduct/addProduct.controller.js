@@ -77,6 +77,10 @@
         if(product_id > 0) {
             if(operation == 'Add')
             {
+                $scope.is_supply = false;
+                if(is_supply == 1) {
+                    $scope.is_supply = true;
+                }
                 $scope.changeProduct(product_id,0,'Add');
             }
         }

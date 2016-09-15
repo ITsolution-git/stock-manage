@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Edit Company Info</span>
-                <md-button  ng-click="closeDialog()">
+                <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
                     <span>Close</span>
                 </md-button>
             </div>
@@ -23,7 +23,7 @@
                 </md-input-container>
 
                 <!---------      CLIENT TYPE      ---------------->
-                <md-input-container class="m-b-30">
+                <md-input-container>
                     <label>Type</label>
                     <md-select ng-model="client.client_companytype" name="client_companytype"  ng-change='UpdateTableField("client_companytype",client.client_companytype,"client","client_id",client.client_id,"address")'>
                         <md-option value="0">
@@ -47,7 +47,7 @@
 
                 <!---------      STATE      ---------------->
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                    <md-input-container flex=45 class="m-b-20">
+                    <md-input-container flex=45>
                         <label>State</label>
                         <md-select ng-model="client.pl_state"  name="pl_state"  ng-change='UpdateTableField("pl_state",client.pl_state,"client","client_id",client.client_id,"address")'>
                             <md-option value="0">
@@ -96,7 +96,7 @@
                 </md-input-container>
 
                 <!---------      DISPOSITIONS      ---------------->
-                <md-input-container class="m-b-30">
+                <md-input-container>
                     <label>Deposition</label>
                     <md-select ng-model="client.client_desposition" name="client_desposition"  ng-change='UpdateTableField("client_desposition",client.client_desposition,"client","client_id",client.client_id,"address")'>
                         <md-option value="0">
