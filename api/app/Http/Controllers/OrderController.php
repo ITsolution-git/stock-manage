@@ -1044,31 +1044,41 @@ class OrderController extends Controller {
         $email = trim($post['email']);
         $email_array = explode(",",$email);
 
-        $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
-
-        $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';
+        if(!isset($post['invoice_id']))
+        {
+          $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail(0,$post['company_id'],1,$post['order_id']);
+          $file_path =  FILEUPLOAD.'order_invoice_'.$post['order_id'].$post['company_id'].'.pdf';
+        }
+        else
+        {
+          $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+          $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';           
+        }
 
         $payment_link = '';
 
-        if($post['paid'] == '0')
+        if($data['order_data'][0]->grand_total > 0)
         {
-            $payment_data = $this->common->GetTableRecords('link_to_pay',array('order_id' => $post['order_id'],'payment_flag' => '0'),array(),'ltp_id','desc');
+          if($post['paid'] == '0')
+          {
+              $payment_data = $this->common->GetTableRecords('link_to_pay',array('order_id' => $post['order_id'],'payment_flag' => '0'),array(),'ltp_id','desc');
 
-            if(empty($payment_data))
-            {
-                $date = date_create();
-                $length = 25;
-                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
+              if(empty($payment_data))
+              {
+                  $date = date_create();
+                  $length = 25;
+                  $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                  $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
 
-                $this->common->InsertRecords('link_to_pay',array('order_id' => $post['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
+                  $this->common->InsertRecords('link_to_pay',array('order_id' => $post['order_id'],'balance_amount' => $post['balance'],'session_link' => $session_link));
 
-                $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$session_link;
-            }
-            else
-            {
-                $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$payment_data[0]->session_link;
-            }
+                  $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$session_link;
+              }
+              else
+              {
+                  $payment_link = SITE_HOST."/api/public/invoice/linktopay/".$payment_data[0]->session_link;
+              }
+          }
         }
 
         if(!file_exists($file_path))
@@ -1285,7 +1295,6 @@ class OrderController extends Controller {
     public function addOrder()
     {
         $post = Input::all();
-       
        
         $client_data = $this->client->GetclientDetail($post['orderData']['client']['client_id']);
 
@@ -1508,12 +1517,6 @@ class OrderController extends Controller {
 
         $result = $this->order->getDesignPositionDetail($data);
 
-        $screen_print_charge = 0;
-        $screen_print_charge = 0;
-        $embroidery_charge = 0;
-        $direct_to_garment_charge = 0;
-        $markup_default = 0;
-
         foreach ($result['order_design_position'] as $position) {
 
             $screen_print_charge = 0;
@@ -1521,6 +1524,18 @@ class OrderController extends Controller {
             $embroidery_charge = 0;
             $direct_to_garment_charge = 0;
             $markup_default = 0;
+
+            $screen_print_charge2 = 0;
+            $screen_print_charge2 = 0;
+            $embroidery_charge2 = 0;
+            $direct_to_garment_charge2 = 0;
+            $markup_default2 = 0;
+
+            $screen_print_charge_qnty = 0;
+            $screen_print_charge_qnty = 0;
+            $embroidery_charge_qnty = 0;
+            $direct_to_garment_charge_qnty = 0;
+            $markup_default_qnty = 0;
 
             $position_qty = $position->qnty;
             $color_stitch_count = $position->color_stitch_count;
@@ -1536,13 +1551,22 @@ class OrderController extends Controller {
                     foreach($price_screen_primary as $primary)
                     {
                         $price_field = 'pricing_'.$color_stitch_count.'c';
+
+                        if($position_qty >= $primary->range_low && $position_qty <= $primary->range_high)
+                        {
+                            if(isset($primary->$price_field))
+                            {
+                                $screen_print_charge2 = $primary->$price_field;
+                            }
+                        }
                         if($position_qty <= $primary->range_low)
                         {
-                            if(isset($primary->$price_field) && $position_qty > 0)
+                            $screen_print_charge_qnty = $primary->range_low." - ".$primary->range_high;
+                            if(isset($primary->$price_field))
                             {
-                                $screen_print_charge = $primary->$price_field;
-                                break;
+                                $screen_print_charge = $primary->$price_field;                                
                             }
+                            break;
                         }
                     }
                 }
@@ -1551,13 +1575,22 @@ class OrderController extends Controller {
                     foreach($price_screen_secondary as $secondary)
                     {
                         $price_field = 'pricing_'.$color_stitch_count.'c';
+
+                        if($position_qty >= $secondary->range_low && $position_qty <= $secondary->range_high)
+                        {
+                            if(isset($secondary->$price_field))
+                            {
+                                $screen_print_charge2 = $secondary->$price_field;
+                            }
+                        }
                         if($position_qty <= $secondary->range_low)
                         {
-                            if(isset($secondary->$price_field) && $position_qty > 0)
+                            $screen_print_charge_qnty = $secondary->range_low." - ".$secondary->range_high;
+                            if(isset($secondary->$price_field))
                             {
-                                $screen_print_charge = $secondary->$price_field;
-                                break;
+                                $screen_print_charge = $secondary->$price_field;                                
                             }
+                            break;
                         }
                     }
                 }
@@ -1636,9 +1669,17 @@ class OrderController extends Controller {
 
                         foreach ($price_screen_embroidery as $embroidery2)
                         {
-                            if($position_qty <= $embroidery2->range_low  && $position_qty > 0)
+                            if($position_qty >= $embroidery2->range_low && $position_qty <= $embroidery2->range_high)
                             {
-                                $embroidery_charge = $embroidery2->$embroidery_field;
+                                $embroidery_charge2 = $embroidery2->$embroidery_field;
+                            }
+                            if($position_qty <= $embroidery2->range_low)
+                            {
+                                $embroidery_charge_qnty = $embroidery2->range_low." - ".$embroidery2->range_high;
+                                if(isset($embroidery2->$embroidery_field))
+                                {
+                                    $embroidery_charge = $embroidery2->$embroidery_field;    
+                                }
                                 break;
                             }
                         }
@@ -1680,12 +1721,20 @@ class OrderController extends Controller {
                         }
 
                         foreach($price_direct_garment as $garment) {
-                          
-                          if($position_qty <= $garment->range_low  && $position_qty > 0)
-                          {
-                              $direct_to_garment_charge = $garment->$garment_field;
-                              break;
-                          }
+
+                            if($position_qty >= $garment->range_low && $position_qty <= $garment->range_high)
+                            {
+                                $direct_to_garment_charge2 = $garment->$garment_field;
+                            }
+                            if($position_qty <= $garment->range_low)
+                            {
+                                $direct_to_garment_charge_qnty = $garment->range_low." - ".$garment->range_high;
+                                if(isset($garment->$garment_field))
+                                {
+                                    $direct_to_garment_charge = $garment->$garment_field;
+                                }
+                                break;
+                            }
                         }
                     }
                 }
@@ -1702,10 +1751,38 @@ class OrderController extends Controller {
                 }
             }
 
-            $position->screen_print_charge = $screen_print_charge;
-            $position->embroidery_charge = $embroidery_charge;
-            $position->direct_to_garment_charge = $direct_to_garment_charge;
-            $position->markup_default = $markup_default;
+            $position->screen_print_charge_qnty = $screen_print_charge_qnty;
+            $position->embroidery_charge_qnty = $embroidery_charge_qnty;
+            $position->direct_to_garment_charge_qnty = $direct_to_garment_charge_qnty;
+
+            if($position_qty > 0)
+            {
+                $position->screen_print_charge = $screen_print_charge;
+                $position->embroidery_charge = $embroidery_charge;
+                $position->direct_to_garment_charge = $direct_to_garment_charge;
+                $position->markup_default = $markup_default;
+
+                $position->screen_print_charge2 = 0;
+                $position->embroidery_charge2 = 0;
+                $position->direct_to_garment_charge2 = 0;
+
+                if($screen_print_charge2 > 0) {
+                    $position->screen_print_charge2 = abs($screen_print_charge2 - $screen_print_charge);
+                }
+                if($embroidery_charge2 > 0) {
+                    $position->embroidery_charge2 = abs($embroidery_charge2 - $embroidery_charge);
+                }
+                if($direct_to_garment_charge2 > 0) {
+                    $position->direct_to_garment_charge2 = abs($direct_to_garment_charge2 - $direct_to_garment_charge);
+                }
+            }
+            else
+            {
+                $position->screen_print_charge = 0;
+                $position->embroidery_charge = 0;
+                $position->direct_to_garment_charge = 0;
+                $position->markup_default = 0;
+            }
 
             if(isset($data['getNextPrice']) && $data['getNextPrice'] == 1 && isset($data['position_id']) && $data['position_id'] == $position->id)
             {
@@ -1740,7 +1817,8 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
-       
+        $orderdata = $this->common->GetTableRecords('orders',array('id'=>$post['cond']['id']));
+
         if($post['orderDataDetail']['in_hands_by'] != '')
         {
             $post['orderDataDetail']['in_hands_by'] = date("Y-m-d", strtotime($post['orderDataDetail']['in_hands_by']));
@@ -1754,8 +1832,13 @@ class OrderController extends Controller {
             $post['orderDataDetail']['date_start'] = date("Y-m-d", strtotime($post['orderDataDetail']['date_start']));
         }
 
+        if($orderdata[0]->client_id != $post['orderDataDetail']['client_id'])
+        {
+            $client_data = $this->client->GetclientDetail($post['orderDataDetail']['client_id']);
+            $post['orderDataDetail']['price_id'] = $client_data['sales']['salespricegrid'];
+        }
 
-       $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
+        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);
             return response()->json(['data'=>$data]);
 
@@ -2265,8 +2348,7 @@ class OrderController extends Controller {
         $id = $this->common->InsertRecords('link_to_pay',$orderData);
         
 
-        //$session_link="http://localhost/stokkup/link_to_pay.php?link=".$session_link;
-        $session_link="http://".$_SERVER['SERVER_NAME']."/link_to_pay.php?link=".$session_link;
+        $session_link="http://".$_SERVER['SERVER_NAME']."/api/public/invoice/linktopay/".$session_link;
         
 
         $data = array("success"=>1,'session_link' =>$session_link);

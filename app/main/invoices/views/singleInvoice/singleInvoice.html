@@ -215,11 +215,11 @@
                                         </tr>
                                     </thead>
                                     <tbody> 
-                                        <tr ng-repeat="pmntHis in siData" class="cursor-p">
+                                        <tr ng-repeat="pmntHis in siData">
                                             <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
                                             <td>{{ pmntHis.payment_amount | currency : $ : 2 }}</td>
                                             <td>{{ pmntHis.payment_method }}</td>
-                                            <td class="text-center"><a href="#" ng-click="deleteHistory(pmntHis.payment_id, pmntHis.payment_method)" class="icon icon-cancel font-19 f-red"></a></td>
+                                            <td class="text-center" class="cursor-p"><a href="#" ng-click="deleteHistory(pmntHis.payment_id, pmntHis.payment_method)" class="icon icon-cancel font-19 f-red"></a></td>
                                         </tr>                    
                                     </tbody>
                                 </table>
@@ -285,7 +285,7 @@
                                                     </md-select>
                                                 </md-input-container>
                                                 <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="CVV" ng-model="company.cvv">
+                                                    <input placeholder="CVV" name="CVV" only-number="10" ng-model="company.cvv">
                                                 </md-input-container>
                                             </div>
                                             <md-checkbox  aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>

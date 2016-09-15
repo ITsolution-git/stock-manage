@@ -24,6 +24,10 @@
                     $("#ajax_loader").hide();
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
+                   if($scope.order.item_ship_charge == undefined || $scope.order.item_ship_charge == '')
+                   {
+                        $scope.order.item_ship_charge = 0;
+                   }
                 } else {
                     $state.go('app.order');
                 }
@@ -353,21 +357,28 @@
 
         $scope.openEmailPopup = function (ev) {
     
-            $mdDialog.show({
-                controller: 'openEmailController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/views/order-info/send-email.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    client_id: $scope.order.client_id,
-                    order_id: $stateParams.id,
-                    paid: $scope.order.is_paid,
-                    balance: $scope.order.balance_due,
-                    event: ev
-                  }
-            });
+            if($scope.total_unit > 0)
+            {
+                $mdDialog.show({
+                    controller: 'openEmailController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/order/views/order-info/send-email.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        client_id: $scope.order.client_id,
+                        order_id: $stateParams.id,
+                        paid: $scope.order.is_paid,
+                        balance: $scope.order.balance_due,
+                        event: ev
+                      }
+                });
+            }
+            else
+            {
+                notifyService.notify('error','Please add atleast one product.');
+            }
         };
 
        $scope.createPO = function() {

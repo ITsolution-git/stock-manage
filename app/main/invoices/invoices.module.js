@@ -20,7 +20,7 @@
                     }
                 },
                 resolve: {
-                    invoiceData: function (msApi)
+                   /* invoiceData: function (msApi)
                     {
                         return msApi.resolve('invoicesDetail@get');
                     },
@@ -31,7 +31,7 @@
                     purchaseOrderData: function (msApi)
                     {
                         return msApi.resolve('purchaseDetail@get');
-                    },
+                    },*/
                     checksession : function (sessionService)
                     {
                        return sessionService.AccessService('BC,CA');
@@ -71,9 +71,9 @@
         $translatePartialLoaderProvider.addPart('app/main/invoices');
 
         // Api
-        msApiProvider.register('invoicesDetail', ['app/data/invoices/invoiceData.json']);
+       /* msApiProvider.register('invoicesDetail', ['app/data/invoices/invoiceData.json']);
         msApiProvider.register('singleInvoicesDetail', ['app/data/invoices/singleInvoiceData.json']);
-        msApiProvider.register('purchaseDetail', ['app/data/invoices/paymenthistry.json']);
+        msApiProvider.register('purchaseDetail', ['app/data/invoices/paymenthistry.json']);*/
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {

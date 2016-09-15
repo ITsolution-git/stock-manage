@@ -67,7 +67,7 @@ button, select, html, textarea, input {
     margin-right: 10px;
     line-height: 40px; }
 
-.stokkup-btn-style1 {
+.stokkup-btn-style1, button.bg-grey.md-raised {
   background-color: #e0e1e3;
   width: 204px;
   height: 41px;
@@ -77,7 +77,11 @@ button, select, html, textarea, input {
   text-align: center;
   text-transform: uppercase; }
 
-.white-bg {
+button.bg-grey.md-raised {
+  background-color: #9fa1a7 !important;
+  font-weight: 700; }
+
+.white-bg, .affiliate-box {
   background-color: #fff; }
 
 .approve-btn span {
@@ -104,7 +108,7 @@ button, select, html, textarea, input {
   -o-box-shadow: none;
   box-shadow: none; }
 
-.border-radius-half, .stokkup-btn-style1, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
+.border-radius-half, .stokkup-btn-style1, button.bg-grey.md-raised, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
   border-radius: 50px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -547,7 +551,7 @@ table.dataTable thead.stokkup-space1 th {
     background-color: #4773d6; }
 
 .stokkup-blue-btn {
-  background-color: #4773d6 !important; }
+  background-color: #6187db !important; }
 
 .small-headings {
   font-size: 13px;
@@ -690,8 +694,8 @@ table.table-white-bg tbody tr:first-child td {
 button.orderscreen-infobtns {
   max-width: 270px;
   margin: 0 0 15px; }
-button:last-child {
-  margin-bottom: 0; }
+  button.orderscreen-infobtns:last-child {
+    margin-bottom: 0; }
 
 .footer button:last-child {
   margin-bottom: 6px; }
@@ -838,8 +842,7 @@ md-card-content.custom-desc-box span {
   height: 90px; }
 
 .custom-struct-2 md-tabs-wrapper {
-  top: 20px;
-  width: 250px;
+  width: 50%;
   margin: auto;
   position: relative;
   z-index: 5; }
@@ -849,7 +852,7 @@ md-card-content.custom-desc-box span {
 
 .stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title {
   position: relative;
-  z-index: 0;
+  z-index: 2;
   padding-bottom: 0; }
 
 .custom-struct-2 md-pagination-wrapper {
@@ -890,9 +893,146 @@ md-card-content.custom-desc-box span {
 .dialog-cancel-btn {
   min-width: 123px; }
 
+.client-screenset-img {
+  max-height: 100px;
+  width: auto; }
+
+.art-tabs {
+  float: left; }
+  .art-tabs span {
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 14px;
+    color: #6e7584;
+    opacity: 0.6;
+    border-bottom: solid 3px #e3e3e3;
+    margin: 0 2px;
+    padding: 8px 10px;
+    position: relative;
+    top: 15px;
+    float: left;
+    text-transform: uppercase; }
+    .art-tabs span.active-art {
+      opacity: 1;
+      border-bottom: solid 3px #4773d6; }
+
+.right-search-box.srch-small {
+  width: 35%; }
+
+.shipping-custom-tab {
+  position: absolute;
+  top: 13px;
+  z-index: 1;
+  width: 100%;
+  background-color: transparent; }
+  .shipping-custom-tab md-tabs-canvas.md-paginated {
+    margin: 0; }
+  .shipping-custom-tab md-tabs-wrapper {
+    width: 50%;
+    margin: 0 auto; }
+
+.dashboard-page .md-title {
+  font-size: 14px;
+  font-weight: 600; }
+
 /* .custom-struct-2 md-tabs.md-active md-ink-bar{
 	border-bottom-color:rgb(71, 115, 214) none repeat scroll 0 0;
 }*/
 /*clients module inner pages */
+.dash-btwn-txt {
+  float: none;
+  display: inline-block;
+  font-size: 13px;
+  line-height: 14px;
+  font-weight: 400;
+  padding: 0 15px; }
+  .dash-btwn-txt.comp-report-txt {
+    position: relative;
+    float: none;
+    display: table;
+    margin: 0 auto;
+    text-align: center;
+    width: 95%; }
+  .dash-btwn-txt.green-txt {
+    color: #39b54a;
+    font-size: 16px;
+    padding: 0;
+    position: relative;
+    top: -3px;
+    left: 10px; }
+    .dash-btwn-txt.green-txt.fa {
+      color: #39b54a;
+      font-size: 14px; }
+
+.dashboard-page .num-style1 {
+  font-size: 29px; }
+.dashboard-page .p-30.last-row {
+  padding-top: 0; }
+.dashboard-page md-card {
+  padding: 20px 0 0;
+  margin: 0 8px;
+  position: relative; }
+  .dashboard-page md-card.firstbox {
+    margin-left: 0 !important; }
+  .dashboard-page md-card.lastbox {
+    margin-right: 0 !important; }
+  .dashboard-page md-card md-card-title {
+    padding: 0 20px; }
+  .dashboard-page md-card md-card-header {
+    padding: 0 5px 0 20px; }
+  .dashboard-page md-card md-card-content {
+    padding-top: 0; }
+
+.dash-footer-box {
+  width: 100%;
+  background-color: #f8f9fa;
+  border-top: solid 1px #ededed;
+  padding: 15px 0;
+  text-align: center; }
+
+.dash-footer-alternate-box {
+  width: 100%;
+  background-color: #fff;
+  padding: 15px 0;
+  text-align: center; }
+
+.affiliate-box {
+  width: 100%;
+  border: solid 1px #ededed; }
+  .affiliate-box h4 {
+    width: 100%;
+    font-size: 16px;
+    line-height: 18px;
+    border-bottom: solid 1px #ededed;
+    padding: 15px 30px; }
+  .affiliate-box .affiliate-content {
+    width: 100%;
+    padding: 20px 30px;
+    float: left; }
+
+.affiliate-content .img-box {
+  max-width: 131px;
+  max-height: 131px;
+  float: left;
+  overflow: hidden;
+  margin-right: 30px; }
+  .affiliate-content .img-box img {
+    max-width: 100%;
+    height: auto; }
+
+.affiliate-block-space {
+  margin-bottom: 15px; }
+
+.global-labels {
+  font-weight: 600;
+  font-size: 14px;
+  color: #6e7584; }
+
+.bottom-shadow {
+  -moz-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  -webkit-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  -ms-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  -o-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
+  box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
