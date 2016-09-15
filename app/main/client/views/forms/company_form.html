@@ -35,8 +35,28 @@
                     </md-select>
                 </md-input-container>
 
+               <md-input-container>
+                <input  vs-google-autocomplete="options"
+                        ng-model="address.name"
+                        vs-street-number="address.components.streetNumber" 
+                        vs-street="address.components.street"
+                        vs-city="address.components.city"
+                        vs-state="address.components.state"
+                        vs-post-code="address.components.postCode"
+                        type="text" 
+                        name="address"
+                        id="address"
+                        
+                        aria-label="form-control" flex=80>
+                        <i flex=20 title="Click to set this address" ng-click="GetAPIData(address.components)" class="icon icon-swap-vertical"></i>
+
+               
+                        <!-- <span class="help-block"><b ng-click="GetAPIData(address.components)">Clik here to Use</b></span> -->
+                </md-input-container>
+
+
                 <md-input-container>
-                    <input placeholder="Street Address" name="pl_address"  ng-model="client.pl_address"ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                    <input placeholder="Street Address" name="pl_address"  ng-model="client.pl_address" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
                 </md-input-container>
                 <md-input-container>
                     <input placeholder="Suite" name="pl_suite"  ng-model="client.pl_suite" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
@@ -53,7 +73,7 @@
                             <md-option value="0">
                                 Select State
                             </md-option>
-                            <md-option ng-repeat="state_val in states_all" ng-selected='{{state_val.id==client.state_id}}' value="{{state_val.id}}">
+                            <md-option ng-repeat="state_val in states_all" id="{{state_val.id}}" ng-selected='{{state_val.id==client.state_id}}' value="{{state_val.id}}">
                                 {{state_val.name}}
                             </md-option>
                         </md-select>
@@ -124,11 +144,11 @@
 
             </div>
         </md-dialog-content>
-<!--         <md-dialog-actions layout="row" layout-align="end center">
+        <md-dialog-actions layout="row" layout-align="end center">
             
-                   <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button>
+                   <md-button ng-click="SaveCompanyInfo(client)" class="md-primary md-hue-1 md-accent ">Save</md-button>
 <!--                    <md-button class="md-accent md-raised " ng-click="UpdateTableField(client)">Save</md-button>
             
-        </md-dialog-actions> -->
+        </md-dialog-actions>
     </form>
 </md-dialog>
