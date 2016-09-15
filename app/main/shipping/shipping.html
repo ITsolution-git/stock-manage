@@ -27,9 +27,9 @@
                             <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
-                                    <label class="top-srch-label">Search Clients...</label>
-                                    <input type="text" ng-model="name" ui-event="{change : 'search($event)'}" />
-                                </md-input-container>
+                                        <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
+                                        <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
+                                    </md-input-container>
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper">
@@ -66,7 +66,7 @@
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                                        <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                                        <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                                        <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                                        <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
                             </div>
