@@ -104,6 +104,7 @@
                 $scope.approval_all = Response.data.result.approval;
             }
         });
+
         vm.editCompanyInfo = editCompanyInfo;
         vm.editCompanyConatct=editCompanyConatct;
         vm.formPopup = 'app/main/client/views/forms';
@@ -551,6 +552,8 @@
                 });
             }
         }
+
+
     }
 
 
@@ -582,28 +585,23 @@
 
         $scope.GetAPIData = function (apidata)
         {
-            //console.log(apidata);
             $scope.client.pl_address = angular.isUndefined(apidata.street)?'':apidata.street;
             $scope.client.pl_suite = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
             $scope.client.pl_city = angular.isUndefined(apidata.city)?'':apidata.city;
-            //console.log(apidata.state);
             for(var i=0; i<$scope.states_all.length; i++)
             {
                 if($scope.states_all[i].code == apidata.state)
                 {
-                    //console.log($scope.states_all[i].code);
                     $scope.client.state_id = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
                     $scope.client.pl_state = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
-                    //$('#'+$scope.states_all[i].id).attr('selected','selected');
-                    //console.log($scope.client.state_id);
                 }
             }
-
             $scope.client.pl_pincode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
-
         }
+
+
   
-          $scope.address = {
+        $scope.address = {
             name: '',
             place: '',
             components: {
@@ -619,9 +617,9 @@
               location: {
                 lat: '',
                 long: ''
-              }
+                }
             }
-          };
+        };
 
 
 
