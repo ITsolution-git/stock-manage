@@ -461,7 +461,7 @@ public function saveColorSize($post)
             {
 
                
-               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup) + ($value->screen_fees_qnty * $value->screen_fees);
+               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup);
                $combine_array['order_design_position'][$key]->total_price = round($combine_array['order_design_position'][$key]->total_price, 2);
                $combine_array['order_design_position'][$key]->position_header_name = $value->position_name;
                $combine_array['order_design_position'][$key]->qnty_header_name = $value->qnty;
@@ -484,6 +484,7 @@ public function saveColorSize($post)
                 $combine_array['order_design_position'][$key]->image_4_url_photo = (!empty($value->image_4))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_4:'';
                 
                 $total_pos_qnty += $value->qnty;
+                $combine_array['order_design_position'][$key]->total_screen_fees = $value->screen_fees_qnty * $value->screen_fees;
                 $total_screen_fees += $value->screen_fees_qnty * $value->screen_fees;
 
                 $value->position_image = '';
