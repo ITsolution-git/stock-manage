@@ -761,7 +761,7 @@ button.orderscreen-infobtns {
   visibility: hidden; }
 
 .trans-box.order-designname {
-  width: 15%; }
+  width: 14%; }
 
 .header-bg-custom {
   background-color: #0b5c93; }
@@ -866,8 +866,7 @@ md-card-content.custom-desc-box span {
 
 .stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title {
   position: relative;
-  z-index: 2;
-  padding-bottom: 0; }
+  z-index: 0; }
 
 .custom-struct-2 md-pagination-wrapper {
   height: 40px; }
@@ -1122,5 +1121,31 @@ md-card.noborder {
     background-color: #f9f9f9;
     border: solid 1px #ededed;
     margin: auto; }
+
+/*tab structure of shipping page */
+.tab-view-page md-tabs {
+  top: -36px;
+  z-index: 1; }
+
+.shipping-custom-tab md-tabs-wrapper {
+  margin: 0;
+  left: 15%; }
+.shipping-custom-tab md-tabs-canvas {
+  height: 40px; }
+  .shipping-custom-tab md-tabs-canvas md-pagination-wrapper {
+    height: 40px; }
+.shipping-custom-tab .md-tab {
+  padding: 8px 20px;
+  color: rgba(37, 41, 50, 0.6) !important; }
+  .shipping-custom-tab .md-tab:before {
+    content: "";
+    position: absolute;
+    border-bottom: solid 3px #e3e3e3;
+    width: 100%;
+    height: 3px;
+    left: 5px;
+    bottom: 0; }
+  .shipping-custom-tab .md-tab.md-active {
+    color: #252932 !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
