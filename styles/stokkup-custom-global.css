@@ -941,7 +941,7 @@ md-card-content.custom-desc-box span {
   .shipping-custom-tab md-tabs-canvas.md-paginated {
     margin: 0; }
   .shipping-custom-tab md-tabs-wrapper {
-    width: 50%;
+    width: 42%;
     margin: 0 auto; }
 
 .dashboard-page .md-title {
@@ -1048,6 +1048,13 @@ md-card-content.custom-desc-box span {
   -o-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
   box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important; }
 
+.top-shadow {
+  -moz-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -webkit-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -ms-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -o-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important; }
+
 .payment-accordion {
   width: 100%;
   border: solid 1px #ededed;
@@ -1124,12 +1131,14 @@ md-card.noborder {
 
 /*tab structure of shipping page */
 .tab-view-page md-tabs {
-  top: -36px;
-  z-index: 1; }
+  top: 0;
+  z-index: 0; }
 
 .shipping-custom-tab md-tabs-wrapper {
   margin: 0;
-  left: 15%; }
+  left: 400px;
+  top: 91px;
+  position: fixed; }
 .shipping-custom-tab md-tabs-canvas {
   height: 40px; }
   .shipping-custom-tab md-tabs-canvas md-pagination-wrapper {
