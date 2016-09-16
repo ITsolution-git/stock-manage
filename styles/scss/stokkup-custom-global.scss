@@ -51,6 +51,7 @@ $md-iconbtn-color:#a8a9ad;
 $blue-shade-btn:#4773d6;
 $green-txt:#39b54a;
 $disable-btn-txt-color:#cdcfd3;
+$tabs-border-color:#e3e3e3;
 /*global variables ends here */
 
 /*global popup style starts here */
@@ -79,7 +80,12 @@ $teal-green:#26b999;
 	height:$buttonheight;
 	line-height:$buttonlineheight;
 }
-
+@mixin colorvariant($red, $green, $blue, $opacity){
+	color:rgba($red,$green,$blue,$opacity) !important;
+}
+@mixin bgcolorvariant($red, $green, $blue, $opacity){
+	color:rgba($red,$green,$blue,$opacity);
+}
 /*genera css */
 input::-moz-placeholder, textarea::-moz-placeholder {
 	opacity:1;
@@ -1041,7 +1047,7 @@ button{
 }
 .trans-box{
 	&.order-designname{
-		width:15%;
+		width:14%;
 	}
 }
 .header-bg-custom{
@@ -1175,8 +1181,7 @@ md-card-content{
 }
 .stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title{
 	position:$pos-relative;
-	z-index:2;
-	padding-bottom:$zero;
+	z-index:0;
 }
 .custom-struct-2{
 	md-pagination-wrapper{
@@ -1208,7 +1213,7 @@ md-card-content{
 	}
 }
 .custom-struct-2 md-tabs md-ink-bar{
-	border-bottom:3px solid #e3e3e3;
+	border-bottom:3px solid $tabs-border-color;
 }
 .md-primary
 {
@@ -1240,7 +1245,7 @@ md-card-content{
 		font-size:$font-size-text;
 		color:$stokkup-global-txtcolor;
 		opacity:0.6;
-		border-bottom:solid 3px #e3e3e3;
+		border-bottom:solid 3px $tabs-border-color;
 		margin:$zero 2px;
 		padding:8px 10px;
 		position:$pos-relative;
@@ -1472,5 +1477,40 @@ md-card.noborder{
 		background-color:#f9f9f9;
 		border:solid 1px #ededed;
 		margin:$auto;
+	}
+}
+/*tab structure of shipping page */
+.tab-view-page{
+	md-tabs{
+		top:-36px;
+		z-index:1;
+	}
+}
+.shipping-custom-tab{
+	md-tabs-wrapper{
+		margin:$zero;
+		left:15%;
+	}
+	md-tabs-canvas{
+		height:40px;
+		md-pagination-wrapper{
+			height:40px;
+		}
+	}
+	.md-tab{
+		padding:8px 20px;
+		@include colorvariant(37,41,50,0.6);
+		&:before{
+			content:"";
+			position:$pos-absolute;
+			border-bottom:solid 3px $tabs-border-color;
+			width:$full-width;
+			height:3px;
+			left:5px;
+			bottom:$zero;
+		}
+		&.md-active{
+		@include colorvariant(37,41,50,1);
+		}
 	}
 }
