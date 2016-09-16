@@ -1157,4 +1157,8 @@ md-card.noborder {
   .shipping-custom-tab .md-tab.md-active {
     color: #252932 !important; }
 
+.dragiconscenter {
+  align-items: center;
+  justify-content: center; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
