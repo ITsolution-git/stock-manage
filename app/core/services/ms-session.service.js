@@ -160,6 +160,29 @@
                     $scope.flag = 'add'; 		//	GET PARAMETERS FOR POPUP
                     $scope.all_scope = all_scope; 	//	FULL SCOPE OF CONTROLLER DATA
 
+			        $scope.Gapi_options = { // GOOGLE ADDRESS API OPTIONS
+			        	componentRestrictions: { country: 'US' }
+			        };
+			        $scope.Gapi_address = { // GOOGLE ADDRESS API PARAMETERS
+			            name: '',
+			            place: '',
+			            components: {
+			              placeId: '',
+			              streetNumber: '', 
+			              street: '',
+			              city: '',
+			              state: '',
+			              countryCode: '',
+			              country: '',
+			              postCode: '',
+			              district: '',
+			              location: {
+			                lat: '',
+			                long: ''
+			                }
+			            }
+			        };
+
                     $scope.closeDialog = function() 
                     { $mdDialog.hide(); } 
                     
@@ -193,6 +216,36 @@
                    		});
 			        }
 
+					$scope.LocationAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION 
+			        {
+			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.postal_code = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			        }
+			        $scope.DistributionAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION 
+			        {
+			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.zipcode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			            $scope.params.country = angular.isUndefined(apidata.countryCode)?'':apidata.countryCode;
+			        }
+			        
+
                 },
                 templateUrl: 'app/main/'+path,
                 parent: angular.element($document.body),
@@ -214,6 +267,59 @@
                     $scope.params = params.data; // GET PARAMETERS FOR POPUP
                     $scope.flag = 'edit'; 		//	GET PARAMETERS FOR POPUP
                     $scope.all_scope = all_scope; 	//	FULL SCOPE OF CONTROLLER DATA
+                    
+                    $scope.Gapi_options = { // GOOGLE ADDRESS API OPTIONS
+			        	componentRestrictions: { country: 'US' }
+			        };
+			        $scope.Gapi_address = { // GOOGLE ADDRESS API PARAMETERS
+			            name: '',
+			            place: '',
+			            components: {
+			              placeId: '',
+			              streetNumber: '', 
+			              street: '',
+			              city: '',
+			              state: '',
+			              countryCode: '',
+			              country: '',
+			              postCode: '',
+			              district: '',
+			              location: {
+			                lat: '',
+			                long: ''
+			                }
+			            }
+			        };
+
+			        $scope.LocationAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION
+			        {
+			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.postal_code = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			        }
+			        $scope.DistributionAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION 
+			        {
+			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.zipcode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			            $scope.params.country = angular.isUndefined(apidata.countryCode)?'':apidata.countryCode;
+			        }
+
                    // console.log($scope.params); //return false;
                     $scope.UpdateTableData = function(field_name,field_value,table_name,cond_field,cond_value,extra,extra_cond)
 			        {
