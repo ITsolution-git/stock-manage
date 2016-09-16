@@ -159,7 +159,7 @@ Route::post('client/GetclientDetail','ClientController@GetclientDetail');
 Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
-Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
+Route::post('client/SaveClientInfo', 'ClientController@SaveClientInfo');
 Route::post('client/checkCompName', 'ClientController@checkCompName');
 Route::get('client/getDocument/{id}/{company_id}','ClientController@getDocument');
 Route::get('client/getDocumentDetailbyId/{id}/{company_id}', 'ClientController@getDocumentDetailbyId');
