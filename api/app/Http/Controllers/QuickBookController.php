@@ -469,6 +469,7 @@ class QuickBookController extends Controller
 
          
          $Invoice->setTxnDate(date('Y-m-d'));
+         $Invoice->setRefNumber('A-123');
          $Invoice->setMemo("INV-15");
          
 
