@@ -437,7 +437,7 @@ class QuickBookController extends Controller
         }*/
     }
 
-    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid,$payment){
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid,$payment,$orderId){
       
 
          $IPP = new \QuickBooks_IPP($this->QBO_DSN);
@@ -465,13 +465,11 @@ class QuickBookController extends Controller
 
         $Invoice = new \QuickBooks_IPP_Object_Invoice();
 
-         $Invoice->setDocNumber('WEB' . mt_rand(0, 10000));
+         $Invoice->setDocNumber('INV-' . $orderId);
 
          
          $Invoice->setTxnDate(date('Y-m-d'));
-         $Invoice->setRefNumber('A-123');
-         $Invoice->setMemo("INV-15");
-         
+        
 
          if($payment == '15') {
 
