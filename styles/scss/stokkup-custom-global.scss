@@ -1273,8 +1273,12 @@ md-card-content{
 		margin:$zero;
 	}
 	md-tabs-wrapper{
-		width:42%;
+		width:100%;
 		margin:0 auto;
+		md-tab-data{
+			z-index:1;
+			opacity:1;
+		}
 	}
 }
 .dashboard-page{
@@ -1496,15 +1500,23 @@ md-card.noborder{
 }
 .shipping-custom-tab{
 	md-tabs-wrapper{
-		margin:$zero;
+		/*margin:$zero;
 		left:400px;
 		top:91px;
 		position:fixed;
+		-webkit-backface-visibility: hidden;
+		-webkit-transform: translateZ(0);
+		-webkit-transform: translate3d(0, 0, 0);*/
 	}
 	md-tabs-canvas{
-		height:40px;
+		height:60px;
+		position:$pos-relative;
+		z-index:1;
+		width:720px;
 		md-pagination-wrapper{
 			height:40px;
+			top:20px;
+			left:180px;
 		}
 	}
 	.md-tab{

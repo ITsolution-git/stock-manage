@@ -2,7 +2,8 @@
     <div class="tab-view-page simple-table-container stokkup-main-tableview">
 
             <md-content class="shipping-custom-tab transparent-bg">
-                <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
+                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                    <div class="table-title white-bg bottom-shadow" flex=100 layout="row" layout-align="space-between center">
                     <div class="table-title-text" class="cursor-p">Shipping</div>
                         <div class="pull-right right-search-box srch-small">
                             <div class="search-block pull-right">
@@ -16,8 +17,7 @@
                                 </md-input-container> -->
                             </div> 
                         </div>
-                </div>
-                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab top-shadow">
+                    </div>
                     <!---Order Waiting to Ship Tab-->
                     <md-tab label="Orders Waiting to Ship">
                         <div ng-controller="shippingController" class="fixe-top-tabs">
