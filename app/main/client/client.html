@@ -48,8 +48,8 @@
                     <tbody>
 
                         <tr ng-repeat="client in rows" >
-                            <td ng-if="role=='CA' || role=='BC'"  ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
-                            <td ng-if="role!='CA' && role!='BC'">{{ client.client_company }}</td>
+                            <td ng-if="role=='CA' || role=='AM' || role=='FM' || role=='PU' || role=='SH'"  ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
+                            <td ng-if="role=='AT' || role=='SU' || role=='AD' || role=='SO' || role=='PO'  || role=='RA' || role=='SA'" >{{ client.client_company }}</td>
                             <td>{{ client.first_name }} {{client.last_name}}</td>
                             <td>{{ client.phone }}</td>
                             <td>{{ client.email }}</td>

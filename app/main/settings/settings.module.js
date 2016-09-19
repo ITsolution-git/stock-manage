@@ -111,7 +111,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/userManagement',
@@ -128,7 +128,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/affiliate',
