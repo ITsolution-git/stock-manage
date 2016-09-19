@@ -469,6 +469,8 @@ class QuickBookController extends Controller
 
          
          $Invoice->setTxnDate(date('Y-m-d'));
+         $Invoice->setMemo("INV-15");
+         
 
          if($payment == '15') {
 
