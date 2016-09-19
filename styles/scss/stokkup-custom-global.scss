@@ -1540,3 +1540,14 @@ md-card.noborder{
 	align-items:center;
 	justify-content:center;
 }
+.company-pro-img-block{
+	max-height:350px !important;
+	overflow:hidden;
+	.company-pro-image{
+		max-height:320px;
+		width:auto;
+		max-width:$full-width;
+		margin:$auto;
+		float:$nofloat;
+	}
+}

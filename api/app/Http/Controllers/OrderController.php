@@ -380,6 +380,7 @@ class OrderController extends Controller {
      public function updatePositions()
      {
         $post = Input::all();
+       
         
         if($post['column_name'] == 'position_id') {
             $result = $this->order->checkDuplicatePositions($post['design_id'],$post['data']['position_id']);
@@ -402,8 +403,20 @@ class OrderController extends Controller {
             $post['data']['screen_fees_qnty'] = $post['data']['color_stitch_count'];
           }  
 
-         
-          
+          if($post['column_name'] == 'placement_type') {
+
+              $postNew = array();
+              $postNew['cond']['company_id'] = $post['company_id'];
+              $miscData = $this->common->getAllMiscDataWithoutBlank($postNew);
+
+           
+              if($miscData['placement_type'][$post['data']['placement_type']]->slug != 46) {
+                $post['data']['dtg_size'] = 0;
+                $post['data']['dtg_on'] = 0;
+              }
+
+          } 
+
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
 
           if($post['column_name'] == 'position_id') {
