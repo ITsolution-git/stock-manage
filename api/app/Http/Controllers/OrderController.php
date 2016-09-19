@@ -1784,7 +1784,7 @@ class OrderController extends Controller {
                 $position->markup_default = 0;
             }
 
-            $position->total_price += $screen_print_charge2;
+            $position->total_price += $screen_print_charge2 + $embroidery_charge2 + $direct_to_garment_charge2;
 
             if(isset($data['getNextPrice']) && $data['getNextPrice'] == 1 && isset($data['position_id']) && $data['position_id'] == $position->id)
             {
