@@ -90,7 +90,7 @@ class Order extends Model {
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
                          ->leftJoin('invoice as i','order.id','=', 'i.order_id')
                          ->leftJoin('art as a','order.id','=', 'a.order_id')
-                         ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "));
+                         ->leftJoin('client_contact as cc','order.contact_main_id','=',DB::raw("cc.id"));
                          if(isset($data['is_affiliate']))
                          {
                                $orderDetailData = $orderDetailData->leftJoin('order_affiliate_mapping as oam','order.id','=', 'oam.order_id');
@@ -542,7 +542,7 @@ public function saveColorSize($post)
     public function orderDetailInfo($data) {
       
         $whereConditions = ['is_delete' => "1",'id' => $data['id'],'company_id' => $data['company_id']];
-        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping','date_start','date_shipped','in_hands_by','approval_id','client_id'];
+        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping','date_start','date_shipped','in_hands_by','approval_id','client_id','contact_main_id'];
 
         $orderDetailData = DB::table('orders')
                          ->select($listArray)
@@ -851,4 +851,21 @@ public function saveColorSize($post)
          return $newData;
 
   }
+
+    public function getApprovalOrders($data)
+    {
+        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $data['company_id']];
+        $orderData = DB::table('orders as o')
+                         ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
+                         ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                         ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
+                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                         ->leftJoin('users as u', 'u.id', '=', 'o.approved_by')
+                         ->select('o.id as order_id','o.created_date',DB::raw('SUM(dp.sales_total) as sales_total'),'u.name','o.order_sns_status')
+                         ->where($where)
+                         ->GroupBy('o.id')
+                         ->get();
+
+        return $orderData;
+    }
 }

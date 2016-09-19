@@ -142,7 +142,7 @@ class Common extends Model {
        
 
 
-        $whereConditions = ['users.status' => '1','users.is_delete' => '1','roles.slug' => 'BC','users.parent_id' => $company_id];
+        $whereConditions = ['users.status' => '1','users.is_delete' => '1','roles.slug' => 'AM','users.parent_id' => $company_id];
         $listArray = ['users.id','users.name'];
 
         $brandCordinatorData = DB::table('users as users')

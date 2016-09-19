@@ -77,7 +77,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU','false');
                     }
                 },
                 url  : '/companyProfile',
@@ -94,7 +94,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU,AT','false');
                     }
                 },
                 url  : '/companyDetails',
@@ -111,7 +111,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/userManagement',
@@ -128,7 +128,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/affiliate',
@@ -224,6 +224,23 @@
                         controller : 'salesController as vm'
                     }
                 }
+            }).state('app.settings.approvals', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA');
+                    }
+                },
+                url  : '/approvals',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/approvals/approvals.html',
+                        controller : 'approvalsController as vm'
+                    }
+                }
             });
         // Navigation
        /* msNavigationServiceProvider.saveItem('fuse', {
@@ -309,6 +326,13 @@
             stateParams: {'id': 9},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 9
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
+            title      : 'S&S Approval',
+            state      : 'app.settings.approvals',
+            stateParams: {'id': 10},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 10
         });/*
         msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',

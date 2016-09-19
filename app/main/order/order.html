@@ -91,12 +91,9 @@
                         </div>
                     </md-content>
                     <div class="filter-footer" layout="row">
-                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()">                                      
-                            APPLY FILTERS
+                        <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button"  flex="50" ng-click="filterOrders()">APPLY FILTERS
                         </md-button>
-                        <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50">                                      
-                            RESET FILTERS
-                        </md-button>
+                        <md-button ng-click="vm.resetFilter()" class="stokkup-custom-btn1 md-button bg-grey md-raised" flex="50">RESET FILTERS</md-button>
 
                     </div>
                 </md-sidenav>
@@ -115,7 +112,7 @@
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
-                <table class="dataTable row-border hover">
+                <table class="dataTable row-border">
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr  ng-repeat-start="row in rows"  >
@@ -139,21 +136,20 @@
                         </tr>
                                 <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
                                     <td colspan="8" class="collpas">
-                                    <table class="dataTable row-border hover" >
+                                    <table class="dataTable row-border" >
                                         <thead>
                                             <th>Design Name</th>
                                             <th>Postion Name</th>
                                             <th>Ship Date</th>
                                             <!-- <th>Status</th> -->
-                                            
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="design_data_all in row.design_pos">
                                                 <td class="cursor-p" ui-sref="app.order.design({id:design_data_all.id})">{{design_data_all.design_name}}</td>
-                                                <td>{{design_data_all.count_position}} Positions<md-tooltip md-direction="bottom">{{design_data_all.position_name}}</md-tooltip></td>
+                                                <td class="cursor-p">{{design_data_all.count_position}} Positions<md-tooltip md-direction="bottom">{{design_data_all.position_name}}</md-tooltip></td>
 
-                                                <td ng-if="design_data_all.shipping_date != '0000-00-00' && design_data_all.shipping_date != '' ">{{design_data_all.shipping_date | date:"M/d/yyyy"  }}</td>
-                                                <td ng-if="design_data_all.shipping_date == '0000-00-00' || design_data_all.shipping_date == '' "></td>
+                                                <td class="cursor-p" ng-if="design_data_all.shipping_date != '0000-00-00' && design_data_all.shipping_date != '' ">{{design_data_all.shipping_date | date:"M/d/yyyy"  }}</td>
+                                                <td class="cursor-p" ng-if="design_data_all.shipping_date == '0000-00-00' || design_data_all.shipping_date == '' "></td>
 
                                                 <!-- <td  class="text-center font-small mdslider"><label class="slider">123</label>
                                                     <md-slider flex ng-model="row.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
@@ -170,7 +166,7 @@
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-           <table class="simple">
+           <table class="dataTable row-border">
                 <thead>
                     <tr>
                         <th>No Records Found</th>

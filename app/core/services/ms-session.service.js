@@ -56,7 +56,7 @@
 			});
 		}	
 
-		function AccessService(ret)
+		function AccessService(arr_role,access)
 		{
 				$http.get('api/public/auth/session').success(function(result) 
                 {  
@@ -74,7 +74,8 @@
 
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);
-	                    if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
+	                    //console.log(arr_role+"--"+access); 
+	                    if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) || access=="true" )) // PERMISSION ALLOW
 			            {
 			               // console.log('error');
 			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
@@ -82,6 +83,15 @@
 			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
 			                return false;
 			            }
+			            if(arr_role.indexOf(role) == 0 && arr_role != 'ALL' && arr_role!='' && access=="false") // PERMISSION NOT ALLOW
+			            {
+			               // console.log('error');
+			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
+			                notifyService.notify(data.status, data.message);
+			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
+			                return false;
+			            }
+			            
 
 	                }
 	                else
@@ -100,52 +110,54 @@
             });
 
 		}
+		function hide_menu(ret_array)
+		{
+			//console.log(ret_array);
+			if(ret_array.length>0)
+			{
+				for(var i=0; i<ret_array.length; i++)
+				{
+					msNavigationService.deleteItem('fuse.'+ret_array[i]);
+				}
+			}
+		}
 		function checkRollMenu(role)
 		{
 			//console.log(role);
 			if(role=='SA')
 			{
-				msNavigationService.deleteItem('fuse.settings');
-				msNavigationService.deleteItem('fuse.art');
-				msNavigationService.deleteItem('fuse.client');
-				msNavigationService.deleteItem('fuse.order');
-				msNavigationService.deleteItem('fuse.invoices');
-				msNavigationService.deleteItem('fuse.purchaseOrder');
-				msNavigationService.deleteItem('fuse.receiving');
-				msNavigationService.deleteItem('fuse.finishing');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.shipping');
-				msNavigationService.deleteItem('fuse.dashboard');
-
+				var ret_array = ['settings','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','client','order'];
+				hide_menu(ret_array);
 			}
 			else if(role=='CA')
 			{
-				msNavigationService.deleteItem('fuse.admin');
+				var ret_array = ['admin'];
+				hide_menu(ret_array);
 			}
-			else if(role=='BC')
+			else if(role=='AM')
 			{
-				msNavigationService.deleteItem('fuse.admin');
-				msNavigationService.deleteItem('fuse.settings');
-			}
-			else if(role=='FM')
+				var ret_array = ['admin','settings.userManagement'];
+				hide_menu(ret_array);
+			}			
+			else if(role=='AT')
 			{
-				msNavigationService.deleteItem('fuse.admin');
-				msNavigationService.deleteItem('fuse.settings');
+				var ret_array = ['settings','order','invoices','purchaseOrder','customProduct','admin','client','vendor'];
+				hide_menu(ret_array);
 			}
+			else if(role=='SU')
+			{
+				var ret_array = ['settings','invoices','purchaseOrder','customProduct','admin'];
+				hide_menu(ret_array);
+			}
+			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
+			{
+				var ret_array = ['admin'];
+				hide_menu(ret_array);
+			}			
 			else
 			{
-				msNavigationService.deleteItem('fuse.settings');
-				msNavigationService.deleteItem('fuse.art');
-				msNavigationService.deleteItem('fuse.order');
-				msNavigationService.deleteItem('fuse.invoices');
-				msNavigationService.deleteItem('fuse.purchaseOrder');
-				msNavigationService.deleteItem('fuse.receiving');
-				msNavigationService.deleteItem('fuse.finishing');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.shipping');
-				msNavigationService.deleteItem('fuse.admin');
+				var ret_array = ['settings','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','admin','client','order'];
+				hide_menu(ret_array);
 			}
 		}
 
