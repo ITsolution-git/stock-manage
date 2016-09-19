@@ -1172,4 +1172,14 @@ md-card.noborder {
   align-items: center;
   justify-content: center; }
 
+.company-pro-img-block {
+  max-height: 350px !important;
+  overflow: hidden; }
+  .company-pro-img-block .company-pro-image {
+    max-height: 320px;
+    width: auto;
+    max-width: 100%;
+    margin: auto;
+    float: none; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
