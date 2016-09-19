@@ -231,7 +231,17 @@
                                <div class="pd15">
                                    <div layout="row">
                                        <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
+                                            <div class="title" layout-padding>
+                                                <span class="basicInfoStyle">Credit Card Information</span>
+                                                <md-select placeholder="Saved Credit Cards" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
+                                                    <md-option value="">
+                                                        Saved Credit Cards
+                                                    </md-option>
+                                                    <md-option ng-repeat="cards in cardsAll" value="{{cards.payment_profile_id}}" >
+                                                        {{cards.card_number}}:{{cards.expiration}}
+                                                    </md-option>
+                                                </md-select>
+                                            </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="50">
                                                      <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
