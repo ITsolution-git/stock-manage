@@ -313,4 +313,39 @@ class InvoiceController extends Controller {
             );
         return response()->json(["data" => $response]);
     }
+
+    // get stored card details with Authorized.net payment profile IDs
+    public function getInvoiceCards($invoice_id,$company_id,$type=0){
+
+        $post = Input::all();
+
+        $retutn_arr = array();
+        
+        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+
+        $retArray = DB::table('invoice as i')
+            ->select('cppd.payment_profile_id', 'cppd.card_number', 'cppd.expiration')
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client_payment_profiles as cpp','cpp.client_id','=','o.client_id')
+            ->leftJoin('client_payment_profiles_detail as cppd','cppd.cpp_id','=','cpp.cpp_id')
+            ->where('i.id','=',$invoice_id)
+            ->get();
+
+         if(empty($retArray))
+        {
+
+           $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS
+                                ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+            );
+        return response()->json(["data" => $response]);
+    }
 }

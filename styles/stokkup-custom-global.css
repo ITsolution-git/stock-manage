@@ -941,8 +941,11 @@ md-card-content.custom-desc-box span {
   .shipping-custom-tab md-tabs-canvas.md-paginated {
     margin: 0; }
   .shipping-custom-tab md-tabs-wrapper {
-    width: 42%;
+    width: 100%;
     margin: 0 auto; }
+    .shipping-custom-tab md-tabs-wrapper md-tab-data {
+      z-index: 1;
+      opacity: 1; }
 
 .dashboard-page .md-title {
   font-size: 14px;
@@ -1135,14 +1138,22 @@ md-card.noborder {
   z-index: 0; }
 
 .shipping-custom-tab md-tabs-wrapper {
-  margin: 0;
-  left: 400px;
-  top: 91px;
-  position: fixed; }
+  /*margin:$zero;
+  left:400px;
+  top:91px;
+  position:fixed;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);*/ }
 .shipping-custom-tab md-tabs-canvas {
-  height: 40px; }
+  height: 60px;
+  position: relative;
+  z-index: 1;
+  width: 720px; }
   .shipping-custom-tab md-tabs-canvas md-pagination-wrapper {
-    height: 40px; }
+    height: 40px;
+    top: 20px;
+    left: 180px; }
 .shipping-custom-tab .md-tab {
   padding: 8px 20px;
   color: rgba(37, 41, 50, 0.6) !important; }
@@ -1156,5 +1167,9 @@ md-card.noborder {
     bottom: 0; }
   .shipping-custom-tab .md-tab.md-active {
     color: #252932 !important; }
+
+.dragiconscenter {
+  align-items: center;
+  justify-content: center; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

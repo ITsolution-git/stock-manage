@@ -1,4 +1,3 @@
-
 <div class="content client-list-page stockkup-content-table-container">
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
@@ -108,10 +107,8 @@
                                             <md-button class="md-raised stokkup-custom-btn1 bg-grey mb-15" ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
                                             <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
                                         </div>
-                                        <div flex=5 class="pull-left mt-20 text-center">
-                                            <div class="pull-right" dnd-handle>
-                                                <span class="icon icon-menu fs22"></span>
-                                            </div>
+                                        <div flex=5 layout="row" class="dragiconscenter"> 
+                                            <span class="icon icon-menu fs22"></span>
                                         </div>
                                     </div>
                                 </div>    
@@ -124,10 +121,8 @@
                                     <div flex=20 layout="column" class="text-center">
                                             <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="vm.createNewScreen($event,sets.screen_id)">Create Screen</md-button>
                                     </div>
-                                    <div flex=5 class="pull-left mt-20 text-center">
-                                        <div class="pull-right" dnd-handle>
-                                            <span class="icon icon-menu fs22"></span>
-                                        </div>
+                                    <div flex=5 layout="row" class="dragiconscenter"> 
+                                        <span class="icon icon-menu fs22"></span>
                                     </div>
                                 </div>
                                 <!-- <div class="pull-right" dnd-handle>
