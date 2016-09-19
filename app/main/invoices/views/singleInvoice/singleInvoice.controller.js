@@ -44,6 +44,15 @@
             }
         });
 
+        $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+
+            if(result123.data.success == '0') {
+                    $state.go('app.invoices');
+            }else{
+                $scope.cardsAll = result123.data.allData;
+            }
+        });
+
         var misc_list_data = {};
         var condition_obj = {};
         condition_obj['company_id'] =  sessionService.get('company_id');
@@ -202,12 +211,12 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.creditFname == undefined) {
+            if(paymentData.creditFname.length == 0) {
                 var data = {"status": "error", "message": "Please enter First Name"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.creditLname == undefined) {
+            if(paymentData.creditLname.length == 0) {
                 var data = {"status": "error", "message": "Please enter Last Name"}
                 notifyService.notify(data.status, data.message);
                 return false;
@@ -227,12 +236,12 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.expMonth == undefined) {
+            if(paymentData.expMonth.length == 0) {
                 var data = {"status": "error", "message": "Please select Month of Expiration"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.expYear == undefined) {
+            if(paymentData.expYear.length == 0) {
                 var data = {"status": "error", "message": "Please select Year of Expiration"}
                 notifyService.notify(data.status, data.message);
                 return false;
@@ -242,22 +251,22 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.street == undefined) {
+            if(paymentData.street.length == 0) {
                 var data = {"status": "error", "message": "Please enter Street Address"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.city == undefined) {
+            if(paymentData.city.length == 0) {
                 var data = {"status": "error", "message": "Please enter City"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.state == undefined) {
+            if(paymentData.state.length == 0) {
                 var data = {"status": "error", "message": "Please select State"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.zip == undefined) {
+            if(paymentData.zip.length == 0) {
                 var data = {"status": "error", "message": "Please enter Zip"}
                 notifyService.notify(data.status, data.message);
                 return false;
