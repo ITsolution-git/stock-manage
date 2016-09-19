@@ -1338,6 +1338,7 @@ class OrderController extends Controller {
          $post['orderdata']['sales_id'] = $client_data['sales']['salesperson'];
          $post['orderdata']['price_id'] = $client_data['sales']['salespricegrid'];
          $post['orderdata']['tax_rate'] = $client_data['tax']['tax_rate'];
+         $post['orderdata']['contact_main_id'] = $client_data['contact']['id'];
          
           $order_id = $this->common->InsertRecords('orders',$post['orderdata']);
 
@@ -1849,6 +1850,9 @@ class OrderController extends Controller {
         {
             $client_data = $this->client->GetclientDetail($post['orderDataDetail']['client_id']);
             $post['orderDataDetail']['price_id'] = $client_data['sales']['salespricegrid'];
+            $post['orderDataDetail']['sales_id'] = $client_data['sales']['salesperson'];
+            $post['orderDataDetail']['account_manager_id'] = $client_data['main']['account_manager'];
+            $post['orderDataDetail']['contact_main_id'] = $client_data['contact']['id'];
         }
 
         $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
@@ -1867,6 +1871,7 @@ class OrderController extends Controller {
         $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','company_id' =>$result['order'][0]->company_id),array());
         $staff = $this->common->getStaffList($result['order'][0]->company_id);
         $brandCo = $this->common->getBrandCordinator($result['order'][0]->company_id);
+        $contact_main = $this->common->GetTableRecords('client_contact',array('is_deleted' => '1','client_id' =>$result['order'][0]->client_id),array());
 
          if($result['order'][0]->in_hands_by != '0000-00-00' && $result['order'][0]->in_hands_by != '') {
             $result['order'][0]->in_hands_by = date("n/d/Y", strtotime($result['order'][0]->in_hands_by));
@@ -1891,7 +1896,8 @@ class OrderController extends Controller {
                                 'records' => $result['order'],
                                 'price_grid' => $price_grid,
                                 'staff' => $staff,
-                                'brandCo' => $brandCo
+                                'brandCo' => $brandCo,
+                                'contact_main' => $contact_main
                                 );
         } else {
             $response = array(
@@ -1900,7 +1906,8 @@ class OrderController extends Controller {
                                 'records' => $result['order'],
                                 'price_grid' => $price_grid,
                                 'staff' => $staff,
-                                'brandCo' => $brandCo);
+                                'brandCo' => $brandCo,
+                                'contact_main' => $contact_main);
         } 
         return response()->json(["data" => $response]);
 
