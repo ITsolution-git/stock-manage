@@ -77,7 +77,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU','false');
                     }
                 },
                 url  : '/companyProfile',
@@ -94,7 +94,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU,AT','false');
                     }
                 },
                 url  : '/companyDetails',
