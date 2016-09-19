@@ -1261,3 +1261,6 @@ margin-top:30px;
  a.md-button.md-default-theme.md-hue-1.md-accent, a.md-button.md-hue-1.md-accent, .md-button.md-default-theme.md-hue-1.md-accent, .md-button.md-hue-1.md-accent{
   color:#fff !important;
  }
+ .filter-footer .stokkup-custom-btn1{
+  padding:0 auto;
+ }
