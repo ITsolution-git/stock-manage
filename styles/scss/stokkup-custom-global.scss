@@ -51,6 +51,7 @@ $md-iconbtn-color:#a8a9ad;
 $blue-shade-btn:#4773d6;
 $green-txt:#39b54a;
 $disable-btn-txt-color:#cdcfd3;
+$tabs-border-color:#e3e3e3;
 /*global variables ends here */
 
 /*global popup style starts here */
@@ -79,7 +80,12 @@ $teal-green:#26b999;
 	height:$buttonheight;
 	line-height:$buttonlineheight;
 }
-
+@mixin colorvariant($red, $green, $blue, $opacity){
+	color:rgba($red,$green,$blue,$opacity) !important;
+}
+@mixin bgcolorvariant($red, $green, $blue, $opacity){
+	color:rgba($red,$green,$blue,$opacity);
+}
 /*genera css */
 input::-moz-placeholder, textarea::-moz-placeholder {
 	opacity:1;
@@ -1041,7 +1047,7 @@ button{
 }
 .trans-box{
 	&.order-designname{
-		width:15%;
+		width:14%;
 	}
 }
 .header-bg-custom{
@@ -1175,8 +1181,7 @@ md-card-content{
 }
 .stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title{
 	position:$pos-relative;
-	z-index:2;
-	padding-bottom:$zero;
+	z-index:0;
 }
 .custom-struct-2{
 	md-pagination-wrapper{
@@ -1208,7 +1213,7 @@ md-card-content{
 	}
 }
 .custom-struct-2 md-tabs md-ink-bar{
-	border-bottom:3px solid #e3e3e3;
+	border-bottom:3px solid $tabs-border-color;
 }
 .md-primary
 {
@@ -1240,7 +1245,7 @@ md-card-content{
 		font-size:$font-size-text;
 		color:$stokkup-global-txtcolor;
 		opacity:0.6;
-		border-bottom:solid 3px #e3e3e3;
+		border-bottom:solid 3px $tabs-border-color;
 		margin:$zero 2px;
 		padding:8px 10px;
 		position:$pos-relative;
@@ -1268,8 +1273,12 @@ md-card-content{
 		margin:$zero;
 	}
 	md-tabs-wrapper{
-		width:50%;
+		width:100%;
 		margin:0 auto;
+		md-tab-data{
+			z-index:1;
+			opacity:1;
+		}
 	}
 }
 .dashboard-page{
@@ -1396,6 +1405,14 @@ md-card-content{
 	-o-box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
 	box-shadow:0 2px 5px rgba(34,31,31,0.15) !important;
 }
+
+.top-shadow{
+	-moz-box-shadow:0 -2px 5px rgba(34,31,31,0.15) !important;
+	-webkit-box-shadow:0 -2px 5px rgba(34,31,31,0.15) !important;
+	-ms-box-shadow:0 -2px 5px rgba(34,31,31,0.15) !important;
+	-o-box-shadow:0 -2px 5px rgba(34,31,31,0.15) !important;
+	box-shadow:0 -2px 5px rgba(34,31,31,0.15) !important;
+}
 .payment-accordion{
 	width:$full-width;
 	border:solid 1px $gray-shade3;
@@ -1473,4 +1490,53 @@ md-card.noborder{
 		border:solid 1px #ededed;
 		margin:$auto;
 	}
+}
+/*tab structure of shipping page */
+.tab-view-page{
+	md-tabs{
+		top:$zero;
+		z-index:0;
+	}
+}
+.shipping-custom-tab{
+	md-tabs-wrapper{
+		/*margin:$zero;
+		left:400px;
+		top:91px;
+		position:fixed;
+		-webkit-backface-visibility: hidden;
+		-webkit-transform: translateZ(0);
+		-webkit-transform: translate3d(0, 0, 0);*/
+	}
+	md-tabs-canvas{
+		height:60px;
+		position:$pos-relative;
+		z-index:1;
+		width:720px;
+		md-pagination-wrapper{
+			height:40px;
+			top:20px;
+			left:180px;
+		}
+	}
+	.md-tab{
+		padding:8px 20px;
+		@include colorvariant(37,41,50,0.6);
+		&:before{
+			content:"";
+			position:$pos-absolute;
+			border-bottom:solid 3px $tabs-border-color;
+			width:$full-width;
+			height:3px;
+			left:5px;
+			bottom:$zero;
+		}
+		&.md-active{
+		@include colorvariant(37,41,50,1);
+		}
+	}
+}
+.dragiconscenter{
+	align-items:center;
+	justify-content:center;
 }

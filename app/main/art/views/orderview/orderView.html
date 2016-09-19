@@ -1,4 +1,3 @@
-
 <div class="content client-list-page stockkup-content-table-container">
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
@@ -66,62 +65,72 @@
                             ng-class="{'selected': ScreenSets_new.data_all.selected === sets}">
                             <div class="box-zerospace white-bg"><div class="title screenset-titlebox"><span class="stokkup-title-h4 light-300 font-16">{{ScreenSets[0].screen_set}}</span></div></div>
                             <dnd-nodrag>
-                                <div flex=60 class="pull-left" layout-wrap layout="row">
-                                <div class="trans-box">
-                                    <div>Position</div>
-                                    <span class="chrome-weight font-14">{{sets.position_name}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Number of Colors</div>
-                                    <span class="chrome-weight font-14">{{sets.color_stitch_count}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Frame Size</div>
-                                    <span class="chrome-weight font-14">{{sets.frame_size}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Width</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_width}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Number of Screens</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_total}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Lines Per Inch</div>
-                                    <span class="chrome-weight font-14">{{sets.line_per_inch}}</span>
-                                </div>
-                                <div class="trans-box">
-                                    <div>Height</div>
-                                    <span class="chrome-weight font-14">{{sets.screen_height}}</span>
-                                </div>
-                                </div>
-                                <div flex=20 class="pull-left">
-                                    <md-card-content class="box-zerospace padding-10">
-                                        <img   ng-src="{{sets.mokup_logo_url}}" alt="" class="screenset-img" />
-                                    </md-card-content>
-                                </div>
-                                <div flex=20 class="pull-left mt-20 text-center">
-                                    <md-button class="md-raised stokkup-custom-btn1 bg-grey mb-15" ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
-                                    <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
-                                </div>
 
+                                <div ng-show="sets.screen_active==1" layout-wrap layout="row">
+                                    <div flex=100  class="pull-left" layout-wrap layout="row">
+                                        <div flex=60 class="pull-left" layout-wrap layout="row">
+                                            <div class="trans-box">
+                                                <div>Position</div>
+                                                <span class="chrome-weight font-14">{{sets.position_name}}</span>
+                                            </div>
+                                            <div class="trans-box">
+                                                <div>Number of Colors</div>
+                                                <span class="chrome-weight font-14">{{sets.color_stitch_count}}</span>
+                                            </div>
+                                            <div class="trans-box">
+                                                <div>Frame Size</div>
+                                                <span class="chrome-weight font-14">{{sets.frame_size}}</span>
+                                            </div>
+                                            <div class="trans-box">
+                                                <div>Width</div>
+                                                <span class="chrome-weight font-14">{{sets.screen_width}}</span>
+                                            </div>
+                                            <div class="trans-box">
+                                                <div>Number of Screens</div>
+                                                <span class="chrome-weight font-14">{{sets.screen_total}}</span>
+                                            </div>
+                                            <div class="trans-box">
+                                                <div>Lines Per Inch</div>
+                                                <span class="chrome-weight font-14">{{sets.line_per_inch}}</span>
+                                            </div>
+                                            <div class="trans-box">
+                                                <div>Height</div>
+                                                <span class="chrome-weight font-14">{{sets.screen_height}}</span>
+                                            </div>
+                                        </div>    
+                                        <div flex=15 class="pull-left">
+                                            <md-card-content class="box-zerospace padding-10">
+                                                <img   ng-src="{{sets.mokup_logo_url}}" alt="" class="screenset-img" />
+                                            </md-card-content>
+                                        </div>
+                                        <div flex=20 class="pull-left mt-20 text-center">
+                                            <md-button class="md-raised stokkup-custom-btn1 bg-grey mb-15" ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
+                                            <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
+                                        </div>
+                                        <div flex=5 layout="row" class="dragiconscenter"> 
+                                            <span class="icon icon-menu fs22"></span>
+                                        </div>
+                                    </div>
+                                </div>    
                                 <div layout="row" ng-show="sets.screen_active==0">
-                                    <div flex="80" layout="column">
-                                    <div layout="row" layout-wrap>
-                                    <h1 style="color:#cccccc; padding-left: 10px;"> Screen Set Not Yet Created </h1>
+                                    <div flex=75 layout="column">
+                                    <div layout class="m-l-10 m-t-10">
+                                    <span class="stokkup-title-h4 m-t-10"> Screen Set Not Yet Created </span>
                                     </div>
                                     </div>
-                                    <div flex="20" layout="column">
-                                    <div layout="row" layout-wrap style="margin-top: 10px;">
-                                    <div flex="25" class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Create Screen Set</md-button></div>
+                                    <div flex=20 layout="column" class="text-center">
+                                            <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="vm.createNewScreen($event,sets.screen_id)">Create Screen</md-button>
                                     </div>
+                                    <div flex=5 layout="row" class="dragiconscenter"> 
+                                        <span class="icon icon-menu fs22"></span>
                                     </div>
                                 </div>
-                                <div class="pull-right" dnd-handle>
+                                <!-- <div class="pull-right" dnd-handle>
                                     <span class="icon icon-menu fs22"></span>
-                                </div>
+                                </div> -->
                             </dnd-nodrag>
+                        </li>
+                    </ul>
                         </div>
                     </md-card-content>
                 </md-card>

@@ -1,37 +1,34 @@
 <div class="content client-list-page stockkup-content-table-container">
-    <div class="tab-view-page simple-table-container md-whiteframe-4dp stokkup-main-tableview">
-        
+    <div class="tab-view-page simple-table-container stokkup-main-tableview">
 
-
-
-            <md-content class="shipping-custom-tab">
-                <div class="table-title " layout="row" layout-align="space-between center">
-                    <div class="table-title-text" flex=10 class="cursor-p">Shipping</div>
+            <md-content class="shipping-custom-tab transparent-bg">
+                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                    <div class="table-title white-bg bottom-shadow" flex=100 layout="row" layout-align="space-between center">
+                    <div class="table-title-text" class="cursor-p">Shipping</div>
                         <div class="pull-right right-search-box srch-small">
                             <div class="search-block pull-right">
-                                <!-- <md-input-container class="md-block" flex-gt-sm>
+                                <md-input-container class="md-block" flex-gt-sm>
                                    <label class="top-srch-label">Search Shipping...</label>
                                     <input ng-model="name" ui-event="{ change : 'search($event)' }">
-                                </md-input-container> -->
+                                </md-input-container>
                                 <!-- <md-input-container class="md-block" flex-gt-sm>
                                     <label class="top-srch-label">Search Clients...</label>
                                     <input type="text" ng-model="name" ui-event="{change : 'search($event)'}" />
                                 </md-input-container> -->
                             </div> 
                         </div>
-                </div>
-                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                    </div>
                     <!---Order Waiting to Ship Tab-->
-                    <md-tab label="Order Waiting to Ship">
-                        <div ng-controller="shippingController">
-                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                    <md-tab label="Orders Waiting to Ship">
+                        <div ng-controller="shippingController" class="fixe-top-tabs">
+                            <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
                                     <table class="dataTable row-border">
@@ -60,16 +57,16 @@
                         </div>                 
                     </md-tab>
                     <!---Order In Progress Tab-->
-                    <md-tab label="Order In Progress Set">
+                    <md-tab label="Orders In Process">
                         <div ng-controller="shippingProgressController">
-                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                            <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
                                     <table class="dataTable row-border">
@@ -100,14 +97,14 @@
                     <!---Shipped Orders Tab-->
                     <md-tab label="Shipped Orders">
                         <div ng-controller="shippingShippedController">
-                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                            <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="ms-responsive-table-wrapper">
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
                                     <table class="dataTable row-border">

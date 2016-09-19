@@ -761,7 +761,7 @@ button.orderscreen-infobtns {
   visibility: hidden; }
 
 .trans-box.order-designname {
-  width: 15%; }
+  width: 14%; }
 
 .header-bg-custom {
   background-color: #0b5c93; }
@@ -866,8 +866,7 @@ md-card-content.custom-desc-box span {
 
 .stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title {
   position: relative;
-  z-index: 2;
-  padding-bottom: 0; }
+  z-index: 0; }
 
 .custom-struct-2 md-pagination-wrapper {
   height: 40px; }
@@ -942,8 +941,11 @@ md-card-content.custom-desc-box span {
   .shipping-custom-tab md-tabs-canvas.md-paginated {
     margin: 0; }
   .shipping-custom-tab md-tabs-wrapper {
-    width: 50%;
+    width: 100%;
     margin: 0 auto; }
+    .shipping-custom-tab md-tabs-wrapper md-tab-data {
+      z-index: 1;
+      opacity: 1; }
 
 .dashboard-page .md-title {
   font-size: 14px;
@@ -1049,6 +1051,13 @@ md-card-content.custom-desc-box span {
   -o-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
   box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important; }
 
+.top-shadow {
+  -moz-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -webkit-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -ms-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -o-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important; }
+
 .payment-accordion {
   width: 100%;
   border: solid 1px #ededed;
@@ -1122,5 +1131,45 @@ md-card.noborder {
     background-color: #f9f9f9;
     border: solid 1px #ededed;
     margin: auto; }
+
+/*tab structure of shipping page */
+.tab-view-page md-tabs {
+  top: 0;
+  z-index: 0; }
+
+.shipping-custom-tab md-tabs-wrapper {
+  /*margin:$zero;
+  left:400px;
+  top:91px;
+  position:fixed;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);*/ }
+.shipping-custom-tab md-tabs-canvas {
+  height: 60px;
+  position: relative;
+  z-index: 1;
+  width: 720px; }
+  .shipping-custom-tab md-tabs-canvas md-pagination-wrapper {
+    height: 40px;
+    top: 20px;
+    left: 180px; }
+.shipping-custom-tab .md-tab {
+  padding: 8px 20px;
+  color: rgba(37, 41, 50, 0.6) !important; }
+  .shipping-custom-tab .md-tab:before {
+    content: "";
+    position: absolute;
+    border-bottom: solid 3px #e3e3e3;
+    width: 100%;
+    height: 3px;
+    left: 5px;
+    bottom: 0; }
+  .shipping-custom-tab .md-tab.md-active {
+    color: #252932 !important; }
+
+.dragiconscenter {
+  align-items: center;
+  justify-content: center; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
