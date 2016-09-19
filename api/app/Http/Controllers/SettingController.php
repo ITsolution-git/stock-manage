@@ -6,6 +6,7 @@ require_once(app_path() . '/constants.php');
 
 use App\Price;
 use App\Common;
+use App\Order;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -24,11 +25,12 @@ class SettingController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Price $price,Common $common,Api $api) {
+    public function __construct(Price $price,Common $common,Api $api, Order $order) {
 
         $this->price = $price;
         $this->common = $common;
         $this->api = $api;
+        $this->order = $order;
     }
 
 /**
@@ -959,6 +961,27 @@ class SettingController extends Controller {
             });
 
         })->download($post['type']);
+    }
+
+    public function getApprovalOrders()
+    {
+        $post = Input::all();
+        $result = $this->order->getApprovalOrders($post);
+
+        if (count($result) > 0) {
+            $response = array(
+                                'success' => 1, 
+                                'message' => GET_RECORDS,
+                                'records' => $result
+                                );
+        } else {
+            $response = array(
+                                'success' => 0, 
+                                'message' => NO_RECORDS,
+                                'records' => $result
+                            );
+        } 
+        return response()->json(["data" => $response]);
     }
 }
 

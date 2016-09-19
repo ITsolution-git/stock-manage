@@ -74,8 +74,8 @@
 
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);
-	                    //console.log(arr_role.indexOf(role));
-	                    if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && access!="false") // PERMISSION ALLOW
+	                    //console.log(arr_role+"--"+access); 
+	                    if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) || access=="true" )) // PERMISSION ALLOW
 			            {
 			               // console.log('error');
 			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
