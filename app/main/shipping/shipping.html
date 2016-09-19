@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <!---Order Waiting to Ship Tab-->
-                    <md-tab label="Orders Waiting to Ship">
+                    <md-tab label="Orders Waiting to Ship" ng-click="getTab('wait')">
                         <div ng-controller="shippingController" class="fixe-top-tabs">
                             <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
@@ -57,7 +57,7 @@
                         </div>                 
                     </md-tab>
                     <!---Order In Progress Tab-->
-                    <md-tab label="Orders In Process">
+                    <md-tab label="Orders In Process" ng-click="getTab('progress')">
                         <div ng-controller="shippingProgressController">
                             <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
@@ -95,7 +95,7 @@
                         </div>
                     </md-tab>
                     <!---Shipped Orders Tab-->
-                    <md-tab label="Shipped Orders">
+                    <md-tab label="Shipped Orders" ng-click="getTab('shipped')">
                         <div ng-controller="shippingShippedController">
                             <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
                                 <div class="search-block pd15-L" flex=25>
