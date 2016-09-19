@@ -1,0 +1,62 @@
+    <div class="content order-info-page m-b-20">
+        <div class="simple-table-container md-whiteframe-4dp">
+            <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+                <div class="table-title-text" flex=20>S&S Orders</div>
+<!--                 <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-click="vm.addAffiliate($event)">ADD NEW</span>
+                </div> -->
+            </div>
+            <div class=" ms-responsive-table-wrapper userMgmntPadding">
+                <table class="simple" >
+                    <thead>
+
+                        <tr>
+                            <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Order ID</span>
+                                </div>
+                            </th>
+                             <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Created Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Order Total</span>
+                                </div>
+                            </th>
+                             <th class="secondary-text ">
+                                <div class="table-header">
+                                    <span class="column-title">Name</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Status</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title"></span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                   <tbody >
+                        <tr ng-repeat="order in orders">
+                            <td class="">{{order.order_id}}</td>
+                            <td class="">{{order.created_date}}</td>
+                            <td class="">{{order.sales_total | currency : $ : 2}}</td>
+                            <td class="">{{order.name}}</td>
+                            <td ng-if="order.order_sns_status == ''">Pending</td>
+                            <td ng-if="order.order_sns_status != ''">Approved</td>
+                            <td ng-if="order.order_sns_status == ''"><span class="cursor-p stokkup-btn-style1 pull-left" ng-click="">Approve</span></td>
+                            <td ng-if="order.order_sns_status != ''"><span></span></td>
+                        </tr>
+                    </tbody> 
+                </table>
+         
+            </div>
+        </div>
+    </div>
