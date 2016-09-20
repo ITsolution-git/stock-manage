@@ -22,6 +22,7 @@
                 if(result.data.success == '1') 
                 {
                     $scope.allCompany =result.data.records;
+                    $scope.email =sessionService.get('email');
                 } 
                 else
                 {
@@ -49,7 +50,7 @@
         get_company_data_selected(client_id)
 
 
-        $scope.sendMail = function (email) {
+        $scope.sendMail = function (email,mailMessage) {
             if(email == '') {
                   var data = {"status": "error", "message": "Email should not be blank"}
                   notifyService.notify(data.status, data.message);
@@ -61,6 +62,8 @@
             combine_array.email = email;
             combine_array.order_id = order_id;
             combine_array.company_id = sessionService.get('company_id');
+            combine_array.from_email = sessionService.get('email');
+            combine_array.mailMessage = mailMessage;
             combine_array.invoice_id = $scope.invoice.id;
             combine_array.paid = paid;
             combine_array.balance = balance;
