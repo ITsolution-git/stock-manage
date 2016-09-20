@@ -404,7 +404,7 @@ md-dialog.task-dialog {
       font-weight: 700;
       text-transform: uppercase; }
     md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]) {
-      background-color: #6288dc !important;
+      background-color: #4773d6 !important;
       min-width: 123px;
       width: auto;
       height: 41px;
@@ -565,7 +565,8 @@ table.dataTable thead.stokkup-space1 th {
     background-color: #4773d6; }
 
 .stokkup-blue-btn {
-  background-color: #4773d6 !important; }
+  background-color: #4773d6 !important;
+  min-width: 123px; }
 
 .small-headings {
   font-size: 13px;
