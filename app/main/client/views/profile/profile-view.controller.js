@@ -585,8 +585,8 @@
 
         $scope.GetAPIData = function (apidata)
         {
-            $scope.client.pl_address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
-            $scope.client.pl_address = angular.isUndefined(apidata.street)?$scope.client.pl_address:$scope.client.pl_address+", "+apidata.street;
+            $scope.client.pl_address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber+", ";
+            $scope.client.pl_address = angular.isUndefined(apidata.street)?$scope.client.pl_address:$scope.client.pl_address+apidata.street;
             //$scope.client.pl_suite = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
             $scope.client.pl_city = angular.isUndefined(apidata.city)?'':apidata.city;
             for(var i=0; i<$scope.states_all.length; i++)
