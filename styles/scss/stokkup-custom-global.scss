@@ -588,7 +588,7 @@ md-dialog{
 					text-transform:uppercase;
 				}
 				&.md-raised:not([disabled]){
-					background-color:#6288dc !important;
+					background-color:$blue-shade-btn !important;
 					@extend .no-box-shadows;
 					min-width:123px;
 					width:auto;
@@ -818,6 +818,7 @@ table.dataTable thead.stokkup-space1 th{padding-top:10px;}
 }
 .stokkup-blue-btn{
 	background-color:$blue-shade-btn !important;
+	min-width:123px;
 }
 .small-headings{
 	font-size:$datatable-content-size;
