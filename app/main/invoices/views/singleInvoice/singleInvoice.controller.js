@@ -159,6 +159,31 @@
             form.submit();
         }
 
+        /*$scope.validateFloatKeyPress = function()
+        {
+            var v = parseFloat($scope.pay.cashAmount);
+            $scope.pay.cashAmount = (isNaN(v)) ? '' : v.toFixed(2);
+        }*/
+
+        $scope.getStoredProfile = function(profile)
+        {
+            $("#ajax_loader").show();
+            var combine_array_id = {};
+            combine_array_id.cppd_id = profile;
+            $http.post('api/public/invoice/getPaymentCard',combine_array_id).success(function(result) 
+            {
+                $("#ajax_loader").hide();
+                if(result.data.success=='1')
+                {
+                    $scope.company.cppdid = result.data.allData.cppd_id;
+                    //$scope.pay.cashAmount = null;
+                }else{
+
+                }
+            });
+        }
+
+
         $scope.pay_cash = function(amount)
         {
             if((amount == undefined) || (amount.cashAmount==0) || (amount.cashAmount==0.00)) {

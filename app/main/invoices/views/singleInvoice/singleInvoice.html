@@ -233,7 +233,7 @@
                                        <div layout="column" flex="45">
                                             <div class="title" layout-padding>
                                                 <span class="basicInfoStyle">Credit Card Information</span>
-                                                <md-select placeholder="Saved Credit Cards" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
+                                                <md-select placeholder="Saved Credit Cards" ng-change="getStoredProfile(company.savedCard)" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
                                                     <md-option value="">
                                                         Saved Credit Cards
                                                     </md-option>
@@ -241,6 +241,7 @@
                                                         {{cards.card_number}}:{{cards.expiration}}
                                                     </md-option>
                                                 </md-select>
+                                                <input type="hidden" ng-model="company.cppdid">
                                             </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="50">
