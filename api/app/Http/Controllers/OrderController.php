@@ -1058,6 +1058,10 @@ class OrderController extends Controller {
         $fromemail = trim($post['from_email']);
         $email_array = explode(",",$email);
 
+        if(!isset($post['mailMessage'])){
+          $post['mailMessage'] = '';
+        }
+
         if(!isset($post['invoice_id']))
         {
           $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail(0,$post['company_id'],1,$post['order_id']);
