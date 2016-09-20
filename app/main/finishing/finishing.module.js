@@ -15,7 +15,7 @@
                 resolve: {
                     checksession : function (sessionService)
                     {
-                       return sessionService.AccessService('BC,CA');
+                        return sessionService.AccessService('ALL','true');
                     },
                 },
                 url    : '/finishing',
