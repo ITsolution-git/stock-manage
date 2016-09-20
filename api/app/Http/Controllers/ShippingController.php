@@ -842,8 +842,11 @@ class ShippingController extends Controller {
 
         if(isset($response['Data']['Errors']) && !empty($response['Data']['Errors']))
         {
-            $message = 'Something wrong in your address';
-            $success = 0;
+            $response = array(
+                        'success' => 0,
+                        'message' => 'Something wrong in your address'
+                    );
+            return response()->json(["data" => $response]);
         }
         else
         {
@@ -878,18 +881,38 @@ class ShippingController extends Controller {
 
                 if(isset($response) && isset($response['error']))
                 {
-                    $success = 0;
-                    $message = $response['error'];
+                    $response = array(
+                        'success' => 0,
+                        'message' => $response['error']
+                    );
+                    return response()->json(["data" => $response]);
                 }
-                else if(isset($response) && isset($response['status']) && $response['status'] == 'SUCCESS')
+
+                $trackingNumber = '';
+                $charges = 0;
+
+                if(isset($response['trk_main']))
                 {
-                    $success = 1;
-                    $message = '';
-                }
-                else
-                {
-                    $success = 0;
-                    $message = 'Something wrong in your address';
+                    $trackingNumber = $response['trk_main'];
+                    $charges = $response['charges'];
+
+                    //$this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
+
+                    foreach ($response['pkgs'] as $package) {
+                        $label = $package['label_img'];
+
+                        $response = array(
+                            'success' => 1,
+                            'message' => '',
+                            'data' => $label
+                        );
+
+                        return response()->json(["data" => $response]);
+
+                        //header('Content-Type: application/force-download');
+                        //echo base64_decode($label);
+                        //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+                    }
                 }
             }
             else
@@ -925,22 +948,40 @@ class ShippingController extends Controller {
 
                 if(isset($response) && isset($response['error']))
                 {
-                    $success = 0;
-                    $message = $response['error'];
+                    $response = array(
+                        'success' => 0,
+                        'message' => $response['error']
+                    );
+                    return response()->json(["data" => $response]);
                 }
-                else
+
+                $trackingNumber = '';
+                $charges = 0;
+
+                if(isset($response['trk_main']))
                 {
-                    $success = 1;
-                    $message = '';
+                    $trackingNumber = $response['trk_main'];
+                    $charges = $response['charges'];
+
+                    //$this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
+
+                    foreach ($response['pkgs'] as $package) {
+                        $label = $package['label_img'];
+
+                        $response = array(
+                            'success' => 1,
+                            'message' => '',
+                            'data' => $label
+                        );
+
+                        return response()->json(["data" => $response]);
+
+                        //header('Content-Type: application/force-download');
+                        //echo base64_decode($label);
+                        //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+                    }
                 }
             }
         }
-
-        $response = array(
-                        'success' => $success,
-                        'message' => $message
-                    );
-
-        return response()->json(["data" => $response]);
     }
 }
