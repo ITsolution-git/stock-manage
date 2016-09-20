@@ -1219,15 +1219,12 @@ md-autocomplete-wrap input[type="search"]:-moz-placeholder {
   padding-left: 11px;
   font-size: 13px !important; }
 
-md-sidenav.md-sidenav-right {
-  position: fixed;
-  margin-top: 70px; }
-  md-sidenav.md-sidenav-right .filter-title h1 {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    text-transform: capitalize;
-    padding: 15px;
-    margin: 0; }
+md-sidenav.md-sidenav-right .filter-title h1 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 15px;
+  margin: 0; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

@@ -46,7 +46,7 @@ class PaymentController extends Controller {
         $post = Input::all();
         //print_r($post);exit;
         
-        $amount=$post['amount'];
+        $amount=round($post['amount'],2);
 
         if(isset($post['company_id']))
         {
@@ -76,6 +76,43 @@ class PaymentController extends Controller {
         $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);*/
         $merchantAuthentication->setName($retCredsArray[0]->login);
         $merchantAuthentication->setTransactionKey($retCredsArray[0]->transactionkey);
+
+        $qb_data = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array());
+        $qb_id = $qb_data[0]->qb_id;
+        $order_id = $qb_data[0]->order_id;
+
+        $retArray = DB::table('orders as o')
+            ->select('c.client_company', 'c.client_id', 'c.billing_email')
+            ->leftJoin('client as c','c.client_id','=',"o.client_id")
+            ->where('o.id','=',$order_id)
+            ->where('o.is_delete','=','1')
+            ->get();
+
+        if(isset($post['savedCard'])){
+            $paymentprofileid=$post['payment_profile_id'];
+            $profilePayment = $this->common->GetTableRecords('client_payment_profiles',array('client_id' => $retArray[0]->client_id));
+            $resultProfile = $this->chargeCustomerProfile($merchantAuthentication, $profilePayment[0]->profile_id, $post['savedCard'], $amount);
+
+            $orderData = array('qb_id' => $qb_id,'order_id' => $order_id, 'payment_card' => $creditCardNumberStored, 'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Credit Card','authorized_TransId' => $tresponse->getTransId(),'authorized_AuthCode' => $tresponse->getAuthCode(),'qb_payment_id' => '', 'qb_web_reference' => '');
+
+            $id = $this->common->InsertRecords('payment_history',$orderData);
+
+            $retArrayPmt = DB::table('payment_history as p')
+                ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
+                ->leftJoin('orders as o','o.id','=',"p.order_id")
+                ->where('p.order_id','=',$order_id)
+                ->where('p.is_delete','=',1)
+                ->get();
+
+            $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
+            $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+
+            $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+
+            $data = array("success"=>1,'amt' =>$amt);
+            return response()->json(['data'=>$data]);
+        }
+
         $refId = 'ref' . time();
 
         // Create the payment data for a credit card
@@ -85,10 +122,6 @@ class PaymentController extends Controller {
         $creditCard->setCardCode($cvv);
         $paymentOne = new AnetAPI\PaymentType();
         $paymentOne->setCreditCard($creditCard);
-
-        $qb_data = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array());
-        $qb_id = $qb_data[0]->qb_id;
-        $order_id = $qb_data[0]->order_id;
 
         $order = new AnetAPI\OrderType();
         $order->setDescription("Payment for Order ID: ".$order_id);
@@ -101,12 +134,7 @@ class PaymentController extends Controller {
         $transactionRequestType->setOrder($order);
         $transactionRequestType->setPayment($paymentOne);
 
-        $retArray = DB::table('orders as o')
-            ->select('c.client_company', 'c.client_id', 'c.billing_email')
-            ->leftJoin('client as c','c.client_id','=',"o.client_id")
-            ->where('o.id','=',$order_id)
-            ->where('o.is_delete','=','1')
-            ->get();
+        
 
         $billto = new AnetAPI\CustomerAddressType();
         $billto->setFirstName($post['creditFname']);
@@ -580,7 +608,7 @@ class PaymentController extends Controller {
           return response()->json(['data'=>$data]);
         }
 
-        return $response;
+        //return $response;
     }
 
     public function linktopay($token)
@@ -675,11 +703,11 @@ class PaymentController extends Controller {
         return $response;
     }
 
-    public function chargeCustomerProfile($profileid, $paymentprofileid, $amount){
+    public function chargeCustomerProfile($merchantAuthentication, $profileid, $paymentprofileid, $amount){
         // Common setup for API credentials
-        $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
+        /*$merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
         $merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-        $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);
+        $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);*/
         $refId = 'ref' . time();
 
         $profileToCharge = new AnetAPI\CustomerProfilePaymentType();
@@ -708,44 +736,54 @@ class PaymentController extends Controller {
 
                 if ($tresponse != null && $tresponse->getMessages() != null)   
                 {
-                    echo " Transaction Response code : " . $tresponse->getResponseCode() . "\n";
-                    echo  "Charge Customer Profile APPROVED  :" . "\n";
-                    echo " Charge Customer Profile AUTH CODE : " . $tresponse->getAuthCode() . "\n";
-                    echo " Charge Customer Profile TRANS ID  : " . $tresponse->getTransId() . "\n";
-                    echo " Code : " . $tresponse->getMessages()[0]->getCode() . "\n"; 
-                    echo " Description : " . $tresponse->getMessages()[0]->getDescription() . "\n";
+                    //echo " Transaction Response code : " . $tresponse->getResponseCode() . "\n";
+                    //echo  "Charge Customer Profile APPROVED  :" . "\n";
+                    //echo " Charge Customer Profile AUTH CODE : " . $tresponse->getAuthCode() . "\n";
+                    //echo " Charge Customer Profile TRANS ID  : " . $tresponse->getTransId() . "\n";
+                    //echo " Code : " . $tresponse->getMessages()[0]->getCode() . "\n"; 
+                    //echo " Description : " . $tresponse->getMessages()[0]->getDescription() . "\n";
+
+                    $data = array("success"=>1, 'getTransId' =>$tresponse->getTransId(), 'getAuthCode' =>$tresponse->getAuthCode());
                 }
                 else
                 {
-                    echo "Transaction Failed \n";
+                    //echo "Transaction Failed \n";
+                    $message="Transaction Failed. ";
                     if($tresponse->getErrors() != null)
                     {
-                        echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
-                        echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";            
+                        //echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+                        //echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
+                        $message=$message.$tresponse->getErrors()[0]->getErrorText();
                     }
+                    $data = array("success"=>0,'message' =>$message);
                 }
             }
             else
             {
-                echo "Transaction Failed \n";
+                //echo "Transaction Failed \n";
+                $message="Transaction Failed. ";
                 $tresponse = $response->getTransactionResponse();
                 if($tresponse != null && $tresponse->getErrors() != null)
                 {
-                    echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
-                    echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";                      
+                    //echo " Error code  : " . $tresponse->getErrors()[0]->getErrorCode() . "\n";
+                    //echo " Error message : " . $tresponse->getErrors()[0]->getErrorText() . "\n";
+                    $message=$message.$tresponse->getErrors()[0]->getErrorText();
                 }
                 else
                 {
-                    echo " Error code  : " . $response->getMessages()->getMessage()[0]->getCode() . "\n";
-                    echo " Error message : " . $response->getMessages()->getMessage()[0]->getText() . "\n";
+                    //echo " Error code  : " . $response->getMessages()->getMessage()[0]->getCode() . "\n";
+                    //echo " Error message : " . $response->getMessages()->getMessage()[0]->getText() . "\n";
+                    $message=$message.$response->getMessages()->getMessage()[0]->getText();
                 }
+                $data = array("success"=>0,'message' =>$message);
             }
         }
         else
         {
-            echo  "No response returned \n";
+            //echo  "No response returned \n";
+            $data = array("success"=>0,'message' =>'No response returned');
         }
 
-    return $response;
+    return $data;
     }
 }

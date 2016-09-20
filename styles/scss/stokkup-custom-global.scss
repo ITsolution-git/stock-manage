@@ -1591,8 +1591,7 @@ md-autocomplete-wrap input[type="search"]:-moz-placeholder { /* Firefox 18- */
 }
 md-sidenav{
 	&.md-sidenav-right{
-		position:fixed;
-		margin-top:70px;
+		
 		.filter-title{
 			h1{
 				color:$white-color;

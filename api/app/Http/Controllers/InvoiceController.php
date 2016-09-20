@@ -250,8 +250,6 @@ class InvoiceController extends Controller {
     public function getInvoiceHistory($invoice_id,$company_id,$type=0){
 
         $post = Input::all();
-
-        $retutn_arr = array();
         
         $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
 
@@ -286,8 +284,6 @@ class InvoiceController extends Controller {
     public function getInvoicePayment($invoice_id,$company_id,$type=0){
 
         $post = Input::all();
-
-        $retutn_arr = array();
         
         $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
 
@@ -319,10 +315,6 @@ class InvoiceController extends Controller {
 
         $post = Input::all();
 
-        $retutn_arr = array();
-        
-        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
-
         $retArray = DB::table('invoice as i')
             ->select('cppd.payment_profile_id', 'cppd.card_number', 'cppd.expiration')
             ->leftJoin('orders as o','o.id','=','i.order_id')
@@ -335,9 +327,9 @@ class InvoiceController extends Controller {
         {
 
            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
            return response()->json(["data" => $response]);
         }
 
@@ -345,7 +337,32 @@ class InvoiceController extends Controller {
             'success' => 1, 
             'message' => GET_RECORDS,
             'allData' => $retArray
-            );
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getPaymentCard(){
+        $post = Input::all();
+        $cppd_id=$post['cppd_id'];
+
+        $retutn_arr = array();
+        
+        $retArray = $this->common->GetTableRecords('client_payment_profiles_detail',array('payment_profile_id' => $cppd_id),array());
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
         return response()->json(["data" => $response]);
     }
 }

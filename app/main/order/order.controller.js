@@ -244,7 +244,14 @@
 
         // -> Filter menu
         vm.toggle = true;
+        
         vm.openRightMenu = function () {
+            // if($('.md-sidenav-right').hasClass("md-closed")){
+            // $('body').addClass('filtershow');
+            // }
+            // if(!$('.md-sidenav-right').hasClass("md-closed")){
+            // $('body').removeClass('filtershow');
+            // }
             $mdSidenav('right').toggle();
         };
 
