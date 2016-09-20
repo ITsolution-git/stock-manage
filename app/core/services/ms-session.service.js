@@ -143,12 +143,12 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['settings','order','invoices','purchaseOrder','customProduct','admin','client','vendor'];
+				var ret_array = ['settings','order','invoices','purchaseOrder','customProduct','admin','client','vendor','settings.userManagement','app.settings.companyDetails'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
 			{
-				var ret_array = ['settings','invoices','purchaseOrder','customProduct','admin'];
+				var ret_array = ['settings','invoices','purchaseOrder','customProduct','admin','settings.userManagement','app.settings.companyDetails'];
 				hide_menu(ret_array);
 			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
