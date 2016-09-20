@@ -2131,7 +2131,7 @@ class OrderController extends Controller {
 
             
             
-            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
+            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('approved_by' => $post['user_id'],'order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
             $data_record = array("success"=>1,"message"=>"Order is successfully posted to S&S");
             
             return response()->json(["data" => $data_record]);
