@@ -11,6 +11,7 @@
     function AffiliateController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
             $scope.company_id = sessionService.get('company_id');
+            $scope.role_slug = sessionService.get('role_slug');
             var originatorEv;
             var vm = this ;
 

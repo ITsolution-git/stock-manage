@@ -60,13 +60,18 @@
         }
         $scope.getShippingOverview();
 
-        $scope.submitForm = function()
+        $scope.submitForm = function(image)
         {
-            var target;
+            //window.location.href = 'data:image/png;base64,' + image;
+
+            window.open(
+              'data:image/png;base64,' + image,
+              '_blank' // <- This is what makes it open in a new window.
+            );
+
+/*            var target;
             var form = document.createElement("form");
-            form.action = 'api/public/shipping/createLabel';
-            form.method = 'post';
-            form.style.display = 'none';
+            form.action = 'data:image/png;base64,' + image;
 
             var shipping = document.createElement('input');
             shipping.name = 'shipping';
@@ -74,7 +79,7 @@
             form.appendChild(shipping);
 
             document.body.appendChild(form);
-            form.submit();
+            form.submit();*/
         }
 
         $scope.printLAbel = function()
@@ -126,7 +131,7 @@
                 $("#ajax_loader").hide();
                 if(result.data.success == '1')
                 {
-                    $scope.submitForm();
+                    $scope.submitForm(result.data.data);
                 }
                 else
                 {
@@ -151,9 +156,8 @@
             form.submit();*/
         }
 
-        $scope.print_pdf = function(method)
+        $scope.print_pdf = function(image)
         {
-
             if($scope.shippingBoxes.length == 0)
             {
                 notifyService.notify('error','Please create box to generate pdf');
