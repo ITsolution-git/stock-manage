@@ -23,7 +23,7 @@
                 resolve: {
                     checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('ALL','true');
                     },
                 }
             }).state('app.receiving.receivingInfo', {
@@ -36,7 +36,7 @@
             },resolve: {
                     checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU,AT','false');
                     }
                 }
         })

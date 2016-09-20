@@ -15,6 +15,7 @@
 
         // Data
         $scope.company_id = sessionService.get('company_id');
+        $scope.role_slug = sessionService.get('role_slug');
         /* TESTY PAGINATION */     
         $scope.init = {
           'count': 10,
@@ -189,6 +190,7 @@
          
         // Data
         $scope.company_id = sessionService.get('company_id');
+        $scope.role_slug = sessionService.get('role_slug');
         /* TESTY PAGINATION */     
         $scope.init = {
           'count': 10,
