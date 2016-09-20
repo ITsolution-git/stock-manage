@@ -1055,6 +1055,7 @@ class OrderController extends Controller {
 
         $post = Input::all();
         $email = trim($post['email']);
+        $fromemail = trim($post['from_email']);
         $email_array = explode(",",$email);
 
         if(!isset($post['invoice_id']))
@@ -1103,9 +1104,9 @@ class OrderController extends Controller {
 
         foreach ($email_array as $email)
         {
-            Mail::send('emails.invoice', ['email'=>$email,'payment_link' => $payment_link], function($message) use ($file_path,$email)
+            Mail::send('emails.invoice', ['email'=>$email,'fromemail'=>$fromemail,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($file_path,$email,$fromemail)
             {
-                 $message->to($email)->subject('Invoice PDF');
+                 $message->to($email)->from($fromemail)->subject('Invoice PDF');
                  $message->attach($file_path);
             });                
         }
