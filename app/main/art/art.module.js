@@ -23,7 +23,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                 }
             }) .state('app.screen', {
@@ -38,7 +38,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                 }
             }).state('app.art.orderView', {
@@ -46,7 +46,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('SU','false');
                         }
                 },
                 url  : '/artOrderView/:id',
@@ -61,7 +61,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('SU','false');
                         }
                 },
                 url  : '/screensetView/:id',
@@ -77,7 +77,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('SU','false');
                         }
                 },
                 url  : '/notes/:id',
