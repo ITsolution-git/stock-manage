@@ -764,8 +764,6 @@ class ShippingController extends Controller {
             $response = $shipment->submitShipment();
         }
 
-        print_r($response);exit;
-
         $trackingNumber = '';
         $charges = 0;
 
