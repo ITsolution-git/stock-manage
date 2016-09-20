@@ -82,6 +82,7 @@
 			                notifyService.notify(data.status, data.message);
 			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
 			                return false;
+			                $stateChangeStart.preventDefault();
 			            }
 			            if(arr_role.indexOf(role) == 0 && arr_role != 'ALL' && arr_role!='' && access=="false") // PERMISSION NOT ALLOW
 			            {
@@ -90,6 +91,7 @@
 			                notifyService.notify(data.status, data.message);
 			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
 			                return false;
+			                $stateChangeStart.preventDefault();
 			            }
 			            
 
@@ -104,7 +106,7 @@
 	                    {*/
 	                        $state.go('app.login');
 	                        notifyService.notify("error", "Please signin first.");
-	                        //$stateChangeStart.preventDefault();
+	                        $stateChangeStart.preventDefault();
 	                    //}
 	                }
             });
@@ -141,12 +143,12 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['settings','order','invoices','purchaseOrder','customProduct','admin','client','vendor'];
+				var ret_array = ['settings','order','invoices','purchaseOrder','customProduct','admin','client','vendor','settings.userManagement','app.settings.companyDetails'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
 			{
-				var ret_array = ['settings','invoices','purchaseOrder','customProduct','admin'];
+				var ret_array = ['settings','invoices','purchaseOrder','customProduct','admin','settings.userManagement','app.settings.companyDetails'];
 				hide_menu(ret_array);
 			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')

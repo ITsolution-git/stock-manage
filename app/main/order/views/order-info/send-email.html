@@ -9,16 +9,33 @@
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
+
+         <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
+            From : {{email}}
+            </div>
+
+
             <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
                
                 <md-input-container class="first-box">
                     <input placeholder="Email" ng-model="allCompany[0].billing_email">
                 </md-input-container>
             </div>
+
+ <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
+
+            <md-input-container class="md-block md-default-theme" style="height: auto;">
+                                    <label for="input_44">Message</label>
+                                    <textarea  md-select-on-focus="" rows="1" ng-model="mailMessage" class="ng-pristine ng-valid md-input ng-empty ng-touched" id="input_44" aria-invalid="false" style="height: 140px;"></textarea>
+            </md-input-container>
+
+            </div>
+
+
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
                     <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-                    <md-button class="md-accent md-raised " ng-click="sendMail(allCompany[0].billing_email)">OK</md-button>
+                    <md-button class="md-accent md-raised " ng-click="sendMail(allCompany[0].billing_email,mailMessage)">OK</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

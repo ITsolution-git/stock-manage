@@ -1,3 +1,14 @@
+
+<?php
+if($mailMessage != '')
+{
+	echo $mailMessage;
+?>
+<br>
+<?php
+}
+?>
+
 Please find attachment of Invoice.<br>
 
 <?php
