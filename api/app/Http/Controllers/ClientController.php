@@ -494,12 +494,15 @@ class ClientController extends Controller {
 	public function SaveClientInfo()
 	{
 		$post = Input::all();
-		//echo "<pre>"; print_r($post); die();
 		if(!empty($post['client_company']) && !empty($post['client_id']))
 		{
+			$post['pl_state'] = empty($post['pl_state'])?'':$post['pl_state'];
+			$post['pl_address'] = empty($post['pl_address'])?'':$post['pl_address'];
+			$post['pl_pincode'] = empty($post['pl_pincode'])?'':$post['pl_pincode'];
+			$post['pl_suite'] = empty($post['pl_suite'])?'':$post['pl_suite'];
+			$post['pl_city'] = empty($post['pl_city'])?'':$post['pl_city'];
 
 			$result = $this->client->SaveClientInfo($post,$post['client_id']);
-			//echo "<pre>"; print_r($post); die();
     		$data = array("success"=>1,"message"=>UPDATE_RECORD);
     	}
     	else

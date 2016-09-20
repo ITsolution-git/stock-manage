@@ -52,7 +52,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/priceGrid',
@@ -111,7 +111,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA','true');
+                        return sessionService.AccessService('AM,SU,AT','false');
                     }
                 },
                 url  : '/userManagement',
@@ -128,7 +128,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA','true');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/affiliate',
@@ -145,7 +145,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/integrations',
@@ -162,7 +162,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU','false');
                     }
                 },
                 url  : '/support',
@@ -179,7 +179,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/vendor',
@@ -197,7 +197,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/contact/:id',
@@ -214,7 +214,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/sales',
@@ -231,7 +231,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('CA','true');
                     }
                 },
                 url  : '/approvals',
