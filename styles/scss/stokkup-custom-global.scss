@@ -1591,7 +1591,6 @@ md-autocomplete-wrap input[type="search"]:-moz-placeholder { /* Firefox 18- */
 }
 md-sidenav{
 	&.md-sidenav-right{
-		
 		.filter-title{
 			h1{
 				color:$white-color;
@@ -1603,4 +1602,20 @@ md-sidenav{
 				}
 		}
 	}
+}
+.email-heads{
+	padding:8px 11px;
+	font-size:16px;
+	text-transform:none;
+}
+.email-from-box{
+	padding-bottom:5px;
+}
+.email-txtarea{
+	min-height:100px;
+}
+.stokkup-req-fields{
+	color:$red-highlight;
+	font-size:10px;
+	position:relative;
 }
