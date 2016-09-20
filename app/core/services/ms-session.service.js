@@ -232,7 +232,8 @@
 
 					$scope.LocationAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION 
 			        {
-			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+			            $scope.params.address = angular.isUndefined(apidata.street)?$scope.params.address:$scope.params.address+", "+apidata.street;
 			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
 			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
 			            {
@@ -307,7 +308,8 @@
 
 			        $scope.LocationAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION
 			        {
-			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			        	$scope.params.address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+			            $scope.params.address = angular.isUndefined(apidata.street)?$scope.params.address:$scope.params.address+", "+apidata.street;
 			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
 			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
 			            {
