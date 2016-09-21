@@ -370,8 +370,14 @@
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
-                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
-                        $scope.siData = result.data.allData;
+                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
+                        $scope.siData = resultData.data.allData;
+                    });
+
+                    $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                        if(result123.data.success == '1') {
+                            $scope.cardsAll = result123.data.allData;
+                        }
                     });
                     //$scope.paymentData = null;
                     if(!paymentData.storeCard) {
@@ -392,7 +398,7 @@
                         paymentData.amount = null;
                         paymentData.cvv = null;
                     }
-                    
+
                     notifyService.notify('success',"Payment made Successfully");
                 }
                 else
