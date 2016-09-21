@@ -37,6 +37,7 @@
 
         $scope.updateShippingAll = function(name,value,id)
         {
+            
             var order_main_data = {};
 
             if(name == 'max_pack')
@@ -48,6 +49,7 @@
                 order_main_data.table ='shipping';
             }
 
+
             if(name == 'approval_id')
             {
                 order_main_data.table ='orders';
@@ -56,13 +58,24 @@
             $scope.name_filed = name;
             var obj = {};
             obj[$scope.name_filed] =  value;
+
+            if(name == 'shipping_type_id')
+            {
+               obj['shipping_method'] =  '';
+            }
             order_main_data.data = angular.copy(obj);
+
 
             var condition_obj = {};
             condition_obj['id'] =  id;
             order_main_data.cond = angular.copy(condition_obj);
 
             $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+             if(name == 'shipping_type_id')
+                {
+                     $scope.shipping.shipping_method = '';
+                }
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);

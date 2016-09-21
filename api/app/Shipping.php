@@ -219,7 +219,7 @@ class Shipping extends Model {
 
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
         $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number',
-                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code'];
+                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code','s.shipping_method'];
 
         $shippingData = DB::table('shipping as s')
                         ->leftJoin('orders as o','s.order_id','=','o.id')

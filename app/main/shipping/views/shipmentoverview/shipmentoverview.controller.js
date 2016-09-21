@@ -50,10 +50,13 @@
                         $scope.shipping.boxing_type = 'Standard';
                     }
                     if($scope.shipping.shipping_type_id == '1') {
-                        $scope.shipping.shipping_type_id = 'UPS';
+                        $scope.shipping.shipping_type_name = 'UPS';
                     }
                     if($scope.shipping.shipping_type_id == '2') {
-                        $scope.shipping.shipping_type_id = 'Fedex';
+                        $scope.shipping.shipping_type_name = 'Fedex';
+                    }
+                    if($scope.shipping.shipping_type_id == '3') {
+                        $scope.shipping.shipping_type_name = 'Local Messenger';
                     }
                 }
             });
