@@ -965,23 +965,66 @@ class SettingController extends Controller {
 
     public function getApprovalOrders()
     {
-        $post = Input::all();
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
         $result = $this->order->getApprovalOrders($post);
 
-        if (count($result) > 0) {
-            $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'records' => $result
-                                );
-        } else {
-            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS,
-                                'records' => $result
-                            );
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => 'dp.sales_total', 'name' => 'Order Total'),
+                        3=>array('key' => 'u.name', 'name' => 'Name'),
+                        4=>array('key' => '', 'name' => 'Status'),
+                        5=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    /**
+    * Get Array
+    * @return json data
+    */
+    public function return_response($data)
+    {
+        
+
+        if (count($data) > 0) 
+        {
+            $response = $data;
         } 
-        return response()->json(["data" => $response]);
+        else 
+        {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        return  response()->json($response);
     }
 }
 
