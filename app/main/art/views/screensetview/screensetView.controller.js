@@ -9,6 +9,7 @@
     /** @ngInject */
     function screenSetViewController($document,  $state,$window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
+
         var vm = this;
         $scope.company_id = sessionService.get('company_id');
 
@@ -18,6 +19,13 @@
         }, true);
        
         $scope.screenset_id = $stateParams.id;
+        //console.log($stateParams.id);
+        if($stateParams.id=='' || angular.isUndefined($stateParams.id))
+        {
+            notifyService.notify('error','Invalid Parameters.');
+            $state.go('app.art');
+            return false;
+        }
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
