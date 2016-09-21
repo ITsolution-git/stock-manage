@@ -126,7 +126,7 @@
                                     </div>
                                 </div>
                                 <div layout-align="end start"  flex="5" layout="row" ng-show="colorsinf.is_complete==0 || colorsinf.is_complete==1" >
-                                    <div  class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="UpdateColorScreen($event,colorsinf)">Edit Screen Detail</md-button></div>
+                                    <div  class="text-right"><md-button ng-show="allow_access==1" class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="UpdateColorScreen($event,colorsinf)">Edit Screen Detail</md-button></div>
                                 </div>
                             </div>
                         </td>
@@ -184,7 +184,7 @@
                                             <span class="md-title">Screenset Image</span>
                                         </md-card-header-text>
 
-                                        <md-menu>
+                                        <md-menu ng-show="allow_access==1">
                                             <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -231,7 +231,7 @@
             </div>
         </md-card>
     
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row" ng-show="allow_access==1">
         <!-- <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
         <div class="md-ripple-container" style=""></div>
         </button> -->

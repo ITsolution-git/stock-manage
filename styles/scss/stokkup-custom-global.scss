@@ -87,6 +87,13 @@ $teal-green:#26b999;
 	color:rgba($red,$green,$blue,$opacity);
 }
 /*genera css */
+.ease-animations{
+	-moz-transition:all ease-in-out 0.2s;
+	-webkit-transition:all ease-in-out 0.2s;
+	-ms-transition:all ease-in-out 0.2s;
+	-o-transition:all ease-in-out 0.2s;
+	transition:all ease-in-out 0.2s;
+}	
 input::-moz-placeholder, textarea::-moz-placeholder {
 	opacity:1;
 	color:$popup-header-bg;
@@ -588,7 +595,7 @@ md-dialog{
 					text-transform:uppercase;
 				}
 				&.md-raised:not([disabled]){
-					background-color:#6288dc !important;
+					background-color:$blue-shade-btn !important;
 					@extend .no-box-shadows;
 					min-width:123px;
 					width:auto;
@@ -783,8 +790,7 @@ md-card{
 		margin-bottom:$zero !important;
 	}
 }
-.dialog-cancel-global{
-}
+
 .dialog-submit-glboal{
 	background-color:#6288dc;
 	@extend .no-box-shadows;
@@ -812,12 +818,14 @@ table.dataTable thead.stokkup-space1 th{padding-top:10px;}
 	font-weight:$font-weight-700;
 	font-size:$font-size-text;
 	line-height:41px;
+	max-height:41px;
 	&:hover, &:focus{
 		background-color:$blue-shade3;
 	}	
 }
 .stokkup-blue-btn{
 	background-color:$blue-shade-btn !important;
+	min-width:123px;
 }
 .small-headings{
 	font-size:$datatable-content-size;
@@ -1443,7 +1451,7 @@ md-card-content{
 	li{
 		list-style-type:$nofloat;
 		display:$block;
-		margin:$zero $zero 15px;
+		margin:$zero $zero 28px;
 		padding:15px $zero $zero;
 		float:$left;
 		background-color:$white-color;
@@ -1454,10 +1462,27 @@ md-card-content{
 .screenset-list-struct dnd-nodrag{
 	float:$left;
 	width:$full-width;
-	padding:$zero 30px $zero 20px;
+	padding:$zero;
+}
+.screenset-list-struct table.custom-table1{
+	padding:$zero;
+	width:$full-width;
+	border-spacing:$zero;
+	td{
+		border:$nofloat;
+		padding:$zero;
+	}
+}
+.screenset-list-struct .trans-outer{
+	padding:10px 20px;
+	width:$full-width;
+	float:$left;
+	.trans-box{
+		float:$left;
+	}
 }
 img.screenset-img{
-	max-height:130px;
+	max-height:150px;
 	width:auto;
 	float:$nofloat;
 	margin:$auto;
@@ -1540,6 +1565,11 @@ md-card.noborder{
 	align-items:center;
 	justify-content:center;
 	cursor:move;
+	.icon{
+		position:$pos-relative;
+		align-items:center;
+		justify-content:center;
+	}
 }
 .company-pro-img-block{
 	max-height:350px !important;
@@ -1591,7 +1621,6 @@ md-autocomplete-wrap input[type="search"]:-moz-placeholder { /* Firefox 18- */
 }
 md-sidenav{
 	&.md-sidenav-right{
-		
 		.filter-title{
 			h1{
 				color:$white-color;
@@ -1603,4 +1632,44 @@ md-sidenav{
 				}
 		}
 	}
+}
+.email-heads{
+	padding:8px 11px;
+	font-size:16px;
+	text-transform:none;
+}
+.email-from-box{
+	padding-bottom:5px;
+}
+md-dialog.task-dialog md-input-container textarea.email-txtarea{
+	min-height:265px;
+	font-size:14px !important;
+	line-height:22px;
+}
+.stokkup-req-fields{
+	color:$red-highlight;
+	font-size:10px;
+	position:relative;
+}
+#custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label{
+	@extend .border-radius-half;
+	@extend .ease-animations;
+	color:$blue-shade-btn;
+	border:solid 2px $blue-shade-btn;
+	font-weight:$font-weight-600;
+	text-transform:uppercase;
+	font-size:$datatable-heading-size;
+}
+#custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover{
+	@extend .border-radius-half;
+	@extend .ease-animations;
+	color:$white-color;
+	border:solid 2px $blue-shade-btn;
+	background-color:$blue-shade-btn;
+	font-weight:$font-weight-600;
+	text-transform:uppercase;
+	font-size:$datatable-heading-size;
+}
+md-dialog.task-dialog md-dialog-content.email-dialog{
+	padding-top:30px;
 }

@@ -46,7 +46,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU','false');
+                           return sessionService.AccessService('ALL','true');
                         }
                 },
                 url  : '/artOrderView/:id',
@@ -61,7 +61,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU','false');
+                           return sessionService.AccessService('ALL','true');
                         }
                 },
                 url  : '/screensetView/:id',
@@ -77,7 +77,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU','false');
+                           return sessionService.AccessService('ALL','true');
                         }
                 },
                 url  : '/notes/:id',

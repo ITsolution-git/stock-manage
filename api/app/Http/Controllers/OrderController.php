@@ -1058,6 +1058,10 @@ class OrderController extends Controller {
         $fromemail = trim($post['from_email']);
         $email_array = explode(",",$email);
 
+        if(!isset($post['mailMessage'])){
+          $post['mailMessage'] = '';
+        }
+
         if(!isset($post['invoice_id']))
         {
           $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail(0,$post['company_id'],1,$post['order_id']);
@@ -1104,9 +1108,9 @@ class OrderController extends Controller {
 
         foreach ($email_array as $email)
         {
-            Mail::send('emails.invoice', ['email'=>$email,'fromemail'=>$fromemail,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($file_path,$email,$fromemail)
+            Mail::send('emails.invoice', ['email'=>$email,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($file_path,$email)
             {
-                 $message->to($email)->from($fromemail)->subject('Invoice PDF');
+                 $message->to($email)->subject('Invoice PDF');
                  $message->attach($file_path);
             });                
         }
@@ -2131,7 +2135,7 @@ class OrderController extends Controller {
 
             
             
-            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
+            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('approved_by' => $post['user_id'],'order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
             $data_record = array("success"=>1,"message"=>"Order is successfully posted to S&S");
             
             return response()->json(["data" => $data_record]);

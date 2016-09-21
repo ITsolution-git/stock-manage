@@ -5,7 +5,7 @@
             <h1 flex="4">Design Name - {{designInforamtion.design_name}} Job - #{{order_id}}</h1>
         </div>
         <div class="text-right">
-            <md-button  class="bg-grey md-raised" ng-click="confirmPricing()">
+            <md-button  class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="confirmPricing()">
                 Confirm Pricing
             </md-button>
         </div>
@@ -318,7 +318,7 @@
             </div>
             
             <div class="text-right" ng-show="order_number == '' && is_complete == '0' && position_array_count != designInforamtion.colors_count">
-                <md-button  class="bg-grey md-raised" ng-click="openPositionDialog($event,designInforamtion.order_id,order_design_position[0].qnty)">
+                <md-button  class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="openPositionDialog($event,designInforamtion.order_id,order_design_position[0].qnty)">
                             ADD New Position
                         </md-button>
             </div>
@@ -349,7 +349,7 @@
                         <input ng-model="productSearch" ng-change="checkValid()">
                     </md-input-container>
                 </div>
-                <div layout="column" flex="5"><md-button class="md-accent md-raised" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button></div>
+                <div layout="column" flex="5"><md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button></div>
 
                  <!--  <div class="h2 text-semibold flex-55"><span class="float-right" ng-class="{'f-red': total_product != order_design_position[0].qnty}">PRODUCTS QUANTITY : {{total_product}}</span></div> -->
 

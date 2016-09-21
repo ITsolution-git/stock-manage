@@ -7,6 +7,13 @@
 /*global popup style starts here */
 /*global popup style ends here */
 /*genera css */
+.ease-animations, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
+  -moz-transition: all ease-in-out 0.2s;
+  -webkit-transition: all ease-in-out 0.2s;
+  -ms-transition: all ease-in-out 0.2s;
+  -o-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s; }
+
 input::-moz-placeholder, textarea::-moz-placeholder {
   opacity: 1;
   color: #252932; }
@@ -114,7 +121,7 @@ button.bg-grey.md-raised {
   -o-box-shadow: none;
   box-shadow: none; }
 
-.border-radius-half, .stokkup-btn-style1, button.bg-grey.md-raised, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
+.border-radius-half, .stokkup-btn-style1, button.bg-grey.md-raised, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
   border-radius: 50px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -404,7 +411,7 @@ md-dialog.task-dialog {
       font-weight: 700;
       text-transform: uppercase; }
     md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]) {
-      background-color: #6288dc !important;
+      background-color: #4773d6 !important;
       min-width: 123px;
       width: auto;
       height: 41px;
@@ -560,12 +567,14 @@ table.dataTable thead.stokkup-space1 th {
   color: #fff;
   font-weight: 700;
   font-size: 14px;
-  line-height: 41px; }
+  line-height: 41px;
+  max-height: 41px; }
   .stokkup-custom-btn1:hover, .stokkup-custom-btn1:focus {
     background-color: #4773d6; }
 
 .stokkup-blue-btn {
-  background-color: #4773d6 !important; }
+  background-color: #4773d6 !important;
+  min-width: 123px; }
 
 .small-headings {
   font-size: 13px;
@@ -1086,7 +1095,7 @@ md-card-content.custom-desc-box span {
   .screenset-list-struct li {
     list-style-type: none;
     display: block;
-    margin: 0 0 15px;
+    margin: 0 0 28px;
     padding: 15px 0 0;
     float: left;
     background-color: #fff;
@@ -1096,10 +1105,25 @@ md-card-content.custom-desc-box span {
 .screenset-list-struct dnd-nodrag {
   float: left;
   width: 100%;
-  padding: 0 30px 0 20px; }
+  padding: 0; }
+
+.screenset-list-struct table.custom-table1 {
+  padding: 0;
+  width: 100%;
+  border-spacing: 0; }
+  .screenset-list-struct table.custom-table1 td {
+    border: none;
+    padding: 0; }
+
+.screenset-list-struct .trans-outer {
+  padding: 10px 20px;
+  width: 100%;
+  float: left; }
+  .screenset-list-struct .trans-outer .trans-box {
+    float: left; }
 
 img.screenset-img {
-  max-height: 130px;
+  max-height: 150px;
   width: auto;
   float: none;
   margin: auto; }
@@ -1172,6 +1196,10 @@ md-card.noborder {
   align-items: center;
   justify-content: center;
   cursor: move; }
+  .dragiconscenter .icon {
+    position: relative;
+    align-items: center;
+    justify-content: center; }
 
 .company-pro-img-block {
   max-height: 350px !important;
@@ -1226,5 +1254,41 @@ md-sidenav.md-sidenav-right .filter-title h1 {
   text-transform: capitalize;
   padding: 15px;
   margin: 0; }
+
+.email-heads {
+  padding: 8px 11px;
+  font-size: 16px;
+  text-transform: none; }
+
+.email-from-box {
+  padding-bottom: 5px; }
+
+md-dialog.task-dialog md-input-container textarea.email-txtarea {
+  min-height: 265px;
+  font-size: 14px !important;
+  line-height: 22px; }
+
+.stokkup-req-fields {
+  color: #ed1c24;
+  font-size: 10px;
+  position: relative; }
+
+#custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label {
+  color: #4773d6;
+  border: solid 2px #4773d6;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px; }
+
+#custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
+  color: #fff;
+  border: solid 2px #4773d6;
+  background-color: #4773d6;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px; }
+
+md-dialog.task-dialog md-dialog-content.email-dialog {
+  padding-top: 30px; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

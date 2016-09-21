@@ -20,6 +20,18 @@
     $scope.user_id = sessionService.get("user_id");
     $scope.role_slug = sessionService.get('role_slug');
 
+    //console.log($state.current.url);
+    if($state.current.url=='/userProfile')
+    {
+        $scope.profile_id = $scope.user_id;
+    }
+    else
+    {
+        $scope.profile_id = $scope.company_id;
+    }
+    
+
+
         $scope.cancel = function () {
             $mdDialog.hide();
         };
@@ -49,7 +61,7 @@
      
       $scope.GetCompany =  function() {
       $("#ajax_loader").show();
-      $http.get('api/public/admin/company/edit/'+$scope.company_id+'/'+$scope.company_id).success(function(Listdata) 
+      $http.get('api/public/admin/company/edit/'+$scope.profile_id+'/'+$scope.company_id).success(function(Listdata) 
       {
 
             if(Listdata.data.success==1)

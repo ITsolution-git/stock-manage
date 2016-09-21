@@ -4,14 +4,14 @@
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add Position</span>
                 <md-button  ng-click="cancel()">
-                    <span>Cancel</span>
+                    <span>close</span>
                 </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap"  layout-padding>
                
-                <md-input-container class="width100">
+                <md-input-container class="width100 m-b-20">
                     <label>Position</label>
                     <md-select ng-model="order_design_position.position_id">
                         <md-option   ng-repeat="misc_pos in miscData.position" value="{{misc_pos.id}}">
@@ -21,7 +21,7 @@
                 </md-input-container>
 
 
-                <md-input-container class="width100">
+                <md-input-container class="width100 margin-0 m-b-20">
                                 <label>Placement Type</label>
                                 <md-select ng-model="order_design_position.placement_type">
                                     <md-option  ng-repeat="misc_placement in miscData.placement_type" value="{{misc_placement.id}}">
@@ -31,14 +31,14 @@
                 </md-input-container>
 
 
-                <md-input-container class="first-box">
+                <md-input-container class="first-box margin-0 m-b-20">
                     <input placeholder="Quantity" ng-model="order_design_position.qnty" valid-number>
                 </md-input-container>
 
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-                    <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
+                    <!-- <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
                     <md-button class="md-accent md-raised " ng-click="save(order_design_position)">Save</md-button>
         </md-dialog-actions>
     </form>
