@@ -10,7 +10,7 @@
             </div>
         </md-toolbar>
     <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
+    <md-card-content layout="column" class="box-shadow-0"  ng-class="{'disable-click': all_scope.allow_access==0}">
         <div layout="row" layout-wrap>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
@@ -81,10 +81,10 @@
 <table> 
     <tr>
         <td class="p-16 td-500">
-            <md-button class="bg-blue float-right" ng-if="flag=='add'" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params,'vendorcontact')">
+            <md-button class="bg-blue float-right" ng-if="flag=='add' && all_scope.allow_access==1" ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="InsertTableData(params,'vendorcontact')">
                     SAVE
             </md-button>
-             <md-button class="bg-blue float-right"  ng-if="flag=='edit'"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params,'vendor_contacts','id',params.id,'vendorcontact')">
+             <md-button class="bg-blue float-right"  ng-if="flag=='edit' && all_scope.allow_access==1"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="UpdateTableDataAll(params,'vendor_contacts','id',params.id,'vendorcontact')">
                     UPDATE
             </md-button>
 
