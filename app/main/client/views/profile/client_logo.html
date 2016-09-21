@@ -6,7 +6,7 @@
                                     <md-card-header-text>
                                         <span class="md-title">Blind Approval Text</span>
                                     </md-card-header-text>
-                                    <md-menu>
+                                    <md-menu  ng-show="allow_access==1">
                                         <md-button aria-label="Blind Text Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
@@ -31,7 +31,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Color Company Logo</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -65,7 +65,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">B/W Company Logo</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -99,7 +99,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Shipping Company Logo</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>

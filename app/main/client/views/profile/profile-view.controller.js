@@ -20,19 +20,19 @@
         vm.company_id = sessionService.get('company_id');
         $scope.company_id = sessionService.get('company_id');
         $scope.login_id = sessionService.get('user_id');
+        $scope.role_slug = sessionService.get('role_slug');
         $scope.client_id = vm.client_id ;
 
-
-        vm.documents = [
-        ];
-        vm.screenSets = [
-            
-        ];
-        vm.arts = [
-            
-        ];
-
-
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        {
+            $scope.allow_access = 1;  // THESE ROLE CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 0; // THESE ROLE CAN ALLOW TO EDIT, JUST CAN VIEW
+        }
+        
 
         vm.dtOptions = {
             dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -576,7 +576,18 @@
         $scope.company_id = Params.company_id;
         $scope.client_tax = Params.client_tax;
         $scope.companyUsers = Params.companyUsers;
-           
+        
+
+        $scope.role_slug = sessionService.get('role_slug');
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        {
+            $scope.allow_access = 1;  // THESE ROLE CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 0; // THESE ROLE CAN ALLOW TO EDIT, JUST CAN VIEW
+        }   
 
         $scope.options = {
         //types: ['(cities)'],
