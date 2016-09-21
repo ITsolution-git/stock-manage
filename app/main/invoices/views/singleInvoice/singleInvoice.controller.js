@@ -28,7 +28,6 @@
             if(result.data.success == '0') {
                     $state.go('app.invoices');
                 } 
-
                 
             $scope.siData = result.data.allData;
         });
@@ -47,7 +46,7 @@
         $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
             if(result123.data.success == '0') {
-                    $state.go('app.invoices');
+                    //$state.go('app.invoices');
             }else{
                 $scope.cardsAll = result123.data.allData;
             }
@@ -167,20 +166,45 @@
 
         $scope.getStoredProfile = function(profile)
         {
-            $("#ajax_loader").show();
-            var combine_array_id = {};
-            combine_array_id.cppd_id = profile;
-            $http.post('api/public/invoice/getPaymentCard',combine_array_id).success(function(result) 
-            {
-                $("#ajax_loader").hide();
-                if(result.data.success=='1')
+            if(profile != 0){
+                $("#ajax_loader").show();
+                var combine_array_id = {};
+                combine_array_id.cppd_id = profile;
+                $http.post('api/public/invoice/getPaymentCard',combine_array_id).success(function(result) 
                 {
-                    $scope.company.cppdid = result.data.allData.cppd_id;
-                    //$scope.pay.cashAmount = null;
-                }else{
-
-                }
-            });
+                    $("#ajax_loader").hide();
+                    if(result.data.success=='1')
+                    {
+                        $scope.company.creditFname = 'XXXXXX';
+                        $scope.company.creditLname = 'XXXXXX';
+                        $scope.company.creditCard = '000000000000000000';
+                        $scope.company.expMonth = '01';
+                        $scope.company.expYear = '22';
+                        $scope.company.cvv = '000';
+                        $scope.company.street = 'XXXXXX';
+                        $scope.company.city = 'XXXXXX';
+                        $scope.company.state = 'AL';
+                        $scope.company.zip = '00000';
+                    }
+                    else{
+                        var data = {"status": "error", "message": "Please try with any other saved card or new credit card."}
+                        notifyService.notify(data.status, data.message);
+                        return false;
+                    }
+                });
+            }else{
+                $scope.company.creditFname = '';
+                $scope.company.creditLname = '';
+                $scope.company.creditCard = '';
+                $scope.company.expMonth = '';
+                $scope.company.expYear = '';
+                $scope.company.cvv = '';
+                $scope.company.street = '';
+                $scope.company.city = '';
+                $scope.company.state = '';
+                $scope.company.zip = '';   
+            }
+            
         }
 
 
@@ -331,6 +355,9 @@
                 combine_array_id.storeCard = 1;
             }
             combine_array_id.linkToPay = 0;
+            if(paymentData.savedCard) {
+                combine_array_id.savedCard = paymentData.savedCard;
+            }
             
             combine_array_id.invoice_id = invoice_id.value;
             combine_array_id.company_id = company_id.value;

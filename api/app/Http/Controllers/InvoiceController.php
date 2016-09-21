@@ -323,7 +323,16 @@ class InvoiceController extends Controller {
             ->where('i.id','=',$invoice_id)
             ->get();
 
-         if(empty($retArray))
+        if(empty($retArray))
+        {
+
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        if($retArray[0]->payment_profile_id=='')
         {
 
            $response = array(
@@ -357,7 +366,10 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-
+        if(isset($retArray[0]->expiration)){
+            $expiration=explode('/', $retArray[0]->expiration);
+            $retArray[0]->expiration=$expiration;    
+        }
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
