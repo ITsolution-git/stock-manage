@@ -23,7 +23,7 @@
                     checksession : function (sessionService,$stateParams,$state)
                     {
                         
-                       return sessionService.AccessService('SU,AT','false');
+                       return sessionService.AccessService('AT','false');
                     }
                 }
             }).state('app.order.order-info', {
