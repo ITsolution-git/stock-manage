@@ -998,7 +998,7 @@ class SettingController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Order ID'),
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
-                        2=>array('key' => 'dp.sales_total', 'name' => 'Order Total'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => 'u.name', 'name' => 'Name'),
                         4=>array('key' => '', 'name' => 'Status'),
                         5=>array('key' => 'null', 'name' => '', 'sortable' => false)

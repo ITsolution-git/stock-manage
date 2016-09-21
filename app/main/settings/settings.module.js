@@ -179,7 +179,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA','true');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/vendor',
@@ -197,7 +197,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA','true');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/contact/:id',
@@ -214,7 +214,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA','true');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/sales',
