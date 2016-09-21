@@ -4,7 +4,7 @@
             <div class="table-title-text" flex=20>Vendor</div>
             <div class="pull-right right-search-box">
                 <div class="client-modal-title pull-right">
-                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-click="addVendor($event)">ADD NEW</span>
+                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="addVendor($event)">ADD NEW</span>
                 </div>
                 <div class="search-block pull-right">
                 <md-input-container class="md-block" flex-gt-sm>
@@ -35,7 +35,7 @@
                                                 Edit Vendor
                                             </md-button>
                                         </md-menu-item>
-                                        <md-menu-item>
+                                        <md-menu-item ng-show="allow_access==1">
                                             <md-button ng-click="delete_vendor($event,Vendor.id)">
                                                 Remove Vendor
                                             </md-button>

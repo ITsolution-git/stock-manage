@@ -10,7 +10,7 @@
             </div>
         </md-toolbar>
     <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
+    <md-card-content layout="column" class="box-shadow-0"  ng-class="{'disable-click': allow_access==0}">
         <div layout="row" layout-wrap>
 
                 <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
@@ -79,10 +79,10 @@
        
     </div>
 </div>
-<table> 
+<table > 
     <tr>
         <td class="p-16 td-500">
-            <md-button class="bg-blue float-right"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="SaveRecords(users)">
+            <md-button ng-show="allow_access==1" class="bg-blue float-right"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="SaveRecords(users)">
                     SAVE
             </md-button>
         </td>  
