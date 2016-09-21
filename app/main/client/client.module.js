@@ -48,7 +48,7 @@
                 resolve: {
                         checksession : function (sessionService,$stateParams,$state)
                         {
-                           return sessionService.AccessService('AM,CA,FM,PU,SH');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/profile/:id',

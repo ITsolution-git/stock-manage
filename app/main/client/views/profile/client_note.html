@@ -39,7 +39,7 @@
                                             <td>{{note.name}}</td>
                                             <td>{{note.client_notes}}</td>
                                             <td>{{note.created_date}}</td>
-                                            <td class="text-right">
+                                            <td class="text-right"  ng-show="allow_access==1">
                                     <md-menu>
                                         <md-button aria-label="Notes Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -61,7 +61,7 @@
                                     </tr>
                                      </tbody>
                                 </table>
-                                <div class="pull-right"><a class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right" href="javascript:;" ng-click="openInsertPopup('client/views/forms/notes_form.html',$event,'client_notes')">ADD NEW</a></div>
+                                <div class="pull-right"  ng-show="allow_access==1"><a class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right" href="javascript:;" ng-click="openInsertPopup('client/views/forms/notes_form.html',$event,'client_notes')">ADD NEW</a></div>
                             </div>
                         </div>
                     </div>

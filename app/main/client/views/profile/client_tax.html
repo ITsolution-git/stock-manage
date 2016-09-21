@@ -8,7 +8,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Tax ID</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="ID Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -33,7 +33,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Tax Rate Percentage</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Rate Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -59,7 +59,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Tax Exempt</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Tax Exempt Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -84,7 +84,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Tax ID Document</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Document Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
