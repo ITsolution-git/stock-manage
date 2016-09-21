@@ -11,7 +11,18 @@
     function AffiliateController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
             $scope.company_id = sessionService.get('company_id');
+            
+            // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
             $scope.role_slug = sessionService.get('role_slug');
+            if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+            {
+                $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+            }
+            else
+            {
+                $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+            }
+
             var originatorEv;
             var vm = this ;
 
@@ -118,7 +129,7 @@
             }
 // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
         $scope.RemoveFields = function(table,cond_field,cond_value){
-              
+              if($scope.allow_access = 0){return false;}
                 var delete_data = {};
                 
                 $scope.name_filed = cond_field;
@@ -172,6 +183,8 @@
                         $scope.states_all  = $scope.params.states_all;
                         $scope.AllPriceGrid= $scope.params.AllPriceGrid;
                         $scope.aff_id = aff_id;
+                        $scope.allow_access = params.allow_access;
+                        
                         $http.get('api/public/admin/company/getAffiliate/'+$scope.params.company_id+"/"+$scope.aff_id).success(function(result) 
                         {
                             if(result.data.success=='1')
@@ -187,6 +200,7 @@
 
                         $scope.SaveAffilite = function (affiliate)
                         {
+                            if($scope.allow_access = 0){return false;}
                             $("#ajax_loader").show();
                             affiliate.company_id = $scope.params.company_id;
                            // console.log(affiliate); return false;
