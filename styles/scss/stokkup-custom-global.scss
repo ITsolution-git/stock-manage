@@ -1641,8 +1641,10 @@ md-sidenav{
 .email-from-box{
 	padding-bottom:5px;
 }
-.email-txtarea{
-	min-height:100px;
+md-dialog.task-dialog md-input-container textarea.email-txtarea{
+	min-height:265px;
+	font-size:14px !important;
+	line-height:22px;
 }
 .stokkup-req-fields{
 	color:$red-highlight;
@@ -1667,4 +1669,7 @@ md-sidenav{
 	font-weight:$font-weight-600;
 	text-transform:uppercase;
 	font-size:$datatable-heading-size;
+}
+md-dialog.task-dialog md-dialog-content.email-dialog{
+	padding-top:30px;
 }
