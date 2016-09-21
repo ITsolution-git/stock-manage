@@ -16,16 +16,23 @@
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
                         <input placeholder="Username *" name="username" ng-model="sns.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ss_detail\',sns.id)' }">
                     </md-input-container>
-
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
                         <input placeholder="API Key" name="api_key" ng-model="sns.api_key" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ss_detail\',sns.id)' }">
                     </md-input-container>
-
-                 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API Password" type="password" name="password" ng-model="sns.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ss_detail\',sns.id)' }">
+                        <input placeholder="API Password" type="password" name="password" ng-model="sns.password"  >
                     </md-input-container>
-
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Test Mode</label>
+                        <md-select name="test_mode" ng-model="sns.test_mode" flex="100" ng-change="UpdateTableField('test_mode',sns.test_mode,'ss_detail',sns.id)">
+                            <md-option ng-selected="sns.test_mode==1" value="1">
+                                Yes
+                            </md-option>
+                            <md-option ng-selected="sns.test_mode==0" value="0">
+                                No
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
                 
             </div>

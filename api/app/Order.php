@@ -852,20 +852,30 @@ public function saveColorSize($post)
 
   }
 
-    public function getApprovalOrders($data)
+    public function getApprovalOrders($post)
     {
-        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $data['company_id']];
-        $orderData = DB::table('orders as o')
-                         ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
-                         ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
-                         ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
-                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
-                         ->leftJoin('users as u', 'u.id', '=', 'o.approved_by')
-                         ->select('o.id as order_id','o.created_date',DB::raw('SUM(dp.sales_total) as sales_total'),'u.name','o.order_sns_status')
-                         ->where($where)
-                         ->GroupBy('o.id')
-                         ->get();
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping')];
 
-        return $orderData;
+        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $post['company_id']];
+        $orderData = DB::table('orders as o')
+                          ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
+                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                          ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
+                          ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                          ->leftJoin('users as u', 'u.id', '=', 'o.approved_by')
+                          ->select($listArray)
+                          ->where($where)
+                          ->GroupBy('o.id')
+                          ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                          ->skip($post['start'])
+                          ->take($post['range'])
+                          ->get();
+
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        //dd(DB::getQueryLog());
+        $returnData = array();
+        $returnData['allData'] = $orderData;
+        $returnData['count'] = $count[0]->Totalcount;
+        return $returnData;
     }
 }
