@@ -5,7 +5,7 @@
                 Clients
             </div>
             <div class="pull-right right-search-box">
-                <div class="client-modal-title pull-right" ng-if="role=='CA' || role=='BC'">
+                <div class="client-modal-title pull-right" ng-if="role_slug=='CA' || role_slug=='AM' || role_slug=='FM' || role_slug=='PU'">
                     <span class="cursor-p stokkup-btn-style1" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
                 </div>
                 <div class="search-block pull-right">
@@ -48,8 +48,7 @@
                     <tbody>
 
                         <tr ng-repeat="client in rows" >
-                            <td ng-if="role=='CA' || role=='AM' || role=='FM' || role=='PU' || role=='SH'"  ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
-                            <td ng-if="role=='AT' || role=='SU' || role=='AD' || role=='SO' || role=='PO'  || role=='RA' || role=='SA'" >{{ client.client_company }}</td>
+                            <td ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
                             <td>{{ client.first_name }} {{client.last_name}}</td>
                             <td>{{ client.phone }}</td>
                             <td>{{ client.email }}</td>
