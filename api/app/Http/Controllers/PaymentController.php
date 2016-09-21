@@ -44,7 +44,6 @@ class PaymentController extends Controller {
     public function chargeCreditCard()
     {
         $post = Input::all();
-        //print_r($post);exit;
         
         $amount=round($post['amount'],2);
 
@@ -88,29 +87,34 @@ class PaymentController extends Controller {
             ->where('o.is_delete','=','1')
             ->get();
 
+        // direct payment with saved payment profile id on Authorized.net
         if(isset($post['savedCard'])){
-            $paymentprofileid=$post['payment_profile_id'];
             $profilePayment = $this->common->GetTableRecords('client_payment_profiles',array('client_id' => $retArray[0]->client_id));
             $resultProfile = $this->chargeCustomerProfile($merchantAuthentication, $profilePayment[0]->profile_id, $post['savedCard'], $amount);
 
-            $orderData = array('qb_id' => $qb_id,'order_id' => $order_id, 'payment_card' => $creditCardNumberStored, 'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Credit Card','authorized_TransId' => $tresponse->getTransId(),'authorized_AuthCode' => $tresponse->getAuthCode(),'qb_payment_id' => '', 'qb_web_reference' => '');
+            if($resultProfile['success']==0){
+                $data = array("success"=>0,'message' =>"Error from Authorized.net. Please try with any other saved card or new credit card.");
+                return response()->json(['data'=>$data]);
+            }else{
+                $orderData = array('qb_id' => $qb_id,'order_id' => $order_id, 'payment_card' => $creditCardNumberStored, 'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Credit Card', 'authorized_TransId' => $resultProfile['getTransId'],'authorized_AuthCode' => $resultProfile['getAuthCode'], 'qb_payment_id' => '', 'qb_web_reference' => '');
 
-            $id = $this->common->InsertRecords('payment_history',$orderData);
+                $id = $this->common->InsertRecords('payment_history',$orderData);
 
-            $retArrayPmt = DB::table('payment_history as p')
-                ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
-                ->leftJoin('orders as o','o.id','=',"p.order_id")
-                ->where('p.order_id','=',$order_id)
-                ->where('p.is_delete','=',1)
-                ->get();
+                $retArrayPmt = DB::table('payment_history as p')
+                    ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
+                    ->leftJoin('orders as o','o.id','=',"p.order_id")
+                    ->where('p.order_id','=',$order_id)
+                    ->where('p.is_delete','=',1)
+                    ->get();
 
-            $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
-            $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+                $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
+                $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
 
-            $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+                $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
-            $data = array("success"=>1,'amt' =>$amt);
-            return response()->json(['data'=>$data]);
+                $data = array("success"=>1,'amt' =>$amt);
+                return response()->json(['data'=>$data]);
+            }
         }
 
         $refId = 'ref' . time();
@@ -133,8 +137,6 @@ class PaymentController extends Controller {
         $transactionRequestType->setAmount($amount);
         $transactionRequestType->setOrder($order);
         $transactionRequestType->setPayment($paymentOne);
-
-        
 
         $billto = new AnetAPI\CustomerAddressType();
         $billto->setFirstName($post['creditFname']);

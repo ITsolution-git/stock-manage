@@ -234,7 +234,7 @@
                                             <div class="title" layout-padding>
                                                 <span class="basicInfoStyle">Credit Card Information</span>
                                                 <md-select placeholder="Saved Credit Cards" ng-change="getStoredProfile(company.savedCard)" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
-                                                    <md-option value="">
+                                                    <md-option value="0">
                                                         Saved Credit Cards
                                                     </md-option>
                                                     <md-option ng-repeat="cards in cardsAll" value="{{cards.payment_profile_id}}" >
@@ -244,20 +244,20 @@
                                                 <input type="hidden" ng-model="company.cppdid">
                                             </div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="50">
+                                                <md-input-container flex="50" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                      <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
                                                 </md-input-container>
-                                                <md-input-container flex="50">
+                                                <md-input-container flex="50" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                      <input placeholder="Last Name On Card" name="Last Name On Card" ng-model="company.creditLname">
                                                 </md-input-container>
-                                                <md-input-container flex="100">
+                                                <md-input-container flex="100" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                     <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
                                                 </md-input-container>
                                                 <md-input-container flex="100">
                                                     <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
                                                 </md-input-container>
                                             </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                 <md-input-container flex="30">
                                                     <md-select ng-model="company.expMonth" placeholder="MM">
                                                         <md-option value="0">MM</md-option>
@@ -299,10 +299,10 @@
                                                     <input placeholder="CVV" name="CVV" only-number="10" ng-model="company.cvv">
                                                 </md-input-container>
                                             </div>
-                                            <md-checkbox  aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>
+                                            <md-checkbox  ng-show="company.savedCard == 0 || company.savedCard == null" aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>
                                        </div>
                                        <div flex="10">&nbsp;</div>
-                                       <div layout="column" flex="45">
+                                       <div layout="column" flex="45" ng-show="company.savedCard == 0 || company.savedCard == null">
                                             <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                 <md-input-container flex="75">
@@ -331,12 +331,15 @@
                                                 </md-input-container>
                                             </div>
                                             <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
-                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
+                                            
+                                       </div>
+                                       <div layout="column" flex="45">
+                                       <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
+                                                <!--<button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
+                                                </button>-->
                                                 <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Pay</span></button>
                                             </md-dialog-actions>
-                                       </div>
+                                        </div>
                                    </div>
                                </div>
                             </div> 
@@ -354,7 +357,7 @@
                                                 </md-input-container>
                                             </div>
                                             <md-dialog-actions layout="row" class="layout-row">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
+                                                <!--<button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>-->
                                                 </button>
                                                 <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay Cash" ng-click="pay_cash(pay)"><span class="ng-scope">Pay</span></button>
                                             </md-dialog-actions>
