@@ -139,7 +139,7 @@
                                                     </md-card-content>
                                                 </div>
                                                 <div flex="20" class="pull-left mt-20 text-center">
-                                                    <md-button class="md-raised stokkup-custom-btn1 bg-grey mb-15" ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
+                                                    <md-button ng-show="allow_access==1" class="md-raised stokkup-custom-btn1 bg-grey mb-15" ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
                                                     <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
                                                 </div>
                                                 <div flex=5 layout="row" dnd-handle class="dragiconscenter">
@@ -184,7 +184,7 @@
             <md-card-header-text>
             <span class="md-title">Mockup Image</span>
             </md-card-header-text>
-            <md-menu>
+            <md-menu ng-show="allow_access==1">
                 <md-button aria-label="Image Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                     <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                 </md-button>
@@ -209,7 +209,7 @@
             <img   ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
         </md-card-content>
     </md-card> 
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace m-t-20">
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace m-t-20" ng-show="allow_access==1">
         <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" aria-label="Generate Art Approval Form" ng-click="openClientEmailPopup()"><span class="ng-scope">Art Approval</span></button>
         <!-- <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf('0','')"><span class="ng-scope">Generate Art Approval Form</span></button> -->
     </md-dialog-actions>

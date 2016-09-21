@@ -36,7 +36,7 @@
             },resolve: {
                     checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('SU,AT','false');
+                        return sessionService.AccessService('ALL','true');
                     }
                 }
         })
