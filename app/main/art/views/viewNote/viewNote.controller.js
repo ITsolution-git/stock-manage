@@ -13,7 +13,17 @@
          //vm.openaddNoteDialog = openaddNoteDialog;
          $scope.company_id = sessionService.get('company_id');
          $scope.screenset_id = $stateParams.id;
-
+         
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
         //Dummy models data
      
                 /* TESTY PAGINATION */     

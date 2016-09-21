@@ -20,17 +20,17 @@
         vm.company_id = sessionService.get('company_id');
         $scope.company_id = sessionService.get('company_id');
         $scope.login_id = sessionService.get('user_id');
-        $scope.role_slug = sessionService.get('role_slug');
         $scope.client_id = vm.client_id ;
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
         if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
         {
-            $scope.allow_access = 1;  // THESE ROLE CAN ALLOW TO EDIT
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
         }
         else
         {
-            $scope.allow_access = 0; // THESE ROLE CAN ALLOW TO EDIT, JUST CAN VIEW
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
         }
         
 
