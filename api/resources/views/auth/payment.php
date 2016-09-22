@@ -100,7 +100,6 @@
         combine_array_id.state = document.getElementById('state').value;
         combine_array_id.zip = document.getElementById('zip').value;
         combine_array_id.linkToPay = 1;
-        combine_array_id.storeCard = 1;
         
 
         combine_array_id.invoice_id = document.getElementById('invoice_id').value;
@@ -117,8 +116,15 @@
               dataType: "text",
               success: function(resultData) {
                 $("#ajax_loader").hide();
-                alert("Payment made Successfully");
-                setTimeout("location.href = '../../../../index.php';",2000);
+                var resultData = $.parseJSON(resultData);
+                if (resultData.data.success==1) {
+                    alert(resultData.data.message);
+                    //alert("Payment made Successfully");
+                    setTimeout("location.href = '../../../../index.php';",1000);
+                }else{
+                    alert("Payment could not be made. Please verify your card details with Authorized.net.");
+                }
+                
             }
         });
         saveData.error(function() { alert("Payment could not be made. Please verify your card details with Authorized.net."); });
