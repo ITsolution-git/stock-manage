@@ -22,11 +22,13 @@
                             </div>
                             <div layout="column" flex="20">
                                 <div>Shipping By</div>
-                                <span class="font-14 chrome-weight gray-text"></span>
+                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.date_shipped != '0000-00-00'">{{ shipping.date_shipped | date:"M/d/yyyy" }}</span>
+                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.date_shipped == '0000-00-00'"></span>
                             </div>
                             <div layout="column" flex="20">
                                 <div>In Hand By</div>
-                                <span class="font-14 chrome-weight gray-text"></span>
+                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.in_hands_by != '0000-00-00'">{{ shipping.in_hands_by | date:"M/d/yyyy" }}</span>
+                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.in_hands_by == '0000-00-00'"></span>
                             </div>
                             <div layout="column" flex="20">
                                 <div>Status</div>
@@ -35,8 +37,8 @@
                         </div>
                         <div layout="row" class="mrg10-B">
                             <div layout="column" flex="20">
-                                <div>Shipping ID</div>
-                               <span class="font-14 chrome-weight gray-text">{{ shipping.shipping_id }}</span>
+                                <div>Shipping Status</div>
+                               <span class="font-14 chrome-weight gray-text">{{ shipping.shipping_status_name}}</span>
                             </div>
                             <div layout="column" flex="20">
                                 <div>Location</div>
@@ -66,16 +68,16 @@
                             </div>
                             <div layout="column" flex="20">
                                 <div>Fully Shipped</div>
-                                <span class="font-14 chrome-weight gray-text"></span>
+                                <span class="font-14 chrome-weight gray-text">{{ shipping.distributed }}/{{ shipping.total }}</span>
                             </div>
                             <div layout="column" flex="20">
                                 <div>Date Shipped</div>
                                 <span class="font-14 chrome-weight gray-text"></span>
                             </div>
-                            <div layout="column" flex="20">
+                            <!-- <div layout="column" flex="20">
                                 <div>Tracking Number</div>
                                 <span class="font-14 chrome-weight gray-text">{{shipping.tracking_number}}</span>
-                            </div>
+                            </div> -->
                         </div>
                         <div layout-align="end" layout="row">
                             <a ui-sref="app.shipping.shipmentdetails({id: shipping.shipping_id})">EDIT</a>

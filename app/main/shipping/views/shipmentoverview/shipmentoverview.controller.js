@@ -58,6 +58,16 @@
                     if($scope.shipping.shipping_type_id == '3') {
                         $scope.shipping.shipping_type_name = 'Local Messenger';
                     }
+
+                    if($scope.shipping.shipping_status == '1') {
+                        $scope.shipping.shipping_status_name = 'Waiting To Ship';
+                    }
+                    if($scope.shipping.shipping_status == '2') {
+                        $scope.shipping.shipping_status_name = 'Order In Process';
+                    }
+                    if($scope.shipping.shipping_status == '3') {
+                        $scope.shipping.shipping_status_name = 'Shipped';
+                    }
                 }
             });
         }

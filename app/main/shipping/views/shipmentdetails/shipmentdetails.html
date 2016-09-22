@@ -80,8 +80,8 @@
                             </div>
 
 
-                            <div layout="row" flex="100" class="mrg5-B" ng-show="shipping.shipping_type_id == 1">
-                                <div layout="column" flex="100" class="mrg10-R mrg15-T">
+                            <div layout="row" flex="100" class="mrg5-B">
+                                <div layout="column" flex="50" class="mrg10-R mrg15-T" ng-show="shipping.shipping_type_id == 1">
                                     <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="mrg6-TB" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
                                         <md-option>Shipping Method</md-option>
 
@@ -101,11 +101,9 @@
                                         <md-option value="UPS Ground" ng-selected="shipping.shipping_method == 'UPS Ground'">UPS Ground</md-option>
                                     </md-select>
                                 </div>
-                            </div>
 
 
-                            <div layout="row" flex="100" class="mrg5-B" ng-show="shipping.shipping_type_id == 2">
-                                <div layout="column" flex="100" class="mrg10-R mrg15-T">
+                                <div layout="column" flex="50" class="mrg10-R mrg15-T" ng-show="shipping.shipping_type_id == 2">
                                     <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="mrg6-TB" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
                                         <md-option>Shipping Method</md-option>
 
@@ -125,17 +123,26 @@
                                        
                                     </md-select>
                                 </div>
-                            </div>
 
-
-
-                            <div layout="row" flex="100" class="mrg5-B" ng-show="shipping.shipping_type_id == 3">
-                                <div layout="column" flex="100" class="mrg10-R mrg15-T">
-                                      <md-input-container flex="100">
+                                <div layout="column" flex="50" class="mrg10-R mrg15-T" ng-show="shipping.shipping_type_id == 3">
+                                      <md-input-container flex="50">
                                         <input placeholder="Shipping Method"  ng-model="shipping.shipping_method"  ui-event="{ change : 'updateShippingAll(\'shipping_method\',shipping.shipping_method,shipping.shipping_id)' }">
                                     </md-input-container>
                                 </div>
+
+                                <div layout="column" flex="50" class="mrg10-R mrg15-T">
+                                    <md-select ng-model="shipping.shipping_status" placeholder="Shipping Type" class="mrg6-TB" name="shipping_status" ng-change="updateShippingAll('shipping_status',shipping.shipping_status,shipping.shipping_id)">
+                                        <md-option value="1" ng-selected="shipping.shipping_status == 1">Waiting To Ship</md-option>
+                                        <md-option value="2" ng-selected="shipping.shipping_status == 2">Order In Process</md-option>
+                                        <md-option value="3" ng-selected="shipping.shipping_status == 3">Shipped</md-option>
+                                    </md-select>
+                                </div>
+
+
                             </div>
+
+
+                           
 
 
                             <div layout="row" flex="100" class="mrg5-B">
