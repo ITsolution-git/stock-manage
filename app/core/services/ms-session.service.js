@@ -75,6 +75,7 @@
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);
 	                    //console.log(arr_role+"--"+access); 
+	                    //console.log(arr_role.indexOf(role));
 	                    if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) || access=="true" )) // PERMISSION ALLOW
 			            {
 			               // console.log('error');
@@ -82,16 +83,16 @@
 			                notifyService.notify(data.status, data.message);
 			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
 			                return false;
-			                $stateChangeStart.preventDefault();
+			                //$stateChangeStart.preventDefault();
 			            }
-			            if(arr_role.indexOf(role) == 0 && arr_role != 'ALL' && arr_role!='' && access=="false") // PERMISSION NOT ALLOW
+			            if(arr_role.indexOf(role) >= 0 && arr_role != 'ALL' && arr_role!='' && access=="false") // PERMISSION NOT ALLOW
 			            {
 			               // console.log('error');
 			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
 			                notifyService.notify(data.status, data.message);
 			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
 			                return false;
-			                $stateChangeStart.preventDefault();
+			                //$stateChangeStart.preventDefault();
 			            }
 			            
 
@@ -106,7 +107,7 @@
 	                    {*/
 	                        $state.go('app.login');
 	                        notifyService.notify("error", "Please signin first.");
-	                        $stateChangeStart.preventDefault();
+	                        //$stateChangeStart.preventDefault();
 	                    //}
 	                }
             });
