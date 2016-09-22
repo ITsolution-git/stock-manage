@@ -95,6 +95,9 @@
                             </div>
                         </div>
                         <div class="mrg10-L order-container" ms-scroll>
+                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                <button ng-show="unshippedProducts.length > 0" type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Next" ng-click="addAllProducts()"><span class="ng-scope">Add All</span></button>
+                            </md-dialog-actions>
                             <div class="header-typ3">Shipment Items</div>
                             <div class="box-typ3" ng-repeat="product in unshippedProducts">
                                 <div layout="row" flex="100">
@@ -113,7 +116,8 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody> 
-                                                    <tr class="cursor-p">                                                        <td>{{ product.misc_value}}</td>
+                                                    <tr class="cursor-p">
+                                                        <td>{{ product.misc_value}}</td>
                                                         <td>{{ product.name}}</td>
                                                         <td>{{ product.color_name}}</td>
                                                         <td>{{ product.size}}</td>
@@ -149,6 +153,6 @@
         </table>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Next" ng-click="shippingDetails()" ng-disabled="shipping_id == 0"><span class="ng-scope">Next</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Next" ng-click="shippingDetails()"><span class="ng-scope">Next</span></button>
     </md-dialog-actions>
 </div>

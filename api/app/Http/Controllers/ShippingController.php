@@ -564,6 +564,57 @@ class ShippingController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+    public function addAllProductToShip()
+    {
+        $post = Input::all();
+
+        foreach ($post['products'] as $product) {
+            
+            $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+
+            if(!empty($shipping_data)) {
+
+                $product_address_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'product_id' => $product['product_id']),array());
+
+                if(empty($product_address_data))
+                {
+                    $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                    $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $product['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
+                }
+                else
+                {
+                    $product_address_id = $shipping_data[0]->id;
+                }
+
+                $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id']),array());
+
+                if(empty($product_data))
+                {
+                    $distributed_qnty = 0;
+                    $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id'],'distributed_qnty' =>$product['remaining_qnty']));
+                }
+                else
+                {
+                    $updated_qnty = $product_data[0]->distributed_qnty + $product['remaining_qnty'];
+                    $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id']),array('distributed_qnty' => $updated_qnty));
+                }
+            }
+            else
+            {
+                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $product['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
+                $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id'],'distributed_qnty' =>$product['remaining_qnty']));
+            }
+            $this->common->UpdateTableRecords('purchase_detail',array('id' => $product['id']),array('remaining_qnty' => 0));
+        }
+
+        $success=1;
+        $message=UPDATE_RECORD;
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
     public function addProductToShip()
     {
         $post = Input::all();
