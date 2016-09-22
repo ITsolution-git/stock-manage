@@ -1,0 +1,43 @@
+<div class="content client-list-page stockkup-content-table-container custom-tabs-content">
+    <div class="md-whiteframe-4dp stokkup-main-tableview">
+	    <md-content class="">
+	        <div layout="row" layout-wrap="nowrap" class="client-live-nation p-30">
+	            <div flex-xs flex-gt-xs="50" layout="column">
+	                <md-card class="custom-fullbox-shadow">
+	                    <md-card-header layout-align="space-between center">
+	                        <md-card-header-text>
+	                            <span class="md-title">QuickBook Information</span>
+	                            <hr/>
+	                        </md-card-header-text>
+	                        <md-menu  ng-show="allow_access==1">
+	                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+	                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+	                            </md-button>
+	                            <md-menu-content width="4" ng-click="vm.qbActivewearSetup($event,qb.id)">
+	                                <md-menu-item>
+	                                    <md-button>
+	                                        Edit
+	                                    </md-button>
+	                                </md-menu-item>
+	                            </md-menu-content>
+	                        </md-menu>
+	                    </md-card-header>
+	                    <md-card-content class="custom-desc-box">
+	                        <div class="h5 text-semibold">Consumer Key</div>
+	                        <span>{{qb.consumer_key}}</span>
+	                        <div class="h5 text-semibold">Consumer Secret Key</div>
+	                        <span>{{qb.consumer_secret_key}}</span>
+	                    </md-card-content>
+				    <span class="ml-10" ng-show="qb.consumer_key !='' && qb.consumer_secret_key !=''"><connect-to-quickbooks /></span>
+			        <span>
+			            <md-button ng-show="qb.ss =='0' && qb.consumer_key !='' && qb.consumer_secret_key !=''" class="md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple" ng-click="vm.qbActivewearSetup($event,qb.id)" >Setup</md-button>
+			        </span>
+	                </md-card>
+	            </div>
+	        </div>
+
+       
+	    </md-content>
+
+	</div>
+</div>

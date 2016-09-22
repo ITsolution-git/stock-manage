@@ -1,43 +1,45 @@
 <md-dialog class="task-dialog ssActivewearDialog" >
+<form name="integration_form" class="md-inline-form" novalidate>
     <div class="client-profile-page">
-    <md-toolbar class="md-accent md-hue-2">
-            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">S&S API INTEGRATION</span>
-                <md-button  ng-click="closeDialog()">
-                    <span>Cancel</span>
-                </md-button>
-            </div>
-        </md-toolbar>
-    <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
-        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
-                <div layout="column"  flex="100">
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Username *" name="username" ng-model="sns.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ss_detail\',sns.id)' }">
-                    </md-input-container>
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API Key" name="api_key" ng-model="sns.api_key" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ss_detail\',sns.id)' }">
-                    </md-input-container>
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API Password" type="password" name="password" ng-model="sns.password"  >
-                    </md-input-container>
-                    <md-input-container layout="row">
-                        <label class="selectbox-label">Test Mode</label>
-                        <md-select name="test_mode" ng-model="sns.test_mode" flex="100" ng-change="UpdateTableField('test_mode',sns.test_mode,'ss_detail',sns.id)">
-                            <md-option ng-selected="sns.test_mode==1" value="1">
-                                Yes
-                            </md-option>
-                            <md-option ng-selected="sns.test_mode==0" value="0">
-                                No
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
+        <md-toolbar class="md-accent md-hue-2">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                    <span class="title">S&S API INTEGRATION</span>
+                    <md-button  ng-click="closeDialog()">
+                        <span>Cancel</span>
+                    </md-button>
                 </div>
-                
-            </div>
-</div>
-<!--     <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="cancel()">
-            SAVE
-    </md-button> -->
+        </md-toolbar>
+        <div ng-cloak>
+            <md-card-content layout="column" class="box-shadow-0">
+                <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
+                    <div layout="column"  flex="100">
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Username *" name="username" ng-model="params.username" >
+                        </md-input-container>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="API Key" name="api_key" ng-model="params.api_key" >
+                        </md-input-container>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="API Password" type="password" name="password" ng-model="params.password"  >
+                        </md-input-container>
+                        <md-input-container layout="row">
+                            <label class="selectbox-label">Test Mode</label>
+                            <md-select name="test_mode" ng-model="params.test_mode" flex="100" >
+                                <md-option ng-selected="params.test_mode==1" value="1">
+                                    Yes
+                                </md-option>
+                                <md-option ng-selected="params.test_mode==0" value="0">
+                                    No
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+            </md-card-content>
+        </div>
+        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ss_detail','id',params.id,'sns')">
+                SAVE
+        </md-button>
+    </div>
+</form>
 </md-dialog>
