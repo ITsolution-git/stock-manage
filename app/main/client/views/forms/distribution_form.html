@@ -22,16 +22,34 @@
                 <md-input-container>
                     <input placeholder="ATTN" name="attn" ng-model="params.attn"   >
                 </md-input-container>
+                
                 <md-input-container>
-                    <input placeholder="Address*" name="address" required ng-model="params.address"   >
+                    <input tabindex="2" vs-google-autocomplete="Gapi_options"
+                        ng-model="Gapi_address.name"
+                        vs-street-number="Gapi_address.components.streetNumber" 
+                        vs-street="Gapi_address.components.street"
+                        vs-city="Gapi_address.components.city"
+                        vs-state="Gapi_address.components.state"
+                        vs-post-code="Gapi_address.components.postCode"
+                        vs-country="Gapi_address.components.country"
+                        vs-country-short="Gapi_address.components.countryCode"
+                        type="text" 
+                        name="Gapi_address"
+                        id="Gapi_address"
+                        aria-label="form-control" flex=70>
+                        <md-button tabindex="3"  class="md-accent md-raised api-focus border-radius-half" ng-click="DistributionAPI(Gapi_address.components)" flex=20 >Use it</md-button>
+                </md-input-container>
+
+                <md-input-container>
+                    <input placeholder="Street Number"  name="address2" ng-model="params.address2" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Street Address*" name="address" required ng-model="params.address"   >
                     <div ng-messages="clientForm.address.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span >This field is required</span>
                         </div>
                     </div>
-                </md-input-container>
-                <md-input-container>
-                    <input placeholder="Address2"  name="address2" ng-model="params.address2" >
                 </md-input-container>
                 <md-input-container>
                     <input placeholder="City*"  name="city" required ng-model="params.city"  >

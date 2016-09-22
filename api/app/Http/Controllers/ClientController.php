@@ -491,12 +491,24 @@ class ClientController extends Controller {
 		return response()->json(['data'=>$data]);
 	}
 
-	public function SaveCleintPlimp()
+	public function SaveClientInfo()
 	{
 		$post = Input::all();
-		$result = $this->client->SaveCleintPlimp($post['data'],$post['id']);
+		if(!empty($post['client_company']) && !empty($post['client_id']))
+		{
+			$post['pl_state'] = empty($post['pl_state'])?'':$post['pl_state'];
+			$post['pl_address'] = empty($post['pl_address'])?'':$post['pl_address'];
+			$post['pl_pincode'] = empty($post['pl_pincode'])?'':$post['pl_pincode'];
+			$post['pl_suite'] = empty($post['pl_suite'])?'':$post['pl_suite'];
+			$post['pl_city'] = empty($post['pl_city'])?'':$post['pl_city'];
 
-    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+			$result = $this->client->SaveClientInfo($post,$post['client_id']);
+    		$data = array("success"=>1,"message"=>UPDATE_RECORD);
+    	}
+    	else
+    	{
+    		$data = array("success"=>0,"message"=>MISSING_PARAMS);
+    	}
 		return response()->json(['data'=>$data]);
 	}
 /**

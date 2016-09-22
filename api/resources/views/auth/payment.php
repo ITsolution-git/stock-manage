@@ -44,6 +44,10 @@
             alert("Please enter Credit Card");
             return false;
         }
+        if((document.getElementById('creditCard').value.length < 12) || (document.getElementById('creditCard').value.length > 20) ) {
+            alert("Please enter Credit Card");
+            return false;
+        }
         if(document.getElementById('amount').value == '' ) {
             alert("Please enter Amount");
             return false;
@@ -96,7 +100,6 @@
         combine_array_id.state = document.getElementById('state').value;
         combine_array_id.zip = document.getElementById('zip').value;
         combine_array_id.linkToPay = 1;
-        combine_array_id.storeCard = 1;
         
 
         combine_array_id.invoice_id = document.getElementById('invoice_id').value;
@@ -113,8 +116,15 @@
               dataType: "text",
               success: function(resultData) {
                 $("#ajax_loader").hide();
-                alert("Payment made Successfully");
-                setTimeout("location.href = '../../../../index.php';",2000);
+                var resultData = $.parseJSON(resultData);
+                if (resultData.data.success==1) {
+                    alert(resultData.data.message);
+                    //alert("Payment made Successfully");
+                    setTimeout("location.href = '../../../../index.php';",1000);
+                }else{
+                    alert("Payment could not be made. Please verify your card details with Authorized.net.");
+                }
+                
             }
         });
         saveData.error(function() { alert("Payment could not be made. Please verify your card details with Authorized.net."); });
@@ -196,7 +206,7 @@
             </div>
         </div>
         <div class="half-sections">
-             <div class="title"><span class="basicInfoStyle">Billing Address</span></div>
+            <div class="title"><span class="basicInfoStyle">Billing Address</span></div>
             <div class="flex-75 inputfield-space pull-left m-r-5">
                 <input type="text" placeholder="Street Address" id="street" name="street" value="">
             </div>
@@ -219,6 +229,46 @@
                     <input type="text" placeholder="Zip" name="zip" id="zip" value="" maxlength="15">
                 </div>
             </div>
+            <div class="flex-100 inputfield-space pull-left">&nbsp;</div>
+            <div class="flex-100 inputfield-space pull-left">&nbsp;</div>
+            <div class="flex-100 inputfield-space pull-left">&nbsp;</div>
+        </div>
+        <?php if ($orderArray->sales_name != '' || $orderArray->account_name != ''){ ?>
+        <div class="half-sections">
+            <div class="title"><span class="">Questions? Please contact:</span></div>
+        </div>
+        <div class="half-sections">&nbsp;</div>
+        <?php } ?>
+        <div class="half-sections">
+            <?php if ($orderArray->sales_name != ''){ ?>
+            <div class="title"><span class="basicInfoStyle">Sales Person</span></div>
+            <?php if ($orderArray->sales_name != ''){ ?>
+            <div class="flex-100 inputfield-space pull-left">Name: <?php echo $orderArray->sales_name ?></div>
+            <?php } ?>
+            <?php if ($orderArray->sales_email != ''){ ?>
+            <div class="flex-100 inputfield-space pull-left">Email: <?php echo $orderArray->sales_email ?></div>
+            <?php } ?>
+            <?php if ($orderArray->sales_phone != ''){ ?>
+            <div class="flex-100 inputfield-space pull-left">Phone: <?php echo $orderArray->sales_phone ?></div>
+            <?php } ?>
+            <?php if ($orderArray->sales_web != ''){ ?>
+            <div class="flex-100 inputfield-space pull-left">Website: <?php echo $orderArray->sales_web ?></div>
+            <?php } ?>
+            <?php } ?>
+        </div>
+        <div class="half-sections">
+            <?php if ($orderArray->account_name != ''){ ?>
+            <div class="title"><span class="basicInfoStyle">Account Manager</span></div>
+            <?php if ($orderArray->account_name != ''){ ?>
+            <div class="flex-100 inputfield-space pull-left">Name: <?php echo $orderArray->account_name ?></div>
+            <?php } ?>
+            <?php if ($orderArray->account_email != ''){ ?>
+            <div class="flex-100 inputfield-space pull-left">Email: <?php echo $orderArray->account_email ?></div>
+            <?php } ?>
+            <?php if ($orderArray->account_phone != ''){ ?>
+            <div class="flex-100 inputfield-space pull-left">Phone: <?php echo $orderArray->account_phone ?></div>
+            <?php } ?>
+            <?php } ?>
         </div>
         <div class="pay-section">
             <button type="button" onclick="checkvalidations()" aria-label="Pay by Credit Card via Authorized.net">PAY</button>

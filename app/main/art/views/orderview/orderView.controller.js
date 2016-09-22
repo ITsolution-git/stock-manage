@@ -16,6 +16,18 @@
         $scope.company_id = sessionService.get('company_id');
         $scope.order_id = $stateParams.id;
 
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
         var misc_list_data = {};
         var condition_obj = {};
         condition_obj['company_id'] =  sessionService.get('company_id');
@@ -27,6 +39,7 @@
         
         $scope.updateOrderStatus = function(name,value,id)
         {
+            if($scope.allow_access==0){return false;}
             var order_main_data = {};
 
             order_main_data.table ='orders';
@@ -77,6 +90,7 @@
     
         $scope.change_sort = function ()
         {
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $http.post('api/public/art/change_sortscreen',$scope.ScreenSets_new.data_all).success(function(result) 
             {
@@ -87,7 +101,7 @@
 
 
         function createNewScreen(ev, position_id) {
-
+            if($scope.allow_access==0){return false;}
             $mdDialog.show({
                 controller: function ($scope, params,position_id)
                             {
@@ -222,6 +236,7 @@
         }
         $scope.openClientEmailPopup = function(ev)
         {
+            if($scope.allow_access==0){return false;}
             $mdDialog.show({
                 controller: function ($scope, params)
                 {
@@ -274,6 +289,7 @@
             });
         }
         function generateArtForm(ev, settings) {
+            if($scope.allow_access==0){return false;}
             $mdDialog.show({
                  controller: function ($scope, params){
                             $scope.closeDialog = function() 
@@ -309,6 +325,7 @@
 
         $scope.UpdateTableField = function(field_value,order_id)
         {
+            if($scope.allow_access==0){return false;}
             var vm = this;
             var UpdateArray = {};
             UpdateArray.table ='art';
@@ -329,7 +346,7 @@
          // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,extra_params) 
         {
-
+                if($scope.allow_access==0){return false;}
                 $scope.column_name=column_name;
                 $scope.table_name=table_name;
                 $scope.folder_name=folder_name;
@@ -400,6 +417,7 @@
     // ============= DELETE IMAGE ============= // 
         $scope.deleteImage=function(column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,extra_params)
         {
+            if($scope.allow_access==0){return false;}
             if(default_image == '') 
             {
 

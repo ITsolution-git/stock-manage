@@ -116,83 +116,6 @@ class Shipping extends Model {
         $returnData['count'] = $count[0]->Totalcount;
 
         return $returnData;
-
-        /*if($post['type'] == 'progress') {
-
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
-
-            $shippingData = DB::table('orders as o')
-                            ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
-                            ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
-                            ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                            ->leftJoin('product_address_mapping as pam','pam.order_id','=','o.id')
-                            ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
-                            ->select($listArray)
-                            ->where('o.is_complete','=','1')
-                            ->where('o.company_id','=',$post['company_id'])
-                            ->where('pas.distributed_qnty','>',0)
-                            ->havingRaw('distributed < total');
-                            if($search != '')
-                            {
-                                $shippingData = $shippingData->Where(function($query) use($search)
-                                {
-                                    $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
-                                });
-                            }
-                            $shippingData = $shippingData->GroupBy('o.id');
-                            $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-                            ->skip($post['start'])
-                            ->take($post['range'])
-                            ->get();
-
-                //$query = DB::getQueryLog();
-                //print_r($query);
-
-            $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
-
-            $returnData['allData'] = $shippingData;
-            $returnData['count'] = $count[0]->Totalcount;
-        }
-
-        if($post['type'] == 'shipped') {
-
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
-
-            $shippingData = DB::table('orders as o')
-                            ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
-                            ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
-                            ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                            ->leftJoin('product_address_mapping as pam','pam.order_id','=','o.id')
-                            ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
-                            ->select($listArray)
-                            ->where('o.is_complete','=','1')
-                            ->where('o.company_id','=',$post['company_id'])
-                            ->where('pas.distributed_qnty','>',0)
-                            ->havingRaw('distributed == total');
-                            if($search != '')
-                            {
-                                $shippingData = $shippingData->Where(function($query) use($search)
-                                {
-                                    $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
-                                });
-                            }
-                            $shippingData = $shippingData->GroupBy('o.id');
-                            $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-                            ->skip($post['start'])
-                            ->take($post['range'])
-                            ->get();
-
-                //$query = DB::getQueryLog();
-                //print_r($query);
-
-            $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
-
-            $returnData['allData'] = $shippingData;
-            $returnData['count'] = $count[0]->Totalcount;
-        }*/
-
 	}
 
     public function getShippingOrders($company_id)
@@ -218,9 +141,13 @@ class Shipping extends Model {
     public function shippingDetail($data) {
 
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
-        $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number',
-                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code'];
+        /*$listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number',
+                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code','s.shipping_method','s.shipping_status','o.date_shipped','o.in_hands_by'];*/
 
+        $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number',
+                        's.boxing_type','o.shipping_by','o.in_hands_by','s.shipping_type_id','o.date_shipped','o.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code','s.shipping_method','s.shipping_status',
+                        'o.date_shipped','o.in_hands_by',DB::raw('SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
+       
         $shippingData = DB::table('shipping as s')
                         ->leftJoin('orders as o','s.order_id','=','o.id')
                         ->leftJoin('misc_type as mt','mt.id','=','o.f_approval')
@@ -228,8 +155,16 @@ class Shipping extends Model {
                         ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
                         ->leftJoin('state as st','cd.state','=','st.id')
                         ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
+                        
+                        ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
+                        ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+                        ->leftJoin('product_address_mapping as pam','pam.order_id','=','o.id')
+                        ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+
+
                         ->select($listArray)
-                        ->where($whereShippingConditions)->get();
+                        ->where($whereShippingConditions)
+                        ->GroupBy('o.id')->get();
 
         $whereItemConditions = ['pam.shipping_id' => $data['shipping_id']];
         $listItemsArray = ['pam.shipping_id','pd.id','pd.size','pd.qnty','pd.shipped_qnty','pd.boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];

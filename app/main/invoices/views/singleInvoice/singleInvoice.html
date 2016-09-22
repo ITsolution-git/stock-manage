@@ -34,35 +34,35 @@
             </div>            
         </div>
 
-		<div class="ms-responsive-table-wrapper">
-			<table id="billtoShipto" class="mrg20-T" cellspacing="0" cellpadding="0">
-				<tr>
-					<td>
-						<table class="border-col">
-							<tr>
-								<td class="no-border width-50 pad-0"><img src="assets/images/etc/bill.png" alt="BILL TO" title="BILL TO"></td>
-								<td class="no-border pad10-T v-TOP">
-									<label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
-									<label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_billing == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>
-						<table class="border-col">
-							<tr>
-								<td class="no-border width-50 pad-0"><img src="assets/images/etc/ship.png" alt="SHIP TO" title="SHIP TO"></td>
-								<td class="no-border pad10-T v-TOP">
-									<label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
+        <div class="ms-responsive-table-wrapper">
+            <table id="billtoShipto" class="mrg20-T" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <table class="border-col">
+                            <tr>
+                                <td class="no-border width-50 pad-0"><img src="assets/images/etc/bill.png" alt="BILL TO" title="BILL TO"></td>
+                                <td class="no-border pad10-T v-TOP">
+                                    <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
+                                    <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_billing == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        <table class="border-col">
+                            <tr>
+                                <td class="no-border width-50 pad-0"><img src="assets/images/etc/ship.png" alt="SHIP TO" title="SHIP TO"></td>
+                                <td class="no-border pad10-T v-TOP">
+                                    <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
                                     <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_shipping == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <h2 class="mrg20-T">Shipping Detail</h2>
         <div class="ms-responsive-table-wrapper">
             <table class="simple hover simple-tbl1">
@@ -200,160 +200,177 @@
     <div layout="row">
         <div layout="column" flex="75" class="md-whiteframe-4dp mrg15-R h100">
             <div ng-cloak>
-                <md-content>
-                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
-                        <!-----------------Payment History Tab-------------------->
-                        <md-tab label="Payment History">
-                            <div class="ms-responsive-table-wrapper">
-                                <table class="simple hover simple-tbl1">
-                                    <thead>
-                                        <tr>
-                                            <th class="secondary-text" width="30%">Date</th>
-                                            <th class="secondary-text" width="30%">Amount Paid</th>
-                                            <th class="secondary-text" width="30%">Method Paid</th>
-                                            <th class="secondary-text" width="10%">&nbsp;</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                        <tr ng-repeat="pmntHis in siData">
-                                            <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
-                                            <td>{{ pmntHis.payment_amount | currency : $ : 2 }}</td>
-                                            <td>{{ pmntHis.payment_method }}</td>
-                                            <td class="text-center" class="cursor-p"><a href="#" ng-click="deleteHistory(pmntHis.payment_id, pmntHis.payment_method)" class="icon icon-cancel font-19 f-red"></a></td>
-                                        </tr>                    
-                                    </tbody>
-                                </table>
-                            </div>                    
-                        </md-tab>
-                        <!-----------------Pay By Credit Card-------------------->
-                        <md-tab label="Pay By Credit Card">
-                            <div class="ms-responsive-table-wrapper">
-                               <div class="pd15">
-                                   <div layout="row">
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="50">
-                                                     <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
-                                                </md-input-container>
-                                                <md-input-container flex="50">
-                                                     <input placeholder="Last Name On Card" name="Last Name On Card" ng-model="company.creditLname">
-                                                </md-input-container>
-                                                <md-input-container flex="100">
-                                                    <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
-                                                </md-input-container>
-                                                <md-input-container flex="100">
-                                                    <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
-                                                </md-input-container>
+                <md-content class="">
+                            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                                <!--Payment History Tab-->
+                                <md-tab label="Payment History">
+                                    <div layout="row" flex=100 class="p-30">
+                                    <div class="ms-responsive-table-wrapper box-zerospace">
+                                        <table class="simple hover simple-tbl1">
+                                            <thead>
+                                                <tr>
+                                                    <th class="secondary-text" width="30%">Date</th>
+                                                    <th class="secondary-text" width="30%">Amount Paid</th>
+                                                    <th class="secondary-text" width="30%">Method Paid</th>
+                                                    <th class="secondary-text" width="10%">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                <tr ng-repeat="pmntHis in siData">
+                                                    <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
+                                                    <td>{{ pmntHis.payment_amount | currency : $ : 2 }}</td>
+                                                    <td>{{ pmntHis.payment_method }}</td>
+                                                    <td class="text-center" class="cursor-p"><a href="#" ng-click="deleteHistory(pmntHis.payment_id, pmntHis.payment_method)" class="icon icon-cancel font-19 f-red"></a></td>
+                                                </tr>                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>                   
+                                </md-tab>
+                                <!-- Pay By Credit Card-->
+                                <md-tab label="Pay By Credit Card">
+                                    <div layout="row" flex=100 class="p-15">
+                                        <div class="box-layout-2">
+                                           <div layout="row">
+                                               <div layout="column" flex="45" class="m-r-30 layout-padding">
+                                                    <div class="title">
+                                                        <span class="basicInfoStyle p-b-20">Credit Card Information</span>
+                                                        <md-select class="m-t-20 m-b-0 p-b-10" placeholder="Saved Credit Cards" ng-change="getStoredProfile(company.savedCard)" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
+                                                            <md-option value="0">
+                                                                Saved Credit Cards
+                                                            </md-option>
+                                                            <md-option ng-repeat="cards in cardsAll" value="{{cards.payment_profile_id}}" >
+                                                                {{cards.card_number}}
+                                                            </md-option>
+                                                        </md-select>
+                                                        <input type="hidden" ng-model="company.cppdid">
+                                                    </div>
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                        <md-input-container flex="50" class="margin-0 m-b-20" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                             <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
+                                                        </md-input-container>
+                                                        <md-input-container class="margin-0 m-b-20" flex="50" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                             <input placeholder="Last Name On Card" name="Last Name On Card" ng-model="company.creditLname">
+                                                        </md-input-container>
+                                                        <md-input-container flex="100" class="margin-0 m-b-20" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                            <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
+                                                        </md-input-container>
+                                                        <md-input-container flex="100" class="margin-0">
+                                                            <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
+                                                        </md-input-container>
+                                                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                            <md-input-container flex="35">
+                                                                <md-select ng-model="company.expMonth" placeholder="MM">
+                                                                    <md-option value="0">MM</md-option>
+                                                                    <md-option ng-selected="company.month==01" value="01">JAN</md-option>
+                                                                    <md-option ng-selected="company.month==02" value="02">FEB</md-option>
+                                                                    <md-option ng-selected="company.month==03" value="03">MAR</md-option>
+                                                                    <md-option ng-selected="company.month==04" value="04">APR</md-option>
+                                                                    <md-option ng-selected="company.month==05" value="05">MAY</md-option>
+                                                                    <md-option ng-selected="company.month==06" value="06">JUN</md-option>
+                                                                    <md-option ng-selected="company.month==07" value="07">JUL</md-option>
+                                                                    <md-option ng-selected="company.month==08" value="08">AUG</md-option>
+                                                                    <md-option ng-selected="company.month==09" value="09">SEP</md-option>
+                                                                    <md-option ng-selected="company.month==10" value="10">OCT</md-option>
+                                                                    <md-option ng-selected="company.month==11" value="11">NOV</md-option>
+                                                                    <md-option ng-selected="company.month==12" value="12">DEC</md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                            <md-input-container flex=35>
+                                                               <md-select ng-model="company.expYear" placeholder="YY">
+                                                                    <md-option value="0">YY</md-option>
+                                                                    <md-option ng-selected="company.year==16" value="16">16</md-option>
+                                                                    <md-option ng-selected="company.year==17" value="17">17</md-option>
+                                                                    <md-option ng-selected="company.year==18" value="18">18</md-option>
+                                                                    <md-option ng-selected="company.year==19" value="19">19</md-option>
+                                                                    <md-option ng-selected="company.year==20" value="20">20</md-option>
+                                                                    <md-option ng-selected="company.year==21" value="21">21</md-option>
+                                                                    <md-option ng-selected="company.year==22" value="22">22</md-option>
+                                                                    <md-option ng-selected="company.year==23" value="23">23</md-option>
+                                                                    <md-option ng-selected="company.year==24" value="24">24</md-option>
+                                                                    <md-option ng-selected="company.year==25" value="25">25</md-option>
+                                                                    <md-option ng-selected="company.year==26" value="26">26</md-option>
+                                                                    <md-option ng-selected="company.year==27" value="27">27</md-option>
+                                                                    <md-option ng-selected="company.year==28" value="28">28</md-option>
+                                                                    <md-option ng-selected="company.year==29" value="29">29</md-option>
+                                                                    <md-option ng-selected="company.year==30" value="30">30</md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                            <md-input-container flex=30>
+                                                                <input placeholder="CVV" name="CVV" only-number="10" ng-model="company.cvv">
+                                                            </md-input-container>
+                                                            <div flex=100>
+                                                            <md-checkbox  ng-show="company.savedCard == 0 || company.savedCard == null" aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                               </div>
+                                               
+                                               <div layout="column" flex="45" class="layout-padding" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                    <div class="title"><span class="basicInfoStyle p-b-20">Billing Address</span></div>
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                        <md-input-container flex="75" class="margin-0">
+                                                            <input placeholder="Street Address" name="Street Address" ng-model="company.street">
+                                                        </md-input-container>
+                                                        <md-input-container flex="25" class="margin-0">
+                                                            <input placeholder="Suite" name="Suite" ng-model="company.suite">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                        <md-input-container flex="100" class="margin-0 m-b-20">
+                                                            <input placeholder="City" name="City" ng-model="company.city">
+                                                        </md-input-container>
+                                                        <md-input-container flex="70" class="margin-0 m-b-20">
+                                                            <md-select placeholder="State" name="State" aria-label="State" ng-model="company.state">
+                                                                <md-option value="">
+                                                                    Select State
+                                                                </md-option>
+                                                                <md-option ng-repeat="state in states_all" value="{{state.code}}" >
+                                                                    {{state.name}}
+                                                                </md-option>
+                                                            </md-select>
+                                                        </md-input-container>
+                                                        <md-input-container flex="30" class="margin-0 m-b-20">
+                                                            <input placeholder="Zip" name="Zip" only-number="10" ng-model="company.zip">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
+                                               </div>
+                                           </div>
+                                           <div layout="row" class="box-layout-2">
+                                                <div flex=100 class="pull-right m-r-30">
+                                                    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                                        <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20 text-uppercase" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Pay</span></button>
+                                                    </md-dialog-actions>
+                                                </div>
                                             </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="30">
-                                                    <md-select ng-model="company.expMonth" placeholder="MM">
-                                                        <md-option value="0">MM</md-option>
-                                                        <md-option ng-selected="company.month==01" value="01">JAN</md-option>
-                                                        <md-option ng-selected="company.month==02" value="02">FEB</md-option>
-                                                        <md-option ng-selected="company.month==03" value="03">MAR</md-option>
-                                                        <md-option ng-selected="company.month==04" value="04">APR</md-option>
-                                                        <md-option ng-selected="company.month==05" value="05">MAY</md-option>
-                                                        <md-option ng-selected="company.month==06" value="06">JUN</md-option>
-                                                        <md-option ng-selected="company.month==07" value="07">JUL</md-option>
-                                                        <md-option ng-selected="company.month==08" value="08">AUG</md-option>
-                                                        <md-option ng-selected="company.month==09" value="09">SEP</md-option>
-                                                        <md-option ng-selected="company.month==10" value="10">OCT</md-option>
-                                                        <md-option ng-selected="company.month==11" value="11">NOV</md-option>
-                                                        <md-option ng-selected="company.month==12" value="12">DEC</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex=30 class="m-b-20">
-                                                   <md-select ng-model="company.expYear" placeholder="YY">
-                                                        <md-option value="0">YY</md-option>
-                                                        <md-option ng-selected="company.year==16" value="16">16</md-option>
-                                                        <md-option ng-selected="company.year==17" value="17">17</md-option>
-                                                        <md-option ng-selected="company.year==18" value="18">18</md-option>
-                                                        <md-option ng-selected="company.year==19" value="19">19</md-option>
-                                                        <md-option ng-selected="company.year==20" value="20">20</md-option>
-                                                        <md-option ng-selected="company.year==21" value="21">21</md-option>
-                                                        <md-option ng-selected="company.year==22" value="22">22</md-option>
-                                                        <md-option ng-selected="company.year==23" value="23">23</md-option>
-                                                        <md-option ng-selected="company.year==24" value="24">24</md-option>
-                                                        <md-option ng-selected="company.year==25" value="25">25</md-option>
-                                                        <md-option ng-selected="company.year==26" value="26">26</md-option>
-                                                        <md-option ng-selected="company.year==27" value="27">27</md-option>
-                                                        <md-option ng-selected="company.year==28" value="28">28</md-option>
-                                                        <md-option ng-selected="company.year==29" value="29">29</md-option>
-                                                        <md-option ng-selected="company.year==30" value="30">30</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="CVV" only-number="10" ng-model="company.cvv">
-                                                </md-input-container>
+                                        </div>
+                                    </div> 
+                                </md-tab>
+                                <!-----------------Pay By Cash-------------------->
+                                <md-tab label="Pay By Cash">
+                                    <div layout="row" flex=100>
+                                        <div class="box-zerospace">
+                                            <div class="p-30">
+                                           <div>
+                                                    <div class="title"><span class="basicInfoStyle">Amount Paid</span></div>
+                                                    <div layout="row">
+                                                        <md-input-container flex=40 class="margin-0 m-b-20">
+                                                             <input placeholder="$" name="$" only-number ng-model="pay.cashAmount">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <md-dialog-actions layout="row" class="layout-row">
+                                                        <!--<button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
+                                                        </button>-->
+                                                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Pay Cash" ng-click="pay_cash(pay)"><span class="ng-scope">Pay</span></button>
+                                                    </md-dialog-actions>
+                                           </div>
                                             </div>
-                                            <md-checkbox  aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>
-                                       </div>
-                                       <div flex="10">&nbsp;</div>
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="75">
-                                                    <input placeholder="Street Address" name="Street Address" ng-model="company.street">
-                                                </md-input-container>
-                                                <md-input-container flex="25">
-                                                    <input placeholder="Suite" name="Suite" ng-model="company.suite">
-                                                </md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="40">
-                                                    <input placeholder="City" name="City" ng-model="company.city">
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <md-select placeholder="State" name="State" aria-label="State" ng-model="company.state">
-                                                        <md-option value="">
-                                                            Select State
-                                                        </md-option>
-                                                        <md-option ng-repeat="state in states_all" value="{{state.code}}" >
-                                                            {{state.name}}
-                                                        </md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="Zip" name="Zip" only-number="10" ng-model="company.zip">
-                                                </md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
-                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Pay</span></button>
-                                            </md-dialog-actions>
-                                       </div>
-                                   </div>
-                               </div>
-                            </div> 
-                        </md-tab>
-                        <!-----------------Pay By Cash-------------------->
-                        <md-tab label="Pay By Cash">
-                            <div class="ms-responsive-table-wrapper">
-                              <div class="pd15">
-                                   <div layout="row">
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Amount Paid</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="30">
-                                                     <input placeholder="$" name="$" only-number ng-model="pay.cashAmount">
-                                                </md-input-container>
-                                            </div>
-                                            <md-dialog-actions layout="row" class="layout-row">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Pay Cash" ng-click="pay_cash(pay)"><span class="ng-scope">Pay</span></button>
-                                            </md-dialog-actions>
-                                       </div>
-                                   </div>
-                               </div>
-                            </div> 
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
+                                        </div>
+                                    </div>
+                                </md-tab>
+                            </md-tabs>
+                        </md-content>
             </div>
         </div>
         <div class="m-r-15 side-bar h100" flex="25" layout="column">

@@ -50,23 +50,41 @@
                         $scope.shipping.boxing_type = 'Standard';
                     }
                     if($scope.shipping.shipping_type_id == '1') {
-                        $scope.shipping.shipping_type_id = 'UPS';
+                        $scope.shipping.shipping_type_name = 'UPS';
                     }
                     if($scope.shipping.shipping_type_id == '2') {
-                        $scope.shipping.shipping_type_id = 'Fedex';
+                        $scope.shipping.shipping_type_name = 'Fedex';
+                    }
+                    if($scope.shipping.shipping_type_id == '3') {
+                        $scope.shipping.shipping_type_name = 'Local Messenger';
+                    }
+
+                    if($scope.shipping.shipping_status == '1') {
+                        $scope.shipping.shipping_status_name = 'Waiting To Ship';
+                    }
+                    if($scope.shipping.shipping_status == '2') {
+                        $scope.shipping.shipping_status_name = 'Order In Process';
+                    }
+                    if($scope.shipping.shipping_status == '3') {
+                        $scope.shipping.shipping_status_name = 'Shipped';
                     }
                 }
             });
         }
         $scope.getShippingOverview();
 
-        $scope.submitForm = function()
+        $scope.submitForm = function(image)
         {
-            var target;
+            //window.location.href = 'data:image/png;base64,' + image;
+
+            window.open(
+              'data:image/png;base64,' + image,
+              '_blank' // <- This is what makes it open in a new window.
+            );
+
+/*            var target;
             var form = document.createElement("form");
-            form.action = 'api/public/shipping/createLabel';
-            form.method = 'post';
-            form.style.display = 'none';
+            form.action = 'data:image/png;base64,' + image;
 
             var shipping = document.createElement('input');
             shipping.name = 'shipping';
@@ -74,7 +92,7 @@
             form.appendChild(shipping);
 
             document.body.appendChild(form);
-            form.submit();
+            form.submit();*/
         }
 
         $scope.printLAbel = function()
@@ -126,7 +144,7 @@
                 $("#ajax_loader").hide();
                 if(result.data.success == '1')
                 {
-                    $scope.submitForm();
+                    $scope.submitForm(result.data.data);
                 }
                 else
                 {
@@ -151,9 +169,8 @@
             form.submit();*/
         }
 
-        $scope.print_pdf = function(method)
+        $scope.print_pdf = function(image)
         {
-
             if($scope.shippingBoxes.length == 0)
             {
                 notifyService.notify('error','Please create box to generate pdf');

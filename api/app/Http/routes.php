@@ -107,6 +107,7 @@ Route::post('admin/downloadPricegridCSV', 'SettingController@downloadPricegridCS
 Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
 Route::get('admin/uploadSnsCSV', 'SettingController@uploadSnsCSV');
 Route::post('admin/downloadPriceGridExcel', 'SettingController@downloadPriceGridExcel');
+Route::post('admin/getApprovalOrders', 'SettingController@getApprovalOrders');
 
 // ADMIN MISC ROUTERS
 Route::post('admin/miscSave', 'MiscController@miscSave');
@@ -159,7 +160,7 @@ Route::post('client/GetclientDetail','ClientController@GetclientDetail');
 Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
-Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
+Route::post('client/SaveClientInfo', 'ClientController@SaveClientInfo');
 Route::post('client/checkCompName', 'ClientController@checkCompName');
 Route::get('client/getDocument/{id}/{company_id}','ClientController@getDocument');
 Route::get('client/getDocumentDetailbyId/{id}/{company_id}', 'ClientController@getDocumentDetailbyId');
@@ -280,6 +281,7 @@ Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 Route::post('shipping/shipOrder', 'ShippingController@shipOrder');
 Route::post('shipping/getProductByAddress', 'ShippingController@getProductByAddress');
 Route::post('shipping/addProductToShip', 'ShippingController@addProductToShip');
+Route::post('shipping/addAllProductToShip', 'ShippingController@addAllProductToShip');
 Route::post('shipping/getShippingAddress', 'ShippingController@getShippingAddress');
 Route::post('shipping/getShippingBoxes', 'ShippingController@getShippingBoxes');
 Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverview');
@@ -367,4 +369,6 @@ Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
 Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceDetail');
 Route::get('invoice/getInvoiceHistory/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceHistory');
 Route::get('invoice/getInvoicePayment/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoicePayment');
+Route::get('invoice/getInvoiceCards/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceCards');
 Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');
+Route::post('invoice/getPaymentCard', 'InvoiceController@getPaymentCard');

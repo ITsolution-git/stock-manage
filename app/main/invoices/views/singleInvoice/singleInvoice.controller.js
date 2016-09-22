@@ -28,7 +28,6 @@
             if(result.data.success == '0') {
                     $state.go('app.invoices');
                 } 
-
                 
             $scope.siData = result.data.allData;
         });
@@ -41,6 +40,15 @@
                 //$scope.spData = result123.data.allData[0];
                 //alert(result123.data.allData[0].first_name+' : '+result123.data.allData[0].last_name+' : '+result123.data.allData[0].credit_card);
                 $scope.company = result123.data.allData[0];
+            }
+        });
+
+        $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+
+            if(result123.data.success == '0') {
+                    //$state.go('app.invoices');
+            }else{
+                $scope.cardsAll = result123.data.allData;
             }
         });
 
@@ -150,6 +158,56 @@
             form.submit();
         }
 
+        /*$scope.validateFloatKeyPress = function()
+        {
+            var v = parseFloat($scope.pay.cashAmount);
+            $scope.pay.cashAmount = (isNaN(v)) ? '' : v.toFixed(2);
+        }*/
+
+        $scope.getStoredProfile = function(profile)
+        {
+            if(profile != 0){
+                $("#ajax_loader").show();
+                var combine_array_id = {};
+                combine_array_id.cppd_id = profile;
+                $http.post('api/public/invoice/getPaymentCard',combine_array_id).success(function(result) 
+                {
+                    $("#ajax_loader").hide();
+                    if(result.data.success=='1')
+                    {
+                        $scope.company.creditFname = 'XXXXXX';
+                        $scope.company.creditLname = 'XXXXXX';
+                        $scope.company.creditCard = '000000000000000000';
+                        $scope.company.expMonth = '01';
+                        $scope.company.expYear = '22';
+                        $scope.company.cvv = '000';
+                        $scope.company.street = 'XXXXXX';
+                        $scope.company.city = 'XXXXXX';
+                        $scope.company.state = 'AL';
+                        $scope.company.zip = '00000';
+                    }
+                    else{
+                        var data = {"status": "error", "message": "Please try with any other saved card or new credit card."}
+                        notifyService.notify(data.status, data.message);
+                        return false;
+                    }
+                });
+            }else{
+                $scope.company.creditFname = '';
+                $scope.company.creditLname = '';
+                $scope.company.creditCard = '';
+                $scope.company.expMonth = '';
+                $scope.company.expYear = '';
+                $scope.company.cvv = '';
+                $scope.company.street = '';
+                $scope.company.city = '';
+                $scope.company.state = '';
+                $scope.company.zip = '';   
+            }
+            
+        }
+
+
         $scope.pay_cash = function(amount)
         {
             if((amount == undefined) || (amount.cashAmount==0) || (amount.cashAmount==0.00)) {
@@ -202,12 +260,12 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.creditFname == undefined) {
+            if(paymentData.creditFname.length == 0) {
                 var data = {"status": "error", "message": "Please enter First Name"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.creditLname == undefined) {
+            if(paymentData.creditLname.length == 0) {
                 var data = {"status": "error", "message": "Please enter Last Name"}
                 notifyService.notify(data.status, data.message);
                 return false;
@@ -227,12 +285,12 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.expMonth == undefined) {
+            if(paymentData.expMonth.length == 0) {
                 var data = {"status": "error", "message": "Please select Month of Expiration"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.expYear == undefined) {
+            if(paymentData.expYear.length == 0) {
                 var data = {"status": "error", "message": "Please select Year of Expiration"}
                 notifyService.notify(data.status, data.message);
                 return false;
@@ -242,22 +300,22 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.street == undefined) {
+            if(paymentData.street.length == 0) {
                 var data = {"status": "error", "message": "Please enter Street Address"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.city == undefined) {
+            if(paymentData.city.length == 0) {
                 var data = {"status": "error", "message": "Please enter City"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.state == undefined) {
+            if(paymentData.state.length == 0) {
                 var data = {"status": "error", "message": "Please select State"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
-            if(paymentData.zip == undefined) {
+            if(paymentData.zip.length == 0) {
                 var data = {"status": "error", "message": "Please enter Zip"}
                 notifyService.notify(data.status, data.message);
                 return false;
@@ -297,6 +355,9 @@
                 combine_array_id.storeCard = 1;
             }
             combine_array_id.linkToPay = 0;
+            if(paymentData.savedCard) {
+                combine_array_id.savedCard = paymentData.savedCard;
+            }
             
             combine_array_id.invoice_id = invoice_id.value;
             combine_array_id.company_id = company_id.value;
@@ -309,11 +370,17 @@
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
-                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
-                        $scope.siData = result.data.allData;
+                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
+                        $scope.siData = resultData.data.allData;
+                    });
+
+                    $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                        if(result123.data.success == '1') {
+                            $scope.cardsAll = result123.data.allData;
+                        }
                     });
                     //$scope.paymentData = null;
-                    if(!paymentData.storeCard) {
+                    /*if(!paymentData.storeCard) {
                         paymentData.creditFname = null;
                         paymentData.creditLname = null;
                         paymentData.creditCard = null;
@@ -330,8 +397,21 @@
                     }else{
                         paymentData.amount = null;
                         paymentData.cvv = null;
-                    }
-                    
+                    }*/
+                    paymentData.creditFname = null;
+                    paymentData.creditLname = null;
+                    paymentData.creditCard = null;
+                    paymentData.cvv = null;
+                    paymentData.expMonth = null;
+                    paymentData.expYear = null;
+                    paymentData.amount = null;
+                    paymentData.street = null;
+                    paymentData.suite = null;
+                    paymentData.city = null;
+                    paymentData.state = null;
+                    paymentData.zip = null;
+                    paymentData.storeCard = null;
+
                     notifyService.notify('success',"Payment made Successfully");
                 }
                 else

@@ -1,17 +1,18 @@
 <md-dialog class="task-dialog addAffiliateDialog" >
-<form name="affiliateform" class="md-inline-form" novalidate>
+<form name="affiliateform" class="md-inline-form"  novalidate>
 
     <div class="client-profile-page">
     <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">Edit New Affiliate</span>
+                <span class="title" ng-show="allow_access==1">Edit Affiliate</span>
+                <span class="title" ng-show="allow_access==0">View Only</span>
                 <md-button  ng-click="closeDialog()">
                     <span>Cancel</span>
                 </md-button>
             </div>
         </md-toolbar>
     <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
+    <md-card-content layout="column" class="box-shadow-0" ng-class="{'disable-click': allow_access==0}">
         <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
                 <div layout="column"  flex="50">
 
@@ -147,7 +148,7 @@
             </div>
             </md-card-content>
 </div>
-    <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-disabled="affiliateform.$invalid" ng-click="SaveAffilite(affiliate)">
+    <md-button  ng-show="allow_access==1" class="bg-blue float-right" id="affiliateSaveBtn" ng-disabled="affiliateform.$invalid" ng-click="SaveAffilite(affiliate)">
             SAVE
     </md-button>
     </div>

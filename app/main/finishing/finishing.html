@@ -1,20 +1,22 @@
-<div class="content order-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
-                Finishing 
+            <div class="table-title-text" flex=20 ng-click="vm.openaddDesignDialog($event)">
+                Finishing
             </div>
-           
-            <div class="search-block" flex=40>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                </md-input-container>
+            <div class="pull-right right-search-box margin-0">
+                <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="top-srch-label">Search Finishing...</label>
+                        <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div> 
             </div>
-           
         </div>
+
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
-                <table class="dataTable row-border hover">
+                <table class="dataTable row-border">
                     
                     <thead tasty-thead></thead>
                     <tbody>
@@ -32,7 +34,7 @@
                                 &nbsp;
                             </td>
                             <td>
-                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.order_id)" >
+                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.order_id)" >
                                     <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                 </md-select>
                             </td>
@@ -84,7 +86,7 @@
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-           <table class="simple">
+           <table class="dataTable row-border">
                 <thead>
                     <tr>
                         <th>No Records Found</th>
@@ -92,5 +94,5 @@
                 </thead>
             </table>
         </div>
-    </div> 
+    </div>
 </div>

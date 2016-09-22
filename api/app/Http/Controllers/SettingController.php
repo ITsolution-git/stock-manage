@@ -6,6 +6,7 @@ require_once(app_path() . '/constants.php');
 
 use App\Price;
 use App\Common;
+use App\Order;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -24,11 +25,12 @@ class SettingController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Price $price,Common $common,Api $api) {
+    public function __construct(Price $price,Common $common,Api $api, Order $order) {
 
         $this->price = $price;
         $this->common = $common;
         $this->api = $api;
+        $this->order = $order;
     }
 
 /**
@@ -959,6 +961,70 @@ class SettingController extends Controller {
             });
 
         })->download($post['type']);
+    }
+
+    public function getApprovalOrders()
+    {
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.id';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+
+        $result = $this->order->getApprovalOrders($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
+                        3=>array('key' => 'u.name', 'name' => 'Name'),
+                        4=>array('key' => '', 'name' => 'Status'),
+                        5=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    /**
+    * Get Array
+    * @return json data
+    */
+    public function return_response($data)
+    {
+        
+
+        if (count($data) > 0) 
+        {
+            $response = $data;
+        } 
+        else 
+        {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        return  response()->json($response);
     }
 }
 

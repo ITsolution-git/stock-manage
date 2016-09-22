@@ -380,6 +380,7 @@ class OrderController extends Controller {
      public function updatePositions()
      {
         $post = Input::all();
+       
         
         if($post['column_name'] == 'position_id') {
             $result = $this->order->checkDuplicatePositions($post['design_id'],$post['data']['position_id']);
@@ -402,8 +403,20 @@ class OrderController extends Controller {
             $post['data']['screen_fees_qnty'] = $post['data']['color_stitch_count'];
           }  
 
-         
-          
+          if($post['column_name'] == 'placement_type') {
+
+              $postNew = array();
+              $postNew['cond']['company_id'] = $post['company_id'];
+              $miscData = $this->common->getAllMiscDataWithoutBlank($postNew);
+
+           
+              if($miscData['placement_type'][$post['data']['placement_type']]->slug != 46) {
+                $post['data']['dtg_size'] = 0;
+                $post['data']['dtg_on'] = 0;
+              }
+
+          } 
+
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
 
           if($post['column_name'] == 'position_id') {
@@ -1042,7 +1055,12 @@ class OrderController extends Controller {
 
         $post = Input::all();
         $email = trim($post['email']);
+        $fromemail = trim($post['from_email']);
         $email_array = explode(",",$email);
+
+        if(!isset($post['mailMessage'])){
+          $post['mailMessage'] = '';
+        }
 
         if(!isset($post['invoice_id']))
         {
@@ -1090,7 +1108,7 @@ class OrderController extends Controller {
 
         foreach ($email_array as $email)
         {
-            Mail::send('emails.invoice', ['email'=>$email,'payment_link' => $payment_link], function($message) use ($file_path,$email)
+            Mail::send('emails.invoice', ['email'=>$email,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($file_path,$email)
             {
                  $message->to($email)->subject('Invoice PDF');
                  $message->attach($file_path);
@@ -1309,9 +1327,9 @@ class OrderController extends Controller {
         }
 
         
-        if(array_key_exists('sns_shipping', $post['orderData'])) {
+        /*if(array_key_exists('sns_shipping', $post['orderData'])) {
         $post['orderdata']['sns_shipping'] = $post['orderData']['sns_shipping'];
-        }
+        }*/
 
 
          $post['orderdata']['name'] = $post['orderData']['name'];
@@ -1325,6 +1343,9 @@ class OrderController extends Controller {
          $post['orderdata']['sales_id'] = $client_data['sales']['salesperson'];
          $post['orderdata']['price_id'] = $client_data['sales']['salespricegrid'];
          $post['orderdata']['tax_rate'] = $client_data['tax']['tax_rate'];
+         $post['orderdata']['contact_main_id'] = $client_data['contact']['id'];
+
+         
          
           $order_id = $this->common->InsertRecords('orders',$post['orderdata']);
 
@@ -1784,6 +1805,8 @@ class OrderController extends Controller {
                 $position->markup_default = 0;
             }
 
+            $position->total_price += $screen_print_charge2 + $embroidery_charge2 + $direct_to_garment_charge2;
+
             if(isset($data['getNextPrice']) && $data['getNextPrice'] == 1 && isset($data['position_id']) && $data['position_id'] == $position->id)
             {
                 $response = array(
@@ -1836,6 +1859,9 @@ class OrderController extends Controller {
         {
             $client_data = $this->client->GetclientDetail($post['orderDataDetail']['client_id']);
             $post['orderDataDetail']['price_id'] = $client_data['sales']['salespricegrid'];
+            $post['orderDataDetail']['sales_id'] = $client_data['sales']['salesperson'];
+            $post['orderDataDetail']['account_manager_id'] = $client_data['main']['account_manager'];
+            $post['orderDataDetail']['contact_main_id'] = $client_data['contact']['id'];
         }
 
         $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['orderDataDetail']);
@@ -1854,6 +1880,7 @@ class OrderController extends Controller {
         $price_grid = $this->common->GetTableRecords('price_grid',array('is_delete' => '1','status' => '1','company_id' =>$result['order'][0]->company_id),array());
         $staff = $this->common->getStaffList($result['order'][0]->company_id);
         $brandCo = $this->common->getBrandCordinator($result['order'][0]->company_id);
+        $contact_main = $this->common->GetTableRecords('client_contact',array('is_deleted' => '1','client_id' =>$result['order'][0]->client_id),array());
 
          if($result['order'][0]->in_hands_by != '0000-00-00' && $result['order'][0]->in_hands_by != '') {
             $result['order'][0]->in_hands_by = date("n/d/Y", strtotime($result['order'][0]->in_hands_by));
@@ -1878,7 +1905,8 @@ class OrderController extends Controller {
                                 'records' => $result['order'],
                                 'price_grid' => $price_grid,
                                 'staff' => $staff,
-                                'brandCo' => $brandCo
+                                'brandCo' => $brandCo,
+                                'contact_main' => $contact_main
                                 );
         } else {
             $response = array(
@@ -1887,7 +1915,8 @@ class OrderController extends Controller {
                                 'records' => $result['order'],
                                 'price_grid' => $price_grid,
                                 'staff' => $staff,
-                                'brandCo' => $brandCo);
+                                'brandCo' => $brandCo,
+                                'contact_main' => $contact_main);
         } 
         return response()->json(["data" => $response]);
 
@@ -2106,7 +2135,7 @@ class OrderController extends Controller {
 
             
             
-            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
+            $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('approved_by' => $post['user_id'],'order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
             $data_record = array("success"=>1,"message"=>"Order is successfully posted to S&S");
             
             return response()->json(["data" => $data_record]);
@@ -2149,7 +2178,7 @@ class OrderController extends Controller {
           
           $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
           $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment']);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment'],$post['id']);
           
           
           if($result_quickbook_invoice == '1') {
@@ -2163,7 +2192,7 @@ class OrderController extends Controller {
 
         } else {
           
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment']);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment'],$post['id']);
           
           if($result_quickbook_invoice == '1') {
             $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");
@@ -2305,12 +2334,12 @@ class OrderController extends Controller {
         $qb_id = $qb_data[0]->qb_id;
         $order_id = $qb_data[0]->order_id;
 
-        
         if(isset($post['amount'])){
-          $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $post['amount'],'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
+          $amount=round($post['amount'],2);
+          $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $amount,'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
 
           $id = $this->common->InsertRecords('payment_history',$orderData);
-        }
+        
 
         $retArray = DB::table('payment_history as p')
             ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
@@ -2326,6 +2355,10 @@ class OrderController extends Controller {
 
         $data = array("success"=>1,'amt' =>$amt);
         return response()->json(['data'=>$data]);
+      }else{
+        $data = array("success"=>0,'message' =>"Payment could not be made.");
+        return response()->json(['data'=>$data]);
+      }
     }
 
     public function paymentLinkToPay(){

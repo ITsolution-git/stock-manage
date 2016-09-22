@@ -51,6 +51,8 @@
 
             if($scope.sns == true) {
 
+                
+
                 if(order_number != '') {
                     notifyService.notify('error','You have already posted order to S&S');
                     return false;
@@ -61,6 +63,7 @@
                 combine_array_id.company_id = sessionService.get('company_id');
                 combine_array_id.company_name = sessionService.get('company_name');
                 combine_array_id.sns_shipping = sns_shipping;
+                combine_array_id.user_id = sessionService.get('user_id');
                 
                 $("#ajax_loader").show();
                
@@ -70,6 +73,7 @@
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success',result.data.message);
+                        $mdDialog.hide();
                     }
                     else
                     {

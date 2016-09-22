@@ -13,7 +13,7 @@
             <div class="table-title-text h2 text-semibold" flex=20>
                 Vendor Contacts
             </div>
-            <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+            <div class="order-modal-title " layout="row" layout-align="end center"flex=11  ng-show="allow_access==1">
                 <md-button class="dark-bg chrome-weight" ng-click="openInsertPopup('settings/dialogs/vendor/vendorContacts.html',$event)">
                     ADD NEW
                 </md-button>
@@ -42,12 +42,12 @@
                                                 Edit Contact
                                             </md-button>
                                         </md-menu-item>
-                                        <md-menu-item>
+                                        <md-menu-item  ng-show="allow_access==1">
                                             <md-button ng-click="UpdateTableField('is_main',0,'vendor_contacts','vendor_id',note.vendor_id,'contact_main',note.id)">
                                                 Set as main
                                             </md-button>
                                         </md-menu-item>
-                                        <md-menu-item>
+                                        <md-menu-item  ng-show="allow_access==1">
                                             <md-button ng-click="UpdateTableField('is_deleted',0,'vendor_contacts','id',note.id,'delete_note','')">
                                                 Remove Contact
                                             </md-button>

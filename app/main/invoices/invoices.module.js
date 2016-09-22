@@ -34,14 +34,14 @@
                     },*/
                     checksession : function (sessionService)
                     {
-                       return sessionService.AccessService('BC,CA');
+                       return sessionService.AccessService('SU,AT','false');
                     }
                 }
             }).state('app.invoices.singleInvoice', {
                 resolve: {
                     checksession : function (sessionService)
                     {
-                       return sessionService.AccessService('BC,CA');
+                       return sessionService.AccessService('SU,AT','false');
                     },
                 },
                 url  : '/singleInvoice/:id',
@@ -55,7 +55,7 @@
                 resolve: {
                     checksession : function (sessionService)
                     {
-                       return sessionService.AccessService('BC,CA');
+                       return sessionService.AccessService('SU,AT','false');
                     },
                 },
                 url  : '/linktopay',

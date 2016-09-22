@@ -564,6 +564,57 @@ class ShippingController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+    public function addAllProductToShip()
+    {
+        $post = Input::all();
+
+        foreach ($post['products'] as $product) {
+            
+            $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+
+            if(!empty($shipping_data)) {
+
+                $product_address_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'product_id' => $product['product_id']),array());
+
+                if(empty($product_address_data))
+                {
+                    $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                    $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $product['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
+                }
+                else
+                {
+                    $product_address_id = $shipping_data[0]->id;
+                }
+
+                $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id']),array());
+
+                if(empty($product_data))
+                {
+                    $distributed_qnty = 0;
+                    $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id'],'distributed_qnty' =>$product['remaining_qnty']));
+                }
+                else
+                {
+                    $updated_qnty = $product_data[0]->distributed_qnty + $product['remaining_qnty'];
+                    $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id']),array('distributed_qnty' => $updated_qnty));
+                }
+            }
+            else
+            {
+                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $product['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
+                $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id'],'distributed_qnty' =>$product['remaining_qnty']));
+            }
+            $this->common->UpdateTableRecords('purchase_detail',array('id' => $product['id']),array('remaining_qnty' => 0));
+        }
+
+        $success=1;
+        $message=UPDATE_RECORD;
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+    }
+
     public function addProductToShip()
     {
         $post = Input::all();
@@ -842,8 +893,11 @@ class ShippingController extends Controller {
 
         if(isset($response['Data']['Errors']) && !empty($response['Data']['Errors']))
         {
-            $message = 'Something wrong in your address';
-            $success = 0;
+            $response = array(
+                        'success' => 0,
+                        'message' => 'Something wrong in your address'
+                    );
+            return response()->json(["data" => $response]);
         }
         else
         {
@@ -878,18 +932,38 @@ class ShippingController extends Controller {
 
                 if(isset($response) && isset($response['error']))
                 {
-                    $success = 0;
-                    $message = $response['error'];
+                    $response = array(
+                        'success' => 0,
+                        'message' => $response['error']
+                    );
+                    return response()->json(["data" => $response]);
                 }
-                else if(isset($response) && isset($response['status']) && $response['status'] == 'SUCCESS')
+
+                $trackingNumber = '';
+                $charges = 0;
+
+                if(isset($response['trk_main']))
                 {
-                    $success = 1;
-                    $message = '';
-                }
-                else
-                {
-                    $success = 0;
-                    $message = 'Something wrong in your address';
+                    $trackingNumber = $response['trk_main'];
+                    $charges = $response['charges'];
+
+                    //$this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
+
+                    foreach ($response['pkgs'] as $package) {
+                        $label = $package['label_img'];
+
+                        $response = array(
+                            'success' => 1,
+                            'message' => '',
+                            'data' => $label
+                        );
+
+                        return response()->json(["data" => $response]);
+
+                        //header('Content-Type: application/force-download');
+                        //echo base64_decode($label);
+                        //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+                    }
                 }
             }
             else
@@ -925,22 +999,40 @@ class ShippingController extends Controller {
 
                 if(isset($response) && isset($response['error']))
                 {
-                    $success = 0;
-                    $message = $response['error'];
+                    $response = array(
+                        'success' => 0,
+                        'message' => $response['error']
+                    );
+                    return response()->json(["data" => $response]);
                 }
-                else
+
+                $trackingNumber = '';
+                $charges = 0;
+
+                if(isset($response['trk_main']))
                 {
-                    $success = 1;
-                    $message = '';
+                    $trackingNumber = $response['trk_main'];
+                    $charges = $response['charges'];
+
+                    //$this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
+
+                    foreach ($response['pkgs'] as $package) {
+                        $label = $package['label_img'];
+
+                        $response = array(
+                            'success' => 1,
+                            'message' => '',
+                            'data' => $label
+                        );
+
+                        return response()->json(["data" => $response]);
+
+                        //header('Content-Type: application/force-download');
+                        //echo base64_decode($label);
+                        //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+                    }
                 }
             }
         }
-
-        $response = array(
-                        'success' => $success,
-                        'message' => $message
-                    );
-
-        return response()->json(["data" => $response]);
     }
 }

@@ -128,8 +128,37 @@
             });
         }
 
+        $scope.addAllProducts = function()
+        {
+            if($scope.address_id == 0)
+            {
+                var data = {"status": "error", "message": "Please select address"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+
+            var combine_array = {};
+            combine_array.products = $scope.unshippedProducts;
+            combine_array.address_id = $scope.address_id;
+            combine_array.order_id = $scope.order_id;
+
+            $http.post('api/public/shipping/addAllProductToShip',combine_array).success(function(result, status, headers, config) {
+                
+                if(result.data.success == '1') {
+                    $scope.shipOrder();
+                }
+            });
+
+        }
+
         $scope.shippingDetails = function()
         {
+            if($scope.shipping_id == 0 || $scope.shipping_id == undefined)
+            {
+                var data = {"status": "error", "message": "Please select allocated address"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
             if($scope.assignedItems.length == 0)
             {
                 var data = {"status": "error", "message": "Please assign product to address"}

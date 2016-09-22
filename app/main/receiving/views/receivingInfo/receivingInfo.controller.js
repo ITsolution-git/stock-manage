@@ -21,6 +21,18 @@
         $scope.po_id = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
 
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU' )
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        
+
         var misc_list_data = {};
         var condition_obj = {};
         condition_obj['company_id'] =  sessionService.get('company_id');
@@ -32,6 +44,7 @@
         
         $scope.updateOrderStatus = function(name,value,id)
         {
+            if($scope.allow_access == 0){return false;}
             var order_main_data = {};
 
             order_main_data.table ='orders';
@@ -81,6 +94,8 @@
         $scope.GetPodata();
         $scope.UpdateTableField = function(field_name,field_value,id,original,extra,param)
                     {
+                        if($scope.allow_access == 0){return false;}
+
                         if($scope.po_data.is_complete=='1')
                         {
                             notifyService.notify('error', 'Receive order is locked, Changes not accecptable.');
@@ -96,11 +111,11 @@
                         }
                         if(extra=='received')
                         {
-                            if(parseInt(field_value)>parseInt(original))
+                            /*if(parseInt(field_value)>parseInt(original))
                             {
                                 notifyService.notify('error', 'Received quantity should not be more then Ordered quantity');
                                 return false;
-                            }
+                            }*/
                             if(parseInt(param)>parseInt(field_value))
                             {
                                 notifyService.notify('error', 'Defective quantity should not be more then Received quantity');
@@ -152,7 +167,7 @@
         $scope.changeReceiveData = function (ev)
         {
         
-
+            if($scope.allow_access == 0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -214,6 +229,7 @@
         } 
         $scope.openClientEmailPopup = function(ev)
         {
+            if($scope.allow_access == 0){return false;}
             $mdDialog.show({
                 controller: function ($scope, params)
                 {

@@ -1,36 +1,37 @@
 <md-dialog class="task-dialog ssActivewearDialog" >
-    <div class="client-profile-page">
-    <md-toolbar class="md-accent md-hue-2">
-            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">UPS API INTEGRATION</span>
-                <md-button    ng-click="closeDialog()">
-                    <span>Cancel</span>
-                </md-button>
-            </div>
-        </md-toolbar>
-    <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
-    <form autocomplete="off">
-        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
-                <div layout="column"  flex="100">
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="License Key" name="api" class="stop" readonly=""  ng-model="ups.api" onfocus="this.removeAttribute('readonly');" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
-                    </md-input-container>
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Access UserName *" type="text" name="username" readonly=""  onfocus="this.removeAttribute('readonly');" ng-model="ups.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
-                    </md-input-container>
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Account Password" type="password" name="password"  onfocus="this.removeAttribute('readonly');" readonly=""  ng-model="ups.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
-                    </md-input-container>
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Account Number" name="account_number" class="stop" readonly=""  ng-model="ups.account_number" onfocus="this.removeAttribute('readonly');" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
-                    </md-input-container>
+    <form name="integration_form" class="md-inline-form" novalidate>
+        <div class="client-profile-page">
+            <md-toolbar class="md-accent md-hue-2">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                    <span class="title">UPS API INTEGRATION</span>
+                    <md-button    ng-click="closeDialog()">
+                        <span>Cancel</span>
+                    </md-button>
                 </div>
+            </md-toolbar>
+            <div ng-cloak>
+                <md-card-content layout="column" class="box-shadow-0">
+                    <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
+                        <div layout="column"  flex="100">
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="License Key" name="api" class="stop"  ng-model="params.api" >
+                            </md-input-container>
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Access UserName *" type="text" name="username" ng-model="params.username" >
+                            </md-input-container>
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Account Password" type="password" name="password"   ng-model="params.password" >
+                            </md-input-container>
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Account Number" name="account_number" class="stop"  ng-model="params.account_number">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-card-content>
             </div>
-        </form>
-</div>
-    <!-- <md-button class="bg-blue float-right" id="affiliateSaveBtn"  ng-click="closeDialog()">
-            SAVE
-    </md-button> -->
+            <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ups_detail','id',params.id,'ups')">
+                SAVE
+            </md-button>
+        </div>
+    </form>
 </md-dialog>

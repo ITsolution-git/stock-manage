@@ -1,4 +1,5 @@
 <md-dialog class="task-dialog ssActivewearDialog" >
+<form name="integration_form" class="md-inline-form" novalidate>
     <div class="client-profile-page">
     <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
@@ -10,30 +11,31 @@
         </md-toolbar>
     <div ng-cloak>
     <md-card-content layout="column" class="box-shadow-0">
-    <form autocomplete="off">
         <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
                 <div layout="column"  flex="100">
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Key *" name="key" class="stop" readonly=""  ng-model="fedex.key" onfocus="this.removeAttribute('readonly');" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'fedex_detail\',fedex.id,\'yes\')' }">
+                        <input placeholder="Key *" name="key" class="stop" ng-model="params.key">
                     </md-input-container>
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Password" type="password" name="password"  onfocus="this.removeAttribute('readonly');" readonly=""  ng-model="fedex.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'fedex_detail\',fedex.id)' }">
+                        <input placeholder="Password" type="password" name="password"  ng-model="params.password" >
                     </md-input-container>
 
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Account Number" type="text" name="account_number" readonly=""  onfocus="this.removeAttribute('readonly');" ng-model="fedex.account_number" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'fedex_detail\',fedex.id)' }">
+                        <input placeholder="Account Number" type="text" name="account_number"ng-model="params.account_number" >
                     </md-input-container>
 
                     
                     <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Meter Number" type="text" name="meter_number" readonly=""  onfocus="this.removeAttribute('readonly');" ng-model="fedex.meter_number" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'fedex_detail\',fedex.id)' }">
+                        <input placeholder="Meter Number" type="text" name="meter_number" ng-model="params.meter_number" >
                     </md-input-container>
                 </div>
-            </div>
-        </form>
-</div>
-    <!-- <md-button class="bg-blue float-right" id="affiliateSaveBtn"  ng-click="closeDialog()">
-            SAVE
-    </md-button> -->
+                </div>
+            </md-card-content>
+        </div>
+        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'fedex_detail','id',params.id,'fedex')">
+                SAVE
+        </md-button>
+    </div>
+</form>
 </md-dialog>

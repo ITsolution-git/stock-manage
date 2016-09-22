@@ -52,7 +52,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/priceGrid',
@@ -77,7 +77,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU','false');
                     }
                 },
                 url  : '/companyProfile',
@@ -94,7 +94,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU,AT','false');
                     }
                 },
                 url  : '/companyDetails',
@@ -111,7 +111,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AM,SU,AT','false');
                     }
                 },
                 url  : '/userManagement',
@@ -128,7 +128,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/affiliate',
@@ -145,7 +145,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/integrations',
@@ -162,7 +162,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU','false');
                     }
                 },
                 url  : '/support',
@@ -179,7 +179,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/vendor',
@@ -197,7 +197,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/contact/:id',
@@ -214,7 +214,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/sales',
@@ -222,6 +222,23 @@
                     'content@app': {
                         templateUrl: 'app/main/settings/views/sales/sales.html',
                         controller : 'salesController as vm'
+                    }
+                }
+            }).state('app.settings.approvals', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA','true');
+                    }
+                },
+                url  : '/approvals',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/approvals/approvals.html',
+                        controller : 'approvalsController as vm'
                     }
                 }
             });
@@ -309,6 +326,13 @@
             stateParams: {'id': 9},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 9
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
+            title      : 'S&S Approval',
+            state      : 'app.settings.approvals',
+            stateParams: {'id': 10},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 10
         });/*
         msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',

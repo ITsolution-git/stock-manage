@@ -1,6 +1,5 @@
 <style>
-
-        .handles {
+       /* .handles {
             padding-left: 0px !important;
         }
         .handles li {
@@ -16,27 +15,31 @@
         li.highlight {
             background: #FEE25F;
         }
-
         li.sortable-placeholder {
             border: 1px dashed #CCC;
             background: none;
-        }
+        }*/
     </style>
-    <div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="header"  layout="column" >
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back" ui-sref="app.art.orderView({id:ScreenSets[0].order_id})">BACK TO SCREENSET</a>
-             <h2 flex="4" class="font-500">Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].client_id})">{{ScreenSets[0].client_company}}</a></h2>
-            <!-- <md-input-container md-no-float class="md-block" flex="3">
-                <input aria-label="Client Name">
-            </md-input-container> -->
+
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=60>
+               Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].client_id})">{{ScreenSets[0].client_company}}</a>
+            </div>
+            <div class="pull-right right-search-box">
+                 <a class="pull-right common-header-links" ui-sref="app.art.orderView({id:ScreenSets[0].order_id})">BACK TO SCREENSET</a> 
+            </div>
         </div>
-        <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="75" layout="column">
-                <div class="title mrg10-B"><span class="h2 text-semibold">Information</span></div>
+    </div>
+
+    <div class="inner-full-box mt-30">
+        <div class="order-information m-b-45 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <div class="info-order m-r-30" flex="73" layout="column">
+                <div class="title mrg10-B"><span class="stokkup-title-h4">Information</span></div>
                 <md-card layout="row">
-                    <md-card-content flex="95" layout="column">
-                        <div layout="row" layout-wrap>
+                    <md-card-content flex="100" layout="column">
+                        <div layout="row" layout-wrap class="trans-outer">
                             <div class="trans-box">
                                 <div>Client</div>
                                 <span class="chrome-weight font-14">{{ScreenSets[0].client_company}}</span>
@@ -55,169 +58,122 @@
                             </div>
                         </div>
                     </md-card-content>
-                    <!-- <div layout-align="end start"  flex="5" layout="row">
-                        <md-button class="md-icon-button" aria-label="View Details">
-                            <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                        </md-button>
-                    </div> -->
                 </md-card>
             </div>
-            <div flex="25" layout="column">
+            <!-- approval status block -->
+            <div flex="24" layout="column">
                 <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div>
                 <md-select ng-model="ScreenSets[0].approval" ng-change="UpdateTableField(ScreenSets[0].approval)" aria-label="Approval Status">
                     <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}">Approved</md-option>
                     <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}">Pending</md-option>
                 </md-select>
             </div>
+            <!--approval status block ends here -->
         </div>
-    </div>
-    <div layout="row" class="pd10-R">
-        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">{{ScreenSets[0].screen_set}}</span></div></div>
-        <!-- <div flex="25" class="text-right"><md-button class="md-raised md-primary" ng-click="vm.createScreenDetail()">Create New Screen</md-button></div> -->
-    </div>
-    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15" >
-        <ul class="handles" dnd-list="ScreenSets_new.data_all"  dnd-inserted="change_sort()">
-            <li ng-repeat="colorsinf in ScreenSets_new.data_all"
-                dnd-draggable="colorsinf"
-                dnd-moved="ScreenSets_new.data_all.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="ScreenSets_new.data_all.selected = colorsinf"
-                ng-class="{'selected': ScreenSets_new.data_all.selected === colorsinf}">
-                <dnd-nodrag>
-                 <table class="tbl-typ2 col3-layout" >
-                    <tr>
-                        <td width="97%">
-                            <div class="header-typ1">{{colorsinf.color_name}}</div>
-                            <div layout="row">
-                                <div flex="95" layout="column" ng-show="colorsinf.is_complete==1">
-                                    <div layout="row" layout-wrap>
-                                        <div class="trans-box">
-                                            <div>Pantone/Thread Color</div>
-                                            <span class="chrome-weight font-14">{{ colorsinf.thread_display}}</span>
+        <!--screenset box starts here -->
+        <div class="screensetbox pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <div class="info-order box-zerospace">
+                <div class="title box-title m-b-20"><span class="stokkup-title-h4">{{ScreenSets[0].screen_set}}</span></div>
+                    <div class="box-zerospace pull-left">
+                    <ul class="handles screenset-list-struct" dnd-list="ScreenSets_new.data_all"  dnd-inserted="change_sort()">
+                        <li ng-repeat="colorsinf in ScreenSets_new.data_all"
+                            dnd-draggable="colorsinf"
+                            dnd-moved="ScreenSets_new.data_all.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="ScreenSets_new.data_all.selected = colorsinf"
+                            ng-class="{'selected': ScreenSets_new.data_all.selected === colorsinf}">
+                            <dnd-nodrag>
+                             <table class="custom-table1">
+                                <tr>
+                                    <td width="100%">
+                                        <div class="box-zerospace white-bg"><div class="title screenset-titlebox"><span class="stokkup-title-h4 light-300 font-16">{{colorsinf.color_name}}</span></div></div>
+                                        <div layout="row" class="box-zerospace pull-left">
+                                            <div flex="70" layout="column" class="box-zerospace pull-left" ng-show="colorsinf.is_complete==1">
+                                                <div class="trans-outer screenset-view">
+                                                    <div class="trans-box">
+                                                        <div>Pantone/Thread Color</div>
+                                                        <span class="chrome-weight font-14">{{ colorsinf.thread_display}}</span>
+                                                    </div>
+                                                    <div class="trans-box">
+                                                        <div>Mesh/Thread Count</div>
+                                                        <span class="chrome-weight font-14">{{colorsinf.mesh_thread_count}}</span>
+                                                    </div>
+                                                    <div class="trans-box">
+                                                        <div>Stroke</div>
+                                                        <span class="chrome-weight font-14">{{colorsinf.stroke}}</span>
+                                                    </div>
+                                                    <div class="trans-box">
+                                                        <div>Ink Type</div>
+                                                        <span class="chrome-weight font-14">{{colorsinf.inq}}</span>
+                                                    </div>
+                                                    <div class="trans-box">
+                                                        <div>Head Location</div>
+                                                        <span class="chrome-weight font-14">{{colorsinf.head_location}}</span>
+                                                    </div>
+                                                    <div class="trans-box">
+                                                        <div>Squeegee</div>
+                                                        <span class="chrome-weight font-14">{{colorsinf.squeegee}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div flex="70" layout="column" class="box-zerospace pull-left" ng-show="colorsinf.is_complete==0">
+                                                <div class="trans-outer">
+                                                    <div class="trans-box box-zerospace">
+                                                        <div>Screen Details Not Yet Entered</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div flex="70" layout="column" ng-show="colorsinf.is_complete==null">
+                                                <div class="trans-outer">
+                                                    <div class="trans-box box-zerospace">
+                                                        <div>No color assigned for this Screen set</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center p-30" flex="25" ng-show="colorsinf.is_complete==0 || colorsinf.is_complete==1" >
+                                                <md-button ng-show="allow_access==1" class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="UpdateColorScreen($event,colorsinf)">Edit Screen Detail</md-button>
+                                            </div>
+                                            <div flex=5 layout="row" dnd-handle class="dragiconscenter">
+                                                <span class="icon icon-menu fs22"></span>
+                                            </div>
                                         </div>
-                                        <div class="trans-box">
-                                            <div>Mesh/Thread Count</div>
-                                            <span class="chrome-weight font-14">{{colorsinf.mesh_thread_count}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Stroke</div>
-                                            <span class="chrome-weight font-14">{{colorsinf.stroke}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Ink Type</div>
-                                            <span class="chrome-weight font-14">{{colorsinf.inq}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Head Location</div>
-                                            <span class="chrome-weight font-14">{{colorsinf.head_location}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Squeegee</div>
-                                            <span class="chrome-weight font-14">{{colorsinf.squeegee}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div flex="95" layout="column" ng-show="colorsinf.is_complete==0">
-                                    <div layout="row" layout-wrap>
-                                        <h1 style="color:#cccccc; padding-left: 10px;"> Screen Details Not Yet Entered </h1>
-                                    </div>
-                                </div>
-                                <div flex="95" layout="column" ng-show="colorsinf.is_complete==null">
-                                    <div layout="row" layout-wrap>
-                                        <h1 style="color:#cccccc; padding-left: 10px;"> No color assigned for this Screen set</h1>
-                                    </div>
-                                </div>
-                                <div layout-align="end start"  flex="5" layout="row" ng-show="colorsinf.is_complete==0 || colorsinf.is_complete==1" >
-                                    <div  class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="UpdateColorScreen($event,colorsinf)">Edit Screen Detail</md-button></div>
-                                </div>
-                            </div>
-                        </td>
-                        <td width="3%" class="text-center" dnd-handle>
-                            <span class="icon icon-menu fs22"></span>
-                        </td>
-                    </tr>
-                </table>
-                </dnd-nodrag>
-            </li>
-        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                            </dnd-nodrag>
+                        </li>
+                    </ul>
+                </div>        
+            </div>
+        </div>       
+        <!--screenset box ends here -->
+        <md-card class="m-b-20 pull-left first-box-zero m-r-30" flex="30">
+            <md-card-header layout-align="space-between center">
+                <md-card-header-text>
+                <span class="md-title">Screenset Image</span>
+                </md-card-header-text>
+                <md-menu ng-show="allow_access==1">
+                <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                <md-menu-item ng-click="ImagePopup('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_logo,ScreenSets[0].order_id)" >
+                <md-button>
+                    Change Logo
+                </md-button>
+                </md-menu-item>
 
+                <md-menu-item ng-click="deleteImage('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo,'id',ScreenSets[0].screen_id,ScreenSets[0].order_id)">
+                <md-button>
+                    Remove Logo
+                </md-button>
+                </md-menu-item>
 
-
-       
-    </div>
-    <div layout="row" layout="nowrap" class="p-b-20 screen-bottom">
-      <!--   <md-card class="m-b-20 " flex="30">
-                                    <md-card-header layout-align="space-between center">
-                                        <md-card-header-text>
-                                            <span class="md-title">Mockup Image</span>
-                                        </md-card-header-text>
-
-                                        <md-menu>
-                                            <md-button aria-label="Image Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                            </md-button>
-                                            <md-menu-content width="4">
-                                                <md-menu-item ng-click="ImagePopup('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" >
-                                                    <md-button>
-                                                        Change Image
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                                <md-menu-item ng-click="deleteImage('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image,'id',ScreenSets[0].screen_id,ScreenSets[0].order_id)">
-                                                    <md-button>
-                                                        Remove Image
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                            </md-menu-content>
-                                        </md-menu>
-                         </md-card-header>
-            <md-card-content ng-click="ImagePopup('mokup_image','art','artjob_screensets',ScreenSets[0].mokup_image_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
-                
-                <img  ng-if="ScreenSets[0].mokup_image" ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
-                         
-                <table class="uploadfile" ng-show="ScreenSets[0].mokup_image == ''" >
-                        <tr>
-                            <td><span class="icon icon-plus font-50"></span></td>
-                        </tr>
-                </table>
-            </md-card-content>
-        </md-card> -->
-        <md-card class="m-b-20 " flex="30">
-                                    <md-card-header layout-align="space-between center">
-                                        <md-card-header-text>
-                                            <span class="md-title">Screenset Image</span>
-                                        </md-card-header-text>
-
-                                        <md-menu>
-                                            <md-button aria-label="Logo Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                            </md-button>
-                                            <md-menu-content width="4">
-                                                <md-menu-item ng-click="ImagePopup('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_logo,ScreenSets[0].order_id)" >
-                                                    <md-button>
-                                                        Change Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                                <md-menu-item ng-click="deleteImage('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo,'id',ScreenSets[0].screen_id,ScreenSets[0].order_id)">
-                                                    <md-button>
-                                                        Remove Logo
-                                                    </md-button>
-                                                </md-menu-item>
-
-                                            </md-menu-content>
-                                        </md-menu>
-                         </md-card-header>
+                </md-menu-content>
+                </md-menu>
+            </md-card-header>
             <md-card-content ng-click="ImagePopup('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_logo,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
-                
                 <img  ng-src="{{ScreenSets[0].mokup_logo_url}}" alt=""  class="popup-image"/>
-                         
-                <!-- <table class="uploadfile" ng-show="ScreenSets[0].mokup_logo == ''" >
-                        <tr>
-                            <td><span class="icon icon-plus font-50"></span></td>
-                        </tr>
-                </table> -->
             </md-card-content>
         </md-card>
         <md-card class="m-b-20 m-l-20" style="height: 50% !important;" flex="30">
@@ -230,16 +186,12 @@
                 </div>
                 <div class="text-center pad0"><span class="font-18">Total Notes</span></div>
             </md-card-content>
-            <md-divider ></md-divider>
             <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight" ui-sref="app.art.notes({id:ScreenSets[0].screen_id})">View Notes</a>
+                <a class="font-14 chrome-weight" ui-sref="app.art.notes({id:screenset_id})">View Notes</a>
             </div>
         </md-card>
-    
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <!-- <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-        <div class="md-ripple-container" style=""></div>
-        </button> -->
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf()"><span class="ng-scope">GENERATE PRESS INSTRUCTIONS</span></button>
-    </md-dialog-actions>
+        <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace m-t-20" ng-show="allow_access==1">
+            <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" aria-label="Generate Art Approval Form" ng-click="printPdf()"><span class="ng-scope">GENERATE PRESS INSTRUCTIONS</span></button>
+        </md-dialog-actions>   
+    </div><!--inner full box ends here -->
 </div>
