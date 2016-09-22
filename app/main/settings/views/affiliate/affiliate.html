@@ -1,15 +1,18 @@
-    <div class="content order-info-page m-b-20">
-        <div class="simple-table-container md-whiteframe-4dp">
-            <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
-                <div class="table-title-text" flex=20>COMPANY AFFILIATE</div>
-                <div class="order-modal-title " layout="row" layout-align="end center" flex=11 ng-show="allow_access==1">
-                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-click="vm.addAffiliate($event)">ADD NEW</span>
+    <div class="content client-list-page stockkup-content-table-container">
+        <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+            <div class="table-title " layout="row" layout-align="space-between center">
+                <div class="table-title-text" flex=20>
+                    COMPANY AFFILIATE
+                </div>
+                <div class="pull-right right-search-box">
+                    <div class="client-modal-title pull-right" ng-show="allow_access==1">
+                        <span class="cursor-p stokkup-btn-style1" ng-click="vm.addAffiliate($event)">ADD NEW</span>
+                    </div>
                 </div>
             </div>
-            <div class=" ms-responsive-table-wrapper userMgmntPadding">
-                <table class="simple" >
+            <div class=" ms-responsive-table-wrapper">
+                <table class="dataTable row-border">
                     <thead>
-
                         <tr>
                             <th class="secondary-text ">
                                 <div class="table-header">
@@ -65,9 +68,6 @@
                                 </md-menu>
                             </td>
                         </tr>
-
-
-
                     </tbody> 
                 </table>
          
