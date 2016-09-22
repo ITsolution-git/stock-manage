@@ -52,6 +52,8 @@ $blue-shade-btn:#4773d6;
 $green-txt:#39b54a;
 $disable-btn-txt-color:#cdcfd3;
 $tabs-border-color:#e3e3e3;
+$box-border-color:#eeeeee;
+$app-green:#3eb74f;
 /*global variables ends here */
 
 /*global popup style starts here */
@@ -884,7 +886,7 @@ table.table-white-bg{
 			font-size:$datatable-heading-size;
 			color:$datatable-text-color !important;
 			background-color:$white-color;
-			border-bottom:solid 1px #eeeeee;
+			border-bottom:solid 1px $box-border-color;
 			padding:30px 8px 10px;
 			line-height:$datatable-heading-size;		
 			&:first-child{
@@ -925,7 +927,7 @@ table.table-white-bg tbody tr:first-child td{
 		}
 		md-card-content{
 			background:$white-color;
-			border:solid 1px #eeeeee;
+			border:solid 1px $box-border-color;
 			padding-top:12px;
 				md-input-container{
 					padding:$zero;
@@ -1456,7 +1458,7 @@ md-card-content{
 		float:$left;
 		background-color:$white-color;
 		width:$full-width;
-		border:solid 1px #eeeeee;
+		border:solid 1px $box-border-color;
 	}
 }
 .screenset-list-struct dnd-nodrag{
@@ -1489,7 +1491,7 @@ img.screenset-img{
 }
 .screenset-titlebox{
 	padding:3px 30px 15px;
-	border-bottom:solid 1px #eeeeee;
+	border-bottom:solid 1px $box-border-color;
 	width:$full-width;
 	float:$left;
 }
@@ -1718,5 +1720,45 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 			position:$pos-relative;
 		}
 	}
+}
+.boxes-borderstyle{
+	border:1px solid $box-border-color;
+}
+.approve-box{
+	md-select{
+		float:$nofloat;
+		display:inline-block;
+		text-align:center;
+		width:auto;
+		border:$nofloat !important;
+		md-select-value{
+			border:$nofloat !important;
+			color:$app-green !important;
+			font-weight:14px;
+			font-weight:$font-weight-700;
+			width:130px;
+			md-text{
+			color:$app-green !important;
+			font-weight:14px;
+			font-weight:$font-weight-700;
+			}
+			.fa{
+				color:$app-green;
+				font-size:21px;
+				position:$pos-relative;
+				top:5px;
+				margin-right:12px;
+			}
+		}
+	}
+}
+.approve-box .md-select-value .md-select-icon::after{
+	top:7px;
+}
+.approve-box .md-select-value .md-select-icon{
+	margin:0;
+}
+.approve-box md-select md-select-value .md-text{
+	font-size:14px;
 }
 /*css for invoice inner page ends here */
