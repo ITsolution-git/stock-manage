@@ -10,10 +10,10 @@
         </md-toolbar>
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
-                <md-input-container class="md-block first-box"></md-input-container>
-               <md-input-container class="upload-rel">
-                    <input>
-                    <md-button class="border-radius-half stokkup-custom-btn1 stokkup-upload-btn stokkup-blue-btn pull-right mt-15" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
+                <!-- <md-input-container class="md-block first-box"></md-input-container> -->
+               <md-input-container class="upload-rel margin-0">
+                    <!-- <input> -->
+                    <md-button class="border-radius-half stokkup-custom-btn1 stokkup-upload-btn stokkup-blue-btn pull-right margin-0" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
                 </md-input-container>
 
                 <input type="file" required style="display: none;"  onload="onLoad" ng-model="logo_image" id="myFileInput" name="logo_image" class="btn btn-default" base-sixty-four-input  accept="image/*">
@@ -36,7 +36,7 @@
         <md-dialog-actions layout="row" layout-align="end center">
             
                     <!-- <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
-                    <md-button class="md-accent md-raised" ng-disabled="imageform.$invalid" ng-click="SaveImageAll(logo_image);">Save</md-button>
+                    <md-button class="md-accent md-raised m-r-15" ng-disabled="imageform.$invalid" ng-click="SaveImageAll(logo_image);">Save</md-button>
              
         </md-dialog-actions>
     </form>
