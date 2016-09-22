@@ -688,7 +688,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .loader,
 .loader:before,
 .loader:after {
-    background: #4773d6;
+    background: #9fa1a7;
     -webkit-animation: load1 1s infinite ease-in-out;
     animation: load1 1s infinite ease-in-out;
     width: 1em;
@@ -724,11 +724,11 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     0%,
     80%,
     100% {
-        box-shadow: 0 0 #4773d6;
+        box-shadow: 0 0 #9fa1a7;
         height: 4em;
     }
     40% {
-        box-shadow: 0 -2em #4773d6;
+        box-shadow: 0 -2em #9fa1a7;
         height: 5em;
     }
 }
@@ -736,11 +736,11 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     0%,
     80%,
     100% {
-        box-shadow: 0 0 #4773d6;
+        box-shadow: 0 0 #9fa1a7;
         height: 4em;
     }
     40% {
-        box-shadow: 0 -2em #4773d6;
+        box-shadow: 0 -2em #9fa1a7;
         height: 5em;
     }
 
