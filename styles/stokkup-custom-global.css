@@ -1302,4 +1302,34 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
 .first-box-zero {
   margin-left: 0; }
 
+.invoice-logo {
+  max-height: 150px;
+  overflow: hidden; }
+  .invoice-logo img {
+    max-width: 100%;
+    max-height: 130px;
+    height: auto;
+    width: auto; }
+
+/*css for invoice inner page */
+.box-30 {
+  width: 30%;
+  float: left; }
+
+.box-35 {
+  width: 35%;
+  float: left; }
+
+.invoice-detail1 span.text-bold-right {
+  float: none;
+  display: block; }
+
+.invoice-page .stokkup-custom-tabs {
+  width: 100%; }
+  .invoice-page .stokkup-custom-tabs md-tabs-content-wrapper {
+    width: 100%;
+    position: relative; }
+
+/*css for invoice inner page ends here */
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
