@@ -3,9 +3,9 @@
 /*----------------------------------------------------------------*/
 /*  Variables
 /*----------------------------------------------------------------*/
+/*All color variables starts here */
+/*All color variables ends here */
 /*global variables ends here */
-/*global popup style starts here */
-/*global popup style ends here */
 /*genera css */
 .ease-animations, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
   -moz-transition: all ease-in-out 0.2s;
