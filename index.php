@@ -18,7 +18,8 @@
         <link rel="stylesheet" href="styles/stokkup-custom-global.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
         
-        
+        <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
+        async defer></script>
 
         
         <script>
@@ -224,6 +225,7 @@
     <script src="app/main/settings/views/vendor/vendor.controller.js"></script>
     <script src="app/main/settings/views/vendor/viewContact/viewContact.controller.js"></script>
     <script src="app/main/settings/views/sales/sales.controller.js"></script>
+    <script src="app/main/settings/views/approvals/approval.controller.js"></script>
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>
@@ -293,5 +295,10 @@
     <link rel="stylesheet" href="scripts/angular-xeditable/xeditable.css">
     <script src="scripts/drag/angular-dragdrop.js"></script>
     <script src="scripts/clipboard.js"></script>
+    <script src="scripts/other/vs-autocomplete-validator.js"></script>
+
+    
+
+
 </body>
 </html>

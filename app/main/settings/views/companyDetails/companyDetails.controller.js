@@ -10,23 +10,25 @@
     /** @ngInject */
     function CompanyDetailsController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
-      $scope.company_id = sessionService.get('company_id');
-       $scope.btns = [{
+        $scope.company_id = sessionService.get('company_id');
+        $scope.role_slug = sessionService.get('role_slug');
+
+        $scope.btns = [{
         label: "SCREEN PRINTING",
         state: false
-    }, {
-        label: "EMBROIDERING",
-        state: true
-    }, {
-        label: "PACKAGING",
-        state: false
-    }, {
-        label: "SHIPPING",
-        state: false
-    }, {
-        label: "ART WORK",
-        state: false
-    }];
+        }, {
+            label: "EMBROIDERING",
+            state: true
+        }, {
+            label: "PACKAGING",
+            state: false
+        }, {
+            label: "SHIPPING",
+            state: false
+        }, {
+            label: "ART WORK",
+            state: false
+        }];
 
     $scope.toggle = function () {
         this.b.state = !this.b.state;
@@ -51,6 +53,11 @@
 
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
     {
+        if($scope.role_slug!='CA' && $scope.role_slug!='FM')
+        {
+            notifyService.notify('error','You have no rights to Edit.');
+            return false;
+        }
         var vm = this;
         var UpdateArray = {};
         UpdateArray.table =table_name;

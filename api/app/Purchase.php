@@ -307,7 +307,17 @@ class Purchase extends Model {
           			$rec_qnty += $value_ret_array->qnty_purchased;
           			$short += $value_ret_array->short;
 
-          			$value['data'][$key_ret_array]->short_unit = ($value_ret_array->qnty_ordered - $value_ret_array->qnty_purchased);
+          			if($value_ret_array->qnty_ordered>$value_ret_array->qnty_purchased)
+          			{
+          				$value['data'][$key_ret_array]->short_unit = ($value_ret_array->qnty_ordered - $value_ret_array->qnty_purchased);
+          				$value['data'][$key_ret_array]->over_unit = 0;
+          			}
+          			else
+          			{
+          				$value['data'][$key_ret_array]->short_unit = 0;
+          				$value['data'][$key_ret_array]->over_unit = ($value_ret_array->qnty_purchased- $value_ret_array->qnty_ordered);
+          			}
+          			
           			$total_invoice += $value_ret_array->line_total;
           			//$value['data'][$key_ret_array]['']
           		}
@@ -315,7 +325,15 @@ class Purchase extends Model {
           		$ret_array['receive'][$key]['total_product'] = $total_order;
           		$ret_array['receive'][$key]['total_received'] = $rec_qnty;
           		$ret_array['receive'][$key]['total_defective'] = $short;
-          		$ret_array['receive'][$key]['total_remains'] = $total_order -$rec_qnty;
+          		if($total_order>$rec_qnty)
+          		{
+          			$ret_array['receive'][$key]['total_remains'] = $total_order -$rec_qnty." Short";
+          		}
+          		else
+          		{
+          			$ret_array['receive'][$key]['total_remains'] = $rec_qnty -$total_order." Over";
+          		}
+          		
           		$ret_array['po_data']->total_invoice = $total_invoice;
           	}
 

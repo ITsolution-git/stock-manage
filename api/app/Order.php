@@ -90,7 +90,7 @@ class Order extends Model {
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
                          ->leftJoin('invoice as i','order.id','=', 'i.order_id')
                          ->leftJoin('art as a','order.id','=', 'a.order_id')
-                         ->leftJoin('client_contact as cc','order.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "));
+                         ->leftJoin('client_contact as cc','order.contact_main_id','=',DB::raw("cc.id"));
                          if(isset($data['is_affiliate']))
                          {
                                $orderDetailData = $orderDetailData->leftJoin('order_affiliate_mapping as oam','order.id','=', 'oam.order_id');
@@ -461,7 +461,7 @@ public function saveColorSize($post)
             {
 
                
-               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup) + ($value->screen_fees_qnty * $value->screen_fees);
+               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup);
                $combine_array['order_design_position'][$key]->total_price = round($combine_array['order_design_position'][$key]->total_price, 2);
                $combine_array['order_design_position'][$key]->position_header_name = $value->position_name;
                $combine_array['order_design_position'][$key]->qnty_header_name = $value->qnty;
@@ -484,6 +484,7 @@ public function saveColorSize($post)
                 $combine_array['order_design_position'][$key]->image_4_url_photo = (!empty($value->image_4))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_4:'';
                 
                 $total_pos_qnty += $value->qnty;
+                $combine_array['order_design_position'][$key]->total_screen_fees = $value->screen_fees_qnty * $value->screen_fees;
                 $total_screen_fees += $value->screen_fees_qnty * $value->screen_fees;
 
                 $value->position_image = '';
@@ -541,7 +542,7 @@ public function saveColorSize($post)
     public function orderDetailInfo($data) {
       
         $whereConditions = ['is_delete' => "1",'id' => $data['id'],'company_id' => $data['company_id']];
-        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping','date_start','date_shipped','in_hands_by','approval_id','client_id'];
+        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping','date_start','date_shipped','in_hands_by','approval_id','client_id','contact_main_id'];
 
         $orderDetailData = DB::table('orders')
                          ->select($listArray)
@@ -850,4 +851,31 @@ public function saveColorSize($post)
          return $newData;
 
   }
+
+    public function getApprovalOrders($post)
+    {
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping')];
+
+        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $post['company_id']];
+        $orderData = DB::table('orders as o')
+                          ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
+                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
+                          ->leftJoin('products as p', 'dp.product_id', '=', 'p.id')
+                          ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                          ->leftJoin('users as u', 'u.id', '=', 'o.approved_by')
+                          ->select($listArray)
+                          ->where($where)
+                          ->GroupBy('o.id')
+                          ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
+                          ->skip($post['start'])
+                          ->take($post['range'])
+                          ->get();
+
+        $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+        //dd(DB::getQueryLog());
+        $returnData = array();
+        $returnData['allData'] = $orderData;
+        $returnData['count'] = $count[0]->Totalcount;
+        return $returnData;
+    }
 }

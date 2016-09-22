@@ -9,6 +9,7 @@
     /** @ngInject */
     function screenSetViewController($document,  $state,$window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
+
         var vm = this;
         $scope.company_id = sessionService.get('company_id');
 
@@ -18,6 +19,24 @@
         }, true);
        
         $scope.screenset_id = $stateParams.id;
+        //console.log($stateParams.id);
+        if($stateParams.id=='' || angular.isUndefined($stateParams.id))
+        {
+            notifyService.notify('error','Invalid Parameters.');
+            $state.go('app.art');
+            return false;
+        }
+
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
 
         // INTIAL CALL TO RETRIVE ALL SCREENSET DATA
         $scope.GetOrderScreenSet = function() 
@@ -52,6 +71,7 @@
         // DRAG AND DROP FUNCTION CALL WHEN EVEN CALL
         $scope.change_sort = function ()
         {
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $http.post('api/public/art/change_sortcolor',$scope.ScreenSets_new.data_all).success(function(result) 
             {
@@ -62,6 +82,7 @@
         // UPDATE COLOR SCREEN DETAIL
         $scope.UpdateColorScreen = function(ev, colordata) 
         {
+            if($scope.allow_access==0){return false;}
                 $mdDialog.show({
                     controller: function ($scope, params,colordata)
                                 {
@@ -149,7 +170,7 @@
     // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,extra_params) 
         {
-
+                if($scope.allow_access==0){return false;}
                 $scope.column_name=column_name;
                 $scope.table_name=table_name;
                 $scope.folder_name=folder_name;
@@ -263,7 +284,7 @@
         }
         $scope.printPdf=function()
         {
-            
+            if($scope.allow_access==0){return false;}
             var pass_array = {order_id:$scope.ScreenSets[0].order_id,company_id:$scope.company_id,screen_id:$scope.screenset_id }
             var target;
             var form = document.createElement("form");
@@ -282,6 +303,7 @@
         };
         $scope.UpdateTableField = function(field_value)
         {
+            if($scope.allow_access==0){return false;}
             var vm = this;
             var UpdateArray = {};
             UpdateArray.table ='artjob_screensets';

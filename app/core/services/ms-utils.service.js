@@ -323,7 +323,8 @@ core.factory('AllConstant', AllConstant);
                   NoImage: base_path+'api/public/images/noimage.png',
                   NoDocument: base_path+'api/public/images/nodocument.png',
                   currentdate : $filter('date')(new Date(), 'yyyy-MM-dd'),
-                  base_path:base_path
+                  base_path:base_path,
+                  NO_ACCESS:'Sorry, You have no permission.'
                 }
             return constatnt;
         }

@@ -23,6 +23,7 @@
                    $scope.allGrid = result.data.price_grid;
                    $scope.staffList =result.data.staff;
                    $scope.brandCoList =result.data.brandCo;
+                   $scope.contact_main =result.data.contact_main;
                   
                    //$scope.minDate = new Date(result.data.records[0].date_start);
                    //$scope.minShipDate = new Date(result.data.records[0].date_shipped);

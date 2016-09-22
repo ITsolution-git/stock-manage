@@ -31,7 +31,7 @@
                                     <span class="column-title">Status</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th ng-show="role_slug=='CA' || role_slug=='FM'" class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Action</span>
                                 </div>
@@ -45,7 +45,7 @@
                             <td class="">{{user.title}}</td>
                             <td ng-if="user.status==1">Active</td>
                             <td ng-if="user.status==0">Inactive</td>
-                            <td class=""> 
+                            <td ng-show="role_slug=='CA' || role_slug=='FM'" class=""> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>

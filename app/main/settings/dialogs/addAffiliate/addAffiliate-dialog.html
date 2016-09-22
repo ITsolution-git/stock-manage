@@ -4,7 +4,7 @@
     <div class="client-profile-page">
     <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">Add New Affiliate</span>
+                <span class="title">Add Affiliate</span>
                 <md-button  ng-click="closeDialog()">
                     <span>Cancel</span>
                 </md-button>
@@ -145,7 +145,7 @@
             </div>
             </md-card-content>
 </div>
-    <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-disabled="affiliateform.$invalid || affiliateform.$pristine"  ng-click="addAffilite(affiliate)">
+    <md-button  ng-show="allow_access==1" class="bg-blue float-right" id="affiliateSaveBtn" ng-disabled="affiliateform.$invalid || affiliateform.$pristine"  ng-click="addAffilite(affiliate)">
             SAVE
     </md-button>
     </div>

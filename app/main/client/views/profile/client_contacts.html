@@ -59,7 +59,7 @@
                                             <td>{{contact.email}}</td>
                                             <td class="text-center" ng-if="contact.contact_main=='1'"><i class="icon icon-check s40"></i></td>
                                             <td class="text-center" ng-if="contact.contact_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
-                                            <td class="text-left"> 
+                                            <td class="text-left"  ng-show="allow_access==1"> 
                                     <md-menu>
                                         <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -89,7 +89,7 @@
                                 
                                         <!-- <td class="p-16"><a href="javascript:;" ng-click="vm.editCompanyConatct($event,'add','client_contact','contact_form','id',contact.id)">ADD NEW</a></td> -->
 
-                                        <div class="pull-right"><a href="javascript:;" ng-click="openInsertPopup('client/views/forms/contact_form.html',$event,'client_contact')" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right">ADD NEW</a>
+                                        <div class="pull-right"  ng-show="allow_access==1"><a href="javascript:;" ng-click="openInsertPopup('client/views/forms/contact_form.html',$event,'client_contact')" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right">ADD NEW</a>
                                         </div>    
                             </div>
                         </div>

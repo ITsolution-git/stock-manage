@@ -7,6 +7,13 @@
 /*global popup style starts here */
 /*global popup style ends here */
 /*genera css */
+.ease-animations, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
+  -moz-transition: all ease-in-out 0.2s;
+  -webkit-transition: all ease-in-out 0.2s;
+  -ms-transition: all ease-in-out 0.2s;
+  -o-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s; }
+
 input::-moz-placeholder, textarea::-moz-placeholder {
   opacity: 1;
   color: #252932; }
@@ -107,14 +114,14 @@ button.bg-grey.md-raised {
 
 /*genera css ends here */
 /*scss for sidebar and top navigation box */
-.no-box-shadows, #toolbar, #vertical-navigation .navigation-header, #vertical-navigation, .stockkup-content-table-container .stokkup-main-tableview, md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]), md-card, md-card.md-default-theme, .box-3, .dialog-submit-glboal, .dialog-submit-glboal:hover, .dialog-submit-glboal:focus {
+.no-box-shadows, #toolbar, #vertical-navigation .navigation-header, #vertical-navigation, .stockkup-content-table-container .stokkup-main-tableview, md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]), md-card, md-card.md-default-theme, .box-3, .dialog-submit-glboal, .dialog-submit-glboal:hover, .dialog-submit-glboal:focus, md-autocomplete-wrap, md-autocomplete-wrap.md-whiteframe-z1 {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   -ms-box-shadow: none;
   -o-box-shadow: none;
   box-shadow: none; }
 
-.border-radius-half, .stokkup-btn-style1, button.bg-grey.md-raised, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1 {
+.border-radius-half, .stokkup-btn-style1, button.bg-grey.md-raised, .search-block md-input-container .md-input, .search-block md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap .search-block md-input-container md-select .md-select-value, .tasty-page .pagination, .tasty-page .pagination li.active a, .stokkup-custom-btn1.md-button, md-dialog.task-dialog md-dialog-actions .md-button, .stokkup-custom-btn1, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
   border-radius: 50px;
   -moz-border-radius: 50px;
   -webkit-border-radius: 50px;
@@ -404,7 +411,7 @@ md-dialog.task-dialog {
       font-weight: 700;
       text-transform: uppercase; }
     md-dialog.task-dialog md-dialog-actions .md-button.md-raised:not([disabled]) {
-      background-color: #6288dc !important;
+      background-color: #4773d6 !important;
       min-width: 123px;
       width: auto;
       height: 41px;
@@ -560,12 +567,14 @@ table.dataTable thead.stokkup-space1 th {
   color: #fff;
   font-weight: 700;
   font-size: 14px;
-  line-height: 41px; }
+  line-height: 41px;
+  max-height: 41px; }
   .stokkup-custom-btn1:hover, .stokkup-custom-btn1:focus {
     background-color: #4773d6; }
 
 .stokkup-blue-btn {
-  background-color: #4773d6 !important; }
+  background-color: #4773d6 !important;
+  min-width: 123px; }
 
 .small-headings {
   font-size: 13px;
@@ -761,7 +770,7 @@ button.orderscreen-infobtns {
   visibility: hidden; }
 
 .trans-box.order-designname {
-  width: 15%; }
+  width: 14%; }
 
 .header-bg-custom {
   background-color: #0b5c93; }
@@ -866,8 +875,7 @@ md-card-content.custom-desc-box span {
 
 .stockkup-content-table-container .tab-view-page.stokkup-main-tableview .table-title {
   position: relative;
-  z-index: 2;
-  padding-bottom: 0; }
+  z-index: 0; }
 
 .custom-struct-2 md-pagination-wrapper {
   height: 40px; }
@@ -942,8 +950,11 @@ md-card-content.custom-desc-box span {
   .shipping-custom-tab md-tabs-canvas.md-paginated {
     margin: 0; }
   .shipping-custom-tab md-tabs-wrapper {
-    width: 50%;
+    width: 100%;
     margin: 0 auto; }
+    .shipping-custom-tab md-tabs-wrapper md-tab-data {
+      z-index: 1;
+      opacity: 1; }
 
 .dashboard-page .md-title {
   font-size: 14px;
@@ -1049,6 +1060,13 @@ md-card-content.custom-desc-box span {
   -o-box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important;
   box-shadow: 0 2px 5px rgba(34, 31, 31, 0.15) !important; }
 
+.top-shadow {
+  -moz-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -webkit-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -ms-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  -o-box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important;
+  box-shadow: 0 -2px 5px rgba(34, 31, 31, 0.15) !important; }
+
 .payment-accordion {
   width: 100%;
   border: solid 1px #ededed;
@@ -1077,7 +1095,7 @@ md-card-content.custom-desc-box span {
   .screenset-list-struct li {
     list-style-type: none;
     display: block;
-    margin: 0 0 15px;
+    margin: 0 0 28px;
     padding: 15px 0 0;
     float: left;
     background-color: #fff;
@@ -1087,10 +1105,25 @@ md-card-content.custom-desc-box span {
 .screenset-list-struct dnd-nodrag {
   float: left;
   width: 100%;
-  padding: 0 30px 0 20px; }
+  padding: 0; }
+
+.screenset-list-struct table.custom-table1 {
+  padding: 0;
+  width: 100%;
+  border-spacing: 0; }
+  .screenset-list-struct table.custom-table1 td {
+    border: none;
+    padding: 0; }
+
+.screenset-list-struct .trans-outer {
+  padding: 10px 20px;
+  width: 100%;
+  float: left; }
+  .screenset-list-struct .trans-outer .trans-box {
+    float: left; }
 
 img.screenset-img {
-  max-height: 130px;
+  max-height: 150px;
   width: auto;
   float: none;
   margin: auto; }
@@ -1122,5 +1155,216 @@ md-card.noborder {
     background-color: #f9f9f9;
     border: solid 1px #ededed;
     margin: auto; }
+
+/*tab structure of shipping page */
+.tab-view-page md-tabs {
+  top: 0;
+  z-index: 0; }
+
+.shipping-custom-tab md-tabs-wrapper {
+  /*margin:$zero;
+  left:400px;
+  top:91px;
+  position:fixed;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);*/ }
+.shipping-custom-tab md-tabs-canvas {
+  height: 60px;
+  position: relative;
+  z-index: 1;
+  width: 720px; }
+  .shipping-custom-tab md-tabs-canvas md-pagination-wrapper {
+    height: 40px;
+    top: 20px;
+    left: 180px; }
+.shipping-custom-tab .md-tab {
+  padding: 8px 20px;
+  color: rgba(37, 41, 50, 0.6) !important; }
+  .shipping-custom-tab .md-tab:before {
+    content: "";
+    position: absolute;
+    border-bottom: solid 3px #e3e3e3;
+    width: 100%;
+    height: 3px;
+    left: 5px;
+    bottom: 0; }
+  .shipping-custom-tab .md-tab.md-active {
+    color: #252932 !important; }
+
+.dragiconscenter {
+  align-items: center;
+  justify-content: center;
+  cursor: move; }
+  .dragiconscenter .icon {
+    position: relative;
+    align-items: center;
+    justify-content: center; }
+
+.company-pro-img-block {
+  max-height: 350px !important;
+  overflow: hidden; }
+  .company-pro-img-block .company-pro-image {
+    max-height: 320px;
+    width: auto;
+    max-width: 100%;
+    margin: auto;
+    float: none; }
+
+md-autocomplete {
+  background-color: transparent;
+  padding: 8px 0 !important; }
+
+md-autocomplete-wrap {
+  padding: 0; }
+  md-autocomplete-wrap input[type="search"] {
+    border-bottom: solid 2px #d3d4d6;
+    color: #252932;
+    padding: 0 0 2px 10px !important;
+    font-size: 16px; }
+
+md-autocomplete-wrap input[type="search"]::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #252932;
+  padding-left: 11px;
+  font-size: 13px !important; }
+
+md-autocomplete-wrap input[type="search"]::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #252932;
+  padding-left: 11px;
+  font-size: 13px !important; }
+
+md-autocomplete-wrap input[type="search"]:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #252932;
+  padding-left: 11px;
+  font-size: 13px !important; }
+
+md-autocomplete-wrap input[type="search"]:-moz-placeholder {
+  /* Firefox 18- */
+  color: #252932;
+  padding-left: 11px;
+  font-size: 13px !important; }
+
+md-sidenav.md-sidenav-right .filter-title h1 {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 15px;
+  margin: 0; }
+
+.email-heads {
+  padding: 8px 11px;
+  font-size: 16px;
+  text-transform: none; }
+
+.email-from-box {
+  padding-bottom: 5px; }
+
+md-dialog.task-dialog md-input-container textarea.email-txtarea {
+  min-height: 265px;
+  font-size: 14px !important;
+  line-height: 22px; }
+
+.stokkup-req-fields {
+  color: #ed1c24;
+  font-size: 10px;
+  position: relative; }
+
+#custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label {
+  color: #4773d6;
+  border: solid 2px #4773d6;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px; }
+
+#custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
+  color: #fff;
+  border: solid 2px #4773d6;
+  background-color: #4773d6;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px; }
+
+md-dialog.task-dialog md-dialog-content.email-dialog {
+  padding-top: 30px; }
+
+.screenset-view .trans-box {
+  width: 33%; }
+
+.block-center {
+  float: none;
+  margin: 0 auto;
+  display: table; }
+
+.first-box-zero {
+  margin-left: 0; }
+
+.invoice-logo {
+  max-height: 150px;
+  overflow: hidden; }
+  .invoice-logo img {
+    max-width: 100%;
+    max-height: 130px;
+    height: auto;
+    width: auto; }
+
+/*css for invoice inner page */
+.box-30 {
+  width: 30%;
+  float: left; }
+
+.box-35 {
+  width: 35%;
+  float: left; }
+
+.invoice-detail1 span.text-bold-right {
+  float: none;
+  display: block; }
+
+.invoice-page .stokkup-custom-tabs {
+  width: 100%; }
+  .invoice-page .stokkup-custom-tabs md-tabs-content-wrapper {
+    width: 100%;
+    position: relative; }
+
+.boxes-borderstyle {
+  border: 1px solid #eeeeee; }
+
+.approve-box md-select {
+  float: none;
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  border: none !important; }
+  .approve-box md-select md-select-value {
+    border: none !important;
+    color: #3eb74f !important;
+    font-weight: 14px;
+    font-weight: 700;
+    width: 130px; }
+    .approve-box md-select md-select-value md-text {
+      color: #3eb74f !important;
+      font-weight: 14px;
+      font-weight: 700; }
+    .approve-box md-select md-select-value .fa {
+      color: #3eb74f;
+      font-size: 21px;
+      position: relative;
+      top: 5px;
+      margin-right: 12px; }
+
+.approve-box .md-select-value .md-select-icon::after {
+  top: 7px; }
+
+.approve-box .md-select-value .md-select-icon {
+  margin: 0; }
+
+.approve-box md-select md-select-value .md-text {
+  font-size: 14px; }
+
+/*css for invoice inner page ends here */
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

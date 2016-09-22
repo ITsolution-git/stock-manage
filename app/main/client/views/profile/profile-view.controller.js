@@ -22,17 +22,17 @@
         $scope.login_id = sessionService.get('user_id');
         $scope.client_id = vm.client_id ;
 
-
-        vm.documents = [
-        ];
-        vm.screenSets = [
-            
-        ];
-        vm.arts = [
-            
-        ];
-
-
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        
 
         vm.dtOptions = {
             dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -104,6 +104,7 @@
                 $scope.approval_all = Response.data.result.approval;
             }
         });
+
         vm.editCompanyInfo = editCompanyInfo;
         vm.editCompanyConatct=editCompanyConatct;
         vm.formPopup = 'app/main/client/views/forms';
@@ -551,6 +552,8 @@
                 });
             }
         }
+
+
     }
 
 
@@ -573,6 +576,66 @@
         $scope.company_id = Params.company_id;
         $scope.client_tax = Params.client_tax;
         $scope.companyUsers = Params.companyUsers;
+        
+
+        $scope.role_slug = sessionService.get('role_slug');
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        {
+            $scope.allow_access = 1;  // THESE ROLE CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 0; // THESE ROLE CAN ALLOW TO EDIT, JUST CAN VIEW
+        }   
+
+        $scope.options = {
+        //types: ['(cities)'],
+        componentRestrictions: { country: 'US' }
+        };
+
+        $scope.GetAPIData = function (apidata)
+        {
+            $scope.client.pl_address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber+", ";
+            $scope.client.pl_address = angular.isUndefined(apidata.street)?$scope.client.pl_address:$scope.client.pl_address+apidata.street;
+            //$scope.client.pl_suite = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+            $scope.client.pl_city = angular.isUndefined(apidata.city)?'':apidata.city;
+            for(var i=0; i<$scope.states_all.length; i++)
+            {
+                if($scope.states_all[i].code == apidata.state)
+                {
+                    $scope.client.state_id = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
+                    $scope.client.pl_state = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
+                }
+            }
+            $scope.client.pl_pincode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+        }
+
+
+  
+        $scope.address = {
+            name: '',
+            place: '',
+            components: {
+              placeId: '',
+              streetNumber: '', 
+              street: '',
+              city: '',
+              state: '',
+              countryCode: '',
+              country: '',
+              postCode: '',
+              district: '',
+              location: {
+                lat: '',
+                long: ''
+                }
+            }
+        };
+
+
+
+
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
         {
             //console.log(validation);
@@ -658,6 +721,25 @@
               });
         }
 
+        // ============= REMOVE CLIENT CONTACT  ============= // 
+        $scope.SaveCompanyInfo = function(ArrsaveCompany)
+        {
+            //$("#ajax_loader").show();
+            $http.post('api/public/client/SaveClientInfo',ArrsaveCompany).success(function(result) 
+              {
+                if(result.data.success=='1')
+                {
+                    $mdDialog.hide();
+                }
+                else
+                {
+                    notifyService('error',result.data.message);
+                    $mdDialog.hide();
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+
         $scope.showtcprofileimg = false;
         $scope.onLoad=function()
         {
@@ -693,8 +775,7 @@
               });
 
         }
-       
-       
+
 
         }
 })();

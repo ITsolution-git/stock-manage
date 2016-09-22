@@ -13,7 +13,7 @@
             	<!-- <md-input-container class="md-block first-box"></md-input-container> -->
 				<md-input-container class="margin-0 pull-right">
                     <md-button class="border-radius-half stokkup-custom-btn1 stokkup-upload-btn stokkup-blue-btn pull-right" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
-                     <input type='file' area-label=""  style="display: none" ng-model="client_tax.tax_document" id="myFileInput" onload="onLoad" base-sixty-four-input>
+                     <input type='file' area-label="" required style="display: none" ng-model="client_tax.tax_document" id="myFileInput" onload="onLoad" base-sixty-four-input>
                 </md-input-container>
 
                 <div layout-wrap="nowrap" flex="50">
@@ -30,7 +30,7 @@
               </div>
         </md-dialog-content>
          <md-dialog-actions layout="row" layout-align="end center">
-                   <md-button class="md-primary md-hue-1 md-accent" disabled="disbale">Save</md-button>
+              <md-button class="md-primary md-hue-1 md-accent" ng-click="SaveTaxDoc(client_tax)"  ng-disabled="clientForm.$invalid" >Save</md-button>
         </md-dialog-actions> 
     </form>
 </md-dialog>

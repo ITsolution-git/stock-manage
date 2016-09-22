@@ -14,7 +14,7 @@
                     <span class="md-title">Company Information</span>
                 </div>
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Company Name *" name="client_company" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\',\'\',clientForm.client_company.$error)' }"  required ng-model="client.client_company">
+                    <input placeholder="Company Name *" name="client_company"  required ng-model="client.client_company">
                     <div ng-messages="clientForm.client_company.$error" role="alert" multiple>
                         <div ng-message="required">
                             <span>This field is required</span>
@@ -25,7 +25,7 @@
                 <!---------      CLIENT TYPE      ---------------->
                 <md-input-container>
                     <label>Type</label>
-                    <md-select ng-model="client.client_companytype" name="client_companytype"  ng-change='UpdateTableField("client_companytype",client.client_companytype,"client","client_id",client.client_id,"address")'>
+                    <md-select ng-model="client.client_companytype" name="client_companytype"  >
                         <md-option value="0">
                             Select Type
                         </md-option>
@@ -36,36 +36,52 @@
                 </md-input-container>
 
                 <md-input-container>
-                    <input placeholder="Street Address" name="pl_address"  ng-model="client.pl_address"ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                <input  vs-google-autocomplete="options"
+                        ng-model="address.name"
+                        vs-street-number="address.components.streetNumber" 
+                        vs-street="address.components.street"
+                        vs-city="address.components.city"
+                        vs-state="address.components.state"
+                        vs-post-code="address.components.postCode"
+                        type="text" 
+                        name="address"
+                        id="address"
+                        aria-label="form-control" flex=70 tabindex="2">
+                        <md-button tabindex="3"  class="md-accent md-raised api-focus border-radius-half" ng-click="GetAPIData(address.components)" flex=20 >Use it</md-button>
+                </md-input-container>
+
+
+                <md-input-container>
+                    <input placeholder="Street Address" name="pl_address"  ng-model="client.pl_address"  >
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Suite" name="pl_suite"  ng-model="client.pl_suite" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                    <input placeholder="Suite" name="pl_suite"  ng-model="client.pl_suite"  >
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="City"  name="pl_city" ng-model="client.pl_city" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                    <input placeholder="City"  name="pl_city" ng-model="client.pl_city"  >
                 </md-input-container>
 
                 <!---------      STATE      ---------------->
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                     <md-input-container flex=45>
                         <label>State</label>
-                        <md-select ng-model="client.pl_state"  name="pl_state"  ng-change='UpdateTableField("pl_state",client.pl_state,"client","client_id",client.client_id,"address")'>
+                        <md-select ng-model="client.pl_state"  name="pl_state" >
                             <md-option value="0">
                                 Select State
                             </md-option>
-                            <md-option ng-repeat="state_val in states_all" ng-selected='{{state_val.id==client.state_id}}' value="{{state_val.id}}">
+                            <md-option ng-repeat="state_val in states_all" id="{{state_val.id}}" ng-selected='{{state_val.id==client.state_id}}' value="{{state_val.id}}">
                                 {{state_val.name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container flex="45">
-                        <input placeholder="Zip Code" name="pl_pincode"  ng-model="client.pl_pincode" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                        <input placeholder="Zip Code" name="pl_pincode"  ng-model="client.pl_pincode"  >
                     </md-input-container>
                 </div>
 
                 <md-input-container>
                     <label>Billing Email *</label>
-                    <input  type="email" name="billing_email" required ng-pattern="/^.+@.+\..+$/" ng-model="client.billing_email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\',\'\',clientForm.billing_email.$error)' }" >
+                    <input  type="email" name="billing_email" required ng-pattern="/^.+@.+\..+$/" ng-model="client.billing_email"  >
                     
                     <div ng-messages="clientForm.billing_email.$error" role="alert" multiple>
                         <div ng-message="required">
@@ -77,8 +93,7 @@
                     </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Company Phone"  name="company_phone" ng-model="client.company_phone" required only-number ng-maxlength="10" ng-minlength="10"
-                        ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\',\'\',clientForm.company_phone.$error)' }" >
+                    <input placeholder="Company Phone *"  name="company_phone" ng-model="client.company_phone" required only-number ng-maxlength="10" ng-minlength="10">
                         <div ng-messages="clientForm.company_phone.$error" role="alert" multiple>
                             <div ng-message="required">
                                 <span >This field is required</span>
@@ -92,13 +107,13 @@
                         </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Company Website URL"  name="company_url" ng-model="client.company_url" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'address\')' }" >
+                    <input placeholder="Company Website URL"  name="company_url" ng-model="client.company_url" >
                 </md-input-container>
 
                 <!---------      DISPOSITIONS      ---------------->
                 <md-input-container>
                     <label>Deposition</label>
-                    <md-select ng-model="client.client_desposition" name="client_desposition"  ng-change='UpdateTableField("client_desposition",client.client_desposition,"client","client_id",client.client_id,"address")'>
+                    <md-select ng-model="client.client_desposition" name="client_desposition"  >
                         <md-option value="0">
                             Select Deposition
                         </md-option>
@@ -110,7 +125,7 @@
 
                 <md-input-container class="m-b-30">
                     <label>Account Managers</label>
-                    <md-select ng-model="client.account_manager" name="account_manager"  ng-change='UpdateTableField("account_manager",client.account_manager,"client","client_id",client.client_id)'>
+                    <md-select ng-model="client.account_manager" name="account_manager">
                         <md-option value="0">
                             Select Account Manager
                         </md-option>
@@ -124,11 +139,11 @@
 
             </div>
         </md-dialog-content>
-<!--         <md-dialog-actions layout="row" layout-align="end center">
+        <md-dialog-actions layout="row" layout-align="end center">
             
-                   <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button>
+                   <md-button ng-click="SaveCompanyInfo(client)" ng-disabled="clientForm.$invalid || clientForm.$pristine" class="md-primary md-hue-1 md-accent ">Save</md-button>
 <!--                    <md-button class="md-accent md-raised " ng-click="UpdateTableField(client)">Save</md-button>
             
-        </md-dialog-actions> -->
+        </md-dialog-actions>
     </form>
 </md-dialog>

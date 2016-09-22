@@ -2,7 +2,7 @@
         <div class="simple-table-container md-whiteframe-4dp">
             <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
                 <div class="table-title-text" flex=20>COMPANY AFFILIATE</div>
-                <div class="order-modal-title " layout="row" layout-align="end center" flex=11 >
+                <div class="order-modal-title " layout="row" layout-align="end center" flex=11 ng-show="allow_access==1">
                     <span class="cursor-p stokkup-btn-style1 pull-left" ng-click="vm.addAffiliate($event)">ADD NEW</span>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                                     <span class="column-title">Status</span>
                                 </div>
                             </th>
-                            <th class="secondary-text">
+                            <th ng-show="role_slug=='CA' || role_slug=='AM'  || role_slug=='FM'  || role_slug=='PU'"  class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Action</span>
                                 </div>
@@ -56,7 +56,7 @@
                                                 Edit affiliate
                                             </md-button>
                                         </md-menu-item>
-                                        <md-menu-item>
+                                        <md-menu-item ng-show="allow_access==1">
                                             <md-button ng-click="RemoveFields('affiliates','id',affiliate.id,'affilates')">
                                                 Delete affiliate
                                             </md-button>
