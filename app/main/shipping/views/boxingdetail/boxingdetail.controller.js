@@ -41,6 +41,7 @@
                 if(result.data.success == '1') 
                 {
                     $scope.shippingBoxes =result.data.shippingBoxes;
+                    $scope.total_box_qnty =result.data.total_box_qnty;
 
                     if($scope.shipping_box_id > 0)
                     {

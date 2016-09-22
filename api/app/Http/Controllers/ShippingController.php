@@ -714,8 +714,11 @@ class ShippingController extends Controller {
         $boxes = $this->shipping->getShippingBoxes($post);
         $shippingBoxes = array();
 
+        $total_box_qnty = 0;
+
         foreach ($boxes as $box) {
             $box->boxItems = $this->shipping->getBoxItems($box->id);
+            $total_box_qnty += $box->boxed_qnty;
             $shippingBoxes[$box->id] = $box;
         }
 
@@ -723,7 +726,8 @@ class ShippingController extends Controller {
         $response = array(
                         'success' => 1, 
                         'message' => GET_RECORDS,
-                        'shippingBoxes' => $shippingBoxes
+                        'shippingBoxes' => $shippingBoxes,
+                        'total_box_qnty' => $total_box_qnty
                     );
 
         return response()->json(["data" => $response]);
