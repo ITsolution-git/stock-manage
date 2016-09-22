@@ -1330,6 +1330,41 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
     width: 100%;
     position: relative; }
 
+.boxes-borderstyle {
+  border: 1px solid #eeeeee; }
+
+.approve-box md-select {
+  float: none;
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  border: none !important; }
+  .approve-box md-select md-select-value {
+    border: none !important;
+    color: #3eb74f !important;
+    font-weight: 14px;
+    font-weight: 700;
+    width: 130px; }
+    .approve-box md-select md-select-value md-text {
+      color: #3eb74f !important;
+      font-weight: 14px;
+      font-weight: 700; }
+    .approve-box md-select md-select-value .fa {
+      color: #3eb74f;
+      font-size: 21px;
+      position: relative;
+      top: 5px;
+      margin-right: 12px; }
+
+.approve-box .md-select-value .md-select-icon::after {
+  top: 7px; }
+
+.approve-box .md-select-value .md-select-icon {
+  margin: 0; }
+
+.approve-box md-select md-select-value .md-text {
+  font-size: 14px; }
+
 /*css for invoice inner page ends here */
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

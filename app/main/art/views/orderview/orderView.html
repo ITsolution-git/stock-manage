@@ -37,8 +37,8 @@
     <div class="inner-full-box mt-30">
     <!--art order information box starts here -->
     <div class="order-information m-b-45 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
+        <div class="box-zerospace m-b-20 padding-0"><span class="stokkup-title-h4">Information</span></div>
         <div class="info-order m-r-30" flex="73" layout="column">
-            <div class="title mrg10-B"><span class="stokkup-title-h4">Information</span></div>
             <md-card layout="row">
                 <md-card-content flex="95" layout="column">
                     <div layout="row" layout-wrap>
@@ -68,11 +68,11 @@
                 </md-card-content>
             </md-card>
         </div>
-        <div flex="24" layout="column">
+        <div flex="24" class="padding-30 white-bg text-center boxes-borderstyle approve-box">
             <!--  <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div> -->
             <md-select ng-model="ScreenSets[0].approval" ng-change="UpdateTableField(ScreenSets[0].approval,ScreenSets[0].order_id)" aria-label="Approval Status">
-                <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}">Approved</md-option>
-                <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}">Pending</md-option>
+                <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}"><i class="fa fa-check-circle-o"></i>Approved</md-option>
+                <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}"><i class="fa fa-exclamation"></i>Pending</md-option>
             </md-select>
         </div>
     </div>
