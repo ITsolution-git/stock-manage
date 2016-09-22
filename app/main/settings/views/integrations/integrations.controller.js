@@ -16,12 +16,11 @@
             var originatorEv;
             var vm = this ;
 
-            vm.ssActivewearDialog = ssActivewearDialog ;
+           /* vm.ssActivewearDialog = ssActivewearDialog ;
             vm.authorizeNet = authorizeNet ;
-            vm.upsDialog = upsDialog ;
-            vm.qbActivewearDialog = qbActivewearDialog ;
+            vm.upsDialog = upsDialog ;*/
             vm.qbActivewearSetup = qbActivewearSetup ;
-            vm.fedexDialog = fedexDialog;
+           // vm.fedexDialog = fedexDialog;
             
             vm.quickbookDisconnect = quickbookDisconnect;
 
@@ -29,6 +28,17 @@
                 originatorEv = ev;
                 $mdOpenMenu(ev);
             };
+
+            // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+            $scope.role_slug = sessionService.get('role_slug');
+            if($scope.role_slug=='CA')
+            {
+                $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+            }
+            else
+            {
+                $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+            }
 
             $scope.GetAllApi = function ()
             {
@@ -111,164 +121,57 @@
                 $mdDialog.hide();
             }
             
-            function ssActivewearDialog(ev, settings)
+            $scope.OpenForm = function (ev, all_data,path)
             {
                 $("#ajax_loader").show();
                 $mdDialog.show({
                     controller: function ($scope,params)
                     {
                         $scope.params = params;
-                        $scope.sns = $scope.params.sns;
-                         $("#ajax_loader").hide();
+                        $("#ajax_loader").hide();
 
                         $scope.closeDialog = function() 
                         {
                             $mdDialog.hide();
                         } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
+                        $scope.UpdateTableData = function(tableData,table_name,cond_field,cond_value,extra,extra_cond)
                         {
                             var vm = this;
                             var UpdateArray = {};
                             UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
+                            UpdateArray.data = tableData;
 
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                           });
-                        }
+                            var condition_obj = {};
+                            condition_obj[cond_field] =  cond_value;
+                            UpdateArray.cond = angular.copy(condition_obj);
 
-                    },
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        params:$scope,
-                        event: ev
-                    }
-                });
-            }
-            function fedexDialog(ev, settings)
-            {
-                $("#ajax_loader").show();
-                $mdDialog.show({
-                    controller: function ($scope,params)
-                    {
-                        $scope.params = params;
-                        $scope.fedex = $scope.params.fedex;
-                         $("#ajax_loader").hide();
+                            delete UpdateArray.data.id;
 
-                        $scope.closeDialog = function() 
-                        {
-                            $mdDialog.hide();
-                        } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value,extra)
-                        {
-                            if(extra=='yes')
+                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                             {
-                                if(field_value=='')
+                                if(result.data.success=='1')
                                 {
-                                    notifyService.notify('error',field_name+" field should not be blank.");
-                                    return false;
+                                    notifyService.notify('success',result.data.message);   
                                 }
-                            }
-                            var vm = this;
-                            var UpdateArray = {};
-                            UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
-
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
+                                else
+                                {
+                                    notifyService.notify('error',result.data.message);
+                                }
+                                $mdDialog.hide();
                            });
                         }
 
                     },
                     controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/fedex/fedex-dialog.html',
+                    templateUrl: 'app/main/settings/dialogs/'+path,
                     parent: angular.element($document.body),
                     targetEvent: ev,
                     clickOutsideToClose: true,
                     locals: {
-                        params:$scope,
+                        params:all_data,
                         event: ev
-                    }
-                });
-            }
-
-
-             function qbActivewearDialog(ev, settings)
-            {
-                $("#ajax_loader").show();
-                $mdDialog.show({
-                    controller: function ($scope,params)
-                    {
-                        $scope.params = params;
-                        $scope.qb = $scope.params.qb;
-                         $("#ajax_loader").hide();
-
-                        $scope.closeDialog = function() 
-                        {
-                            $mdDialog.hide();
-                        } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
-                        {
-                            var vm = this;
-                            var UpdateArray = {};
-                            UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
-
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                           });
-                        }
-
                     },
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/qbActivewear/qbActivewear-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        params:$scope,
-                        event: ev
-                    }
+                    onRemoving : $scope.GetAllApi  
                 });
             }
 
@@ -282,110 +185,6 @@
                  $state.reload();
                   
               });
-            }
-
-
-            
-
-            function authorizeNet(ev, settings)
-            {
-                $("#ajax_loader").show();
-                $mdDialog.show({
-                    controller: function ($scope,params)
-                    {
-                        $scope.params = params;
-                        $scope.authorize = $scope.params.authorize;
-                       $("#ajax_loader").hide();
-                        $scope.closeDialog = function() 
-                        {
-                            $mdDialog.hide();
-                        } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
-                        {
-                            var vm = this;
-                            var UpdateArray = {};
-                            UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
-
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                           });
-                        }
-
-                    },
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        params:$scope,
-                        event: ev
-                    }
-                });
-            }
-
-            function upsDialog(ev, settings)
-            {
-                $("#ajax_loader").show();
-                $mdDialog.show({
-                    controller: function ($scope,params)
-                    {
-                        $scope.params = params;
-                        $scope.ups = $scope.params.ups;
-                        $("#ajax_loader").hide();
-                        $scope.closeDialog = function() 
-                        {
-                            $mdDialog.hide();
-                        } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
-                        {
-                            var vm = this;
-                            var UpdateArray = {};
-                            UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
-
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                           });
-                        }
-
-
-                    },
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/ups/ups-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        params:$scope,
-                        event: ev
-                    }
-                });
             }
 
             function qbActivewearSetup(ev,id) {
@@ -416,7 +215,6 @@
             }
         
     }
-
 
        
 })();
