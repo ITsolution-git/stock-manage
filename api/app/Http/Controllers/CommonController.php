@@ -1089,7 +1089,8 @@ class CommonController extends Controller {
                 2=>array('key' => 'cl.client_company', 'name' => 'Client'),
                 3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
                 4=>array('key' => 'screen_width', 'name' => '#of Screen'),
-                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size')
+                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size'),
+                6=>array('key' => '', 'name' => '','sortable' => false)
                 );
         }
         if($post['filter']['function']=='art_notes') // SCREENSET COLOR NOTE
