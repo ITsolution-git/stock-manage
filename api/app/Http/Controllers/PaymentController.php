@@ -92,7 +92,7 @@ class PaymentController extends Controller {
             ->get();
 
         // direct payment with saved payment profile id on Authorized.net
-        if(isset($post['savedCard'])){
+        if(isset($post['savedCard']) && $post['savedCard']!=0 ){
             $profilePayment = $this->common->GetTableRecords('client_payment_profiles',array('client_id' => $retArray[0]->client_id));
             $resultProfile = $this->chargeCustomerProfile($merchantAuthentication, $profilePayment[0]->profile_id, $post['savedCard'], $amount, $order);
 
