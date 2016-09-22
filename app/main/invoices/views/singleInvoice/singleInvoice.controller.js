@@ -380,7 +380,7 @@
                         }
                     });
                     //$scope.paymentData = null;
-                    if(!paymentData.storeCard) {
+                    /*if(!paymentData.storeCard) {
                         paymentData.creditFname = null;
                         paymentData.creditLname = null;
                         paymentData.creditCard = null;
@@ -397,7 +397,20 @@
                     }else{
                         paymentData.amount = null;
                         paymentData.cvv = null;
-                    }
+                    }*/
+                    paymentData.creditFname = null;
+                    paymentData.creditLname = null;
+                    paymentData.creditCard = null;
+                    paymentData.cvv = null;
+                    paymentData.expMonth = null;
+                    paymentData.expYear = null;
+                    paymentData.amount = null;
+                    paymentData.street = null;
+                    paymentData.suite = null;
+                    paymentData.city = null;
+                    paymentData.state = null;
+                    paymentData.zip = null;
+                    paymentData.storeCard = null;
 
                     notifyService.notify('success',"Payment made Successfully");
                 }

@@ -92,7 +92,7 @@ class PaymentController extends Controller {
             ->get();
 
         // direct payment with saved payment profile id on Authorized.net
-        if(isset($post['savedCard'])){
+        if(isset($post['savedCard']) && $post['savedCard']!=0 ){
             $profilePayment = $this->common->GetTableRecords('client_payment_profiles',array('client_id' => $retArray[0]->client_id));
             $resultProfile = $this->chargeCustomerProfile($merchantAuthentication, $profilePayment[0]->profile_id, $post['savedCard'], $amount, $order);
 
@@ -186,7 +186,7 @@ class PaymentController extends Controller {
 
                     $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
-                    if(($post['storeCard']==1) || ($post['linkToPay']==1))
+                    if(isset($post['storeCard']) && $post['storeCard']==1)
                     {
                         $profilePayment = $this->common->GetTableRecords('client_payment_profiles',array('client_id' => $retArray[0]->client_id));
                         if(count($profilePayment)<1){
@@ -274,10 +274,18 @@ class PaymentController extends Controller {
                             $result = $this->createCustomerPaymentProfile($profilePayment[0]->profile_id, $merchantAuthentication, $paymentCreditCard, $billto);
                             if($result['success']==1){
                                 $expiryDate=$post['expMonth']."/".$post['expYear'];
-                                $profileDetailData = array('cpp_id'=> $profilePayment[0]->cpp_id, 'payment_profile_id' => $paymentProfiles[0],'card_number' => $creditCardNumber, 'expiration' => $expiryDate);
+                                $payment_data = $this->common->GetTableRecords('client_payment_profiles_detail',array('cpp_id' => $profilePayment[0]->cpp_id, 'card_number' => $creditCardNumber));
 
-                                $id = $this->common->InsertRecords('client_payment_profiles_detail', $profileDetailData);
-                                $amt['payment_profile_id'] = $paymentProfiles[0];
+                                if(count($payment_data)<1){
+                                    // addding new credit card payment profile with expiry period entered by user
+                                    $profileDetailData = array('cpp_id'=> $profilePayment[0]->cpp_id, 'payment_profile_id' => $result['profile_id'],'card_number' => $creditCardNumber, 'expiration' => $expiryDate);
+                                    $id = $this->common->InsertRecords('client_payment_profiles_detail', $profileDetailData);
+                                }else{
+                                    // Updating existing credit card payment profile with new expiry period entered by user
+                                    $profileDetailData = array('payment_profile_id' => $result['profile_id'],'expiration' => $expiryDate);
+                                    $this->common->UpdateTableRecords('client_payment_profiles_detail',array('cppd_id' => $payment_data[0]->cppd_id),$profileDetailData);
+                                }
+                                $amt['payment_profile_id'] = $result['profile_id'];
                                 $amt['card_number'] = $creditCardNumber;
                                 $amt['expiration'] = $expiryDate;
                             }
@@ -387,7 +395,7 @@ class PaymentController extends Controller {
         $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
         if (($response != null) && ($response->getMessages()->getResultCode() == "Ok") )
         {
-            echo "Create Customer Payment Profile SUCCESS: " . $response->getCustomerPaymentProfileId() . "\n";
+            //echo "Create Customer Payment Profile SUCCESS: " . $response->getCustomerPaymentProfileId() . "\n";
             $data = array("success"=>1,'profile_id' =>$response->getCustomerPaymentProfileId());
         }
         else
