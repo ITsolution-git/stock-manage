@@ -17,6 +17,13 @@
 
         var combine_array_id = {};
         combine_array_id.id = $stateParams.id;
+
+        if($stateParams.id == ''){
+             $state.go('app.shipping');
+             return false;
+        }
+
+        
         combine_array_id.company_id = sessionService.get('company_id');
         $scope.order_id = $stateParams.id;
         

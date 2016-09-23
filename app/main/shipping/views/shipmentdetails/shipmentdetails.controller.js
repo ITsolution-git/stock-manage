@@ -9,6 +9,14 @@
     /** @ngInject */
     function shipmentController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+
+
+        if($stateParams.id == ''){
+             $state.go('app.shipping');
+             return false;
+        }
+
+        
         var vm = this;
 
         var combine_array_id = {};
@@ -22,7 +30,8 @@
                 $scope.shipping = result.data.records[0];
             }
             else {
-                $scope.shippingItems = [];
+                  $state.go('app.shipping');
+                     return false;
             }
         });
 

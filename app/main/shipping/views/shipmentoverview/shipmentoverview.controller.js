@@ -12,6 +12,10 @@
         var vm = this;
 
         $scope.shipping_id = $stateParams.id;
+        if($scope.shipping_id == ''){
+             $state.go('app.shipping');
+             return false;
+        }
         var company_id = sessionService.get('company_id');
 
         $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
@@ -32,6 +36,7 @@
             var combine_array = {};
             combine_array.shipping_id = $scope.shipping_id;
             combine_array.company_id = company_id;
+
 
             $http.post('api/public/shipping/getShippingOverview',combine_array).success(function(result) {
 
@@ -68,6 +73,10 @@
                     if($scope.shipping.shipping_status == '3') {
                         $scope.shipping.shipping_status_name = 'Shipped';
                     }
+                } else {
+
+                    $state.go('app.shipping');
+                    return false;
                 }
             });
         }

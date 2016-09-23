@@ -234,8 +234,7 @@ class Shipping extends Model {
                         
                         ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
                         ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                        ->leftJoin('product_address_mapping as pam','pam.order_id','=','o.id')
-                        ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                        ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
 
 
                         ->select($listArray)

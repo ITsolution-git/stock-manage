@@ -12,6 +12,11 @@
         var vm = this;
         $scope.shipping_id = $stateParams.id;
 
+        if($scope.shipping_id == ''){
+             $state.go('app.shipping');
+             return false;
+        }
+
         $scope.box_items = [];
         $scope.shipping_box_id = 0;
 
@@ -47,6 +52,9 @@
                     {
                         $scope.select_box($scope.shipping_box_id);
                     }
+                } else {
+                     $state.go('app.shipping');
+                     return false;
                 }
             });
         }

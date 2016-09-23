@@ -211,6 +211,8 @@ class ShippingController extends Controller {
         $data = Input::all();
 
         $result = $this->shipping->shippingDetail($data);
+        
+
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if(!empty($result['shippingBoxes']))
@@ -223,7 +225,7 @@ class ShippingController extends Controller {
             }
         }
 
-        if (count($result) > 0) {
+        if (count($result['shipping']) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
@@ -722,6 +724,17 @@ class ShippingController extends Controller {
             $shippingBoxes[$box->id] = $box;
         }
 
+         if(empty($shippingBoxes))
+            {
+                  $response = array(
+                        'success' => 0, 
+                        'message' => "No Records Found",
+                        'shippingBoxes' => '',
+                        'total_box_qnty' => ''
+                    ); 
+                   return response()->json(["data" => $response]);
+            }
+
 
         $response = array(
                         'success' => 1, 
@@ -739,6 +752,20 @@ class ShippingController extends Controller {
         $data['overview'] = 1;
 
         $result = $this->shipping->shippingDetail($data);
+       
+
+         if(empty($result['shipping']))
+            {
+                  $response = array(
+                        'success' => 0, 
+                        'message' => "No Records Found",
+                        'shippingBoxes' => '',
+                        'records' => '',
+                        'shippingItems' => ''
+                    ); 
+                   return response()->json(["data" => $response]);
+            }
+
 
         $boxes = $this->shipping->getShippingBoxes($data);
 
