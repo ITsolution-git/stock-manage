@@ -49,7 +49,7 @@
                                 <span class="font-14 chrome-weight">{{order.approval}}</span>
                             </div>
                             <div class="pull-right order-popup-menu1">
-                                <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event,order.id)"><md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event,order.id)"><md-icon md-menu-origin md-font-icon="icon-dots-vertical" ng-show="allow_access==1"></md-icon>
                                 </md-button>
                             </div> 
                         </div>
@@ -58,16 +58,16 @@
                         <div layout-align="end start"  flex="30" layout="row">
                             <!--4 buttons panel -->
                             <div class="right-20 m-t-20 m-b-20">
-                                <md-button  class="pull-right full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns" ng-click="calculateAll(order_id,company_id)">
+                                <md-button  class="pull-right full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns" ng-click="calculateAll(order_id,company_id)"  ng-show="allow_access==1">
                                 CONFIRM PRICING
                                 </md-button>
-                                <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-click="openEmailPopup($event)">
+                                <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-click="openEmailPopup($event)" ng-show="allow_access==1">
                                 EMAIL
                                 </md-button>
                                 <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-show="order.invoice_id > 0" ng-click="printPdf()">
                                     PRINT
                                 </md-button>
-                                <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-click="checkDesign()" ng-show="order.order_number == '' && order.is_complete == '0' ">
+                                <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-click="checkDesign()" ng-show="allow_access==1 && order.order_number == '' && order.is_complete == '0'">
                                     ASSIGN/SPLIT AFFILIATE
                                 </md-button>
                             </div>
@@ -122,7 +122,7 @@
                                             <span class="column-title marginLeft-58">Status</span>
                                         </div>
                                     </th> -->
-                                    <th class="secondary-text" ng-show="order.order_number == '' && order.is_complete == '0' ">
+                                    <th class="secondary-text" ng-show="order.order_number == '' && order.is_complete == '0' && allow_access==1">
 
                                     </th>
                                 </tr>
@@ -137,7 +137,7 @@
                                         <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
                                         </md-slider>
                                     </td>  -->
-                            <td class="text-right" ng-show="order.order_number == '' && order.is_complete == '0' "> 
+                            <td class="text-right" ng-show="order.order_number == '' && order.is_complete == '0' && allow_access==1"> 
                             <md-menu>
                                 <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                     <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -164,8 +164,8 @@
                         </table>
                         </div>
                         <div class="flex-20 m-t-20 right-20 layout-padding pull-right">
-                            <div ng-show="order.order_number == '' && order.is_complete == '0' ">
-                            <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right" ng-click="vm.openaddDesignDialog($event,0)">
+                            <div ng-show="order.order_number == '' && order.is_complete == '0' " >
+                            <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right" ng-click="vm.openaddDesignDialog($event,0)" ng-show="allow_access==1">
                                 ADD NEW
                             </md-button>
                             </div> 
@@ -472,7 +472,7 @@
                                 <span class="full-row text-center not-visible">text</span>
                             </div>
                              <div class="text-right">
-                                <a ui-sref="app.art.orderView({id:order_id})">EDIT</a>
+                                <a ng-show="allow_access==1" ui-sref="app.art.orderView({id:order_id})">EDIT</a>
                             </div>
                         </md-card-content>
                     </md-card>
@@ -547,7 +547,7 @@
                     </md-card-content>
                 </md-card>
                 <div class="text-center m-t-20">
-                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)">Approve Order</md-button>
+                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)" ng-show="allow_access==1">Approve Order</md-button>
                 </div>
             </div>
         </div>
@@ -580,7 +580,7 @@
                     </div>
                 
                     <div class="pull-right" ng-show="order.invoice_id > 0">
-                        <md-button  class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="createPO()">Create PO
+                        <md-button  class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="createPO()" ng-show="allow_access==1">Create PO
                         </md-button>
                     </div>
                 </div>

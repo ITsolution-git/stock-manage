@@ -31,7 +31,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/order-info/:id',
@@ -46,7 +46,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/design/:id',
@@ -61,7 +61,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/distribution/:id',
@@ -76,7 +76,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/orderNotes/:id',
@@ -91,7 +91,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/distributionProduct/:id',
@@ -106,7 +106,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/spiltAffiliate/:id',
@@ -121,7 +121,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/affiliate-info/:id',
@@ -136,7 +136,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('SU,AT','false');
+                           return sessionService.AccessService('AT','false');
                         }
                     },
                 url  : '/affiliate-view/:id',
