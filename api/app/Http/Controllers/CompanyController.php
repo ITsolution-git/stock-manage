@@ -374,87 +374,38 @@ $this->common = $common;
 		$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
 	}
-	public function getAuthorizeAPI($company_id)
+
+	public function checkAPIData($id,$table,$company_id)
 	{
-		if(!empty($company_id))
+		$ret = $this->company->getApiDetail($id,$table,$company_id); // GET API DETAILS
+
+		//echo "<pre>"; print_r($ret); echo "</pre>"; die;
+		if(count($ret)==0)
 		{
-			$result = $this->company->getAuthorizeAPI($company_id); // GET API DETAILS
-			if(count($result)==0)
-			{
-				$this->company->InsertAuthorizeAPI($company_id);
-				$result = $this->company->getAuthorizeAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
-			$success = 1;
+			$link_id = $this->common->InsertRecords('api_link_table',array("api_id"=>$id,"company_id"=>$company_id));
+			$this->common->InsertRecords($table,array("link_id"=>$link_id,'api_date'=>date("Y-m-d")));
+			$ret = $this->company->getApiDetail($id,$table,$company_id); // GET API DETAILS
 		}
-		else
-		{
-			$message = MISSING_PARAMS."- company_id";
-			$success = 0;
-			$result = '';
-		}
-		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
-		return response()->json(['data'=>$data]);
-	}
-	public function getUpsAPI($company_id)
-	{
-		if(!empty($company_id))
-		{
-			$result = $this->company->getUpsAPI($company_id); // GET API DETAILS
-			if(count($result)==0)
-			{
-				$this->company->InsertUpsAPI($company_id);
-				$result = $this->company->getUpsAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
-			$success = 1;
-		}
-		else
-		{
-			$message = MISSING_PARAMS."- company_id";
-			$success = 0;
-			$result = '';
-		}
-		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
-		return response()->json(['data'=>$data]);
-	}
-	public function getSnsAPI($company_id)
-	{
-		if(!empty($company_id))
-		{
-			$result = $this->company->getSnsAPI($company_id); // GET API DETAILS
-			//echo count($result);
-			if(count($result)==0)
-			{
-				$this->company->InsertSnsAPI($company_id);
-				$result = $this->company->getSnsAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
-			$success = 1;
-		}
-		else
-		{
-			$message = MISSING_PARAMS."- company_id";
-			$success = 0;
-			$result = '';
-		}
-		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
-		return response()->json(['data'=>$data]);
+		return $ret[0];
 	}
 
-	public function getQBAPI($company_id)
+	public function GetAllApi()
 	{
-		if(!empty($company_id))
+		$post = Input::all();
+		if(!empty($post['company_id']))
 		{
-			$result = $this->company->getQBAPI($company_id); // GET API DETAILS
-			//echo count($result);
-			if(count($result)==0)
-			{
-				$this->company->InsertQBAPI($company_id);
-				$result = $this->company->getQBAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
+			$company_id = $post['company_id'];
+			
+			$fedex = $this->checkAPIData(FEDEX_ID,'fedex_detail',$company_id); // GET API DETAILS
+			$qb = $this->checkAPIData(QUICKBOOK_ID,'quickbook_detail',$company_id); // GET API DETAILS
+			$sns = $this->checkAPIData(SNS_ID,'ss_detail',$company_id); // GET API DETAILS
+			$ups = $this->checkAPIData(UPS_ID,'ups_detail',$company_id); // GET API DETAILS
+			$authorize = $this->checkAPIData(AUTHORIZED_ID,'authorize_detail',$company_id); // GET API DETAILS
+			$location = $this->company->getCompanyAddress($company_id); // GET API DETAILS
+
 			$success = 1;
+			$message = GET_RECORDS;
+			$result = array("fedex"=>$fedex,"qb"=>$qb,"sns"=>$sns,"ups"=>$ups,"authorize"=>$authorize,"location"=>$location);
 		}
 		else
 		{
@@ -465,30 +416,6 @@ $this->common = $common;
 		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
 		return response()->json(['data'=>$data]);
 	}
-	public function getFedexAPI($company_id)
-	{
-		if(!empty($company_id))
-		{
-			$result = $this->company->getFedexAPI($company_id); // GET API DETAILS
-			//echo count($result);
-			if(count($result)==0)
-			{
-				$this->company->InsertFedexAPI($company_id);
-				$result = $this->company->getFedexAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
-			$success = 1;
-		}
-		else
-		{
-			$message = MISSING_PARAMS."- company_id";
-			$success = 0;
-			$result = '';
-		}
-		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
-		return response()->json(['data'=>$data]);
-	}
-	
 
 	
 }

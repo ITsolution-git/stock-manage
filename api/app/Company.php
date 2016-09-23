@@ -539,96 +539,18 @@ class Company extends Model {
        $result = DB::table('affiliates')->where('id',"=",$id)->update($post);
        return $result;
     }
-     public function getAuthorizeAPI($company_id)
-    {
-        $result = DB::table('api_link_table as alt')
-            ->select('ad.*')
-            ->Join('authorize_detail as ad','ad.link_id','=','alt.id')
-            ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",AUTHORIZED_ID)
-            ->get();
-        return $result;
-    }
-    public function InsertAuthorizeAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>AUTHORIZED_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('authorize_detail')->insert(array("link_id"=>$link_id));
 
-      return $result;
-    }
-     public function getUpsAPI($company_id)
-    {
-        $result = DB::table('api_link_table as alt')
-            ->select('ad.*')
-            ->Join('ups_detail as ad','ad.link_id','=','alt.id')
-            ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",UPS_ID)
-            ->get();
-        return $result;
-    }
-    public function InsertUpsAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>UPS_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('ups_detail')->insert(array("link_id"=>$link_id));
-
-      return $result;
-    }
-     public function getSnsAPI($company_id)
-    {
-        $result = DB::table('api_link_table as alt')
-            ->select('ad.*')
-            ->Join('ss_detail as ad','ad.link_id','=','alt.id')
-            ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",SNS_ID)
-            ->get();
-        return $result;
-    }
-    public function InsertSnsAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>SNS_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('ss_detail')->insert(array("link_id"=>$link_id));
-
-      return $result;
-    }
-
-     public function getQBAPI($company_id)
-    {
-        $result = DB::table('api_link_table as alt')
-            ->select('qd.*')
-            ->Join('quickbook_detail as qd','qd.link_id','=','alt.id')
-            ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",QUICKBOOK_ID)
-            ->get();
-        return $result;
-    }
-    public function InsertQBAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>QUICKBOOK_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('quickbook_detail')->insert(array("link_id"=>$link_id));
-
-      return $result;
-    }
-
-    public function InsertFedexAPI($company_id)
-    {
-       $result  = DB::table('api_link_table')->insert(array("api_id"=>"5","company_id"=>$company_id));
-       $link_id = DB::getPdo()->lastInsertId();
-       $result  = DB::table('fedex_detail')->insert(array("link_id"=>$link_id));
-    }
-    public function getFedexAPI($company_id)
+    public function getApiDetail($api_id,$table,$company_id)
     {
         $result = DB::table('api_link_table as alt')
             ->select('fd.*')
-            ->Join('fedex_detail as fd','fd.link_id','=','alt.id')
+            ->Join($table.' as fd','fd.link_id','=','alt.id')
             ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=","5")
+            ->where("alt.api_id","=",$api_id)
             ->get();
         return $result;
     }
+
     public function getColors($post)
     {
         $search = '';
@@ -683,6 +605,16 @@ class Company extends Model {
 
         return $returnData;
     }
+    public function getCompanyAddress($company_id)
+    {
+       $result = DB::table('company_address as ca')
+                    ->leftJoin('state as st','st.id','=','ca.state')
+                    ->select('st.name as state_name','ca.*')
+                    ->where('ca.company_id','=',$company_id)
+                    ->where('ca.is_deleted','=','1')
+                    ->get();
+        return $result;   
+    }       
     
 
 }
