@@ -14,14 +14,7 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
-                <md-input-container class="md-block first-box">
-                    <input placeholder="Description *" name="description" required ng-model="params.description">
-                    <div ng-messages="companyform.description.$error" role="alert" multiple>
-                        <div ng-message="required">
-                            <span >This field is required</span>
-                        </div>
-                    </div>
-                </md-input-container>
+                
                 <md-input-container>
                     <input tabindex="2" vs-google-autocomplete="Gapi_options"
                         ng-model="Gapi_address.name"
@@ -93,6 +86,9 @@
                         </div>
                     </md-input-container>
                 </div>
+                <md-input-container class="md-block first-box">
+                    <input placeholder="Cost" name="cost" only-number ng-model="params.cost">
+                </md-input-container>
 
 
 

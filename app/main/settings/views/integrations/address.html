@@ -30,7 +30,12 @@
                                                 <div class="table-header">
                                                     <span class="column-title">Zipcode</span>
                                                 </div>
-                                            </th>                                            
+                                            </th>  
+                                            <th class="secondary-text">
+                                                <div class="table-header">
+                                                    <span class="column-title">Cost</span>
+                                                </div>
+                                            </th> 
                                             <th class="secondary-text">
                                                 <div class="table-header text-center">
                                                     <span class="column-title">Main Location</span>
@@ -46,6 +51,7 @@
                                             <td>{{location.city}}</td>
                                             <td>{{location.state_name}}</td>
                                             <td>{{location.zipcode}}</td>
+                                            <td>${{location.cost}}</td>
                                             <td  class="text-center" ng-if="location.is_main=='1'"><i class="icon icon-check s40"></i></td>
                                             <td class="text-center" ng-if="location.is_main=='0'"><i class="icon icon-flickr-before s40"></i></td>
 
