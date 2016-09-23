@@ -51,10 +51,11 @@ class PaymentController extends Controller {
         {
             $company_id=$post['company_id'];
             $retCredsArray = DB::table('authorize_detail as au')
-            ->select('au.login', 'au.transactionkey')
+            ->select('au.login', 'au.transactionkey', 'au.is_live')
             ->leftJoin('api_link_table as ai','ai.id','=',"au.link_id")
             ->where('ai.company_id','=',$company_id)
             ->where('ai.status','=','1')
+            ->where('au.is_active','=','1')
             ->where('ai.api_id','=',3)
             ->get();
         }
@@ -64,15 +65,14 @@ class PaymentController extends Controller {
             return response()->json(['data'=>$data]);
         }
 
-        $creditCardNumber=$post['creditCard'];//4111111111111111
+        $envConst=$retCredsArray[0]->is_live;
+
+        $creditCardNumber=$post['creditCard'];
         $creditCardNumberStored=substr($creditCardNumber, -4);
         $expiry=$post['expMonth'].$post['expYear'];
-        //$expiry=$post['expiry'];//1226
-        $cvv=$post['cvv'];//123
+        $cvv=$post['cvv'];
         // Common setup for API credentials
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        /*$merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-        $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);*/
         $merchantAuthentication->setName($retCredsArray[0]->login);
         $merchantAuthentication->setTransactionKey($retCredsArray[0]->transactionkey);
 
@@ -94,7 +94,7 @@ class PaymentController extends Controller {
         // direct payment with saved payment profile id on Authorized.net
         if(isset($post['savedCard']) && $post['savedCard']!=0 ){
             $profilePayment = $this->common->GetTableRecords('client_payment_profiles',array('client_id' => $retArray[0]->client_id));
-            $resultProfile = $this->chargeCustomerProfile($merchantAuthentication, $profilePayment[0]->profile_id, $post['savedCard'], $amount, $order);
+            $resultProfile = $this->chargeCustomerProfile($merchantAuthentication, $profilePayment[0]->profile_id, $post['savedCard'], $amount, $order, $envConst);
 
             if($resultProfile['success']==0){
                 $data = array("success"=>0,'message' =>"Error from Authorized.net. Please try with any other saved card or new credit card.");
@@ -156,7 +156,12 @@ class PaymentController extends Controller {
 
         $request->setTransactionRequest( $transactionRequestType);
         $controller = new AnetController\CreateTransactionController($request);
-        $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        if($envConst==1){
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+        }else{
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        }
+        
       
         if ($response != null)
         {
@@ -229,7 +234,11 @@ class PaymentController extends Controller {
                             $requestNew->setRefId( $refId);
                             $requestNew->setProfile($customerprofile);
                             $controller = new AnetController\CreateCustomerProfileController($requestNew);
-                            $responseProfile = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+                            if($envConst==1){
+                                $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+                            }else{
+                                $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+                            }
                       
                             if (($responseProfile != null) && ($responseProfile->getMessages()->getResultCode() == "Ok") )
                             {
@@ -271,7 +280,7 @@ class PaymentController extends Controller {
                             $billto->setCountry("USA");
                             $billto->setEmail($retArray[0]->billing_email);
 
-                            $result = $this->createCustomerPaymentProfile($profilePayment[0]->profile_id, $merchantAuthentication, $paymentCreditCard, $billto);
+                            $result = $this->createCustomerPaymentProfile($profilePayment[0]->profile_id, $merchantAuthentication, $paymentCreditCard, $billto, $envConst);
                             if($result['success']==1){
                                 $expiryDate=$post['expMonth']."/".$post['expYear'];
                                 $payment_data = $this->common->GetTableRecords('client_payment_profiles_detail',array('cpp_id' => $profilePayment[0]->cpp_id, 'card_number' => $creditCardNumber));
@@ -354,27 +363,8 @@ class PaymentController extends Controller {
     }
         
     // Create the payment data for a credit card
-    public function createCustomerPaymentProfile($existingcustomerprofileid, $merchantAuthentication, $paymentCreditCard, $billto){
+    public function createCustomerPaymentProfile($existingcustomerprofileid, $merchantAuthentication, $paymentCreditCard, $billto, $envConst){
         $refId = 'ref' . time();
-
-        /*$creditCard = new AnetAPI\CreditCardType();
-        $creditCard->setCardNumber( "4242424242424242");
-        $creditCard->setExpirationDate( "2038-12");
-        $creditCard->setCardCode( "142");
-        $paymentCreditCard = new AnetAPI\PaymentType();
-        $paymentCreditCard->setCreditCard($creditCard);*/
-
-        // Create the Bill To info for new payment type
-        /*$billto = new AnetAPI\CustomerAddressType();
-        $billto->setFirstName("Mrs Mary");
-        $billto->setLastName("Doe");
-        $billto->setCompany("My company");
-        $billto->setAddress("123 Main St.");
-        $billto->setCity("Bellevue");
-        $billto->setState("WA");
-        $billto->setZip("98004");
-        $billto->setPhoneNumber("999-999-9999");
-        $billto->setCountry("USA");*/
 
         // Create a new Customer Payment Profile
         $paymentprofile = new AnetAPI\CustomerPaymentProfileType();
@@ -392,7 +382,11 @@ class PaymentController extends Controller {
         $paymentprofilerequest->setPaymentProfile( $paymentprofile );
         $paymentprofilerequest->setValidationMode("liveMode");
         $controller = new AnetController\CreateCustomerPaymentProfileController($paymentprofilerequest);
-        $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        if($envConst==1){
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+        }else{
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        }
         if (($response != null) && ($response->getMessages()->getResultCode() == "Ok") )
         {
             //echo "Create Customer Payment Profile SUCCESS: " . $response->getCustomerPaymentProfileId() . "\n";
@@ -409,7 +403,7 @@ class PaymentController extends Controller {
     }   
 
     // Fetching transaction details from Authorized.net
-    public function getTransactionDetails($transactionId, $merchantAuthentication) {
+    public function getTransactionDetails($transactionId, $merchantAuthentication, $envConst) {
 
       $refId = 'ref' . time();
 
@@ -418,8 +412,11 @@ class PaymentController extends Controller {
       $request->setTransId($transactionId);
 
       $controller = new AnetController\GetTransactionDetailsController($request);
-
-      $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+      if($envConst==1){
+          $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+      }else{
+          $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+      }
 
       if (($response != null) && ($response->getMessages()->getResultCode() == "Ok"))
       {
@@ -442,9 +439,9 @@ class PaymentController extends Controller {
       }
       else
       {
-        echo "ERROR :  Invalid response\n";
-        $errorMessages = $response->getMessages()->getMessage();
-        echo "Response : " . $errorMessages[0]->getCode() . "  " .$errorMessages[0]->getText() . "\n";
+        //echo "ERROR :  Invalid response\n";
+        //$errorMessages = $response->getMessages()->getMessage();
+        //echo "Response : " . $errorMessages[0]->getCode() . "  " .$errorMessages[0]->getText() . "\n";
         $data = array("success"=>0,'message' =>'Authorized.net Transaction ID is not valid');
       }
       return $data;
@@ -470,16 +467,16 @@ class PaymentController extends Controller {
         $creditCardNumberStored = substr($creditCardNumber, -4);
         $payment_date=$retArrayRefund[0]->payment_date;
         $authorized_AuthCode=$retArrayRefund[0]->authorized_AuthCode;
-        //print_r($retCredsArray);exit;
 
         if(isset($post['company_id']))
         {
             $company_id=$post['company_id'];
             $retCredsArray = DB::table('authorize_detail as au')
-            ->select('au.login', 'au.transactionkey')
+            ->select('au.login', 'au.transactionkey', 'au.is_live')
             ->leftJoin('api_link_table as ai','ai.id','=',"au.link_id")
             ->where('ai.company_id','=',$company_id)
             ->where('ai.status','=','1')
+            ->where('au.is_active','=','1')
             ->where('ai.api_id','=',3)
             ->get();
         }
@@ -488,13 +485,13 @@ class PaymentController extends Controller {
             return response()->json(['data'=>$data]);
         }
 
+        $envConst=$retCredsArray[0]->is_live;
+
         // Common setup for API credentials
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        /*$merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-        $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);*/
         $merchantAuthentication->setName($retCredsArray[0]->login);
         $merchantAuthentication->setTransactionKey($retCredsArray[0]->transactionkey);
-        $result = $this->getTransactionDetails($refTransId, $merchantAuthentication);
+        $result = $this->getTransactionDetails($refTransId, $merchantAuthentication, $envConst);
     
         if($result['success']==0){
             $data = array("success"=>0,'message' =>"Authorized.net Transaction ID is not valid");
@@ -520,12 +517,6 @@ class PaymentController extends Controller {
         $order = new AnetAPI\OrderType();
         $order->setDescription("Refund - ".$result['order']);
         $order->setInvoiceNumber($result['invoice']);
-        /*if($amount==$result['amount']){
-            echo "ok";
-        }else{
-          echo "not ok";
-        }
-        exit;*/
 
         //create a transaction
         $transactionRequest = new AnetAPI\TransactionRequestType();
@@ -559,7 +550,11 @@ class PaymentController extends Controller {
         $request->setRefId($refId);
         $request->setTransactionRequest( $transactionRequest);
         $controller = new AnetController\CreateTransactionController($request);
-        $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        if($envConst==1){
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+        }else{
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        }
 
         if ($response != null)
         {
@@ -680,51 +675,8 @@ class PaymentController extends Controller {
         return view('auth.payment',$data)->render();
     }
 
-    // Retrieve an existing customer profile along with all the associated payment profiles and shipping addresses
-    public function getCustomerProfile(){
-        //$merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        //$merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-        //$merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);
-        //$profileIdRequested='';
-        $refId = 'ref' . time();
-
-        $request = new AnetAPI\GetCustomerProfileRequest();
-        $request->setMerchantAuthentication($merchantAuthentication);
-        $request->setCustomerProfileId($profileIdRequested);
-        $controller = new AnetController\GetCustomerProfileController($request);
-        $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
-        if (($response != null) && ($response->getMessages()->getResultCode() == "Ok") )
-        {
-            echo "GetCustomerProfile SUCCESS : " .  "\n";
-            $profileSelected = $response->getProfile();
-            $paymentProfilesSelected = $profileSelected->getPaymentProfiles();
-            echo "Profile Has " . count($paymentProfilesSelected). " Payment Profiles" . "\n";
-
-            if($response->getSubscriptionIds() != null) 
-            {
-                if($response->getSubscriptionIds() != null)
-                {
-
-                    echo "List of subscriptions:";
-                    foreach($response->getSubscriptionIds() as $subscriptionid)
-                    echo $subscriptionid . "\n";
-                }
-            }
-        }
-        else
-        {
-            echo "ERROR :  GetCustomerProfile: Invalid response\n";
-            $errorMessages = $response->getMessages()->getMessage();
-            echo "Response : " . $errorMessages[0]->getCode() . "  " .$errorMessages[0]->getText() . "\n";
-        }
-        return $response;
-    }
-
-    public function chargeCustomerProfile($merchantAuthentication, $profileid, $paymentprofileid, $amount, $order){
+    public function chargeCustomerProfile($merchantAuthentication, $profileid, $paymentprofileid, $amount, $order, $envConst){
         // Common setup for API credentials
-        /*$merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
-        $merchantAuthentication->setName(\SampleCode\Constants::MERCHANT_LOGIN_ID);
-        $merchantAuthentication->setTransactionKey(\SampleCode\Constants::MERCHANT_TRANSACTION_KEY);*/
         $refId = 'ref' . time();
 
         $profileToCharge = new AnetAPI\CustomerProfilePaymentType();
@@ -744,7 +696,11 @@ class PaymentController extends Controller {
         $request->setRefId( $refId);
         $request->setTransactionRequest( $transactionRequestType);
         $controller = new AnetController\CreateTransactionController($request);
-        $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        if($envConst==1){
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+        }else{
+            $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+        }
 
         if ($response != null)
         {

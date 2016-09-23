@@ -197,25 +197,25 @@ width: 25%;
     cursor:pointer;
 }
 .loaderouter{
-position:fixed;
-width:100%;
-height:100%;
-margin:0px;
-padding:0px;
-background-color:rgba(23, 16, 20, 0.7);
-filter:alpha(opacity=100);
-z-index:200;
-overflow-y:hidden;
-top:0;
-left:0;
-padding-top:10%;
-padding-left:10%;
-opacity: 1;
+    position:fixed;
+    width:100%;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    background-color:rgba(23, 16, 20, 0.7);
+    filter:alpha(opacity=100);
+    z-index:200;
+    overflow-y:hidden;
+    top:0;
+    left:0;
+    padding-top:10%;
+    padding-left:10%;
+    opacity: 1;
 }
 .loader,
 .loader:before,
 .loader:after {
-    background: #31c0be;
+    background: #9fa1a7;
     -webkit-animation: load1 1s infinite ease-in-out;
     animation: load1 1s infinite ease-in-out;
     width: 1em;
@@ -245,4 +245,66 @@ opacity: 1;
 }
 .loader:after {
     left: 1.5em;
+}
+.fs22 { font-size: 22px;} 
+@-webkit-keyframes load1 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 0 #9fa1a7;
+        height: 4em;
+    }
+    40% {
+        box-shadow: 0 -2em #9fa1a7;
+        height: 5em;
+    }
+}
+@keyframes load1 {
+    0%,
+    80%,
+    100% {
+        box-shadow: 0 0 #9fa1a7;
+        height: 4em;
+    }
+    40% {
+        box-shadow: 0 -2em #9fa1a7;
+        height: 5em;
+    }
+
+}
+
+/*=====================================
+        Ajax Loader Image CSS
+=====================================*/
+.overlay-loader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+}
+
+.overlay-loader .loader-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  -webkit-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  -moz-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  -ms-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  -o-transition: background-color .2s 0s linear,right .2s .3s ease-out;
+  transition: background-color .2s 0s linear,right .2s .3s ease-out;
+}
+
+.overlay-loader .loader-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -48px 0 0 -48px;
+  font-size: 96px;
+  color: #FFF;
 }
