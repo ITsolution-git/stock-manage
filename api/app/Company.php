@@ -616,5 +616,15 @@ class Company extends Model {
         return $result;   
     }       
     
+    public function getQBAPI($company_id)
+    {
+       $result = DB::table('api_link_table as alt')
+           ->select('qd.*')
+           ->Join('quickbook_detail as qd','qd.link_id','=','alt.id')
+           ->where("alt.company_id","=",$company_id)
+           ->where("alt.api_id","=",QUICKBOOK_ID)
+           ->get();
+       return $result;
+   }
 
 }
