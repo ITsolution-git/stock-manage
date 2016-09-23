@@ -45,5 +45,6 @@ define('SNS_ID',1);
 define('UPS_ID',2);
 define('AUTHORIZED_ID',3);
 define('QUICKBOOK_ID',4);
+define('FEDEX_ID',5);
 define('OVERSIZE_VALUE',0.5);
 define('TAX_RATE',0);

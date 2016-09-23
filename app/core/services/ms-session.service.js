@@ -218,6 +218,7 @@
                 		if(extra=='client_contact'){InserArray.data.client_id=$scope.all_scope.client_id;}
                 		if(extra=='client_notes'){InserArray.data.client_id=$scope.all_scope.client_id; InserArray.data.user_id=$scope.all_scope.login_id;InserArray.data.created_date=AllConstant.currentdate;}
                 		if(extra=='client_distaddress'){InserArray.data.client_id=$scope.all_scope.client_id;}
+                		if(extra=='company_address'){InserArray.data.company_id=$scope.all_scope.company_id;}
                 		//=============== SPECIAL CONDITIONS ==============
 
                 		//console.log(InserArray); return false;
@@ -385,6 +386,7 @@
                 		if(extra=='client_address'){ delete UpdateArray.data.id;delete UpdateArray.data.address_type;delete UpdateArray.data.state_name; }
                 		if(extra=='client_notes'){ delete UpdateArray.data.note_id; delete UpdateArray.data.name; delete UpdateArray.data.created_date;}
                 		if(extra=='client_distaddress'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
+                		if(extra=='company_address'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
                 		//=============== SPECIAL CONDITIONS ==============
 
                 		//console.log(UpdateArray); return false;
