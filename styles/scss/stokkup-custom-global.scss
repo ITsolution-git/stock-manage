@@ -15,21 +15,18 @@ $full-width:100%;
 $zero:0;
 $auto:auto;
 $center:center;
-$white-color:#fff;
 $left:left;
 $right:right;
-$red-highlight:#ed1c24;
 $pos-relative:relative;
 $pos-absolute:absolute;
+
+/*All color variables starts here */
+$white-color:#fff;
+$red-highlight:#ed1c24;
 $usermenu-color:#2c3038;
 $usermenu-txtcolor:#9fa1a7;
 $datatable-bg:#f6f7f8;
 $datatable-text-color:#6e7584;
-$datatable-heading-size:14px;
-$datatable-content-size:13px;
-$stokkup-h4-size:18px;
-$datatable-heading-fontweight:600;
-$datatable-content-fontweight:400;
 $datatable-alternaterow-color:#fdfdfe;
 $stokkup-table-footer-bg:#e0e1e3;
 $stokkup-table-footer-txtcolor:#252932;
@@ -40,13 +37,9 @@ $secondary-blue:#6288dc;
 $blue-shade3:#4773d6;
 $gray-shade3:#ededed;
 $gray-shade4:#8d93a0;
-$thirty:30px;
 $blue-shade4:#0b5c93;
-$inner-heading-size:20px;
 $tab-color:#a5a6a9;
 $tab-active-color:#252932;
-$xs-font-size:12px;
-$font-size-mid:20px;
 $md-iconbtn-color:#a8a9ad;
 $blue-shade-btn:#4773d6;
 $green-txt:#39b54a;
@@ -54,25 +47,36 @@ $disable-btn-txt-color:#cdcfd3;
 $tabs-border-color:#e3e3e3;
 $box-border-color:#eeeeee;
 $app-green:#3eb74f;
-/*global variables ends here */
-
-/*global popup style starts here */
-$popup-heading-font-size:16px;
 $popup-header-bg:#252932;
-$popup-header-height:60px;
-$popup-header-spacing:$zero 30px;
 $input-fields-border-color:#d3d4d6;
-$input-fields-border-size:2px;
-$red-border:#de0000;
-/*global popup style ends here */
 $page-title-color:#252932;
-$page-title-size:20px;
-$toolbar-height:70px;
 $topbar-bgcolor:#252932;
 $sidenav-bg:#303440;
 $sidenav-color:#9fa1a7;
-$sidenav-lineheight:40px;
 $teal-green:#26b999;
+$red-border:#de0000;
+/*All color variables ends here */
+
+$datatable-heading-size:14px;
+$datatable-content-size:13px;
+$stokkup-h4-size:18px;
+$datatable-heading-fontweight:600;
+$datatable-content-fontweight:400;
+$thirty:30px;
+$inner-heading-size:20px;
+$xs-font-size:12px;
+$font-size-mid:20px;
+
+/*global variables ends here */
+
+$popup-heading-font-size:16px;
+$popup-header-height:60px;
+$popup-header-spacing:$zero 30px;
+$input-fields-border-size:2px;
+$page-title-size:20px;
+$toolbar-height:70px;
+$sidenav-lineheight:40px;
+
 @mixin generaltablespacing($maintablemargin, $maintablepadding){
 	margin:$maintablemargin;
 	padding:$maintablepadding;
